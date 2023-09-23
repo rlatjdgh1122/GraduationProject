@@ -1,0 +1,48 @@
+#interface {
+    height: 150px;
+    top: 300px;
+    background-image: none;
+    background-color: rgb(192, 192, 192);
+    flex-shrink: 1;
+    width: 1000px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.scrollview {
+}
+
+#builditem-template {
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+    top: auto;
+    right: auto;
+    left: auto;
+    margin-bottom: 0;
+    margin-right: 10px;
+    -unity-text-align: upper-left;
+    width: auto;
+    flex-wrap: nowrap;
+    margin-top: 0;
+    margin-left: 10px;
+    align-self: flex-start;
+    height: auto;
+}
+
+#builditem-template > #builditem-name {
+    position: relative;
+    top: -5px;
+    flex-grow: 0;
+    height: auto;
+    font-size: 14px;
+    align-items: stretch;
+    -unity-text-align: upper-center;
+}
+
+#builditem-template > #btn-builditem {
+    width: 100px;
+    height: auto;
+}

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/09.UI/InGame/MainScreen/MainUI.uss?fileID=7433441132597879392&amp;guid=45a532009b26a094cb220102d1a12037&amp;type=3#MainUI" />
+    <ui:VisualElement name="container" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-around;">
+        <ui:VisualElement name="interface" style="align-items: center; justify-content: space-around; flex-direction: column; flex-wrap: nowrap; align-self: center; height: 170px;">
+            <ui:VisualElement name="frame" style="flex-grow: 0; width: auto; height: 135px;">
+                <ui:ScrollView name="builditem-container" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" nested-interaction-kind="Default" touch-scroll-type="Clamped" mouse-wheel-scroll-size="10" class="scrollview" style="width: 970px; height: 170px; align-items: center; justify-content: flex-start; flex-direction: column-reverse; align-self: center; margin-right: 0; margin-left: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
