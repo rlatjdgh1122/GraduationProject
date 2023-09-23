@@ -11,7 +11,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] private VisualTreeAsset buildItem_template;
 
     private VisualElement _root = null;
-    private ScrollView _buildItemContainer = null;
+    private ScrollView _buildItemContainer;
     private void Awake()
     {
         _root = GetComponent<UIDocument>().rootVisualElement;
@@ -20,9 +20,10 @@ public class MainUI : MonoBehaviour
     public void SetBuildItemUI(string name, Sprite image)
     {
         Debug.Log("¼¼ÆÃ");
-        var template = buildItem_template.Instantiate().Q<VisualElement>("builditem-template");
+        VisualElement template = buildItem_template.Instantiate().Q<VisualElement>("builditem-template");
 
         _buildItemContainer.Add(template);
+        Debug.Log(template);    
 
         BuildlItemUI buidlitemUI = new(template, name, image);
     }

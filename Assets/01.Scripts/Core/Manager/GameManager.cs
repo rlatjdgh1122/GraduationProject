@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
             Instance = this;
 
         else Destroy(this);
-
+    }
+    private void Start()
+    {
         buildingList.BuildItems.ForEach(item =>
         {
             mainUI.SetBuildItemUI(item.Name, item.Image);
