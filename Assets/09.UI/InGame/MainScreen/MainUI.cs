@@ -20,7 +20,7 @@ public class MainUI : MonoBehaviour
     public void SetBuildItemUI(string name, Sprite image)
     {
         Debug.Log("¼¼ÆÃ");
-        VisualElement template = buildItem_template.Instantiate().Q<VisualElement>("builditem-template");
+        VisualElement template = buildItem_template.Instantiate();
 
         _buildItemContainer.Add(template);
         Debug.Log(template);    

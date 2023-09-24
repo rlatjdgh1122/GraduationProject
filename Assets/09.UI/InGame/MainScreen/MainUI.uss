@@ -13,7 +13,7 @@
 }
 
 #builditem-template {
-    flex-grow: 0;
+    flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -34,7 +34,7 @@
 
 #builditem-template > #builditem-name {
     position: relative;
-    top: auto;
+    top: 5px;
     flex-grow: 0;
     height: auto;
     font-size: 17px;
@@ -45,4 +45,6 @@
 #builditem-template > #btn-builditem {
     width: 100px;
     height: auto;
+    flex-grow: 1;
+    top: 5px;
 }
