@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] private InitBuildingList buildingList = null;
-    private Dictionary<string, Build> _buildingDictionary = new();
+    private Dictionary<string, Building> _buildingDictionary = new();
 
     [Header("스크립트들")]
     [SerializeField] private MainUI mainUI = null;
@@ -20,13 +20,13 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        buildingList.BuildItems.ForEach(item =>
+        buildingList.BuildingItems.ForEach(item =>
         {
-            mainUI.SetBuildItemUI(item.Name, item.Image);
+            mainUI.SetBuildingItemUI(item.Name, item.Image);
             _buildingDictionary.Add(item.Name, item.BuildItem);
         });
     }
-    public Build GetBuildFormName(string buildingName)
+    public Building GetBuildingFormName(string buildingName)
     {
         if (_buildingDictionary.ContainsKey(buildingName))
         {

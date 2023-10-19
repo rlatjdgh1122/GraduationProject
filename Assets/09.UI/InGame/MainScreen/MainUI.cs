@@ -17,7 +17,7 @@ public class MainUI : MonoBehaviour
         _root = GetComponent<UIDocument>().rootVisualElement;
         _buildItemContainer = _root.Q<ScrollView>("builditem-container"); 
     }
-    public void SetBuildItemUI(string name, Sprite image)
+    public void SetBuildingItemUI(string name, Sprite image)
     {
         Debug.Log("¼¼ÆÃ");
         VisualElement template = buildItem_template.Instantiate();
@@ -25,6 +25,6 @@ public class MainUI : MonoBehaviour
         _buildItemContainer.Add(template);
         Debug.Log(template);    
 
-        BuildlItemUI buidlitemUI = new(template, name, image);
+        BuildinglItemUI buidlitemUI = new(template, name, image);
     }
 }
