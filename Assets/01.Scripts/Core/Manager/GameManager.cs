@@ -2,22 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance;
 
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, Building> _buildingDictionary = new();
 
     [Header("스크립트들")]
     [SerializeField] private MainUI mainUI = null;
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-
-        else Destroy(this);
-    }
     private void Start()
     {
         buildingList.BuildingItems.ForEach(item =>
@@ -25,6 +17,7 @@ public class GameManager : MonoBehaviour
             mainUI.SetBuildingItemUI(item.Name, item.Image);
             _buildingDictionary.Add(item.Name, item.BuildItem);
         });
+        Init();
     }
     public Building GetBuildingFormName(string buildingName)
     {
@@ -36,5 +29,10 @@ public class GameManager : MonoBehaviour
 
         Debug.LogError("해당하는 이름의 건물은 존재하지 않습니다.");
         return null;
+    }
+
+    public override void Init()
+    {
+        throw new System.NotImplementedException();
     }
 }
