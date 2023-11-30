@@ -37,7 +37,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private RectTransform clockHandImgTrm;
     [SerializeField]
-    private TextMeshProUGUI timeText;
+    private TextMeshProUGUI timeText, wavCntText;
+
+    private int waveCnt = 0;
 
     private bool isPhase = false;
     public bool IsPhase => isPhase;
@@ -82,11 +84,16 @@ public class WaveManager : MonoBehaviour
 
     private void OnPhaseStartHandle() // 전투페이즈 시작
     {
+        isPhase = true;
+        wavCntText.SetText($"Current Wave:{waveCnt}");
         RotateClockHand(new Vector3(0, 0, 90), 0.7f, Ease.InOutElastic, SpawnEnemy);
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료
     {
+        isPhase = false;
+        waveCnt++;
+        wavCntText.SetText($"Next Wave:{waveCnt}");
         RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
     }
 
