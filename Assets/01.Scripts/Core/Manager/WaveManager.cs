@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Net.NetworkInformation;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,15 +31,17 @@ public class WaveManager : MonoBehaviour
     #region 사용 변수들
 
     private int curWaveCnt;
-    private int WaveCnt => curWaveCnt;
+    public int WaveCnt => curWaveCnt;
 
     [SerializeField]
-    private float remainingPhaseReadyTime; //  현재 남은 페이지 준비 시간
+    private int remainingPhaseReadyTime; //  현재 남은 페이지 준비 시간
     [SerializeField]
-    private float maxPhaseReadyTime; // 페이지 준비 시간
+    private int maxPhaseReadyTime; // 페이지 준비 시간
 
     [SerializeField]
-    private Image timeBox;
+    private RectTransform clockHandImg;
+    [SerializeField]
+    private TextMeshProUGUI timeText;
 
     private bool isPhase = false; //현재 페이지진행중
     public bool IsPhase => isPhase;
@@ -68,6 +72,15 @@ public class WaveManager : MonoBehaviour
         OnPhaseEndEvent?.Invoke();
     }
 
+    private void Update()
+    {
+        Debug.Log(clockHandImg.transform.localRotation.z);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnPhaseEndEvent?.Invoke();
+        }
+    }
+
     private void SetReadyTime()
     {
         remainingPhaseReadyTime = maxPhaseReadyTime;
@@ -85,11 +98,20 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator PhaseReadyRoutine()
     {
-        while(remainingPhaseReadyTime >= 0)
+        int minutes = 0;
+        int remainingSeconds = 0;
+        clockHandImg.DOLocalRotate(new Vector3(0, 0, -180), remainingPhaseReadyTime);
+
+
+        while (remainingPhaseReadyTime > 0)
         {
             yield return new WaitForSeconds(1.0f);
-            remainingPhaseReadyTime -= 1f;
-            timeBox.fillAmount = remainingPhaseReadyTime / maxPhaseReadyTime;
+            remainingPhaseReadyTime -= 1;
+            minutes = remainingPhaseReadyTime / 60;
+            remainingSeconds = remainingPhaseReadyTime % 60;
+
+            if (minutes > 0) { timeText.SetText($"{minutes}:{remainingSeconds}"); }
+            else { timeText.SetText($"{remainingSeconds}"); }
         }
 
         SetReadyTime();
