@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BuildItemInfo
+public class BuildingItemInfo
 {
     public string Name;
     public Sprite Image;
-    public Build BuildItem;
+    public Building BuildItem;
 }
 [CreateAssetMenu(menuName = "SO/BuildingList")]
 public class InitBuildingList : ScriptableObject
 {
-   public List<BuildItemInfo> BuildItems = null;
+   public List<BuildingItemInfo> BuildingItems = null;
 }
