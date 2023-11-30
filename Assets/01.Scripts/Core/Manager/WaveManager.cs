@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System;
 using System.Collections;
-using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,33 +26,30 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-
     #region 사용 변수들
 
-    private int curWaveCnt;
-    public int WaveCnt => curWaveCnt;
+    [Header("Wave Settings")]
+    [SerializeField]
+    private int maxPhaseReadyTime;
+    private int remainingPhaseReadyTime;
 
+    [Header("UI References")]
     [SerializeField]
-    private int remainingPhaseReadyTime; //  현재 남은 페이지 준비 시간
-    [SerializeField]
-    private int maxPhaseReadyTime; // 페이지 준비 시간
-
-    [SerializeField]
-    private RectTransform clockHandImg;
+    private RectTransform clockHandImgTrm;
     [SerializeField]
     private TextMeshProUGUI timeText;
 
-    private bool isPhase = false; //현재 페이지진행중
+    private bool isPhase = false;
     public bool IsPhase => isPhase;
 
-    public event Action OnPhaseStartEvent = null; // 페이지 시작 이벤트
-    public event Action OnPhaseEndEvent = null; // 페이지 시작 이벤트
+    public event Action OnPhaseStartEvent = null;
+    public event Action OnPhaseEndEvent = null;
 
     #endregion
 
     private void Awake()
     {
-        if (_instance != this && _instance != null)
+        if (_instance != this && _instance != null) // 싱글톤
         {
             Destroy(gameObject);
         }
@@ -62,66 +58,103 @@ public class WaveManager : MonoBehaviour
             _instance = this;
         }
 
-        OnPhaseStartEvent += OnPhaseStartHandle;
-        OnPhaseEndEvent += OnPhaseEndHandle;
+        OnPhaseStartEvent += OnPhaseStartHandle; // 전투페이즈 시작 이벤트 구독
+        OnPhaseEndEvent += OnPhaseEndHandle;     // 전투페이즈 종료 이벤트 구독
     }
 
     private void Start()
     {
-        SetReadyTime();
-        OnPhaseEndEvent?.Invoke();
+        SetReadyTime(); // 시간 초기화
     }
 
     private void Update()
     {
-        Debug.Log(clockHandImg.transform.localRotation.z);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) // 디버그용
         {
-            OnPhaseEndEvent?.Invoke();
+            InvokePhaseEndEvent();
         }
     }
 
-    private void SetReadyTime()
+    private void SetReadyTime() // 준비 시간을 초기화한다.
     {
         remainingPhaseReadyTime = maxPhaseReadyTime;
     }
 
-    private void OnPhaseStartHandle()
+    private void OnPhaseStartHandle() // 전투페이즈 시작
     {
-        SpawnEnemy();
+        RotateClockHand(new Vector3(0, 0, 90), 0.7f, Ease.InOutElastic, SpawnEnemy);
     }
 
-    private void OnPhaseEndHandle()
+    private void OnPhaseEndHandle() // 전투페이즈 종료
+    {
+        RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
+    }
+
+    private void StartPhaseReadyRoutine() // 준비시간 계산 코루틴 실행용 함수
     {
         StartCoroutine(PhaseReadyRoutine());
     }
 
-    private IEnumerator PhaseReadyRoutine()
+    private IEnumerator PhaseReadyRoutine() // 준비시간 계산 코루틴
     {
-        int minutes = 0;
-        int remainingSeconds = 0;
-        clockHandImg.DOLocalRotate(new Vector3(0, 0, -180), remainingPhaseReadyTime);
-
-
-        while (remainingPhaseReadyTime > 0)
+        while (remainingPhaseReadyTime >= 0) // 현재 남은 준비 시간이 0보다 크다면
         {
-            yield return new WaitForSeconds(1.0f);
-            remainingPhaseReadyTime -= 1;
-            minutes = remainingPhaseReadyTime / 60;
-            remainingSeconds = remainingPhaseReadyTime % 60;
+            UpdateClockHandRotation(); // 시계를 업데이트
+            UpdateTimeText(); // 시간 텍스트 업데이트 
 
-            if (minutes > 0) { timeText.SetText($"{minutes}:{remainingSeconds}"); }
-            else { timeText.SetText($"{remainingSeconds}"); }
+            yield return new WaitForSeconds(1.0f); // 1초후
+            remainingPhaseReadyTime--; // 남은 준비시간 - 1
         }
 
-        SetReadyTime();
-        OnPhaseStartEvent?.Invoke();
+        // 준비시간이 끝났다면
+
+        SetReadyTime(); // 남은 준비시간 초기화
+        InvokePhaseStartEvent(); // 전투 페이즈 시작
+    }
+
+    private void UpdateClockHandRotation() // 시계 업데이트
+    {
+        // 회전할 값
+        float rotationAngle = Mathf.Lerp(0,
+                                         -180,
+                                         1f - (remainingPhaseReadyTime / (float)maxPhaseReadyTime));
+        RotateClockHand(new Vector3(0, 0, rotationAngle), 1f, Ease.Linear); // 계산된 값으로 회전
+    }
+
+    private void UpdateTimeText() // 시간 텍스트 업데이트
+    {
+        int minutes = remainingPhaseReadyTime / 60;          // 분
+        int remainingSeconds = remainingPhaseReadyTime % 60; // 초
+
+        if (minutes > 0) { timeText.SetText($"{minutes}:{remainingSeconds}"); } //분으로 나타낼 수 있다면 분까지 나타낸다.
+        else { timeText.SetText($"{remainingSeconds}"); }
+    }
+
+    private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // 시계 업데이트
+    {
+        clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
+        {
+            foreach (var action in actions) //실행할 함수가 있다면 실행
+            {
+                action?.Invoke();
+            }
+        });
     }
 
     private void SpawnEnemy()
     {
         // 적 생성
         Debug.Log("적 생성");
+    }
+
+    private void InvokePhaseStartEvent() // 전투페이즈 시작 이벤트 실행용 함수
+    {
+        OnPhaseStartEvent?.Invoke();
+    }
+
+    private void InvokePhaseEndEvent() // 전투페이즈 종료 이벤트 실행용 함수
+    {
+        OnPhaseEndEvent?.Invoke();
     }
 
     private void OnDisable()
