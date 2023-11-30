@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum PenguinStateEnum
 {
     Idle,
     Move,
+    Chase,
+    Attack
 }
 
-public class PenguinStateMachine
+public class PenguinStateMachine : MonoBehaviour
 {
     public PenguinState CurrentState { get; private set; }
     public Dictionary<PenguinStateEnum, PenguinState> StateDictionary
@@ -24,6 +27,7 @@ public class PenguinStateMachine
     public void ChangeState(PenguinStateEnum newState)
     {
         CurrentState.Exit();
+        Debug.Log(newState);
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
     }

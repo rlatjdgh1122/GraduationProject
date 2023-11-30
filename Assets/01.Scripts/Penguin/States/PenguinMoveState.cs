@@ -13,28 +13,25 @@ public class PenguinMoveState : PenguinState
     public override void Enter()
     {
         base.Enter();
-        _penguin.Input.ClickEvent += HandleClick;
-        _penguin.SetMovement();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
+        if (IsInside && !_penguin.IsClickToMoving)
+            _stateMachine.ChangeState(PenguinStateEnum.Chase);
+
         if (_penguin.NavAgent.remainingDistance < 0.1f && !_penguin.NavAgent.pathPending)
         {
+            if (_penguin.IsClickToMoving)
+                _penguin.IsClickToMoving = false;
             _stateMachine.ChangeState(PenguinStateEnum.Idle); //목적지에 도달했을 때 Idle상태로 바꿔준다.
         }
     }
 
-    private void HandleClick()
-    {
-        _stateMachine.ChangeState(PenguinStateEnum.Move);
-    }
-
     public override void Exit()
     {
-        _penguin.Input.ClickEvent -= HandleClick;
         base.Exit();
     }
 }

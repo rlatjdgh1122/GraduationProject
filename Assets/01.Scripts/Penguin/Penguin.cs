@@ -8,10 +8,14 @@ public class Penguin : Entity
     public float attackDelay = 0.5f;
     public float attackTime = 0.5f;
 
+    public bool IsInnerTarget;
+
+    public bool IsClickToMoving = false;
+
     [SerializeField] private InputReader _inputReader;
     public InputReader Input => _inputReader;
 
-    public PenguinStateMachine StateMachine;
+    public PenguinStateMachine StateMachine { get; private set; }
 
     protected override void Awake()
     {
