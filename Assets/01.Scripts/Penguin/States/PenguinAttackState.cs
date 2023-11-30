@@ -1,12 +1,10 @@
-using Polyperfect.Common;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PenguinIdleState : PenguinState
+public class PenguinAttackState : PenguinState
 {
-    public PenguinIdleState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName)
+    public PenguinAttackState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) 
         : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -19,9 +17,6 @@ public class PenguinIdleState : PenguinState
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (IsInside && !_penguin.IsClickToMoving)
-            _stateMachine.ChangeState(PenguinStateEnum.Chase);
     }
 
     public override void Exit()

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -14,6 +15,12 @@ public abstract class Entity : MonoBehaviour
     [Header("Knockback info")]
     [SerializeField] protected float _knockbackDuration;
     protected bool _isKnocked;
+
+    [Header("Target info")]
+    public Vector3 target;
+    public Transform enemy;
+    public float innerDistance = 4f;
+    public float attackDistance = 1.5f;
 
     #region 컴포넌트
     public Animator AnimatorCompo { get; private set; }
@@ -64,6 +71,12 @@ public abstract class Entity : MonoBehaviour
         //OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth());
     }
 
+    public void SetTarget(Vector3 _target)
+    {
+        target = _target;
+        MoveToTarget();
+    }
+    
     protected virtual void Start()
     {
 
@@ -74,32 +87,39 @@ public abstract class Entity : MonoBehaviour
 
     }
 
-
-    //protected virtual void HandleKnockback(Vector2 direction)
-    //{
-    //    StartCoroutine(HitKnockback(direction));
-    //}
-
     protected abstract void HandleDie();
 
-    //protected virtual IEnumerator HitKnockback(Vector2 direction)
-    //{
-    //    _isKnocked = true;
-    //    RigidbodyCompo.velocity = direction;
-    //    yield return new WaitForSeconds(_knockbackDuration);
-    //    _isKnocked = false;
-    //}
+    public Transform FindNearestObjectByTag(string tag)
+    {
+        var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
 
-    #region 속도 관련
+        var neareastObject = objects
+            .OrderBy(obj =>
+            {
+                return Vector3.Distance(transform.position, obj.transform.position);
+            })
+        .FirstOrDefault();
+
+        return enemy = neareastObject.transform;
+    }
+
+    #region 이동 관련
     public void SetMovement()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log(hit.point);
-            NavAgent.SetDestination(hit.point);
+            NavAgent.ResetPath();
+            //NavAgent.SetDestination(hit.point);
+            SetTarget(hit.point);   
         }
+    }
+
+    public void MoveToTarget()
+    {
+        NavAgent.ResetPath();
+        NavAgent.SetDestination(target);
     }
 
     public void StopImmediately()
