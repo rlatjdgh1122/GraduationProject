@@ -111,7 +111,6 @@ public abstract class Entity : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             NavAgent.ResetPath();
-            //NavAgent.SetDestination(hit.point);
             SetTarget(hit.point);   
         }
     }
