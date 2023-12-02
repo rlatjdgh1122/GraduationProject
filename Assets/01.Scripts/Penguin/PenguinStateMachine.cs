@@ -1,38 +1,29 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PenguinStateEnum
+public class PenguinStateMachine<T> where T : Enum
 {
-    Idle,
-    Move,
-    Chase,
-    Attack
-}
-
-public class PenguinStateMachine : MonoBehaviour
-{
-    public PenguinState CurrentState { get; private set; }
-    public Dictionary<PenguinStateEnum, PenguinState> StateDictionary
-        = new Dictionary<PenguinStateEnum, PenguinState>();
+    public PenguinState<T> CurrentState { get; private set; }
+    public Dictionary<T, PenguinState<T>> StateDictionary
+        = new Dictionary<T, PenguinState<T>>();
 
     private Penguin _penguin;
 
-    public void Init(PenguinStateEnum state, Penguin penguin)
+    public void Init(T state)
     {
-        _penguin = penguin;
         CurrentState = StateDictionary[state];
         CurrentState.Enter();
     }
 
-    public void ChangeState(PenguinStateEnum newState)
+    public void ChangeState(T newState)
     {
         CurrentState.Exit();
-        Debug.Log(newState);
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
     }
 
-    public void WaitingForCompletion(PenguinStateEnum newState, float value)
+    public void WaitingForCompletion(T newState, float value)
     {
         float time = _penguin.AnimatorCompo.GetCurrentAnimatorStateInfo(0).normalizedTime;
         if (time >= value)
@@ -41,7 +32,7 @@ public class PenguinStateMachine : MonoBehaviour
         }
     }
 
-    public void AddState(PenguinStateEnum state, PenguinState playerState)
+    public void AddState(T state, PenguinState<T> playerState)
     {
         StateDictionary.Add(state, playerState);
     }
