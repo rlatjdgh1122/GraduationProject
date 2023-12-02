@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.Events;
 public class ClickBuilding : MonoBehaviour
 {
     [SerializeField] private LayerMask _whatIsGround;
+
+    public event Action<bool> OnClickEvent;
 
     public bool _isClick;
     public bool IsClick => _isClick;
@@ -20,11 +23,11 @@ public class ClickBuilding : MonoBehaviour
             {
                 if(hit.collider.gameObject.CompareTag("Building"))
                 {
-                    _isClick = true;
+                    OnClickEvent?.Invoke(true);
                 }
                 else
                 {
-                    _isClick = false;
+                    OnClickEvent?.Invoke(false);
                 }
             }
         }
