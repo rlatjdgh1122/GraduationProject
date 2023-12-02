@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PenguinChaseState : PenguinState
+public class PenguinChaseState : PenguinBaseState
 {
-    public PenguinChaseState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName)
+    public PenguinChaseState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -21,8 +21,8 @@ public class PenguinChaseState : PenguinState
     {
         base.UpdateState();
 
-        if (AttackInable && !_penguin.IsClickToMoving)
-            _stateMachine.ChangeState(PenguinStateEnum.Attack);
+        if (_penguin.AttackInable && !_penguin.IsClickToMoving)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
     }
 
     public override void Exit()

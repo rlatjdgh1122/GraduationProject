@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PenguinIdleState : PenguinState
+public class PenguinIdleState : PenguinBaseState
 {
-    public PenguinIdleState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName)
+    public PenguinIdleState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -20,8 +20,8 @@ public class PenguinIdleState : PenguinState
     {
         base.UpdateState();
 
-        if (IsInside && !_penguin.IsClickToMoving)
-            _stateMachine.ChangeState(PenguinStateEnum.Chase);
+        if (_penguin.IsInside && !_penguin.IsClickToMoving)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
     }
 
     public override void Exit()

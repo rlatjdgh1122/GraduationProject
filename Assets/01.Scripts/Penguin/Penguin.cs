@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Penguin : Entity
@@ -11,52 +12,29 @@ public class Penguin : Entity
     public bool IsInnerTarget;
 
     public bool IsClickToMoving = false;
+    protected bool _isDead = false;
+
+    public bool IsInside => Vector3.Distance(transform.position, enemy.position) <= innerDistance;
+    public bool AttackInable => Vector3.Distance(transform.position, enemy.position) <= attackDistance;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader Input => _inputReader;
 
-    public PenguinStateMachine StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
-
-        StateMachine = new PenguinStateMachine();
-
-        foreach (PenguinStateEnum state in Enum.GetValues(typeof(PenguinStateEnum)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"Penguin{typeName}State");
-            //¸®ÇÃ·º¼Ç
-            PenguinState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState;
-
-            StateMachine.AddState(state, newState);
-        }
     }
 
-    protected override void Start()
+    public override void Attack()
     {
-        StateMachine.Init(PenguinStateEnum.Idle, this);
-    }
-
-    protected override void Update()
-    {
-        StateMachine.CurrentState.UpdateState();
-    }
-
-    private void OnEnable()
-    {
-
-    }
-
-    private void OnDestroy()
-    {
-
+        base.Attack();
     }
 
     protected override void HandleDie()
     {
         //Á×¾úÀ»¶§ ¹¹ÇØÁÙÁö
+        _isDead = true;
         Debug.Log("Áê±Ý");
     }
 }
