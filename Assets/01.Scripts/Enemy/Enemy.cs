@@ -1,23 +1,21 @@
-using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Penguin : Entity
+public class Enemy : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 12f;
     public float attackDelay = 0.5f;
     public float attackTime = 0.5f;
 
-    public bool IsClickToMoving = false;
-    protected bool _isDead = false;
+    public Transform NexusTarget;
+
+    protected bool isDead = false;
+    public bool isMove = false;
 
     public bool IsInside => Vector3.Distance(transform.position, target.position) <= innerDistance;
     public bool AttackInable => Vector3.Distance(transform.position, target.position) <= attackDistance;
-
-    [SerializeField] private InputReader _inputReader;
-    public InputReader Input => _inputReader;
-
+    public bool ReachedNexus => Vector3.Distance(transform.position, NexusTarget.position) <= attackDistance;
 
     protected override void Awake()
     {
@@ -32,7 +30,13 @@ public class Penguin : Entity
     protected override void HandleDie()
     {
         //Á×¾úÀ»¶§ ¹¹ÇØÁÙÁö
-        _isDead = true;
+        isDead = true;
         Debug.Log("Áê±Ý");
+    }
+
+    public void MoveToNexus()
+    {
+        NavAgent.ResetPath();
+        NavAgent.SetDestination(NexusTarget.position);
     }
 }

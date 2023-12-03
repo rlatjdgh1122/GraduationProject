@@ -12,11 +12,13 @@ public class PenguinAttackState : PenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _penguin.StopImmediately();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+        _penguin.SetRotation();
     }
 
     public override void Exit()

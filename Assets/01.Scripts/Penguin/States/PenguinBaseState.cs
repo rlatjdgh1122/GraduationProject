@@ -21,7 +21,7 @@ public class PenguinBaseState : PenguinState<BasicPenguinStateEnum> //상속받기 �
     private void HandleClick()
     {
         if (_penguin.IsInside || _penguin.AttackInable) _penguin.IsClickToMoving = true;
-        _penguin.SetMovement();
+        _penguin.SetClickMovement();
         _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
     }
 
