@@ -5,6 +5,7 @@ using UnityEngine;
 public class PenguinStateMachine<T> where T : Enum
 {
     public PenguinState<T> CurrentState { get; private set; }
+    public PenguinState<T> PrevState { get; private set; }
     public Dictionary<T, PenguinState<T>> StateDictionary
         = new Dictionary<T, PenguinState<T>>();
 
@@ -13,11 +14,17 @@ public class PenguinStateMachine<T> where T : Enum
     public void Init(T state)
     {
         CurrentState = StateDictionary[state];
+
+        PrevState = CurrentState;
         CurrentState.Enter();
     }
 
     public void ChangeState(T newState)
     {
+        PrevState = CurrentState;
+        Debug.Log("들어온 상태 확인 : " +newState.ToString());
+        Debug.Log("이전 상태 확인 : " + PrevState.ToString());
+
         CurrentState.Exit();
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();

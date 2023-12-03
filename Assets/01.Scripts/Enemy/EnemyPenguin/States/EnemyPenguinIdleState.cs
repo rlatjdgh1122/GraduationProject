@@ -15,10 +15,10 @@ public class EnemyPenguinIdleState : EnemyState<EnemyPenguinStateEnum>
     {
         base.UpdateState();
 
-        if (_enemy.isMove)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+        //if (_enemy.isMove)
+        //    _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
 
-        if (_enemy.IsInside)
+        if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
     }
 

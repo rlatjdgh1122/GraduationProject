@@ -32,7 +32,7 @@ public class Penguin : Entity
     protected override void HandleDie()
     {
         //Á×¾úÀ»¶§ ¹¹ÇØÁÙÁö
-        _isDead = true;
         Debug.Log("Áê±İ");
+        _isDead = true;
     }
 }

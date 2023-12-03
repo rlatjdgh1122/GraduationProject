@@ -1,3 +1,4 @@
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +12,9 @@ public class Enemy : Entity
     public Transform NexusTarget;
 
     protected bool isDead = false;
-    public bool isMove = false;
 
-    public bool IsInside => Vector3.Distance(transform.position, target.position) <= innerDistance;
-    public bool AttackInable => Vector3.Distance(transform.position, target.position) <= attackDistance;
+    public bool IsTargetPlayerInside => Vector3.Distance(transform.position, target.position) <= innerDistance;
+    public bool IsAttackable => Vector3.Distance(transform.position, target.position) <= attackDistance;
     public bool ReachedNexus => Vector3.Distance(transform.position, NexusTarget.position) <= attackDistance;
 
     protected override void Awake()
@@ -38,5 +38,10 @@ public class Enemy : Entity
     {
         NavAgent.ResetPath();
         NavAgent.SetDestination(NexusTarget.position);
+    }
+
+    public void LookAtNexus()
+    {
+        transform.LookAt(NexusTarget);
     }
 }

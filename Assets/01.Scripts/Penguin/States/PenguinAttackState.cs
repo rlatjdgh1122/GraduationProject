@@ -18,7 +18,7 @@ public class PenguinAttackState : PenguinBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-        _penguin.SetRotation();
+        _penguin.LookTarget();
     }
 
     public override void Exit()

@@ -67,8 +67,7 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void HandleHit()
     {
-        //UI갱신
-        //OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth());
+
     }
 
     public void SetTarget(Vector3 _target)
@@ -133,7 +132,7 @@ public abstract class Entity : MonoBehaviour
     #endregion
 
     #region 회전 관련
-    public void SetRotation()
+    public void LookTarget()
     {
         //transform.Rotate(targetTrm);
         transform.LookAt(targetTrm);

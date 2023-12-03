@@ -16,11 +16,13 @@ public class EnemyPenguinMoveState : EnemyState<EnemyPenguinStateEnum>
     {
         base.UpdateState();
 
-        if (_enemy.IsInside)
+        if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
 
         if (_enemy.ReachedNexus)
+        {
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack);
+        }      
     }
 
     public override void Exit()
