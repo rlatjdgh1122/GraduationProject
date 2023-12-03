@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,15 @@ public class WaveManager : MonoBehaviour
     private RectTransform clockHandImgTrm;
     [SerializeField]
     private TextMeshProUGUI timeText, wavCntText;
+    [SerializeField]
+    private RectTransform loseUI;
+
+    [Header("테스트 용")]
+    [SerializeField]
+    private GameObject rewardGround;
+    public bool isWin;
+    [SerializeField]
+    Color targetColor;
 
     private int waveCnt = 0;
 
@@ -73,7 +83,7 @@ public class WaveManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) // 디버그용
         {
-            InvokePhaseEndEvent();
+            InvokePhaseEndEvent(rewardGround, isWin);
         }
     }
 
@@ -86,15 +96,62 @@ public class WaveManager : MonoBehaviour
     {
         isPhase = true;
         wavCntText.SetText($"Current Wave:{waveCnt}");
-        RotateClockHand(new Vector3(0, 0, 90), 0.7f, Ease.InOutElastic, SpawnEnemy);
+        RotateClockHand(new Vector3(0, 0, 90), 0.7f, Ease.InOutElastic, SpawnEnemy); // 적의 수의 비례해서 시계 돌아가도록 바꿀 것
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료
     {
         isPhase = false;
-        waveCnt++;
-        wavCntText.SetText($"Next Wave:{waveCnt}");
-        RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
+
+        if (isWin)
+        {
+            waveCnt++;
+            wavCntText.SetText($"Next Wave:{waveCnt}");
+            GetReward();
+            RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
+        }
+        else
+        {
+            ShowLoseUI();
+        }
+        
+    }
+
+    private void ShowLoseUI()
+    {
+        loseUI.gameObject.SetActive(true);
+    }
+
+    private void GetReward() // 보상 획득 함수
+    {
+        //여기서 뭐 내땅의 자식으로 두거나 해서 내땅으로 만들어야할듯
+
+        ShowEffect(); // 이펙트
+    }
+
+    private void ShowEffect() // 이펙트
+    {
+        // 이 부분은 적 빙하가 우리 빙하로 붙었을 때로 넘어갈듯
+
+        //var outline = rewardGround.GetComponent<Outline>();
+        //Color startColor = outline.OutlineColor;
+        //Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
+
+        //// Fade in
+        //DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, targetColor, 0.7f)
+        //    .OnComplete(() =>
+        //    {
+        //        // Fade out
+        //        DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, startColor, 0.7f);
+        //    });
+
+        var mr = rewardGround.GetComponent<MeshRenderer>();
+        Color color = mr.material.color;
+
+        DOTween.To(() => color, c => color = c, targetColor, 0.7f).OnUpdate(() =>
+        {
+            mr.material.color = color;
+        });
     }
 
     private void StartPhaseReadyRoutine() // 준비시간 계산 코루틴 실행용 함수
@@ -107,10 +164,10 @@ public class WaveManager : MonoBehaviour
         while (remainingPhaseReadyTime >= 0) // 현재 남은 준비 시간이 0보다 크다면
         {
             UpdateClockHandRotation(); // 시계를 업데이트
-            UpdateTimeText(); // 시간 텍스트 업데이트 
+            UpdateTimeText(); // 시간 텍스트 업데이트
 
             yield return new WaitForSeconds(1.0f); // 1초후
-            remainingPhaseReadyTime--; // 남은 준비시간 - 1
+            remainingPhaseReadyTime--; // 남은 준비시간 -1
         }
 
         // 준비시간이 끝났다면
@@ -154,13 +211,15 @@ public class WaveManager : MonoBehaviour
         Debug.Log("적 생성");
     }
 
-    private void InvokePhaseStartEvent() // 전투페이즈 시작 이벤트 실행용 함수
+    public void InvokePhaseStartEvent() // 전투페이즈 시작 이벤트 실행용 함수
     {
         OnPhaseStartEvent?.Invoke();
     }
 
-    private void InvokePhaseEndEvent() // 전투페이즈 종료 이벤트 실행용 함수
+    public void InvokePhaseEndEvent(GameObject _rewardGround, bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
     {
+        rewardGround = _rewardGround;
+        isWin = _isWin;
         OnPhaseEndEvent?.Invoke();
     }
 
