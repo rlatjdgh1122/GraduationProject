@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +46,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private GameObject rewardGround;
     public bool isWin;
+    [SerializeField]
+    Color targetColor;
 
     private int waveCnt = 0;
 
@@ -128,17 +131,27 @@ public class WaveManager : MonoBehaviour
 
     private void ShowEffect() // 이펙트
     {
-        var outline = rewardGround.GetComponent<Outline>();
-        Color startColor = outline.OutlineColor;
-        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
+        // 이 부분은 적 빙하가 우리 빙하로 붙었을 때로 넘어갈듯
 
-        // Fade in
-        DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, targetColor, 0.7f)
-            .OnComplete(() =>
-            {
-                // Fade out
-                DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, startColor, 0.7f);
-            });
+        //var outline = rewardGround.GetComponent<Outline>();
+        //Color startColor = outline.OutlineColor;
+        //Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
+
+        //// Fade in
+        //DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, targetColor, 0.7f)
+        //    .OnComplete(() =>
+        //    {
+        //        // Fade out
+        //        DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, startColor, 0.7f);
+        //    });
+
+        var mr = rewardGround.GetComponent<MeshRenderer>();
+        Color color = mr.material.color;
+
+        DOTween.To(() => color, c => color = c, targetColor, 0.7f).OnUpdate(() =>
+        {
+            mr.material.color = color;
+        });
     }
 
     private void StartPhaseReadyRoutine() // 준비시간 계산 코루틴 실행용 함수
@@ -151,10 +164,10 @@ public class WaveManager : MonoBehaviour
         while (remainingPhaseReadyTime >= 0) // 현재 남은 준비 시간이 0보다 크다면
         {
             UpdateClockHandRotation(); // 시계를 업데이트
-            UpdateTimeText(); // 시간 텍스트 업데이트 
+            UpdateTimeText(); // 시간 텍스트 업데이트
 
             yield return new WaitForSeconds(1.0f); // 1초후
-            remainingPhaseReadyTime--; // 남은 준비시간 - 1
+            remainingPhaseReadyTime--; // 남은 준비시간 -1
         }
 
         // 준비시간이 끝났다면
