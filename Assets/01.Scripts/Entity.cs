@@ -17,8 +17,8 @@ public abstract class Entity : MonoBehaviour
     protected bool _isKnocked;
 
     [Header("Target info")]
-    public Vector3 target;
-    public Transform enemy;
+    public Vector3 targetTrm;
+    public Transform target;
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
@@ -73,10 +73,10 @@ public abstract class Entity : MonoBehaviour
 
     public void SetTarget(Vector3 _target)
     {
-        target = _target;
+        targetTrm = _target;
         MoveToTarget();
     }
-    
+
     protected virtual void Start()
     {
 
@@ -100,7 +100,7 @@ public abstract class Entity : MonoBehaviour
             })
         .FirstOrDefault();
 
-        return enemy = neareastObject.transform;
+        return target = neareastObject.transform;
     }
 
     public virtual void Attack()
@@ -109,21 +109,21 @@ public abstract class Entity : MonoBehaviour
     }
 
     #region 이동 관련
-    public void SetMovement()
+    public void SetClickMovement()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out hit))
         {
             NavAgent.ResetPath();
-            SetTarget(hit.point);   
+            SetTarget(hit.point);
         }
     }
 
     public void MoveToTarget()
     {
         NavAgent.ResetPath();
-        NavAgent.SetDestination(target);
+        NavAgent.SetDestination(targetTrm);
     }
 
     public void StopImmediately()
@@ -133,9 +133,10 @@ public abstract class Entity : MonoBehaviour
     #endregion
 
     #region 회전 관련
-    public void SetRotation(Vector3 rot)
+    public void SetRotation()
     {
-        transform.Rotate(rot);
+        //transform.Rotate(targetTrm);
+        transform.LookAt(targetTrm);
     }
     #endregion
 
