@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour, IDamageable
 {
     public int maxHealth;
-    private int _currentHealth;
+    public int _currentHealth;
 
     public Action OnHit;
     public Action OnDied;
@@ -35,6 +35,12 @@ public class Health : MonoBehaviour, IDamageable
         
         //나중에 아머값에 따른 데미지 감소도 해야함
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth);
+
+        if (_currentHealth <= 0)
+        {
+            _isDead = true;
+            OnDied?.Invoke();
+        }
     }
 
     public void ApplyHeal(int amount)

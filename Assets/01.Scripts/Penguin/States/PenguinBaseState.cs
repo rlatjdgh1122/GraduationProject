@@ -7,15 +7,15 @@ public class PenguinBaseState : PenguinState<BasicPenguinStateEnum> //상속받기 �
     {
     }
 
-    public override void UpdateState()
-    {
-        base.UpdateState();
-        _penguin.Input.ClickEvent += HandleClick;
-    }
-
     public override void Enter()
     {
         base.Enter();
+        _penguin.Input.ClickEvent += HandleClick;
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
     }
 
     private void HandleClick()
