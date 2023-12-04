@@ -34,7 +34,6 @@ public abstract class Entity : MonoBehaviour
 
     public int FacingDirection { get; private set; } = 1; //오른쪽이 1, 왼쪽이 -1
     protected bool _facingRight = true;
-    public bool CanAttack = true;
     public UnityEvent<float> OnHealthBarChanged;
 
     protected virtual void Awake()

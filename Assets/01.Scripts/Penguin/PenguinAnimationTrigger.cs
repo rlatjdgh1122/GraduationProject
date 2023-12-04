@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PenguinAnimationTrigger : MonoBehaviour
 {
@@ -21,8 +22,8 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.enabled = false;
     }
 
-    public void AnimationTrigger()
+    private void AnimationEndTrigger()
     {
-        _penguin.AnimationFinishTrigger();
+        _penguin.AnimationTrigger();
     }
 }

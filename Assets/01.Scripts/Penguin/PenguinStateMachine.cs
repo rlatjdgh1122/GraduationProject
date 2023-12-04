@@ -1,3 +1,4 @@
+using Polyperfect.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,9 +20,6 @@ public class PenguinStateMachine<T> where T : Enum
     public void ChangeState(T newState)
     {
         PrevState = CurrentState;
-        Debug.Log("들어온 상태 확인 : " + newState.ToString());
-        Debug.Log("이전 상태 확인 : " + PrevState.ToString());
-
         CurrentState.Exit();
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();

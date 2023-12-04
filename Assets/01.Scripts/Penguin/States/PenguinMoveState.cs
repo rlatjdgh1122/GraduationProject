@@ -20,7 +20,9 @@ public class PenguinMoveState : PenguinBaseState
         base.UpdateState();
 
         if (_penguin.IsInside && !_penguin.IsClickToMoving) //타겟 안에 들어오면 && 클릭
+        {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+        }
 
         if (_penguin.NavAgent.remainingDistance < 0.1f && !_penguin.NavAgent.pathPending)
         {
