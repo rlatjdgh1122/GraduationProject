@@ -1,5 +1,5 @@
 
-public class EnemyPenguinMoveState : EnemyState<EnemyPenguinStateEnum>
+public class EnemyPenguinMoveState : EnemyPenguinBaseState
 {
     public EnemyPenguinMoveState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)

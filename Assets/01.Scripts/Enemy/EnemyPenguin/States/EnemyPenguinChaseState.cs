@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class EnemyPenguinChaseState : EnemyState<EnemyPenguinStateEnum>
+public class EnemyPenguinChaseState : EnemyPenguinBaseState
 {
     public EnemyPenguinChaseState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
@@ -11,19 +11,25 @@ public class EnemyPenguinChaseState : EnemyState<EnemyPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
-        Transform nearestPlayer = _enemy.FindNearestObjectByTag("Player");
-        _enemy.SetTarget(nearestPlayer.position);
+
+        Penguin nearestPlayer = _enemy.FindNearestPenguin("Player");
+        if (nearestPlayer != null)
+            _enemy.SetTarget(nearestPlayer.transform.position);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
+        if (_enemy.IsAttackable)
+        {
+            _enemy.StopImmediately();
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack);
+        }
+        else if (!_enemy.IsAttackable)
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
         if (!_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
-
-        if (_enemy.IsAttackable)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack);
     }
 
     public override void Exit()

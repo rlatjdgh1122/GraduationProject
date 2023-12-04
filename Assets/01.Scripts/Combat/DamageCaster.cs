@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -29,21 +30,28 @@ public class DamageCaster : MonoBehaviour
 
     public bool CastDamage()
     {
-        int cnt = Physics.OverlapSphereNonAlloc(attackChecker.position, attackCheckRadius, _hitResult, whatIsEnemy);
+        Collider[] colliders = Physics.OverlapSphere(attackChecker.position, attackCheckRadius, whatIsEnemy);
 
-        for (int i = 0; i < cnt; ++i)
+        // 거리순으로 정렬
+        List<Collider> sortedColliders = colliders.OrderBy(collider => Vector3.Distance(transform.position, collider.transform.position)).ToList();
+
+        foreach (Collider collider in sortedColliders)
         {
-            Vector2 direction = (_hitResult[i].transform.position - transform.position).normalized;
-            if (_hitResult[i].TryGetComponent<IDamageable>(out IDamageable health))
+            Vector3 direction = (collider.transform.position - transform.position).normalized;
+
+            if (collider.TryGetComponent<IDamageable>(out IDamageable health))
             {
-                Debug.Log("아야!!");
                 int damage = _owner.Stat.GetDamage();
+
                 health.ApplyDamage(damage, direction, knockbackPower, _owner);
+
+                return true; 
             }
         }
 
-        return cnt > 0;
+        return false; 
     }
+
     private void OnDrawGizmos()
     {
         if (attackChecker != null)

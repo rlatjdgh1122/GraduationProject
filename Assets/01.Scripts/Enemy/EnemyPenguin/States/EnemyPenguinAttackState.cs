@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyPenguinAttackState : EnemyState<EnemyPenguinStateEnum>
+public class EnemyPenguinAttackState : EnemyPenguinBaseState
 {
     public EnemyPenguinAttackState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
@@ -11,6 +11,7 @@ public class EnemyPenguinAttackState : EnemyState<EnemyPenguinStateEnum>
     {
         base.Enter();
         _enemy.StopImmediately();
+        _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
     public override void UpdateState()
@@ -18,7 +19,7 @@ public class EnemyPenguinAttackState : EnemyState<EnemyPenguinStateEnum>
         base.UpdateState();
         if (_enemy.ReachedNexus)
             _enemy.LookAtNexus();
-        else if (_enemy.IsTargetPlayerInside)
+        else
             _enemy.LookTarget();
 
         if (!_enemy.ReachedNexus)
@@ -33,6 +34,7 @@ public class EnemyPenguinAttackState : EnemyState<EnemyPenguinStateEnum>
 
     public override void Exit()
     {
+        _enemy.AnimatorCompo.speed = 1;
         base.Exit();
     }
 }

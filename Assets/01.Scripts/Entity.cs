@@ -18,7 +18,6 @@ public abstract class Entity : MonoBehaviour
 
     [Header("Target info")]
     public Vector3 targetTrm;
-    public Transform target;
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
@@ -70,12 +69,6 @@ public abstract class Entity : MonoBehaviour
 
     }
 
-    public void SetTarget(Vector3 _target)
-    {
-        targetTrm = _target;
-        MoveToTarget();
-    }
-
     protected virtual void Start()
     {
 
@@ -87,20 +80,6 @@ public abstract class Entity : MonoBehaviour
     }
 
     protected abstract void HandleDie();
-
-    public Transform FindNearestObjectByTag(string tag)
-    {
-        var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
-
-        var neareastObject = objects
-            .OrderBy(obj =>
-            {
-                return Vector3.Distance(transform.position, obj.transform.position);
-            })
-        .FirstOrDefault();
-
-        return target = neareastObject.transform;
-    }
 
     public virtual void Attack()
     {
@@ -114,9 +93,14 @@ public abstract class Entity : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out hit))
         {
-            NavAgent.ResetPath();
             SetTarget(hit.point);
         }
+    }
+
+    public void SetTarget(Vector3 _target)
+    {
+        targetTrm = _target;
+        MoveToTarget();
     }
 
     public void MoveToTarget()
@@ -132,11 +116,11 @@ public abstract class Entity : MonoBehaviour
     #endregion
 
     #region 회전 관련
-    public void LookTarget()
-    {
-        //transform.Rotate(targetTrm);
-        transform.LookAt(targetTrm);
-    }
+    //public void LookTarget()
+    //{
+    //    //transform.Rotate(targetTrm);
+    //    transform.LookAt(targetTrm);
+    //}
     #endregion
 
     #region 충돌 관련
