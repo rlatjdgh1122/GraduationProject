@@ -3,7 +3,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : Entity
+public abstract class Enemy : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 3f;
@@ -15,8 +15,8 @@ public class Enemy : Entity
 
     public bool IsDead = false;
 
-    public bool IsTargetPlayerInside => Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
-    public bool IsAttackable => Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
+    public bool IsTargetPlayerInside => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
+    public bool IsAttackable => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
     public bool ReachedNexus => Vector3.Distance(transform.position, NexusTarget.position) <= attackDistance;
 
     protected override void Awake()
@@ -36,6 +36,8 @@ public class Enemy : Entity
         IsDead = true;
         Debug.Log("Áê±Ý");
     }
+
+    public abstract void AnimationFinishTrigger();
 
     public Penguin FindNearestPenguin(string tag)
     {
@@ -84,6 +86,7 @@ public class Enemy : Entity
     public void LookTarget()
     {
         //transform.Rotate(targetTrm);
-        transform.LookAt(Target.transform.position);
+        if (Target != null)
+            transform.LookAt(Target.transform.position);
     }
 }

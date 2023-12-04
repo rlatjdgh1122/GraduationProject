@@ -16,13 +16,19 @@ public class PenguinBaseState : PenguinState<BasicPenguinStateEnum> //상속받기 �
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (_penguin.IsDead)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
     }
 
     private void HandleClick()
     {
-        if (_penguin.IsInside || _penguin.IsAttackRange) _penguin.IsClickToMoving = true;
-        _penguin.SetClickMovement();
-        _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+        if (!_penguin.IsDead)
+        {
+            if (_penguin.IsInside || _penguin.IsAttackRange) _penguin.IsClickToMoving = true;
+            _penguin.SetClickMovement();
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+        }
     }
 
     public override void Exit()

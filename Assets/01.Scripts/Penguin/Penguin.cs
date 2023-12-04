@@ -9,10 +9,16 @@ public abstract class Penguin : Entity
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
 
+    [Header("공격상태설정값")]
+    public float attackCooldown;
+    [HideInInspector] public float lastTimeAttacked;
+
     public Enemy Target;
 
     public bool IsClickToMoving = false;
-    protected bool _isDead = false;
+    public bool IsDead = false;
+
+    protected int _lastAnimationBoolHash; //마지막으로 재생된 애니메이션 해시
 
     public bool IsInside => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
     public bool IsAttackRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
@@ -31,6 +37,8 @@ public abstract class Penguin : Entity
     {
         base.Attack();
     }
+
+    public abstract void AnimationFinishTrigger();
 
     public Enemy FindNearestEnemy(string tag)
     {
@@ -81,6 +89,6 @@ public abstract class Penguin : Entity
     protected override void HandleDie()
     {
         Debug.Log("쥬금");
-        _isDead = true;
+        IsDead = true;
     }
 }

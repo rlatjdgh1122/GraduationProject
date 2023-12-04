@@ -14,6 +14,7 @@ public class PenguinAttackState : PenguinBaseState
         base.Enter();
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
+        _penguin.CanAttack = false;
     }
 
     public override void UpdateState()
@@ -26,9 +27,13 @@ public class PenguinAttackState : PenguinBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
         }
 
-        if (!_penguin.IsAttackRange && _penguin.Target != null)
+        if (_penguin.Target != null)
         {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+            if (!_penguin.IsAttackRange)
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+
+            if (_penguin.Target.IsDead)
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
     }
 
