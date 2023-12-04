@@ -1,7 +1,7 @@
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements.Experimental;
 
 public abstract class Penguin : Entity
 {
@@ -38,7 +38,7 @@ public abstract class Penguin : Entity
         base.Attack();
     }
 
-    public abstract void AnimationFinishTrigger();
+    public abstract void AnimationTrigger();
 
     public Enemy FindNearestEnemy(string tag)
     {

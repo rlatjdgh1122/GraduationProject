@@ -11,8 +11,6 @@ public class PenguinState<T> where T : Enum
     protected int _animBoolHash;
     protected bool _triggerCalled;
 
-    private bool _isAnimationFinished = false;
-
     public PenguinState(Penguin penguin, PenguinStateMachine<T> stateMachine, string animationBoolName)
     {
         _penguin = penguin;
@@ -22,8 +20,8 @@ public class PenguinState<T> where T : Enum
 
     public virtual void Enter()
     {
-        _triggerCalled = false;
         _penguin.AnimatorCompo.SetBool(_animBoolHash, true); //들어오면 내 애니메이션을 활성화 해주는 것
+        _triggerCalled = false;
         _navAgent = _penguin.NavAgent;
     }
 
@@ -39,6 +37,6 @@ public class PenguinState<T> where T : Enum
 
     public void AnimationFinishTrigger()
     {
-
+        _triggerCalled = true;
     }
 }
