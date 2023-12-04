@@ -13,16 +13,20 @@ public class PenguinChaseState : PenguinBaseState
     public override void Enter()
     {
         base.Enter();
-        Transform nearestEnemy = _penguin.FindNearestObjectByTag("Enemy");
-        _penguin.SetTarget(nearestEnemy.position);
+        Enemy nearestEnemy = _penguin.FindNearestEnemy("Enemy");
+        if (nearestEnemy != null)
+            _penguin.SetTarget(nearestEnemy.transform.position);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.AttackInable && !_penguin.IsClickToMoving)
+        if (_penguin.IsAttackRange && !_penguin.IsClickToMoving)
+        {
+            _penguin.StopImmediately();
             _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
+        }
     }
 
     public override void Exit()

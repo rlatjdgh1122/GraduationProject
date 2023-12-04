@@ -6,7 +6,8 @@ public enum EnemyPenguinStateEnum
     Idle,
     Move,
     Chase,
-    Attack
+    Attack,
+    Dead
 }
 
 public class EnemyBasicPenguin : Enemy

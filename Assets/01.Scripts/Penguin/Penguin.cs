@@ -1,27 +1,30 @@
-using System;
-using UnityEditor.Experimental.GraphView;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Penguin : Entity
+public abstract class Penguin : Entity
 {
     [Header("Setting Values")]
-    public float moveSpeed = 12f;
-    public float attackDelay = 0.5f;
-    public float attackTime = 0.5f;
+    public float moveSpeed = 4.5f;
+    public float attackSpeed = 1f;
+
+    public Enemy Target;
 
     public bool IsClickToMoving = false;
     protected bool _isDead = false;
 
-    public bool IsInside => Vector3.Distance(transform.position, target.position) <= innerDistance;
-    public bool AttackInable => Vector3.Distance(transform.position, target.position) <= attackDistance;
+    public bool IsInside => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
+    public bool IsAttackRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader Input => _inputReader;
 
-
     protected override void Awake()
     {
         base.Awake();
+        Target = FindNearestEnemy("Enemy");
+        NavAgent.speed = moveSpeed;
     }
 
     public override void Attack()
@@ -29,9 +32,54 @@ public class Penguin : Entity
         base.Attack();
     }
 
+    public Enemy FindNearestEnemy(string tag)
+    {
+        var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
+
+        var nearestObject = objects
+            .OrderBy(obj =>
+            {
+                return Vector3.Distance(transform.position, obj.transform.position);
+            })
+            .FirstOrDefault();
+
+        if (nearestObject != null)
+        {
+            Enemy enemyScript = nearestObject.GetComponent<Enemy>();
+
+            if (enemyScript != null)
+            {
+                return Target = enemyScript;
+            }
+            else
+            {
+                Debug.LogWarning("가장 가까운 오브젝트에 Enemy 스크립트가 없습니다.");
+            }
+        }
+        else
+        {
+            //Debug.LogWarning("가까운 오브젝트를 찾지 못했습니다.");
+            return Target = null;
+        }
+
+        // 여기까지 왔다면 오류가 발생했거나 가까운 오브젝트를 찾지 못한 경우이므로 null 반환
+        return null;
+    }
+
+    public void LookTarget()
+    {
+        if (Target != null)
+        {
+            Vector3 directionToTarget = Target.transform.position - transform.position;
+
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
+        }
+    }
+
     protected override void HandleDie()
     {
-        //죽었을때 뭐해줄지
         Debug.Log("쥬금");
         _isDead = true;
     }
