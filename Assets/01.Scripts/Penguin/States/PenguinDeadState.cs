@@ -12,8 +12,10 @@ public class PenguinDeadState : PenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        if (_penguin.Target != null)
+            _penguin.Target.FindNearestPenguin("Player");
         _penguin.tag = "Untagged";
-        _penguin.Target.FindNearestPenguin("Enemy");
+        _penguin.enabled = false;
         _penguin.CharController.enabled = false;
         _penguin.NavAgent.enabled = false;
     }

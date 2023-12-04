@@ -6,7 +6,8 @@ public enum BasicPenguinStateEnum
     Idle,
     Move,
     Chase,
-    Attack
+    Attack,
+    Dead
 }
 
 public class BasicPenguin : Penguin
@@ -39,4 +40,6 @@ public class BasicPenguin : Penguin
     {
         StateMachine.CurrentState.UpdateState();
     }
+
+    public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }

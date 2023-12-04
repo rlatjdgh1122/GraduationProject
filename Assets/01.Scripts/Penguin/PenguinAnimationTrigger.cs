@@ -15,4 +15,14 @@ public class PenguinAnimationTrigger : MonoBehaviour
     {
         _penguin.Attack();
     }
+
+    public void DeadCompleteTrigger()
+    {
+        _penguin.enabled = false;
+    }
+
+    public void AnimationTrigger()
+    {
+        _penguin.AnimationFinishTrigger();
+    }
 }

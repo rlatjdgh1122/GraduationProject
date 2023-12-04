@@ -15,4 +15,14 @@ public class EnemyAnimationTrigger : MonoBehaviour
     {
         _enemy.Attack();
     }
+
+    public void DeadCompleteTrigger()
+    {
+        _enemy.enabled = false;
+    }
+
+    public void AnimationTrigger()
+    {
+        _enemy.AnimationFinishTrigger();
+    }
 }

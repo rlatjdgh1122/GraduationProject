@@ -30,6 +30,20 @@ public class EnemyPenguinAttackState : EnemyPenguinBaseState
             if (!_enemy.IsAttackable)
                 _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
         }
+        else
+        {
+            if (_enemy.IsTargetPlayerInside)
+                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+
+            if (_enemy.IsAttackable)
+                _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack);
+        }
+
+        if (_enemy.Target != null)
+        {
+            if (_enemy.Target.IsDead)
+                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+        }
     }
 
     public override void Exit()

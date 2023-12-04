@@ -40,4 +40,6 @@ public class EnemyBasicPenguin : Enemy
     {
         StateMachine.CurrentState.UpdateState();
     }
+
+    public override void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }
