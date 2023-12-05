@@ -114,7 +114,8 @@ public class WaveManager : MonoBehaviour
         {
             ShowLoseUI();
         }
-        
+
+        _currentEnemyGround = null;
     }
 
     private void ShowLoseUI()
