@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
+
+public class Arrow : MonoBehaviour
+{
+    [SerializeField] private float _bulletPower;
+
+    private int _damage;
+
+    private Rigidbody _rigid;
+    private Entity _owner;
+
+    private void OnEnable()
+    {
+        _rigid = GetComponent<Rigidbody>();
+        StartCoroutine(WaitForDestroy());
+    }
+
+    public void SetOwner(Entity owner)
+    {
+        _owner = owner;
+        _damage = _owner.Stat.GetDamage();
+    }
+
+    public void Fire(Vector3 dir)
+    {
+        _rigid.AddForce(dir * _bulletPower, ForceMode.Impulse);
+    }
+
+    private IEnumerator WaitForDestroy()
+    {
+        yield return new WaitForSeconds(2);
+        Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            if (other.TryGetComponent<IDamageable>(out IDamageable health))
+            {
+                health.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                Destroy(this.gameObject);
+            }
+        }
+        else if (other.CompareTag("Untagged"))
+        {
+            Destroy(this.gameObject);
+        }    
+    }
+}

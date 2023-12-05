@@ -21,6 +21,8 @@ public abstract class Entity : MonoBehaviour
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
+    public ParticleSystem HitEffect;
+
     #region 컴포넌트
     public Animator AnimatorCompo { get; private set; }
     public Health HealthCompo { get; private set; }
@@ -86,6 +88,11 @@ public abstract class Entity : MonoBehaviour
     public virtual void Attack()
     {
         DamageCasterCompo?.CastDamage();
+    }
+
+    public virtual void RangeAttack()
+    {
+
     }
 
     #region 이동 관련

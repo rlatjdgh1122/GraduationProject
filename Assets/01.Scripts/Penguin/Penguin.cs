@@ -13,6 +13,10 @@ public abstract class Penguin : Entity
     public float attackCooldown;
     [HideInInspector] public float lastTimeAttacked;
 
+    [Header("원거리공격설정값")]
+    [SerializeField] protected Arrow _arrowPrefab;
+    [SerializeField] protected Transform _firePos;
+
     public Enemy Target;
 
     public bool IsClickToMoving = false;
@@ -20,8 +24,8 @@ public abstract class Penguin : Entity
 
     protected int _lastAnimationBoolHash; //마지막으로 재생된 애니메이션 해시
 
-    public bool IsInTargetRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
-    public bool IsAttackRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
+    public bool IsInTargetRange => Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
+    public bool IsAttackRange => Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader Input => _inputReader;
@@ -36,6 +40,13 @@ public abstract class Penguin : Entity
     public override void Attack()
     {
         base.Attack();
+    }
+
+    public override void RangeAttack()
+    {
+        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, Quaternion.identity);
+        arrow.SetOwner(this);
+        arrow.Fire(_firePos.forward);
     }
 
     public abstract void AnimationTrigger();
