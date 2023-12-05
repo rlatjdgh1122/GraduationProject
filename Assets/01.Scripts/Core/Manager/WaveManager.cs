@@ -131,20 +131,6 @@ public class WaveManager : MonoBehaviour
 
     private void ShowEffect() // 이펙트
     {
-        // 이 부분은 적 빙하가 우리 빙하로 붙었을 때로 넘어갈듯
-
-        //var outline = rewardGround.GetComponent<Outline>();
-        //Color startColor = outline.OutlineColor;
-        //Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
-
-        //// Fade in
-        //DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, targetColor, 0.7f)
-        //    .OnComplete(() =>
-        //    {
-        //        // Fade out
-        //        DOTween.To(() => outline.OutlineColor, color => outline.OutlineColor = color, startColor, 0.7f);
-        //    });
-
         var mr = rewardGround.GetComponent<MeshRenderer>();
         Color color = mr.material.color;
 
