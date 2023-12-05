@@ -6,7 +6,7 @@ public delegate void CurCountChangeEvent(int newCnt, int maxCount);
 
 public class ButtonEvent : MonoBehaviour
 {
-    [SerializeField] private float _coolTime;
+    public float CoolTime;
     [SerializeField] private int _maxCnt;
     [SerializeField] private GameObject _prefab;
     [SerializeField] private Transform _spawnPoint;
@@ -49,7 +49,7 @@ public class ButtonEvent : MonoBehaviour
     private IEnumerator SpawnCoroutine()
     {
         CanSpawn = false;
-        yield return new WaitForSeconds(_coolTime);
+        yield return new WaitForSeconds(CoolTime);
         CanSpawn = true;
     }
 }

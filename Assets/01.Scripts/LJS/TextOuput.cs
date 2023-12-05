@@ -4,18 +4,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TextOuput : MonoBehaviour
 {
     private ButtonEvent _btnEvent;
     [SerializeField] private TextMeshProUGUI _cntText;
-    [SerializeField] private TextMeshProUGUI _completText;
+    [SerializeField] private Image _img;
+
+    private float _curTime;
+    private float _maxTime;
 
     private void Awake()
     {
         _btnEvent = GetComponent<ButtonEvent>();
         _btnEvent.OnCurCountChangedEvent += HandleValueChanged;
-
+        _curTime = _btnEvent.CoolTime;
+        _maxTime = _btnEvent.CoolTime;
     }
 
     private void OnDestroy()
@@ -33,14 +38,15 @@ public class TextOuput : MonoBehaviour
     }
 
     private void Update()
-    {        
-        if(_btnEvent.CanSpawn)
+    {
+        if(!_btnEvent.CanSpawn)
         {
-            _completText.text = "스폰 가능";
+            _curTime -= Time.deltaTime;
+            _img.fillAmount = _curTime/ _maxTime;
         }
         else
         {
-            _completText.tag = "기다려!";
+            _curTime = _maxTime;
         }
     }
 }
