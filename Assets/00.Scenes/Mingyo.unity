@@ -227,6 +227,11 @@ PrefabInstance:
       propertyPath: hexagonPos
       value: 
       objectReference: {fileID: 901747709}
+    - target: {fileID: 1993757459866945231, guid: 06df8e846fb83bb48918c52f864baa7f,
+        type: 3}
+      propertyPath: cameraZoomFOV
+      value: 45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -994,7 +999,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 223721481}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -1358,7 +1363,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
