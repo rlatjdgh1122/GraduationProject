@@ -21,7 +21,6 @@ public class PenguinState<T> where T : Enum
     public virtual void Enter()
     {
         _penguin.AnimatorCompo.SetBool(_animBoolHash, true); //들어오면 내 애니메이션을 활성화 해주는 것
-        _triggerCalled = false;
         _navAgent = _penguin.NavAgent;
     }
 
@@ -37,6 +36,7 @@ public class PenguinState<T> where T : Enum
 
     public void AnimationFinishTrigger()
     {
+        Debug.Log("똥");
         _triggerCalled = true;
     }
 }

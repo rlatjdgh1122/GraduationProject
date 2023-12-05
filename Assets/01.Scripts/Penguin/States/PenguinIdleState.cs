@@ -15,13 +15,14 @@ public class PenguinIdleState : PenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.IsInside && !_penguin.IsClickToMoving)
+        if (_penguin.IsInTargetRange && !_penguin.IsClickToMoving)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
     }
 

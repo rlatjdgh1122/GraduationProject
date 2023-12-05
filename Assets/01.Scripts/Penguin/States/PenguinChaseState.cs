@@ -13,6 +13,7 @@ public class PenguinChaseState : PenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
         Enemy nearestEnemy = _penguin.FindNearestEnemy("Enemy");
         if (nearestEnemy != null)
             _penguin.SetTarget(nearestEnemy.transform.position);

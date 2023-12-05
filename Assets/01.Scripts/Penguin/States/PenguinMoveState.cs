@@ -13,13 +13,14 @@ public class PenguinMoveState : PenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.IsInside && !_penguin.IsClickToMoving) //타겟 안에 들어오면 && 클릭
+        if (_penguin.IsInTargetRange && !_penguin.IsClickToMoving) //타겟 안에 들어오면 && 클릭
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }

@@ -9,6 +9,7 @@ public class EnemyPenguinMoveState : EnemyPenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
         _enemy.MoveToNexus();
     }
 
