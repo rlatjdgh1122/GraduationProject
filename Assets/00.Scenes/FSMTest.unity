@@ -1780,7 +1780,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ec1c21b46877d4260a195fbe70a7f311, type: 2}
+  - {fileID: 2100000, guid: 3a388c4d282a0434988752ff7a3a34ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2432,8 +2432,9 @@ MonoBehaviour:
   _wallCheckDistance: 1.5
   _knockbackDuration: 0
   targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 4
+  innerDistance: 5
   attackDistance: 1.1
+  ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -2940,6 +2941,7 @@ MonoBehaviour:
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 4
   attackDistance: 1.5
+  ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -3124,8 +3126,9 @@ MonoBehaviour:
   _wallCheckDistance: 1.5
   _knockbackDuration: 0
   targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 4
+  innerDistance: 5
   attackDistance: 1.1
+  ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -3584,6 +3587,84 @@ Transform:
   - {fileID: 100417264}
   m_Father: {fileID: 1672790850}
   m_LocalEulerAnglesHint: {x: -5.8946, y: -2.2182012, z: -4.320294}
+--- !u!1001 &817284036
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4055751039282520397, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_Name
+      value: ClickParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754137205956544435, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754137205956544435, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.9509871
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0689073
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.10202861
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947623549876630533, guid: d690782f2707dc746a5945b9145319db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d690782f2707dc746a5945b9145319db, type: 3}
 --- !u!1 &831895436
 GameObject:
   m_ObjectHideFlags: 0
@@ -4988,7 +5069,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ec1c21b46877d4260a195fbe70a7f311, type: 2}
+  - {fileID: 2100000, guid: 3a388c4d282a0434988752ff7a3a34ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5972,7 +6053,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ec1c21b46877d4260a195fbe70a7f311, type: 2}
+  - {fileID: 2100000, guid: 3a388c4d282a0434988752ff7a3a34ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6506,6 +6587,7 @@ MonoBehaviour:
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 4
   attackDistance: 1.5
+  ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -8121,8 +8203,9 @@ MonoBehaviour:
   _wallCheckDistance: 1.5
   _knockbackDuration: 0
   targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 4
+  innerDistance: 5
   attackDistance: 1.1
+  ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -8755,6 +8838,7 @@ MonoBehaviour:
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 4
   attackDistance: 1.5
+  ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -10600,3 +10684,4 @@ SceneRoots:
   - {fileID: 2025391555}
   - {fileID: 1558977912}
   - {fileID: 754914283}
+  - {fileID: 817284036}

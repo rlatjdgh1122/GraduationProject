@@ -30,6 +30,9 @@ public class EnemyPenguinChaseState : EnemyPenguinBaseState
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
         if (!_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+
+        if (_enemy.ReachedNexus && !_enemy.IsTargetPlayerInside)
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack);
     }
 
     public override void Exit()

@@ -23,7 +23,7 @@ public class EnemyPenguinAttackState : EnemyPenguinBaseState
         else
             _enemy.LookTarget();
 
-        if (_triggerCalled && _enemy.Target != null)
+        if (_triggerCalled)
         {
             if (!_enemy.ReachedNexus)
             {
@@ -34,7 +34,9 @@ public class EnemyPenguinAttackState : EnemyPenguinBaseState
             }
             else
             {
-                if (_enemy.IsTargetPlayerInside)
+                if (_enemy.IsTargetPlayerInside && _enemy.Target != null)
+                    _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+                else
                     _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
             }
         }
