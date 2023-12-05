@@ -26,7 +26,7 @@ public class PenguinBaseState : PenguinState<BasicPenguinStateEnum> //상속받기 �
     {
         if (!_penguin.IsDead)
         {
-            if (_penguin.IsInside || _penguin.IsAttackRange) _penguin.IsClickToMoving = true;
+            if (_penguin.IsInTargetRange || _penguin.IsAttackRange) _penguin.IsClickToMoving = true;
             _penguin.SetClickMovement();
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         }

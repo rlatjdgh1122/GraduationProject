@@ -27,6 +27,7 @@ public abstract class Entity : MonoBehaviour
     public DamageCaster DamageCasterCompo { get; private set; }
     public CharacterController CharController { get; private set; }
     public NavMeshAgent NavAgent { get; private set; }
+    public ParticleSystem ClickParticle;
 
     [SerializeField] protected CharacterStat _characterStat;
     public CharacterStat Stat => _characterStat;
@@ -44,6 +45,7 @@ public abstract class Entity : MonoBehaviour
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
         CharController = GetComponent<CharacterController>();
         NavAgent = GetComponent<NavMeshAgent>();
+        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
 
         DamageCasterCompo.SetOwner(this, castByCloneSkill: false); //자신의 스탯상 데미지를 넣어줌.
         HealthCompo.SetOwner(this);
@@ -90,10 +92,12 @@ public abstract class Entity : MonoBehaviour
     public void SetClickMovement()
     {
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (Physics.Raycast(ray, out hit))
+
+        if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
             SetTarget(hit.point);
+            ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
+            ClickParticle.Play();
         }
     }
 

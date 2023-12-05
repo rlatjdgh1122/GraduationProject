@@ -11,7 +11,7 @@ public class EnemyPenguinChaseState : EnemyPenguinBaseState
     public override void Enter()
     {
         base.Enter();
-
+        _triggerCalled = true;
         Penguin nearestPlayer = _enemy.FindNearestPenguin("Player");
         if (nearestPlayer != null)
             _enemy.SetTarget(nearestPlayer.transform.position);
@@ -30,6 +30,9 @@ public class EnemyPenguinChaseState : EnemyPenguinBaseState
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
         if (!_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+
+        if (_enemy.ReachedNexus && !_enemy.IsTargetPlayerInside)
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack);
     }
 
     public override void Exit()

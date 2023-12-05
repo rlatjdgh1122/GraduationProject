@@ -37,7 +37,7 @@ public abstract class Enemy : Entity
         Debug.Log("¡Í±›");
     }
 
-    public abstract void AnimationFinishTrigger();
+    public abstract void AnimationTrigger();
 
     public Penguin FindNearestPenguin(string tag)
     {
