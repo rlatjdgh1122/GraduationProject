@@ -35,11 +35,13 @@ public class IceMove : MonoBehaviour
 
         dir = hexagonPos.transform.position - glacierPos.position;
         originalFOV = _virtualCam.m_Lens.FieldOfView;
+
         WaveManager.Instance.OnPhaseStartEvent += GroundMove;
     }
 
     private void GroundMove()
     {
+        WaveManager.Instance.SetCurrentEnemyGround(gameObject);
         StartCoroutine(MoveCorou());
     }
 

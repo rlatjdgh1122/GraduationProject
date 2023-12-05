@@ -33,6 +33,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private int maxPhaseReadyTime;
     private int remainingPhaseReadyTime;
+    private GameObject _currentEnemyGround;
+
 
     [Header("UI References")]
     [SerializeField]
@@ -43,8 +45,6 @@ public class WaveManager : MonoBehaviour
     private RectTransform loseUI;
 
     [Header("테스트 용")]
-    [SerializeField]
-    private GameObject rewardGround;
     public bool isWin;
     [SerializeField]
     Color targetColor;
@@ -83,7 +83,7 @@ public class WaveManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) // 디버그용
         {
-            InvokePhaseEndEvent(rewardGround, isWin);
+            InvokePhaseEndEvent(isWin);
         }
     }
 
@@ -131,13 +131,20 @@ public class WaveManager : MonoBehaviour
 
     private void ShowEffect() // 이펙트
     {
-        var mr = rewardGround.GetComponent<MeshRenderer>();
-        Color color = mr.material.color;
-
-        DOTween.To(() => color, c => color = c, targetColor, 0.7f).OnUpdate(() =>
+        try
         {
-            mr.material.color = color;
-        });
+            var mr = _currentEnemyGround.GetComponent<MeshRenderer>();
+            Color color = mr.material.color;
+
+            DOTween.To(() => color, c => color = c, targetColor, 0.7f).OnUpdate(() =>
+            {
+                mr.material.color = color;
+            });
+        }
+        catch
+        {
+            Debug.Log("MeshRenderer is Missing Or First Fight");
+        }
     }
 
     private void StartPhaseReadyRoutine() // 준비시간 계산 코루틴 실행용 함수
@@ -202,9 +209,8 @@ public class WaveManager : MonoBehaviour
         OnPhaseStartEvent?.Invoke();
     }
 
-    public void InvokePhaseEndEvent(GameObject _rewardGround, bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
+    public void InvokePhaseEndEvent(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
     {
-        rewardGround = _rewardGround;
         isWin = _isWin;
         OnPhaseEndEvent?.Invoke();
     }
@@ -213,5 +219,10 @@ public class WaveManager : MonoBehaviour
     {
         OnPhaseStartEvent -= OnPhaseStartHandle;
         OnPhaseEndEvent -= OnPhaseEndHandle;
+    }
+
+    public void SetCurrentEnemyGround(GameObject ice) // 나중에 바꿀듯
+    {
+        _currentEnemyGround = ice;
     }
 }
