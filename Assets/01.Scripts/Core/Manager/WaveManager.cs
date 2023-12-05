@@ -33,7 +33,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private int maxPhaseReadyTime;
     private int remainingPhaseReadyTime;
-    private GameObject _currentEnemyGround;
+    private IceMove _currentEnemyGround;
 
 
     [Header("UI References")]
@@ -131,8 +131,10 @@ public class WaveManager : MonoBehaviour
 
     private void ShowEffect() // 이펙트
     {
-        try
+        try //전투에서 이겼다면 적의 땅을 흡수한다. (색을 바꿈)
         {
+            _currentEnemyGround?.EndWave();
+
             var mr = _currentEnemyGround.GetComponent<MeshRenderer>();
             Color color = mr.material.color;
 
@@ -140,6 +142,7 @@ public class WaveManager : MonoBehaviour
             {
                 mr.material.color = color;
             });
+
         }
         catch
         {
@@ -221,7 +224,7 @@ public class WaveManager : MonoBehaviour
         OnPhaseEndEvent -= OnPhaseEndHandle;
     }
 
-    public void SetCurrentEnemyGround(GameObject ice) // 나중에 바꿀듯
+    public void SetCurrentEnemyGround(IceMove ice) // 나중에 바꿀듯
     {
         _currentEnemyGround = ice;
     }

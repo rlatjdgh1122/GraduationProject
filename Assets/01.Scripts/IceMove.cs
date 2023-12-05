@@ -30,24 +30,25 @@ public class IceMove : MonoBehaviour
 
     private void Start()
     {
+        // 아웃라인 컬러 변수 초기화
         startColor = new Color(_outline.OutlineColor.r, _outline.OutlineColor.g, _outline.OutlineColor.b, 0f);
         targetColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
 
         dir = hexagonPos.transform.position - glacierPos.position;
         originalFOV = _virtualCam.m_Lens.FieldOfView;
 
-        WaveManager.Instance.OnPhaseStartEvent += GroundMove;
+        WaveManager.Instance.OnPhaseStartEvent += GroundMoveHandle;
     }
 
-    private void GroundMove()
+    private void GroundMoveHandle()
     {
-        WaveManager.Instance.SetCurrentEnemyGround(gameObject);
+        WaveManager.Instance.SetCurrentEnemyGround(this);
         StartCoroutine(MoveCorou());
     }
 
     private IEnumerator MoveCorou()
     {
-        while (isMoving)
+        while (isMoving) //이동
         {
             transform.position += dir.normalized * speed * Time.deltaTime;
             yield return null;
@@ -60,15 +61,26 @@ public class IceMove : MonoBehaviour
                 // Fade out
                 DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, startColor, 0.7f).OnComplete(() =>
                 {
-                    _virtualCam.LookAt = transform;
+                    _virtualCam.LookAt = transform; // 줌 땡김
                     DOTween.To(() => _virtualCam.m_Lens.FieldOfView, fov => _virtualCam.m_Lens.FieldOfView = fov,
                         cameraZoomFOV, 0.7f);
                 });
             });
     }
 
+    public void EndWave()
+    {
+        // 줌땡겼던거 풀어줌
+        DOTween.To(() => _virtualCam.m_Lens.FieldOfView, fov => _virtualCam.m_Lens.FieldOfView = fov,
+                        originalFOV, 0.7f);
+
+        // 빙하 이동 구독 해제
+        WaveManager.Instance.OnPhaseStartEvent -= GroundMoveHandle;
+    }
+
     private void OnEnable()
     {
-        WaveManager.Instance.OnPhaseStartEvent -= GroundMove;
+        // 오브젝트 비활성화 시 구독 해제
+        WaveManager.Instance.OnPhaseStartEvent -= GroundMoveHandle;
     }
 }
