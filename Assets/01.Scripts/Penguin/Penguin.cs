@@ -20,7 +20,7 @@ public abstract class Penguin : Entity
 
     protected int _lastAnimationBoolHash; //마지막으로 재생된 애니메이션 해시
 
-    public bool IsInside => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
+    public bool IsInTargetRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
     public bool IsAttackRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
 
     [SerializeField] private InputReader _inputReader;

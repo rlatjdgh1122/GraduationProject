@@ -10,6 +10,7 @@ public class EnemyPenguinAttackState : EnemyPenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = false;
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
@@ -22,27 +23,20 @@ public class EnemyPenguinAttackState : EnemyPenguinBaseState
         else
             _enemy.LookTarget();
 
-        if (!_enemy.ReachedNexus)
+        if (_triggerCalled && _enemy.Target != null)
         {
-            if (!_enemy.IsTargetPlayerInside)
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
-
-            if (!_enemy.IsAttackable)
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
-        }
-        else
-        {
-            if (_enemy.IsTargetPlayerInside)
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
-
-            if (_enemy.IsAttackable)
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack);
-        }
-
-        if (_enemy.Target != null)
-        {
-            if (_enemy.Target.IsDead)
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+            if (!_enemy.ReachedNexus)
+            {
+                if (!_enemy.IsTargetPlayerInside)
+                    _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+                else
+                    _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+            }
+            else
+            {
+                if (_enemy.IsTargetPlayerInside)
+                    _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+            }
         }
     }
 

@@ -9,6 +9,7 @@ public class EnemyPenguinIdleState : EnemyPenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
     }
 
     public override void UpdateState()

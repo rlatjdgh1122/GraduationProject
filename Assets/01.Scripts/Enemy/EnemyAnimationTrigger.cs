@@ -21,8 +21,8 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy.enabled = false;
     }
 
-    public void AnimationTrigger()
+    private void AnimationEndTrigger()
     {
-        _enemy.AnimationFinishTrigger();
+        _enemy.AnimationTrigger();
     }
 }

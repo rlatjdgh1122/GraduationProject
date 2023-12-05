@@ -11,7 +11,7 @@ public class EnemyPenguinChaseState : EnemyPenguinBaseState
     public override void Enter()
     {
         base.Enter();
-
+        _triggerCalled = true;
         Penguin nearestPlayer = _enemy.FindNearestPenguin("Player");
         if (nearestPlayer != null)
             _enemy.SetTarget(nearestPlayer.transform.position);

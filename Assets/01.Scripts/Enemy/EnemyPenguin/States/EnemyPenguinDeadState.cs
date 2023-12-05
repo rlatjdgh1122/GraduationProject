@@ -12,6 +12,7 @@ public class EnemyPenguinDeadState : EnemyPenguinBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
         if (_enemy.Target != null)
             _enemy.Target.FindNearestEnemy("Enemy");
         _enemy.tag = "Untagged";
