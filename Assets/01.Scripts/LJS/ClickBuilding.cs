@@ -6,12 +6,7 @@ using UnityEngine.Events;
 
 public class ClickBuilding : MonoBehaviour
 {
-    [SerializeField] private LayerMask _whatIsGround;
-
-    public event Action<bool> OnClickEvent;
-
-    public bool _isClick;
-    public bool IsClick => _isClick;
+    public event Action<bool> ClickEvent;
 
     private void Update()
     {
@@ -19,15 +14,15 @@ public class ClickBuilding : MonoBehaviour
         {
             Ray pos = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if(Physics.Raycast(pos, out hit, _whatIsGround))
+            if(Physics.Raycast(pos, out hit, Camera.main.farClipPlane))
             {
-                if(hit.collider.gameObject.CompareTag("Building"))
+                if(hit.collider.CompareTag("Building"))
                 {
-                    OnClickEvent?.Invoke(true);
+                    ClickEvent?.Invoke(true);
                 }
                 else
                 {
-                    OnClickEvent?.Invoke(false);
+                    ClickEvent?.Invoke(false);
                 }
             }
         }
