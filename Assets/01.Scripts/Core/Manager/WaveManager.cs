@@ -147,7 +147,7 @@ public class WaveManager : MonoBehaviour
         }
         catch
         {
-            Debug.Log("MeshRenderer is Missing Or First Fight");
+            Debug.Log("MeshRenderer is Missing Or Wave Fight");
         }
     }
 
