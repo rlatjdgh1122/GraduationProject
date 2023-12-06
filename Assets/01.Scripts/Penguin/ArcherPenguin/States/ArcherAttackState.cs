@@ -23,7 +23,7 @@ public class ArcherAttackState : ArcherBaseState
 
         if (_triggerCalled && _penguin.Target != null)
         {
-            if (_penguin.IsAttackRange)
+            if (_penguin.IsInTargetRange)
             {
                 _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
             }

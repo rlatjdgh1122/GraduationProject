@@ -27,7 +27,6 @@ public class ArcherChaseState : ArcherBaseState
         {
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Idle);
         }
-
         //if (_penguin.Target != null)
         //{
         //    if (_penguin.Target.IsDead)
