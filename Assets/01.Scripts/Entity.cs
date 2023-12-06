@@ -24,6 +24,10 @@ public abstract class Entity : MonoBehaviour
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
+    [Header("RangeAttack Info")]
+    [SerializeField] protected Arrow _arrowPrefab;
+    [SerializeField] protected Transform _firePos;
+
     public ParticleSystem HitEffect;
 
     #region 컴포넌트
@@ -73,7 +77,7 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void HandleHit()
     {
-
+        
     }
 
     protected virtual void Start()
@@ -106,6 +110,7 @@ public abstract class Entity : MonoBehaviour
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
             Debug.Log("마우스 위치 : " + hit.point);
+
             ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
@@ -115,7 +120,6 @@ public abstract class Entity : MonoBehaviour
 
     public void SetTarget(Vector3 _target)
     {
-
         targetTrm = _target;
         MoveToTarget();
     }
@@ -131,7 +135,8 @@ public abstract class Entity : MonoBehaviour
 
     public void StopImmediately()
     {
-        NavAgent.isStopped = true;
+        if (NavAgent != null && enabled)
+            NavAgent.isStopped = true;
     }
     #endregion
 

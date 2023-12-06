@@ -14,11 +14,7 @@ public class ArmySystem : MonoBehaviour
     }
     private void Start()
     {
-        for (int i = 0; i < armyTrms.Count; i++)
-        {
-            var entity = armyTrms[i] as Entity;
-            entity.idx = i;
-        }
+        SetIdx();
     }
     public void SetArmyMovePostiton(Vector3 startPos, int idx)
     {
@@ -33,5 +29,20 @@ public class ArmySystem : MonoBehaviour
                 entity.SetTarget(trms[i]);
             }
         }
+    }
+
+    public void SetIdx()
+    {
+        for (int i = 0; i < armyTrms.Count; i++)
+        {
+            var entity = armyTrms[i] as Entity;
+            entity.idx = i;
+        }
+    }
+
+    public void Remove(Penguin obj)
+    {
+        armyTrms.Remove(obj);
+        SetIdx();
     }
 }

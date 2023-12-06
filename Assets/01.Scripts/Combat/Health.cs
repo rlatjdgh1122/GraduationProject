@@ -32,7 +32,8 @@ public class Health : MonoBehaviour, IDamageable
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
     {
         if (_isDead) return; //사망하면 더이상 데미지 없음.
-        
+
+        OnHit?.Invoke();
         //나중에 아머값에 따른 데미지 감소도 해야함
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth);
 

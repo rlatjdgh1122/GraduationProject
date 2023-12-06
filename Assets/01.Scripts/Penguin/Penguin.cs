@@ -13,10 +13,6 @@ public abstract class Penguin : Entity
     public float attackCooldown;
     public float lastTimeAttacked = 0f;
 
-    [Header("원거리공격설정값")]
-    [SerializeField] protected Arrow _arrowPrefab;
-    [SerializeField] protected Transform _firePos;
-
     public Enemy Target;
 
     public bool IsClickToMoving = false;
@@ -45,7 +41,7 @@ public abstract class Penguin : Entity
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.SetOwner(this);
+        arrow.SetOwner(this, "Enemy");
         arrow.Fire(_firePos.forward);
     }
 
@@ -100,6 +96,7 @@ public abstract class Penguin : Entity
     protected override void HandleDie()
     {
         Debug.Log("쥬금");
+        ArmySystem.Instace.Remove(this);
         IsDead = true;
     }
 }
