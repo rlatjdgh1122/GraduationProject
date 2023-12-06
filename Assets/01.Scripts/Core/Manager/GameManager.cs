@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
+    public int GetPenguinCount => FindObjectsOfType<BasicPenguin>().Length;
+    public int GetEnemyPenguinCount => FindObjectsOfType<EnemyBasicPenguin>().Length;
 
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, Building> _buildingDictionary = new();
