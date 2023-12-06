@@ -113,7 +113,7 @@ public abstract class Entity : MonoBehaviour
 
             ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
 
-            ClickParticle.transform.position = hit.point + new Vector3(0, 0f, 0);
+            ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
         }
     }

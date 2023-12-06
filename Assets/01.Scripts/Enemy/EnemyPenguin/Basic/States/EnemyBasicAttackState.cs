@@ -12,6 +12,7 @@ public class EnemyBasicAttackState : EnemyBasicBaseState
         base.Enter();
         _triggerCalled = false;
         _enemy.StopImmediately();
+
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
@@ -19,30 +20,17 @@ public class EnemyBasicAttackState : EnemyBasicBaseState
     {
         base.UpdateState();
 
-        if (_triggerCalled)
+        if (_enemy.ReachedNexus)
+            _enemy.LookAtNexus();
+        else
+            _enemy.LookTarget();
+
+        if (_triggerCalled) //공격이 한 차례 끝났을 때,
         {
-            if (_enemy.Target != null && _enemy.IsAttackable)
-            {
-                _enemy.LookTarget();
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
-            }
-            else if (_enemy.ReachedNexus)
-            {
-                _enemy.LookAtNexus();
-            }
-
-            if (_enemy.Target == null && !_enemy.ReachedNexus) //만약 플레이어가 없으면 넥서스로 돌격
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
-
-            if (_enemy.ReachedNexus)
-            {
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
-            }
-
-            if (!_enemy.ReachedNexus && !_enemy.IsTargetPlayerInside)
-            {
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
-            }
+            if (_enemy.IsTargetPlayerInside)
+                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase); //사거리 안에 타겟 플레이어가 있다 -> 따라가
+            else
+                _stateMachine.ChangeState(EnemyPenguinStateEnum.Move); //없다 -> 넥서스로 Move
         }
     }
 

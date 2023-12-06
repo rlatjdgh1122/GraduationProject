@@ -16,11 +16,11 @@ public class EnemyBasicIdleState : EnemyBasicBaseState
     {
         base.UpdateState();
 
-        //if (_enemy.isMove)
-        //    _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+        if (_enemy.IsMove)
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Move); //IsMove 불 변수가 True이면 넥서스로 Move
 
         if (_enemy.IsTargetPlayerInside)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase); //감지 사거리 안에 타겟 플레이어가 있다 -> 쫓아가
     }
 
     public override void Exit()

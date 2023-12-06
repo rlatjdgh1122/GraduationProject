@@ -20,10 +20,10 @@ public class EnemyBasicBaseState : EnemyState<EnemyPenguinStateEnum>
         base.UpdateState();
 
         if (_enemy.IsDead)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead); //Á×À¸¸é Dead State·Î
 
         if (_enemy.Target == null)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Move); //¸Ê¿¡ Å¸°Ù ÇÃ·¹ÀÌ¾î°¡ ¾Æ¿¹ ¾ø´Ù -> ³Ø¼­½º·Î Move
     }
 
     public void ChangeStateWhenHitted()

@@ -48,6 +48,10 @@ public class ArmySystem : MonoBehaviour
     public void Remove(Penguin obj)
     {
         armyTrms.Remove(obj);
+
+        var crown = GameObject.FindGameObjectWithTag("Crown");
+        Destroy(crown);
+
         SetIdx();
     }
 }

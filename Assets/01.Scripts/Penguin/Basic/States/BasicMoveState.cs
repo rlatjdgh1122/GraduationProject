@@ -26,12 +26,15 @@ public class BasicMoveState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
 
-        if (_penguin.NavAgent.remainingDistance < 0.1f && !_penguin.NavAgent.pathPending)
+        if (_penguin.Target != null)
         {
-            if (_penguin.IsClickToMoving)
-                _penguin.IsClickToMoving = false;
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle); //목적지에 도달했을 때 Idle상태로 바꿔준다.
-        }
+            if (_penguin.NavAgent.remainingDistance < 0.1f && !_penguin.NavAgent.pathPending)
+            {
+                if (_penguin.IsClickToMoving)
+                    _penguin.IsClickToMoving = false;
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle); //목적지에 도달했을 때 Idle상태로 바꿔준다.
+            }
+        }    
     }
 
     public override void Exit()
