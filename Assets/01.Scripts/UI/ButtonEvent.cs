@@ -4,11 +4,17 @@ using UnityEngine;
 
 public delegate void CurCountChangeEvent(int newCnt, int maxCount);
 
+enum HeroType
+{
+    Sword,
+    Bow
+}
+
 public class ButtonEvent : MonoBehaviour
 {
     public float CoolTime;
     [SerializeField] private int _maxCnt;
-    [SerializeField] private GameObject _prefab;
+    public GameObject[] _prefab;
     [SerializeField] private Transform _spawnPoint;
     public bool CanSpawn { get; set; }
     private int _curCnt = 0;
@@ -36,12 +42,12 @@ public class ButtonEvent : MonoBehaviour
 
     }
 
-    public void Spawn()
+    public void Spawn(int i)
     {
         if (CanSpawn && CurCnt < _maxCnt)
         {
             CurCnt++;
-            GameObject Hero = Instantiate(_prefab, _spawnPoint.position, Quaternion.identity);
+            GameObject Hero = Instantiate(_prefab[i], _spawnPoint.position, Quaternion.identity);
             StartCoroutine(SpawnCoroutine());
         }
     }

@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class TextOuput : MonoBehaviour
 {
     private ButtonEvent _btnEvent;
-    [SerializeField] private TextMeshProUGUI _cntText;
-    [SerializeField] private Image _img;
+    public TextMeshProUGUI[] _cntText;
+    public Image[] _img;
 
     private float _curTime;
     private float _maxTime;
@@ -32,8 +32,10 @@ public class TextOuput : MonoBehaviour
 
     private void HandleValueChanged(int newCnt, int maxCount)
     {
-
-        _cntText.text = $"{newCnt} / {maxCount}";
+        for(int i = 0; i < _cntText.Length; i++)
+        {
+            _cntText[i].text = $"{newCnt} / {maxCount}";
+        }
 
     }
 
@@ -42,7 +44,10 @@ public class TextOuput : MonoBehaviour
         if(!_btnEvent.CanSpawn)
         {
             _curTime -= Time.deltaTime;
-            _img.fillAmount = _curTime/ _maxTime;
+            for(int i = 0; i < _cntText.Length; i++)
+            {
+                _img[i].fillAmount = _curTime/ _maxTime;
+            }
         }
         else
         {
