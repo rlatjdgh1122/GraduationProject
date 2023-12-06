@@ -5,6 +5,7 @@ using Define.Algorithem;
 public class ArmySystem : MonoBehaviour
 {
     public static ArmySystem Instace;
+    [SerializeField] private GameObject _crown;
     [SerializeField] private List<Penguin> armyTrms = new();
     [SerializeField] private List<Vector3> a = new();
 
@@ -37,6 +38,10 @@ public class ArmySystem : MonoBehaviour
         {
             var entity = armyTrms[i] as Entity;
             entity.idx = i;
+            if (i == 0)
+            {
+               Instantiate(_crown, entity.transform);
+            }
         }
     }
 
