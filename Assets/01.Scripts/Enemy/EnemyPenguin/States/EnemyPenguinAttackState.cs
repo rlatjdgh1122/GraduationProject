@@ -18,25 +18,31 @@ public class EnemyPenguinAttackState : EnemyPenguinBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_enemy.ReachedNexus)
-            _enemy.LookAtNexus();
-        else
-            _enemy.LookTarget();
 
         if (_triggerCalled)
         {
+            if (_enemy.Target != null && _enemy.IsAttackable)
+            {
+                _enemy.LookTarget();
+                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+            }
+            else if (_enemy.ReachedNexus)
+            {
+                _enemy.LookAtNexus();
+            }
+
             if (!_enemy.ReachedNexus)
             {
                 if (!_enemy.IsTargetPlayerInside)
                     _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
                 else
+                {
                     _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+                }       
             }
             else
             {
-                if (_enemy.IsTargetPlayerInside && _enemy.Target != null)
-                    _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
-                else
+                if (_enemy.Target != null)
                     _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
             }
         }

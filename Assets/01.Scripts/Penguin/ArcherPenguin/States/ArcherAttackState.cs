@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ArcherAttackState : ArcherBaseState
 {
     public ArcherAttackState(Penguin penguin, PenguinStateMachine<ArcherPenguinStateEnum> stateMachine, string animationBoolName)
@@ -8,14 +10,15 @@ public class ArcherAttackState : ArcherBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = false;
         _penguin.StopImmediately();
+        _triggerCalled = false;
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+        _penguin.StopImmediately();
         _penguin.LookTarget();
 
         if (_triggerCalled && _penguin.Target != null)

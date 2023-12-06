@@ -42,12 +42,10 @@ public class Arrow : MonoBehaviour
             if (other.TryGetComponent<IDamageable>(out IDamageable health))
             {
                 health.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                ParticleSystem effect = Instantiate(_owner.HitEffect, other.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                effect.Play();
                 Destroy(this.gameObject);
             }
-        }
-        else if (other.CompareTag("Untagged"))
-        {
-            Destroy(this.gameObject);
-        }    
+        }  
     }
 }
