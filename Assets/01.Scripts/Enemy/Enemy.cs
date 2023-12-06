@@ -11,6 +11,8 @@ public abstract class Enemy : Entity
 
     public Penguin Target;
 
+    public bool IsMove = false;
+
     public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
     public bool IsDead = false;

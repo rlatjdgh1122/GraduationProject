@@ -40,6 +40,8 @@ public class WaveManager : MonoBehaviour
 
     private int maxEnemyCnt;
 
+    public int tsest;
+
     #endregion
 
     private static WaveManager _instance;
@@ -61,7 +63,7 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != this && _instance != null) // �̱���
+        if (_instance != this && _instance != null) //  ̱   
         {
             Destroy(gameObject);
         }
@@ -78,18 +80,14 @@ public class WaveManager : MonoBehaviour
         maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount; // 테스트용
         SetReadyTime(); // 시간 초기화
         InvokePhaseEndEvent(isWin);
+
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // 디버그용
-        {
-            InvokePhaseEndEvent(isWin);
-        }
-
         if (Input.GetKeyDown(KeyCode.A))
         {
-            UpdateUIOnEnemyCount();
+            UpdateUIOnEnemyCount(tsest);
         }
     }
 
@@ -230,14 +228,17 @@ public class WaveManager : MonoBehaviour
         _currentEnemyGround = ice;
     }
 
-    public void UpdateUIOnEnemyCount()
+    public void UpdateUIOnEnemyCount(int? a = null)
     {
-        int enemyCnt = GameManager.Instance.GetEnemyPenguinCount;
+        int enemyCnt = a ?? GameManager.Instance.GetEnemyPenguinCount;
 
-        if (enemyCnt <= 0 || enemyCnt == maxEnemyCnt)
+        if (enemyCnt == maxEnemyCnt)
         {
             RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
-            //InvokePhaseEndEvent(true);
+        }
+        else if (enemyCnt <= 0)
+        {
+            InvokePhaseEndEvent(true);
         }
         else
         {
@@ -248,5 +249,4 @@ public class WaveManager : MonoBehaviour
 
         enemyCntText.SetText($"Enemy: {enemyCnt}");
     }
-
 }

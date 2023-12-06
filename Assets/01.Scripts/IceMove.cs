@@ -3,6 +3,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class IceMove : MonoBehaviour
@@ -22,11 +23,15 @@ public class IceMove : MonoBehaviour
     Vector3 dir;
     Color startColor;
     Color targetColor;
+
+    private NavMeshSurface _NM;
+
     private void Awake()
     {
         hexagonPos = GameObject.Find("HexagonPos");
         _outline = GetComponent<Outline>();
         _virtualCam = GameObject.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>();
+        _NM = GetComponent<NavMeshSurface>();
     }
 
     private void Start()

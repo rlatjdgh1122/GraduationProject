@@ -16,8 +16,8 @@ public class EnemyArcherIdleState : EnemyBasicBaseState
     {
         base.UpdateState();
 
-        //if (_enemy.isMove)
-        //    _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+        if (_enemy.IsMove)
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
 
         if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
