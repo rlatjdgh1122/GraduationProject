@@ -77,6 +77,7 @@ public class WaveManager : MonoBehaviour
     {
         maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount; // 테스트용
         SetReadyTime(); // 시간 초기화
+        InvokePhaseEndEvent(isWin);
     }
 
     private void Update()
@@ -233,10 +234,10 @@ public class WaveManager : MonoBehaviour
     {
         int enemyCnt = GameManager.Instance.GetEnemyPenguinCount;
 
-        if (enemyCnt <= 0 || enemyCnt == maxEnemyCnt) 
+        if (enemyCnt <= 0 || enemyCnt == maxEnemyCnt)
         {
             RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
-            InvokePhaseEndEvent(true);
+            //InvokePhaseEndEvent(true);
         }
         else
         {
