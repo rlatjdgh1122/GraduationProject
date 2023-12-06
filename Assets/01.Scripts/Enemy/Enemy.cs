@@ -31,6 +31,13 @@ public abstract class Enemy : Entity
         base.Attack();
     }
 
+    public override void RangeAttack()
+    {
+        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+        arrow.SetOwner(this, "Player");
+        arrow.Fire(_firePos.forward);
+    }
+
     protected override void HandleDie()
     {
         IsDead = true;

@@ -12,15 +12,18 @@ public class Arrow : MonoBehaviour
     private Rigidbody _rigid;
     private Entity _owner;
 
+    private string _whatIsHitableTag;
+
     private void OnEnable()
     {
         _rigid = GetComponent<Rigidbody>();
         StartCoroutine(WaitForDestroy());
     }
 
-    public void SetOwner(Entity owner)
+    public void SetOwner(Entity owner, string tag)
     {
         _owner = owner;
+        _whatIsHitableTag = tag;
         _damage = _owner.Stat.GetDamage();
     }
 
@@ -37,7 +40,7 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("Player"))
+        if (other.CompareTag(_whatIsHitableTag))
         {
             if (other.TryGetComponent<IDamageable>(out IDamageable health))
             {
