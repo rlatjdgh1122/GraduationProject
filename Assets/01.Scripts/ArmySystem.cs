@@ -23,7 +23,7 @@ public class ArmySystem : MonoBehaviour
     public void SetArmyMovePostiton(Vector3 startPos, int idx)
     {
         a.Clear();
-        var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, new float[] { 3f, 7f, 10f }, new int[] { armyTrms.Count / 3, armyTrms.Count / 2, armyTrms.Count / 1 });
+        var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, armyTrms.Count);
         a.AddRange(trms);
         for (int i = 0; i < armyTrms.Count; i++)
         {

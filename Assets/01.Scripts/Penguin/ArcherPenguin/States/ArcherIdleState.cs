@@ -19,7 +19,7 @@ public class ArcherIdleState : ArcherBaseState
     {
         base.UpdateState();
 
-        if (_penguin.IsInTargetRange && !_penguin.IsClickToMoving)
+        if (_penguin.IsAttackRange && !_penguin.IsClickToMoving)
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Attack);
     }
 
