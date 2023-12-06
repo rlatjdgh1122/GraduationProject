@@ -38,7 +38,7 @@ public class WaveManager : MonoBehaviour
     public event Action OnPhaseStartEvent = null;
     public event Action OnPhaseEndEvent = null;
 
-    public int testInt;
+    private int maxEnemyCnt;
 
     #endregion
 
@@ -75,6 +75,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount; // 테스트용
         SetReadyTime(); // 시간 초기화
     }
 
@@ -87,7 +88,7 @@ public class WaveManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            UpdateUIOnEnemyCount(testInt);
+            UpdateUIOnEnemyCount();
         }
     }
 
@@ -99,8 +100,8 @@ public class WaveManager : MonoBehaviour
     private void OnPhaseStartHandle() // 전투페이즈 시작
     {
         isPhase = true;
+        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount;
         wavCntText.SetText($"Current Wave: {waveCnt}");
-        //RotateClockHand(new Vector3(0, 0, 90), 0.7f, Ease.InOutElastic, SpawnEnemy); // 적의 수의 비례해서 시계 돌아가도록 바꿀 것
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료
@@ -223,23 +224,26 @@ public class WaveManager : MonoBehaviour
         OnPhaseEndEvent -= OnPhaseEndHandle;
     }
 
-    public void SetCurrentEnemyGround(IceMove ice) // 나중에 바꿀듯
+    public void SetCurrentEnemyGround(IceMove ice)
     {
         _currentEnemyGround = ice;
     }
 
-    public void UpdateUIOnEnemyCount(int ?a = null)
+    public void UpdateUIOnEnemyCount()
     {
-        int enemyCnt = a ?? GameManager.Instance.GetEnemyPenguinCount;
-        if(enemyCnt <= 0 || enemyCnt == 3) 
+        int enemyCnt = GameManager.Instance.GetEnemyPenguinCount;
+
+        if (enemyCnt <= 0 || enemyCnt == maxEnemyCnt) 
         {
             RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
+            InvokePhaseEndEvent(true);
         }
         else
         {
-            RotateClockHand(new Vector3(0, 0, 1 - (180 / enemyCnt)), 0.2f, Ease.Linear);
+            float rotationAngle = -(180 / maxEnemyCnt) * (maxEnemyCnt - enemyCnt) + 180;
+            Vector3 rotationVec = new Vector3(0, 0, rotationAngle);
+            RotateClockHand(rotationVec, 0.2f, Ease.Linear);
         }
-        Debug.Log(enemyCnt);
 
         enemyCntText.SetText($"Enemy: {enemyCnt}");
     }
