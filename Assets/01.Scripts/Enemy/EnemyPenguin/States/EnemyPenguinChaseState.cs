@@ -1,9 +1,9 @@
 
 using UnityEngine;
 
-public class EnemyBasicChaseState : EnemyBasicBaseState
+public class EnemyPenguinChaseState : EnemyPenguinBaseState
 {
-    public EnemyBasicChaseState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
+    public EnemyPenguinChaseState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
     }

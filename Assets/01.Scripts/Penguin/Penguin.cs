@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements.Experimental;
+using Define.Algorithem;
 
 public abstract class Penguin : Entity
 {

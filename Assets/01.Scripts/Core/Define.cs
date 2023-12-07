@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Define
@@ -36,6 +35,17 @@ namespace Define
                     }
 
                     return trms;
+                }
+
+                public static Vector3 GetCenterPostion(List<Vector3> GetPostionListAround)
+                {
+                    if (GetPostionListAround.Count >= 0)
+                        return GetPostionListAround[0];
+                    else
+                    {
+                        Debug.LogError("리스트에 값이 없습니다.");
+                        return Vector3.zero;
+                    }
                 }
             }
         }

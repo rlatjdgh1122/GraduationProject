@@ -11,7 +11,7 @@ public abstract class Enemy : Entity
     public float rotationSpeed = 2f;
 
     [SerializeField]
-    [Range(0.1f, 2f)]
+    [Range(0.1f, 6f)]
     protected float nexusDistance;
 
     public Penguin Target;

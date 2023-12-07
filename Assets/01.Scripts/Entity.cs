@@ -110,7 +110,6 @@ public abstract class Entity : MonoBehaviour
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
             Debug.Log("마우스 위치 : " + hit.point);
-
             ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
