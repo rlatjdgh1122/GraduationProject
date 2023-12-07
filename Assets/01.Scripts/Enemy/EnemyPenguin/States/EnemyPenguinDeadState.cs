@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyArcherDeadState : EnemyBasicBaseState
+public class EnemyPenguinDeadState : EnemyPenguinBaseState
 {
-    public EnemyArcherDeadState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
+    public EnemyPenguinDeadState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName) 
         : base(enemyBase, stateMachine, animBoolName)
     {
     }
