@@ -30,7 +30,7 @@ public class ArmySystem : MonoBehaviour
     }
 
     
-    public void SetArmyMovePostiton(Vector3 startPos, int idx, int legion) //¸¶¿ì½º À§Ä¡, Æë±Ï idx, Æë±Ï ±º´Ü ÀÌ¸§
+    public void SetArmyMovePostiton(Vector3 startPos, int idx, int legion) //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡, ï¿½ï¿½ï¿½ idx, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
     {
         var soldiers = armies[legion].Soldiers;
         var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
@@ -53,7 +53,7 @@ public class ArmySystem : MonoBehaviour
         {
             var entity = soldiers[i];
             entity.idx = i;
-            if (i == 0) //±º´ÜÀÇ ¿Õ¿¡°Õ ¿Õ°üÀÌ Áã¾îÁø´Ù
+            if (i == 0)  //ë‚˜ëŠ” ë‚˜ìš”, ë„ˆëŠ” ì„ íƒë°›ì€ ì™•ì´ë‹ˆ ì™•ê´€ì´ ì¥ì–´ì§€ë¦¬
             {
                 Instantiate(_crown, entity.transform);
             }
@@ -65,5 +65,10 @@ public class ArmySystem : MonoBehaviour
         var soldiers = armies[legion].Soldiers;
         soldiers.Remove(obj);
         SetSoldersIdx(legion);
+
+        var crown = GameObject.FindGameObjectWithTag("Crown");
+        Destroy(crown);
+
+        SetIdx();
     }
 }

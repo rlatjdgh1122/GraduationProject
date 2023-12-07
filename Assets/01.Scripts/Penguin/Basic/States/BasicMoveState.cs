@@ -21,7 +21,7 @@ public class BasicMoveState : BasicBaseState
     {
         base.UpdateState();
 
-        if (_penguin.IsInTargetRange && !_penguin.IsClickToMoving) //타겟 안에 들어오면 && 클릭
+        if (_penguin.IsInTargetRange && !_penguin.IsClickToMoving) //타겟 안에 들어오면 && 클릭하지 않고 있을 때 -> Chase로
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
