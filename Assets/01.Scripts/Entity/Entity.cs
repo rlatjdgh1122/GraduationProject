@@ -57,7 +57,7 @@ public abstract class Entity : MonoBehaviour
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
 
         DamageCasterCompo.SetOwner(this, castByCloneSkill: false); //자신의 스탯상 데미지를 넣어줌.
-        HealthCompo.SetOwner(this);
+        HealthCompo.SetOwner(_characterStat);
 
         //HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnHit += HandleHit;
@@ -99,7 +99,9 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void RangeAttack()
     {
-
+        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+        arrow.SetOwner(this, "Enemy");
+        arrow.Fire(_firePos.forward);
     }
 
     #region 이동 관련
