@@ -51,7 +51,7 @@ public class ArmySystem : MonoBehaviour
 
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
-            ArmySystem.Instace.SetArmyMovePostiton(hit.point, 0, curLegion);
+            SetArmyMovePostiton(hit.point, 0, curLegion);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
