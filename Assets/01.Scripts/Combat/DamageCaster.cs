@@ -13,7 +13,7 @@ public class DamageCaster : MonoBehaviour
     public Vector2 knockbackPower;
 
     [SerializeField] private int _maxHitCount = 5; //최대로 때릴 수 있는 적 갯수
-    public LayerMask whatIsEnemy;
+    public LayerMask whatIsHitable;
     private Collider[] _hitResult;
 
     private Entity _owner;
@@ -30,7 +30,7 @@ public class DamageCaster : MonoBehaviour
 
     public bool CastDamage()
     {
-        Collider[] colliders = Physics.OverlapSphere(attackChecker.position, attackCheckRadius, whatIsEnemy);
+        Collider[] colliders = Physics.OverlapSphere(attackChecker.position, attackCheckRadius, whatIsHitable);
 
         // 거리순으로 정렬
         List<Collider> sortedColliders = colliders.OrderBy(collider => Vector3.Distance(transform.position, collider.transform.position)).ToList();

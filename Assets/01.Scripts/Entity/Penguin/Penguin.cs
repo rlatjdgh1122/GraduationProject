@@ -37,13 +37,6 @@ public abstract class Penguin : Entity
         base.Attack();
     }
 
-    public override void RangeAttack()
-    {
-        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.SetOwner(this, "Enemy");
-        arrow.Fire(_firePos.forward);
-    }
-
     public abstract void AnimationTrigger();
 
     public Enemy FindNearestEnemy(string tag)
