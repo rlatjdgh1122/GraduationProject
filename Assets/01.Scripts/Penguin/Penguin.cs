@@ -96,7 +96,7 @@ public abstract class Penguin : Entity
     protected override void HandleDie()
     {
         Debug.Log("¡Í±›");
-        ArmySystem.Instace.Remove(this);
+        ArmySystem.Instace.Remove(0, this);
         IsDead = true;
     }
 }

@@ -12,7 +12,7 @@ public enum EnemyPenguinStateEnum
 
 public class EnemyBasicPenguin : Enemy
 {
-    public EnemyStateMachine<EnemyPenguinStateEnum> StateMachine { get; private set; }
+    public EnemyStateMachine<EnemyPenguinStateEnum> StateMachine { get; private set; }  
 
     protected override void Awake()
     {

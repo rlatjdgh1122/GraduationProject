@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Define.Algorithem;
+
+[System.Serializable]
+public class Army
+{
+    public int Legion;
+    public List<Entity> Soldiers = new();
+}
 public class ArmySystem : MonoBehaviour
 {
     public static ArmySystem Instace;
+
     [SerializeField] private GameObject _crown;
-    [SerializeField] private List<Penguin> armyTrms = new();
-    [SerializeField] private List<Vector3> a = new();
+
+    [SerializeField] private List<Army> armies = new();
 
     private void Awake()
     {
@@ -15,39 +23,47 @@ public class ArmySystem : MonoBehaviour
     }
     private void Start()
     {
-        SetIdx();
+        foreach (var army in armies)
+        {
+            SetSoldersIdx(army.Legion);
+        }
     }
-    public void SetArmyMovePostiton(Vector3 startPos, int idx)
+
+    
+    public void SetArmyMovePostiton(Vector3 startPos, int idx, int legion) //¸¶¿ì½º À§Ä¡, Æë±Ï idx, Æë±Ï ±º´Ü ÀÌ¸§
     {
-        a.Clear();
-        var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, armyTrms.Count);
-        a.AddRange(trms);
-        for (int i = 0; i < armyTrms.Count; i++)
+        var soldiers = armies[legion].Soldiers;
+        var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
+
+        for (int i = 0; i < soldiers.Count; i++)
         {
             if (idx == i)
             {
-                var entity = armyTrms[i] as Entity;
+                var entity = soldiers[i];
                 entity.SetTarget(trms[i]);
             }
         }
     }
 
-    public void SetIdx()
+    public void SetSoldersIdx(int legion)
     {
-        for (int i = 0; i < armyTrms.Count; i++)
+        var soldiers = armies[legion].Soldiers;
+
+        for (int i = 0; i < soldiers.Count; i++)
         {
-            var entity = armyTrms[i] as Entity;
+            var entity = soldiers[i];
             entity.idx = i;
-            if (i == 0)
+            if (i == 0) //±º´ÜÀÇ ¿Õ¿¡°Õ ¿Õ°üÀÌ Áã¾îÁø´Ù
             {
-               Instantiate(_crown, entity.transform);
+                Instantiate(_crown, entity.transform);
             }
         }
     }
 
-    public void Remove(Penguin obj)
+    public void Remove(int legion, Entity obj)
     {
-        armyTrms.Remove(obj);
-        SetIdx();
+        var soldiers = armies[legion].Soldiers;
+        soldiers.Remove(obj);
+        SetSoldersIdx(legion);
     }
 }

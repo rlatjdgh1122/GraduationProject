@@ -77,7 +77,7 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void HandleHit()
     {
-        
+
     }
 
     protected virtual void Start()
@@ -111,7 +111,7 @@ public abstract class Entity : MonoBehaviour
         {
             Debug.Log("마우스 위치 : " + hit.point);
 
-            ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
+            ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx, 0);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
