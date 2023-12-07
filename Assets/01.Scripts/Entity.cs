@@ -14,7 +14,7 @@ public abstract class Entity : PoolableMono
     [SerializeField] protected LayerMask _whatIsWall;
     [SerializeField] protected Transform _wallChecker;
     [SerializeField] protected float _wallCheckDistance;
-    
+
     [Header("Knockback info")]
     [SerializeField] protected float _knockbackDuration;
     protected bool _isKnocked;
@@ -110,7 +110,7 @@ public abstract class Entity : PoolableMono
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
 
-            ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx, 0);
+            //ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx, 0);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();

@@ -8864,7 +8864,7 @@ MonoBehaviour:
   attackDistance: 1.5
   _arrowPrefab: {fileID: 0}
   _firePos: {fileID: 0}
-  HitEffect: {fileID: 0}
+  HitEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
@@ -8872,7 +8872,10 @@ MonoBehaviour:
       m_Calls: []
   moveSpeed: 3
   attackSpeed: 1
+  rotationSpeed: 2
+  nexusDistance: 0
   Target: {fileID: 721659704}
+  IsMove: 0
   IsDead: 0
 --- !u!4 &711536054
 Transform:
@@ -20355,7 +20358,7 @@ MonoBehaviour:
   attackDistance: 1.5
   _arrowPrefab: {fileID: 0}
   _firePos: {fileID: 0}
-  HitEffect: {fileID: 0}
+  HitEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
@@ -20363,7 +20366,10 @@ MonoBehaviour:
       m_Calls: []
   moveSpeed: 3
   attackSpeed: 1
+  rotationSpeed: 2
+  nexusDistance: 0
   Target: {fileID: 721659704}
+  IsMove: 0
   IsDead: 0
 --- !u!4 &1558977912
 Transform:
@@ -25617,6 +25623,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _crown: {fileID: 2452924120397455080, guid: 3c3f83f81f1522c4898a186bcd6bdf7e, type: 3}
+  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
+  ClickParticle: {fileID: 0}
   armies:
   - Legion: 0
     Soldiers:
@@ -25626,10 +25634,14 @@ MonoBehaviour:
     - {fileID: 240491013}
     - {fileID: 2129885077}
     - {fileID: 219803705}
+  - Legion: 1
+    Soldiers:
     - {fileID: 181466411}
     - {fileID: 482190189}
     - {fileID: 1314863715}
     - {fileID: 80769431}
+  - Legion: 2
+    Soldiers:
     - {fileID: 988516854}
     - {fileID: 1961899982}
     - {fileID: 886101289}
@@ -26004,7 +26016,7 @@ MonoBehaviour:
   attackDistance: 1.5
   _arrowPrefab: {fileID: 0}
   _firePos: {fileID: 0}
-  HitEffect: {fileID: 0}
+  HitEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
@@ -26012,7 +26024,10 @@ MonoBehaviour:
       m_Calls: []
   moveSpeed: 3
   attackSpeed: 1
+  rotationSpeed: 2
+  nexusDistance: 0
   Target: {fileID: 721659704}
+  IsMove: 0
   IsDead: 0
 --- !u!4 &2025391555
 Transform:
