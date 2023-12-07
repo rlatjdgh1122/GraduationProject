@@ -25,8 +25,7 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
 
     public void ChangeStateWhenHitted()
     {
-        if (_triggerCalled)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+        _stateMachine.ChangeState(EnemyPenguinStateEnum.MustChase);
     }
 
     public override void Exit()
