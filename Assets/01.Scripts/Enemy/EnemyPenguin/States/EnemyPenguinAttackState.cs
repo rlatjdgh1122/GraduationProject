@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EnemyBasicAttackState : EnemyBasicBaseState
+public class EnemyPenguinAttackState : EnemyPenguinBaseState
 {
-    public EnemyBasicAttackState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
+    public EnemyPenguinAttackState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
     }
@@ -12,7 +12,6 @@ public class EnemyBasicAttackState : EnemyBasicBaseState
         base.Enter();
         _triggerCalled = false;
         _enemy.StopImmediately();
-
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
@@ -20,10 +19,7 @@ public class EnemyBasicAttackState : EnemyBasicBaseState
     {
         base.UpdateState();
 
-        if (_enemy.ReachedNexus)
-            _enemy.LookAtNexus();
-        else
-            _enemy.LookTarget();
+        _enemy.LookTarget();
 
         if (_triggerCalled) //°ø°ÝÀÌ ÇÑ Â÷·Ê ³¡³µÀ» ¶§,
         {

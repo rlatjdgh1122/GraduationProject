@@ -13,7 +13,7 @@ public class EnemyArcherPenguin : Enemy
         foreach (EnemyPenguinStateEnum state in Enum.GetValues(typeof(EnemyPenguinStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"EnemyArcher{typeName}State");
+            Type t = Type.GetType($"EnemyPenguin{typeName}State");
             //리플렉션
             var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyPenguinStateEnum>;
 
