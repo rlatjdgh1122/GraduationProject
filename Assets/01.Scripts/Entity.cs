@@ -125,11 +125,8 @@ public abstract class Entity : PoolableMono
 
     public void MoveToTarget()
     {
-        Debug.Log("��������1");
         NavAgent.ResetPath();
-        Debug.Log("��������2");
         NavAgent.SetDestination(targetTrm);
-        Debug.Log("��������3");
     }
 
     public void StopImmediately()
