@@ -7,14 +7,14 @@ using UnityEngine.InputSystem;
 using Define.Algorithem;
 using System.Collections.Generic;
 
-public abstract class Entity : MonoBehaviour
+public abstract class Entity : PoolableMono
 {
     public int idx;
     [Header("Collision Info")]
     [SerializeField] protected LayerMask _whatIsWall;
     [SerializeField] protected Transform _wallChecker;
     [SerializeField] protected float _wallCheckDistance;
-
+    
     [Header("Knockback info")]
     [SerializeField] protected float _knockbackDuration;
     protected bool _isKnocked;
