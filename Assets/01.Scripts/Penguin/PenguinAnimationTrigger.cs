@@ -17,6 +17,11 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.Attack();
     }
 
+    private void RangeAttackTrigger()
+    {
+        _penguin.RangeAttack();
+    }
+
     public void DeadCompleteTrigger()
     {
         _penguin.enabled = false;

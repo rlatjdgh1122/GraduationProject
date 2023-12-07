@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using Define.Algorithem;
+using System.Collections.Generic;
 
 public abstract class Entity : MonoBehaviour
 {
+    public int idx;
     [Header("Collision Info")]
     [SerializeField] protected LayerMask _whatIsWall;
     [SerializeField] protected Transform _wallChecker;
@@ -20,6 +23,12 @@ public abstract class Entity : MonoBehaviour
     public Vector3 targetTrm;
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
+
+    [Header("RangeAttack Info")]
+    [SerializeField] protected Arrow _arrowPrefab;
+    [SerializeField] protected Transform _firePos;
+
+    public ParticleSystem HitEffect;
 
     #region 컴포넌트
     public Animator AnimatorCompo { get; private set; }
@@ -68,7 +77,7 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void HandleHit()
     {
-
+        
     }
 
     protected virtual void Start()
@@ -88,6 +97,11 @@ public abstract class Entity : MonoBehaviour
         DamageCasterCompo?.CastDamage();
     }
 
+    public virtual void RangeAttack()
+    {
+
+    }
+
     #region 이동 관련
     public void SetClickMovement()
     {
@@ -95,7 +109,10 @@ public abstract class Entity : MonoBehaviour
 
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
-            SetTarget(hit.point);
+            Debug.Log("마우스 위치 : " + hit.point);
+
+            ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
+
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
         }
@@ -109,13 +126,17 @@ public abstract class Entity : MonoBehaviour
 
     public void MoveToTarget()
     {
+        Debug.Log("움직여라1");
         NavAgent.ResetPath();
+        Debug.Log("움직여라2");
         NavAgent.SetDestination(targetTrm);
+        Debug.Log("움직여라3");
     }
 
     public void StopImmediately()
     {
-        NavAgent.isStopped = true;
+        if (NavAgent != null && enabled)
+            NavAgent.isStopped = true;
     }
     #endregion
 

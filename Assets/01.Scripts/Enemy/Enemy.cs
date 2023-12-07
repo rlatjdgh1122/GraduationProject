@@ -8,8 +8,15 @@ public abstract class Enemy : Entity
     [Header("Setting Values")]
     public float moveSpeed = 3f;
     public float attackSpeed = 1f;
+    public float rotationSpeed = 2f;
+
+    [SerializeField]
+    [Range(0.1f, 2f)]
+    protected float nexusDistance;
 
     public Penguin Target;
+
+    public bool IsMove = false;
 
     public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
@@ -17,7 +24,7 @@ public abstract class Enemy : Entity
 
     public bool IsTargetPlayerInside => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
     public bool IsAttackable => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
-    public bool ReachedNexus => Vector3.Distance(transform.position, NexusTarget.position) <= attackDistance;
+    public bool ReachedNexus => Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
 
     protected override void Awake()
     {
@@ -29,6 +36,13 @@ public abstract class Enemy : Entity
     public override void Attack()
     {
         base.Attack();
+    }
+
+    public override void RangeAttack()
+    {
+        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+        arrow.SetOwner(this, "Player");
+        arrow.Fire(_firePos.forward);
     }
 
     protected override void HandleDie()
@@ -80,13 +94,25 @@ public abstract class Enemy : Entity
 
     public void LookAtNexus()
     {
-        transform.LookAt(NexusTarget);
+        if (NexusTarget != null)
+        {
+            Vector3 directionToTarget = NexusTarget.transform.position - transform.position;
+
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
     public void LookTarget()
     {
-        //transform.Rotate(targetTrm);
         if (Target != null)
-            transform.LookAt(Target.transform.position);
+        {
+            Vector3 directionToTarget = Target.transform.position - transform.position;
+
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 }

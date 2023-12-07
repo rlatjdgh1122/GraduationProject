@@ -16,6 +16,11 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy.Attack();
     }
 
+    private void RangeAttackTrigger()
+    {
+        _enemy.RangeAttack();
+    }
+
     public void DeadCompleteTrigger()
     {
         _enemy.enabled = false;

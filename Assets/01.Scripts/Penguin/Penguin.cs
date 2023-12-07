@@ -11,7 +11,7 @@ public abstract class Penguin : Entity
 
     [Header("공격상태설정값")]
     public float attackCooldown;
-    [HideInInspector] public float lastTimeAttacked;
+    public float lastTimeAttacked = 0f;
 
     public Enemy Target;
 
@@ -36,6 +36,13 @@ public abstract class Penguin : Entity
     public override void Attack()
     {
         base.Attack();
+    }
+
+    public override void RangeAttack()
+    {
+        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+        arrow.SetOwner(this, "Enemy");
+        arrow.Fire(_firePos.forward);
     }
 
     public abstract void AnimationTrigger();
@@ -89,6 +96,7 @@ public abstract class Penguin : Entity
     protected override void HandleDie()
     {
         Debug.Log("쥬금");
+        ArmySystem.Instace.Remove(this);
         IsDead = true;
     }
 }

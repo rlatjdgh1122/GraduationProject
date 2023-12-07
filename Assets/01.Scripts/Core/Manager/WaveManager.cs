@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
@@ -8,26 +8,7 @@ using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
-    private static WaveManager _instance;
-
-    public static WaveManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<WaveManager>();
-
-                if (_instance == null)
-                {
-                    Debug.LogError("WaveManager ÀÎ½ºÅÏ½º¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
-                }
-            }
-            return _instance;
-        }
-    }
-
-    #region »ç¿ë º¯¼öµé
+    #region ì‚¬ìš© ë³€ìˆ˜ë“¤
 
     [Header("Wave Settings")]
     [SerializeField]
@@ -36,15 +17,15 @@ public class WaveManager : MonoBehaviour
     private IceMove _currentEnemyGround;
 
 
-    [Header("UI References")]
+    [Header("UI References")] //ì„ì‹œë¡œ ì—¬ê¸°ìˆì§€ë§Œ ë‚˜ì¤‘ì— UIManagerë¡œ ì˜®ê²¨ì•¼ í•œë‹¤.
     [SerializeField]
     private RectTransform clockHandImgTrm;
     [SerializeField]
-    private TextMeshProUGUI timeText, wavCntText;
+    private TextMeshProUGUI timeText, wavCntText, enemyCntText;
     [SerializeField]
     private RectTransform loseUI;
 
-    [Header("Å×½ºÆ® ¿ë")]
+    [Header("í…ŒìŠ¤íŠ¸ ìš©")]
     public bool isWin;
     [SerializeField]
     Color targetColor;
@@ -57,11 +38,32 @@ public class WaveManager : MonoBehaviour
     public event Action OnPhaseStartEvent = null;
     public event Action OnPhaseEndEvent = null;
 
+    private int maxEnemyCnt;
+
+    public int tsest;
+
     #endregion
+
+    private static WaveManager _instance;
+    public static WaveManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<WaveManager>();
+                if (_instance == null)
+                {
+                    Debug.LogError("WaveManager is Multiple.");
+                }
+            }
+            return _instance;
+        }
+    }
 
     private void Awake()
     {
-        if (_instance != this && _instance != null) // ½Ì±ÛÅæ
+        if (_instance != this && _instance != null) //  Ì±   
         {
             Destroy(gameObject);
         }
@@ -69,46 +71,48 @@ public class WaveManager : MonoBehaviour
         {
             _instance = this;
         }
-
-        OnPhaseStartEvent += OnPhaseStartHandle; // ÀüÅõÆäÀÌÁî ½ÃÀÛ ÀÌº¥Æ® ±¸µ¶
-        OnPhaseEndEvent += OnPhaseEndHandle;     // ÀüÅõÆäÀÌÁî Á¾·á ÀÌº¥Æ® ±¸µ¶
+        OnPhaseStartEvent += OnPhaseStartHandle; // ì „íˆ¬í˜ì´ì¦ˆ ì‹œì‘ ì´ë²¤íŠ¸ êµ¬ë…
+        OnPhaseEndEvent += OnPhaseEndHandle;     // ì „íˆ¬í˜ì´ì¦ˆ ì¢…ë£Œ ì´ë²¤íŠ¸ êµ¬ë…
     }
 
     private void Start()
     {
-        SetReadyTime(); // ½Ã°£ ÃÊ±âÈ­
+        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount; // í…ŒìŠ¤íŠ¸ìš©
+        SetReadyTime(); // ì‹œê°„ ì´ˆê¸°í™”
+        InvokePhaseEndEvent(isWin);
+
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // µğ¹ö±×¿ë
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            InvokePhaseEndEvent(isWin);
+            UpdateUIOnEnemyCount(tsest);
         }
     }
 
-    private void SetReadyTime() // ÁØºñ ½Ã°£À» ÃÊ±âÈ­ÇÑ´Ù.
+    private void SetReadyTime() // ì¤€ë¹„ ì‹œê°„ì„ ì´ˆê¸°í™”í•œë‹¤.
     {
         remainingPhaseReadyTime = maxPhaseReadyTime;
     }
 
-    private void OnPhaseStartHandle() // ÀüÅõÆäÀÌÁî ½ÃÀÛ
+    private void OnPhaseStartHandle() // ì „íˆ¬í˜ì´ì¦ˆ ì‹œì‘
     {
         isPhase = true;
-        wavCntText.SetText($"Current Wave:{waveCnt}");
-        RotateClockHand(new Vector3(0, 0, 90), 0.7f, Ease.InOutElastic, SpawnEnemy); // ÀûÀÇ ¼öÀÇ ºñ·ÊÇØ¼­ ½Ã°è µ¹¾Æ°¡µµ·Ï ¹Ù²Ü °Í
+        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount;
+        wavCntText.SetText($"Current Wave: {waveCnt}");
     }
 
-    private void OnPhaseEndHandle() // ÀüÅõÆäÀÌÁî Á¾·á
+    private void OnPhaseEndHandle() // ì „íˆ¬í˜ì´ì¦ˆ ì¢…ë£Œ
     {
         isPhase = false;
 
         if (isWin)
         {
             waveCnt++;
-            wavCntText.SetText($"Next Wave:{waveCnt}");
+            wavCntText.SetText($"Next Wave: {waveCnt}");
             GetReward();
-            RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
+            UpdateUIOnEnemyCount();
         }
         else
         {
@@ -123,23 +127,23 @@ public class WaveManager : MonoBehaviour
         loseUI.gameObject.SetActive(true);
     }
 
-    private void GetReward() // º¸»ó È¹µæ ÇÔ¼ö
+    private void GetReward() // ë³´ìƒ íšë“ í•¨ìˆ˜
     {
-        //¿©±â¼­ ¹¹ ³»¶¥ÀÇ ÀÚ½ÄÀ¸·Î µÎ°Å³ª ÇØ¼­ ³»¶¥À¸·Î ¸¸µé¾î¾ßÇÒµí
+        //ì—¬ê¸°ì„œ ë­ ë‚´ë•…ì˜ ìì‹ìœ¼ë¡œ ë‘ê±°ë‚˜ í•´ì„œ ë‚´ë•…ìœ¼ë¡œ ë§Œë“¤ì–´ì•¼í• ë“¯
 
-        ShowEffect(); // ÀÌÆåÆ®
+        ShowEffect(); // ì´í™íŠ¸
     }
 
-    private void ShowEffect() // ÀÌÆåÆ®
+    private void ShowEffect() // ì´í™íŠ¸
     {
-        try //ÀüÅõ¿¡¼­ ÀÌ°å´Ù¸é ÀûÀÇ ¶¥À» Èí¼öÇÑ´Ù. (»öÀ» ¹Ù²Ş)
+        try // ì „íˆ¬ì—ì„œ ì´ê²¼ë‹¤ë©´ ì ì˜ ë•…ì„ í¡ìˆ˜í•œë‹¤. (ìƒ‰ì„ ë°”ê¿ˆ)
         {
             _currentEnemyGround?.EndWave();
 
             var mr = _currentEnemyGround.GetComponent<MeshRenderer>();
             Color color = mr.material.color;
 
-            DOTween.To(() => color, c => color = c, targetColor, 0.7f).OnUpdate(() =>
+            DOTween.To(() => color, c => color = c, targetColor, 3f).OnUpdate(() =>
             {
                 mr.material.color = color;
             });
@@ -147,73 +151,67 @@ public class WaveManager : MonoBehaviour
         }
         catch
         {
-            Debug.Log("MeshRenderer is Missing Or First Wave");
+            Debug.Log("MeshRenderer is Missing Or Current Wave is First Wave");
         }
     }
 
-    private void StartPhaseReadyRoutine() // ÁØºñ½Ã°£ °è»ê ÄÚ·çÆ¾ ½ÇÇà¿ë ÇÔ¼ö
+    private void StartPhaseReadyRoutine() // ì¤€ë¹„ì‹œê°„ ê³„ì‚° ì½”ë£¨í‹´ ì‹¤í–‰ìš© í•¨ìˆ˜
     {
         StartCoroutine(PhaseReadyRoutine());
     }
 
-    private IEnumerator PhaseReadyRoutine() // ÁØºñ½Ã°£ °è»ê ÄÚ·çÆ¾
+    private IEnumerator PhaseReadyRoutine() // ì¤€ë¹„ì‹œê°„ ê³„ì‚° ì½”ë£¨í‹´
     {
-        while (remainingPhaseReadyTime >= 0) // ÇöÀç ³²Àº ÁØºñ ½Ã°£ÀÌ 0º¸´Ù Å©´Ù¸é
+        while (remainingPhaseReadyTime >= 0) // í˜„ì¬ ë‚¨ì€ ì¤€ë¹„ ì‹œê°„ì´ 0ë³´ë‹¤ í¬ë‹¤ë©´
         {
-            UpdateClockHandRotation(); // ½Ã°è¸¦ ¾÷µ¥ÀÌÆ®
-            UpdateTimeText(); // ½Ã°£ ÅØ½ºÆ® ¾÷µ¥ÀÌÆ®
+            UpdateClockHandRotation(); // ì‹œê³„ë¥¼ ì—…ë°ì´íŠ¸
+            UpdateTimeText(); // ì‹œê°„ í…ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸
 
-            yield return new WaitForSeconds(1.0f); // 1ÃÊÈÄ
-            remainingPhaseReadyTime--; // ³²Àº ÁØºñ½Ã°£ -1
+            yield return new WaitForSeconds(1.0f); // 1ì´ˆí›„
+            remainingPhaseReadyTime--; // ë‚¨ì€ ì¤€ë¹„ì‹œê°„ -1
         }
 
-        // ÁØºñ½Ã°£ÀÌ ³¡³µ´Ù¸é
+        // ì¤€ë¹„ì‹œê°„ì´ ëë‚¬ë‹¤ë©´
 
-        SetReadyTime(); // ³²Àº ÁØºñ½Ã°£ ÃÊ±âÈ­
-        InvokePhaseStartEvent(); // ÀüÅõ ÆäÀÌÁî ½ÃÀÛ
+        SetReadyTime(); // ë‚¨ì€ ì¤€ë¹„ì‹œê°„ ì´ˆê¸°í™”
+        InvokePhaseStartEvent(); // ì „íˆ¬ í˜ì´ì¦ˆ ì‹œì‘
     }
 
-    private void UpdateClockHandRotation() // ½Ã°è ¾÷µ¥ÀÌÆ®
+    private void UpdateClockHandRotation() // ì‹œê³„ ì—…ë°ì´íŠ¸
     {
-        // È¸ÀüÇÒ °ª
+        // íšŒì „í•  ê°’
         float rotationAngle = Mathf.Lerp(0,
                                          -180,
                                          1f - (remainingPhaseReadyTime / (float)maxPhaseReadyTime));
-        RotateClockHand(new Vector3(0, 0, rotationAngle), 1f, Ease.Linear); // °è»êµÈ °ªÀ¸·Î È¸Àü
+        RotateClockHand(new Vector3(0, 0, rotationAngle), 1f, Ease.Linear); // ê³„ì‚°ëœ ê°’ìœ¼ë¡œ íšŒì „
     }
 
-    private void UpdateTimeText() // ½Ã°£ ÅØ½ºÆ® ¾÷µ¥ÀÌÆ®
+    private void UpdateTimeText() // ì‹œê°„ í…ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸
     {
-        int minutes = remainingPhaseReadyTime / 60;          // ºĞ
-        int remainingSeconds = remainingPhaseReadyTime % 60; // ÃÊ
+        int minutes = remainingPhaseReadyTime / 60;          // ë¶„
+        int remainingSeconds = remainingPhaseReadyTime % 60; // ì´ˆ
 
-        if (minutes > 0) { timeText.SetText($"{minutes}:{remainingSeconds}"); } //ºĞÀ¸·Î ³ªÅ¸³¾ ¼ö ÀÖ´Ù¸é ºĞ±îÁö ³ªÅ¸³½´Ù.
+        if (minutes > 0) { timeText.SetText($"{minutes}: {remainingSeconds}"); } //ë¶„ìœ¼ë¡œ ë‚˜íƒ€ë‚¼ ìˆ˜ ìˆë‹¤ë©´ ë¶„ê¹Œì§€ ë‚˜íƒ€ë‚¸ë‹¤.
         else { timeText.SetText($"{remainingSeconds}"); }
     }
 
-    private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // ½Ã°è ¾÷µ¥ÀÌÆ®
+    private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // ì‹œê³„ ì—…ë°ì´íŠ¸
     {
         clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
         {
-            foreach (var action in actions) //½ÇÇàÇÒ ÇÔ¼ö°¡ ÀÖ´Ù¸é ½ÇÇà
+            foreach (var action in actions) //ì‹¤í–‰í•  í•¨ìˆ˜ê°€ ìˆë‹¤ë©´ ì‹¤í–‰
             {
                 action?.Invoke();
             }
         });
     }
 
-    private void SpawnEnemy()
-    {
-        // Àû »ı¼º
-        Debug.Log("Àû »ı¼º");
-    }
-
-    public void InvokePhaseStartEvent() // ÀüÅõÆäÀÌÁî ½ÃÀÛ ÀÌº¥Æ® ½ÇÇà¿ë ÇÔ¼ö
+    public void InvokePhaseStartEvent() // ì „íˆ¬í˜ì´ì¦ˆ ì‹œì‘ ì´ë²¤íŠ¸ ì‹¤í–‰ìš© í•¨ìˆ˜
     {
         OnPhaseStartEvent?.Invoke();
     }
 
-    public void InvokePhaseEndEvent(bool _isWin) // ÀüÅõÆäÀÌÁî Á¾·á ÀÌº¥Æ® ½ÇÇà¿ë ÇÔ¼ö
+    public void InvokePhaseEndEvent(bool _isWin) // ì „íˆ¬í˜ì´ì¦ˆ ì¢…ë£Œ ì´ë²¤íŠ¸ ì‹¤í–‰ìš© í•¨ìˆ˜
     {
         isWin = _isWin;
         OnPhaseEndEvent?.Invoke();
@@ -225,8 +223,30 @@ public class WaveManager : MonoBehaviour
         OnPhaseEndEvent -= OnPhaseEndHandle;
     }
 
-    public void SetCurrentEnemyGround(IceMove ice) // ³ªÁß¿¡ ¹Ù²Üµí
+    public void SetCurrentEnemyGround(IceMove ice)
     {
         _currentEnemyGround = ice;
+    }
+
+    public void UpdateUIOnEnemyCount(int? a = null)
+    {
+        int enemyCnt = a ?? GameManager.Instance.GetEnemyPenguinCount;
+
+        if (enemyCnt == maxEnemyCnt)
+        {
+            RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
+        }
+        else if (enemyCnt <= 0)
+        {
+            InvokePhaseEndEvent(true);
+        }
+        else
+        {
+            float rotationAngle = -(180 / maxEnemyCnt) * (maxEnemyCnt - enemyCnt) + 180;
+            Vector3 rotationVec = new Vector3(0, 0, rotationAngle);
+            RotateClockHand(rotationVec, 0.2f, Ease.Linear);
+        }
+
+        enemyCntText.SetText($"Enemy: {enemyCnt}");
     }
 }

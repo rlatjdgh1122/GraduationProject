@@ -3,6 +3,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class IceMove : MonoBehaviour
@@ -14,6 +15,7 @@ public class IceMove : MonoBehaviour
     [SerializeField]
     private float cameraZoomFOV;
     private float originalFOV;
+    Transform _originalCameraLookatTrm;
 
     bool isMoving => Vector3.Distance(glacierPos.position, hexagonPos.transform.position) > 0.1f;
 
@@ -21,11 +23,15 @@ public class IceMove : MonoBehaviour
     Vector3 dir;
     Color startColor;
     Color targetColor;
+
+    private NavMeshSurface _NM;
+
     private void Awake()
     {
         hexagonPos = GameObject.Find("HexagonPos");
         _outline = GetComponent<Outline>();
         _virtualCam = GameObject.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>();
+        _NM = GetComponent<NavMeshSurface>();
     }
 
     private void Start()
@@ -36,6 +42,7 @@ public class IceMove : MonoBehaviour
 
         dir = hexagonPos.transform.position - glacierPos.position;
         originalFOV = _virtualCam.m_Lens.FieldOfView;
+        _originalCameraLookatTrm = _virtualCam.LookAt;
 
         WaveManager.Instance.OnPhaseStartEvent += GroundMoveHandle;
     }
@@ -73,6 +80,8 @@ public class IceMove : MonoBehaviour
         // ¡‹∂Ø∞Â¥¯∞≈ «ÆæÓ¡‹
         DOTween.To(() => _virtualCam.m_Lens.FieldOfView, fov => _virtualCam.m_Lens.FieldOfView = fov,
                         originalFOV, 0.7f);
+
+        _virtualCam.LookAt = _originalCameraLookatTrm;
 
         // ∫˘«œ ¿Ãµø ±∏µ∂ «ÿ¡¶
         WaveManager.Instance.OnPhaseStartEvent -= GroundMoveHandle;
