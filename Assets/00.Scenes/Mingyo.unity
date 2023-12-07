@@ -1757,6 +1757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd80ed9baef8a1046a619c62f2be958c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idx: 0
   _whatIsWall:
     serializedVersion: 2
     m_Bits: 64
@@ -1766,6 +1767,9 @@ MonoBehaviour:
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 4
   attackDistance: 1.5
+  _arrowPrefab: {fileID: 0}
+  _firePos: {fileID: 0}
+  HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
@@ -1773,7 +1777,10 @@ MonoBehaviour:
       m_Calls: []
   moveSpeed: 3
   attackSpeed: 1
-  Target: {fileID: 1284565338}
+  rotationSpeed: 2
+  nexusDistance: 0
+  Target: {fileID: 0}
+  IsMove: 0
   IsDead: 0
 --- !u!1001 &223721480
 PrefabInstance:
@@ -2314,28 +2321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatIsWall:
-    serializedVersion: 2
-    m_Bits: 64
-  _wallChecker: {fileID: 54252755}
-  _wallCheckDistance: 1.5
-  _knockbackDuration: 0
-  targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 5
-  attackDistance: 1.1
-  ClickParticle: {fileID: 842550232}
-  _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
-  OnHealthBarChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  moveSpeed: 4
-  attackSpeed: 1.5
-  attackCooldown: 0.5
-  lastTimeAttacked: 0
-  Target: {fileID: 0}
-  IsClickToMoving: 0
-  IsDead: 0
-  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!1 &286890518
 GameObject:
   m_ObjectHideFlags: 0
@@ -3221,7 +3206,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1749951384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &474356245
 MonoBehaviour:
@@ -5488,12 +5473,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834966438}
   m_CullTransparentMesh: 1
---- !u!198 &842550232 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6754137205956544435, guid: d690782f2707dc746a5945b9145319db,
-    type: 3}
-  m_PrefabInstance: {fileID: 532978701}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &845930547
 GameObject:
   m_ObjectHideFlags: 0
@@ -7531,6 +7510,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 271840473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1194391568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1194391570}
+  - component: {fileID: 1194391569}
+  m_Layer: 0
+  m_Name: UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1194391569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194391568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 766323a3ee3c7214cbf3c8fd18d0a9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnUI: {fileID: 1616049499}
+  onSpawnUIYPosValue: 320
+--- !u!4 &1194391570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194391568}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1196754925
 GameObject:
   m_ObjectHideFlags: 0
@@ -8205,28 +8230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatIsWall:
-    serializedVersion: 2
-    m_Bits: 64
-  _wallChecker: {fileID: 927704180}
-  _wallCheckDistance: 1.5
-  _knockbackDuration: 0
-  targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 5
-  attackDistance: 1.1
-  ClickParticle: {fileID: 842550232}
-  _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
-  OnHealthBarChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  moveSpeed: 4
-  attackSpeed: 1.5
-  attackCooldown: 0.5
-  lastTimeAttacked: 0
-  Target: {fileID: 0}
-  IsClickToMoving: 0
-  IsDead: 0
-  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!195 &1284565339
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8579,6 +8582,50 @@ Transform:
   - {fileID: 1685773685}
   m_Father: {fileID: 2110121243}
   m_LocalEulerAnglesHint: {x: 21.839128, y: -54.41238, z: -52.441654}
+--- !u!1 &1341371908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1341371909}
+  - component: {fileID: 1341371910}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1341371909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341371908}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1749951384}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1341371910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341371908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f62f7d1ccf7d14a82e9946be691c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1345890425
 GameObject:
   m_ObjectHideFlags: 0
@@ -8870,6 +8917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd80ed9baef8a1046a619c62f2be958c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idx: 0
   _whatIsWall:
     serializedVersion: 2
     m_Bits: 64
@@ -8879,6 +8927,9 @@ MonoBehaviour:
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 4
   attackDistance: 1.5
+  _arrowPrefab: {fileID: 0}
+  _firePos: {fileID: 0}
+  HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
@@ -8886,7 +8937,10 @@ MonoBehaviour:
       m_Calls: []
   moveSpeed: 3
   attackSpeed: 1
-  Target: {fileID: 1284565338}
+  rotationSpeed: 2
+  nexusDistance: 0
+  Target: {fileID: 0}
+  IsMove: 0
   IsDead: 0
 --- !u!1 &1420877243
 GameObject:
@@ -9813,28 +9867,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatIsWall:
-    serializedVersion: 2
-    m_Bits: 64
-  _wallChecker: {fileID: 2108214193}
-  _wallCheckDistance: 1.5
-  _knockbackDuration: 0
-  targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 5
-  attackDistance: 1.1
-  ClickParticle: {fileID: 842550232}
-  _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
-  OnHealthBarChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  moveSpeed: 4
-  attackSpeed: 1.5
-  attackCooldown: 0.5
-  lastTimeAttacked: 0
-  Target: {fileID: 0}
-  IsClickToMoving: 0
-  IsDead: 0
-  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!1 &1559462965
 GameObject:
   m_ObjectHideFlags: 0
@@ -11433,6 +11465,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2120751104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1749951383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1749951384}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1749951384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749951383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 474356244}
+  - {fileID: 1341371909}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1757644929
 GameObject:
   m_ObjectHideFlags: 0
@@ -12249,6 +12314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd80ed9baef8a1046a619c62f2be958c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idx: 0
   _whatIsWall:
     serializedVersion: 2
     m_Bits: 64
@@ -12258,6 +12324,9 @@ MonoBehaviour:
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 4
   attackDistance: 1.5
+  _arrowPrefab: {fileID: 0}
+  _firePos: {fileID: 0}
+  HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
@@ -12265,7 +12334,10 @@ MonoBehaviour:
       m_Calls: []
   moveSpeed: 3
   attackSpeed: 1
-  Target: {fileID: 1284565338}
+  rotationSpeed: 2
+  nexusDistance: 0
+  Target: {fileID: 0}
+  IsMove: 0
   IsDead: 0
 --- !u!1 &1945019818
 GameObject:
@@ -14134,4 +14206,5 @@ SceneRoots:
   - {fileID: 223721480}
   - {fileID: 1283215788}
   - {fileID: 532978701}
-  - {fileID: 474356244}
+  - {fileID: 1749951384}
+  - {fileID: 1194391570}
