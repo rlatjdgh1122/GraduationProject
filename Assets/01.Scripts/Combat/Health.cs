@@ -23,10 +23,9 @@ public class Health : MonoBehaviour, IDamageable
         _isDead = false;
     }
 
-    public void SetOwner(Entity owner)
+    public void SetOwner(BaseStat owner)
     {
-        _owner = owner;
-        _currentHealth = maxHealth = _owner.Stat.GetMaxHealthValue();
+        _currentHealth = maxHealth = owner.GetMaxHealthValue();
     }
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
