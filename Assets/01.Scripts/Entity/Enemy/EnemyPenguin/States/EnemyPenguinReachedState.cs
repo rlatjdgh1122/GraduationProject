@@ -14,6 +14,7 @@ public class EnemyPenguinReachedState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = false;
+        _enemy.HealthCompo.OnHit += ChangeStateWhenHitted;
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
@@ -33,8 +34,14 @@ public class EnemyPenguinReachedState : EnemyPenguinBaseState
         }
     }
 
+    public void ChangeStateWhenHitted()
+    {
+        _stateMachine.ChangeState(EnemyPenguinStateEnum.MustChase);
+    }
+
     public override void Exit()
     {
+        _enemy.HealthCompo.OnHit -= ChangeStateWhenHitted;
         _enemy.AnimatorCompo.speed = 1;
         base.Exit();
     }

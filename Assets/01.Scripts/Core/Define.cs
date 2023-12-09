@@ -3,6 +3,14 @@ using UnityEngine;
 
 namespace Define
 {
+    namespace CamDefine
+    {
+        public static class Cam
+        {
+            public static Camera MainCam => Camera.main;
+        }
+    }
+
     namespace Algorithem
     {
         public static class Algorithm
