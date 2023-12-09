@@ -25,17 +25,13 @@ public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
     {
         base.UpdateState();
 
-        if (_enemy.IsTargetPlayerInside && _enemy.Target != null)
+        if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
 
         if (_enemy.NavAgent.remainingDistance < 0.1f && !_enemy.NavAgent.pathPending)
         {
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
         }
-
-
-        if (_enemy.IsDead)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
     }
 
     public override void Exit()
