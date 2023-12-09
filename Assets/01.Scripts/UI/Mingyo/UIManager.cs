@@ -1,8 +1,11 @@
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -19,6 +22,20 @@ public class UIManager : Singleton<UIManager>
             {
                 action?.Invoke();
             }
+        });
+    }
+
+    public void ButtonCooldown(SpawnPenguinBtnInfo btnInfo, Action spawnAction)
+    {
+        btnInfo.Btn.interactable = false;
+        btnInfo.CoolingImg.fillAmount = 1f;
+
+        Debug.Log(btnInfo.CoolingImg);
+
+        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
+        {
+            spawnAction?.Invoke();
+            btnInfo.Btn.interactable = true;
         });
     }
 

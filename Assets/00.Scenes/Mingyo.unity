@@ -870,6 +870,7 @@ GameObject:
   - component: {fileID: 120445745}
   - component: {fileID: 120445744}
   - component: {fileID: 120445743}
+  - component: {fileID: 120445746}
   m_Layer: 5
   m_Name: Basic
   m_TagString: Untagged
@@ -946,7 +947,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1194391569}
         m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: MeleePenguinSpawnHandler
+        m_MethodName: BasicPenguinSpawnHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -994,6 +995,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120445741}
   m_CullTransparentMesh: 1
+--- !u!114 &120445746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120445741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolingimg: {fileID: 291900137}
+  cooltime: 5
 --- !u!1 &127990501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,6 +2130,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idx: 0
+  _whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
+  _wallChecker: {fileID: 0}
+  _wallCheckDistance: 0
+  _knockbackDuration: 0
+  targetTrm: {x: 0, y: 0, z: 0}
+  innerDistance: 4
+  attackDistance: 1.5
+  _arrowPrefab: {fileID: 0}
+  _firePos: {fileID: 0}
+  HitEffect: {fileID: 0}
+  ClickParticle: {fileID: 0}
+  _characterStat: {fileID: 0}
+  OnHealthBarChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeed: 4.5
+  attackSpeed: 1
+  attackCooldown: 0
+  lastTimeAttacked: 0
+  Target: {fileID: 0}
+  IsClickToMoving: 0
+  IsDead: 0
+  _inputReader: {fileID: 0}
 --- !u!1 &286890518
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,6 +3057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingList: {fileID: 11400000, guid: 836dad901748ff549960a9dea266bd46, type: 2}
   mainUI: {fileID: 0}
+  _poolingListSO: {fileID: 11400000, guid: 07de459dc533c5d4f90da9a22e6f7b16, type: 2}
 --- !u!1 &492934488
 GameObject:
   m_ObjectHideFlags: 0
@@ -3435,9 +3477,9 @@ MonoBehaviour:
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
   _maxHitCount: 2
-  whatIsEnemy:
+  whatIsHitable:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 0
 --- !u!1 &563932778
 GameObject:
   m_ObjectHideFlags: 0
@@ -3487,9 +3529,9 @@ MonoBehaviour:
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
   _maxHitCount: 2
-  whatIsEnemy:
+  whatIsHitable:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 0
 --- !u!1 &566098781
 GameObject:
   m_ObjectHideFlags: 0
@@ -5535,6 +5577,7 @@ GameObject:
   - component: {fileID: 891282472}
   - component: {fileID: 891282471}
   - component: {fileID: 891282470}
+  - component: {fileID: 891282473}
   m_Layer: 5
   m_Name: Archer
   m_TagString: Untagged
@@ -5611,7 +5654,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1194391569}
         m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: LongDistanceSpawnHandler
+        m_MethodName: ArcherPenguinSpawnHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5659,6 +5702,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891282468}
   m_CullTransparentMesh: 1
+--- !u!114 &891282473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891282468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolingimg: {fileID: 854067347}
+  cooltime: 10
 --- !u!1 &894142668
 GameObject:
   m_ObjectHideFlags: 0
@@ -7477,6 +7534,7 @@ MonoBehaviour:
   _spawnUI: {fileID: 1616049499}
   _spawnPoint: {fileID: 1192132426}
   onSpawnUIYPosValue: 320
+  _btnTrm: {fileID: 1024605541}
 --- !u!4 &1194391570
 Transform:
   m_ObjectHideFlags: 0
@@ -7690,9 +7748,9 @@ MonoBehaviour:
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
   _maxHitCount: 25
-  whatIsEnemy:
+  whatIsHitable:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 0
 --- !u!1 &1208940591
 GameObject:
   m_ObjectHideFlags: 0
@@ -8166,6 +8224,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idx: 0
+  _whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
+  _wallChecker: {fileID: 0}
+  _wallCheckDistance: 0
+  _knockbackDuration: 0
+  targetTrm: {x: 0, y: 0, z: 0}
+  innerDistance: 4
+  attackDistance: 1.5
+  _arrowPrefab: {fileID: 0}
+  _firePos: {fileID: 0}
+  HitEffect: {fileID: 0}
+  ClickParticle: {fileID: 0}
+  _characterStat: {fileID: 0}
+  OnHealthBarChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeed: 4.5
+  attackSpeed: 1
+  attackCooldown: 0
+  lastTimeAttacked: 0
+  Target: {fileID: 0}
+  IsClickToMoving: 0
+  IsDead: 0
+  _inputReader: {fileID: 0}
 --- !u!195 &1284565339
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9258,9 +9342,9 @@ MonoBehaviour:
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
   _maxHitCount: 25
-  whatIsEnemy:
+  whatIsHitable:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 0
 --- !u!1 &1458821187
 GameObject:
   m_ObjectHideFlags: 0
@@ -9939,6 +10023,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idx: 0
+  _whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
+  _wallChecker: {fileID: 0}
+  _wallCheckDistance: 0
+  _knockbackDuration: 0
+  targetTrm: {x: 0, y: 0, z: 0}
+  innerDistance: 4
+  attackDistance: 1.5
+  _arrowPrefab: {fileID: 0}
+  _firePos: {fileID: 0}
+  HitEffect: {fileID: 0}
+  ClickParticle: {fileID: 0}
+  _characterStat: {fileID: 0}
+  OnHealthBarChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeed: 4.5
+  attackSpeed: 1
+  attackCooldown: 0
+  lastTimeAttacked: 0
+  Target: {fileID: 0}
+  IsClickToMoving: 0
+  IsDead: 0
+  _inputReader: {fileID: 0}
 --- !u!1 &1559462965
 GameObject:
   m_ObjectHideFlags: 0
@@ -10191,9 +10301,9 @@ MonoBehaviour:
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
   _maxHitCount: 25
-  whatIsEnemy:
+  whatIsHitable:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 0
 --- !u!1 &1576370968
 GameObject:
   m_ObjectHideFlags: 0
@@ -12644,9 +12754,9 @@ MonoBehaviour:
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
   _maxHitCount: 2
-  whatIsEnemy:
+  whatIsHitable:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 0
 --- !u!1 &2003352384
 GameObject:
   m_ObjectHideFlags: 0
