@@ -136,7 +136,7 @@ public abstract class Entity : PoolableMono
 
     public void StopImmediately()
     {
-        if (NavAgent != null && enabled)
+        if (NavAgent.isActiveAndEnabled)
             NavAgent.isStopped = true;
     }
     #endregion
