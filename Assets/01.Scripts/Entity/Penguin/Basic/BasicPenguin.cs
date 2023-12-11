@@ -12,7 +12,7 @@ public enum BasicPenguinStateEnum
 
 public class BasicPenguin : Penguin
 {
-    public PenguinStateMachine<BasicPenguinStateEnum> StateMachine { get; private set; }
+    public PenguinStateMachine<BasicPenguinStateEnum> StateMachine { get; private set; }  
 
     protected override void Awake()
     {

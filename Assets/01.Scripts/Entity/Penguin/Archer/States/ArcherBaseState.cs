@@ -28,7 +28,7 @@ public class ArcherBaseState : PenguinState<ArcherPenguinStateEnum>
         if (!_penguin.IsDead)
         {
             if (_penguin.IsInTargetRange || _penguin.IsAttackRange) _penguin.IsClickToMoving = true;
-            _penguin.SetClickMovement();
+            //_penguin.SetClickMovement();
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Move);
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.UI.GridLayoutGroup;
 
-public class Arrow : MonoBehaviour
+public class Arrow : MonoBehaviour  
 {
     [SerializeField] private float _bulletPower;
 
