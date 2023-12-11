@@ -12,7 +12,6 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
-        _enemy.HealthCompo.OnHit += ChangeStateWhenHitted;
     }
 
     public override void UpdateState()
@@ -23,14 +22,8 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead); //Á×À¸¸é Dead State·Î
     }
 
-    public void ChangeStateWhenHitted()
-    {
-        _stateMachine.ChangeState(EnemyPenguinStateEnum.MustChase);
-    }
-
     public override void Exit()
     {
         base.Exit();
-        _enemy.HealthCompo.OnHit -= ChangeStateWhenHitted;
     }
 }

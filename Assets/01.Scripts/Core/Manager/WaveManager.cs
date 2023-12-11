@@ -37,6 +37,7 @@ public class WaveManager : MonoBehaviour
 
     public event Action OnPhaseStartEvent = null;
     public event Action OnPhaseEndEvent = null;
+    public event Action OnIceArrivedEvent = null;
 
     private int maxEnemyCnt;
 
@@ -215,6 +216,11 @@ public class WaveManager : MonoBehaviour
     {
         isWin = _isWin;
         OnPhaseEndEvent?.Invoke();
+    }
+
+    public void OnIceArrivedEventHanlder()
+    {
+        OnIceArrivedEvent?.Invoke();
     }
 
     private void OnDisable()
