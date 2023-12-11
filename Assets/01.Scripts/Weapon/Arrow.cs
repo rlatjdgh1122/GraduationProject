@@ -50,5 +50,9 @@ public class Arrow : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }  
+        else if (!other.CompareTag("Enemy") && !other.CompareTag("Player"))
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
