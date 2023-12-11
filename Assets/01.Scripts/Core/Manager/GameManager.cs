@@ -14,6 +14,9 @@ public class GameManager : Singleton<GameManager>
     [Header("스크립트들")]
     [SerializeField] private MainUI mainUI = null;
 
+    [SerializeField]
+    private PoolingListSO _poolingListSO;
+
     //private void Start()
     //{
     //    buildingList.BuildingItems.ForEach(item =>
@@ -23,6 +26,11 @@ public class GameManager : Singleton<GameManager>
     //    });
     //    Init();
     //}
+
+    private void Start()
+    {
+        MakePool();
+    }
 
     public Building GetBuildingFormName(string buildingName)
     {
@@ -46,5 +54,12 @@ public class GameManager : Singleton<GameManager>
     public override void Init()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void MakePool()
+    {
+        PoolManager.Instance = new PoolManager(transform);
+
+        _poolingListSO.List.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount)); //리스트에 있는 모든
     }
 }
