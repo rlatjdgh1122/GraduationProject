@@ -11,7 +11,7 @@ public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //»ó¼Ó¹Þ±â À§Ç
     public override void Enter()
     {
         base.Enter();
-       // _penguin.Input.ClickEvent += HandleClick;
+        _penguin.Input.ClickEvent += HandleClick;
     }
 
     public override void UpdateState()
@@ -27,7 +27,7 @@ public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //»ó¼Ó¹Þ±â À§Ç
         if (!_penguin.IsDead)
         {
             if (_penguin.IsInTargetRange || _penguin.IsAttackRange) _penguin.IsClickToMoving = true;
-            _penguin.SetClickMovement();
+            //_penguin.SetClickMovement();
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         }
     }
@@ -35,6 +35,6 @@ public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //»ó¼Ó¹Þ±â À§Ç
     public override void Exit()
     {
         base.Exit();
-        //_penguin.Input.ClickEvent -= HandleClick;
+        _penguin.Input.ClickEvent -= HandleClick;
     }
 }

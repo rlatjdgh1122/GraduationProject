@@ -51,14 +51,14 @@ public class ArmySystem : MonoBehaviour
 
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
-            SetArmyMovePostiton(hit.point, 0, curLegion);
+            SetArmyMovePostiton(hit.point, curLegion);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
         }
     }
 
-    public void SetArmyMovePostiton(Vector3 startPos, int idx, int legion) //���콺 ��ġ, ��� idx, ��� ���� �̸�
+    public void SetArmyMovePostiton(Vector3 startPos, int legion) //���콺 ��ġ, ��� idx, ��� ���� �̸�
     {
         var soldiers = armies[legion].Soldiers;
         var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
