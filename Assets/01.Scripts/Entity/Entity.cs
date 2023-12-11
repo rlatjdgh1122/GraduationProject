@@ -111,7 +111,6 @@ public abstract class Entity : PoolableMono
 
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
-            Debug.Log("마우스 위치 : " + hit.point);
             ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
@@ -127,11 +126,8 @@ public abstract class Entity : PoolableMono
 
     public void MoveToTarget()
     {
-        Debug.Log("움직여라1");
         NavAgent.ResetPath();
-        Debug.Log("움직여라2");
         NavAgent.SetDestination(targetTrm);
-        Debug.Log("움직여라3");
     }
 
     public void StopImmediately()
