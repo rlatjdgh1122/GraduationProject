@@ -546,11 +546,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
-  _currentHealth: 0
+  currentHealth: 0
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
-  OnHitEvent:
+  OnUIUpdate:
     m_PersistentCalls:
       m_Calls: []
 --- !u!143 &8294540095052450964
@@ -598,7 +598,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1.33
-  m_BaseOffset: -0
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &2489154852780807051

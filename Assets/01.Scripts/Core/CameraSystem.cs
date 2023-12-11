@@ -19,9 +19,12 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float fieldOfViewMin = 10;
 
     [Header("카메라 회전")]
-    [SerializeField] private float _rotateSpeed = 300f;
+    [Range(0.1f, 9f)]
+    [SerializeField] private float _rotateSpeed;
 
     private float targetFieldOfView = 50f;
+    private bool isRotating = false;
+    private Vector3 lastMousePosition;
 
     //카메라 시스템 빈 오브젝트를 만들어서 넣어주기
     //-> 오브젝트를 움직이는것
@@ -115,18 +118,31 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraRotate()
     {
-        float rotateDirX = 0f;
-
-        if(Input.GetKey(KeyCode.Q))
+        if (Input.GetMouseButtonDown(0))
         {
-            rotateDirX = -1f;
-        }
-        if(Input.GetKey(KeyCode.E))
-        {
-            rotateDirX = 1f;
+            // 마우스 왼쪽 버튼을 누르면 회전 시작
+            isRotating = true;
+            lastMousePosition = Input.mousePosition;
         }
 
-        _cinemachineCam.transform.eulerAngles += new Vector3(0, rotateDirX * _rotateSpeed * Time.deltaTime, 0);
-        transform.eulerAngles += new Vector3(0, rotateDirX * _rotateSpeed * Time.deltaTime, 0);
+        if (Input.GetMouseButtonUp(0))
+        {
+            // 마우스 왼쪽 버튼을 뗄 때 회전 종료
+            isRotating = false;
+        }
+
+        if (isRotating)
+        {
+            // 마우스를 드래그한 거리에 따라 회전 방향 계산
+            Vector3 deltaMousePosition = Input.mousePosition - lastMousePosition;
+            float rotateDirX = deltaMousePosition.x;
+
+            // 회전 적용
+            _cinemachineCam.transform.eulerAngles += new Vector3(0, rotateDirX * _rotateSpeed * Time.deltaTime, 0);
+            transform.eulerAngles += new Vector3(0, rotateDirX * _rotateSpeed * Time.deltaTime);
+
+            // 마우스 위치 업데이트
+            lastMousePosition = Input.mousePosition;
+        }
     }
 }
