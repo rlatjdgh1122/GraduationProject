@@ -10,9 +10,19 @@ public class SlotUI
     public GameObject SlotUIPrefab;
 }
 
+[Serializable]
+public class LegionCnt
+{
+    public int Sword;
+    public int Arrow;
+    public Transform _LegionPannel;
+}
+
 public class Legion : Singleton<Legion>
 {
     public List<SlotUI> LegionUIList = new();
+    public List<LegionCnt> LegionCnt = new();
+
 
     public override void Init()
     {
