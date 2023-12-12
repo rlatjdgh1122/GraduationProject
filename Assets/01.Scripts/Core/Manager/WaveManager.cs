@@ -41,8 +41,6 @@ public class WaveManager : MonoBehaviour
 
     private int maxEnemyCnt;
 
-    public int tsest;
-
     #endregion
 
     private static WaveManager _instance;
@@ -82,14 +80,6 @@ public class WaveManager : MonoBehaviour
         SetReadyTime(); // 시간 초기화
         InvokePhaseEndEvent(isWin);
 
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            UpdateUIOnEnemyCount(tsest);
-        }
     }
 
     private void SetReadyTime() // 준비 시간을 초기화한다.
@@ -234,9 +224,9 @@ public class WaveManager : MonoBehaviour
         _currentEnemyGround = ice;
     }
 
-    public void UpdateUIOnEnemyCount(int? a = null)
+    public void UpdateUIOnEnemyCount()
     {
-        int enemyCnt = a ?? GameManager.Instance.GetEnemyPenguinCount;
+        int enemyCnt = GameManager.Instance.GetEnemyPenguinCount;
 
         if (enemyCnt == maxEnemyCnt)
         {

@@ -31,8 +31,9 @@ public class PenguinSpawner : MonoBehaviour
     [SerializeField] protected Transform _spawnPoint;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
+    [SerializeField] private LayerMask _spawnerLayer;
 
-    Penguin spawnPenguin;
+    Penguin _spawnPenguin;
 
     public bool isSpawnUIOn { get; private set; }
 
@@ -66,21 +67,26 @@ public class PenguinSpawner : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.B)) //일단 임시로 b키 누르면 생성 UI 뜸
+        if (Input.GetMouseButtonDown(0))
         {
-            Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
-            UIManager.Instance.UIMoveDot(_spawnUI, targetVec, 0.7f, Ease.OutCubic);
-            UpdateSpawnUIBool();
+            if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
+                                                out var hit, Mathf.Infinity, _spawnerLayer))
+            {
+                Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
+                UIManager.Instance.UIMoveDot(_spawnUI, targetVec, 0.7f, Ease.OutCubic);
+                UpdateSpawnUIBool();
+                hit.collider.transform.GetComponent<Outline>().enabled = isSpawnUIOn;
+            }
         }
     }
 
     public void SpawnPenguin<T>(Vector3 vec) where T : Penguin // 타입에 맞게 펭귄 생성
     {
         Type type = typeof(T);
-        spawnPenguin = PoolManager.Instance.Pop(type.Name) as T;
+        _spawnPenguin = PoolManager.Instance.Pop(type.Name) as T;
 
-        spawnPenguin.transform.position = vec;
-        spawnPenguin.transform.rotation = Quaternion.identity;
+        _spawnPenguin.transform.position = vec;
+        _spawnPenguin.transform.rotation = Quaternion.identity;
     }
 
     private void UpdateSpawnUIBool()
