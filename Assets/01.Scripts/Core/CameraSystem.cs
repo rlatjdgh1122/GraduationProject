@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraSystem : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float _moveSpeed = 50f;
     [SerializeField] private int _edgeScrollSize = 20;
     [SerializeField] private CinemachineVirtualCamera _cinemachineCam;
+    [SerializeField] private float _dragSpeed = 2f;
+    private bool _dragPanMoveActive;
+    private Vector2 _lastMousePosition;
 
     [Header("카메라 확대&축소")]
     [SerializeField] private float _fieldOfViewMax = 50;
@@ -28,6 +32,7 @@ public class CameraSystem : MonoBehaviour
     private void Update()
     {
         CameraMove();
+        //Move();
         CameraZoomHandle();
         CameraRotate();
     }
@@ -57,6 +62,38 @@ public class CameraSystem : MonoBehaviour
 
 
         Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
+
+        transform.position += moveDir * _moveSpeed * Time.deltaTime;
+    }
+
+    private void Move()
+    {
+        Vector3 inputDir = new Vector3(0, 0, 0);
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            _dragPanMoveActive = true;
+            _lastMousePosition = Input.mousePosition;
+        }
+
+        if(Input.GetMouseButtonUp(2))
+        {
+            _dragPanMoveActive = false;
+        }
+
+        if(_dragPanMoveActive)
+        {
+            Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
+
+            Debug.Log(mouseMovementDelta);
+
+            inputDir.x = mouseMovementDelta.x * _dragSpeed;
+            inputDir.z = mouseMovementDelta.y * _dragSpeed;
+
+            _lastMousePosition = Input.mousePosition;
+        }
+
+        Vector3 moveDir = transform.forward * inputDir.x + transform.right * inputDir.z;
 
         transform.position += moveDir * _moveSpeed * Time.deltaTime;
     }
