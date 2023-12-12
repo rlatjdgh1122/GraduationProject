@@ -14,7 +14,7 @@ public abstract class Entity : PoolableMono
     [SerializeField] protected LayerMask _whatIsWall;
     [SerializeField] protected Transform _wallChecker;
     [SerializeField] protected float _wallCheckDistance;
-    
+
     [Header("Knockback info")]
     [SerializeField] protected float _knockbackDuration;
     protected bool _isKnocked;
@@ -30,7 +30,7 @@ public abstract class Entity : PoolableMono
 
     public ParticleSystem HitEffect;
 
-    #region ÄÄÆ÷³ÍÆ®
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public Animator AnimatorCompo { get; private set; }
     public Health HealthCompo { get; private set; }
     public DamageCaster DamageCasterCompo { get; private set; }
@@ -42,7 +42,7 @@ public abstract class Entity : PoolableMono
     public CharacterStat Stat => _characterStat;
     #endregion
 
-    public int FacingDirection { get; private set; } = 1; //¿À¸¥ÂÊÀÌ 1, ¿ÞÂÊÀÌ -1
+    public int FacingDirection { get; private set; } = 1; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -1
     protected bool _facingRight = true;
     public UnityEvent<float> OnHealthBarChanged;
 
@@ -55,17 +55,18 @@ public abstract class Entity : PoolableMono
         CharController = GetComponent<CharacterController>();
         NavAgent = GetComponent<NavMeshAgent>();
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-
-        DamageCasterCompo.SetOwner(this, castByCloneSkill: false); //ÀÚ½ÅÀÇ ½ºÅÈ»ó µ¥¹ÌÁö¸¦ ³Ö¾îÁÜ.
+        
+        DamageCasterCompo.SetOwner(this, castByCloneSkill: false); //ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½.
         HealthCompo.SetOwner(_characterStat);
+
 
         //HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
-        //OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth()); //ÃÖ´ëÄ¡·Î UIº¯°æ.
+        //OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth()); //ï¿½Ö´ï¿½Ä¡ï¿½ï¿½ UIï¿½ï¿½ï¿½ï¿½.
 
-        _characterStat = Instantiate(_characterStat); //º¹Á¦º»À¸·Î Å¾Àç.
-        _characterStat.SetOwner(this); //ÀÚ±â¸¦ ¿À³Ê·Î ¼³Á¤
+        _characterStat = Instantiate(_characterStat); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¾ï¿½ï¿½.
+        _characterStat.SetOwner(this); //ï¿½Ú±â¸¦ ï¿½ï¿½ï¿½Ê·ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     private void OnDestroy()
@@ -77,7 +78,7 @@ public abstract class Entity : PoolableMono
 
     protected virtual void HandleHit()
     {
-        
+
     }
 
     protected virtual void Start()
@@ -104,15 +105,15 @@ public abstract class Entity : PoolableMono
         arrow.Fire(_firePos.forward);
     }
 
-    #region ÀÌµ¿ °ü·Ã
+    #region ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetClickMovement()
     {
         RaycastHit hit;
 
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
-            Debug.Log("¸¶¿ì½º À§Ä¡ : " + hit.point);
-            ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
+
+            //ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx, 0);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
@@ -127,11 +128,8 @@ public abstract class Entity : PoolableMono
 
     public void MoveToTarget()
     {
-        Debug.Log("¿òÁ÷¿©¶ó1");
         NavAgent.ResetPath();
-        Debug.Log("¿òÁ÷¿©¶ó2");
         NavAgent.SetDestination(targetTrm);
-        Debug.Log("¿òÁ÷¿©¶ó3");
     }
 
     public void StopImmediately()
@@ -141,7 +139,7 @@ public abstract class Entity : PoolableMono
     }
     #endregion
 
-    #region È¸Àü °ü·Ã
+    #region È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     //public void LookTarget()
     //{
     //    //transform.Rotate(targetTrm);
@@ -149,7 +147,7 @@ public abstract class Entity : PoolableMono
     //}
     #endregion
 
-    #region Ãæµ¹ °ü·Ã
+    #region ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
     public virtual bool IsWallDetected() =>
         Physics.Raycast(_wallChecker.position, Vector3.forward * FacingDirection,
                             _wallCheckDistance, _whatIsWall);
