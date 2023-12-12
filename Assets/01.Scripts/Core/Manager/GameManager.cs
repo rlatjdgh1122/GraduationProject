@@ -7,6 +7,8 @@ public class GameManager : Singleton<GameManager>
 {
     public int GetPenguinCount => FindObjectsOfType<BasicPenguin>().Length;
     public int GetEnemyPenguinCount => FindObjectsOfType<EnemyBasicPenguin>().Length;
+    private int dummyPenguinCount;
+    public int GetDummyPenguinCount => dummyPenguinCount;
 
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, Building> _buildingDictionary = new();
@@ -66,5 +68,16 @@ public class GameManager : Singleton<GameManager>
         PoolManager.Instance = new PoolManager(transform);
 
         _poolingListSO.List.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount)); //리스트에 있는 모든
+    }
+
+    public void PlusDummyPenguinCount()
+    {
+        dummyPenguinCount++;
+        Debug.Log(dummyPenguinCount);
+    }
+
+    public void ResetDummyPenguinCount()
+    {
+        dummyPenguinCount = 0;
     }
 }
