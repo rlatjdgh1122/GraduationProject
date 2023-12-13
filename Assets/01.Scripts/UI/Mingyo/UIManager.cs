@@ -31,7 +31,7 @@ public class UIManager : Singleton<UIManager>
         btnInfo.Btn.interactable = false;
         btnInfo.CoolingImg.fillAmount = 1f;
 
-        Debug.Log(btnInfo.CoolingImg);
+        GameManager.Instance.PlusDummyPenguinCount();
 
         DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
         {
