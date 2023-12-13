@@ -25,7 +25,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI timeText, wavCntText, enemyCntText;
     [SerializeField]
-    private RectTransform loseUI;
+    private CanvasGroup loseUI;
     [SerializeField]
     private CanvasGroup winUI;
 
@@ -141,6 +141,11 @@ public class WaveManager : MonoBehaviour
         ShowEffect();
         UIManager.Instance.victoryUI.SetTexts();
         winUI.DOFade(1, 1f);
+    }
+
+    public void Defeat()
+    {
+        loseUI.DOFade(1, 1f);
     }
 
     public void CloseWinPanel()
