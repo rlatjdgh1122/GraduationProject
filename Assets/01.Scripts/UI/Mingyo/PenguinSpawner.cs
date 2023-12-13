@@ -10,16 +10,18 @@ public class SpawnPenguinBtnInfo
     public Button Btn;
     public Image CoolingImg;
     public float CoolTime;
+    public PenguinTypeEnum PenguinType;
 
-    public SpawnPenguinBtnInfo(Button button, Image image, float coolTime)
+    public SpawnPenguinBtnInfo(PenguinTypeEnum penguinType, Button button, Image image, float coolTime)
     {
+        PenguinType = penguinType;
         Btn = button;
         CoolingImg = image;
         CoolTime = coolTime;
     }
 }
 
-public enum PenguinType
+public enum PenguinTypeEnum
 {
     Basic,
     Archer
@@ -46,17 +48,17 @@ public class PenguinSpawner : MonoBehaviour
     [SerializeField] private Transform _btnTrm;
     private SpawnButton[] _btnArr;
     
-    Dictionary<PenguinType, SpawnPenguinBtnInfo> _penguinSpawnBtnDic = new Dictionary<PenguinType, SpawnPenguinBtnInfo>();
+    Dictionary<PenguinTypeEnum, SpawnPenguinBtnInfo> _penguinSpawnBtnDic = new Dictionary<PenguinTypeEnum, SpawnPenguinBtnInfo>();
 
     private void OnEnable()
     {
-        WaveManager.Instance.OnPhaseStartEvent += DummyPenguinSetPosition;
+        WaveManager.Instance.OnPhaseStartEvent += DummyPenguinMoveToTent;
         WaveManager.Instance.OnIceArrivedEvent += ResetDummyPenguinList;
     }
 
     private void OnDisable()
     {
-        WaveManager.Instance.OnPhaseStartEvent -= DummyPenguinSetPosition;
+        WaveManager.Instance.OnPhaseStartEvent -= DummyPenguinMoveToTent;
         WaveManager.Instance.OnIceArrivedEvent -= ResetDummyPenguinList;
     }
 
@@ -82,7 +84,7 @@ public class PenguinSpawner : MonoBehaviour
 
     private void InitPenguinSpawnBtnDic()
     {
-        PenguinType[] penguinTypes = (PenguinType[])Enum.GetValues(typeof(PenguinType));
+        PenguinTypeEnum[] penguinTypes = (PenguinTypeEnum[])Enum.GetValues(typeof(PenguinTypeEnum));
 
         for (int i = 0; i < penguinTypes.Length; i++)
         {
@@ -93,7 +95,7 @@ public class PenguinSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsPhase)
         {
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
                                                 out var hit, Mathf.Infinity, _spawnerLayer))
@@ -122,7 +124,6 @@ public class PenguinSpawner : MonoBehaviour
 
         dummy.transform.position = vec;
         dummy.transform.rotation = Quaternion.identity;
-        Debug.Log(dummy.transform.position);
 
         _dummyPenguinList.Add(dummy);
     }
@@ -134,22 +135,30 @@ public class PenguinSpawner : MonoBehaviour
 
     #region SpawnPenguinButtonHandler
 
-    public void BasicPenguinSpawnHandler()
+    public void BasicPenguinSpawnHandler() // 이거를 struct를 받는 걸로 바꾸셈
     {
-        UIManager.Instance.ButtonCooldown
-            (_penguinSpawnBtnDic[PenguinType.Basic],
-            () => SpawnDummyPenguin(_spawnPoints[GameManager.Instance.GetDummyPenguinCount].position, "Basic"));
-        Debug.Log(_spawnPoints[GameManager.Instance.GetDummyPenguinCount].position);
+        
+        if(WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Basic].CoolTime)
+        {
+            int index = GameManager.Instance.GetDummyPenguinCount;
+            UIManager.Instance.ButtonCooldown
+                (_penguinSpawnBtnDic[PenguinTypeEnum.Basic],
+                () => SpawnDummyPenguin(_spawnPoints[index].position, "Basic"));
+        }
     }
 
     public void ArcherPenguinSpawnHandler()
     {
-        UIManager.Instance.ButtonCooldown
-            (_penguinSpawnBtnDic[PenguinType.Archer],
-            () => SpawnDummyPenguin(_spawnPoints[GameManager.Instance.GetDummyPenguinCount].position, "Archer"));
+        if (WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Basic].CoolTime)
+        {
+            int index = GameManager.Instance.GetDummyPenguinCount;
+            UIManager.Instance.ButtonCooldown
+                (_penguinSpawnBtnDic[PenguinTypeEnum.Archer],
+                () => SpawnDummyPenguin(_spawnPoints[index].position, "Archer"));
+        }
     }
 
-    private void DummyPenguinSetPosition()
+    private void DummyPenguinMoveToTent()
     {
         for(int i = 0; i < _dummyPenguinList.Count; i++)
         {
