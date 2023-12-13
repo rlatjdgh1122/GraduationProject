@@ -156,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 1599966396164666560}
   serializedVersion: 2
   m_LocalRotation: {x: -0.009501715, y: 0.013242464, z: -0.81238264, w: 0.58289707}
-  m_LocalPosition: {x: -3.8000016, y: 1.6000041, z: 6.200014}
+  m_LocalPosition: {x: -0.63, y: 11.38, z: 1.92}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -499,7 +499,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2750486943252041552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 730af4912c5f73e448778fc4fd9f7653, type: 3}
   m_Controller: {fileID: 9100000, guid: 1d69d05758680724b87f933cc70a4723, type: 2}
   m_CullingMode: 0
@@ -808,7 +808,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3110494488520617749}
   - component: {fileID: 7803603170794983782}
-  - component: {fileID: 882785306377451655}
   m_Layer: 11
   m_Name: BasicDummyPenguin
   m_TagString: Player
@@ -847,29 +846,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveDuration: 5
---- !u!136 &882785306377451655
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4860611155139023724}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.44
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0.09, y: 0.45, z: 0.18}
 --- !u!1 &4968897530657236761
 GameObject:
   m_ObjectHideFlags: 0

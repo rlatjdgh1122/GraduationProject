@@ -15,6 +15,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private int maxPhaseReadyTime;
     private int remainingPhaseReadyTime;
+    public int RemainingPhaseReadyTime => remainingPhaseReadyTime;
     private IceMove _currentEnemyGround;
 
 
