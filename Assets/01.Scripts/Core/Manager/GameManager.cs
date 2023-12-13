@@ -73,7 +73,6 @@ public class GameManager : Singleton<GameManager>
     public void PlusDummyPenguinCount()
     {
         dummyPenguinCount++;
-        Debug.Log(dummyPenguinCount);
     }
 
     public void ResetDummyPenguinCount()

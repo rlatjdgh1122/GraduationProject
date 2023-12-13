@@ -11,6 +11,7 @@ public class SpawnButton : MonoBehaviour
     [SerializeField]
     private Image coolingimg;
     [SerializeField] private float cooltime;
+    [SerializeField] PenguinTypeEnum penguinType;
 
     public SpawnPenguinBtnInfo Info;
 
@@ -18,6 +19,11 @@ public class SpawnButton : MonoBehaviour
     {
         btn = GetComponent<Button>();
 
-        Info = new SpawnPenguinBtnInfo(btn, coolingimg, cooltime);
+        Info = new SpawnPenguinBtnInfo(penguinType, btn, coolingimg, cooltime);
+    }
+
+    private void Update()
+    {
+        
     }
 }
