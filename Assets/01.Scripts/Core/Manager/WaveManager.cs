@@ -36,7 +36,7 @@ public class WaveManager : MonoBehaviour
 
     public int CurrentStage = 0;
 
-    public bool isPhase = false;
+    public bool IsPhase = false;
 
     public event Action OnPhaseStartEvent = null;
     public event Action OnPhaseEndEvent = null;
@@ -94,7 +94,7 @@ public class WaveManager : MonoBehaviour
         //    UpdateUIOnEnemyCount(tsest);
         //}
 
-        if (isPhase)
+        if (IsPhase)
         {
             if (GameManager.Instance.GetEnemyPenguinCount() <= 0)
                 GetReward();
@@ -108,14 +108,14 @@ public class WaveManager : MonoBehaviour
 
     private void OnPhaseStartHandle() // 전투페이즈 시작
     {
-        isPhase = true;
+        IsPhase = true;
         maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount();
         wavCntText.SetText($"Current Wave: {CurrentStage}");
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료
     {
-        isPhase = false;
+        IsPhase = false;
 
         if (isWin)
         {
@@ -145,7 +145,7 @@ public class WaveManager : MonoBehaviour
 
     public void CloseWinPanel()
     {
-        isPhase = false;
+        IsPhase = false;
 
         winUI.DOFade(0, 1f).OnComplete(() =>
         {
