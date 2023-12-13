@@ -21,7 +21,7 @@ public class GroundMove : MonoBehaviour
     private Outline _outline;
     #endregion
 
-    private Enemy[] _enemies;
+    public Enemy[] _enemies;
 
     private void Awake()
     {

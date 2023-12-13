@@ -81,11 +81,11 @@ public abstract class Entity : PoolableMono
 
     protected virtual void HandleHit()
     {
-        mpb = new MaterialPropertyBlock();
+        //mpb = new MaterialPropertyBlock();
 
-        Debug.Log("맞음");
-        mpb.SetColor("_EmissionColor", Color.white);
-        _renderer.SetPropertyBlock(mpb);
+        //Debug.Log("맞음");
+        //mpb.SetColor("_EmissionColor", Color.white);
+        //_renderer.SetPropertyBlock(mpb);
     }
 
     protected virtual void Start()

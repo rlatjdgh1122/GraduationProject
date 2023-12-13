@@ -16,7 +16,7 @@ public class BasicIdleState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _penguin.FindNearestEnemy("Enemy");
+        //_penguin.FindNearestEnemy("Enemy");
     }
 
     public override void UpdateState()
@@ -28,7 +28,7 @@ public class BasicIdleState : BasicBaseState
         if (_penguin.IsInTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
-        if (_penguin.NavAgent.velocity.magnitude > 0.15f)
+        if (_penguin.NavAgent.velocity.magnitude >= 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
     }
 

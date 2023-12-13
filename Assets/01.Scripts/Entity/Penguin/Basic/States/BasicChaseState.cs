@@ -10,7 +10,7 @@ public class BasicChaseState : BasicBaseState
         base.Enter();
         _triggerCalled = true;
         Enemy nearestEnemy = _penguin.FindNearestEnemy("Enemy");
-        if (nearestEnemy != null)
+        if (nearestEnemy != null || !nearestEnemy.IsDead)
             _penguin.SetTarget(nearestEnemy.transform.position);
     }
 
