@@ -29,8 +29,22 @@ public abstract class Enemy : Entity
     protected override void Awake()
     {
         base.Awake();
-        Target = FindNearestPenguin("Player");
         NavAgent.speed = moveSpeed;
+    }
+
+    private void OnEnable()
+    {
+        WaveManager.Instance.OnIceArrivedEvent += SetTarget;
+    }
+
+    private void OnDisable()
+    {
+        WaveManager.Instance.OnIceArrivedEvent -= SetTarget;
+    }
+
+    private void SetTarget()
+    {
+        Target = FindNearestPenguin("Player");
     }
 
     public override void Attack()
@@ -74,7 +88,7 @@ public abstract class Enemy : Entity
             }
             else
             {
-                Debug.LogWarning("가장 가까운 오브젝트에 Enemy 스크립트가 없습니다.");
+                Debug.LogWarning("가장 가까운 오브젝트에 스크립트가 없습니다.");
             }
         }
         else

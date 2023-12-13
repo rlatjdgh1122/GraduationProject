@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,22 +25,25 @@ public class WaveManager : MonoBehaviour
     private TextMeshProUGUI timeText, wavCntText, enemyCntText;
     [SerializeField]
     private RectTransform loseUI;
+    [SerializeField]
+    private CanvasGroup winUI;
 
     [Header("테스트 용")]
     public bool isWin;
     [SerializeField]
     Color targetColor;
 
-    private int waveCnt = 0;
+    public int CurrentStage = 0;
 
-    private bool isPhase = false;
-    public bool IsPhase => isPhase;
+    public bool isPhase = false;
 
     public event Action OnPhaseStartEvent = null;
     public event Action OnPhaseEndEvent = null;
     public event Action OnIceArrivedEvent = null;
 
     private int maxEnemyCnt;
+
+    public int tsest;
 
     #endregion
 
@@ -76,10 +80,24 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount; // 테스트용
+        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount(); // 테스트용
         SetReadyTime(); // 시간 초기화
         InvokePhaseEndEvent(isWin);
 
+    }
+
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    UpdateUIOnEnemyCount(tsest);
+        //}
+
+        if (isPhase)
+        {
+            if (GameManager.Instance.GetEnemyPenguinCount() <= 0)
+                GetReward();
+        }
     }
 
     private void SetReadyTime() // 준비 시간을 초기화한다.
@@ -90,8 +108,8 @@ public class WaveManager : MonoBehaviour
     private void OnPhaseStartHandle() // 전투페이즈 시작
     {
         isPhase = true;
-        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount;
-        wavCntText.SetText($"Current Wave: {waveCnt}");
+        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount();
+        wavCntText.SetText($"Current Wave: {CurrentStage}");
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료
@@ -100,9 +118,8 @@ public class WaveManager : MonoBehaviour
 
         if (isWin)
         {
-            waveCnt++;
-            wavCntText.SetText($"Next Wave: {waveCnt}");
-            GetReward();
+            CurrentStage++;
+            wavCntText.SetText($"Next Wave: {CurrentStage}");
             UpdateUIOnEnemyCount();
         }
         else
@@ -120,9 +137,19 @@ public class WaveManager : MonoBehaviour
 
     private void GetReward() // 보상 획득 함수
     {
-        //여기서 뭐 내땅의 자식으로 두거나 해서 내땅으로 만들어야할듯
+        ShowEffect();
+        UIManager.Instance.victoryUI.SetTexts();
+        winUI.DOFade(1, 1f);
+    }
 
-        ShowEffect(); // 이펙트
+    public void CloseWinPanel()
+    {
+        isPhase = false;
+
+        winUI.DOFade(0, 1f).OnComplete(() =>
+        {
+            OnPhaseEndEvent?.Invoke();
+        });
     }
 
     private void ShowEffect() // 이펙트
@@ -224,9 +251,9 @@ public class WaveManager : MonoBehaviour
         _currentEnemyGround = ice;
     }
 
-    public void UpdateUIOnEnemyCount()
+    public void UpdateUIOnEnemyCount(int? a = null)
     {
-        int enemyCnt = GameManager.Instance.GetEnemyPenguinCount;
+        int enemyCnt = a ?? GameManager.Instance.GetEnemyPenguinCount();
 
         if (enemyCnt == maxEnemyCnt)
         {
@@ -239,7 +266,7 @@ public class WaveManager : MonoBehaviour
         else
         {
             float rotationAngle = -(180 / maxEnemyCnt) * (maxEnemyCnt - enemyCnt) + 180;
-            Vector3 rotationVec = new Vector3(0, 0, rotationAngle);
+            Vector3 rotationVec = new Vector3(0, 0, 5);
             RotateClockHand(rotationVec, 0.2f, Ease.Linear);
         }
 

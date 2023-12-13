@@ -9,6 +9,11 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("UI References")]
+    [SerializeField] private PenguinSpawner _penguinSpawner;
+    public PenguinSpawner PenguinSpawnerComPo => _penguinSpawner;
+    public VictoryUI victoryUI;
+
     public void UIMoveDot(RectTransform transform, Vector3 targetVec, float duration,
                           Ease ease = Ease.Linear, params Action[] actions)
     {
@@ -24,19 +29,16 @@ public class UIManager : Singleton<UIManager>
     public void ButtonCooldown(SpawnPenguinBtnInfo btnInfo, Action spawnAction)
     {
         btnInfo.Btn.interactable = false;
-        btnInfo.CoolingImg.fillAmount = 1.0f;
+        btnInfo.CoolingImg.fillAmount = 1f;
 
-        GameManager.Instance.PlusDummyPenguinCount();
+        Debug.Log(btnInfo.CoolingImg);
 
-        Tween tween = DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, .0f, btnInfo.CoolTime);
-        tween.OnKill(() =>
+        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
         {
-            btnInfo.Btn.interactable = true;
             spawnAction?.Invoke();
-            Debug.Log("qnpfer");
+            btnInfo.Btn.interactable = true;
         });
     }
-
 
     public override void Init()
     {

@@ -43,29 +43,10 @@ public class EnemyBasicPenguin : Enemy
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
+
+        if (IsDead)
+            StateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-
-    private void EnableNavmesh()
-    {
-        NavAgent.enabled = true;
-    }
-
-    private void DisableNavmesh()
-    {
-        NavAgent.enabled = false;
-    }
-
-    private void OnEnable()
-    {
-        WaveManager.Instance.OnPhaseStartEvent += DisableNavmesh;
-        WaveManager.Instance.OnIceArrivedEvent += EnableNavmesh;
-    }
-
-    private void OnDisable()
-    {
-        WaveManager.Instance.OnPhaseStartEvent -= DisableNavmesh;
-        WaveManager.Instance.OnIceArrivedEvent -= EnableNavmesh;
-    }
 }

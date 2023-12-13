@@ -1,12 +1,12 @@
 using System.Linq;
 using UnityEngine;
-using Define.Algorithem;
-
+using  Define.Algorithem;
 public abstract class Penguin : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
+    public float maxRange = 35;
 
     [Header("공격상태설정값")]
     public float attackCooldown;
@@ -19,16 +19,29 @@ public abstract class Penguin : Entity
 
     protected int _lastAnimationBoolHash; //마지막으로 재생된 애니메이션 해시
 
-    public bool IsInTargetRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
+    public bool IsInTargetRange => Target != null && Vector3.Distance(Algorithm.AlignmentRule.GetArmyCenterPostion(owner), Target.transform.position) <= innerDistance;
     public bool IsAttackRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader Input => _inputReader;
 
+    private float _distance;
+
+    public Army owner;
+
+    private void OnEnable()
+    {
+        WaveManager.Instance.OnIceArrivedEvent += FindEnemy;
+    }
+
+    private void OnDisable()
+    {
+        WaveManager.Instance.OnIceArrivedEvent -= FindEnemy;
+    }
+
     protected override void Awake()
     {
         base.Awake();
-        Target = FindNearestEnemy("Enemy");
         NavAgent.speed = moveSpeed;
     }
 
@@ -37,7 +50,17 @@ public abstract class Penguin : Entity
         base.Attack();
     }
 
+    public void SetOwner(Army army)
+    {
+        owner = army;
+    }
+
     public abstract void AnimationTrigger();
+
+    public void FindEnemy()
+    {
+        FindNearestEnemy("Enemy");
+    }
 
     public Enemy FindNearestEnemy(string tag)
     {
@@ -46,11 +69,11 @@ public abstract class Penguin : Entity
         var nearestObject = objects
             .OrderBy(obj =>
             {
-                return Vector3.Distance(transform.position, obj.transform.position);
+                return _distance = Vector3.Distance(transform.position, obj.transform.position);
             })
             .FirstOrDefault();
 
-        if (nearestObject != null)
+        if (_distance <= maxRange && nearestObject != null)
         {
             Enemy enemyScript = nearestObject.GetComponent<Enemy>();
 

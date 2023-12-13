@@ -10,6 +10,7 @@ public class PenguinState<T> where T : Enum
 
     protected int _animBoolHash;
     protected bool _triggerCalled;
+    
 
     public PenguinState(Penguin penguin, PenguinStateMachine<T> stateMachine, string animationBoolName)
     {
@@ -36,7 +37,6 @@ public class PenguinState<T> where T : Enum
 
     public void AnimationFinishTrigger()
     {
-        Debug.Log("¶Ë");
         _triggerCalled = true;
     }
 }

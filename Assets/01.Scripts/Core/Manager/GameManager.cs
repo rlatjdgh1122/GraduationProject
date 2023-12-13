@@ -5,10 +5,56 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int GetPenguinCount => FindObjectsOfType<BasicPenguin>().Length;
-    public int GetEnemyPenguinCount => FindObjectsOfType<EnemyBasicPenguin>().Length;
-    private int dummyPenguinCount;
-    public int GetDummyPenguinCount => dummyPenguinCount;
+    public int GetPenguinCount => FindObjectsOfType<Penguin>().Length;
+
+    public int GetDeadPenguinCount()
+    {
+        Penguin[] penguins = FindObjectsOfType<Penguin>();
+
+        int count = 0;
+
+        foreach (Penguin penguin in penguins)
+        {
+            if (penguin.IsDead)
+                count++;
+        }
+
+        return count;
+    }
+
+    public int GetEnemyPenguinCount()
+    {
+        Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
+
+        int activeCount = 0;
+
+        foreach (Enemy enemyPenguin in enemyPenguins)
+        {
+            if (enemyPenguin.enabled)
+            {
+                activeCount++;
+            }
+        }
+
+        return activeCount;
+    }
+
+    public int GetDeadEnemyPenguinCount()
+    {
+        Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
+
+        int count = 0;
+
+        foreach (Enemy enemyPenguin in enemyPenguins)
+        {
+            if (enemyPenguin.IsDead)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
 
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, Building> _buildingDictionary = new();
@@ -53,11 +99,6 @@ public class GameManager : Singleton<GameManager>
         return ray;
     }
 
-    public bool TryRaycast(Ray ray, out RaycastHit hit,float distance, LayerMask? layerMask = null) // PenguinSpawner Update에 사용하는거 나와있음
-    {
-        return Physics.Raycast(ray, out hit, distance, layerMask ?? Physics.DefaultRaycastLayers);
-    }
-
     public override void Init()
     {
         throw new System.NotImplementedException();
@@ -68,16 +109,5 @@ public class GameManager : Singleton<GameManager>
         PoolManager.Instance = new PoolManager(transform);
 
         _poolingListSO.List.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount)); //리스트에 있는 모든
-    }
-
-    public void PlusDummyPenguinCount()
-    {
-        dummyPenguinCount++;
-        Debug.Log(dummyPenguinCount);
-    }
-
-    public void ResetDummyPenguinCount()
-    {
-        dummyPenguinCount = 0;
     }
 }
