@@ -144,6 +144,7 @@ public class PenguinSpawner : MonoBehaviour
             UIManager.Instance.ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Basic],
                 () => SpawnDummyPenguin(_spawnPoints[index].position, "Basic"));
+            Legion.Instance.LegionUIList[0].HeroCnt++;
         }
     }
 
@@ -155,6 +156,7 @@ public class PenguinSpawner : MonoBehaviour
             UIManager.Instance.ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Archer],
                 () => SpawnDummyPenguin(_spawnPoints[index].position, "Archer"));
+            Legion.Instance.LegionUIList[1].HeroCnt++;
         }
     }
 
