@@ -69,11 +69,11 @@ public abstract class Penguin : Entity
         var nearestObject = objects
             .OrderBy(obj =>
             {
-                return _distance = Vector3.Distance(transform.position, obj.transform.position);
+                return Vector3.Distance(transform.position, obj.transform.position);
             })
             .FirstOrDefault();
 
-        if (_distance <= maxRange && nearestObject != null)
+        if (nearestObject != null)
         {
             Enemy enemyScript = nearestObject.GetComponent<Enemy>();
 
@@ -88,11 +88,9 @@ public abstract class Penguin : Entity
         }
         else
         {
-            //Debug.LogWarning("가까운 오브젝트를 찾지 못했습니다.");
             return Target = null;
         }
 
-        // 여기까지 왔다면 오류가 발생했거나 가까운 오브젝트를 찾지 못한 경우이므로 null 반환
         return null;
     }
 

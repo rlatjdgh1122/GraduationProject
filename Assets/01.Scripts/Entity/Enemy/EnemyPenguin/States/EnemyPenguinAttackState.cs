@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class EnemyPenguinAttackState : EnemyPenguinBaseState
 {
     public EnemyPenguinAttackState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)

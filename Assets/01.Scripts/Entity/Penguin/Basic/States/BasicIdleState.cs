@@ -1,10 +1,3 @@
-using Polyperfect.Common;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
-using UnityEngine;
-
 public class BasicIdleState : BasicBaseState
 {
     public BasicIdleState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animationBoolName)
@@ -16,19 +9,21 @@ public class BasicIdleState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        //_penguin.FindNearestEnemy("Enemy");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _penguin.owner.IsMoving = true;
+        //_penguin.owner.IsMoving = true;
+        //if (_penguin.IsInTargetRange)
+        //    _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
         if (_penguin.IsInTargetRange)
+        {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
-
-        if (_penguin.NavAgent.velocity.magnitude >= 0.05f)
+        }
+        else if (_penguin.NavAgent.velocity.magnitude >= 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
     }
 

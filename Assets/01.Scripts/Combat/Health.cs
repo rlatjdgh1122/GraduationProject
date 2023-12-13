@@ -12,7 +12,7 @@ public class Health : MonoBehaviour, IDamageable
     public Action OnHit;
     public Action OnDied;
 
-    public UnityEvent<Vector2> OnDeathEvent;
+    public UnityEvent OnDeathEvent; //나중에 Vector3인자값
     public UnityEvent<int> OnUIUpdate;
 
     private Entity _owner;
@@ -30,7 +30,11 @@ public class Health : MonoBehaviour, IDamageable
 
     public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
     {
-        if (_isDead) return; //사망하면 더이상 데미지 없음.
+        if (_isDead)
+        {
+            OnDeathEvent?.Invoke();
+            return;
+        }
 
         OnHit?.Invoke();
         OnUIUpdate?.Invoke(damage);

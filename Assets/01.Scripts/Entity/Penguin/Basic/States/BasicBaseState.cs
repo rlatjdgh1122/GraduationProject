@@ -19,7 +19,6 @@ public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //»ó¼Ó¹Þ±â À§Ç
 
         if (_penguin.IsDead)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
-
     }
 
     public override void Exit()

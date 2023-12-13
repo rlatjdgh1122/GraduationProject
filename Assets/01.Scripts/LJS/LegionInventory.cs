@@ -51,6 +51,7 @@ public class LegionInventory : MonoBehaviour
             _cntText[i].text = $"{_slot[i].transform.childCount}";
         }
     }
+
     public void LegionUIDownUnitCnt()
     {
         foreach (var legion in Legion.Instance.LegionCnt)
@@ -61,6 +62,7 @@ public class LegionInventory : MonoBehaviour
                     legion.Arrow++;
                 else
                     legion.Sword++;
+
             }
         }
     }

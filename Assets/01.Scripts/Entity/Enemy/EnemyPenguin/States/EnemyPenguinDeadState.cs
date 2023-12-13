@@ -13,7 +13,7 @@ public class EnemyPenguinDeadState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _enemy.Target.FindNearestEnemy("Enemy");
+        //_enemy.Target.FindNearestEnemy("Enemy");
         _enemy.tag = "Untagged";
         _enemy.CharController.enabled = false;
         _enemy.NavAgent.enabled = false;

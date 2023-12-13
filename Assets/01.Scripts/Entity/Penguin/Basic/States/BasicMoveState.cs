@@ -14,14 +14,13 @@ public class BasicMoveState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        //_penguin.FindNearestEnemy("Enemy");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.IsInTargetRange) //타겟 안에 들어오면 && 클릭하지 않고 있을 때 -> Chase로
+        if (_penguin.IsInTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)

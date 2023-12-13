@@ -10,8 +10,9 @@ public class BasicChaseState : BasicBaseState
         base.Enter();
         _triggerCalled = true;
         Enemy nearestEnemy = _penguin.FindNearestEnemy("Enemy");
-        if (nearestEnemy != null || !nearestEnemy.IsDead)
+        if (nearestEnemy != null)
             _penguin.SetTarget(nearestEnemy.transform.position);
+            //ArmySystem.Instace.SetArmyMovePostiton(nearestEnemy.transform.position, _penguin.owner.Legion);
     }
 
     public override void UpdateState()
