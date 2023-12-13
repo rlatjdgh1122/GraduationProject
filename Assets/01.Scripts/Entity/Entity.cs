@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
-using Define.Algorithem;
-using System.Collections.Generic;
+using DG.Tweening;
 
 public abstract class Entity : PoolableMono
 {
@@ -37,6 +33,10 @@ public abstract class Entity : PoolableMono
     public CharacterController CharController { get; private set; }
     public NavMeshAgent NavAgent { get; private set; }
     public ParticleSystem ClickParticle;
+    public Outline OutlineCompo { get; private set; }
+
+    [SerializeField] protected SkinnedMeshRenderer _renderer;
+    public SkinnedMeshRenderer Renderer => _renderer;
 
     [SerializeField] protected CharacterStat _characterStat;
     public CharacterStat Stat => _characterStat;
@@ -45,6 +45,8 @@ public abstract class Entity : PoolableMono
     public int FacingDirection { get; private set; } = 1; //�������� 1, ������ -1
     protected bool _facingRight = true;
     public UnityEvent<float> OnHealthBarChanged;
+
+    private MaterialPropertyBlock mpb;
 
     protected virtual void Awake()
     {
@@ -55,6 +57,7 @@ public abstract class Entity : PoolableMono
         CharController = GetComponent<CharacterController>();
         NavAgent = GetComponent<NavMeshAgent>();
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
+        OutlineCompo = GetComponent<Outline>();
         
         DamageCasterCompo.SetOwner(this, castByCloneSkill: false); //�ڽ��� ���Ȼ� �������� �־���.
         HealthCompo.SetOwner(_characterStat);
@@ -78,7 +81,11 @@ public abstract class Entity : PoolableMono
 
     protected virtual void HandleHit()
     {
+        mpb = new MaterialPropertyBlock();
 
+        Debug.Log("맞음");
+        mpb.SetColor("_EmissionColor", Color.white);
+        _renderer.SetPropertyBlock(mpb);
     }
 
     protected virtual void Start()

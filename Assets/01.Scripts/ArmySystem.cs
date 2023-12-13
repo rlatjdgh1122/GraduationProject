@@ -20,8 +20,10 @@ public class ArmySystem : MonoBehaviour
     public ParticleSystem ClickParticle;
 
     [SerializeField] private List<Army> armies = new();
+    public List<Army> Armies { get { return armies; } }
 
     private int curLegion = 0;
+    public int CurLegion => curLegion;
 
     private void Awake()
     {
@@ -39,42 +41,56 @@ public class ArmySystem : MonoBehaviour
             army.Soldiers.ForEach(s => s.SetOwner(army));
             army.IsMoving = true;
         }
+
+        ChangeArmy(0);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            curLegion = 0;
+            ChangeArmy(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
-            curLegion = 1;
+            ChangeArmy(1);
         else if (Input.GetKeyDown(KeyCode.Alpha3))
-            curLegion = 2;
+            ChangeArmy(2);
+    }
+
+    public void ChangeArmy(int index)
+    {
+        curLegion = index;
+        for (int i = 0; i < armies.Count; i++)
+        {
+            if (i == index)
+                armies[i].Soldiers.ForEach(s => s.OutlineCompo.enabled = true);
+            else
+                armies[i].Soldiers.ForEach(s => s.OutlineCompo.enabled = false);
+        }
     }
 
     public void SetClickMovement()
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
+        if (armies[curLegion].IsMoving)
         {
-            SetArmyMovePostiton(hit.point, curLegion);
+            RaycastHit hit;
 
-            ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
-            ClickParticle.Play();
+            if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
+            {
+                SetArmyMovePostiton(hit.point, curLegion);
+
+                ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
+                ClickParticle.Play();
+            }
         }
     }
 
     public void SetArmyMovePostiton(Vector3 startPos, int legion) //���콺 ��ġ, ��� idx, ��� ���� �̸�
     {
-        if (armies[legion].IsMoving)
-        {
-            var soldiers = armies[legion].Soldiers;
-            var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
+        var soldiers = armies[legion].Soldiers;
+        var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
 
-            for (int i = 0; i < soldiers.Count; i++)
-            {
-                soldiers[i].SetTarget(trms[i]);
-            }
+        for (int i = 0; i < soldiers.Count; i++)
+        {
+            soldiers[i].SetTarget(trms[i]);
         }
     }
 

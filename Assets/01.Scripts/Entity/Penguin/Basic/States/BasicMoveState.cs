@@ -26,13 +26,6 @@ public class BasicMoveState : BasicBaseState
 
         if (_penguin.NavAgent.velocity.magnitude < 0.15f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
-
-        //if (_penguin.NavAgent != null && !_penguin.NavAgent.pathPending && !_penguin.NavAgent.isStopped && _penguin.NavAgent.remainingDistance < 0.1f)
-        //{
-        //    if (_penguin.IsClickToMoving)
-        //        _penguin.IsClickToMoving = false;
-        //    _stateMachine.ChangeState(BasicPenguinStateEnum.Idle); //목적지에 도달했을 때 Idle상태로 바꿔준다.
-        //}
     }
 
     public override void Exit()

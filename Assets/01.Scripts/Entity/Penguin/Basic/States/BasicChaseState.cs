@@ -18,11 +18,6 @@ public class BasicChaseState : BasicBaseState
     {
         base.UpdateState();
 
-        //if (_penguin.Target.IsDead)
-        //{
-        //    _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
-        //}
-
         if (_penguin.IsAttackRange)
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
