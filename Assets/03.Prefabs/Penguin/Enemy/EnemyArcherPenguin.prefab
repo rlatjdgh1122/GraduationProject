@@ -722,7 +722,7 @@ MonoBehaviour:
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 5.9
   attackDistance: 5.9
-  _arrowPrefab: {fileID: 7271070087933662226, guid: daf7a3f982b0d1948829586327706867,
+  _arrowPrefab: {fileID: 8396514779560577617, guid: daf7a3f982b0d1948829586327706867,
     type: 3}
   _firePos: {fileID: 8096066805892693343}
   HitEffect: {fileID: 7640890292566896195, guid: c27706ee754478944853f84cab7482fa,
@@ -752,25 +752,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
-  _currentHealth: 0
+  currentHealth: 0
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
-  OnHitEvent:
+  OnUIUpdate:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1598124227567866696}
-        m_TargetAssemblyTypeName: Entity, Assembly-CSharp
-        m_MethodName: MoveToTarget
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!143 &8392588929912488062
 CharacterController:
   m_ObjectHideFlags: 0

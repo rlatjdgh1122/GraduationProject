@@ -26,7 +26,7 @@ public class ArcherMoveState : ArcherBaseState
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
         }
 
-        if (_penguin.NavAgent.remainingDistance < 0.1f && !_penguin.NavAgent.pathPending)
+        if (_penguin.NavAgent != null && !_penguin.NavAgent.pathPending && !_penguin.NavAgent.isStopped && _penguin.NavAgent.remainingDistance < 0.1f)
         {
             if (_penguin.IsClickToMoving)
                 _penguin.IsClickToMoving = false;

@@ -12,6 +12,7 @@ public class UIManager : Singleton<UIManager>
     [Header("UI References")]
     [SerializeField] private PenguinSpawner _penguinSpawner;
     public PenguinSpawner PenguinSpawnerComPo => _penguinSpawner;
+    public VictoryUI victoryUI;
 
     public void UIMoveDot(RectTransform transform, Vector3 targetVec, float duration,
                           Ease ease = Ease.Linear, params Action[] actions)

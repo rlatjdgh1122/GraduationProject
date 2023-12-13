@@ -7,8 +7,10 @@ using Define.Algorithem;
 public class Army
 {
     public int Legion;
-    public List<Entity> Soldiers = new();
+    public bool IsMoving;
+    public List<Penguin> Soldiers = new();
 }
+
 public class ArmySystem : MonoBehaviour
 {
     public static ArmySystem Instace;
@@ -25,17 +27,20 @@ public class ArmySystem : MonoBehaviour
     {
         Instace = this;
 
+        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         _inputReader.ClickEvent += SetClickMovement;
     }
+
     private void Start()
     {
-        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-
         foreach (var army in armies)
         {
             SetSoldersIdx(army.Legion);
+            army.Soldiers.ForEach(s => s.SetOwner(army));
+            army.IsMoving = true;
         }
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -45,6 +50,7 @@ public class ArmySystem : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
             curLegion = 2;
     }
+
     public void SetClickMovement()
     {
         RaycastHit hit;
@@ -60,12 +66,15 @@ public class ArmySystem : MonoBehaviour
 
     public void SetArmyMovePostiton(Vector3 startPos, int legion) //���콺 ��ġ, ��� idx, ��� ���� �̸�
     {
-        var soldiers = armies[legion].Soldiers;
-        var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
-
-        for (int i = 0; i < soldiers.Count; i++)
+        if (armies[legion].IsMoving)
         {
-            soldiers[i].SetTarget(trms[i]);
+            var soldiers = armies[legion].Soldiers;
+            var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
+
+            for (int i = 0; i < soldiers.Count; i++)
+            {
+                soldiers[i].SetTarget(trms[i]);
+            }
         }
     }
 
@@ -84,7 +93,7 @@ public class ArmySystem : MonoBehaviour
         }
     }
 
-    public void Remove(int legion, Entity obj)
+    public void Remove(int legion, Penguin obj)
     {
         var soldiers = armies[legion].Soldiers;
         soldiers.Remove(obj);
@@ -93,7 +102,8 @@ public class ArmySystem : MonoBehaviour
         var crown = GameObject.FindGameObjectWithTag("Crown");
         Destroy(crown);
     }
-    public void JoinArmy(int legion, Entity obj) //들어가고 싶은 군단, 
+
+    public void JoinArmy(int legion, Penguin obj) //들어가고 싶은 군단, 
     {
         if (armies.Find(p => p.Legion == legion) == null)
         {
@@ -103,6 +113,7 @@ public class ArmySystem : MonoBehaviour
 
         armies[legion].Soldiers.Add(obj);
     }
+
     private void OnDestroy()
     {
         _inputReader.ClickEvent -= SetClickMovement;

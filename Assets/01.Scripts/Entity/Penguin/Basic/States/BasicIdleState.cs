@@ -23,8 +23,11 @@ public class BasicIdleState : BasicBaseState
     {
         base.UpdateState();
 
-        if (_penguin.IsInTargetRange && !_penguin.IsClickToMoving)
+        if (_penguin.IsInTargetRange/* && !_penguin.IsClickToMoving*/)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+
+        if (_penguin.NavAgent.velocity.magnitude > 0.15f)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
     }
 
     public override void Exit()

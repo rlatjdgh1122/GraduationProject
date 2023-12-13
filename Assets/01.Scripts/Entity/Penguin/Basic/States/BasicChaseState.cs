@@ -18,7 +18,12 @@ public class BasicChaseState : BasicBaseState
     {
         base.UpdateState();
 
-        if (_penguin.IsAttackRange && !_penguin.IsClickToMoving)
+        //if (_penguin.Target.IsDead)
+        //{
+        //    _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+        //}
+
+        if (_penguin.IsAttackRange)
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
         }
@@ -27,23 +32,10 @@ public class BasicChaseState : BasicBaseState
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
         }
-
-        //if (_penguin.Target != null)
-        //{
-        //    if (_penguin.Target.IsDead)
-        //    {
-        //        _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
-        //    }
-        //}
     }
 
     public override void Exit()
     {
         base.Exit();
-    }
-
-    private bool CanAttack()
-    {
-        return _triggerCalled;
     }
 }

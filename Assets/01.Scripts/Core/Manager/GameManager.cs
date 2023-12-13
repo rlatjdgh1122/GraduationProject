@@ -5,8 +5,56 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int GetPenguinCount => FindObjectsOfType<BasicPenguin>().Length;
-    public int GetEnemyPenguinCount => FindObjectsOfType<EnemyBasicPenguin>().Length;
+    public int GetPenguinCount => FindObjectsOfType<Penguin>().Length;
+
+    public int GetDeadPenguinCount()
+    {
+        Penguin[] penguins = FindObjectsOfType<Penguin>();
+
+        int count = 0;
+
+        foreach (Penguin penguin in penguins)
+        {
+            if (penguin.IsDead)
+                count++;
+        }
+
+        return count;
+    }
+
+    public int GetEnemyPenguinCount()
+    {
+        Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
+
+        int activeCount = 0;
+
+        foreach (Enemy enemyPenguin in enemyPenguins)
+        {
+            if (enemyPenguin.enabled)
+            {
+                activeCount++;
+            }
+        }
+
+        return activeCount;
+    }
+
+    public int GetDeadEnemyPenguinCount()
+    {
+        Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
+
+        int count = 0;
+
+        foreach (Enemy enemyPenguin in enemyPenguins)
+        {
+            if (enemyPenguin.IsDead)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
 
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, Building> _buildingDictionary = new();

@@ -22,9 +22,6 @@ public class CameraSystem : MonoBehaviour
     private bool isRotating = false;
     private Vector3 lastMousePosition;
 
-    //카메라 시스템 빈 오브젝트를 만들어서 넣어주기
-    //-> 오브젝트를 움직이는것
-
     private void Update()
     {
         CameraMove();
@@ -34,29 +31,31 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraMove()
     {
-        float xInput = Input.GetAxisRaw("Horizontal");
-        float yInput = Input.GetAxisRaw("Vertical");
-        Vector3 inputDir = new Vector3(0, 0, 0);
-
-        if (xInput < 0)
-        {
-            inputDir.x = -1f;
-        }
-        if (yInput < 0)
-        {
-            inputDir.z = -1f;
-        }
-        if (xInput > 0)
-        {
-            inputDir.x = 1f;
-        }
-        if (yInput > 0)
-        {
-            inputDir.z = 1f;
-        }
-
+        float xInput = 0;
+        float yInput = 0;
+        Vector3 inputDir = new Vector3(xInput, 0, yInput).normalized;
 
         Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
+
+        // 마우스 화면 끝에서의 이동 처리
+        Vector3 mousePosition = Input.mousePosition;
+        if (mousePosition.x <= _edgeScrollSize)
+        {
+            moveDir -= transform.right;
+        }
+        else if (mousePosition.x >= Screen.width - _edgeScrollSize)
+        {
+            moveDir += transform.right;
+        }
+
+        if (mousePosition.y <= _edgeScrollSize)
+        {
+            moveDir -= transform.forward;
+        }
+        else if (mousePosition.y >= Screen.height - _edgeScrollSize)
+        {
+            moveDir += transform.forward;
+        }
 
         transform.position += moveDir * _moveSpeed * Time.deltaTime;
     }
