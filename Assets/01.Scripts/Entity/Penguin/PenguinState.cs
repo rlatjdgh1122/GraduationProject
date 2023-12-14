@@ -9,7 +9,7 @@ public class PenguinState<T> where T : Enum
     protected NavMeshAgent _navAgent; //편의를 위해서 여기에도 NavAgent 선언
 
     protected int _animBoolHash;
-    protected bool _triggerCalled;
+    protected bool _triggerCalled = true;
     
 
     public PenguinState(Penguin penguin, PenguinStateMachine<T> stateMachine, string animationBoolName)

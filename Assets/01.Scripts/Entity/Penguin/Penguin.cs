@@ -6,7 +6,6 @@ public abstract class Penguin : Entity
     [Header("Setting Values")]
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
-    public float maxRange = 35;
 
     [Header("공격상태설정값")]
     public float attackCooldown;
@@ -73,7 +72,7 @@ public abstract class Penguin : Entity
             })
             .FirstOrDefault();
 
-        if (nearestObject != null)
+        if (nearestObject != null && GameManager.Instance.GetCurrentEnemyCount() > 0)
         {
             Enemy enemyScript = nearestObject.GetComponent<Enemy>();
 

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int GetPenguinCount => FindObjectsOfType<Penguin>().Length;
+    public int GetCurrentPenguinCount => FindObjectsOfType<Penguin>().Length;
 
     public int GetDeadPenguinCount()
     {
@@ -22,7 +22,7 @@ public class GameManager : Singleton<GameManager>
         return count;
     }
 
-    public int GetEnemyPenguinCount()
+    public int GetCurrentEnemyCount()
     {
         Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
 
@@ -39,7 +39,7 @@ public class GameManager : Singleton<GameManager>
         return activeCount;
     }
 
-    public int GetDeadEnemyPenguinCount()
+    public int GetCurrentDeadEnemyCount()
     {
         Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
 
@@ -104,11 +104,6 @@ public class GameManager : Singleton<GameManager>
     public bool TryRaycast(Ray ray, out RaycastHit hit,float distance, LayerMask? layerMask = null) // PenguinSpawner Update에 사용하는거 나와있음
     {
         return Physics.Raycast(ray, out hit, distance, layerMask ?? Physics.DefaultRaycastLayers);
-    }
-
-    public override void Init()
-    {
-        throw new System.NotImplementedException();
     }
 
     private void MakePool()

@@ -20,11 +20,13 @@ public class BasicMoveState : BasicBaseState
     {
         base.UpdateState();
 
+        if (_penguin.NavAgent.velocity.magnitude < 0.05f)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+
         if (_penguin.IsInTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
-        if (_penguin.NavAgent.velocity.magnitude < 0.05f)
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+       
     }
 
     public override void Exit()
