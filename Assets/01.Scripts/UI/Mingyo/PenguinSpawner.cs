@@ -124,7 +124,7 @@ public class PenguinSpawner : MonoBehaviour
         DummyPenguin dummy = PoolManager.Instance.Pop($"{type}DummyPenguin") as DummyPenguin;
 
         dummy.transform.position = vec;
-        dummy.transform.LookAt(_campFireTrm); //æÓ¿Ã∞≈æ»¥Ô §ª§ª
+        dummy.transform.LookAt(_campFireTrm);
 
         _dummyPenguinList.Add(dummy);
     }
