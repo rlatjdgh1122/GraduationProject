@@ -7,7 +7,7 @@ public class BuildingItemInfo
 {
     public string Name;
     public Sprite Image;
-    public Building BuildItem;
+    public BaseBuilding BuildItem;
 }
 [CreateAssetMenu(menuName = "SO/BuildingList")]
 public class InitBuildingList : ScriptableObject

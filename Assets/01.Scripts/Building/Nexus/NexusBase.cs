@@ -20,5 +20,7 @@ public class NexusBase : MonoBehaviour
 
         _health.SetOwner(_nexusStat);
         _nexusStat.SetOwner(this);
+
+
     }
 }
