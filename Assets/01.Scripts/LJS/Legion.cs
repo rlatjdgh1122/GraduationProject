@@ -22,10 +22,4 @@ public class Legion : Singleton<Legion>
 {
     public List<SlotUI> LegionUIList = new();
     public List<LegionCnt> LegionCnt = new();
-
-
-    public override void Init()
-    {
-
-    }
 }

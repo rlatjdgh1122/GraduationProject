@@ -128,8 +128,11 @@ public abstract class Entity : PoolableMono
 
     public void SetTarget(Vector3 _target)
     {
-        targetTrm = _target;
-        MoveToTarget();
+        if (NavAgent.isActiveAndEnabled)
+        {
+            targetTrm = _target;
+            MoveToTarget();
+        }
     }
 
     public void MoveToTarget()

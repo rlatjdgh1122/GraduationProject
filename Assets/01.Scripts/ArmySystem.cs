@@ -74,7 +74,7 @@ public class ArmySystem : MonoBehaviour
 
     public void SetClickMovement()
     {
-        if (armies[curLegion].IsMoving)
+        if (armies[curLegion].IsMoving && armies[curLegion].Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
             RaycastHit hit;
 

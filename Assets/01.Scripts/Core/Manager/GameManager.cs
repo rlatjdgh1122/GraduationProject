@@ -5,7 +5,22 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int GetPenguinCount => FindObjectsOfType<Penguin>().Length;
+    public int GetCurrentPenguinCount()
+    {
+        Penguin[] penguins = FindObjectsOfType<Penguin>();
+
+        int activeCount = 0;
+
+        foreach (Penguin penguin in penguins)
+        {
+            if (penguin.enabled)
+            {
+                activeCount++;
+            }
+        }
+
+        return activeCount;
+    }
 
     public int GetDeadPenguinCount()
     {
@@ -22,7 +37,7 @@ public class GameManager : Singleton<GameManager>
         return count;
     }
 
-    public int GetEnemyPenguinCount()
+    public int GetCurrentEnemyCount()
     {
         Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
 
@@ -39,7 +54,7 @@ public class GameManager : Singleton<GameManager>
         return activeCount;
     }
 
-    public int GetDeadEnemyPenguinCount()
+    public int GetCurrentDeadEnemyCount()
     {
         Enemy[] enemyPenguins = FindObjectsOfType<Enemy>();
 
@@ -55,14 +70,14 @@ public class GameManager : Singleton<GameManager>
 
         return count;
     }
+
+    public float ElapsedTime => Time.time;
+
     private int dummyPenguinCount;
     public int GetDummyPenguinCount => dummyPenguinCount;
 
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, Building> _buildingDictionary = new();
-
-    [Header("스크립트들")]
-    [SerializeField] private MainUI mainUI = null;
 
     [SerializeField]
     private PoolingListSO _poolingListSO;
@@ -104,11 +119,6 @@ public class GameManager : Singleton<GameManager>
     public bool TryRaycast(Ray ray, out RaycastHit hit,float distance, LayerMask? layerMask = null) // PenguinSpawner Update에 사용하는거 나와있음
     {
         return Physics.Raycast(ray, out hit, distance, layerMask ?? Physics.DefaultRaycastLayers);
-    }
-
-    public override void Init()
-    {
-        throw new System.NotImplementedException();
     }
 
     private void MakePool()

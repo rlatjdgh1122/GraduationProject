@@ -13,15 +13,19 @@ public class ArcherIdleState : ArcherBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _penguin.FindNearestEnemy("Enemy");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.IsAttackRange && !_penguin.IsClickToMoving)
-            _stateMachine.ChangeState(ArcherPenguinStateEnum.Attack);
+        if (_penguin.NavAgent.velocity.magnitude > 0.05f)
+            _stateMachine.ChangeState(ArcherPenguinStateEnum.Move);
+
+        if (_penguin.IsInTargetRange)
+            _stateMachine.ChangeState(ArcherPenguinStateEnum.Move);
+        else
+            _penguin.FindNearestEnemy("Enemy");
     }
 
     public override void Exit()
