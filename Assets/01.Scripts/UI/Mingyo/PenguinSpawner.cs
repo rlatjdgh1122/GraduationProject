@@ -35,6 +35,7 @@ public class PenguinSpawner : MonoBehaviour
     [SerializeField] private float onSpawnUIYPosValue = 320;
     [SerializeField] private LayerMask _spawnerLayer;
     [SerializeField] Transform _spawnPoint;
+    [SerializeField] private Transform _campFireTrm;
 
     List<DummyPenguin> _dummyPenguinList = new List<DummyPenguin>();
 
@@ -123,7 +124,7 @@ public class PenguinSpawner : MonoBehaviour
         DummyPenguin dummy = PoolManager.Instance.Pop($"{type}DummyPenguin") as DummyPenguin;
 
         dummy.transform.position = vec;
-        dummy.transform.rotation = Quaternion.identity;
+        dummy.transform.LookAt(_campFireTrm); //æÓ¿Ã∞≈æ»¥Ô §ª§ª
 
         _dummyPenguinList.Add(dummy);
     }
