@@ -25,6 +25,9 @@ public class BasicAttackState : BasicBaseState
         if (_triggerCalled)
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+
+            if (_penguin.Target == null)
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
         }
     }
 

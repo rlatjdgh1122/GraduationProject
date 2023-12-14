@@ -9,8 +9,6 @@ public class ArcherDeadState : ArcherBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        if (_penguin.Target != null)
-            _penguin.Target.FindNearestPenguin("Player");
         _penguin.tag = "Untagged";
         _penguin.enabled = false;
         _penguin.CharController.enabled = false;

@@ -20,6 +20,8 @@ public class BasicIdleState : BasicBaseState
 
         if (_penguin.IsInTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+        else
+            _penguin.FindNearestEnemy("Enemy");
     }
 
     public override void Exit()

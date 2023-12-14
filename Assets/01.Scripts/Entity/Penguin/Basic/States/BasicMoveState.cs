@@ -25,8 +25,6 @@ public class BasicMoveState : BasicBaseState
 
         if (_penguin.IsInTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
-
-       
     }
 
     public override void Exit()

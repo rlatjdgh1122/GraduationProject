@@ -1,30 +1,34 @@
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VictoryUI : PopupUI
 {
+    private Image _background;
     private CanvasGroup _canvasGroup;
     [SerializeField] private TextMeshProUGUI[] _texts;
 
     public override void Awake()
     {
-        _canvasGroup = GetComponent<CanvasGroup>();
+        _canvasGroup = GetComponentInChildren<CanvasGroup>();
+        _background = GetComponent<Image>();
     }
 
     public override void DisableUI(float time, Action action)
     {
-        _canvasGroup.DOFade(0, time).OnComplete(() =>  action?.Invoke());
+        DOTween.KillAll(); //юс╫ц
+        _canvasGroup.DOFade(0, time).OnComplete(() =>
+        {
+            _background.DOFade(0, time).OnComplete(() => action?.Invoke());
+        });
     }
 
     public override void EnableUI(float time)
     {
         SetTexts();
-        _canvasGroup.DOFade(1, time);
+        _background.DOFade(0.75f, time).OnComplete(() => _canvasGroup.DOFade(1, time));
     }
 
     private void SetTexts()

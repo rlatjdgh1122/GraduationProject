@@ -24,8 +24,6 @@ public class WaveManager : MonoBehaviour
     private RectTransform clockHandImgTrm;
     [SerializeField]
     private TextMeshProUGUI timeText, wavCntText, enemyCntText;
-    [SerializeField]
-    private CanvasGroup loseUI;
 
     [Header("테스트 용")]
     public bool isWin;
@@ -53,6 +51,15 @@ public class WaveManager : MonoBehaviour
         {
             UIManager.Instance.uiDictionary.TryGetValue(UI.Victory, out PopupUI victoryUI);
             return victoryUI;
+        }
+    }
+
+    PopupUI defeatUI
+    {
+        get
+        {
+            UIManager.Instance.uiDictionary.TryGetValue(UI.Defeat, out PopupUI defeatUI);
+            return defeatUI;
         }
     }
     #endregion
@@ -107,6 +114,9 @@ public class WaveManager : MonoBehaviour
         {
             if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
                 GetReward();
+
+            if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
+                ShowDefeatUI();
         }
     }
 
@@ -120,6 +130,7 @@ public class WaveManager : MonoBehaviour
         IsPhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
         wavCntText.SetText($"Current Wave: {CurrentStage}");
+        UpdateTimeText();
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료
@@ -134,15 +145,15 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            ShowLoseUI();
+            ShowDefeatUI();
         }
 
         _currentEnemyGround = null;
     }
 
-    private void ShowLoseUI()
+    private void ShowDefeatUI()
     {
-        loseUI.gameObject.SetActive(true);
+        defeatUI.EnableUI(1);
     }
 
     private void GetReward() // 보상 획득 함수
@@ -150,11 +161,6 @@ public class WaveManager : MonoBehaviour
         ShowEffect();
         
         victoryUI.EnableUI(1f);
-    }
-
-    public void Defeat()
-    {
-        loseUI.DOFade(1, 1f);
     }
 
     public void CloseWinPanel()

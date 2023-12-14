@@ -5,7 +5,22 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int GetCurrentPenguinCount => FindObjectsOfType<Penguin>().Length;
+    public int GetCurrentPenguinCount()
+    {
+        Penguin[] penguins = FindObjectsOfType<Penguin>();
+
+        int activeCount = 0;
+
+        foreach (Penguin penguin in penguins)
+        {
+            if (penguin.enabled)
+            {
+                activeCount++;
+            }
+        }
+
+        return activeCount;
+    }
 
     public int GetDeadPenguinCount()
     {
@@ -55,14 +70,14 @@ public class GameManager : Singleton<GameManager>
 
         return count;
     }
+
+    public float ElapsedTime => Time.time;
+
     private int dummyPenguinCount;
     public int GetDummyPenguinCount => dummyPenguinCount;
 
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, Building> _buildingDictionary = new();
-
-    [Header("스크립트들")]
-    [SerializeField] private MainUI mainUI = null;
 
     [SerializeField]
     private PoolingListSO _poolingListSO;

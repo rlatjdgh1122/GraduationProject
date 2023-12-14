@@ -25,6 +25,7 @@ public abstract class Penguin : Entity
     public InputReader Input => _inputReader;
 
     private float _distance;
+    public Enemy nearestEnemy;
 
     public Army owner;
 
