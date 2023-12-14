@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 public class WaveManager : MonoBehaviour
 {
     #region 사용 변수들
-
+    public List<GameObject> testOurPenguins = new();
     [Header("Wave Settings")]
     [SerializeField]
     private int maxPhaseReadyTime;
@@ -111,6 +112,22 @@ public class WaveManager : MonoBehaviour
         IsPhase = true;
         maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount();
         wavCntText.SetText($"Current Wave: {CurrentStage}");
+
+        if (CurrentStage == 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                testOurPenguins[i].SetActive(true);
+            }
+        }
+
+        if (CurrentStage == 2)
+        {
+            for (int i = 3; i < 7; i++)
+            {
+                testOurPenguins[i].SetActive(true);
+            }
+        }
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료

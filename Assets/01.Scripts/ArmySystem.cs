@@ -60,10 +60,15 @@ public class ArmySystem : MonoBehaviour
         curLegion = index;
         for (int i = 0; i < armies.Count; i++)
         {
+            if (armies[i].Soldiers[i].enabled == false) continue;
             if (i == index)
+            {
                 armies[i].Soldiers.ForEach(s => s.OutlineCompo.enabled = true);
+            }
             else
+            {
                 armies[i].Soldiers.ForEach(s => s.OutlineCompo.enabled = false);
+            }
         }
     }
 

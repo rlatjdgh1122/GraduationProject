@@ -6,7 +6,6 @@ public class WaterWaveManager : MonoBehaviour
 {
     public Material waveMaterial;
     public Texture2D waveTexture;
-
     float[][] waveN, waveNm1, waveNp1;
 
     float Lx = 10;
@@ -45,6 +44,8 @@ public class WaterWaveManager : MonoBehaviour
 
     void WaveStep()
     {
+
+
         dt = CFL * dx / 2;
         t += dx;
 
