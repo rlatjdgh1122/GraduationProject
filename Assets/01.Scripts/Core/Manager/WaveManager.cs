@@ -24,10 +24,6 @@ public class WaveManager : MonoBehaviour
     private RectTransform clockHandImgTrm;
     [SerializeField]
     private TextMeshProUGUI timeText, wavCntText, enemyCntText;
-    [SerializeField]
-    private CanvasGroup loseUI;
-    [SerializeField]
-    private CanvasGroup winUI;
 
     [Header("테스트 용")]
     public bool isWin;
@@ -46,6 +42,26 @@ public class WaveManager : MonoBehaviour
 
     public int tsest;
 
+    #endregion
+
+    #region UIManager UI
+    PopupUI victoryUI
+    {
+        get
+        {
+            UIManager.Instance.uiDictionary.TryGetValue(UI.Victory, out PopupUI victoryUI);
+            return victoryUI;
+        }
+    }
+
+    PopupUI defeatUI
+    {
+        get
+        {
+            UIManager.Instance.uiDictionary.TryGetValue(UI.Defeat, out PopupUI defeatUI);
+            return defeatUI;
+        }
+    }
     #endregion
 
     private static WaveManager _instance;
@@ -81,7 +97,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount(); // 테스트용
+        maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
         SetReadyTime(); // 시간 초기화
         InvokePhaseEndEvent(isWin);
 
@@ -96,8 +112,11 @@ public class WaveManager : MonoBehaviour
 
         if (IsPhase)
         {
-            if (GameManager.Instance.GetEnemyPenguinCount() <= 0)
+            if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
                 GetReward();
+
+            if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
+                ShowDefeatUI();
         }
     }
 
@@ -109,8 +128,9 @@ public class WaveManager : MonoBehaviour
     private void OnPhaseStartHandle() // 전투페이즈 시작
     {
         IsPhase = true;
-        maxEnemyCnt = GameManager.Instance.GetEnemyPenguinCount();
+        maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
         wavCntText.SetText($"Current Wave: {CurrentStage}");
+        UpdateTimeText();
     }
 
     private void OnPhaseEndHandle() // 전투페이즈 종료
@@ -125,37 +145,29 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            ShowLoseUI();
+            ShowDefeatUI();
         }
 
         _currentEnemyGround = null;
     }
 
-    private void ShowLoseUI()
+    private void ShowDefeatUI()
     {
-        loseUI.gameObject.SetActive(true);
+        defeatUI.EnableUI(1);
     }
 
     private void GetReward() // 보상 획득 함수
     {
         ShowEffect();
-        UIManager.Instance.victoryUI.SetTexts();
-        winUI.DOFade(1, 1f);
-    }
-
-    public void Defeat()
-    {
-        loseUI.DOFade(1, 1f);
+        
+        victoryUI.EnableUI(1f);
     }
 
     public void CloseWinPanel()
     {
         IsPhase = false;
 
-        winUI.DOFade(0, 1f).OnComplete(() =>
-        {
-            OnPhaseEndEvent?.Invoke();
-        });
+        victoryUI.DisableUI(1, OnPhaseEndEvent);
     }
 
     private void ShowEffect() // 이펙트
@@ -215,7 +227,8 @@ public class WaveManager : MonoBehaviour
         int minutes = remainingPhaseReadyTime / 60;          // 분
         int remainingSeconds = remainingPhaseReadyTime % 60; // 초
 
-        if (minutes > 0) { timeText.SetText($"{minutes}: {remainingSeconds}"); } //분으로 나타낼 수 있다면 분까지 나타낸다.
+        if (IsPhase) { timeText.SetText($"전투 진행중"); }
+        else if (minutes > 0) { timeText.SetText($"{minutes}: {remainingSeconds}"); } //분으로 나타낼 수 있다면 분까지 나타낸다.
         else { timeText.SetText($"{remainingSeconds}"); }
     }
 
@@ -259,7 +272,7 @@ public class WaveManager : MonoBehaviour
 
     public void UpdateUIOnEnemyCount(int? a = null)
     {
-        int enemyCnt = a ?? GameManager.Instance.GetEnemyPenguinCount();
+        int enemyCnt = a ?? GameManager.Instance.GetCurrentEnemyCount();
 
         if (enemyCnt == maxEnemyCnt)
         {

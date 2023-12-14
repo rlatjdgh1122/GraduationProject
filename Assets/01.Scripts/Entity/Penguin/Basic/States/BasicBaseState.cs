@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-
 public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //»ó¼Ó¹Þ±â À§ÇØ¼­ ¸¸µç Â¥¹Ù¸® Å¬·¡½º
 {
     public BasicBaseState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animBoolName) :
@@ -18,6 +15,12 @@ public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //»ó¼Ó¹Þ±â À§Ç
         base.UpdateState();
 
         if (_penguin.IsDead)
+        {
+            _penguin.NavAgent.enabled = false;
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
+        }
+
+        if (!_penguin.enabled)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
     }
 

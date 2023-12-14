@@ -21,5 +21,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    public abstract void Init();
+    public virtual void Awake()
+    {
+
+    }
 }

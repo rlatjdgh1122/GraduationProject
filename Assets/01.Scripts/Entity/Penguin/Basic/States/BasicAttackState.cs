@@ -24,10 +24,10 @@ public class BasicAttackState : BasicBaseState
 
         if (_triggerCalled)
         {
-            if (GameManager.Instance.GetEnemyPenguinCount() <= 0) //타겟이 없다면 가만히 있음
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
-
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+
+            if (_penguin.Target == null)
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
         }
     }
 

@@ -51,11 +51,6 @@ public class PenguinSpawner : MonoBehaviour
     
     Dictionary<PenguinTypeEnum, SpawnPenguinBtnInfo> _penguinSpawnBtnDic = new Dictionary<PenguinTypeEnum, SpawnPenguinBtnInfo>();
 
-    private void OnEnable()
-    {
-        WaveManager.Instance.OnPhaseStartEvent += DummyPenguinMoveToTent;
-        WaveManager.Instance.OnIceArrivedEvent += ResetDummyPenguinList;
-    }
 
     private void OnDisable()
     {
@@ -73,6 +68,9 @@ public class PenguinSpawner : MonoBehaviour
 
             Debug.Log(t.position);
         }
+
+        WaveManager.Instance.OnPhaseStartEvent += DummyPenguinMoveToTent;
+        WaveManager.Instance.OnIceArrivedEvent += ResetDummyPenguinList;
     }
 
     private void Start()
@@ -133,7 +131,6 @@ public class PenguinSpawner : MonoBehaviour
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
     }
-
     #region SpawnPenguinButtonHandler
 
     public void BasicPenguinSpawnHandler() // 이거를 struct를 받는 걸로 바꾸셈
@@ -142,7 +139,7 @@ public class PenguinSpawner : MonoBehaviour
         if(WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Basic].CoolTime)
         {
             int index = GameManager.Instance.GetDummyPenguinCount;
-            UIManager.Instance.ButtonCooldown
+            ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Basic],
                 () => SpawnDummyPenguin(_spawnPoints[index].position, "Basic"));
             Legion.Instance.LegionUIList[0].HeroCnt++;
@@ -154,7 +151,7 @@ public class PenguinSpawner : MonoBehaviour
         if (WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Basic].CoolTime)
         {
             int index = GameManager.Instance.GetDummyPenguinCount;
-            UIManager.Instance.ButtonCooldown
+            ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Archer],
                 () => SpawnDummyPenguin(_spawnPoints[index].position, "Archer"));
             Legion.Instance.LegionUIList[1].HeroCnt++;
@@ -173,6 +170,20 @@ public class PenguinSpawner : MonoBehaviour
     {
         GameManager.Instance.ResetDummyPenguinCount();
         _dummyPenguinList.Clear();
+    }
+
+    public void ButtonCooldown(SpawnPenguinBtnInfo btnInfo, Action spawnAction)
+    {
+        btnInfo.Btn.interactable = false;
+        btnInfo.CoolingImg.fillAmount = 1f;
+
+        GameManager.Instance.PlusDummyPenguinCount();
+
+        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
+        {
+            spawnAction?.Invoke();
+            btnInfo.Btn.interactable = true;
+        });
     }
 
     #endregion

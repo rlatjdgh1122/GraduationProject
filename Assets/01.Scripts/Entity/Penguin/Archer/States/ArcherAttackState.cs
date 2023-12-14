@@ -10,32 +10,24 @@ public class ArcherAttackState : ArcherBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.StopImmediately();
         _triggerCalled = false;
+        _penguin.FindNearestEnemy("Enemy");
+        _penguin.owner.IsMoving = false;
+        _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        _penguin.StopImmediately();
         _penguin.LookTarget();
 
-        if (_triggerCalled && _penguin.Target != null)
+        if (_triggerCalled)
         {
-            if (_penguin.IsInTargetRange)
-            {
-                _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
-            }
-            else
-            {
-                _stateMachine.ChangeState(ArcherPenguinStateEnum.Idle);
-            }
+            _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
 
             if (_penguin.Target == null) //타겟이 없다면 가만히 있음
-            {
                 _stateMachine.ChangeState(ArcherPenguinStateEnum.Idle);
-            }
         }
     }
 

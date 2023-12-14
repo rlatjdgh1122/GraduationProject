@@ -12,7 +12,6 @@ public class ArcherBaseState : PenguinState<ArcherPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
-        _penguin.Input.ClickEvent += HandleClick;
     }
 
     public override void UpdateState()
@@ -20,22 +19,17 @@ public class ArcherBaseState : PenguinState<ArcherPenguinStateEnum>
         base.UpdateState();
 
         if (_penguin.IsDead)
-            _stateMachine.ChangeState(ArcherPenguinStateEnum.Dead);
-    }
-
-    private void HandleClick()
-    {
-        if (!_penguin.IsDead)
         {
-            if (_penguin.IsInTargetRange || _penguin.IsAttackRange) _penguin.IsClickToMoving = true;
-            //_penguin.SetClickMovement();
-            _stateMachine.ChangeState(ArcherPenguinStateEnum.Move);
+            _penguin.NavAgent.enabled = false;
+            _stateMachine.ChangeState(ArcherPenguinStateEnum.Dead);
         }
+
+        if (!_penguin.enabled)
+            _stateMachine.ChangeState(ArcherPenguinStateEnum.Dead);
     }
 
     public override void Exit()
     {
         base.Exit();
-        _penguin.Input.ClickEvent -= HandleClick;
     }
 }
