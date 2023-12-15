@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using DG.Tweening;
+using UnityEngine.UIElements.Experimental;
 
 public abstract class Entity : PoolableMono
 {
@@ -45,8 +46,6 @@ public abstract class Entity : PoolableMono
     public int FacingDirection { get; private set; } = 1; //�������� 1, ������ -1
     protected bool _facingRight = true;
     public UnityEvent<float> OnHealthBarChanged;
-
-    private MaterialPropertyBlock mpb;
 
     protected virtual void Awake()
     {

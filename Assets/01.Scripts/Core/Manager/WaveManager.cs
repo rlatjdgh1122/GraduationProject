@@ -92,7 +92,7 @@ public class WaveManager : MonoBehaviour
             _instance = this;
         }
         OnPhaseStartEvent += OnPhaseStartHandle; // 전투페이즈 시작 이벤트 구독
-        OnPhaseEndEvent += OnPhaseEndHandle;     // 전투페이즈 종료 이벤트 구독
+        OnPhaseEndEvent += OnPhaseEndHandle;     // 전투페이즈 종료 이벤트 
     }
 
     private void Start()
@@ -100,7 +100,6 @@ public class WaveManager : MonoBehaviour
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
         SetReadyTime(); // 시간 초기화
         InvokePhaseEndEvent(isWin);
-
     }
 
     private void Update()
@@ -112,11 +111,11 @@ public class WaveManager : MonoBehaviour
 
         if (IsPhase)
         {
-            if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
-                GetReward();
-
             if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
                 ShowDefeatUI();
+
+            if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
+                GetReward();
         }
     }
 
@@ -127,8 +126,8 @@ public class WaveManager : MonoBehaviour
 
     private void OnPhaseStartHandle() // 전투페이즈 시작
     {
-        IsPhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
+        IsPhase = true;
         wavCntText.SetText($"Current Wave: {CurrentStage}");
         UpdateTimeText();
     }

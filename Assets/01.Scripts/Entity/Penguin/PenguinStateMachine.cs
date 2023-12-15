@@ -22,12 +22,6 @@ public class PenguinStateMachine<T> where T : Enum
         PrevState = CurrentState;
         CurrentState.Exit();
         CurrentState = StateDictionary[newState];
-
-        //Debug.Log($"이전 상태는 {PrevState.ToString()} 입니다");
-        //if (newState is BasicPenguinStateEnum)
-        //{
-        //    Debug.Log($"현재 상태는 {newState.ToString()} 입니다.");
-        //}
         CurrentState.Enter();
     }
 

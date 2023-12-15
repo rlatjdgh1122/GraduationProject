@@ -1,6 +1,8 @@
 using System.Linq;
 using UnityEngine;
 using  Define.Algorithem;
+using UnityEngine.EventSystems;
+
 public abstract class Penguin : Entity
 {
     [Header("Setting Values")]
@@ -24,7 +26,6 @@ public abstract class Penguin : Entity
     [SerializeField] private InputReader _inputReader;
     public InputReader Input => _inputReader;
 
-    private float _distance;
     public Enemy nearestEnemy;
 
     public Army owner;
@@ -108,8 +109,7 @@ public abstract class Penguin : Entity
 
     protected override void HandleDie()
     {
-        Debug.Log("¡Í±›");
-        ArmySystem.Instace.Remove(0, this);
+        ArmySystem.Instace.Remove(owner.Legion, this);
         IsDead = true;
     }
 }

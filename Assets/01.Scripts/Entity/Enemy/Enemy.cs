@@ -102,11 +102,8 @@ public abstract class Enemy : Entity
 
     public void MoveToNexus()
     {
-        if (NavAgent.isActiveAndEnabled)
-        {
-            NavAgent.ResetPath();
-            NavAgent.SetDestination(NexusTarget.position);
-        }
+        NavAgent.ResetPath();
+        NavAgent.SetDestination(NexusTarget.position);
     }
 
     public void LookAtNexus()
