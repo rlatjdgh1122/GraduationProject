@@ -15,6 +15,7 @@ public class GroundMove : MonoBehaviour
     private Vector3 _moveDir;
     [SerializeField] private Color startColor;
     [SerializeField] private Color targetColor;
+    [SerializeField] private Color endColor;
 
     #region 프로퍼티
     private NavMeshSurface _surface;
@@ -43,13 +44,15 @@ public class GroundMove : MonoBehaviour
             enemy.enabled = false;
         }
 
-        WaveManager.Instance.OnPhaseStartEvent += GroundMoveHandle; 
+        WaveManager.Instance.OnPhaseStartEvent += GroundMoveHandle;
+        //WaveManager.Instance.OnPhaseEndEvent += SetOutline;
     }
 
     private void GroundMoveHandle()
     {
         if (WaveManager.Instance.CurrentStage == _enableStage)
         {
+            Debug.Log("일치하여 스타트");
             foreach (Enemy enemy in _enemies)
             {
                 enemy.enabled = true;
@@ -70,5 +73,14 @@ public class GroundMove : MonoBehaviour
                     });
                 });
         }
+    }
+
+    private void SetOutline()
+    {
+        DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, endColor, 0.7f).OnComplete(() =>
+        {
+            _outline.enabled = false;
+            WaveManager.Instance.OnPhaseEndEvent -= GroundMoveHandle;
+        });
     }
 }

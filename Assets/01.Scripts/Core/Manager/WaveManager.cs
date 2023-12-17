@@ -126,8 +126,8 @@ public class WaveManager : MonoBehaviour
 
     private void OnPhaseStartHandle() // 전투페이즈 시작
     {
-        maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
         IsPhase = true;
+        maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
         wavCntText.SetText($"Current Wave: {CurrentStage}");
         UpdateTimeText();
     }

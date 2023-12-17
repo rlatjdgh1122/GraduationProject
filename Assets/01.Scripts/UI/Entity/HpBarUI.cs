@@ -32,14 +32,14 @@ public class HpBarUI : MonoBehaviour
 
     public void UpdateHpbarUI(float current, float max)
     {
+        _fadeSequence.Append(_container.DOFade(1, 0.5f));
+        _fadeSequence.Append(_hpbar.DOFillAmount(current / max, 0.5f));
+
         if (current <= 0)
         {
             FadeOutImmediately();
             return;
         }
-
-        _fadeSequence.Append(_container.DOFade(1, 0.5f));
-        _fadeSequence.Append(_hpbar.DOFillAmount(current / max, 0.5f));
 
         if (_fadeOutCoroutine != null)
         {
