@@ -19,7 +19,7 @@ public class WaveManager : MonoBehaviour
     private IceMove _currentEnemyGround;
 
 
-    [Header("UI References")] //임시로 여기있지만 나중에 UIManager로 옮겨야 한다.
+    [Header("UI References")] //일단 임시로 여기에
     [SerializeField]
     private RectTransform clockHandImgTrm;
     [SerializeField]

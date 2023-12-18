@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class DummyPenguin : PoolableMono
 {
-    private float _moveDuration = 4f;
+    private float _moveDuration = 3f;
 
     Vector3 _initTrm;
     Animator _animator;
@@ -14,11 +14,11 @@ public class DummyPenguin : PoolableMono
     private void Awake()
     {
         _animator = transform.Find("Visual").GetComponent<Animator>();
-        _initTrm = GameObject.Find("InitPos").transform.position;
     }
 
-    public override void Init()
+    public void Init(Vector3 initTrm)
     {
+        _initTrm = initTrm;
     }
 
     public void MoveToTent()

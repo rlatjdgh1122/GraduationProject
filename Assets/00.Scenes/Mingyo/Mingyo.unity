@@ -1009,6 +1009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolingimg: {fileID: 291900137}
   cooltime: 5
+  penguinType: 0
 --- !u!1 &124499122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,6 +1743,7 @@ MonoBehaviour:
   _firePos: {fileID: 0}
   HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
+  _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -2273,18 +2275,24 @@ MonoBehaviour:
   _firePos: {fileID: 0}
   HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
+  _renderer: {fileID: 0}
   _characterStat: {fileID: 0}
   OnHealthBarChanged:
     m_PersistentCalls:
       m_Calls: []
   moveSpeed: 4.5
   attackSpeed: 1
+  maxRange: 35
   attackCooldown: 0
   lastTimeAttacked: 0
   Target: {fileID: 0}
   IsClickToMoving: 0
   IsDead: 0
   _inputReader: {fileID: 0}
+  owner:
+    Legion: 0
+    IsMoving: 0
+    Soldiers: []
 --- !u!1 &286890518
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,7 +2526,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5746586777680546054, guid: b4e05b86688c5493db1dc78b2b6f3839,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 912598337}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4e05b86688c5493db1dc78b2b6f3839, type: 3}
 --- !u!4 &292000749 stripped
@@ -2855,7 +2867,7 @@ Transform:
   m_GameObject: {fileID: 334340562}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.06, y: 2.5100002, z: 9.83}
+  m_LocalPosition: {x: -20.24, y: 2.5100002, z: 9.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6131,6 +6143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolingimg: {fileID: 854067347}
   cooltime: 10
+  penguinType: 0
 --- !u!1 &894142668
 GameObject:
   m_ObjectHideFlags: 0
@@ -6353,6 +6366,37 @@ Transform:
   m_Children:
   - {fileID: 1486024582}
   m_Father: {fileID: 1224670158}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &912598336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912598337}
+  m_Layer: 0
+  m_Name: CampFirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &912598337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912598336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.55, y: 1.38, z: 1.86}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 292000749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &919531615
 GameObject:
@@ -8643,18 +8687,24 @@ MonoBehaviour:
   _firePos: {fileID: 0}
   HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
+  _renderer: {fileID: 0}
   _characterStat: {fileID: 0}
   OnHealthBarChanged:
     m_PersistentCalls:
       m_Calls: []
   moveSpeed: 4.5
   attackSpeed: 1
+  maxRange: 35
   attackCooldown: 0
   lastTimeAttacked: 0
   Target: {fileID: 0}
   IsClickToMoving: 0
   IsDead: 0
   _inputReader: {fileID: 0}
+  owner:
+    Legion: 0
+    IsMoving: 0
+    Soldiers: []
 --- !u!195 &1284565339
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9051,6 +9101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f62f7d1ccf7d14a82e9946be691c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _penguinSpawner: {fileID: 0}
+  victoryUI: {fileID: 0}
+  defeatUI: {fileID: 0}
 --- !u!1 &1345890425
 GameObject:
   m_ObjectHideFlags: 0
@@ -9384,6 +9437,7 @@ MonoBehaviour:
   _firePos: {fileID: 0}
   HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
+  _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -10500,18 +10554,24 @@ MonoBehaviour:
   _firePos: {fileID: 0}
   HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
+  _renderer: {fileID: 0}
   _characterStat: {fileID: 0}
   OnHealthBarChanged:
     m_PersistentCalls:
       m_Calls: []
   moveSpeed: 4.5
   attackSpeed: 1
+  maxRange: 35
   attackCooldown: 0
   lastTimeAttacked: 0
   Target: {fileID: 0}
   IsClickToMoving: 0
   IsDead: 0
   _inputReader: {fileID: 0}
+  owner:
+    Legion: 0
+    IsMoving: 0
+    Soldiers: []
 --- !u!1 &1559462965
 GameObject:
   m_ObjectHideFlags: 0
@@ -12971,6 +13031,7 @@ MonoBehaviour:
   _firePos: {fileID: 0}
   HitEffect: {fileID: 0}
   ClickParticle: {fileID: 0}
+  _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   OnHealthBarChanged:
     m_PersistentCalls:
@@ -13505,14 +13566,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2cb6f3406fa2e54590c6fd8f0c61f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPhaseReadyTime: 20
+  maxPhaseReadyTime: 999
   clockHandImgTrm: {fileID: 53653699}
   timeText: {fileID: 1161507069}
   wavCntText: {fileID: 2142409098}
   enemyCntText: {fileID: 1559462967}
   loseUI: {fileID: 299249563}
+  winUI: {fileID: 0}
   isWin: 1
   targetColor: {r: 1, g: 1, b: 1, a: 1}
+  CurrentStage: 0
+  IsPhase: 0
+  tsest: 0
 --- !u!4 &2019026238
 Transform:
   m_ObjectHideFlags: 0
@@ -14989,6 +15054,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   _spawnPoint: {fileID: 1015210584}
+  _campFireTrm: {fileID: 912598337}
   _btnTrm: {fileID: 1024605541}
 --- !u!114 &2140325299
 MonoBehaviour:

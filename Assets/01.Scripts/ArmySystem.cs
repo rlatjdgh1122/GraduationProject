@@ -51,13 +51,12 @@ public class ArmySystem : MonoBehaviour
             ChangeArmy(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
             ChangeArmy(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeArmy(2);
     }
 
     public void ChangeArmy(int index)
     {
         curLegion = index;
+
         for (int i = 0; i < armies.Count; i++)
         {
             if (i == index)
@@ -106,15 +105,18 @@ public class ArmySystem : MonoBehaviour
     {
         var soldiers = armies[legion].Soldiers;
 
+        Debug.Log(armies[legion].Soldiers.Count);
         for (int i = 0; i < soldiers.Count; i++)
         {
             var entity = soldiers[i];
             entity.idx = i;
+            entity.SetOwner(armies[legion]);
             if (i == 0)  //나는 나요, 너는 선택받은 왕이니 왕관이 쥐어지리
             {
                 Instantiate(_crown, entity.transform);
             }
         }
+
     }
 
     public void Remove(int legion, Penguin obj)
@@ -136,6 +138,7 @@ public class ArmySystem : MonoBehaviour
         }
 
         armies[legion].Soldiers.Add(obj);
+        SetSoldersIdx(legion);
     }
 
     private void OnDestroy()
