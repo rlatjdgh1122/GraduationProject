@@ -119,8 +119,8 @@ public class PenguinSpawner : MonoBehaviour
         _spawnPenguin.transform.position = _initTrm.position;
         _spawnPenguin.transform.rotation = Quaternion.identity;
 
+        _spawnPenguin.SetFirstPosition(vec);
         return (T)_spawnPenguin;
-        //_spawnPenguin.SetFirstPosition(vec);
     }
 
     public void SpawnDummyPenguin(Vector3 vec, string type) // Å¸ÀÔ¿¡ ¸Â°Ô Æë±Ï »ý¼º
@@ -218,7 +218,7 @@ public class PenguinSpawner : MonoBehaviour
         GameManager.Instance.PlusDummyPenguinCount();
 
 
-        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
+        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnComplete(() =>
         {
             spawnAction?.Invoke();
             btnInfo.Btn.interactable = true;
