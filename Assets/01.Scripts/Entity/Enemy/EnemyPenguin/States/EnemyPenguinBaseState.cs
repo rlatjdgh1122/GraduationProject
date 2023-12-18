@@ -20,9 +20,6 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
 
         if (_enemy.IsDead)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead); //Á×À¸¸é Dead State·Î
-
-        if (!_enemy.enabled)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
     }
 
     public override void Exit()

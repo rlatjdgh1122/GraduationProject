@@ -23,4 +23,14 @@ public class NexusBase : MonoBehaviour
 
 
     }
+
+    private void OnMouseEnter()
+    {
+        _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
+    }
+
+    private void OnMouseExit()
+    {
+        _health.OffUIUpdate?.Invoke();
+    }
 }

@@ -22,6 +22,12 @@ public class BasicIdleState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         else
             _penguin.FindNearestEnemy("Enemy");
+
+        if (_penguin.IsDead)
+        {
+            _penguin.NavAgent.enabled = false;
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
+        }
     }
 
     public override void Exit()

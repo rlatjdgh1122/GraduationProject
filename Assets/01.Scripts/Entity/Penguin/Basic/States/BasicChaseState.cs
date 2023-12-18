@@ -27,6 +27,9 @@ public class BasicChaseState : BasicBaseState
 
         if (_penguin.Target == null)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+
+        if (_penguin.IsDead)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
     }
 
     public override void Exit()

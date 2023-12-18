@@ -70,9 +70,5 @@ public class GroundMove : MonoBehaviour
                     });
                 });
         }
-        else
-        {
-            return;
-        }
     }
 }
