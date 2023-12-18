@@ -112,4 +112,9 @@ public abstract class Penguin : Entity
         ArmySystem.Instace.Remove(0, this);
         IsDead = true;
     }
+
+    public void SetFirstPosition(Vector3 vec)
+    {
+        NavAgent.SetDestination(vec);
+    }
 }

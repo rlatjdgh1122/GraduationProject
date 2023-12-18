@@ -31,8 +31,9 @@ public class PenguinSpawner : MonoBehaviour
 {
     [SerializeField] private RectTransform _spawnUI;
     private Transform[] _dummySpawnPoints;
+    [SerializeField]
     private Transform[] _legionSpawnPoints;
-    [SerializeField] Vector3 _initTrm;
+    [SerializeField] private Transform _initTrm;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
     [SerializeField] private LayerMask _spawnerLayer;
@@ -57,16 +58,23 @@ public class PenguinSpawner : MonoBehaviour
     private void OnDisable()
     {
         WaveManager.Instance.OnPhaseStartEvent -= DummyPenguinMoveToTent;
+        WaveManager.Instance.OnPhaseStartEvent -= SpawnPenguinLegionHandler;
+
         WaveManager.Instance.OnIceArrivedEvent -= ResetDummyPenguinList;
+    }
+
+    private void OnEnable()
+    {
+        WaveManager.Instance.OnPhaseStartEvent += DummyPenguinMoveToTent;
+        WaveManager.Instance.OnPhaseStartEvent += SpawnPenguinLegionHandler;
+
+        WaveManager.Instance.OnIceArrivedEvent += ResetDummyPenguinList;
     }
 
     private void Awake()
     {
         _dummySpawnPoints = _spawnPoint.GetComponentsInChildren<Transform>();
         _btnArr = _btnTrm.GetComponentsInChildren<SpawnButton>();
-
-        WaveManager.Instance.OnPhaseStartEvent += DummyPenguinMoveToTent;
-        WaveManager.Instance.OnIceArrivedEvent += ResetDummyPenguinList;
     }
 
     private void Start()
@@ -103,21 +111,23 @@ public class PenguinSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnPenguin<T>(Vector3 vec) where T : Penguin // Å¸ÀÔ¿¡ ¸Â°Ô Æë±Ï »ý¼º
+    public T SpawnPenguin<T>(Vector3 vec) where T : Penguin // Å¸ÀÔ¿¡ ¸Â°Ô Æë±Ï »ý¼º
     {
         Type type = typeof(T);
-        Debug.Log(type);
         _spawnPenguin = PoolManager.Instance.Pop(type.Name) as T;
 
-        _spawnPenguin.transform.position = _initTrm;
+        _spawnPenguin.transform.position = _initTrm.position;
         _spawnPenguin.transform.rotation = Quaternion.identity;
+
+        return (T)_spawnPenguin;
+        //_spawnPenguin.SetFirstPosition(vec);
     }
 
     public void SpawnDummyPenguin(Vector3 vec, string type) // Å¸ÀÔ¿¡ ¸Â°Ô Æë±Ï »ý¼º
     {
         DummyPenguin dummy = PoolManager.Instance.Pop($"{type}DummyPenguin") as DummyPenguin;
         
-        dummy.Init(_initTrm);
+        dummy.Init(_initTrm.position);
         dummy.transform.position = vec;
         dummy.transform.LookAt(_campFireTrm);
 
@@ -129,17 +139,33 @@ public class PenguinSpawner : MonoBehaviour
         isSpawnUIOn = isSpawnUIOn ? false : true;
     }
 
-    private void SpawnPenguinLegion(int index)
+    private void SpawnPenguinLegionHandler()
     {
-        for (int i = 0; i < Legion.Instance.LegionCnt[index + 1].Sword; i++)
-        {
-            SpawnPenguin<BasicPenguin>(_legionSpawnPoints[i].position);
-        }
+        StartCoroutine(SpawnPenguinLegion());
+    }
 
-        for (int i = 0; i < Legion.Instance.LegionCnt[index + 1].Arrow; i++)
+    private IEnumerator SpawnPenguinLegion()
+    {
+        yield return new WaitForSeconds(4f);
+
+        for (int i = 0; i < Legion.Instance.LegionCnt.Count; i++)
         {
-            SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[i].position);
+            for (int j = 0; j < Legion.Instance.LegionCnt[i].Sword; j++)
+            {
+                BasicPenguin penguin = SpawnPenguin<BasicPenguin>(_legionSpawnPoints[j].position);
+                ArmySystem.Instace.JoinArmy(i, penguin);
+                Debug.Log("1 : " + i);
+
+            }
+
+            for (int j = 0; j < Legion.Instance.LegionCnt[i].Arrow; j++)
+            {
+                ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[j].position);
+                ArmySystem.Instace.JoinArmy(i, penguin);
+                Debug.Log("2 : " + i);
+            }
         }
+        
     }
     #region SpawnPenguinButtonHandler
 
@@ -149,10 +175,11 @@ public class PenguinSpawner : MonoBehaviour
         if(WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Basic].CoolTime)
         {
             int index = GameManager.Instance.GetDummyPenguinCount;
+            Legion.Instance.LegionUIList[0].HeroCnt++;
+
             ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Basic],
                 () => SpawnDummyPenguin(_dummySpawnPoints[index].position, "Basic"));
-            Legion.Instance.LegionUIList[0].HeroCnt++;
         }
     }
 
@@ -161,10 +188,11 @@ public class PenguinSpawner : MonoBehaviour
         if (WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Basic].CoolTime)
         {
             int index = GameManager.Instance.GetDummyPenguinCount;
+            Legion.Instance.LegionUIList[1].HeroCnt++;
+
             ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Archer],
                 () => SpawnDummyPenguin(_dummySpawnPoints[index].position, "Archer"));
-            Legion.Instance.LegionUIList[1].HeroCnt++;
         }
     }
 
@@ -188,6 +216,7 @@ public class PenguinSpawner : MonoBehaviour
         btnInfo.CoolingImg.fillAmount = 1f;
 
         GameManager.Instance.PlusDummyPenguinCount();
+
 
         DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
         {
