@@ -27,7 +27,6 @@ public class PenguinState<T> where T : Enum
 
     public virtual void UpdateState()
     {
-
     }
 
     public virtual void Exit()

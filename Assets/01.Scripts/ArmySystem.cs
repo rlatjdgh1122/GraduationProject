@@ -60,9 +60,17 @@ public class ArmySystem : MonoBehaviour
         for (int i = 0; i < armies.Count; i++)
         {
             if (i == index)
-                armies[i].Soldiers.ForEach(s => s.OutlineCompo.enabled = true);
+                armies[i].Soldiers.ForEach(s =>
+                {
+                    s.OutlineCompo.enabled = true;
+                    s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
+                });
             else
-                armies[i].Soldiers.ForEach(s => s.OutlineCompo.enabled = false);
+                armies[i].Soldiers.ForEach(s =>
+                {
+                    s.OutlineCompo.enabled = false;
+                    s.HealthCompo.OffUIUpdate?.Invoke();
+                });
         }
     }
 

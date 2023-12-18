@@ -12,16 +12,10 @@ public class DamageCaster : MonoBehaviour
 
     public Vector2 knockbackPower;
 
-    [SerializeField] private int _maxHitCount = 5; //최대로 때릴 수 있는 적 갯수
+    [SerializeField] private int _numberOfTargets = 5; //최대로 때릴 수 있는 적 갯수
     public LayerMask whatIsHitable;
-    private Collider[] _hitResult;
 
     private Entity _owner;
-
-    private void Awake()
-    {
-        _hitResult = new Collider[_maxHitCount];
-    }
 
     public void SetOwner(Entity owner, bool castByCloneSkill)
     {
@@ -30,27 +24,22 @@ public class DamageCaster : MonoBehaviour
 
     public bool CastDamage()
     {
-        Collider[] colliders = Physics.OverlapSphere(attackChecker.position, attackCheckRadius, whatIsHitable);
-
-        // 거리순으로 정렬
-        List<Collider> sortedColliders = colliders.OrderBy(collider => Vector3.Distance(transform.position, collider.transform.position)).ToList();
-
-        foreach (Collider collider in sortedColliders)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 250f, whatIsHitable))
         {
-            Vector3 direction = (collider.transform.position - transform.position).normalized;
-
-            if (collider.TryGetComponent<IDamageable>(out IDamageable health))
+            if (hit.collider.TryGetComponent<IDamageable>(out IDamageable health))
             {
                 int damage = _owner.Stat.GetDamage();
-                ParticleSystem effect = Instantiate(_owner.HitEffect, collider.transform.position, Quaternion.identity);
-                health.ApplyDamage(damage, direction, knockbackPower, _owner);
+                ParticleSystem effect = Instantiate(_owner.HitEffect, hit.collider.transform.position, Quaternion.identity);
+                health.ApplyDamage(damage, Vector2.zero, knockbackPower, _owner);
 
-                return true; 
+                return true;
             }
         }
 
-        return false; 
+        return false; // 피해를 입힐 요소가 지정한 개수만큼 없는 경우
     }
+
 
     private void OnDrawGizmos()
     {

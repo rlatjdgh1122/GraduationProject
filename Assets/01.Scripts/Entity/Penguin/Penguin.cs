@@ -1,33 +1,33 @@
 using System.Linq;
 using UnityEngine;
 using  Define.Algorithem;
+using UnityEngine.EventSystems;
+using System;
+using System.Collections.Generic;
+
 public abstract class Penguin : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
+    public float provokeRange = 5f;
+    public int maxDetectedCount;
 
-    [Header("공격상태설정값")]
-    public float attackCooldown;
-    public float lastTimeAttacked = 0f;
+    [SerializeField] private LayerMask _whatIsEnemy;
+    private Enemy[] _nearestEnemies;
 
-    public Enemy Target;
+    public Enemy CurrentTarget;
 
     public bool IsClickToMoving = false;
     public bool IsDead = false;
+    public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(Algorithm.AlignmentRule.GetArmyCenterPostion(owner), CurrentTarget.transform.position) <= innerDistance;
+    public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
-    protected int _lastAnimationBoolHash; //마지막으로 재생된 애니메이션 해시
-
-    public bool IsInTargetRange => Target != null && Vector3.Distance(Algorithm.AlignmentRule.GetArmyCenterPostion(owner), Target.transform.position) <= innerDistance;
-    public bool IsAttackRange => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
+    public List<Enemy> nearestEnemy;
+    public Army owner;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader Input => _inputReader;
-
-    private float _distance;
-    public Enemy nearestEnemy;
-
-    public Army owner;
 
     private void OnEnable()
     {
@@ -59,46 +59,39 @@ public abstract class Penguin : Entity
 
     public void FindEnemy()
     {
-        FindNearestEnemy("Enemy");
+        FindNearestEnemy(maxDetectedCount);
     }
 
-    public Enemy FindNearestEnemy(string tag)
+    public List<Enemy> FindNearestEnemy(int maxCount)
     {
-        var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
 
-        var nearestObject = objects
-            .OrderBy(obj =>
-            {
-                return Vector3.Distance(transform.position, obj.transform.position);
-            })
-            .FirstOrDefault();
+        List<Enemy> enemies = objects
+            .Where(obj => obj != null && GameManager.Instance.GetCurrentEnemyCount() > 0)
+            .Select(obj => obj.GetComponent<Enemy>())
+            .Where(enemyScript => enemyScript != null)
+            .OrderBy(enemyScript => Vector3.Distance(transform.position, enemyScript.transform.position))
+            .ToList();
 
-        if (nearestObject != null && GameManager.Instance.GetCurrentEnemyCount() > 0)
+        if (enemies.Count > 0)
         {
-            Enemy enemyScript = nearestObject.GetComponent<Enemy>();
-
-            if (enemyScript != null)
-            {
-                return Target = enemyScript;
-            }
-            else
-            {
-                Debug.LogWarning("가장 가까운 오브젝트에 Enemy 스크립트가 없습니다.");
-            }
+            // 가장 가까운 적을 CurrentTarget으로 설정
+            CurrentTarget = enemies[0];
+            return enemies.Take(maxCount).ToList();
         }
         else
         {
-            return Target = null;
+            Debug.LogWarning("가장 가까운 오브젝트에 Enemy 스크립트가 없거나 현재 적이 없습니다.");
+            CurrentTarget = null;
+            return null;
         }
-
-        return null;
     }
 
     public void LookTarget()
     {
-        if (Target != null)
+        if (CurrentTarget != null)
         {
-            Vector3 directionToTarget = Target.transform.position - transform.position;
+            Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
@@ -108,8 +101,7 @@ public abstract class Penguin : Entity
 
     protected override void HandleDie()
     {
-        Debug.Log("쥬금");
-        ArmySystem.Instace.Remove(0, this);
+        ArmySystem.Instace.Remove(owner.Legion, this);
         IsDead = true;
     }
 

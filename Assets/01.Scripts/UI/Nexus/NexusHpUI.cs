@@ -1,22 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Define.CamDefine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
+using Define.CamDefine;
 
 public class NexusHpUI : MonoBehaviour
 {
     #region ÄÄÆ÷³ÍÆ®
     private NexusBase _nexus;
-
     private Slider _hpSlider;
+    private Camera _cam;
     #endregion
 
     private void Awake()
     {
         _nexus = GameObject.Find("Nexus").GetComponent<NexusBase>();
         _hpSlider = GetComponent<Slider>();
+        _cam = Cam.MainCam;
     }
 
     private void Start()
@@ -28,7 +26,7 @@ public class NexusHpUI : MonoBehaviour
 
     private void Update()
     {
-        transform.LookAt(-Cam.MainCam.transform.position);
+        transform.rotation = Quaternion.LookRotation(transform.position - _cam.transform.position);
     }
 
     public void UpdateHealthBar(int value)

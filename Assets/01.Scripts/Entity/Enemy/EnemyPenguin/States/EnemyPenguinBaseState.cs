@@ -12,6 +12,7 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
+        _enemy.OnProvoked += Provoked;
     }
 
     public override void UpdateState()
@@ -20,13 +21,17 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
 
         if (_enemy.IsDead)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead); //Á×À¸¸é Dead State·Î
+    }
 
-        if (!_enemy.enabled)
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
+    private void Provoked()
+    {
+        _enemy.playerLayer = "Shield";
+        //_enemy.SetTarget(_enemy.CurrentTarget.transform.position);
     }
 
     public override void Exit()
     {
         base.Exit();
+        _enemy.OnProvoked -= Provoked;
     }
 }

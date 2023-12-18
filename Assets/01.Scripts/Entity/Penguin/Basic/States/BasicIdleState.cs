@@ -18,10 +18,8 @@ public class BasicIdleState : BasicBaseState
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
 
-        if (_penguin.IsInTargetRange)
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
-        else
-            _penguin.FindNearestEnemy("Enemy");
+        if (_penguin.IsInnerTargetRange)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
     }
 
     public override void Exit()

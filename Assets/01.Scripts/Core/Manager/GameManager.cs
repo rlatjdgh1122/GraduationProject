@@ -77,7 +77,7 @@ public class GameManager : Singleton<GameManager>
     public int GetDummyPenguinCount => dummyPenguinCount;
 
     [SerializeField] private InitBuildingList buildingList = null;
-    private Dictionary<string, Building> _buildingDictionary = new();
+    private Dictionary<string, BaseBuilding> _buildingDictionary = new();
 
     [SerializeField]
     private PoolingListSO _poolingListSO;
@@ -97,7 +97,7 @@ public class GameManager : Singleton<GameManager>
         MakePool();
     }
 
-    public Building GetBuildingFormName(string buildingName)
+    public BaseBuilding GetBuildingFormName(string buildingName)
     {
         if (_buildingDictionary.ContainsKey(buildingName))
         {

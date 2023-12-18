@@ -13,7 +13,8 @@ public class Health : MonoBehaviour, IDamageable
     public Action OnDied;
 
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
-    public UnityEvent<int> OnUIUpdate;
+    public UnityEvent<float, float> OnUIUpdate;
+    public UnityEvent OffUIUpdate;
 
     private Entity _owner;
     private bool _isDead = false;
@@ -37,9 +38,9 @@ public class Health : MonoBehaviour, IDamageable
         }
 
         OnHit?.Invoke();
-        OnUIUpdate?.Invoke(damage);
         //나중에 아머값에 따른 데미지 감소도 해야함
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
+        OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
@@ -51,7 +52,7 @@ public class Health : MonoBehaviour, IDamageable
     public void ApplyHeal(int amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        //체력증가에 따른 UI필요.
+        OnUIUpdate?.Invoke(currentHealth, maxHealth);
         Debug.Log($"{_owner.gameObject.name} is healed!! : {amount}");
     }
 }

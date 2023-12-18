@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using DG.Tweening;
+using UnityEngine.UIElements.Experimental;
 
 public abstract class Entity : PoolableMono
 {
@@ -42,11 +43,7 @@ public abstract class Entity : PoolableMono
     public CharacterStat Stat => _characterStat;
     #endregion
 
-    public int FacingDirection { get; private set; } = 1; //�������� 1, ������ -1
-    protected bool _facingRight = true;
     public UnityEvent<float> OnHealthBarChanged;
-
-    private MaterialPropertyBlock mpb;
 
     protected virtual void Awake()
     {
@@ -146,19 +143,5 @@ public abstract class Entity : PoolableMono
         if (NavAgent.isActiveAndEnabled)
             NavAgent.isStopped = true;
     }
-    #endregion
-
-    #region ȸ�� ����
-    //public void LookTarget()
-    //{
-    //    //transform.Rotate(targetTrm);
-    //    transform.LookAt(targetTrm);
-    //}
-    #endregion
-
-    #region �浹 ����
-    public virtual bool IsWallDetected() =>
-        Physics.Raycast(_wallChecker.position, Vector3.forward * FacingDirection,
-                            _wallCheckDistance, _whatIsWall);
     #endregion
 }

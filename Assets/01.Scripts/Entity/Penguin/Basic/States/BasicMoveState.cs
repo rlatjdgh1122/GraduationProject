@@ -23,7 +23,7 @@ public class BasicMoveState : BasicBaseState
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
 
-        if (_penguin.IsInTargetRange)
+        if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
     }
 
