@@ -771,7 +771,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 2
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
@@ -801,7 +801,7 @@ ParticleSystem:
   lengthInSec: 0.05
   simulationSpeed: 1
   stopAction: 0
-  cullingMode: 0
+  cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
@@ -1044,7 +1044,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5522,7 +5522,7 @@ Transform:
   m_GameObject: {fileID: 356672750}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -10.729999, y: -0.4, z: -17.869999}
+  m_LocalPosition: {x: 36.383, y: -0.4, z: -10.231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6958,8 +6958,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f62f7d1ccf7d14a82e9946be691c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _penguinSpawner: {fileID: 0}
-  victoryUI: {fileID: 0}
 --- !u!114 &1156354578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7003,7 +7001,6 @@ GameObject:
   - component: {fileID: 1194710656}
   - component: {fileID: 1194710658}
   - component: {fileID: 1194710657}
-  - component: {fileID: 1194710659}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -7076,23 +7073,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194710655}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1194710659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194710655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33be750e6a0711143934785beda39458, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waveMaterial: {fileID: 2100000, guid: ca7c3cd434f7abc4baaef506737bc0bd, type: 2}
-  waveTexture: {fileID: 0}
-  dx: 0.1
-  CFL: 0.5
-  c: 1
 --- !u!1 &1222909575
 GameObject:
   m_ObjectHideFlags: 0
@@ -8273,7 +8253,7 @@ Transform:
   m_GameObject: {fileID: 1821210374}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.36, y: -0.2, z: -24.03}
+  m_LocalPosition: {x: 36.66, y: -0.2, z: -10.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
