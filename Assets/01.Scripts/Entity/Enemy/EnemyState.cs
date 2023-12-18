@@ -12,7 +12,7 @@ public class EnemyState<T> where T : Enum
     protected Rigidbody2D _rigidbody;
     protected NavMeshAgent _navAgent; //편의를 위해서 여기에도 NavAgent 선언
 
-    protected bool _triggerCalled;
+    protected bool _triggerCalled = true;
 
 
     public EnemyState(Enemy enemyBase, EnemyStateMachine<T> stateMachine, string animBoolName)
