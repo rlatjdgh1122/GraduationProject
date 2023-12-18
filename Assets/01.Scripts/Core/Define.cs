@@ -37,7 +37,7 @@ namespace Define
                     trms.Add(startPos);
                     for (int i = 0; i < trmCount; i++)
                     {
-                        float angle = i * (360f / trmCount);
+                        float angle = i * (360f / (trmCount - 1));
                         Vector3 dir = Quaternion.Euler(0, angle, 0) * new Vector3(0, 0, 1f);
                         Vector3 pos = startPos + dir * distance;
                         trms.Add(pos);
