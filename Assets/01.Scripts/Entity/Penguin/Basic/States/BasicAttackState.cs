@@ -11,7 +11,7 @@ public class BasicAttackState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = false;
-        _penguin.FindNearestEnemy("Enemy");
+        _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
         _penguin.owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
@@ -26,7 +26,7 @@ public class BasicAttackState : BasicBaseState
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
-            if (_penguin.Target == null)
+            if (_penguin.CurrentTarget == null)
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
         }
     }

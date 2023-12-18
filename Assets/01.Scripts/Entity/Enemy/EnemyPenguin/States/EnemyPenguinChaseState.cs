@@ -14,7 +14,7 @@ public class EnemyPenguinChaseState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _nearestPlayer = _enemy.FindNearestPenguin("Player");
+        _nearestPlayer = _enemy.FindNearestPenguin(_enemy.playerLayer);
     }
 
     public override void UpdateState()
@@ -24,7 +24,7 @@ public class EnemyPenguinChaseState : EnemyPenguinBaseState
         if (_nearestPlayer != null)
             _enemy.SetTarget(_nearestPlayer.transform.position);
 
-        if (_enemy.IsAttackable)
+        if (_enemy.CanAttack)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack); //공격 사거리 내에 들어왔다 -> Attack
         else
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase); //공격 사거리 밖이면 계속 따라가

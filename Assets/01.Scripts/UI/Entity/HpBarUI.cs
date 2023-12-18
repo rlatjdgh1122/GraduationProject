@@ -7,11 +7,12 @@ using UnityEngine.EventSystems;
 
 public class HpBarUI : MonoBehaviour
 {
+    [SerializeField] private float _waitToDisappear;
+
     [SerializeField] private Canvas _canvas;
     private CanvasGroup _container;
     private Image _hpbar;
     private Camera _cam;
-
     private Coroutine _fadeOutCoroutine;
     private Sequence _fadeSequence;
 
@@ -32,14 +33,14 @@ public class HpBarUI : MonoBehaviour
 
     public void UpdateHpbarUI(float current, float max)
     {
-        _fadeSequence.Append(_container.DOFade(1, 0.5f));
-        _fadeSequence.Append(_hpbar.DOFillAmount(current / max, 0.5f));
-
         if (current <= 0)
         {
             FadeOutImmediately();
             return;
         }
+
+        _fadeSequence.Append(_container.DOFade(1, 0.5f));
+        _fadeSequence.Append(_hpbar.DOFillAmount(current / max, 0.5f));
 
         if (_fadeOutCoroutine != null)
         {
@@ -56,7 +57,7 @@ public class HpBarUI : MonoBehaviour
 
     private IEnumerator FadeOutTime()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(_waitToDisappear);
 
         FadeOutImmediately();
         _fadeOutCoroutine = null;

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
@@ -14,17 +15,23 @@ public abstract class Enemy : Entity
     [Range(0.1f, 6f)]
     protected float nexusDistance;
 
-    public Penguin Target;
+    public string playerLayer = "Player";
+
+    #region 이벤트들
+    public Action OnProvoked = null;
+    #endregion
+
+    public Penguin CurrentTarget;
 
     public bool IsMove = false;
-
-    public Transform NexusTarget => GameObject.Find("Nexus").transform;
-
     public bool IsDead = false;
-
-    public bool IsTargetPlayerInside => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= innerDistance;
-    public bool IsAttackable => Target != null && Vector3.Distance(transform.position, Target.transform.position) <= attackDistance;
-    public bool ReachedNexus => Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
+    public bool IsTargetPlayerInside => CurrentTarget != null &&
+                            Vector3.Distance(transform.position, CurrentTarget.transform.position) <= innerDistance;
+    public bool CanAttack => CurrentTarget != null && 
+                            Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
+    public bool ReachedNexus => 
+                            Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
+    public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
     protected override void Awake()
     {
@@ -44,7 +51,7 @@ public abstract class Enemy : Entity
 
     private void SetTarget()
     {
-        Target = FindNearestPenguin("Player");
+        CurrentTarget = FindNearestPenguin("Player");
     }
 
     public override void Attack()
@@ -62,7 +69,6 @@ public abstract class Enemy : Entity
     protected override void HandleDie()
     {
         IsDead = true;
-        Debug.Log("쥬금");
     }
 
     public abstract void AnimationTrigger();
@@ -84,7 +90,7 @@ public abstract class Enemy : Entity
 
             if (penguinScript != null)
             {
-                return Target = penguinScript;
+                return CurrentTarget = penguinScript;
             }
             else
             {
@@ -93,7 +99,7 @@ public abstract class Enemy : Entity
         }
         else
         {
-            return Target = null;
+            return CurrentTarget = null;
         }
 
         // 여기까지 왔다면 오류가 발생했거나 가까운 오브젝트를 찾지 못한 경우이므로 null 반환
@@ -120,9 +126,9 @@ public abstract class Enemy : Entity
 
     public void LookTarget()
     {
-        if (Target != null)
+        if (CurrentTarget != null)
         {
-            Vector3 directionToTarget = Target.transform.position - transform.position;
+            Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
