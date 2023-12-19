@@ -152,7 +152,7 @@ public class PenguinSpawner : MonoBehaviour
         {
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Sword; j++)
             {
-                BasicPenguin penguin = SpawnPenguin<BasicPenguin>(_legionSpawnPoints[j].position);
+                MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[j].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
                 Debug.Log("1 : " + i);
 

@@ -51,6 +51,8 @@ public class ArmySystem : MonoBehaviour
             ChangeArmy(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
             ChangeArmy(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            ChangeArmy(2);
     }
 
     public void ChangeArmy(int index)
