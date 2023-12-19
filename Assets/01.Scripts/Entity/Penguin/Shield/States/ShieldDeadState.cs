@@ -8,8 +8,17 @@ public class ShieldDeadState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.CurrentTarget.FindNearestPenguin("Player");
-        _penguin.CurrentTarget = null;
+        foreach (var enemy in _penguin.nearestEnemy)
+        {
+            if (!enemy.IsDead)
+            {
+                enemy.playerLayer = "Player";
+                enemy.FindNearestPenguin("Player");
+            }          
+        }
+
+        //_penguin.CurrentTarget.FindNearestPenguin("Player");
+        //_penguin.CurrentTarget = null;
         _penguin.tag = "Untagged";
         _penguin.CharController.enabled = false;
         _penguin.NavAgent.enabled = false;

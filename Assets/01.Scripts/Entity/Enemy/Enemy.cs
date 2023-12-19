@@ -62,7 +62,7 @@ public abstract class Enemy : Entity
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.SetOwner(this, "Player");
+        arrow.Setting(this, this.GetType());
         arrow.Fire(_firePos.forward);
     }
 
