@@ -45,7 +45,7 @@ public class GroundMove : MonoBehaviour
         }
 
         WaveManager.Instance.OnPhaseStartEvent += GroundMoveHandle;
-        //WaveManager.Instance.OnPhaseEndEvent += SetOutline;
+        WaveManager.Instance.OnPhaseEndEvent += SetOutline;
     }
 
     private void GroundMoveHandle()

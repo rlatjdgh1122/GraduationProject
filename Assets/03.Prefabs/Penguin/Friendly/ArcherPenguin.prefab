@@ -119,13 +119,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539195783165308581}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.018089388, z: 0, w: 0.9998364}
-  m_LocalPosition: {x: 20.5, y: 60.3, z: 40.9}
-  m_LocalScale: {x: 69.999985, y: 70.000015, z: 70.000015}
+  m_LocalRotation: {x: -0.77601343, y: -0.06391475, z: 0.0064820996, w: 0.62743616}
+  m_LocalPosition: {x: 0.054, y: 0.789, z: -0.012}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3640129903166075986}
-  m_LocalEulerAnglesHint: {x: 0, y: -2.073, z: 0}
+  m_Father: {fileID: 6838764546174961286}
+  m_LocalEulerAnglesHint: {x: -103.352, y: 23.007996, z: -27.695007}
 --- !u!1 &928794714929666294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,13 +1030,16 @@ MonoBehaviour:
   _whatIsWall:
     serializedVersion: 2
     m_Bits: 64
+  _whatIsHitable:
+    serializedVersion: 2
+    m_Bits: 4096
   _wallChecker: {fileID: 4077443948039061729}
   _wallCheckDistance: 1.5
   _knockbackDuration: 0
   targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 5.9
-  attackDistance: 5.9
-  _arrowPrefab: {fileID: 8396514779560577617, guid: daf7a3f982b0d1948829586327706867,
+  innerDistance: 6
+  attackDistance: 6
+  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
     type: 3}
   _firePos: {fileID: 7060097859151106643}
   HitEffect: {fileID: 7640890292566896195, guid: c27706ee754478944853f84cab7482fa,
@@ -1049,17 +1052,17 @@ MonoBehaviour:
       m_Calls: []
   moveSpeed: 3.5
   attackSpeed: 0.6
-  attackCooldown: 1
-  lastTimeAttacked: 1
-  Target: {fileID: 0}
+  maxDetectedCount: 0
+  CurrentTarget: {fileID: 0}
   IsClickToMoving: 0
   IsDead: 0
-  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
-  nearestEnemy: {fileID: 0}
+  nearestEnemy:
+  - {fileID: 0}
   owner:
     Legion: 0
     IsMoving: 0
     Soldiers: []
+  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!114 &886979751048114177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1335,7 +1338,6 @@ Transform:
   m_Children:
   - {fileID: 4351877586749648099}
   - {fileID: 3613115055805442621}
-  - {fileID: 7060097859151106643}
   m_Father: {fileID: 7124704069954103808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3317585461736457524
@@ -1419,7 +1421,7 @@ MonoBehaviour:
   attackChecker: {fileID: 4730473750607786356}
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
-  _maxHitCount: 25
+  _numberOfTargets: 5
   whatIsHitable:
     serializedVersion: 2
     m_Bits: 0
@@ -1989,7 +1991,8 @@ Transform:
   m_LocalPosition: {x: -0.258, y: 0.087, z: 0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7060097859151106643}
   m_Father: {fileID: 6863090226380861789}
   m_LocalEulerAnglesHint: {x: -37.795, y: 10.439, z: 20.157}
 --- !u!33 &637965663701911080

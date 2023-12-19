@@ -15,12 +15,6 @@ public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //»ó¼Ó¹Þ±â À§Ç
         base.UpdateState();
 
         if (_penguin.IsDead)
-        {
-            _penguin.NavAgent.enabled = false;
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
-        }
-
-        if (!_penguin.enabled)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
     }
 

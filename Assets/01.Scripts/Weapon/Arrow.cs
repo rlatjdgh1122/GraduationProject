@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
-public class Arrow : MonoBehaviour  
+public class Arrow : MonoBehaviour
 {
     [SerializeField] private float _bulletPower;
 
@@ -12,47 +12,61 @@ public class Arrow : MonoBehaviour
     private Rigidbody _rigid;
     private Entity _owner;
 
-    private string _whatIsHitableTag;
+    Type _ownerType;
 
     private void OnEnable()
-    {
+    {  
         _rigid = GetComponent<Rigidbody>();
         StartCoroutine(WaitForDestroy());
     }
 
-    public void SetOwner(Entity owner, string tag)
-    {
+    public void Setting(Entity owner, Type type)
+    {  
         _owner = owner;
-        _whatIsHitableTag = tag;
+        _ownerType = type;
         _damage = _owner.Stat.GetDamage();
     }
 
     public void Fire(Vector3 dir)
     {
-        _rigid.AddForce(dir * _bulletPower, ForceMode.Impulse);
+        _rigid.AddForce(dir * _bulletPower, ForceMode.Impulse);  
     }
 
     private IEnumerator WaitForDestroy()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(_whatIsHitableTag))
+        Debug.Log(_ownerType);
+        if (_ownerType == typeof(ArcherPenguin))
         {
-            if (other.TryGetComponent<IDamageable>(out IDamageable health))
+            if (other.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                health.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                enemy.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
                 ParticleSystem effect = Instantiate(_owner.HitEffect, other.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
                 effect.Play();
                 Destroy(this.gameObject);
             }
-        }  
-        else if (!other.CompareTag("Enemy") && !other.CompareTag("Player"))
+        }
+        else if (_ownerType == typeof(EnemyArcherPenguin))
         {
-            Destroy(this.gameObject);
+            if (other.TryGetComponent<Penguin>(out Penguin enemy))
+            {
+                enemy.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                ParticleSystem effect = Instantiate(_owner.HitEffect, other.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                effect.Play();
+                Destroy(this.gameObject);
+            }
+            else if (other.TryGetComponent<NexusBase>(out NexusBase nexus))
+            {
+                nexus.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                ParticleSystem effect = Instantiate(_owner.HitEffect, other.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                effect.Play();
+                Destroy(this.gameObject);
+            }
         }
     }
 }

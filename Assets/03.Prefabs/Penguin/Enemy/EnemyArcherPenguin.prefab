@@ -270,7 +270,7 @@ MonoBehaviour:
   attackChecker: {fileID: 5014808679685937704}
   attackCheckRadius: 1
   knockbackPower: {x: 0, y: 0}
-  _maxHitCount: 1
+  _numberOfTargets: 5
   whatIsHitable:
     serializedVersion: 2
     m_Bits: 10240
@@ -434,7 +434,6 @@ Transform:
   m_Children:
   - {fileID: 1485517233749750264}
   - {fileID: 8673086024207856992}
-  - {fileID: 8096066805892693343}
   m_Father: {fileID: 1114431459249668274}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5847828287030720476
@@ -691,13 +690,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3258983067799887975}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.018089388, z: 0, w: 0.9998364}
-  m_LocalPosition: {x: 20.5, y: 60.3, z: 40.9}
-  m_LocalScale: {x: 69.999985, y: 70.000015, z: 70.000015}
+  m_LocalRotation: {x: -0.7714344, y: -0.025343588, z: 0.030786237, w: 0.63505805}
+  m_LocalPosition: {x: -0, y: 0.803, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5857964566268004476}
-  m_LocalEulerAnglesHint: {x: 0, y: -2.073, z: 0}
+  m_Father: {fileID: 1208302314773415692}
+  m_LocalEulerAnglesHint: {x: -101.972, y: 22.593002, z: -22.148987}
 --- !u!1 &3593569991261899729
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,13 +850,16 @@ MonoBehaviour:
   _whatIsWall:
     serializedVersion: 2
     m_Bits: 64
+  _whatIsHitable:
+    serializedVersion: 2
+    m_Bits: 2048
   _wallChecker: {fileID: 3987876602990256468}
   _wallCheckDistance: 1.5
   _knockbackDuration: 0
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 5.9
   attackDistance: 5.9
-  _arrowPrefab: {fileID: 8396514779560577617, guid: daf7a3f982b0d1948829586327706867,
+  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
     type: 3}
   _firePos: {fileID: 8096066805892693343}
   HitEffect: {fileID: 7640890292566896195, guid: c27706ee754478944853f84cab7482fa,
@@ -872,7 +874,8 @@ MonoBehaviour:
   attackSpeed: 0.6
   rotationSpeed: 4.5
   nexusDistance: 5.85
-  Target: {fileID: 0}
+  playerLayer: Player
+  CurrentTarget: {fileID: 0}
   IsMove: 1
   IsDead: 0
 --- !u!114 &4534826737116297947
@@ -1634,7 +1637,8 @@ Transform:
   m_LocalPosition: {x: -0.258, y: 0.087, z: 0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8096066805892693343}
   m_Father: {fileID: 7211896317706243823}
   m_LocalEulerAnglesHint: {x: -37.795, y: 10.439, z: 20.157}
 --- !u!33 &6957238339953468330
