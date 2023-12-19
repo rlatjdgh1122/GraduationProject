@@ -122,7 +122,7 @@ public class PenguinSpawner : MonoBehaviour
 
         //여기 시간에 약간의 쿨타임을 가지고 나오게 하기.
         _spawnPenguin.NavAgent.enabled = true;
-        _spawnPenguin.SetFirstPosition(vec);
+        _spawnPenguin.SetFirstPosition(vec); //위치 살짝 이상함
 
 
         return (T)_spawnPenguin;
