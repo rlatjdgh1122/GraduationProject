@@ -15,7 +15,7 @@ public class Pool<T> where T : PoolableMono
 
         for(int i =0; i<count; i++)
         {
-            T obj = GameObject.Instantiate(prefab, parent);
+            T obj = GameObject.Instantiate(prefab, _parent.position, _parent.rotation);
             obj.gameObject.name = obj.gameObject.name.Replace("(Clone)", "");
             obj.gameObject.SetActive(false);
             _pool.Push(obj);
@@ -28,7 +28,7 @@ public class Pool<T> where T : PoolableMono
 
         if(_pool.Count <= 0)
         {
-            obj = GameObject.Instantiate(_prefab, _parent);
+            obj = GameObject.Instantiate(_prefab, _parent.position, _parent.rotation);
             obj.gameObject.name = obj.gameObject.name.Replace("(Clone)", "");
 
         }

@@ -40,7 +40,7 @@ public class WaveManager : MonoBehaviour
 
     private int maxEnemyCnt;
 
-    public int tsest;
+    private bool isFirst = true;
 
     #endregion
 
@@ -100,23 +100,6 @@ public class WaveManager : MonoBehaviour
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
         SetReadyTime(); // 시간 초기화
         InvokePhaseEndEvent(isWin);
-    }
-
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    UpdateUIOnEnemyCount(tsest);
-        //}
-
-        if (IsPhase)
-        {
-            if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
-                ShowDefeatUI();
-
-            if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
-                GetReward();
-        }
     }
 
     private void SetReadyTime() // 준비 시간을 초기화한다.
@@ -269,9 +252,10 @@ public class WaveManager : MonoBehaviour
         _currentEnemyGround = ice;
     }
 
-    public void UpdateUIOnEnemyCount(int? a = null)
+    public void UpdateUIOnEnemyCount()
     {
-        int enemyCnt = a ?? GameManager.Instance.GetCurrentEnemyCount();
+        int enemyCnt = GameManager.Instance.GetCurrentEnemyCount();
+        int friendlyCnt = GameManager.Instance.GetCurrentPenguinCount();
 
         if (enemyCnt == maxEnemyCnt)
         {
@@ -279,6 +263,7 @@ public class WaveManager : MonoBehaviour
         }
         else if (enemyCnt <= 0)
         {
+            GetReward();
             InvokePhaseEndEvent(true);
         }
         else
@@ -288,6 +273,15 @@ public class WaveManager : MonoBehaviour
             RotateClockHand(rotationVec, 0.2f, Ease.Linear);
         }
 
+
+        if (friendlyCnt <= 0 && !isFirst)
+        {
+            ShowDefeatUI();
+            return;
+        }
+
         enemyCntText.SetText($"Enemy: {enemyCnt}");
+
+        isFirst = false;    
     }
 }
