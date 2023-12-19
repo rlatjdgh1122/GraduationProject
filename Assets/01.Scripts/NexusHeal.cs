@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
-public class HealingTest : MonoBehaviour
+public class NexusHeal : MonoBehaviour
 {
     [Header("스탯들")]
     [SerializeField] private float _rangeSize; //범위 크기
-    [SerializeField] private float _tick; // 몇초동안
+    [SerializeField] private float _tick; //몇초동안
     [SerializeField] private int _intensity; //얼만큼
     [Range(0f, 10f)]
     public float _noize; // 노이즈

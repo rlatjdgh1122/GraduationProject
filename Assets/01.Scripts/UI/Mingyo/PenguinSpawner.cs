@@ -119,8 +119,8 @@ public class PenguinSpawner : MonoBehaviour
         _spawnPenguin.transform.position = _initTrm.position;
         _spawnPenguin.transform.rotation = Quaternion.identity;
 
+        _spawnPenguin.SetFirstPosition(vec);
         return (T)_spawnPenguin;
-        //_spawnPenguin.SetFirstPosition(vec);
     }
 
     public void SpawnDummyPenguin(Vector3 vec, string type) // Å¸ÀÔ¿¡ ¸Â°Ô Æë±Ï »ý¼º
@@ -150,19 +150,23 @@ public class PenguinSpawner : MonoBehaviour
 
         for (int i = 0; i < Legion.Instance.LegionCnt.Count; i++)
         {
+            int idx = 0;
+
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Sword; j++)
             {
-                MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[j].position);
+                Debug.Log(_legionSpawnPoints[j]);
+                MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[idx].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
-                Debug.Log("1 : " + i);
-
+                idx++;
             }
+
+            idx++;
 
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Arrow; j++)
             {
-                ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[j].position);
+                ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[idx].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
-                Debug.Log("2 : " + i);
+                idx++;
             }
         }
         
