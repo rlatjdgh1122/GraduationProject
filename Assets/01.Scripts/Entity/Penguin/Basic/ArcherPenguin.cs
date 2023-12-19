@@ -10,7 +10,7 @@ public enum ArcherPenguinStateEnum
     Dead
 }
 
-public class ArcherPenguin : Penguin
+public class ArcherPenguin : Penguin 
 {
     public PenguinStateMachine<BasicPenguinStateEnum> StateMachine { get; private set; }
 

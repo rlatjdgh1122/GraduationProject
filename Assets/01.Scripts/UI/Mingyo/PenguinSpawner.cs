@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class SpawnPenguinBtnInfo
 {
@@ -119,7 +120,11 @@ public class PenguinSpawner : MonoBehaviour
         _spawnPenguin.transform.position = _initTrm.position;
         _spawnPenguin.transform.rotation = Quaternion.identity;
 
+        //여기 시간에 약간의 쿨타임을 가지고 나오게 하기.
+        _spawnPenguin.NavAgent.enabled = true;
         _spawnPenguin.SetFirstPosition(vec);
+
+
         return (T)_spawnPenguin;
     }
 
@@ -152,17 +157,15 @@ public class PenguinSpawner : MonoBehaviour
         {
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Sword; j++)
             {
-                BasicPenguin penguin = SpawnPenguin<BasicPenguin>(_legionSpawnPoints[j].position);
+                MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[j].localPosition);
                 ArmySystem.Instace.JoinArmy(i, penguin);
-                Debug.Log("1 : " + i);
 
             }
 
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Arrow; j++)
             {
-                ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[j].position);
+                ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[j].localPosition);
                 ArmySystem.Instace.JoinArmy(i, penguin);
-                Debug.Log("2 : " + i);
             }
         }
         
