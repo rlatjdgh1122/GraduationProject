@@ -29,16 +29,16 @@ public class HpBarUI : MonoBehaviour
     private void Update()
     {
         _container.transform.rotation = Quaternion.LookRotation(_container.transform.position - _cam.transform.position);
-    }
 
-    public void UpdateHpbarUI(float current, float max)
-    {
-        if (current <= 0)
+        if (_hpbar.fillAmount <= 0)
         {
             FadeOutImmediately();
             return;
         }
+    }
 
+    public void UpdateHpbarUI(float current, float max)
+    {
         _fadeSequence.Append(_container.DOFade(1, 0.5f));
         _fadeSequence.Append(_hpbar.DOFillAmount(current / max, 0.5f));
 

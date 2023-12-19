@@ -33,6 +33,7 @@ public class WaveManager : MonoBehaviour
     public int CurrentStage = 0;
 
     public bool IsPhase = false;
+    public bool IsArrived = false;
 
     public event Action OnPhaseStartEvent = null;
     public event Action OnPhaseEndEvent = null;
@@ -93,6 +94,7 @@ public class WaveManager : MonoBehaviour
         }
         OnPhaseStartEvent += OnPhaseStartHandle; // 전투페이즈 시작 이벤트 구독
         OnPhaseEndEvent += OnPhaseEndHandle;     // 전투페이즈 종료 이벤트 
+        OnIceArrivedEvent += OnIceArrivedHandle;
     }
 
     private void Start()
@@ -102,9 +104,29 @@ public class WaveManager : MonoBehaviour
         InvokePhaseEndEvent(isWin);
     }
 
+    private void Update()
+    {
+        if (IsPhase)
+        {
+            if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
+                GetReward();
+
+            if (IsArrived)
+            {
+                if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
+                    ShowDefeatUI();
+            }
+        }
+    }
+
     private void SetReadyTime() // 준비 시간을 초기화한다.
     {
         remainingPhaseReadyTime = maxPhaseReadyTime;
+    }
+
+    private void OnIceArrivedHandle()
+    {
+        IsArrived = true;
     }
 
     private void OnPhaseStartHandle() // 전투페이즈 시작
@@ -118,6 +140,7 @@ public class WaveManager : MonoBehaviour
     private void OnPhaseEndHandle() // 전투페이즈 종료
     {
         IsPhase = false;
+        IsArrived = false;
 
         if (isWin)
         {
@@ -245,6 +268,7 @@ public class WaveManager : MonoBehaviour
     {
         OnPhaseStartEvent -= OnPhaseStartHandle;
         OnPhaseEndEvent -= OnPhaseEndHandle;
+        OnIceArrivedEvent -= OnIceArrivedEventHanlder;
     }
 
     public void SetCurrentEnemyGround(IceMove ice)

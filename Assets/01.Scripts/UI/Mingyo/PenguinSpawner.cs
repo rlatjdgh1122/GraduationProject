@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-using UnityEngine.AI;
 
 public class SpawnPenguinBtnInfo
 {
@@ -120,11 +119,7 @@ public class PenguinSpawner : MonoBehaviour
         _spawnPenguin.transform.position = _initTrm.position;
         _spawnPenguin.transform.rotation = Quaternion.identity;
 
-        //여기 시간에 약간의 쿨타임을 가지고 나오게 하기.
-        _spawnPenguin.NavAgent.enabled = true;
-        _spawnPenguin.SetFirstPosition(vec); //위치 살짝 이상함
-
-
+        _spawnPenguin.SetFirstPosition(vec);
         return (T)_spawnPenguin;
     }
 
@@ -155,17 +150,23 @@ public class PenguinSpawner : MonoBehaviour
 
         for (int i = 0; i < Legion.Instance.LegionCnt.Count; i++)
         {
+            int idx = 0;
+
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Sword; j++)
             {
-                MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[j].localPosition);
+                Debug.Log(_legionSpawnPoints[j]);
+                MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[idx].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
-
+                idx++;
             }
+
+            idx++;
 
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Arrow; j++)
             {
-                ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[j].localPosition);
+                ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[idx].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
+                idx++;
             }
         }
         
@@ -221,7 +222,7 @@ public class PenguinSpawner : MonoBehaviour
         GameManager.Instance.PlusDummyPenguinCount();
 
 
-        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnComplete(() =>
+        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
         {
             spawnAction?.Invoke();
             btnInfo.Btn.interactable = true;
