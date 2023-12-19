@@ -15,12 +15,6 @@ public class ShieldBaseState : PenguinState<ShieldPenguinStateEnum> //상속받기 �
         base.UpdateState();
 
         if (_penguin.IsDead)
-        {
-            _penguin.NavAgent.enabled = false;
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Dead);
-        }
-
-        if (!_penguin.enabled)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Dead);
     }
 

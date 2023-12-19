@@ -9,6 +9,7 @@ public abstract class Entity : PoolableMono
     public int idx;
     [Header("Collision Info")]
     [SerializeField] protected LayerMask _whatIsWall;
+    [SerializeField] protected LayerMask _whatIsHitable;
     [SerializeField] protected Transform _wallChecker;
     [SerializeField] protected float _wallCheckDistance;
 
@@ -104,9 +105,7 @@ public abstract class Entity : PoolableMono
 
     public virtual void RangeAttack()
     {
-        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.SetOwner(this, "Enemy");
-        arrow.Fire(_firePos.forward);
+
     }
 
     #region �̵� ����

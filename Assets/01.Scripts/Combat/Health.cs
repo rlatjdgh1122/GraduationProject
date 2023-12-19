@@ -18,7 +18,7 @@ public class Health : MonoBehaviour, IDamageable
 
     private Entity _owner;
     private bool _isDead = false;
-
+    public bool IsMaxHP => currentHealth == maxHealth;
     private void Awake()
     {
         _isDead = false;
@@ -53,6 +53,6 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
-        Debug.Log($"{_owner.gameObject.name} is healed!! : {amount}");
+        //Debug.Log($"{_owner.gameObject.name} is healed!! : {amount}");
     }
 }

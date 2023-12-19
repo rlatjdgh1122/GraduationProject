@@ -10,11 +10,7 @@ public abstract class Penguin : Entity
     [Header("Setting Values")]
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
-    public float provokeRange = 5f;
     public int maxDetectedCount;
-
-    [SerializeField] private LayerMask _whatIsEnemy;
-    private Enemy[] _nearestEnemies;
 
     public Enemy CurrentTarget;
 
@@ -48,6 +44,13 @@ public abstract class Penguin : Entity
     public override void Attack()
     {
         base.Attack();
+    }
+
+    public override void RangeAttack()
+    {
+        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+        arrow.Setting(this, this.GetType());
+        arrow.Fire(_firePos.forward);
     }
 
     public void SetOwner(Army army)

@@ -15,7 +15,7 @@ public class BasicChaseState : BasicBaseState
         _penguin.nearestEnemy = _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
     }
 
-    public override void UpdateState()
+    public override void UpdateState()  
     {
         base.UpdateState();
 
