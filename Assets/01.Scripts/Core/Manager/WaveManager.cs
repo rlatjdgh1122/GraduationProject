@@ -118,6 +118,10 @@ public class WaveManager : MonoBehaviour
                     ShowDefeatUI();
             }
         }
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            remainingPhaseReadyTime -= 3;
+        }
     }
 
     private void SetReadyTime() // 준비 시간을 초기화한다.
