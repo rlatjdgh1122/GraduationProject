@@ -104,12 +104,17 @@ public class PenguinSpawner : MonoBehaviour
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
                                                 out var hit, Mathf.Infinity, _spawnerLayer))
             {
-                Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
-                UIManager.Instance.UIMoveDot(_spawnUI, targetVec, 0.7f, Ease.OutCubic);
-                UpdateSpawnUIBool();
+                SpawnButton();
                 hit.collider.transform.GetComponent<Outline>().enabled = isSpawnUIOn;
             }
         }
+    }
+
+    public void SpawnButton()
+    {
+        Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
+        UIManager.Instance.UIMoveDot(_spawnUI, targetVec, 0.7f, Ease.OutCubic);
+        UpdateSpawnUIBool();
     }
 
     public T SpawnPenguin<T>(Vector3 vec) where T : Penguin // Å¸ÀÔ¿¡ ¸Â°Ô Æë±Ï »ý¼º
