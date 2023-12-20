@@ -226,7 +226,7 @@ public class PenguinSpawner : MonoBehaviour
         if (WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Shield].CoolTime)
         {
             int index = GameManager.Instance.GetDummyPenguinCount;
-            Legion.Instance.LegionUIList[1].HeroCnt++;
+            Legion.Instance.LegionUIList[2].HeroCnt++;
 
             ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Shield],

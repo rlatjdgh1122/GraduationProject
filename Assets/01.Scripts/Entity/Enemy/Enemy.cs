@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class Enemy : Entity
 {
