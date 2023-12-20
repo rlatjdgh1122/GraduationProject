@@ -98,13 +98,14 @@ public class NexusHeal : MonoBehaviour
                 {
                     if (isHealing == false) break;
 
-                    if (coll.TryGetComponent<Health>(out var compo))
+                    if (coll.TryGetComponent<Penguin>(out var penguin))
                     {
                         //풀피면? 해줄필요가 없다!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        if (compo.IsMaxHP) continue;
+                        if (penguin.HealthCompo.IsMaxHP) continue;
 
                         //힐해주는 코드
-                        compo?.ApplyHeal(Intensity);
+                        penguin?.HealthCompo.ApplyHeal(Intensity);
+                        penguin?.HealEffect.Play();
                     }
                 }
 

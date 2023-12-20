@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 enum SlotType
 {
     Sword,
-    Arrow
+    Arrow,
+    Shield
 }
 
 public class LegionInventory : MonoBehaviour
@@ -42,6 +38,11 @@ public class LegionInventory : MonoBehaviour
         #endregion
 
         HeroCntTexOutput();
+
+        if (_isMoveUI)
+            WaveManager.Instance.CanTimer = false;
+        else
+            WaveManager.Instance.CanTimer = true;
     }
 
     public void HeroCntTexOutput()
@@ -60,9 +61,10 @@ public class LegionInventory : MonoBehaviour
             {
                 if (string.Equals(child.name, $"ItemObject[{SlotType.Arrow.ToString()}](Clone)"))
                     legion.Arrow++;
-                else
+                if (string.Equals(child.name, $"ItemObject[{SlotType.Sword.ToString()}](Clone)"))
                     legion.Sword++;
-
+                if (string.Equals(child.name, $"ItemObject[{SlotType.Shield.ToString()}](Clone)"))
+                    legion.Shield++;
             }
         }
     }
@@ -73,7 +75,7 @@ public class LegionInventory : MonoBehaviour
         {
             Legion.Instance.LegionCnt[i].Arrow = 0;
             Legion.Instance.LegionCnt[i].Sword = 0;
-
+            Legion.Instance.LegionCnt[i].Shield = 0;
         }
     }
 
@@ -83,6 +85,7 @@ public class LegionInventory : MonoBehaviour
     {
         InstantiateHeroes(SlotType.Sword);
         InstantiateHeroes(SlotType.Arrow);
+        InstantiateHeroes(SlotType.Shield);
     }
 
     private void InstantiateHeroes(SlotType slotType)
