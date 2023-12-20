@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,43 +27,63 @@ public class CameraSystem : MonoBehaviour
     private bool isRotating = false;
     private Vector3 lastMousePosition;
 
+    private bool isMoving = true;
     private void Update()
     {
+        CameraControl();
         CameraMove();
         //Move();
         CameraZoomHandle();
         CameraRotate();
     }
 
+    private void CameraControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Debug.Log("눌림");
+            isMoving = !isMoving;
+
+            transform.position = new Vector3(0, transform.position.y, 0);
+            //transform.Rotate(0f, 0f, 0f);
+            //_cinemachineCam.transform.Rotate(50f, 0f, 0f);
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50, 0, 0));
+        }
+    }
+
     private void CameraMove()
     {
-        float xInput = 0;
-        float yInput = 0;
-        Vector3 inputDir = new Vector3(xInput, 0, yInput).normalized;
-
-        Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
-
-        // 마우스 화면 끝에서의 이동 처리
-        Vector3 mousePosition = Input.mousePosition;
-        if (mousePosition.x <= _edgeScrollSize)
+        if (isMoving)
         {
-            moveDir -= transform.right;
-        }
-        else if (mousePosition.x >= Screen.width - _edgeScrollSize)
-        {
-            moveDir += transform.right;
-        }
+            float xInput = 0;
+            float yInput = 0;
+            Vector3 inputDir = new Vector3(xInput, 0, yInput).normalized;
 
-        if (mousePosition.y <= _edgeScrollSize)
-        {
-            moveDir -= transform.forward;
-        }
-        else if (mousePosition.y >= Screen.height - _edgeScrollSize)
-        {
-            moveDir += transform.forward;
-        }
+            Vector3 moveDir = transform.forward * inputDir.z + transform.right * inputDir.x;
 
-        transform.position += moveDir * _moveSpeed * Time.deltaTime;
+            // 마우스 화면 끝에서의 이동 처리
+            Vector3 mousePosition = Input.mousePosition;
+            if (mousePosition.x <= _edgeScrollSize)
+            {
+                moveDir -= transform.right;
+            }
+            else if (mousePosition.x >= Screen.width - _edgeScrollSize)
+            {
+                moveDir += transform.right;
+            }
+
+            if (mousePosition.y <= _edgeScrollSize)
+            {
+                moveDir -= transform.forward;
+            }
+            else if (mousePosition.y >= Screen.height - _edgeScrollSize)
+            {
+                moveDir += transform.forward;
+            }
+
+            transform.position += moveDir * _moveSpeed * Time.deltaTime;
+        }
     }
 
     private void Move()
@@ -75,12 +96,12 @@ public class CameraSystem : MonoBehaviour
             _lastMousePosition = Input.mousePosition;
         }
 
-        if(Input.GetMouseButtonUp(2))
+        if (Input.GetMouseButtonUp(2))
         {
             _dragPanMoveActive = false;
         }
 
-        if(_dragPanMoveActive)
+        if (_dragPanMoveActive)
         {
             Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
 
