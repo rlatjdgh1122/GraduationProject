@@ -34,6 +34,7 @@ public class WaveManager : MonoBehaviour
 
     public bool IsPhase = false;
     public bool IsArrived = false;
+    public bool CanTimer = true;
 
     public event Action OnPhaseStartEvent = null;
     public event Action OnPhaseEndEvent = null;
@@ -205,11 +206,16 @@ public class WaveManager : MonoBehaviour
     {
         while (remainingPhaseReadyTime >= 0) // 현재 남은 준비 시간이 0보다 크다면
         {
-            UpdateClockHandRotation(); // 시계를 업데이트
-            UpdateTimeText(); // 시간 텍스트 업데이트
+            if (CanTimer)
+            {
+                UpdateClockHandRotation(); // 시계를 업데이트
+                UpdateTimeText(); // 시간 텍스트 업데이트
 
-            yield return new WaitForSeconds(1.0f); // 1초후
-            remainingPhaseReadyTime--; // 남은 준비시간 -1
+                yield return new WaitForSeconds(1.0f); // 1초후
+                remainingPhaseReadyTime--; // 남은 준비시간 -1
+            }
+            else
+                yield return null;  
         }
 
         // 준비시간이 끝났다면

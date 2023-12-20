@@ -12,10 +12,10 @@ public enum ShieldPenguinStateEnum
     Dead
 }
 
-public class SheildPenguin : Penguin
+public class ShieldPenguin : Penguin
 {
     public PenguinStateMachine<ShieldPenguinStateEnum> StateMachine { get; private set; }
-
+      
     protected override void Awake()
     {
         base.Awake();
