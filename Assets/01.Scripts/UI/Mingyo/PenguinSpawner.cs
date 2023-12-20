@@ -168,8 +168,13 @@ public class PenguinSpawner : MonoBehaviour
                 ArmySystem.Instace.JoinArmy(i, penguin);
                 idx++;
             }
+
+            yield return new WaitForSeconds(0.1f);
+
+            Legion.Instance.LegionCnt[i].Sword = 0;
+            Legion.Instance.LegionCnt[i].Arrow = 0;
+
         }
-        
     }
     #region SpawnPenguinButtonHandler
 
