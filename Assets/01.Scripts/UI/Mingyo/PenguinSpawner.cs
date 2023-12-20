@@ -24,7 +24,8 @@ public class SpawnPenguinBtnInfo
 public enum PenguinTypeEnum
 {
     Basic,
-    Archer
+    Archer,
+    Shield
 }
 
 public class PenguinSpawner : MonoBehaviour
@@ -169,12 +170,22 @@ public class PenguinSpawner : MonoBehaviour
                 idx++;
             }
 
-            yield return new WaitForSeconds(0.1f);
+            idx++;
+
+            for (int j = 0; j < Legion.Instance.LegionCnt[i].Shield; j++)
+            {
+                ShieldPenguin penguin = SpawnPenguin<ShieldPenguin>(_legionSpawnPoints[idx].position);
+                ArmySystem.Instace.JoinArmy(i, penguin);
+                idx++;
+            }
+
+            yield return null;
 
             Legion.Instance.LegionCnt[i].Sword = 0;
             Legion.Instance.LegionCnt[i].Arrow = 0;
-
+            Legion.Instance.LegionCnt[i].Shield = 0;
         }
+        
     }
     #region SpawnPenguinButtonHandler
 
@@ -202,6 +213,19 @@ public class PenguinSpawner : MonoBehaviour
             ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Archer],
                 () => SpawnDummyPenguin(_dummySpawnPoints[index].position, "Archer"));
+        }
+    }
+
+    public void ShieldPenguinSpawnHandler()
+    {
+        if (WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Shield].CoolTime)
+        {
+            int index = GameManager.Instance.GetDummyPenguinCount;
+            Legion.Instance.LegionUIList[1].HeroCnt++;
+
+            ButtonCooldown
+                (_penguinSpawnBtnDic[PenguinTypeEnum.Shield],
+                () => SpawnDummyPenguin(_dummySpawnPoints[index].position, "Shield"));
         }
     }
 

@@ -15,6 +15,7 @@ public class LegionCnt
 {
     public int Sword;
     public int Arrow;
+    public int Shield;
     public Transform _LegionPannel;
 }
 

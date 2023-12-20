@@ -30,7 +30,8 @@ public class DamageCaster : MonoBehaviour
             if (hit.collider.TryGetComponent<IDamageable>(out IDamageable health))
             {
                 int damage = _owner.Stat.GetDamage();
-                ParticleSystem effect = Instantiate(_owner.HitEffect, hit.collider.transform.position, Quaternion.identity);
+                _owner.HitEffect.transform.position = hit.point;
+                _owner.HitEffect.Play();
                 health.ApplyDamage(damage, Vector2.zero, knockbackPower, _owner);
 
                 return true;

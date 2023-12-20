@@ -26,9 +26,9 @@ public abstract class Entity : PoolableMono
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
 
-    public ParticleSystem HitEffect;
-
     #region ������Ʈ
+    public ParticleSystem HitEffect { get; private set; }
+    public ParticleSystem HealEffect { get; private set; }
     public Animator AnimatorCompo { get; private set; }
     public Health HealthCompo { get; private set; }
     public DamageCaster DamageCasterCompo { get; private set; }
@@ -50,6 +50,11 @@ public abstract class Entity : PoolableMono
     {
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm.GetComponent<Animator>();
+        Transform hitEffectTrm = transform?.Find("HitEffect");
+        HitEffect = hitEffectTrm?.GetComponent<ParticleSystem>();
+        Transform healEffectTrm = transform?.Find("HealEffect");
+        HealEffect = healEffectTrm?.GetComponent<ParticleSystem>();
+
         HealthCompo = GetComponent<Health>();
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
         CharController = GetComponent<CharacterController>();
@@ -59,12 +64,8 @@ public abstract class Entity : PoolableMono
         
         DamageCasterCompo.SetOwner(this, castByCloneSkill: false); //�ڽ��� ���Ȼ� �������� �־���.
         HealthCompo.SetOwner(_characterStat);
-
-
-        //HealthCompo.OnKnockBack += HandleKnockback;
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
-        //OnHealthBarChanged?.Invoke(HealthCompo.GetNormalizedHealth()); //�ִ�ġ�� UI����.
 
         _characterStat = Instantiate(_characterStat); //���������� ž��.
         _characterStat.SetOwner(this); //�ڱ⸦ ���ʷ� ����
@@ -72,18 +73,13 @@ public abstract class Entity : PoolableMono
 
     private void OnDestroy()
     {
-        //HealthCompo.OnKnockBack -= HandleKnockback;
         HealthCompo.OnHit -= HandleHit;
         HealthCompo.OnDied -= HandleDie;
     }
 
     protected virtual void HandleHit()
     {
-        //mpb = new MaterialPropertyBlock();
 
-        //Debug.Log("맞음");
-        //mpb.SetColor("_EmissionColor", Color.white);
-        //_renderer.SetPropertyBlock(mpb);
     }
 
     protected virtual void Start()
