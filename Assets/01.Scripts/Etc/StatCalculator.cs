@@ -1,55 +1,80 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.HDROutputUtils;
 
-public enum OPERATION
+namespace StatOperator
 {
-    합연산, // 합연산
-    곱연산 // 곱연산
-}
-
-public class StatCalculator : MonoBehaviour
-{
-    public OPERATION operation;
-    public int stat;
-    public List<int> percent = new();
-    public float fewtimes; // 기존보다 몇배 증가했는가
-    public float result; // 최종 결과 값
-
-    public float Percent(int per)
-        => stat + (stat * (per / 100f)); // 실수 나눗셈으로 변경
-
-    [ContextMenu("Result")]
-    public void Result()
+    public static class StatCalculator
     {
-        float sum = 0; // 실수로 변경
-        if (operation == OPERATION.합연산)
+        public static float Percent(int value, int per)
+            => value + (value * (per / 100f));
+
+        /// <summary>
+        /// 합연산. 최종 결과 값
+        /// </summary>
+        /// <returns></returns>
+        public static float SumOperValue(int value, List<int> percents)
         {
-            foreach (var item in percent)
+            float sum = 0; // 실수로 변경
+            foreach (var per in percents)
             {
-                Debug.Log(Percent(item));
-                sum += Percent(item) - stat; // 합연산 수정
+                sum += Percent(value, per) - value; // 합연산 수정
             }
-            fewtimes = 1 + sum / stat; // 기존 스탯 대비 몇 배 증가했는지 계산
-            result = stat + sum;
+            return value + sum;
         }
-        else if (operation == OPERATION.곱연산)
+
+        /// <summary>
+        /// 곱연산. 최종 결과 값
+        /// </summary>
+        /// <returns></returns>
+        public static float MultiOperValue(int value, List<int> percents)
         {
-            sum = 1; // 곱셈 연산을 위해 초기값을 1로 설정
-            foreach (var item in percent)
+            float sum = 1;
+            foreach (var per in percents)
             {
-                sum *= Percent(item) / 100f; // 실수 나눗셈으로 변경
+                sum *= Percent(value, per) / 100f;
             }
-            fewtimes = sum; // 기존 스탯 대비 몇 배 증가했는지 계산
-            result = stat * sum;
+            return value * sum;
+        }
+
+        /// <summary>
+        /// 합연산. 기존 값에 몇배 증가했는지 리턴
+        /// </summary>
+        /// <param name="value"></param>
+        ///  수정할 값.
+        /// <param name="percents"></param>
+        ///  합연산 할 퍼센트 리스트.
+        /// <returns></returns>
+        public static float SumOperTimes(int value, List<int> percents)
+        {
+            float sum = 0; // 실수로 변경
+            foreach (var per in percents)
+            {
+                sum += Percent(value, per) - value; // 합연산 수정
+            }
+            return 1 + sum / value; // 기존 스탯 대비 몇 배 증가했는지 계산
+        }
+
+        /// <summary>
+        /// 곱연산. 기존 값에 몇배 증가했는지 리턴
+        /// </summary>
+        /// <param name="value"></param>
+        /// 수정할 값.
+        /// <param name="percents"></param>
+        /// 곱연산 할 퍼센트 리스트.
+        /// <returns></returns>
+        public static float MultiOperTimes(int value, List<int> percents)
+        {
+            float sum = 1;
+            foreach (var per in percents)
+            {
+                sum *= Percent(value, per) / 100f;
+            }
+            return sum;
         }
     }
 
-    private void Reset()
-    {
-        stat = 0;
-        result = 0;
-        fewtimes = 0;
-        percent.Clear();
-    }
 }
+
+

@@ -57,6 +57,8 @@ public class ArmySystem : MonoBehaviour
 
     public void ChangeArmy(int index)
     {
+        if (curLegion == index) return;
+
         curLegion = index;
 
         for (int i = 0; i < armies.Count; i++)
@@ -78,7 +80,8 @@ public class ArmySystem : MonoBehaviour
 
     public void SetClickMovement()
     {
-        if (armies[curLegion].IsMoving && armies[curLegion].Soldiers.TrueForAll(s => s.NavAgent.enabled))
+        if (armies[curLegion].IsMoving
+            && armies[curLegion].Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
             RaycastHit hit;
 
@@ -118,7 +121,6 @@ public class ArmySystem : MonoBehaviour
                 Instantiate(_crown, entity.transform);
             }
         }
-
     }
 
     public void Remove(int legion, Penguin obj)
