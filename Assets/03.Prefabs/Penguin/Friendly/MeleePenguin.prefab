@@ -9968,37 +9968,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!1 &1812228052219481060
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8784597986625992750}
-  m_Layer: 11
-  m_Name: WallChecker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8784597986625992750
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812228052219481060}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.238}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1241305011308058854}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2011761017850383620
 GameObject:
   m_ObjectHideFlags: 0
@@ -10342,6 +10311,7 @@ GameObject:
   - component: {fileID: 1241305011308058854}
   - component: {fileID: 2163785626428387538}
   - component: {fileID: 6964161571943707159}
+  - component: {fileID: 3029608363560809845}
   - component: {fileID: 7709827813026867361}
   - component: {fileID: 7488549622468102932}
   - component: {fileID: 3961603348618899472}
@@ -10366,7 +10336,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3686042055597055651}
-  - {fileID: 8784597986625992750}
   - {fileID: 7362004413546297761}
   - {fileID: 8763376338853670714}
   - {fileID: 384660083972156973}
@@ -10387,15 +10356,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idx: 0
-  _whatIsWall:
-    serializedVersion: 2
-    m_Bits: 64
-  _whatIsHitable:
-    serializedVersion: 2
-    m_Bits: 0
-  _wallChecker: {fileID: 8784597986625992750}
-  _wallCheckDistance: 1.5
-  _knockbackDuration: 0
   targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 6
   attackDistance: 1.1
@@ -10404,9 +10364,6 @@ MonoBehaviour:
   ClickParticle: {fileID: 0}
   _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
-  OnHealthBarChanged:
-    m_PersistentCalls:
-      m_Calls: []
   moveSpeed: 4
   attackSpeed: 1.2
   maxDetectedCount: 1
@@ -10434,6 +10391,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -10467,6 +10427,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3029608363560809845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3129644745910179850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9896306ed17fc8a40b1819cd5ce85f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitPoint: {x: 0, y: 0, z: 0}
+  HitNormal: {x: 0, y: 0, z: 0}
 --- !u!143 &7709827813026867361
 CharacterController:
   m_ObjectHideFlags: 0
@@ -15685,11 +15659,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackChecker: {fileID: 4761556576901606028}
-  attackCheckRadius: 1
-  knockbackPower: {x: 0, y: 0}
-  _numberOfTargets: 1
-  whatIsHitable:
+  _casterRadius: 1
+  _casterInterpolation: 0.5
+  _targetLayer:
     serializedVersion: 2
     m_Bits: 4096
 --- !u!1 &5925691591888898639

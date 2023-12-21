@@ -7,15 +7,6 @@ using UnityEngine.UIElements.Experimental;
 public abstract class Entity : PoolableMono
 {
     public int idx;
-    [Header("Collision Info")]
-    [SerializeField] protected LayerMask _whatIsWall;
-    [SerializeField] protected LayerMask _whatIsHitable;
-    [SerializeField] protected Transform _wallChecker;
-    [SerializeField] protected float _wallCheckDistance;
-
-    [Header("Knockback info")]
-    [SerializeField] protected float _knockbackDuration;
-    protected bool _isKnocked;
 
     [Header("Target info")]
     public Vector3 targetTrm;
@@ -44,16 +35,10 @@ public abstract class Entity : PoolableMono
     public CharacterStat Stat => _characterStat;
     #endregion
 
-    public UnityEvent<float> OnHealthBarChanged;
-
     protected virtual void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm.GetComponent<Animator>();
-        Transform hitEffectTrm = transform?.Find("HitEffect");
-        HitEffect = hitEffectTrm?.GetComponent<ParticleSystem>();
-        Transform healEffectTrm = transform?.Find("HealEffect");
-        HealEffect = healEffectTrm?.GetComponent<ParticleSystem>();
 
         HealthCompo = GetComponent<Health>();
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
@@ -62,13 +47,13 @@ public abstract class Entity : PoolableMono
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         OutlineCompo = GetComponent<Outline>();
         
-        DamageCasterCompo.SetOwner(this, castByCloneSkill: false); //�ڽ��� ���Ȼ� �������� �־���.
+        DamageCasterCompo.SetOwner(this);
         HealthCompo.SetOwner(_characterStat);
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
 
-        _characterStat = Instantiate(_characterStat); //���������� ž��.
-        _characterStat.SetOwner(this); //�ڱ⸦ ���ʷ� ����
+        _characterStat = Instantiate(_characterStat); 
+        _characterStat.SetOwner(this); 
     }
 
     private void OnDestroy()
