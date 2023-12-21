@@ -18,6 +18,12 @@ public abstract class EntityFactory : MonoBehaviour
         return duumyPenguin;
     }
 
+    public Enemy CreateEnemy()
+    {
+        Enemy enemy = new Enemy();
+        return enemy;
+    }
+
     public abstract Penguin CreateMonster();
     //public abstract Weapon CreateWeapon();
 }

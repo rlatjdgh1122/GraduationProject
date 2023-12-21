@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public abstract class Enemy : Entity
+public class Enemy : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 3f;
@@ -69,7 +69,10 @@ public abstract class Enemy : Entity
         IsDead = true;
     }
 
-    public abstract void AnimationTrigger();
+    public virtual void AnimationTrigger()
+    {
+        
+    }
 
     public Penguin FindNearestPenguin(string tag)
     {
