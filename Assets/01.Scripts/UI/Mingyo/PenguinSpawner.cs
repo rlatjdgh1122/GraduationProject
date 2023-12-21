@@ -51,7 +51,7 @@ public class PenguinSpawner : MonoBehaviour
     Vector3 _offSpawnUIVec;
 
     [SerializeField] private Transform _btnTrm;
-    private SpawnButton[] _btnArr;
+    private SpawnButtonInfo[] _btnArr;
     
     Dictionary<PenguinTypeEnum, SpawnPenguinBtnInfo> _penguinSpawnBtnDic = new Dictionary<PenguinTypeEnum, SpawnPenguinBtnInfo>();
 
@@ -75,7 +75,7 @@ public class PenguinSpawner : MonoBehaviour
     private void Awake()
     {
         _dummySpawnPoints = _spawnPoint.GetComponentsInChildren<Transform>();
-        _btnArr = _btnTrm.GetComponentsInChildren<SpawnButton>();
+        _btnArr = _btnTrm.GetComponentsInChildren<SpawnButtonInfo>();
     }
 
     private void Start()
@@ -193,7 +193,6 @@ public class PenguinSpawner : MonoBehaviour
 
     public void BasicPenguinSpawnHandler() // 이거를 struct를 받는 걸로 바꾸셈
     {
-        
         if(WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Basic].CoolTime)
         {
             int index = GameManager.Instance.GetDummyPenguinCount;

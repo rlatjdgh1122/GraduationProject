@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class SpawnButton : MonoBehaviour
+public class SpawnButtonInfo : MonoBehaviour
 {
     private Button btn;
-    [SerializeField]
-    private Image coolingimg;
+
+    [SerializeField] private Image coolingimg;
     [SerializeField] private float cooltime;
     [SerializeField] PenguinTypeEnum penguinType;
 

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
 
-public abstract class Penguin : Entity
+public class Penguin : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 4.5f;
@@ -58,7 +58,10 @@ public abstract class Penguin : Entity
         owner = army;
     }
 
-    public abstract void AnimationTrigger();
+    public virtual void AnimationTrigger()
+    {
+
+    }
 
     public void FindEnemy()
     {
