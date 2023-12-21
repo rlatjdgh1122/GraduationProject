@@ -169,7 +169,7 @@ public class PenguinSpawner : MonoBehaviour
                 ArmySystem.Instace.JoinArmy(i, penguin);
                 idx++;
             }
-
+            
             idx++;
 
             for (int j = 0; j < Legion.Instance.LegionCnt[i].Shield; j++)
