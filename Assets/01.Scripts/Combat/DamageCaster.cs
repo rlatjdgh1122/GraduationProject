@@ -1,50 +1,77 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class DamageCaster : MonoBehaviour
 {
-    public Transform attackChecker;
-    public float attackCheckRadius;
+    [SerializeField]
+    [Range(0.5f, 3f)]
+    private float _casterRadius = 1f;
+    [SerializeField]
+    private float _casterInterpolation = 0.5f;  //이건 캐스터를 뒤쪽으로 빼주는 정도
+    [SerializeField]
+    private LayerMask _targetLayer;
 
-    public Vector2 knockbackPower;
+    //public Transform attackChecker;
+    //public float attackCheckRadius;
 
-    [SerializeField] private int _numberOfTargets = 5; //최대로 때릴 수 있는 적 갯수
-    public LayerMask whatIsHitable;
+    //public Vector2 knockbackPower;
+
+    //[SerializeField] private int _numberOfTargets = 5; //최대로 때릴 수 있는 적 갯수
+    //public LayerMask whatIsHitable;
 
     private Entity _owner;
 
-    public void SetOwner(Entity owner, bool castByCloneSkill)
+    public void SetOwner(Entity owner)
     {
         _owner = owner;
     }
 
-    public bool CastDamage()
+    public void CastDamage()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 250f, whatIsHitable))
+        Vector3 startPos = transform.position - transform.forward * _casterRadius;
+
+        RaycastHit[] hitArr = Physics.SphereCastAll(startPos, _casterRadius, transform.forward,
+                                    _casterRadius + _casterInterpolation, _targetLayer);
+
+        foreach (RaycastHit hit in hitArr)
         {
             if (hit.collider.TryGetComponent<IDamageable>(out IDamageable health))
             {
-                int damage = _owner.Stat.GetDamage();
-                _owner.HitEffect.transform.position = hit.point;
-                _owner.HitEffect.Play();
-                health.ApplyDamage(damage, Vector2.zero, knockbackPower, _owner);
+                if (hit.point.sqrMagnitude == 0)
+                {
+                    continue;
+                }
 
-                return true;
+                int damage = _owner.Stat.damage.GetValue();
+                health.ApplyDamage(damage, hit.point, hit.normal);
+                //float critical = _controller.CharData.BaseCritical;
+                //float criticalDamage = _controller.CharData.BaseCriticalDamage;
+
+                ////아이템을 먹었다면 크리티컬이라면 이런 설정들이 여기서 계산될꺼야
+                //float dice = Random.value; // 0 ~ 1까지의 값이 나온다.
+                //int fontSize = 10;
+                //Color fontColor = Color.white;
+
+                //if (dice < critical)
+                //{
+                //    damage = Mathf.CeilToInt(damage * criticalDamage);
+                //    fontSize = 15;
+                //    fontColor = Color.red;
+                //}
             }
         }
-
-        return false; // 피해를 입힐 요소가 지정한 개수만큼 없는 경우
     }
 
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (attackChecker != null)
-            Gizmos.DrawWireSphere(attackChecker.position, attackCheckRadius);
+        if (UnityEditor.Selection.activeObject == gameObject)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _casterRadius);
+            Gizmos.color = Color.white;
+        }
     }
+#endif
 }

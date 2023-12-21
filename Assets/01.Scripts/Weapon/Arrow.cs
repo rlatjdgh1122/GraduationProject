@@ -45,7 +45,7 @@ public class Arrow : MonoBehaviour
         {
             if (other.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                enemy.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                enemy.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero);
                 ParticleSystem effect = Instantiate(_owner.HitEffect, other.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
                 effect.Play();
                 Destroy(this.gameObject);
@@ -55,14 +55,14 @@ public class Arrow : MonoBehaviour
         {
             if (other.TryGetComponent<Penguin>(out Penguin enemy))
             {
-                enemy.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                enemy.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero);
                 ParticleSystem effect = Instantiate(_owner.HitEffect, other.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
                 effect.Play();
                 Destroy(this.gameObject);
             }
             else if (other.TryGetComponent<NexusBase>(out NexusBase nexus))
             {
-                nexus.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero, _owner);
+                nexus.HealthCompo.ApplyDamage(_damage, Vector2.zero, Vector2.zero);
                 ParticleSystem effect = Instantiate(_owner.HitEffect, other.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
                 effect.Play();
                 Destroy(this.gameObject);
