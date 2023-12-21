@@ -1,11 +1,7 @@
-using System.Collections;
+using DG.Tweening;
+using System;
 using Unity.AI.Navigation;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.UI;
-using System;
-using System.Collections.Generic;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class GroundMove : MonoBehaviour
 {
@@ -46,7 +42,20 @@ public class GroundMove : MonoBehaviour
 
         WaveManager.Instance.OnPhaseStartEvent += GroundMoveHandle;
         WaveManager.Instance.OnPhaseEndEvent += SetOutline;
+        //WaveManager.Instance.OnIceArrivedEvent += SetChilderns;
     }
+
+    //private void SetChilderns()
+    //{
+    //    if (WaveManager.Instance.CurrentStage == _enableStage)
+    //    {
+    //        foreach (Enemy enemy in _enemies)
+    //        {
+    //            enemy.transform.parent = null;
+    //        }
+    //        WaveManager.Instance.OnIceArrivedEvent -= SetChilderns;
+    //    }
+    //}
 
     private void GroundMoveHandle()
     {
