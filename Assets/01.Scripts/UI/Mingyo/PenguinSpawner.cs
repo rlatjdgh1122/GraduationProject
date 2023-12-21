@@ -104,12 +104,17 @@ public class PenguinSpawner : MonoBehaviour
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
                                                 out var hit, Mathf.Infinity, _spawnerLayer))
             {
-                Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
-                UIManager.Instance.UIMoveDot(_spawnUI, targetVec, 0.7f, Ease.OutCubic);
-                UpdateSpawnUIBool();
+                SpawnButton();
                 hit.collider.transform.GetComponent<Outline>().enabled = isSpawnUIOn;
             }
         }
+    }
+
+    public void SpawnButton()
+    {
+        Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
+        UIManager.Instance.UIMoveDot(_spawnUI, targetVec, 0.7f, Ease.OutCubic);
+        UpdateSpawnUIBool();
     }
 
     public T SpawnPenguin<T>(Vector3 vec) where T : Penguin // Å¸ÀÔ¿¡ ¸Â°Ô Æë±Ï »ý¼º
@@ -153,9 +158,8 @@ public class PenguinSpawner : MonoBehaviour
         {
             int idx = 0;
 
-            for (int j = 0; j < Legion.Instance.LegionCnt[i].Sword; j++)
+            for (int j = 0; j < Legion.Instance.LegionCnt[i].SpawnSwordCnt; j++)
             {
-                Debug.Log(_legionSpawnPoints[j]);
                 MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[idx].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
                 idx++;
@@ -163,7 +167,7 @@ public class PenguinSpawner : MonoBehaviour
 
             idx++;
 
-            for (int j = 0; j < Legion.Instance.LegionCnt[i].Arrow; j++)
+            for (int j = 0; j < Legion.Instance.LegionCnt[i].SpawnArrowCnt; j++)
             {
                 ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[idx].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
@@ -172,18 +176,16 @@ public class PenguinSpawner : MonoBehaviour
             
             idx++;
 
-            for (int j = 0; j < Legion.Instance.LegionCnt[i].Shield; j++)
+            for (int j = 0; j < Legion.Instance.LegionCnt[i].SpawnShieldCnt; j++)
             {
                 ShieldPenguin penguin = SpawnPenguin<ShieldPenguin>(_legionSpawnPoints[idx].position);
                 ArmySystem.Instace.JoinArmy(i, penguin);
                 idx++;
             }
 
-            yield return null;
-
-            Legion.Instance.LegionCnt[i].Sword = 0;
-            Legion.Instance.LegionCnt[i].Arrow = 0;
-            Legion.Instance.LegionCnt[i].Shield = 0;
+            Legion.Instance.LegionCnt[i].SpawnSwordCnt = 0;
+            Legion.Instance.LegionCnt[i].SpawnShieldCnt = 0;
+            Legion.Instance.LegionCnt[i].SpawnArrowCnt = 0;
         }
         
     }
@@ -221,7 +223,7 @@ public class PenguinSpawner : MonoBehaviour
         if (WaveManager.Instance.RemainingPhaseReadyTime >= _penguinSpawnBtnDic[PenguinTypeEnum.Shield].CoolTime)
         {
             int index = GameManager.Instance.GetDummyPenguinCount;
-            Legion.Instance.LegionUIList[1].HeroCnt++;
+            Legion.Instance.LegionUIList[2].HeroCnt++;
 
             ButtonCooldown
                 (_penguinSpawnBtnDic[PenguinTypeEnum.Shield],
@@ -251,7 +253,7 @@ public class PenguinSpawner : MonoBehaviour
         GameManager.Instance.PlusDummyPenguinCount();
 
 
-        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnUpdate(() => Debug.Log(btnInfo.CoolingImg.fillAmount)).OnComplete(() =>
+        DOTween.To(() => btnInfo.CoolingImg.fillAmount, f => btnInfo.CoolingImg.fillAmount = f, 0f, btnInfo.CoolTime).OnComplete(() =>
         {
             spawnAction?.Invoke();
             btnInfo.Btn.interactable = true;

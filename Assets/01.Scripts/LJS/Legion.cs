@@ -13,9 +13,13 @@ public class SlotUI
 [Serializable]
 public class LegionCnt
 {
-    public int Sword;
-    public int Arrow;
-    public int Shield;
+    public int SpawnSwordCnt;
+    public int SpawnArrowCnt;
+    public int SpawnShieldCnt;
+
+    public int TotalSwordCnt = 0;
+    public int TotalArrowCnt = 0;
+    public int TotalShieldCnt = 0;
     public Transform _LegionPannel;
 }
 
@@ -23,4 +27,5 @@ public class Legion : Singleton<Legion>
 {
     public List<SlotUI> LegionUIList = new();
     public List<LegionCnt> LegionCnt = new();
+
 }
