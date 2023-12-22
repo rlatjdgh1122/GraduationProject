@@ -799,6 +799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
+  HitType: 0
 --- !u!143 &8294540095052450964
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1442,7 +1443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effectPlayTime: 1
+  _effectPlayTime: 2
 --- !u!1 &5381121728245997004
 GameObject:
   m_ObjectHideFlags: 0
@@ -6564,7 +6565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _casterRadius: 1
   _casterInterpolation: 0.5
-  _effectType: 0
+  _hitType: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 2048

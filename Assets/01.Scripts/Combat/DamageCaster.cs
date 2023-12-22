@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using UnityEngine;
 
 public class DamageCaster : MonoBehaviour
@@ -7,7 +7,7 @@ public class DamageCaster : MonoBehaviour
     [Range(0.1f, 3f)]
     private float _casterRadius = 1f;
     [SerializeField]
-    private float _casterInterpolation = 0.5f;  //¿Ã∞« ƒ≥Ω∫≈Õ∏¶ µ⁄¬ ¿∏∑Œ ª©¡÷¥¬ ¡§µµ
+    private float _casterInterpolation = 0.5f;  //Ïù¥Í±¥ Ï∫êÏä§ÌÑ∞Î•º Îí§Ï™ΩÏúºÎ°ú ÎπºÏ£ºÎäî Ï†ïÎèÑ
     [SerializeField]
     private HitType _hitType;
 
@@ -18,46 +18,54 @@ public class DamageCaster : MonoBehaviour
     public void SetOwner(Entity owner)
     {
         _owner = owner;
-    }  
+    }
 
     public bool CastDamage()
     {
-        Vector3 startPos = transform.position - transform.forward * _casterRadius;
+        Vector3 sphereCastDirection = transform.forward;
+        Vector3 sphereCastStartPos = transform.position - sphereCastDirection * _casterRadius;
 
-        RaycastHit[] hitArr = Physics.SphereCastAll(startPos, _casterRadius, transform.forward,
-                                    _casterRadius + _casterInterpolation, TargetLayer);
+        RaycastHit[] sphereCastHits = Physics.SphereCastAll(sphereCastStartPos, _casterRadius, sphereCastDirection, _casterRadius + _casterInterpolation, TargetLayer);
 
-        foreach (RaycastHit hit in hitArr)
+        RaycastHit raycastHit;
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _casterRadius, TargetLayer);
+
+        if (raycastSuccess && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
-            if (hit.collider.TryGetComponent<IDamageable>(out IDamageable health))
+            int damage = _owner.Stat.damage.GetValue();
+            raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            return true;
+            //float critical = _controller.CharData.BaseCritical;
+            //float criticalDamage = _controller.CharData.BaseCriticalDamage;
+
+            //float dice = Random.value; 
+            //int fontSize = 10;
+            //Color fontColor = Color.white;
+
+            //if (dice < critical)
+            //{
+            //    damage = Mathf.CeilToInt(damage * criticalDamage);
+            //    fontSize = 15;
+            //    fontColor = Color.red;
+            //}
+        }
+
+        foreach (RaycastHit sphereCastHit in sphereCastHits)
+        {
+            if (sphereCastHit.collider.TryGetComponent<IDamageable>(out IDamageable sphereCastHealth))
             {
-                if (hit.point.sqrMagnitude == 0)
+                if (sphereCastHit.point != Vector3.zero)
                 {
-                    continue;
+                    int damage = _owner.Stat.damage.GetValue();
+                    sphereCastHealth.ApplyDamage(damage, sphereCastHit.point, sphereCastHit.normal, _hitType);
+                    return true;
                 }
-
-                int damage = _owner.Stat.damage.GetValue();
-                health.ApplyDamage(damage, hit.point, hit.normal, _hitType);
-                return true;
-                //float critical = _controller.CharData.BaseCritical;
-                //float criticalDamage = _controller.CharData.BaseCriticalDamage;
-
-                ////æ∆¿Ã≈€¿ª ∏‘æ˙¥Ÿ∏È ≈©∏Æ∆ºƒ√¿Ã∂Û∏È ¿Ã∑± º≥¡§µÈ¿Ã ø©±‚º≠ ∞ËªÍµ…≤®æﬂ
-                //float dice = Random.value; // 0 ~ 1±Ó¡ˆ¿« ∞™¿Ã ≥™ø¬¥Ÿ.
-                //int fontSize = 10;
-                //Color fontColor = Color.white;
-
-                //if (dice < critical)
-                //{
-                //    damage = Mathf.CeilToInt(damage * criticalDamage);
-                //    fontSize = 15;
-                //    fontColor = Color.red;
-                //}
             }
         }
 
         return false;
     }
+
 
 
 #if UNITY_EDITOR
