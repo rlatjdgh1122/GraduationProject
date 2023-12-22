@@ -10300,6 +10300,65 @@ Transform:
   - {fileID: 3552398227739606621}
   m_Father: {fileID: 9210230257381917978}
   m_LocalEulerAnglesHint: {x: 42.782562, y: -11.54417, z: -23.090107}
+--- !u!1 &3120993829494442525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7370588182385438139}
+  - component: {fileID: 7906392286249860784}
+  - component: {fileID: 7566684760027647481}
+  m_Layer: 11
+  m_Name: HitFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7370588182385438139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3120993829494442525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1241305011308058854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7906392286249860784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3120993829494442525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada02887f1b371b448dabef21b4fab2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7566684760027647481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3120993829494442525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectPlayTime: 2
+  Effect: 0
 --- !u!1 &3129644745910179850
 GameObject:
   m_ObjectHideFlags: 0
@@ -10338,6 +10397,7 @@ Transform:
   - {fileID: 3686042055597055651}
   - {fileID: 7362004413546297761}
   - {fileID: 8763376338853670714}
+  - {fileID: 7370588182385438139}
   - {fileID: 384660083972156973}
   - {fileID: 6270836688112019854}
   - {fileID: 5320049036447884162}
@@ -10393,7 +10453,19 @@ MonoBehaviour:
   currentHealth: 0
   OnHitEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7906392286249860784}
+        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -10524,7 +10596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &384660083972156973
 Transform:
   m_ObjectHideFlags: 0
@@ -15661,7 +15733,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _casterRadius: 1
   _casterInterpolation: 0.5
-  _targetLayer:
+  _effectType: 0
+  TargetLayer:
     serializedVersion: 2
     m_Bits: 4096
 --- !u!1 &5925691591888898639

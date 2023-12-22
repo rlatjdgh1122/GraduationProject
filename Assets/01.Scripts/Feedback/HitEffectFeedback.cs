@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class HitEffectFeedback : Feedback
 {
-    [SerializeField] private PoolableMono _hitEffect;
     [SerializeField] private float _effectPlayTime;
 
     private EntityActionData _actionData;
 
     private void Awake()
     {
-        _actionData = transform.Find("ActionData").GetComponent<EntityActionData>();
+        _actionData = transform.parent.GetComponent<EntityActionData>();
     }
 
     public override void CreateFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(_hitEffect.name) as EffectPlayer;
+        EffectPlayer effect = PoolManager.Instance.Pop(_actionData.HitType.ToString()) as EffectPlayer;  
         effect.transform.position = _actionData.HitPoint;
         effect.transform.rotation = Quaternion.LookRotation(_actionData.HitNormal * -1);
         effect.StartPlay(_effectPlayTime);

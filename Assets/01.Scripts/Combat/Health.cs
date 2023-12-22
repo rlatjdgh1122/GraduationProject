@@ -34,7 +34,7 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth = maxHealth = owner.GetMaxHealthValue();
     }
 
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal)
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
     {
         if (_isDead)
         {
@@ -44,9 +44,11 @@ public class Health : MonoBehaviour, IDamageable
 
         _actionData.HitPoint = point;
         _actionData.HitNormal = normal;
+        _actionData.HitType = hitType;
 
-        OnHit?.Invoke();
         OnHitEvent?.Invoke();
+        OnHit?.Invoke();
+
         //나중에 아머값에 따른 데미지 감소도 해야함
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);

@@ -102,7 +102,7 @@ public class NexusHeal : MonoBehaviour
 
                         //힐해주는 코드
                         penguin?.HealthCompo.ApplyHeal(Intensity);
-                        penguin?.HealEffect.Play();
+                        //penguin?.HealEffect.Play();
                     }
                 }
 

@@ -17,14 +17,13 @@ public abstract class Entity : PoolableMono
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
 
-    #region ������Ʈ
-    public ParticleSystem HitEffect { get; private set; }
-    public ParticleSystem HealEffect { get; private set; }
+    #region Components
     public Animator AnimatorCompo { get; private set; }
     public Health HealthCompo { get; private set; }
     public DamageCaster DamageCasterCompo { get; private set; }
     public CharacterController CharController { get; private set; }
     public NavMeshAgent NavAgent { get; private set; }
+    public EntityActionData ActionData { get; private set; }
     public ParticleSystem ClickParticle;
     public Outline OutlineCompo { get; private set; }
 

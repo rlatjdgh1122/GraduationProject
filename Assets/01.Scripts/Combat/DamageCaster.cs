@@ -4,34 +4,28 @@ using UnityEngine;
 public class DamageCaster : MonoBehaviour
 {
     [SerializeField]
-    [Range(0.5f, 3f)]
+    [Range(0.1f, 3f)]
     private float _casterRadius = 1f;
     [SerializeField]
     private float _casterInterpolation = 0.5f;  //이건 캐스터를 뒤쪽으로 빼주는 정도
     [SerializeField]
-    private LayerMask _targetLayer;
+    private HitType _hitType;
 
-    //public Transform attackChecker;
-    //public float attackCheckRadius;
-
-    //public Vector2 knockbackPower;
-
-    //[SerializeField] private int _numberOfTargets = 5; //최대로 때릴 수 있는 적 갯수
-    //public LayerMask whatIsHitable;
+    public LayerMask TargetLayer;
 
     private Entity _owner;
 
     public void SetOwner(Entity owner)
     {
         _owner = owner;
-    }
+    }  
 
-    public void CastDamage()
+    public bool CastDamage()
     {
         Vector3 startPos = transform.position - transform.forward * _casterRadius;
 
         RaycastHit[] hitArr = Physics.SphereCastAll(startPos, _casterRadius, transform.forward,
-                                    _casterRadius + _casterInterpolation, _targetLayer);
+                                    _casterRadius + _casterInterpolation, TargetLayer);
 
         foreach (RaycastHit hit in hitArr)
         {
@@ -43,7 +37,8 @@ public class DamageCaster : MonoBehaviour
                 }
 
                 int damage = _owner.Stat.damage.GetValue();
-                health.ApplyDamage(damage, hit.point, hit.normal);
+                health.ApplyDamage(damage, hit.point, hit.normal, _hitType);
+                return true;
                 //float critical = _controller.CharData.BaseCritical;
                 //float criticalDamage = _controller.CharData.BaseCriticalDamage;
 
@@ -60,6 +55,8 @@ public class DamageCaster : MonoBehaviour
                 //}
             }
         }
+
+        return false;
     }
 
 

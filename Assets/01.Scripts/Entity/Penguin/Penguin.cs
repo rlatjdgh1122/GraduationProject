@@ -49,7 +49,7 @@ public class Penguin : Entity
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(this, this.GetType());
+        arrow.Setting(this, DamageCasterCompo.TargetLayer);
         arrow.Fire(_firePos.forward);
     }
 
