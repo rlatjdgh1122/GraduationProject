@@ -5,9 +5,7 @@ public class DamageCaster : MonoBehaviour
 {
     [SerializeField]
     [Range(0.1f, 3f)]
-    private float _casterRadius = 1f;
-    [SerializeField]
-    private float _casterInterpolation = 0.5f;  //이건 캐스터를 뒤쪽으로 빼주는 정도
+    private float _detectRange = 1f;
     [SerializeField]
     private HitType _hitType;
 
@@ -22,21 +20,16 @@ public class DamageCaster : MonoBehaviour
 
     public bool CastDamage()
     {
-        Vector3 sphereCastDirection = transform.forward;
-        Vector3 sphereCastStartPos = transform.position - sphereCastDirection * _casterRadius;
-
-        RaycastHit[] sphereCastHits = Physics.SphereCastAll(sphereCastStartPos, _casterRadius, sphereCastDirection, _casterRadius + _casterInterpolation, TargetLayer);
-
         RaycastHit raycastHit;
-        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _casterRadius, TargetLayer);
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
 
         if (raycastSuccess && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
             int damage = _owner.Stat.damage.GetValue();
             raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             return true;
-            //float critical = _controller.CharData.BaseCritical;
-            //float criticalDamage = _controller.CharData.BaseCriticalDamage;
+            //float critical = _controller.CharData.BaseCritical; <- 크리티컬 데미지 관련 로직입니다.
+            //float criticalDamage = _controller.CharData.BaseCriticalDamage; 
 
             //float dice = Random.value; 
             //int fontSize = 10;
@@ -50,19 +43,6 @@ public class DamageCaster : MonoBehaviour
             //}
         }
 
-        foreach (RaycastHit sphereCastHit in sphereCastHits)
-        {
-            if (sphereCastHit.collider.TryGetComponent<IDamageable>(out IDamageable sphereCastHealth))
-            {
-                if (sphereCastHit.point != Vector3.zero)
-                {
-                    int damage = _owner.Stat.damage.GetValue();
-                    sphereCastHealth.ApplyDamage(damage, sphereCastHit.point, sphereCastHit.normal, _hitType);
-                    return true;
-                }
-            }
-        }
-
         return false;
     }
 
@@ -74,7 +54,7 @@ public class DamageCaster : MonoBehaviour
         if (UnityEditor.Selection.activeObject == gameObject)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _casterRadius);
+            Gizmos.DrawWireSphere(transform.position, _detectRange);
             Gizmos.color = Color.white;
         }
     }

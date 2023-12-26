@@ -12,13 +12,13 @@ public class Enemy : Entity
     [SerializeField]
     [Range(0.1f, 6f)]
     protected float nexusDistance;
-    public string playerLayer = "Player";
 
     [Header("Action & Events")]
     public Action OnProvoked = null;
     public UnityEvent OnProvokedEvent;
 
     public Penguin CurrentTarget;
+    public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
     public bool IsMove = false;
     public bool IsDead = false;
@@ -27,9 +27,8 @@ public class Enemy : Entity
                             Vector3.Distance(transform.position, CurrentTarget.transform.position) <= innerDistance;
     public bool CanAttack => CurrentTarget != null && 
                             Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
-    public bool ReachedNexus => 
+    public bool IsReachedNexus => 
                             Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
-    public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
     protected override void Awake()
     {
@@ -49,7 +48,7 @@ public class Enemy : Entity
 
     private void SetTarget()
     {
-        CurrentTarget = FindNearestPenguin("Player");
+        CurrentTarget = FindNearestPenguin<Penguin>();
     }
 
     public override void Attack()
@@ -74,37 +73,21 @@ public class Enemy : Entity
         
     }
 
-    public Penguin FindNearestPenguin(string tag)
+    public T FindNearestPenguin<T>() where T : Penguin //OnProvoked bool로 빼기
     {
-        var objects = GameObject.FindGameObjectsWithTag(tag).ToList();
+        var components = FindObjectsOfType<T>().Where(p => p.enabled);
 
-        var nearestObject = objects
-            .OrderBy(obj =>
-            {
-                return Vector3.Distance(transform.position, obj.transform.position);
-            })
+        var nearestObject = components
+            .OrderBy(obj => Vector3.Distance(obj.transform.position, transform.position))
             .FirstOrDefault();
 
         if (nearestObject != null)
         {
-            Penguin penguinScript = nearestObject.GetComponent<Penguin>();
-
-            if (penguinScript != null)
-            {
-                return CurrentTarget = penguinScript;
-            }
-            else
-            {
-                Debug.LogWarning("가장 가까운 오브젝트에 스크립트가 없습니다.");
-            }
-        }
-        else
-        {
-            return CurrentTarget = null;
+            CurrentTarget = nearestObject;
+            return nearestObject;
         }
 
-        // 여기까지 왔다면 오류가 발생했거나 가까운 오브젝트를 찾지 못한 경우이므로 null 반환
-        return null;
+        return default;
     }
 
     public void MoveToNexus()

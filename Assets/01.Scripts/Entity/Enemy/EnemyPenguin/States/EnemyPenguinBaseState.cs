@@ -25,9 +25,8 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
 
     private void Provoked()
     {
-        _enemy.playerLayer = "Shield";
+        _enemy.CurrentTarget = _enemy.FindNearestPenguin<ShieldPenguin>(); //OnProvoked bool·Î »©±â
         _enemy.OnProvokedEvent?.Invoke();
-        //_enemy.SetTarget(_enemy.CurrentTarget.transform.position);
     }
 
     public override void Exit()

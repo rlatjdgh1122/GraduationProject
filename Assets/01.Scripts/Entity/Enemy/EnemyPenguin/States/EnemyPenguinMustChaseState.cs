@@ -17,7 +17,7 @@ public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _nearestPayer = _enemy.FindNearestPenguin("Player");
+        _nearestPayer = _enemy.FindNearestPenguin<Penguin>();
     }
 
     public override void UpdateState()

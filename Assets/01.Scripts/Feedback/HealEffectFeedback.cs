@@ -10,13 +10,13 @@ public class HealEffectFeedback : Feedback
     public override void CreateFeedback()
     {
         EffectPlayer effect = PoolManager.Instance.Pop(_healEffect.name) as EffectPlayer;
-        effect.transform.SetParent(owner.transform);
+        effect.transform.position = owner.transform.position;
         effect.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
         effect.StartPlay(_effectEndTime);
     }
 
     public override void FinishFeedback()
     {
-           
+        
     }
 }

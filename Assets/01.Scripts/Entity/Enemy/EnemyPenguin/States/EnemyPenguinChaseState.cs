@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EnemyPenguinChaseState : EnemyPenguinBaseState
 {
-    private Penguin _nearestPlayer;
-
     public EnemyPenguinChaseState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
@@ -14,15 +12,15 @@ public class EnemyPenguinChaseState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _nearestPlayer = _enemy.FindNearestPenguin(_enemy.playerLayer);
+        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>(); //OnProvoked bool로 빼기
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_nearestPlayer != null)
-            _enemy.SetTarget(_nearestPlayer.transform.position);
+        if (_enemy.CurrentTarget != null)
+            _enemy.SetTarget(_enemy.CurrentTarget.transform.position);
 
         if (_enemy.CanAttack)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack); //공격 사거리 내에 들어왔다 -> Attack

@@ -11,14 +11,14 @@ public class ShieldChaseState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.nearestEnemy = _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
+        _penguin.FindFirstNearestEnemy();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.nearestEnemy != null)
+        if (_penguin.CurrentTarget != null)
             _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
 
         if (_penguin.IsInnerMeleeRange)

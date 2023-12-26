@@ -14,7 +14,7 @@ public class ShieldBlockState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
+        _penguin.FindNearestEnemy();
         _penguin.owner.IsMoving = false;
         _penguin.StopImmediately();
 
@@ -25,7 +25,7 @@ public class ShieldBlockState : ShieldBaseState
     {
         base.UpdateState();
 
-        enemies = _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
+        enemies = _penguin.FindNearestEnemy(5);
 
         _penguin.LookTarget();
 
