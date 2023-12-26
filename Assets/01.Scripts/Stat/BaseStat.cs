@@ -3,6 +3,8 @@ using UnityEngine;
 public abstract class BaseStat : ScriptableObject
 {
     [Header("Stat")]
+    public Stat moveSpeed; //
+    public Stat attackSpeed; //
     [Header("Major stat")]
     public Stat strength; // 1포인트당 데미지 증가, 크증뎀 1%
     public Stat agility; // 1포인트당 회피 1%, 크리티컬 1%

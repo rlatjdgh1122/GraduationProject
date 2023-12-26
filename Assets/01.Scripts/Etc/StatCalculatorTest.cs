@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using StatOperator;
 public enum OPERATION
 {
     합연산, // 합연산
@@ -22,26 +22,15 @@ public class StatCalculatorTest : MonoBehaviour
     [ContextMenu("Result")]
     public void Result()
     {
-        float sum = 0; // 실수로 변경
         if (operation == OPERATION.합연산)
         {
-            foreach (var item in percent)
-            {
-                Debug.Log(Percent(item));
-                sum += Percent(item) - stat; // 합연산 수정
-            }
-            fewtimes = 1 + sum / stat; // 기존 스탯 대비 몇 배 증가했는지 계산
-            result = stat + sum;
+            result = StatCalculator.SumOperValue(stat, percent);
+            fewtimes = StatCalculator.SumOperTimes(stat, percent);
         }
         else if (operation == OPERATION.곱연산)
         {
-            sum = 1; // 곱셈 연산을 위해 초기값을 1로 설정
-            foreach (var item in percent)
-            {
-                sum *= Percent(item) / 100f; // 실수 나눗셈으로 변경
-            }
-            fewtimes = sum; // 기존 스탯 대비 몇 배 증가했는지 계산
-            result = stat * sum;
+            result = StatCalculator.MultiOperValue(stat, percent);
+            fewtimes = StatCalculator.MultiOperTimes(stat, percent);
         }
     }
 
