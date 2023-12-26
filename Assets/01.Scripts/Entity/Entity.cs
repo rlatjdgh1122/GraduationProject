@@ -45,6 +45,7 @@ public abstract class Entity : PoolableMono
         NavAgent = GetComponent<NavMeshAgent>();
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         OutlineCompo = GetComponent<Outline>();
+        ActionData = GetComponent<EntityActionData>();
         
         DamageCasterCompo.SetOwner(this);
         HealthCompo.SetOwner(_characterStat);

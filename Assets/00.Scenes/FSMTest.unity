@@ -792,7 +792,7 @@ PrefabInstance:
     - target: {fileID: 4169427133079595497, guid: 446f9bf1806445b43ac7891423e090b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4276996580944431299, guid: 446f9bf1806445b43ac7891423e090b0,
         type: 3}
@@ -1082,6 +1082,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 102426438}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &105224005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 539569831777354752, guid: 446f9bf1806445b43ac7891423e090b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 60244243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98354ecb5ac476b4b9726ee483e00362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &122696255
 GameObject:
   m_ObjectHideFlags: 0
@@ -3951,7 +3963,7 @@ PrefabInstance:
     - target: {fileID: 3129644745910179850, guid: 0d157e196d50f1a4598c391453dfd7c0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3964,6 +3976,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 451318341}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &451318348 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2163785626428387538, guid: 0d157e196d50f1a4598c391453dfd7c0,
+    type: 3}
+  m_PrefabInstance: {fileID: 451318341}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &451562502
 GameObject:
   m_ObjectHideFlags: 0
@@ -7421,6 +7445,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  OnHealedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnHitEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -13967,7 +13994,9 @@ MonoBehaviour:
   armies:
   - Legion: 0
     IsMoving: 0
-    Soldiers: []
+    Soldiers:
+    - {fileID: 105224005}
+    - {fileID: 451318348}
   - Legion: 1
     IsMoving: 0
     Soldiers: []

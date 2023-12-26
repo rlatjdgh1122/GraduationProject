@@ -12,6 +12,7 @@ public class Health : MonoBehaviour, IDamageable
     #region ActionEvent
     public Action OnHit;
     public Action OnDied;
+    public UnityEvent OnHealedEvent;
     public UnityEvent OnHitEvent;
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
     public UnityEvent<float, float> OnUIUpdate;
@@ -64,6 +65,6 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
-        //Debug.Log($"{_owner.gameObject.name} is healed!! : {amount}");
+        OnHealedEvent?.Invoke();
     }
 }

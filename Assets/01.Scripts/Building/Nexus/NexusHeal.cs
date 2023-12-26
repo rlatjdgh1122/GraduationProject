@@ -81,8 +81,6 @@ public class NexusHeal : MonoBehaviour
 
     private void OnPenguinInsideRangeStay()
     {
-
-        Debug.Log("안에있다");
         curTime += Time.deltaTime;
 
         if (isHealing == true)
@@ -102,14 +100,12 @@ public class NexusHeal : MonoBehaviour
 
                         //힐해주는 코드
                         penguin?.HealthCompo.ApplyHeal(Intensity);
-                        //penguin?.HealEffect.Play();
                     }
                 }
 
                 curTime = 0f;
             }
         }
-
     }
 
     private void OnPenguinInsideRangeExit()
@@ -118,8 +114,6 @@ public class NexusHeal : MonoBehaviour
         isHealing = false;
         Debug.Log("안에나갔다");
     }
-
-
 
     private void OnDrawGizmos()
     {
