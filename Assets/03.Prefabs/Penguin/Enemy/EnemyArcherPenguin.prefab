@@ -799,6 +799,7 @@ Transform:
   - {fileID: 5582189151429356110}
   - {fileID: 5334454145084963940}
   - {fileID: 760590471223953168}
+  - {fileID: 2990970039313535883}
   - {fileID: 730150851209436257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -829,6 +830,21 @@ MonoBehaviour:
   rotationSpeed: 4.5
   nexusDistance: 5.85
   playerLayer: Player
+  OnProvokedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2041943471858354794}
+        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   CurrentTarget: {fileID: 0}
   IsMove: 1
   IsDead: 0
@@ -1892,6 +1908,67 @@ Transform:
   - {fileID: 3996538961510098735}
   m_Father: {fileID: 8911825151324809436}
   m_LocalEulerAnglesHint: {x: 15.823302, y: -7.6845107, z: -11.530476}
+--- !u!1 &8777617313638964167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2990970039313535883}
+  - component: {fileID: 2041943471858354794}
+  - component: {fileID: 7082859616599149122}
+  m_Layer: 11
+  m_Name: ProvokeFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2990970039313535883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8777617313638964167}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.94, y: -0.45000005, z: -8.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114431459249668274}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2041943471858354794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8777617313638964167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada02887f1b371b448dabef21b4fab2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7082859616599149122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8777617313638964167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c596b5941ad781d4cb8ec08c2857cdbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  _provokedEffect: {fileID: 6060938240861186850, guid: 352304b7fbe11f445970df6ae36e6227,
+    type: 3}
+  _effectEndTime: 2
 --- !u!1 &8977884648572301595
 GameObject:
   m_ObjectHideFlags: 0

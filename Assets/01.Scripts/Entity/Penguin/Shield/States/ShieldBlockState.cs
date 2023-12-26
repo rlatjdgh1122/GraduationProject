@@ -25,7 +25,7 @@ public class ShieldBlockState : ShieldBaseState
     {
         base.UpdateState();
 
-        enemies = _penguin.FindNearestEnemy(5);
+        enemies = _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
 
         _penguin.LookTarget();
 
