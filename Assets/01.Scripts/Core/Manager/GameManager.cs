@@ -22,6 +22,19 @@ public class GameManager : Singleton<GameManager>
         return activeCount;
     }
 
+    private int currentPreparationTimeSpawnPenguinCount;
+    public int CurrentPreparationTimeSpawnPenguinCount => currentPreparationTimeSpawnPenguinCount;
+
+    public void PlusCurrentPreparationTimeSpawnPenguinCount()
+    {
+        currentPreparationTimeSpawnPenguinCount++;
+    }
+
+    public void ResetCurrentPreparationTimeSpawnPenguinCount()
+    {
+        currentPreparationTimeSpawnPenguinCount = 0;
+    }
+
     public int GetDeadPenguinCount()
     {
         Penguin[] penguins = FindObjectsOfType<Penguin>();
@@ -128,13 +141,4 @@ public class GameManager : Singleton<GameManager>
         _poolingListSO.List.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount)); //리스트에 있는 모든
     }
 
-    public void PlusDummyPenguinCount()
-    {
-        dummyPenguinCount++;
-    }
-
-    public void ResetDummyPenguinCount()
-    {
-        dummyPenguinCount = 0;
-    }
 }

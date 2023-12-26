@@ -1,29 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-//최상위 팩토리 클래스. 각 엔티티별로 이 클래스를 상속받아 각자의 팩토리를 만들어준다.
-public abstract class EntityFactory : MonoBehaviour
+
+public abstract class EntityFactory<T>: MonoBehaviour
 {
-    public Penguin CreatePenguin()
+    // 외부에서 호출하는 함수 - 팩토리내부에서 처리할수있는 모든 처리는 여기서하자.
+    public void SpawnPenguin(T type, Transform spawnTrm, Vector3? setVec = null)
     {
-        Penguin penguin = new Penguin();
-        return penguin;
+        Entity entity = this.Create(type, spawnTrm, setVec);
+        entity.transform.position = spawnTrm.position;
+        entity.transform.rotation = Quaternion.identity;
+
+        if (setVec != null)
+        {
+            entity.SetFirstPosition((Vector3)setVec);
+        }
+
+        Debug.Log(entity.transform.position);
     }
 
-    public DummyPenguin CreateDummyPenguin()
-    {
-        DummyPenguin duumyPenguin = new DummyPenguin();
-        return duumyPenguin;
-    }
+    // 타입이 다른 몬스터 상관없이 생산
+    protected abstract Entity Create(T _type, Transform spawnTrm, Vector3? setVec = null);
 
-    public Enemy CreateEnemy()
-    {
-        Enemy enemy = new Enemy();
-        return enemy;
-    }
-
-    public abstract Penguin CreateMonster();
-    //public abstract Weapon CreateWeapon();
 }

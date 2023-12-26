@@ -104,6 +104,11 @@ public abstract class Entity : PoolableMono
 
     }
 
+    public void SetFirstPosition(Vector3 vec) // 정민교 추가
+    {
+        NavAgent.SetDestination(vec);
+    }
+
     #region �̵� ����
     public void SetClickMovement()
     {

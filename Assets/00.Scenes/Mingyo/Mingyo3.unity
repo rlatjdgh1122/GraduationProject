@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 19297437}
   - component: {fileID: 19297436}
   - component: {fileID: 19297435}
-  - component: {fileID: 19297434}
+  - component: {fileID: 19297438}
   m_Layer: 5
   m_Name: Shield
   m_TagString: Untagged
@@ -165,21 +165,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &19297434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19297432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolingimg: {fileID: 1925592956}
-  cooltime: 10
-  penguinType: 2
 --- !u!114 &19297435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,9 +209,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1356469835}
-        m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: ShieldPenguinSpawnHandler
+      - m_Target: {fileID: 19297438}
+        m_TargetAssemblyTypeName: SpawnPenguinButton, Assembly-CSharp
+        m_MethodName: SpawnPenguinHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -274,6 +259,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19297432}
   m_CullTransparentMesh: 1
+--- !u!114 &19297438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19297432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coolingimg: {fileID: 1925592956}
+  cooltime: 1
+  spawnPenguin: {fileID: 539569831777354752, guid: 446f9bf1806445b43ac7891423e090b0,
+    type: 3}
+  _penguinFactory: {fileID: 136748206}
 --- !u!1001 &30171297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1156,6 +1158,50 @@ Transform:
   - {fileID: 476359667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &136748204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136748205}
+  - component: {fileID: 136748206}
+  m_Layer: 0
+  m_Name: PenguinFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &136748205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136748204}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1040324531}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &136748206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136748204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d6e1b47833ab34ba90af9b7fa8216f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &163591211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8038,6 +8084,7 @@ Transform:
   - {fileID: 303848101}
   - {fileID: 1667011556}
   - {fileID: 1094673615}
+  - {fileID: 136748205}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1041196321
@@ -8302,7 +8349,7 @@ GameObject:
   - component: {fileID: 1049602722}
   - component: {fileID: 1049602721}
   - component: {fileID: 1049602720}
-  - component: {fileID: 1049602719}
+  - component: {fileID: 1049602723}
   m_Layer: 5
   m_Name: Basic
   m_TagString: Untagged
@@ -8332,21 +8379,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1049602719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049602717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolingimg: {fileID: 1434865564}
-  cooltime: 5
-  penguinType: 0
 --- !u!114 &1049602720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8391,9 +8423,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1356469835}
-        m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: BasicPenguinSpawnHandler
+      - m_Target: {fileID: 1049602723}
+        m_TargetAssemblyTypeName: SpawnPenguinButton, Assembly-CSharp
+        m_MethodName: SpawnPenguinHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8441,6 +8473,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049602717}
   m_CullTransparentMesh: 1
+--- !u!114 &1049602723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049602717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coolingimg: {fileID: 1434865564}
+  cooltime: 1
+  spawnPenguin: {fileID: 2163785626428387538, guid: 0d157e196d50f1a4598c391453dfd7c0,
+    type: 3}
+  _penguinFactory: {fileID: 136748206}
 --- !u!1001 &1058879002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8657,7 +8706,7 @@ GameObject:
   - component: {fileID: 1094673615}
   m_Layer: 0
   m_Name: PenguinSpawnPoints
-  m_TagString: Untagged
+  m_TagString: LegionSpawnPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10435,22 +10484,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnUI: {fileID: 562135043}
-  _legionSpawnPoints:
-  - {fileID: 172664271}
-  - {fileID: 1652696526}
-  - {fileID: 1571359607}
-  - {fileID: 823088680}
-  - {fileID: 1384600832}
-  - {fileID: 1901713840}
-  - {fileID: 1149569522}
-  - {fileID: 1655712636}
-  _initTrm: {fileID: 1658376550}
   onSpawnUIYPosValue: 340
   _spawnerLayer:
     serializedVersion: 2
     m_Bits: 16384
-  _spawnPoint: {fileID: 1667011556}
-  _campFireTrm: {fileID: 303848101}
   _btnTrm: {fileID: 623755286}
 --- !u!208 &1356469839
 NavMeshObstacle:
@@ -10757,7 +10794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1415062821}
   m_Layer: 0
-  m_Name: PenguinSpawnPoint (7)
+  m_Name: PenguinSpawnPoint (5)
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -13026,8 +13063,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1667011556}
   m_Layer: 0
-  m_Name: DummySpawnPoints
-  m_TagString: Untagged
+  m_Name: CampFire
+  m_TagString: CampFireSpawnPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13050,9 +13087,9 @@ Transform:
   - {fileID: 1309990686}
   - {fileID: 1476072812}
   - {fileID: 1117747482}
-  - {fileID: 2017229765}
-  - {fileID: 663215664}
   - {fileID: 1415062821}
+  - {fileID: 663215664}
+  - {fileID: 2017229765}
   m_Father: {fileID: 1040324531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1668354419
@@ -15299,7 +15336,7 @@ GameObject:
   - component: {fileID: 1988058829}
   - component: {fileID: 1988058828}
   - component: {fileID: 1988058827}
-  - component: {fileID: 1988058826}
+  - component: {fileID: 1988058830}
   m_Layer: 5
   m_Name: Archer
   m_TagString: Untagged
@@ -15329,21 +15366,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1988058826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988058824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolingimg: {fileID: 1024936431}
-  cooltime: 10
-  penguinType: 1
 --- !u!114 &1988058827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15388,9 +15410,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1356469835}
-        m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: ArcherPenguinSpawnHandler
+      - m_Target: {fileID: 1988058830}
+        m_TargetAssemblyTypeName: SpawnPenguinButton, Assembly-CSharp
+        m_MethodName: SpawnPenguinHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15438,6 +15460,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988058824}
   m_CullTransparentMesh: 1
+--- !u!114 &1988058830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988058824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coolingimg: {fileID: 1024936431}
+  cooltime: 1
+  spawnPenguin: {fileID: 7741800042478522081, guid: ecb9c7fe127919244af337189985d2ea,
+    type: 3}
+  _penguinFactory: {fileID: 136748206}
 --- !u!1 &1992766049
 GameObject:
   m_ObjectHideFlags: 0
@@ -16086,7 +16125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2017229765}
   m_Layer: 0
-  m_Name: PenguinSpawnPoint (5)
+  m_Name: PenguinSpawnPoint (7)
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -16729,7 +16768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d23d74eff5a5b843b789622c083a4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingList: {fileID: 0}
+  buildingList: {fileID: 11400000, guid: 836dad901748ff549960a9dea266bd46, type: 2}
   _poolingListSO: {fileID: 11400000, guid: 07de459dc533c5d4f90da9a22e6f7b16, type: 2}
 --- !u!114 &2120009858
 MonoBehaviour:
@@ -16754,21 +16793,33 @@ MonoBehaviour:
     SlotUIPrefab: {fileID: 3585275359799384372, guid: 66319d68b7c18c74aa62b4413edf9266,
       type: 3}
   LegionCnt:
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 1237632861}
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 419344488}
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 1404628287}
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 79620730}
 --- !u!1001 &2127792721
 PrefabInstance:
