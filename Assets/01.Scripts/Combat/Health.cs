@@ -9,19 +9,25 @@ public class Health : MonoBehaviour, IDamageable
     public int maxHealth;
     public int currentHealth;
 
+    #region ActionEvent
     public Action OnHit;
     public Action OnDied;
-
+    public UnityEvent OnHealedEvent;
+    public UnityEvent OnHitEvent;
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
+    #endregion
 
-    private Entity _owner;
+    private EntityActionData _actionData;
+
     private bool _isDead = false;
     public bool IsMaxHP => currentHealth == maxHealth;
+
     private void Awake()
     {
         _isDead = false;
+        _actionData = GetComponent<EntityActionData>();
     }
 
     public void SetOwner(BaseStat owner)
@@ -29,7 +35,7 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth = maxHealth = owner.GetMaxHealthValue();
     }
 
-    public void ApplyDamage(int damage, Vector2 attackDirection, Vector2 knockbackPower, Entity dealer)
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
     {
         if (_isDead)
         {
@@ -37,7 +43,13 @@ public class Health : MonoBehaviour, IDamageable
             return;
         }
 
+        _actionData.HitPoint = point;
+        _actionData.HitNormal = normal;
+        _actionData.HitType = hitType;
+
+        OnHitEvent?.Invoke();
         OnHit?.Invoke();
+
         //나중에 아머값에 따른 데미지 감소도 해야함
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
@@ -53,6 +65,6 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
-        //Debug.Log($"{_owner.gameObject.name} is healed!! : {amount}");
+        OnHealedEvent?.Invoke();
     }
 }

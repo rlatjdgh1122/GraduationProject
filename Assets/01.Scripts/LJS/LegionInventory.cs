@@ -60,12 +60,19 @@ public class LegionInventory : MonoBehaviour
             foreach (Transform child in legion._LegionPannel)
             {
                 if (string.Equals(child.name, $"ItemObject[{SlotType.Arrow.ToString()}](Clone)"))
-                    legion.Arrow++;
+                    legion.SpawnArrowCnt++;
+                    Debug.Log($"Arrow: {legion.SpawnArrowCnt}");
                 if (string.Equals(child.name, $"ItemObject[{SlotType.Sword.ToString()}](Clone)"))
-                    legion.Sword++;
+                    legion.SpawnSwordCnt++;
+                    Debug.Log($"Sword: {legion.SpawnSwordCnt}");
                 if (string.Equals(child.name, $"ItemObject[{SlotType.Shield.ToString()}](Clone)"))
-                    legion.Shield++;
+                    legion.SpawnShieldCnt++;
+                    Debug.Log($"Shield: {legion.SpawnShieldCnt}");
             }
+
+            legion.TotalShieldCnt += legion.SpawnShieldCnt;
+            legion.TotalSwordCnt += legion.SpawnSwordCnt;
+            legion.TotalArrowCnt += legion.SpawnArrowCnt;
         }
     }
 
@@ -73,9 +80,9 @@ public class LegionInventory : MonoBehaviour
     {
         for(int i = 0; i < Legion.Instance.LegionCnt.Count; i++)
         {
-            Legion.Instance.LegionCnt[i].Arrow = 0;
-            Legion.Instance.LegionCnt[i].Sword = 0;
-            Legion.Instance.LegionCnt[i].Shield = 0;
+            Legion.Instance.LegionCnt[i].SpawnArrowCnt = 0;
+            Legion.Instance.LegionCnt[i].SpawnSwordCnt = 0;
+            Legion.Instance.LegionCnt[i].SpawnShieldCnt = 0;
         }
     }
 
@@ -106,8 +113,9 @@ public class LegionInventory : MonoBehaviour
     #region UI ¿òÁ÷ÀÓ
     public void MoveLegionUI()
     {
-        if (WaveManager.Instance.IsPhase) _isMoveUI = false;
-        else _isMoveUI = !_isMoveUI;
+        //if (WaveManager.Instance.IsPhase) _isMoveUI = false;
+        //else 
+        _isMoveUI = !_isMoveUI;
         Vector3 targetPos;
 
         if(_isMoveUI)

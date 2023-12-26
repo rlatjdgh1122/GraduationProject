@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5257973777648239350}
   - component: {fileID: 8498803257001340901}
   - component: {fileID: 1519222992535101541}
+  - component: {fileID: 666428298356218299}
   - component: {fileID: 8318427162695237864}
   m_Layer: 0
   m_Name: ArrowRoot
@@ -75,6 +76,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPower: 7
+--- !u!114 &666428298356218299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3699185831418722052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _casterRadius: 0.3
+  _casterInterpolation: 0.5
+  _hitType: 1
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!65 &8318427162695237864
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,28 +1,28 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
-public abstract class Enemy : Entity
+public class Enemy : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 3f;
     public float attackSpeed = 1f;
     public float rotationSpeed = 2f;
-
     [SerializeField]
     [Range(0.1f, 6f)]
     protected float nexusDistance;
-
     public string playerLayer = "Player";
 
-    #region 이벤트들
+    [Header("Action & Events")]
     public Action OnProvoked = null;
-    #endregion
+    public UnityEvent OnProvokedEvent;
 
     public Penguin CurrentTarget;
 
     public bool IsMove = false;
     public bool IsDead = false;
+
     public bool IsTargetPlayerInside => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.transform.position) <= innerDistance;
     public bool CanAttack => CurrentTarget != null && 
@@ -60,7 +60,7 @@ public abstract class Enemy : Entity
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(this, this.GetType());
+        arrow.Setting(this, DamageCasterCompo.TargetLayer);
         arrow.Fire(_firePos.forward);
     }
 
@@ -69,7 +69,10 @@ public abstract class Enemy : Entity
         IsDead = true;
     }
 
-    public abstract void AnimationTrigger();
+    public virtual void AnimationTrigger()
+    {
+        
+    }
 
     public Penguin FindNearestPenguin(string tag)
     {
