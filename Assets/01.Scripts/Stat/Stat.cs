@@ -1,33 +1,30 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using StatOperator;
 [Serializable]
 public class Stat
 {
     [SerializeField] private int _baseValue;
-
-    public List<int> modifiers;
-    public int GetValue()
+    public List<int> increases; //증가 % (곱연산)
+    public List<int> decreases; //감소 % (합연산)
+    public int GetValue() //합연산으로 들어감
     {
-        int finalValue = _baseValue;
-        foreach (int value in modifiers)
-        {
-            finalValue += value;
-        }
-        return finalValue;
+        int plusValue = StatCalculator.MultiOperValue(_baseValue, increases);
+        int minusValue = StatCalculator.SumOperValue(_baseValue, decreases);
+        return plusValue - minusValue;
     }
 
     public void AddModifier(int value)
     {
         if (value != 0)
-            modifiers.Add(value);
+            increases.Add(value);
     }
 
     public void RemoveModifier(int value)
     {
         if (value != 0)
-            modifiers.Remove(value);
+            increases.Remove(value);
     }
 
     public void SetDefaultValue(int value)

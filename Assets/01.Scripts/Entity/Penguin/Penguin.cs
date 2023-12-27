@@ -50,7 +50,7 @@ public class Penguin : Entity
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(this, this.GetType());
+        arrow.Setting(this, DamageCasterCompo.TargetLayer);
         arrow.Fire(_firePos.forward);
     }
 
@@ -76,15 +76,16 @@ public class Penguin : Entity
         List<Enemy> enemies = objects
             .Where(obj => obj != null && GameManager.Instance.GetCurrentEnemyCount() > 0)
             .Select(obj => obj.GetComponent<Enemy>())
-            .Where(enemyScript => enemyScript != null)
+            .Where(enemyScript => enemyScript != null && Vector3.Distance(transform.position, enemyScript.transform.position) <= 25f)
             .OrderBy(enemyScript => Vector3.Distance(transform.position, enemyScript.transform.position))
+            .Take(maxCount)  // OrderBy 이전에 Take를 적용
             .ToList();
 
         if (enemies.Count > 0)
         {
             // 가장 가까운 적을 CurrentTarget으로 설정
             CurrentTarget = enemies[0];
-            return enemies.Take(maxCount).ToList();
+            return enemies;
         }
         else
         {
