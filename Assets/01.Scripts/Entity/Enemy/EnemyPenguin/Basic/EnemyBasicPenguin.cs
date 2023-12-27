@@ -9,7 +9,8 @@ public enum EnemyPenguinStateEnum
     Attack,
     Dead,
     Reached,
-    MustChase
+    MustChase,
+    Provoked
 }
 
 public class EnemyBasicPenguin : Enemy

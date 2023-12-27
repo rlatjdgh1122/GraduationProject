@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class ShieldBlockState : ShieldBaseState
 {
-    private List<Enemy> enemies;
-
     public ShieldBlockState(Penguin penguin, PenguinStateMachine<ShieldPenguinStateEnum> stateMachine, string animBoolName) 
         : base(penguin, stateMachine, animBoolName)
     {
@@ -14,9 +8,15 @@ public class ShieldBlockState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.FindNearestEnemy();
+        _triggerCalled = true;
+        _penguin.FindFirstNearestEnemy();
         _penguin.owner.IsMoving = false;
         _penguin.StopImmediately();
+
+        foreach (var enemy in _penguin.FindNearestEnemy(5)) //일단 임시로 5마리도발 이것도 SO로 뺄거임
+        {
+            enemy.IsProvoked = true;
+        }
 
         _penguin.HealthCompo.OnHit += ImpactShield;
     }
@@ -25,8 +25,6 @@ public class ShieldBlockState : ShieldBaseState
     {
         base.UpdateState();
 
-        enemies = _penguin.FindNearestEnemy(5);
-
         _penguin.LookTarget();
 
         if (!_penguin.IsInnerMeleeRange)
@@ -34,13 +32,6 @@ public class ShieldBlockState : ShieldBaseState
 
         if (_penguin.CurrentTarget == null)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-        else
-        {
-            foreach (var enemy in enemies)
-            {
-                enemy.OnProvoked?.Invoke();
-            }
-        }
     }
 
     private void ImpactShield()

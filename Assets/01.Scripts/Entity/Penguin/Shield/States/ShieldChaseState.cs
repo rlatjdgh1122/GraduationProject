@@ -11,6 +11,7 @@ public class ShieldChaseState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
         _penguin.FindFirstNearestEnemy();
     }
 

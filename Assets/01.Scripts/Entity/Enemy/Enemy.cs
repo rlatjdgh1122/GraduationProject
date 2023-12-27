@@ -22,6 +22,7 @@ public class Enemy : Entity
 
     public bool IsMove = false;
     public bool IsDead = false;
+    public bool IsProvoked = false;
 
     public bool IsTargetPlayerInside => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.transform.position) <= innerDistance;
@@ -82,10 +83,7 @@ public class Enemy : Entity
             .FirstOrDefault();
 
         if (nearestObject != null)
-        {
-            CurrentTarget = nearestObject;
             return nearestObject;
-        }
 
         return default;
     }

@@ -12,7 +12,6 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
-        _enemy.OnProvoked += Provoked;
     }
 
     public override void UpdateState()
@@ -23,15 +22,8 @@ public class EnemyPenguinBaseState : EnemyState<EnemyPenguinStateEnum>
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Dead); //Á×À¸¸é Dead State·Î
     }
 
-    private void Provoked()
-    {
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<ShieldPenguin>(); //OnProvoked bool·Î »©±â
-        _enemy.OnProvokedEvent?.Invoke();
-    }
-
     public override void Exit()
     {
         base.Exit();
-        _enemy.OnProvoked -= Provoked;
     }
 }
