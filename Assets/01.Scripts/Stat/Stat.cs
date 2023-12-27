@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using StatOperator;
-using Unity.Collections;
 
 [Serializable]
 public class Stat
