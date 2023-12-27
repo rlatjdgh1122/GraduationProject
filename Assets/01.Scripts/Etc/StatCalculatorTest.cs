@@ -7,8 +7,8 @@ public class StatCalculatorTest : MonoBehaviour
     public int stat;
     public List<int> increases = new();
     public List<int> decreases = new();
-    public float fewtimes; // 기존보다 몇배 증가했는가
-    public float result; // 최종 결과 값
+    [ReadOnly] public float fewtimes; // 기존보다 몇배 증가했는가
+    [ReadOnly] public float result; // 최종 결과 값
 
     [ContextMenu("Result")]
     public void Result()
