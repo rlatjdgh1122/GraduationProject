@@ -236,8 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _casterRadius: 0.1
-  _casterInterpolation: 0.5
+  _detectRange: 1
   _hitType: 1
   TargetLayer:
     serializedVersion: 2
@@ -773,6 +772,7 @@ GameObject:
   - component: {fileID: 1114431459249668274}
   - component: {fileID: 1598124227567866696}
   - component: {fileID: 4534826737116297947}
+  - component: {fileID: 294678438657808925}
   - component: {fileID: 8392588929912488062}
   - component: {fileID: 3490279142008653527}
   m_Layer: 12
@@ -829,7 +829,6 @@ MonoBehaviour:
   attackSpeed: 0.6
   rotationSpeed: 4.5
   nexusDistance: 5.85
-  playerLayer: Player
   OnProvokedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -848,6 +847,7 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   IsMove: 1
   IsDead: 0
+  IsProvoked: 0
 --- !u!114 &4534826737116297947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -913,6 +913,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &294678438657808925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4389804514022249589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9896306ed17fc8a40b1819cd5ce85f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitPoint: {x: 0, y: 0, z: 0}
+  HitNormal: {x: 0, y: 0, z: 0}
+  HitType: 1
 --- !u!143 &8392588929912488062
 CharacterController:
   m_ObjectHideFlags: 0
