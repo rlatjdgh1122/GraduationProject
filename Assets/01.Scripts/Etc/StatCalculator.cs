@@ -7,21 +7,26 @@ namespace StatOperator
 {
     public static class StatCalculator
     {
-        public static float Percent(int value, int per) // 100 30 => 30
+        public static float Percent(int value, int per) // 10 10 => 
             => value * (per / 100f);
-
+        public static float OperTimes(float result, int value)
+            => result / value;
+        public static int GetValue(int plusValue, int minusValue)
+            => plusValue - minusValue;
         /// <summary>
         /// 합연산. 최종 결과 값
         /// </summary>
         /// <returns></returns>
         public static int SumOperValue(int value, List<int> percents)
         {
+            if (percents.Count <= 0) return 0;
+
             float sum = 0; // 실수로 변경
             foreach (var per in percents)
             {
                 sum += Percent(value, per); // 합연산 수정
             }
-            return (int)(value + sum);
+            return (int)(sum);
         }
 
         /// <summary>

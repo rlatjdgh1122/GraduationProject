@@ -54,7 +54,6 @@ public class ArmySystem : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
             ChangeArmy(2);
     }
-
     public void ChangeArmy(int index)
     {
         if (curLegion == index) return;
