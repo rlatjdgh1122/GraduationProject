@@ -4,6 +4,21 @@ using UnityEngine;
 using Define.Algorithem;
 
 [System.Serializable]
+public struct ArmyInfo //UI부분, 기획이 더 필요
+{
+    //인원수
+    public int totalCount;
+    public int basicCount;
+    public int archerCount;
+    public int shieldCount;
+
+    //스탯이 몇배정도 증가하였는가
+    public float basicTimes;
+    public float archerTimes;
+    public float shieldTimes;
+}
+
+[System.Serializable]
 public class Army
 {
     public int Legion;
@@ -53,6 +68,11 @@ public class ArmySystem : MonoBehaviour
             ChangeArmy(1);
         else if (Input.GetKeyDown(KeyCode.Alpha3))
             ChangeArmy(2);
+    }
+
+    public Army GetCurArmy() //현재 army 리턴
+    {
+        return armies[curLegion];
     }
     public void ChangeArmy(int index)
     {

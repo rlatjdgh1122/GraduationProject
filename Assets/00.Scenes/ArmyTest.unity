@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 19297437}
   - component: {fileID: 19297436}
   - component: {fileID: 19297435}
-  - component: {fileID: 19297434}
+  - component: {fileID: 19297438}
   m_Layer: 5
   m_Name: Shield
   m_TagString: Untagged
@@ -165,18 +165,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &19297434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19297432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &19297435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +259,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19297432}
   m_CullTransparentMesh: 1
+--- !u!114 &19297438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19297432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolingimg: {fileID: 822686063}
+  cooltime: 0
+  penguinType: 2
 --- !u!1001 &30171297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -626,7 +629,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1422658230}
   m_Lens:
-    FieldOfView: 48.7
+    FieldOfView: 50
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -8182,7 +8185,7 @@ GameObject:
   - component: {fileID: 1049602722}
   - component: {fileID: 1049602721}
   - component: {fileID: 1049602720}
-  - component: {fileID: 1049602719}
+  - component: {fileID: 1049602723}
   m_Layer: 5
   m_Name: Basic
   m_TagString: Untagged
@@ -8212,18 +8215,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1049602719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049602717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1049602720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8318,6 +8309,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049602717}
   m_CullTransparentMesh: 1
+--- !u!114 &1049602723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049602717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolingimg: {fileID: 847915804}
+  cooltime: 0
+  penguinType: 0
 --- !u!1001 &1058879002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11317,7 +11323,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 48.7
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -14154,6 +14160,7 @@ GameObject:
   - component: {fileID: 1861243453}
   - component: {fileID: 1861243452}
   - component: {fileID: 1861243454}
+  - component: {fileID: 1861243455}
   m_Layer: 0
   m_Name: ArmySystem
   m_TagString: Untagged
@@ -14223,11 +14230,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f237cfbc89496164eb2d0f6656e74328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: 10
-  increases: 280000003c000000
+  stat: 15
+  increases: 0a0000000a000000
   decreases: 
-  fewtimes: 2.2
-  result: 22
+  fewtimes: 1.2
+  result: 18
+--- !u!114 &1861243455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861243451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69328257d48b08a4d9988187684e7c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1890632349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15033,7 +15052,7 @@ GameObject:
   - component: {fileID: 1988058829}
   - component: {fileID: 1988058828}
   - component: {fileID: 1988058827}
-  - component: {fileID: 1988058826}
+  - component: {fileID: 1988058830}
   m_Layer: 5
   m_Name: Archer
   m_TagString: Untagged
@@ -15063,18 +15082,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1988058826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988058824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1988058827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15169,6 +15176,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988058824}
   m_CullTransparentMesh: 1
+--- !u!114 &1988058830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988058824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolingimg: {fileID: 1451634103}
+  cooltime: 0
+  penguinType: 1
 --- !u!1 &1992766049
 GameObject:
   m_ObjectHideFlags: 0
