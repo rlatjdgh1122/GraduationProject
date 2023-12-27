@@ -11,6 +11,7 @@ public class Penguin : Entity
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
+    public float provokeRange = 25f;
 
     public Enemy CurrentTarget;
 
@@ -71,13 +72,15 @@ public class Penguin : Entity
     {
         Enemy[] objects = FindObjectsOfType<Enemy>().Where(e => e.enabled).ToArray();
 
-        var nearestEnemies = objects
-        .OrderBy(obj => Vector3.Distance(transform.position, obj.transform.position))
-        .Take(count)
-        .ToList();
+        var nearbyEnemies = objects
+            .Where(obj => Vector3.Distance(transform.position, obj.transform.position) <= provokeRange)
+            .OrderBy(obj => Vector3.Distance(transform.position, obj.transform.position))
+            .Take(count)
+            .ToList();
 
-        return nearestEnemies;
+        return nearbyEnemies;
     }
+
 
     public void LookTarget()
     {
