@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class ShieldIdleState : ShieldBaseState
 {
     public ShieldIdleState(Penguin penguin, PenguinStateMachine<ShieldPenguinStateEnum> stateMachine, string animBoolName) 
@@ -12,6 +8,7 @@ public class ShieldIdleState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
     }
 
     public override void UpdateState()

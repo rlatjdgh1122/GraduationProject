@@ -19,7 +19,6 @@ public class Penguin : Entity
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(Algorithm.AlignmentRule.GetArmyCenterPostion(owner), CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
-    public List<Enemy> nearestEnemy;
     public Army owner;
 
     [SerializeField] private InputReader _inputReader;
@@ -27,12 +26,12 @@ public class Penguin : Entity
 
     private void OnEnable()
     {
-        WaveManager.Instance.OnIceArrivedEvent += FindEnemy;
+        WaveManager.Instance.OnIceArrivedEvent += FindFirstNearestEnemy;
     }
 
     private void OnDisable()
     {
-        WaveManager.Instance.OnIceArrivedEvent -= FindEnemy;
+        WaveManager.Instance.OnIceArrivedEvent -= FindFirstNearestEnemy;
     }
 
     protected override void Awake()
@@ -63,35 +62,21 @@ public class Penguin : Entity
 
     }
 
-    public void FindEnemy()
+    public void FindFirstNearestEnemy()
     {
-        FindNearestEnemy(maxDetectedCount);
+        CurrentTarget = FindNearestEnemy().FirstOrDefault();
     }
 
-    public List<Enemy> FindNearestEnemy(int maxCount)
+    public List<Enemy> FindNearestEnemy(int count = 1)
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemy");
+        Enemy[] objects = FindObjectsOfType<Enemy>().Where(e => e.enabled).ToArray();
 
-        List<Enemy> enemies = objects
-            .Where(obj => obj != null && GameManager.Instance.GetCurrentEnemyCount() > 0)
-            .Select(obj => obj.GetComponent<Enemy>())
-            .Where(enemyScript => enemyScript != null && Vector3.Distance(transform.position, enemyScript.transform.position) <= 25f)
-            .OrderBy(enemyScript => Vector3.Distance(transform.position, enemyScript.transform.position))
-            .Take(maxCount)  // OrderBy 이전에 Take를 적용
-            .ToList();
+        var nearestEnemies = objects
+        .OrderBy(obj => Vector3.Distance(transform.position, obj.transform.position))
+        .Take(count)
+        .ToList();
 
-        if (enemies.Count > 0)
-        {
-            // 가장 가까운 적을 CurrentTarget으로 설정
-            CurrentTarget = enemies[0];
-            return enemies;
-        }
-        else
-        {
-            Debug.LogWarning("가장 가까운 오브젝트에 Enemy 스크립트가 없거나 현재 적이 없습니다.");
-            CurrentTarget = null;
-            return null;
-        }
+        return nearestEnemies;
     }
 
     public void LookTarget()
