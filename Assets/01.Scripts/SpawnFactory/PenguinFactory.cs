@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PenguinFactory : EntityFactory<Penguin>
 {
@@ -66,8 +68,8 @@ public class PenguinFactory : EntityFactory<Penguin>
     protected override Entity Create(Penguin type, Transform spawnTrm, Vector3? setVec = null)
     {
         string originalString = type.ToString();
-        string resultString = originalString.Replace($"({type})", "").Trim();
-        Debug.Log(resultString);
+        string resultString = originalString.Substring(0, originalString.LastIndexOf(" "));
+
         Penguin spawnPenguin = PoolManager.Instance.Pop(resultString) as Penguin;
         return spawnPenguin;
     }
