@@ -4,6 +4,7 @@ using  Define.Algorithem;
 using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class Penguin : Entity
 {
@@ -109,10 +110,5 @@ public class Penguin : Entity
     {
         ArmySystem.Instace.Remove(owner.Legion, this);
         IsDead = true;
-    }
-
-    public void SetFirstPosition(Vector3 vec)
-    {
-        NavAgent.SetDestination(vec);
     }
 }

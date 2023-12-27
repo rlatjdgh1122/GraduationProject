@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class EntityFactory<T>: MonoBehaviour
 {
-    // 외부에서 호출하는 함수 - 팩토리내부에서 처리할수있는 모든 처리는 여기서하자.
+    // 외부에서 호출하는 함수  팩토리내부에서 처리할수있는 모든 처리는 여기서하자.
     public void SpawnPenguin(T type, Transform spawnTrm, Vector3? setVec = null)
     {
         Entity entity = this.Create(type, spawnTrm, setVec);
@@ -22,7 +22,6 @@ public abstract class EntityFactory<T>: MonoBehaviour
         Debug.Log(entity.transform.position);
     }
 
-    // 타입이 다른 몬스터 상관없이 생산
     protected abstract Entity Create(T _type, Transform spawnTrm, Vector3? setVec = null);
 
 }

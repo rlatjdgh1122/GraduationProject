@@ -6,10 +6,12 @@ using UnityEngine.Windows;
 
 public class PenguinFactory : EntityFactory<Penguin>
 {
-    protected int campFireidx = -1;
+    protected int campFireidx = 0;
 
     private Transform[] _campFireSpawnPoints;
     private Transform[] _legionSpawnPoints;
+
+    protected List<Penguin> curPTspawnPenguins = new List<Penguin>();
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class PenguinFactory : EntityFactory<Penguin>
         if (legionidx != null)
         {
             SpawnPenguin(penguin, _campFireSpawnPoints[campFireidx], _legionSpawnPoints[(int)legionidx].position);
+            curPTspawnPenguins.Add(penguin);
         }
         else
         {
@@ -52,18 +55,34 @@ public class PenguinFactory : EntityFactory<Penguin>
 
     private void OnEnable()
     {
-        WaveManager.Instance.OnPhaseStartEvent += ResetCampFireIdx;
+        WaveManager.Instance.OnPhaseStartEvent += ResetPTInfo;
+
+
+        WaveManager.Instance.OnPhaseStartEvent += ResetPTInfo;
     }
 
     public void OnDisable()
     {
-        WaveManager.Instance.OnPhaseStartEvent -= ResetCampFireIdx;
+        WaveManager.Instance.OnPhaseStartEvent -= ResetPTInfo;
     }
 
-    private void ResetCampFireIdx()
+    private void ResetPTInfo()
     {
         campFireidx = 0;
+        curPTspawnPenguins.Clear();
     }
+
+    private void SpawnPenguinsMoveToTent()
+    {
+        for(int i = 0; i < curPTspawnPenguins.Count; i++) 
+        {
+            if () // 생성된 펭귄이 군단에 들어가있지 않으면 텐트로 돌아가게.
+            {
+                curPTspawnPenguins[i].
+            }
+            // 군단에 들어가 있다면 알아서 군단위치로 가게
+        }
+    }    
 
     protected override Entity Create(Penguin type, Transform spawnTrm, Vector3? setVec = null)
     {
