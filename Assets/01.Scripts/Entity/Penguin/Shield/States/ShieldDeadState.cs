@@ -8,21 +8,18 @@ public class ShieldDeadState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        foreach (var enemy in _penguin.nearestEnemy)
-        {
-            if (!enemy.IsDead)
-            {
-                enemy.playerLayer = "Player";
-                enemy.FindNearestPenguin("Player");
-            }          
-        }
 
-        //_penguin.CurrentTarget.FindNearestPenguin("Player");
-        //_penguin.CurrentTarget = null;
-        _penguin.tag = "Untagged";
+        _triggerCalled = true;
+        _penguin.CurrentTarget = null;
         _penguin.CharController.enabled = false;
         _penguin.NavAgent.enabled = false;
-        //_penguin.enabled = false;
+        _penguin.enabled = false;
+
+        foreach (var e in _penguin.FindNearestEnemy(5)) //일단 임시로 5마리도발 이것도 SO로 뺄거임
+        {
+            if (!e.IsDead)
+                e.IsProvoked = false;
+        }
     }
 
     public override void UpdateState()
