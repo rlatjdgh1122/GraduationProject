@@ -114,7 +114,7 @@ public class ArmySystem : MonoBehaviour
         }
     }
 
-    public void SetArmyMovePostiton(Vector3 startPos, int legion) //���콺 ��ġ, ��� idx, ��� ���� �̸�
+    public void SetArmyMovePostiton(Vector3 startPos, int legion)
     {
         var soldiers = armies[legion].Soldiers;
         var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
