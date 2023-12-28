@@ -48,12 +48,11 @@ public abstract class Entity : PoolableMono
         ActionData = GetComponent<EntityActionData>();
         
         DamageCasterCompo.SetOwner(this);
-        HealthCompo.SetOwner(_characterStat);
+        HealthCompo.SetHealth(_characterStat);
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
 
         _characterStat = Instantiate(_characterStat); 
-        _characterStat.SetOwner(this); 
     }
 
     private void OnDestroy()
