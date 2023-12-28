@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.AI;
 
 public class Penguin : Entity
 {

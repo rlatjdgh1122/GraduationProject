@@ -61,13 +61,10 @@ public class LegionInventory : MonoBehaviour
             {
                 if (string.Equals(child.name, $"ItemObject[{SlotType.Arrow.ToString()}](Clone)"))
                     legion.SpawnArrowCnt++;
-                    Debug.Log($"Arrow: {legion.SpawnArrowCnt}");
                 if (string.Equals(child.name, $"ItemObject[{SlotType.Sword.ToString()}](Clone)"))
                     legion.SpawnSwordCnt++;
-                    Debug.Log($"Sword: {legion.SpawnSwordCnt}");
                 if (string.Equals(child.name, $"ItemObject[{SlotType.Shield.ToString()}](Clone)"))
                     legion.SpawnShieldCnt++;
-                    Debug.Log($"Shield: {legion.SpawnShieldCnt}");
             }
 
             legion.TotalShieldCnt += legion.SpawnShieldCnt;

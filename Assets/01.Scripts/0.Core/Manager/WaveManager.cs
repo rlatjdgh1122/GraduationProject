@@ -1,10 +1,12 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
@@ -16,6 +18,8 @@ public class WaveManager : MonoBehaviour
     private int maxPhaseReadyTime;
     private int remainingPhaseReadyTime;
     public int RemainingPhaseReadyTime => remainingPhaseReadyTime;
+    [SerializeField]
+    private Transform _tentTrm;
 
 
     [Header("UI References")] //일단 임시로 여기에
@@ -42,6 +46,7 @@ public class WaveManager : MonoBehaviour
     private int maxEnemyCnt;
 
     private bool isFirst = true;
+    private List<Penguin> _curPTspawnPenguins = new List<Penguin> ();
 
     #endregion
 
@@ -65,6 +70,7 @@ public class WaveManager : MonoBehaviour
     }
     #endregion
 
+    #region SingleTon
     private static WaveManager _instance;
     public static WaveManager Instance
     {
@@ -84,7 +90,7 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != this && _instance != null) //  ̱   
+        if (_instance != this)
         {
             Destroy(gameObject);
         }
@@ -92,6 +98,12 @@ public class WaveManager : MonoBehaviour
         {
             _instance = this;
         }
+    }
+
+    #endregion
+
+    public void OnEnable()
+    {
         OnPhaseStartEvent += OnPhaseStartHandle; // 전투페이즈 시작 이벤트 구독
         OnPhaseEndEvent += OnPhaseEndHandle;     // 전투페이즈 종료 이벤트 
         OnIceArrivedEvent += OnIceArrivedHandle;
@@ -311,5 +323,27 @@ public class WaveManager : MonoBehaviour
         enemyCntText.SetText($"Enemy: {enemyCnt}");
 
         isFirst = false;    
+    }
+
+    public void SetCurPTSpawnPenguins(List<Penguin> penguins)
+    {
+        _curPTspawnPenguins.Clear();
+
+        for(int i = 0; i < penguins.Count; i++) //넘겨 받은 리스트를 저장하고
+        {
+            _curPTspawnPenguins.Add(penguins[i]);
+        }
+
+        SetPosCurPTSpawnPenguin(); // 생성한 펭귄의 상태에 맞게 위치를 설정한다.
+    }
+
+    private void SetPosCurPTSpawnPenguin()
+    {
+        for (int i = 0; i < _curPTspawnPenguins.Count; i++)
+        {
+            //if () // 생성된 펭귄이 군단에 들어가있지 않으면 텐트로 돌아가게.
+            _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
+            //else // 군단에 들어가 있다면 알아서 군단위치로 가게
+        }
     }
 }
