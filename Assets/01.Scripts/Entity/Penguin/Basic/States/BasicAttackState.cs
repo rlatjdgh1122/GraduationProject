@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.VisualScripting;
 
 public class BasicAttackState : BasicBaseState
@@ -11,7 +12,7 @@ public class BasicAttackState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = false;
-        _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
+        _penguin.FindFirstNearestEnemy();
         _penguin.owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;

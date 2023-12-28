@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -14,6 +13,7 @@ public class GroundMove : MonoBehaviour
     [SerializeField] private Color endColor;
 
     #region 프로퍼티
+    private NavMeshSurface _parentSurface;
     private NavMeshSurface _surface;
     private Outline _outline;
     #endregion
@@ -22,6 +22,7 @@ public class GroundMove : MonoBehaviour
 
     private void Awake()
     {
+        _parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
         _surface = transform.parent.GetComponent<NavMeshSurface>();
         _outline = GetComponent<Outline>();
 
@@ -42,20 +43,7 @@ public class GroundMove : MonoBehaviour
 
         WaveManager.Instance.OnPhaseStartEvent += GroundMoveHandle;
         WaveManager.Instance.OnPhaseEndEvent += SetOutline;
-        //WaveManager.Instance.OnIceArrivedEvent += SetChilderns;
     }
-
-    //private void SetChilderns()
-    //{
-    //    if (WaveManager.Instance.CurrentStage == _enableStage)
-    //    {
-    //        foreach (Enemy enemy in _enemies)
-    //        {
-    //            enemy.transform.parent = null;
-    //        }
-    //        WaveManager.Instance.OnIceArrivedEvent -= SetChilderns;
-    //    }
-    //}
 
     private void GroundMoveHandle()
     {
@@ -66,10 +54,14 @@ public class GroundMove : MonoBehaviour
             {
                 enemy.enabled = true;
             }
+
             transform.DOMove(new Vector3(_moveDir.x, transform.position.y, _moveDir.z), _moveDuration).
                 OnComplete(() =>
                 {
                     _surface.enabled = true;
+                    _surface.transform.SetParent(_parentSurface.transform);
+                    _parentSurface.BuildNavMesh();
+
                     DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
                     {
                         WaveManager.Instance.OnIceArrivedEventHanlder();

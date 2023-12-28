@@ -1,13 +1,11 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 public class WaveManager : MonoBehaviour
 {
@@ -161,6 +159,11 @@ public class WaveManager : MonoBehaviour
         if (isWin)
         {
             CurrentStage++;
+            List<Penguin> penguins = FindObjectsOfType<Penguin>().Where(p => p.enabled).ToList();
+            foreach (Penguin penguin in penguins)
+            {
+                penguin.CurrentTarget = null;
+            }
             wavCntText.SetText($"Next Wave: {CurrentStage}");
             UpdateUIOnEnemyCount();
         }
@@ -180,7 +183,7 @@ public class WaveManager : MonoBehaviour
     private void GetReward() // 보상 획득 함수
     {
         ShowEffect();
-        
+
         victoryUI.EnableUI(1f);
     }
 

@@ -10,7 +10,6 @@ public class BasicDeadState : BasicBaseState
         base.Enter();
         _triggerCalled = true;
         _penguin.CurrentTarget = null;
-        _penguin.tag = "Untagged";
         _penguin.enabled = false;
         _penguin.CharController.enabled = false;
         _penguin.NavAgent.enabled = false;

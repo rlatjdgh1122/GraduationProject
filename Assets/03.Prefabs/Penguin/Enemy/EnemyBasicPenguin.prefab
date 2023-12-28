@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 1128351977756427870}
   m_Layer: 12
   m_Name: EnemyBasicPenguin
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -717,7 +717,6 @@ MonoBehaviour:
   attackSpeed: 1
   rotationSpeed: 2
   nexusDistance: 3.75
-  playerLayer: Player
   OnProvokedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1705,8 +1704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _casterRadius: 1
-  _casterInterpolation: 0.5
+  _detectRange: 1
   _hitType: 0
   TargetLayer:
     serializedVersion: 2
