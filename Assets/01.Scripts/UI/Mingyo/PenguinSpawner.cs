@@ -161,7 +161,7 @@ public class PenguinSpawner : MonoBehaviour
             for (int j = 0; j < Legion.Instance.LegionCnt[i].SpawnSwordCnt; j++)
             {
                 MeleePenguin penguin = SpawnPenguin<MeleePenguin>(_legionSpawnPoints[idx].position);
-                ArmySystem.Instace.JoinArmy(i, penguin);
+                ArmySystem.Instace.JoinArmyToSoldier(i, penguin);
                 idx++;
             }
 
@@ -170,7 +170,7 @@ public class PenguinSpawner : MonoBehaviour
             for (int j = 0; j < Legion.Instance.LegionCnt[i].SpawnArrowCnt; j++)
             {
                 ArcherPenguin penguin = SpawnPenguin<ArcherPenguin>(_legionSpawnPoints[idx].position);
-                ArmySystem.Instace.JoinArmy(i, penguin);
+                ArmySystem.Instace.JoinArmyToSoldier(i, penguin);
                 idx++;
             }
             
@@ -179,7 +179,7 @@ public class PenguinSpawner : MonoBehaviour
             for (int j = 0; j < Legion.Instance.LegionCnt[i].SpawnShieldCnt; j++)
             {
                 ShieldPenguin penguin = SpawnPenguin<ShieldPenguin>(_legionSpawnPoints[idx].position);
-                ArmySystem.Instace.JoinArmy(i, penguin);
+                ArmySystem.Instace.JoinArmyToSoldier(i, penguin);
                 idx++;
             }
 
