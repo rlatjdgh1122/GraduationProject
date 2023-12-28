@@ -30,18 +30,14 @@ public class Health : MonoBehaviour, IDamageable
         _actionData = GetComponent<EntityActionData>();
     }
 
-    public void SetOwner(BaseStat owner)
+    public void SetHealth(BaseStat owner)
     {
         currentHealth = maxHealth = owner.GetMaxHealthValue();
     }
 
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
     {
-        if (_isDead)
-        {
-            OnDeathEvent?.Invoke();
-            return;
-        }
+        if (_isDead) return;
 
         _actionData.HitPoint = point;
         _actionData.HitNormal = normal;
@@ -57,6 +53,7 @@ public class Health : MonoBehaviour, IDamageable
         if (currentHealth <= 0)
         {
             _isDead = true;
+            OnDeathEvent?.Invoke();
             OnDied?.Invoke();
         }
     }

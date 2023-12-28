@@ -1,22 +1,19 @@
+using DG.Tweening;
 using System;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class DefeatUI : PopupUI
+public class VictoryUI : NormalUI
 {
     private Image _background;
     private CanvasGroup _canvasGroup;
-    private TextMeshProUGUI _text;
-    private float _elaspedTime => GameManager.Instance.ElapsedTime;
+    [SerializeField] private TextMeshProUGUI[] _texts;
 
     public override void Awake()
     {
-        _background = GetComponent<Image>();
         _canvasGroup = GetComponentInChildren<CanvasGroup>();
-        _text = GetComponentInChildren<TextMeshProUGUI>();
+        _background = GetComponent<Image>();
     }
 
     public override void DisableUI(float time, Action action)
@@ -34,14 +31,9 @@ public class DefeatUI : PopupUI
         _background.DOFade(0.75f, time).OnComplete(() => _canvasGroup.DOFade(1, time));
     }
 
-    public void SetTexts()
+    private void SetTexts()
     {
-        _text.text = $"경과 시간 : {_elaspedTime.ToString("F0")}초"; //일단 임시임
-    }
-
-    public void Restart()
-    {
-        Debug.Log("다시시작");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _texts[0].text = $"처치한 적군 : {GameManager.Instance.GetCurrentDeadEnemyCount()}마리";
+        _texts[1].text = $"전사한 아군 : {GameManager.Instance.GetDeadPenguinCount()}마리";
     }
 }
