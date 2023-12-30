@@ -26,7 +26,7 @@ public abstract class CharacterStat : BaseStat
     {
         switch (type)
         {
-            case StatType.MoveSpeed:
+            /*case StatType.MoveSpeed:
                 if (mode == StatMode.Increase)
                 {
                     moveSpeed.AddIncrease(value);
@@ -46,7 +46,7 @@ public abstract class CharacterStat : BaseStat
                 {
                     attackSpeed.AddDecrease(value);
                 }
-                break;
+                break;*/
 
             case StatType.Strength:
                 if (mode == StatMode.Increase)
@@ -163,7 +163,7 @@ public abstract class CharacterStat : BaseStat
     {
         switch (type)
         {
-            case StatType.MoveSpeed:
+           /* case StatType.MoveSpeed:
                 if (mode == StatMode.Increase)
                 {
                     moveSpeed.RemoveIncrease(value);
@@ -183,7 +183,7 @@ public abstract class CharacterStat : BaseStat
                 {
                     attackSpeed.RemoveDecrease(value);
                 }
-                break;
+                break;*/
 
             case StatType.Strength:
                 if (mode == StatMode.Increase)
