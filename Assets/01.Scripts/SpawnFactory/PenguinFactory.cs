@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Windows;
 
@@ -12,6 +13,9 @@ public class PenguinFactory : EntityFactory<Penguin>
     private Transform[] _legionSpawnPoints; // 군단을 생성해 놓을 초기 위치
 
     protected List<Penguin> _curPTspawnPenguins = new List<Penguin>(); // 현재 준비시간에 생성한 펭귄 리스트
+
+    [SerializeField]
+    public TextMeshProUGUI SpawnFailHudText;
 
     private void Awake()
     {
@@ -74,6 +78,7 @@ public class PenguinFactory : EntityFactory<Penguin>
         string resultString = originalString.Substring(0, originalString.LastIndexOf(" ")); 
 
         Penguin spawnPenguin = PoolManager.Instance.Pop(resultString) as Penguin;
+        spawnPenguin.SetCanInitTent(false);
         return spawnPenguin;
     }
 }

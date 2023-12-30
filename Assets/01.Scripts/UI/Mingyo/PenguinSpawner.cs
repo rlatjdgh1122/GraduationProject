@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public enum PenguinTypeEnum
 {
@@ -19,17 +20,12 @@ public class PenguinSpawner : MonoBehaviour
     [SerializeField] private float onSpawnUIYPosValue = 320;
     [SerializeField] private LayerMask _spawnerLayer;
 
-    List<DummyPenguin> _dummyPenguinList = new List<DummyPenguin>();
-
-    Penguin _spawnPenguin;
-
     private bool isSpawnUIOn;
 
     Vector3 _onSpawnUIVec;
     Vector3 _offSpawnUIVec;
 
     [SerializeField] private Transform _btnTrm;
-    private SpawnPenguinButton[] _btnArr;
 
     //private void OnDisable()
     //{
@@ -46,11 +42,6 @@ public class PenguinSpawner : MonoBehaviour
 
     //    WaveManager.Instance.OnIceArrivedEvent += ResetDummyPenguinList;
     //}
-
-    private void Awake()
-    {
-        _btnArr = _btnTrm.GetComponentsInChildren<SpawnPenguinButton>();
-    }
 
     private void Start()
     {

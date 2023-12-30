@@ -2,7 +2,6 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +29,17 @@ public class SpawnPenguinButton : MonoBehaviour
 
     public void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
+        if(WaveManager.Instance.IsPhase)
+        {
+            UIManager.Instance.InitializeWarningTextSequence();
+            UIManager.Instance.WarningTextSequence.Prepend(_penguinFactory.SpawnFailHudText.DOFade(1f, 0.5f))
+            .Join(_penguinFactory.SpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y, 0.5f))
+            .Append(_penguinFactory.SpawnFailHudText.DOFade(0f, 0.5f))
+            .Join(_penguinFactory.SpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y - 50f, 0.5f));
+
+            return;
+        }
+
         if (WaveManager.Instance.RemainingPhaseReadyTime >= cooltime) // 남은 준비시간안에 생성할 수 있다면 생성한다.
         {
             Legion.Instance.LegionUIList[0].HeroCnt++;
@@ -49,4 +59,5 @@ public class SpawnPenguinButton : MonoBehaviour
             _penguinFactory.SpawnPenguinHandler(spawnPenguin); // 팩토리에서 생성하는 함수 실행
         });
     }
+
 }

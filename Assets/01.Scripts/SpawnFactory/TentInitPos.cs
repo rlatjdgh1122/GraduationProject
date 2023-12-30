@@ -8,7 +8,10 @@ public class TentInitPos : MonoBehaviour
     {
         if(other.TryGetComponent(out PoolableMono obj))
         {
-            PoolManager.Instance.Push(obj);
+            if(obj.CanInitTent)
+            {
+                PoolManager.Instance.Push(obj);
+            }
         }
     }
 }
