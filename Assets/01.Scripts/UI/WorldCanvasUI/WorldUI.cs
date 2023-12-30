@@ -20,6 +20,4 @@ public abstract class WorldUI : MonoBehaviour
         //Vector3 orientationTarget = _cam.transform.rotation * Vector3.forward;
         transform.LookAt(posTarget);
     }
-
-    public abstract void EnableUI(float time);
 }
