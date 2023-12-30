@@ -18,10 +18,7 @@ public class NexusBase : MonoBehaviour
     {
         _health = GetComponent<Health>();
 
-        _health.SetOwner(_nexusStat);
-        _nexusStat.SetOwner(this);
-
-
+        _health.SetHealth(_nexusStat);
     }
 
     private void OnMouseEnter()

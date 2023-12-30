@@ -12,7 +12,7 @@ public class FeedbackPlayer : MonoBehaviour
     {
         _owner = transform.parent.GetComponent<Entity>();
         _feedbackToPlay = new List<Feedback>();
-        GetComponents<Feedback>(_feedbackToPlay); //나한테 붙은 피드백을 전부 가져와서
+        GetComponents<Feedback>(_feedbackToPlay); 
 
         foreach (Feedback feedback in _feedbackToPlay)
         {

@@ -1,6 +1,6 @@
 using System.Linq;
 using UnityEngine;
-using  Define.Algorithem;
+using Define.Algorithem;
 using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
@@ -100,5 +100,14 @@ public class Penguin : Entity
     {
         ArmySystem.Instace.Remove(owner.Legion, this);
         IsDead = true;
+    }
+
+    public void AddStat(int value, StatType type, StatMode mode)
+    {
+        Stat.AddStat(value, type, mode);
+    }
+    public void RemoveStat(int value, StatType type, StatMode mode)
+    {
+        Stat.RemoveStat(value, type, mode);
     }
 }

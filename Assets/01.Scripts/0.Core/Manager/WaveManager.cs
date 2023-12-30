@@ -49,20 +49,20 @@ public class WaveManager : MonoBehaviour
     #endregion
 
     #region UIManager UI
-    PopupUI victoryUI
+    NormalUI victoryUI
     {
         get
         {
-            UIManager.Instance.uiDictionary.TryGetValue(UI.Victory, out PopupUI victoryUI);
+            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Victory, out NormalUI victoryUI);
             return victoryUI;
         }
     }
 
-    PopupUI defeatUI
+    NormalUI defeatUI
     {
         get
         {
-            UIManager.Instance.uiDictionary.TryGetValue(UI.Defeat, out PopupUI defeatUI);
+            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Defeat, out NormalUI defeatUI);
             return defeatUI;
         }
     }

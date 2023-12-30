@@ -4,11 +4,29 @@ using UnityEngine;
 using Define.Algorithem;
 
 [System.Serializable]
+public struct ArmyInfo //UI부분, 기획이 더 필요
+{
+    //인원수
+    public int totalCount;
+    public int basicCount;
+    public int archerCount;
+    public int shieldCount;
+
+    //스탯이 몇배정도 증가하였는가
+    public float basicTimes;
+    public float archerTimes;
+    public float shieldTimes;
+}
+
+[System.Serializable]
 public class Army
 {
     public int Legion;
     public bool IsMoving;
     public List<Penguin> Soldiers = new();
+    public Penguin General; //장군
+
+    public ArmyInfo info;
 }
 
 public class ArmySystem : MonoBehaviour
@@ -24,6 +42,7 @@ public class ArmySystem : MonoBehaviour
 
     private int curLegion = 0;
     public int CurLegion => curLegion;
+    public int ArmyCount => armies.Count;
 
     private void Awake()
     {
@@ -55,6 +74,10 @@ public class ArmySystem : MonoBehaviour
             ChangeArmy(2);
     }
 
+    public Army GetCurArmy() //현재 army 리턴
+    {
+        return armies[curLegion];
+    }
     public void ChangeArmy(int index)
     {
         if (curLegion == index) return;
@@ -95,7 +118,7 @@ public class ArmySystem : MonoBehaviour
         }
     }
 
-    public void SetArmyMovePostiton(Vector3 startPos, int legion) //���콺 ��ġ, ��� idx, ��� ���� �̸�
+    public void SetArmyMovePostiton(Vector3 startPos, int legion)
     {
         var soldiers = armies[legion].Soldiers;
         var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
@@ -106,7 +129,7 @@ public class ArmySystem : MonoBehaviour
         }
     }
 
-    public void SetSoldersIdx(int legion)
+    public void SetSoldersIdx(int legion) //수정
     {
         var soldiers = armies[legion].Soldiers;
 
@@ -133,7 +156,7 @@ public class ArmySystem : MonoBehaviour
         Destroy(crown);
     }
 
-    public void JoinArmy(int legion, Penguin obj) //들어가고 싶은 군단, 
+    public void JoinArmyToSoldier(int legion, Penguin obj) //들어가고 싶은 군단, 군인펭귄
     {
         if (armies.Find(p => p.Legion == legion) == null)
         {
@@ -143,6 +166,29 @@ public class ArmySystem : MonoBehaviour
 
         armies[legion].Soldiers.Add(obj);
         SetSoldersIdx(legion);
+    }
+    public void JoinArmyToGeneral(int legion, Penguin obj) //들어가고 싶은 군단, 장군펭귄
+    {
+        if (armies.Find(p => p.Legion == legion) == null)
+        {
+            Debug.Log("그런 군단 이름은 없습니다.");
+            return;
+        }
+
+        if (armies[legion].General != null)
+        {
+            Debug.Log($"현재 {legion}군단에는 장군이 존재합니다.");
+            return;
+        }
+
+        armies[legion].General = obj;
+    }
+    public void CreateArmy() //군단 추가
+    {
+        Army newArmy = new Army();
+        newArmy.Legion = ArmyCount + 1;
+        newArmy.IsMoving = true;
+        armies.Add(newArmy);
     }
 
     private void OnDestroy()
