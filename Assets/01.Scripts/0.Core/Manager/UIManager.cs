@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UI
+public enum UIType
 {
     Victory,
     Defeat,
@@ -11,23 +11,23 @@ public enum UI
 
 public class UIManager : Singleton<UIManager>
 {
-    public Dictionary<UI, PopupUI> uiDictionary = new Dictionary<UI, PopupUI>();
+    public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
 
     public override void Awake()
     {
-        GameObject root = GameObject.Find("Canvas");
+        GameObject overlayCanvasRoot = GameObject.Find("Canvas");
 
-        PopupUI[] popupUIs = root.GetComponentsInChildren<PopupUI>();
+        NormalUI[] overlayUIArray = overlayCanvasRoot.GetComponentsInChildren<NormalUI>();
 
-        foreach (PopupUI popupUI in popupUIs)
+        foreach (NormalUI overlayUI in overlayUIArray)
         {
-            if (!uiDictionary.ContainsKey(popupUI.UIType))
+            if (!overlayUIDictionary.ContainsKey(overlayUI.UIType))
             {
-                uiDictionary.Add(popupUI.UIType, popupUI);
+                overlayUIDictionary.Add(overlayUI.UIType, overlayUI);
             }
             else
             {
-                Debug.LogWarning("키 중복 : " + popupUI.name);
+                Debug.LogWarning("키 중복 : " + overlayUI.name);
             }
         }
     }
