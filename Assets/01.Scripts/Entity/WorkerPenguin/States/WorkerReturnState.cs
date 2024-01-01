@@ -12,11 +12,15 @@ public class WorkerReturnState : WorkerState<WorkerPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
+        _triggerCalled = true;
+        _worker.MoveToNexus();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+        if (_worker.CheckNexusDistance() < 0.05f)
+            _worker.MoveEndToNexus();
     }
 
     public override void Exit()
