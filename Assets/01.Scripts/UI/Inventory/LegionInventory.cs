@@ -6,14 +6,15 @@ using UnityEngine;
 [Serializable]
 public class Legion
 {
-    public List<LegionInventoryData> legionInvent;
+    public bool generalLimit;
+    public List<LegionInventoryData> legionInven;
     public Dictionary<PenguinUIDataSO, LegionInventoryData> legionDictionary = new();
 }
 
 public class LegionInventory : Singleton<LegionInventory>
 {
-    public List<LegionInventoryData> warLoadInven = new();
-    public Dictionary<PenguinUIDataSO, LegionInventoryData> warLoadDictionary = new();
+    public List<LegionInventoryData> generalInven = new();
+    public Dictionary<PenguinUIDataSO, LegionInventoryData> generalDictionary = new();
 
     //병사 인벤토리
     public List<LegionInventoryData> soliderInven = new();
@@ -38,7 +39,7 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void AddPenguin(PenguinUIDataSO type)
     {
-        if (type.JobType == PenguinJobType.WarLoard)
+        if (type.JobType == PenguinJobType.General)
         {
             AddToWarLoad(type);
         }
@@ -61,27 +62,28 @@ public class LegionInventory : Singleton<LegionInventory>
             _warloadSlots[i].CleanUpSlot();
         }
 
-        for (int i = 0; i < warLoadInven.Count; ++i)
+        for (int i = 0; i < generalInven.Count; ++i)
         {
-            _warloadSlots[i].UpdateSlot(warLoadInven[i]);
+            _warloadSlots[i].UpdateSlot(generalInven[i]);
         }
         for (int i = 0; i < soliderInven.Count; ++i)
         {
             _soliderSlots[i].UpdateSlot(soliderInven[i]);
         }
+
     }
 
     public void AddToWarLoad(PenguinUIDataSO penguin)
     {
-        if (warLoadDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))
+        if (generalDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))
         {
             legionInven.AddStack();
         }
         else
         {
             LegionInventoryData newInven = new LegionInventoryData(penguin);
-            warLoadInven.Add(newInven);
-            warLoadDictionary.Add(penguin, newInven);
+            generalInven.Add(newInven);
+            generalDictionary.Add(penguin, newInven);
         }
     }
 
@@ -109,19 +111,37 @@ public class LegionInventory : Singleton<LegionInventory>
         else
         {
             LegionInventoryData newInven = new LegionInventoryData(penguin);
-            LegionList[legionNumber].legionInvent.Add(newInven);
+            LegionList[legionNumber].legionInven.Add(newInven);
             LegionList[legionNumber].legionDictionary.Add(penguin, newInven);
         }
+
+        for (int i = 0; i < LegionList.Count; i++)
+        {
+            LegionList[i].generalLimit = HasGeneralInLegion(i);
+        }
+    }
+
+    public bool HasGeneralInLegion(int i)
+    {
+        foreach (var legion in LegionList[i].legionInven)
+        {
+            if (legion.penguinData.JobType == PenguinJobType.General)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void RemovePenguin(PenguinUIDataSO penguin, int count = 1)
     {
-        if (warLoadDictionary.TryGetValue(penguin, out LegionInventoryData warloadPenguin))
+        if (generalDictionary.TryGetValue(penguin, out LegionInventoryData warloadPenguin))
         {
             if (warloadPenguin.stackSize <= count)
             {
-                warLoadInven.Remove(warloadPenguin);
-                warLoadDictionary.Remove(penguin);
+                generalInven.Remove(warloadPenguin);
+                generalDictionary.Remove(penguin);
             }
             else
             {
@@ -149,7 +169,7 @@ public class LegionInventory : Singleton<LegionInventory>
 
         if (legion.stackSize <= count)
         {
-            LegionList[i].legionInvent.Remove(legion);
+            LegionList[i].legionInven.Remove(legion);
             LegionList[i].legionDictionary.Remove(penguin);
         }
         else

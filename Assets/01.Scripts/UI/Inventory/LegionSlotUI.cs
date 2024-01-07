@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,9 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
         if (_data == null && _info._data != null)
         {
             _data = _info._data;
+
+            //if (_data.penguinData.JobType == PenguinJobType.General &&
+            //    LegionInventory.Instance.LegionList[_legionNumber - 1].generalLimit) return;
 
             LegionInventory.Instance.RemovePenguin(_info._data.penguinData);
             LegionInventory.Instance.AddToLegion(_data.penguinData, _legionNumber - 1);

@@ -11,7 +11,7 @@ public enum PenguinUniqueType
 
 public enum PenguinJobType
 {
-    WarLoard,
+    General,
     Solider
 }
 
