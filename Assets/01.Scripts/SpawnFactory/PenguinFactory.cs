@@ -14,9 +14,6 @@ public class PenguinFactory : EntityFactory<Penguin>
 
     protected List<Penguin> _curPTspawnPenguins = new List<Penguin>(); // 현재 준비시간에 생성한 펭귄 리스트
 
-    [SerializeField]
-    public TextMeshProUGUI SpawnFailHudText;
-
     private void Awake()
     {
         // 생성 위치들을 씬에서 받아와 설정해준다.
@@ -44,7 +41,7 @@ public class PenguinFactory : EntityFactory<Penguin>
     public void SpawnPenguinHandler(Penguin penguin) 
     {
         campFireidx++; // 생성 위치를 위한 idx
-        Penguin spawnPenguin =  SpawnPenguin(penguin, _campFireSpawnPoints[campFireidx]) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
+        Penguin spawnPenguin =  SpawnObject(penguin, _campFireSpawnPoints[campFireidx].position) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
         _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
     }
 
@@ -71,7 +68,7 @@ public class PenguinFactory : EntityFactory<Penguin>
         WaveManager.Instance.SetCurPTSpawnPenguins(_curPTspawnPenguins);
     }
 
-    protected override Entity Create(Penguin type, Transform spawnTrm) // 실제로 펭귄이 생성되는 함수
+    protected override PoolableMono Create(Penguin type) // 실제로 펭귄이 생성되는 함수
     {
         string originalString = type.ToString();
         // 프리펩에 있는 스크립트의 이름을 가져오므로 필요한 부분만 가져온다. (ex: MeleePenguin (MeleePenguin) 에서 (MeleePenguin)제거.)
