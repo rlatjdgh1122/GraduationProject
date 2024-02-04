@@ -6,6 +6,6 @@ public class PlacementSysytem : MonoBehaviour
 {
     public void CreateBuildingSilhouette()
     {
-        BaseBuilding building = PoolManager.Instance.Push();
+        //BaseBuilding building = PoolManager.Instance.Push();
     }
 }
