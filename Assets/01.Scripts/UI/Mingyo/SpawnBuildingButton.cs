@@ -9,20 +9,17 @@ public class SpawnBuildingButton : MonoBehaviour
     private Button _btn;
 
     [Tooltip("쿨타임")]
-    [SerializeField] private float cooltime;
-
-    [Tooltip("무엇을 생성할 것인지. Prefab을 넣어주면 된다.")]
-    [SerializeField] private BaseBuilding spawnBuilding;
+    [SerializeField] private float cooltime; //일단은 시간으로 해둠
 
     private BuildingFactory _buildingFactory; // 팩토리
 
     protected virtual void Awake()
     {
-        _buildingFactory = GameObject.Find("PenguinSpawner/BuildingFactory").GetComponent<BuildingFactory>();
+        _buildingFactory = GameObject.Find("BuildingFactory").GetComponent<BuildingFactory>();
         _btn = GetComponent<Button>();
     }
 
-    public void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
+    public void SpawnPenguinEventHandler(BaseBuilding spawnBuilding) //Inspector 버튼 이벤트에서 구독할 함수
     {
         if (WaveManager.Instance.IsPhase)
         {
@@ -35,10 +32,10 @@ public class SpawnBuildingButton : MonoBehaviour
             return;
         }
 
-        ButtonCooldown();
+        ButtonCooldown(spawnBuilding);
     }
 
-    private void ButtonCooldown() // 버튼 누르면 실행될 함수
+    private void ButtonCooldown(BaseBuilding spawnBuilding) // 버튼 누르면 실행될 함수
     {
         _buildingFactory.SpawnBuildingHandler(spawnBuilding);
     }
