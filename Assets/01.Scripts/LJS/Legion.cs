@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class SlotUI
+public class test
 {
     public int HeroCnt;
     public GameObject SlotUIPrefab;
@@ -23,9 +23,9 @@ public class LegionCnt
     public Transform _LegionPannel;
 }
 
-public class Legion : Singleton<Legion>
+public class TestLegion : Singleton<TestLegion>
 {
-    public List<SlotUI> LegionUIList = new();
+    public List<test> LegionUIList = new();
     public List<LegionCnt> LegionCnt = new();
 
 }

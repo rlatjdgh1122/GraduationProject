@@ -8,7 +8,7 @@ enum SlotType
     Shield
 }
 
-public class LegionInventory : MonoBehaviour
+public class LegionUI : MonoBehaviour
 {
     [SerializeField] private RectTransform _legionInventory;
     [SerializeField] private float _targetPos;
@@ -20,11 +20,11 @@ public class LegionInventory : MonoBehaviour
     private Vector3 _firstUIPos;
     private bool _isMoveUI;
 
-    private Legion _legionManager;
+    private TestLegion _legionManager;
 
     private void Awake()
     {
-        _legionManager = Legion.Instance;
+        _legionManager = TestLegion.Instance;
         _firstUIPos = _legionInventory.position;
     }
 
@@ -55,7 +55,7 @@ public class LegionInventory : MonoBehaviour
 
     public void LegionUIDownUnitCnt()
     {
-        foreach (var legion in Legion.Instance.LegionCnt)
+        foreach (var legion in TestLegion.Instance.LegionCnt)
         {
             foreach (Transform child in legion._LegionPannel)
             {
@@ -75,11 +75,11 @@ public class LegionInventory : MonoBehaviour
 
     public void LegionUIDownUnitReset()
     {
-        for(int i = 0; i < Legion.Instance.LegionCnt.Count; i++)
+        for(int i = 0; i < TestLegion.Instance.LegionCnt.Count; i++)
         {
-            Legion.Instance.LegionCnt[i].SpawnArrowCnt = 0;
-            Legion.Instance.LegionCnt[i].SpawnSwordCnt = 0;
-            Legion.Instance.LegionCnt[i].SpawnShieldCnt = 0;
+            TestLegion.Instance.LegionCnt[i].SpawnArrowCnt = 0;
+            TestLegion.Instance.LegionCnt[i].SpawnSwordCnt = 0;
+            TestLegion.Instance.LegionCnt[i].SpawnShieldCnt = 0;
         }
     }
 
@@ -98,12 +98,12 @@ public class LegionInventory : MonoBehaviour
 
         for (int j = 0; j < _legionManager.LegionUIList[slotIndex].HeroCnt; j++)
         {
-            GameObject uiObj = Instantiate(Legion.Instance.LegionUIList[slotIndex].SlotUIPrefab);
+            GameObject uiObj = Instantiate(TestLegion.Instance.LegionUIList[slotIndex].SlotUIPrefab);
             uiObj.transform.SetParent(_slot[slotIndex].transform);
             uiObj.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
         }
 
-        Legion.Instance.LegionUIList[slotIndex].HeroCnt = 0;
+        TestLegion.Instance.LegionUIList[slotIndex].HeroCnt = 0;
     }
     #endregion
 
