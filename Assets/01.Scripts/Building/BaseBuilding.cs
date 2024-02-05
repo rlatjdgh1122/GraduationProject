@@ -41,8 +41,12 @@ public abstract class BaseBuilding : PoolableMono
     {
         while (true)
         {
-            Vector3Int gridPosition = _grid.WorldToCell(_mousePos);
-            transform.position = _grid.CellToWorld(gridPosition);
+            if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
+                                                out var hit, Mathf.Infinity))
+            {
+                Vector3Int gridPosition = _grid.WorldToCell(hit.point);
+                transform.position = _grid.CellToWorld(gridPosition);
+            }
 
             yield return 0.1f;
         }
