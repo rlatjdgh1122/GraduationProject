@@ -13,8 +13,10 @@ GameObject:
   - component: {fileID: 1072433876283728514}
   - component: {fileID: 2365211737018866756}
   - component: {fileID: 361412488471684142}
+  - component: {fileID: 673804724001557585}
+  - component: {fileID: 1594041333091633495}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TestBuilding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,3 +120,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29761c6de5551847b87da2614c69619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 79dc316bddf0f9a46a2a2f4213747b5f, type: 2}
+--- !u!114 &673804724001557585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4322896179663317604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d59ff96f7e14443b783782b3cde1a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
+  OnHealedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OffUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!156049354 &1594041333091633495
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4322896179663317604}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
