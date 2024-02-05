@@ -1,9 +1,11 @@
 using System.Linq;
 using UnityEngine;
-using  Define.Algorithem;
+using Define.Algorithem;
 using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
+using UnityEngine.AI;
 
 public class Penguin : Entity
 {
@@ -100,8 +102,12 @@ public class Penguin : Entity
         IsDead = true;
     }
 
-    public void SetFirstPosition(Vector3 vec)
+    public void AddStat(int value, StatType type, StatMode mode)
     {
-        NavAgent.SetDestination(vec);
+        Stat.AddStat(value, type, mode);
+    }
+    public void RemoveStat(int value, StatType type, StatMode mode)
+    {
+        Stat.RemoveStat(value, type, mode);
     }
 }
