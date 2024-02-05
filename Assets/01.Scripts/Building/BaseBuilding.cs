@@ -1,63 +1,54 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public struct BuildingInfo
+{
+    [HideInInspector]
+    public MeshRenderer MeshRendererCompo;
+    [HideInInspector]
+    public Material NormalMaterial;
+    public Material TransparencyMaterial;
+    [HideInInspector]
+    public Grid Grid;
+}
+
 //[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(Grid))]
 public abstract class BaseBuilding : PoolableMono
 {
+    public BuildingInfo BuildingInfoCompo;
+
     private bool isSelected;
     private bool isPlaced;
 
-
-    [SerializeField]
-    private Material[] _materials;
-
-    private Grid _grid;
-    
-    private MeshRenderer _meshRenderer;
-
-    private Coroutine _followMousePositionCoroutine;
-    
-    private Vector3 _mousePos => Input.mousePosition;
-
-
     private void Awake()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-        _grid = GetComponent<Grid>();
+        SetUpCompo();
     }
 
-    public void SetSelect()
+    private void SetUpCompo()
     {
+        BuildingInfoCompo.MeshRendererCompo = GetComponent<MeshRenderer>();
+        BuildingInfoCompo.NormalMaterial = BuildingInfoCompo.MeshRendererCompo.material;
+        BuildingInfoCompo.Grid = GetComponent<Grid>();
+    }
+
+    public void SetSelected()
+    {
+        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.TransparencyMaterial; // 선택되어 투명메테리얼로 바꿈
         isSelected = true;
-        _meshRenderer.material = _materials[1];
-
-        _followMousePositionCoroutine = StartCoroutine(FollowMousePosition());
-    }
-
-    private IEnumerator FollowMousePosition()
-    {
-        while (true)
-        {
-            if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity))
-            {
-                Vector3Int gridPosition = _grid.WorldToCell(hit.point);
-                transform.position = _grid.CellToWorld(gridPosition);
-            }
-
-            yield return 0.1f;
-        }
     }
 
     public void Deselect()
     {
         isSelected = false;
-        _meshRenderer.material = _materials[0];
-
+        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.NormalMaterial; // 선택되어 원래메테리얼로 바꿈
 
     }
-
 }

@@ -4,8 +4,32 @@ using UnityEngine;
 
 public class PlacementSysytem : MonoBehaviour
 {
-    public void CreateBuildingSilhouette()
+    private Coroutine _followMousePositionCoroutine;
+
+    private BaseBuilding _curBuilding;
+
+    public void SelectBuilding(BaseBuilding building)
     {
-        //BaseBuilding building = PoolManager.Instance.Push();
+        building.SetSelected();
+        _curBuilding = building;
+
+        _followMousePositionCoroutine = StartCoroutine(FollowMousePosition());
     }
+
+    private IEnumerator FollowMousePosition()
+    {
+        while (true)
+        {
+            if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
+                                                out var hit, Mathf.Infinity))
+            {
+                Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.Grid.WorldToCell(hit.point);
+                _curBuilding.transform.position = _curBuilding.BuildingInfoCompo.Grid.CellToWorld(gridPosition);
+            }
+
+            yield return 0.1f;
+        }
+    }
+
+    
 }

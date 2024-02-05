@@ -5,10 +5,17 @@ using UnityEngine.InputSystem;
 
 public class BuildingFactory : EntityFactory<BaseBuilding>
 {
+    private PlacementSysytem _placementSysytem;
+
+    private void Awake()
+    {
+        _placementSysytem = GetComponent<PlacementSysytem>();
+    }
+
     public void SpawnBuildingHandler(BaseBuilding building)
     {
-        BaseBuilding spawnPenguin = SpawnObject(building, Input.mousePosition) as BaseBuilding;  //매개변수로 받아온 Building을 생성한다
-        spawnPenguin.SetSelect();
+        BaseBuilding spawnbuilding = SpawnObject(building, Input.mousePosition) as BaseBuilding;  //매개변수로 받아온 Building을 생성한다
+        _placementSysytem.SelectBuilding(spawnbuilding);
     }
 
     protected override PoolableMono Create(BaseBuilding type)
