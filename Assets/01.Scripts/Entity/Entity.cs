@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,13 @@ public abstract class Entity : PoolableMono
     [Header("RangeAttack Info")]
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
+
+    private Vector3 _seatPos = Vector3.zero; //군단에서 배치된 자리 OK?
+    public Vector3 SeatPos
+    {
+        get => _seatPos;
+        set { _seatPos = value; }
+    }
 
     #region Components
     public Animator AnimatorCompo { get; private set; }
@@ -43,13 +51,13 @@ public abstract class Entity : PoolableMono
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         OutlineCompo = GetComponent<Outline>();
         ActionData = GetComponent<EntityActionData>();
-        
+
         DamageCasterCompo.SetOwner(this);
         HealthCompo.SetHealth(_characterStat);
         HealthCompo.OnHit += HandleHit;
         HealthCompo.OnDied += HandleDie;
 
-        _characterStat = Instantiate(_characterStat); 
+        _characterStat = Instantiate(_characterStat);
     }
 
     private void OnDestroy()
@@ -88,30 +96,41 @@ public abstract class Entity : PoolableMono
     #region �̵� ����
     public void SetClickMovement()
     {
+
+        Debug.Log("이 함수 사용하냐???");
         RaycastHit hit;
 
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
-            ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
+            //ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
         }
     }
 
-    public void SetTarget(Vector3 _target)
+    public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
     {
         if (NavAgent.isActiveAndEnabled)
         {
-            targetTrm = _target;
-            MoveToTarget();
+            //targetTrm = target;
+            MoveToTarget(mousePos + SeatPos);
         }
     }
 
-    public void MoveToTarget()
+    public void SetTarget(Vector3 mousePos)
+    {
+        if (NavAgent.isActiveAndEnabled)
+        {
+            //targetTrm = target;
+            MoveToTarget(mousePos);
+        }
+    }
+
+    public void MoveToTarget(Vector3 pos)
     {
         NavAgent.ResetPath();
-        NavAgent.SetDestination(targetTrm);
+        NavAgent.SetDestination(pos);
     }
 
     public void StopImmediately()

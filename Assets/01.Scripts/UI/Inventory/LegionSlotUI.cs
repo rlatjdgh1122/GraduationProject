@@ -8,6 +8,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
 {
     [SerializeField] protected UnitInformationUI _info;
     [SerializeField] private int _legionNumber;
+    [SerializeField] private int _slotNumber;
 
     private void Awake()
     {
@@ -23,6 +24,15 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
     public override void UpdateSlot(LegionInventoryData data)
     {
         _unitImage.sprite = data.penguinData.PenguinIcon;
+
+        var info = new ArrangementInfo
+        {
+            legionIdx = _legionNumber,
+            SlotIdx = _slotNumber,
+            penguinData = data.penguinData
+        };
+
+        SignalHub.OnArrangementInfoModify?.Invoke(info);
     }
 
     public void OnPointerDown(PointerEventData eventData)

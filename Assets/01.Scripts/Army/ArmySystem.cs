@@ -110,17 +110,26 @@ public class ArmySystem : MonoBehaviour
 
             if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
             {
-                SetArmyMovePostiton(hit.point, curLegion);
+                //SetArmyMovePostiton(hit.point);
+                SetArmyMovePostiton1(hit.point);
 
                 ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
                 ClickParticle.Play();
             }
         }
     }
-
-    public void SetArmyMovePostiton(Vector3 startPos, int legion)
+    public void SetArmyMovePostiton1(Vector3 startPos) //배치 시스템 테스트중
     {
-        var soldiers = armies[legion].Soldiers;
+        var soldiers = armies[curLegion].Soldiers;
+
+        for (int i = 0; i < soldiers.Count; i++)
+        {
+            soldiers[i].MoveToMySeat(startPos);
+        }
+    }
+    public void SetArmyMovePostiton(Vector3 startPos) //배치시스템 되면 필요없어짐
+    {
+        var soldiers = armies[curLegion].Soldiers;
         var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
 
         for (int i = 0; i < soldiers.Count; i++)
@@ -133,7 +142,7 @@ public class ArmySystem : MonoBehaviour
     {
         var soldiers = armies[legion].Soldiers;
 
-        Debug.Log(armies[legion].Soldiers.Count);   
+        Debug.Log(armies[legion].Soldiers.Count);
         for (int i = 0; i < soldiers.Count; i++)
         {
             var entity = soldiers[i];
@@ -182,6 +191,13 @@ public class ArmySystem : MonoBehaviour
         }
 
         armies[legion].General = obj;
+    }
+
+    public T CreateSoldier<T>(int legion) where T : Penguin //팽귄 만들기
+    {
+        T obj = null;
+
+        return obj;
     }
     public void CreateArmy() //군단 추가
     {
