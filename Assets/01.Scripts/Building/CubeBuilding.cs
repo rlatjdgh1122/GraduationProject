@@ -5,15 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class CubeBuilding : BaseBuilding
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Running()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("설치되어 이것저것 한다");
     }
 }

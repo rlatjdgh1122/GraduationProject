@@ -16,13 +16,19 @@ public class PlacementSysytem : MonoBehaviour
         building.SetSelected();
         _curBuilding = building;
 
-        _followMousePositionCoroutine = StartCoroutine(FollowMousePosition());
+        _followMousePositionCoroutine = StartCoroutine(BuildingFollowMousePosition());
     }
 
-    private IEnumerator FollowMousePosition()
+    private IEnumerator BuildingFollowMousePosition()
     {
         while (true)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _curBuilding.Placed();
+                break;
+            }
+
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
                                                 out var hit, Mathf.Infinity, _groundLayer))
             {

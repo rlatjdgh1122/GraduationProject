@@ -24,8 +24,8 @@ public abstract class BaseBuilding : PoolableMono
 {
     public BuildingInfo BuildingInfoCompo;
 
-    private bool isSelected;
-    private bool isPlaced;
+    private bool isSelected = false;
+    private bool isPlaced = false;
 
     private void Awake()
     {
@@ -49,6 +49,21 @@ public abstract class BaseBuilding : PoolableMono
     {
         isSelected = false;
         BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.NormalMaterial; // 선택되어 원래메테리얼로 바꿈
-
     }
+
+    public void Placed()
+    {
+        isPlaced = true;
+        Deselect();
+    }
+
+    protected virtual void Update()
+    {
+        if(isPlaced)
+        {
+            Running(); // 설치 되면 역할 수행
+        }
+    }
+
+    protected abstract void Running();
 }
