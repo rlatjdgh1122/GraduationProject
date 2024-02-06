@@ -1,13 +1,5 @@
-using Polyperfect.Common;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-
 public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
 {
-    private Penguin _nearestPayer;
-
     public EnemyPenguinMustChaseState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName) 
         : base(enemyBase, stateMachine, animBoolName)
     {
@@ -17,15 +9,15 @@ public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _nearestPayer = _enemy.FindNearestPenguin("Player");
+        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_nearestPayer != null)
-            _enemy.SetTarget(_nearestPayer.transform.position);
+        if (_enemy.CurrentTarget != null)
+            _enemy.SetTarget(_enemy.CurrentTarget.transform.position);
 
         if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);

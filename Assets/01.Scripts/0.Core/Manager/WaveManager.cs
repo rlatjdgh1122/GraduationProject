@@ -2,10 +2,10 @@
 using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 public class WaveManager : MonoBehaviour
 {
@@ -16,13 +16,15 @@ public class WaveManager : MonoBehaviour
     private int maxPhaseReadyTime;
     private int remainingPhaseReadyTime;
     public int RemainingPhaseReadyTime => remainingPhaseReadyTime;
+    [SerializeField]
+    private Transform _tentTrm;
 
 
     [Header("UI References")] //일단 임시로 여기에
     [SerializeField]
-    private RectTransform clockHandImgTrm;
+    private RectTransform _clockHandImgTrm;
     [SerializeField]
-    private TextMeshProUGUI timeText, wavCntText, enemyCntText;
+    private TextMeshProUGUI _timeText, _waveCntText, _enemyCntText;
 
     [Header("테스트 용")]
     public bool isWin;
@@ -42,29 +44,31 @@ public class WaveManager : MonoBehaviour
     private int maxEnemyCnt;
 
     private bool isFirst = true;
+    private List<Penguin> _curPTspawnPenguins = new List<Penguin> ();
 
     #endregion
 
     #region UIManager UI
-    PopupUI victoryUI
+    NormalUI victoryUI
     {
         get
         {
-            UIManager.Instance.uiDictionary.TryGetValue(UI.Victory, out PopupUI victoryUI);
+            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Victory, out NormalUI victoryUI);
             return victoryUI;
         }
     }
 
-    PopupUI defeatUI
+    NormalUI defeatUI
     {
         get
         {
-            UIManager.Instance.uiDictionary.TryGetValue(UI.Defeat, out PopupUI defeatUI);
+            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Defeat, out NormalUI defeatUI);
             return defeatUI;
         }
     }
     #endregion
 
+    #region SingleTon
     private static WaveManager _instance;
     public static WaveManager Instance
     {
@@ -84,7 +88,7 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != this && _instance != null) //  ̱   
+        if (_instance != this)
         {
             Destroy(gameObject);
         }
@@ -92,6 +96,12 @@ public class WaveManager : MonoBehaviour
         {
             _instance = this;
         }
+    }
+
+    #endregion
+
+    public void OnEnable()
+    {
         OnPhaseStartEvent += OnPhaseStartHandle; // 전투페이즈 시작 이벤트 구독
         OnPhaseEndEvent += OnPhaseEndHandle;     // 전투페이즈 종료 이벤트 
         OnIceArrivedEvent += OnIceArrivedHandle;
@@ -137,7 +147,7 @@ public class WaveManager : MonoBehaviour
     {
         IsPhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
-        wavCntText.SetText($"Current Wave: {CurrentStage}");
+        _waveCntText.SetText($"Current Wave: {CurrentStage}");
         UpdateTimeText();
     }
 
@@ -149,7 +159,12 @@ public class WaveManager : MonoBehaviour
         if (isWin)
         {
             CurrentStage++;
-            wavCntText.SetText($"Next Wave: {CurrentStage}");
+            List<Penguin> penguins = FindObjectsOfType<Penguin>().Where(p => p.enabled).ToList();
+            foreach (Penguin penguin in penguins)
+            {
+                penguin.CurrentTarget = null;
+            }
+            _waveCntText.SetText($"Next Wave: {CurrentStage}");
             UpdateUIOnEnemyCount();
         }
         else
@@ -168,7 +183,7 @@ public class WaveManager : MonoBehaviour
     private void GetReward() // 보상 획득 함수
     {
         ShowEffect();
-        
+
         victoryUI.EnableUI(1f);
     }
 
@@ -241,14 +256,14 @@ public class WaveManager : MonoBehaviour
         int minutes = remainingPhaseReadyTime / 60;          // 분
         int remainingSeconds = remainingPhaseReadyTime % 60; // 초
 
-        if (IsPhase) { timeText.SetText($"전투 진행중"); }
-        else if (minutes > 0) { timeText.SetText($"{minutes}: {remainingSeconds}"); } //분으로 나타낼 수 있다면 분까지 나타낸다.
-        else { timeText.SetText($"{remainingSeconds}"); }
+        if (IsPhase) { _timeText.SetText($"전투 진행중"); }
+        else if (minutes > 0) { _timeText.SetText($"{minutes}: {remainingSeconds}"); } //분으로 나타낼 수 있다면 분까지 나타낸다.
+        else { _timeText.SetText($"{remainingSeconds}"); }
     }
 
     private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // 시계 업데이트
     {
-        clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
+        _clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
         {
             foreach (var action in actions) //실행할 함수가 있다면 실행
             {
@@ -308,8 +323,31 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        enemyCntText.SetText($"Enemy: {enemyCnt}");
+        _enemyCntText.SetText($"Enemy: {enemyCnt}");
 
         isFirst = false;    
+    }
+
+    public void SetCurPTSpawnPenguins(List<Penguin> penguins)
+    {
+        _curPTspawnPenguins.Clear();
+
+        for(int i = 0; i < penguins.Count; i++) //넘겨 받은 리스트를 저장하고
+        {
+            _curPTspawnPenguins.Add(penguins[i]);
+        }
+
+        SetPosCurPTSpawnPenguin(); // 생성한 펭귄의 상태에 맞게 위치를 설정한다.
+    }
+
+    private void SetPosCurPTSpawnPenguin()
+    {
+        for (int i = 0; i < _curPTspawnPenguins.Count; i++)
+        {
+            //if () // 생성된 펭귄이 군단에 들어가있지 않으면 텐트로 돌아가게.
+            _curPTspawnPenguins[i].SetCanInitTent(true);
+            _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
+            //else // 군단에 들어가 있다면 알아서 군단위치로 가게
+        }
     }
 }

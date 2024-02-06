@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 19297437}
   - component: {fileID: 19297436}
   - component: {fileID: 19297435}
-  - component: {fileID: 19297434}
+  - component: {fileID: 19297438}
   m_Layer: 5
   m_Name: Shield
   m_TagString: Untagged
@@ -165,21 +165,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &19297434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19297432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolingimg: {fileID: 1925592956}
-  cooltime: 10
-  penguinType: 2
 --- !u!114 &19297435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,9 +209,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1356469835}
-        m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: ShieldPenguinSpawnHandler
+      - m_Target: {fileID: 19297438}
+        m_TargetAssemblyTypeName: SpawnPenguinButton, Assembly-CSharp
+        m_MethodName: SpawnPenguinEventHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -274,6 +259,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19297432}
   m_CullTransparentMesh: 1
+--- !u!114 &19297438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19297432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coolingimg: {fileID: 1925592956}
+  cooltime: 1
+  spawnPenguin: {fileID: 539569831777354752, guid: 446f9bf1806445b43ac7891423e090b0,
+    type: 3}
 --- !u!1001 &30171297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1156,6 +1157,51 @@ Transform:
   - {fileID: 476359667}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &136748204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136748205}
+  - component: {fileID: 136748206}
+  m_Layer: 0
+  m_Name: PenguinFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &136748205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136748204}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1040324531}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &136748206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136748204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d6e1b47833ab34ba90af9b7fa8216f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnFailHudText: {fileID: 1624352177}
 --- !u!1001 &163591211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6613,6 +6659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f62f7d1ccf7d14a82e9946be691c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScreenCenterVec: {x: 960, y: 540}
+  offVec: {x: 960, y: 540}
 --- !u!1 &822686061
 GameObject:
   m_ObjectHideFlags: 0
@@ -7499,6 +7547,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  OnHealedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -8038,6 +8092,7 @@ Transform:
   - {fileID: 303848101}
   - {fileID: 1667011556}
   - {fileID: 1094673615}
+  - {fileID: 136748205}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1041196321
@@ -8302,7 +8357,7 @@ GameObject:
   - component: {fileID: 1049602722}
   - component: {fileID: 1049602721}
   - component: {fileID: 1049602720}
-  - component: {fileID: 1049602719}
+  - component: {fileID: 1049602723}
   m_Layer: 5
   m_Name: Basic
   m_TagString: Untagged
@@ -8332,21 +8387,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1049602719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049602717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolingimg: {fileID: 1434865564}
-  cooltime: 5
-  penguinType: 0
 --- !u!114 &1049602720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8391,9 +8431,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1356469835}
-        m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: BasicPenguinSpawnHandler
+      - m_Target: {fileID: 1049602723}
+        m_TargetAssemblyTypeName: SpawnPenguinButton, Assembly-CSharp
+        m_MethodName: SpawnPenguinEventHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8441,6 +8481,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049602717}
   m_CullTransparentMesh: 1
+--- !u!114 &1049602723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049602717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coolingimg: {fileID: 1434865564}
+  cooltime: 1
+  spawnPenguin: {fileID: 2163785626428387538, guid: 0d157e196d50f1a4598c391453dfd7c0,
+    type: 3}
 --- !u!1001 &1058879002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8657,7 +8713,7 @@ GameObject:
   - component: {fileID: 1094673615}
   m_Layer: 0
   m_Name: PenguinSpawnPoints
-  m_TagString: Untagged
+  m_TagString: LegionSpawnPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10435,22 +10491,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnUI: {fileID: 562135043}
-  _legionSpawnPoints:
-  - {fileID: 172664271}
-  - {fileID: 1652696526}
-  - {fileID: 1571359607}
-  - {fileID: 823088680}
-  - {fileID: 1384600832}
-  - {fileID: 1901713840}
-  - {fileID: 1149569522}
-  - {fileID: 1655712636}
-  _initTrm: {fileID: 1658376550}
   onSpawnUIYPosValue: 340
   _spawnerLayer:
     serializedVersion: 2
     m_Bits: 16384
-  _spawnPoint: {fileID: 1667011556}
-  _campFireTrm: {fileID: 303848101}
   _btnTrm: {fileID: 623755286}
 --- !u!208 &1356469839
 NavMeshObstacle:
@@ -10757,7 +10801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1415062821}
   m_Layer: 0
-  m_Name: PenguinSpawnPoint (7)
+  m_Name: PenguinSpawnPoint (5)
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -12645,6 +12689,142 @@ RectTransform:
   m_AnchoredPosition: {x: 2.8, y: -49.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1624352175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1624352176}
+  - component: {fileID: 1624352178}
+  - component: {fileID: 1624352177}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1624352176
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624352175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1971149093}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1624352177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624352175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\uC804\uD22C \uD398\uC774\uC988\uC5D0\uB294 \uC0DD\uC131 \uD560 \uC218
+    \uC5C6\uC2B5\uB2C8\uB2E4"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0019043d6c9e6a54090cbc396a9d0838, type: 2}
+  m_sharedMaterial: {fileID: -7419187930917110359, guid: 0019043d6c9e6a54090cbc396a9d0838,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 0
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1624352178
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624352175}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1624484625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12994,8 +13174,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1658376550}
+  - component: {fileID: 1658376552}
+  - component: {fileID: 1658376551}
+  - component: {fileID: 1658376553}
   m_Layer: 14
-  m_Name: InitPos
+  m_Name: TentInitPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13010,12 +13193,74 @@ Transform:
   m_GameObject: {fileID: 1658376549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.15, y: 0, z: 1.01}
+  m_LocalPosition: {x: -0.109, y: 0.618, z: 1.941}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1356469832}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1658376551
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658376549}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1658376552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658376549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3604fae8d7eab5948ac14ce9dc864b97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &1658376553
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658376549}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1667011555
 GameObject:
   m_ObjectHideFlags: 0
@@ -13026,8 +13271,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1667011556}
   m_Layer: 0
-  m_Name: DummySpawnPoints
-  m_TagString: Untagged
+  m_Name: CampFire
+  m_TagString: CampFireSpawnPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13050,9 +13295,9 @@ Transform:
   - {fileID: 1309990686}
   - {fileID: 1476072812}
   - {fileID: 1117747482}
-  - {fileID: 2017229765}
-  - {fileID: 663215664}
   - {fileID: 1415062821}
+  - {fileID: 663215664}
+  - {fileID: 2017229765}
   m_Father: {fileID: 1040324531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1668354419
@@ -13901,11 +14146,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2cb6f3406fa2e54590c6fd8f0c61f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPhaseReadyTime: 30
-  clockHandImgTrm: {fileID: 1618046854}
-  timeText: {fileID: 1837234703}
-  wavCntText: {fileID: 864198661}
-  enemyCntText: {fileID: 417051877}
+  maxPhaseReadyTime: 10
+  _tentTrm: {fileID: 1658376550}
+  _clockHandImgTrm: {fileID: 1618046854}
+  _timeText: {fileID: 1837234703}
+  _waveCntText: {fileID: 864198661}
+  _enemyCntText: {fileID: 417051877}
   isWin: 1
   targetColor: {r: 0, g: 0, b: 0, a: 0}
   CurrentStage: 0
@@ -14278,18 +14524,63 @@ MonoBehaviour:
   - Legion: 0
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 1
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 2
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 3
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 4
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
 --- !u!4 &1861243453
 Transform:
   m_ObjectHideFlags: 0
@@ -15038,6 +15329,7 @@ RectTransform:
   - {fileID: 562135043}
   - {fileID: 740223842}
   - {fileID: 2146362168}
+  - {fileID: 1624352176}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -15299,7 +15591,7 @@ GameObject:
   - component: {fileID: 1988058829}
   - component: {fileID: 1988058828}
   - component: {fileID: 1988058827}
-  - component: {fileID: 1988058826}
+  - component: {fileID: 1988058830}
   m_Layer: 5
   m_Name: Archer
   m_TagString: Untagged
@@ -15329,21 +15621,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 284.051}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1988058826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988058824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45411e1d368af114597601bdb9d513dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolingimg: {fileID: 1024936431}
-  cooltime: 10
-  penguinType: 1
 --- !u!114 &1988058827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15388,9 +15665,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1356469835}
-        m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: ArcherPenguinSpawnHandler
+      - m_Target: {fileID: 1988058830}
+        m_TargetAssemblyTypeName: SpawnPenguinButton, Assembly-CSharp
+        m_MethodName: SpawnPenguinEventHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15438,6 +15715,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988058824}
   m_CullTransparentMesh: 1
+--- !u!114 &1988058830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988058824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4df188203108b46a26d48493eee34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coolingimg: {fileID: 1024936431}
+  cooltime: 1
+  spawnPenguin: {fileID: 7741800042478522081, guid: ecb9c7fe127919244af337189985d2ea,
+    type: 3}
 --- !u!1 &1992766049
 GameObject:
   m_ObjectHideFlags: 0
@@ -16086,7 +16379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2017229765}
   m_Layer: 0
-  m_Name: PenguinSpawnPoint (5)
+  m_Name: PenguinSpawnPoint (7)
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -16729,7 +17022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d23d74eff5a5b843b789622c083a4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingList: {fileID: 0}
+  buildingList: {fileID: 11400000, guid: 836dad901748ff549960a9dea266bd46, type: 2}
   _poolingListSO: {fileID: 11400000, guid: 07de459dc533c5d4f90da9a22e6f7b16, type: 2}
 --- !u!114 &2120009858
 MonoBehaviour:
@@ -16754,21 +17047,33 @@ MonoBehaviour:
     SlotUIPrefab: {fileID: 3585275359799384372, guid: 66319d68b7c18c74aa62b4413edf9266,
       type: 3}
   LegionCnt:
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 1237632861}
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 419344488}
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 1404628287}
-  - Sword: 0
-    Arrow: 0
-    Shield: 0
+  - SpawnSwordCnt: 0
+    SpawnArrowCnt: 0
+    SpawnShieldCnt: 0
+    TotalSwordCnt: 0
+    TotalArrowCnt: 0
+    TotalShieldCnt: 0
     _LegionPannel: {fileID: 79620730}
 --- !u!1001 &2127792721
 PrefabInstance:

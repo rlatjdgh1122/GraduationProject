@@ -37,7 +37,5 @@ public class DummyPenguin : PoolableMono
                 _animator.SetBool("Move", false);
                 PoolManager.Instance.Push(this);
             });
-
-
     }
 }

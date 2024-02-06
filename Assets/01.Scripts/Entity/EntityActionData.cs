@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EntityActionData : MonoBehaviour
 {
-    public Vector3 HitPoint;
-    public Vector3 HitNormal;
-    public HitType HitType;
+    [HideInInspector] public Vector3 HitPoint;
+    [HideInInspector] public Vector3 HitNormal;
+    [HideInInspector] public HitType HitType;
 }

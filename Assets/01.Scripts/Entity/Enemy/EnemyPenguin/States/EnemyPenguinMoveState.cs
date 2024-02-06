@@ -23,7 +23,7 @@ public class EnemyPenguinMoveState : EnemyPenguinBaseState
         if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase); //가는 도중에 감지 사거리 내에 타겟 플레이어가 있으면 Chase로
 
-        if (_enemy.ReachedNexus)
+        if (_enemy.IsReachedNexus)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Reached);
     }
 

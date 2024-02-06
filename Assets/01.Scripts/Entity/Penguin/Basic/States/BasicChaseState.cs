@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 
 public class BasicChaseState : BasicBaseState
@@ -12,14 +13,14 @@ public class BasicChaseState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _penguin.nearestEnemy = _penguin.FindNearestEnemy(_penguin.maxDetectedCount);
+        _penguin.FindFirstNearestEnemy();
     }
 
     public override void UpdateState()  
     {
         base.UpdateState();
 
-        if (_penguin.nearestEnemy != null)
+        if (_penguin.CurrentTarget != null)
             _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
 
         if (_penguin.IsInnerMeleeRange)
