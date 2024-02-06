@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
-using DG.Tweening;
-using UnityEngine.UIElements.Experimental;
 
 public abstract class Entity : PoolableMono
 {
