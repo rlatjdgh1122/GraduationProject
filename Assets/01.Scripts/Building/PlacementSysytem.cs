@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlacementSysytem : MonoBehaviour
 {
+    [SerializeField]
+    private LayerMask _groundLayer;
+
     private Coroutine _followMousePositionCoroutine;
 
     private BaseBuilding _curBuilding;
@@ -21,13 +24,14 @@ public class PlacementSysytem : MonoBehaviour
         while (true)
         {
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity))
+                                                out var hit, Mathf.Infinity, _groundLayer))
             {
-                Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.Grid.WorldToCell(hit.point);
+                Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y, hit.transform.position.z);
+                Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.Grid.WorldToCell(hitPos);
                 _curBuilding.transform.position = _curBuilding.BuildingInfoCompo.Grid.CellToWorld(gridPosition);
             }
 
-            yield return 0.1f;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
