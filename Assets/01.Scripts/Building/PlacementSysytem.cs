@@ -45,7 +45,6 @@ public class PlacementSysytem : MonoBehaviour
                         _curGround.PlacedBuilding();
 
                         _curGround = null;
-                        _curBuilding = null;
                         yield break;
                     }
                 }
