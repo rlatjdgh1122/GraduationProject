@@ -98,7 +98,7 @@ public class Penguin : Entity
 
     protected override void HandleDie()
     {
-        ArmySystem.Instace.Remove(owner.Legion, this);
+        ArmySystem.Instance.Remove(owner.Legion, this);
         IsDead = true;
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Define.Algorithem;
+using UnityEngine.Rendering;
 
 [System.Serializable]
 public struct ArmyInfo //UI부분, 기획이 더 필요
@@ -29,13 +30,21 @@ public class Army
     public ArmyInfo info;
 }
 
-public class ArmySystem : MonoBehaviour
+[System.Serializable]
+public class SoldierType
 {
-    public static ArmySystem Instace;
+    public PenguinTypeEnum type;
+    public Penguin obj;
+}
+public class ArmySystem : Singleton<ArmySystem>
+{
 
     [SerializeField] private GameObject _crown;
     [SerializeField] private InputReader _inputReader;
     public ParticleSystem ClickParticle;
+
+    [SerializeField] private List<SoldierType> soldierTypes = new();
+    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
 
     [SerializeField] private List<Army> armies = new();
     public List<Army> Armies { get { return armies; } }
@@ -44,16 +53,20 @@ public class ArmySystem : MonoBehaviour
     public int CurLegion => curLegion;
     public int ArmyCount => armies.Count;
 
-    private void Awake()
+    public override void Awake()
     {
-        Instace = this;
-
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         _inputReader.ClickEvent += SetClickMovement;
     }
 
     private void Start()
     {
+        foreach (var solider in soldierTypes)
+        {
+            Debug.Log(solider.type);
+            soldierTypeDictionary.Add(solider.type, solider.obj);
+        }
+
         foreach (var army in armies)
         {
             SetSoldersIdx(army.Legion);
@@ -193,10 +206,25 @@ public class ArmySystem : MonoBehaviour
         armies[legion].General = obj;
     }
 
-    public T CreateSoldier<T>(int legion) where T : Penguin //팽귄 만들기
-    {
-        T obj = null;
+    /// <summary>
+    /// 팽귄 생성하는 함수
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// Penguin타입만 가능
+    /// <param name="SpawnPoint"></param>
+    /// 스폰위치
+    /// <param name="seatPos"></param>
+    /// 마우스 위치 기준으로 배치된 포지션
+    /// <returns></returns>
 
+    public T CreateSoldier<T>(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos) where T : Penguin
+    {
+
+        T obj = null;
+        var prefab = soldierTypeDictionary[type];
+
+        obj = Instantiate(prefab, SpawnPoint, Quaternion.identity) as T;
+        obj.SeatPos = seatPos;
         return obj;
     }
     public void CreateArmy() //군단 추가

@@ -10,6 +10,8 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
     [SerializeField] private int _legionNumber;
     [SerializeField] private int _slotNumber;
 
+ 
+
     private void Awake()
     {
         _data = null;
@@ -25,14 +27,16 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
     {
         _unitImage.sprite = data.penguinData.PenguinIcon;
 
+        //내가 추가한거 - 성호
+
         var info = new ArrangementInfo
         {
             legionIdx = _legionNumber,
             SlotIdx = _slotNumber,
-            penguinData = data.penguinData
+            Type = data.penguinData.PenguinType
         };
 
-        SignalHub.OnArrangementInfoModify?.Invoke(info);
+        ArrangementTest.Instance.InfoList.Add(info);
     }
 
     public void OnPointerDown(PointerEventData eventData)
