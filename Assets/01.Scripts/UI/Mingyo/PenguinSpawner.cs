@@ -27,6 +27,8 @@ public class PenguinSpawner : MonoBehaviour
 
     [SerializeField] private Transform _btnTrm;
 
+    private Outline _outline;
+
     //private void OnDisable()
     //{
     //    WaveManager.Instance.OnPhaseStartEvent -= DummyPenguinMoveToTent;
@@ -43,6 +45,11 @@ public class PenguinSpawner : MonoBehaviour
     //    WaveManager.Instance.OnIceArrivedEvent += ResetDummyPenguinList;
     //}
 
+    private void Awake()
+    {
+        _outline = GetComponent<Outline>();
+    }
+
     private void Start()
     {
         _offSpawnUIVec = _spawnUI.position;
@@ -58,7 +65,6 @@ public class PenguinSpawner : MonoBehaviour
                                                 out var hit, Mathf.Infinity, _spawnerLayer))
             {
                 SpawnButton();
-                hit.collider.transform.GetComponent<Outline>().enabled = isSpawnUIOn;
             }
         }
     }
@@ -70,9 +76,10 @@ public class PenguinSpawner : MonoBehaviour
         UpdateSpawnUIBool();
     }
 
-    private void UpdateSpawnUIBool()
+    public void UpdateSpawnUIBool()
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
+        _outline.enabled = isSpawnUIOn;
     }
 
     //private void SpawnPenguinLegionHandler()
@@ -103,7 +110,7 @@ public class PenguinSpawner : MonoBehaviour
     //            ArmySystem.Instace.JoinArmy(i, penguin);
     //            idx++;
     //        }
-            
+
     //        idx++;
 
     //        for (int j = 0; j < Legion.Instance.LegionCnt[i].SpawnShieldCnt; j++)

@@ -120,9 +120,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29761c6de5551847b87da2614c69619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  - {fileID: 2100000, guid: 79dc316bddf0f9a46a2a2f4213747b5f, type: 2}
+  BuildingInfoCompo:
+    MeshRendererCompo: {fileID: 0}
+    NormalMaterial: {fileID: 0}
+    TransparencyMaterial: {fileID: 2100000, guid: 79dc316bddf0f9a46a2a2f4213747b5f,
+      type: 2}
+    RedTransparencyMaterial: {fileID: 2100000, guid: 6b9fbfc8ba2bb044cb3f42a69e9688c8,
+      type: 2}
+    GridCompo: {fileID: 0}
 --- !u!114 &673804724001557585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,5 +167,5 @@ Grid:
   m_Enabled: 1
   m_CellSize: {x: 1, y: 1, z: 1}
   m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 0
+  m_CellLayout: 1
   m_CellSwizzle: 0

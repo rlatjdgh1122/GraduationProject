@@ -1,59 +1,69 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public struct BuildingInfo
+{
+    [HideInInspector]
+    public MeshRenderer MeshRendererCompo;
+    [HideInInspector]
+    public Material NormalMaterial;
+    public Material TransparencyMaterial;
+    [HideInInspector]
+    public Grid Grid;
+}
+
 //[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(Grid))]
 public abstract class BaseBuilding : PoolableMono
 {
-    private bool isSelected;
-    private bool isPlaced;
+    public BuildingInfo BuildingInfoCompo;
 
-
-    [SerializeField]
-    private Material[] _materials;
-
-    private Grid _grid;
-    
-    private MeshRenderer _meshRenderer;
-
-    private Coroutine _followMousePositionCoroutine;
-    
-    private Vector3 _mousePos => Input.mousePosition;
-
+    private bool isSelected = false;
+    private bool isPlaced = false;
 
     private void Awake()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-        _grid = GetComponent<Grid>();
+        SetUpCompo();
     }
 
-    public void SetSelect()
+    private void SetUpCompo()
     {
+        BuildingInfoCompo.MeshRendererCompo = GetComponent<MeshRenderer>();
+        BuildingInfoCompo.NormalMaterial = BuildingInfoCompo.MeshRendererCompo.material;
+        BuildingInfoCompo.Grid = GetComponent<Grid>();
+    }
+
+    public void SetSelected()
+    {
+        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.TransparencyMaterial; // 선택되어 투명메테리얼로 바꿈
         isSelected = true;
-        _meshRenderer.material = _materials[1];
-
-        _followMousePositionCoroutine = StartCoroutine(FollowMousePosition());
-    }
-
-    private IEnumerator FollowMousePosition()
-    {
-        while (true)
-        {
-            Vector3Int gridPosition = _grid.WorldToCell(_mousePos);
-            transform.position = _grid.CellToWorld(gridPosition);
-
-            yield return 0.1f;
-        }
     }
 
     public void Deselect()
     {
         isSelected = false;
-        _meshRenderer.material = _materials[0];
-
-
+        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.NormalMaterial; // 선택되어 원래메테리얼로 바꿈
     }
 
+    public void Placed()
+    {
+        isPlaced = true;
+        Deselect();
+    }
+
+    protected virtual void Update()
+    {
+        if(isPlaced)
+        {
+            Running(); // 설치 되면 역할 수행
+        }
+    }
+
+    protected abstract void Running();
 }

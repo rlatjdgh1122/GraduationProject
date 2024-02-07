@@ -12,7 +12,7 @@ public class SpawnUI : MonoBehaviour
 
     private void Start()
     {
-        _offSpawnUIVec = _unitSpawnUI.position;
+        _offSpawnUIVec = _buildingSpawnUI.position;
         _onSpawnUIVec = _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, 340, 0); //´ëÃæ°ª
     }
 
@@ -26,5 +26,15 @@ public class SpawnUI : MonoBehaviour
     {
         UIManager.Instance.UIMoveDot(_buildingSpawnUI, _onSpawnUIVec, 0.7f, Ease.OutCubic);
         UIManager.Instance.UIMoveDot(_unitSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+    }
+
+    public void OffUnitPanel()
+    {
+        UIManager.Instance.UIMoveDot(_unitSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+    }
+
+    public void OffBuildingPanel()
+    {
+        UIManager.Instance.UIMoveDot(_buildingSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
     }
 }
