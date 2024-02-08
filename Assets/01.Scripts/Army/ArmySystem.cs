@@ -133,7 +133,7 @@ public class ArmySystem : MonoBehaviour
     {
         var soldiers = armies[legion].Soldiers;
 
-        Debug.Log(armies[legion].Soldiers.Count);   
+        Debug.Log(armies[legion].Soldiers.Count);
         for (int i = 0; i < soldiers.Count; i++)
         {
             var entity = soldiers[i];
