@@ -183,7 +183,6 @@ public class WaveManager : MonoBehaviour
     private void GetReward() // 보상 획득 함수
     {
         ShowEffect();
-
         victoryUI.EnableUI(1f);
     }
 
