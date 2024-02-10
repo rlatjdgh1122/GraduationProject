@@ -56,6 +56,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
         InfoList.ForEach(p =>
         {
             Penguin obj = null;
+
             if (p.Type == PenguinTypeEnum.Basic)
             {
                 obj = ArmySystem.Instance.CreateSoldier<MeleePenguin>
@@ -72,6 +73,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
                 obj = ArmySystem.Instance.CreateSoldier<ArcherPenguin>
                (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
             }
+            Debug.Log(p.legionIdx);
             ArmySystem.Instance.JoinArmyToSoldier(p.legionIdx, obj);
         });
     }

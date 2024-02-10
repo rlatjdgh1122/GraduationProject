@@ -63,7 +63,6 @@ public class ArmySystem : Singleton<ArmySystem>
     {
         foreach (var solider in soldierTypes)
         {
-            Debug.Log(solider.type);
             soldierTypeDictionary.Add(solider.type, solider.obj);
         }
 
@@ -116,15 +115,14 @@ public class ArmySystem : Singleton<ArmySystem>
 
     public void SetClickMovement()
     {
-        if (armies[curLegion].IsMoving
-            && armies[curLegion].Soldiers.TrueForAll(s => s.NavAgent.enabled))
+        if (armies[curLegion].IsMoving && armies[curLegion].Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
             RaycastHit hit;
 
             if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
             {
-                //SetArmyMovePostiton(hit.point);
-                SetArmyMovePostiton1(hit.point);
+                SetArmyMovePostiton1(hit.point); //이게 기존에 쓰던거
+                //SetArmyMovePostiton1(hit.point);
 
                 ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
                 ClickParticle.Play();
@@ -155,7 +153,6 @@ public class ArmySystem : Singleton<ArmySystem>
     {
         var soldiers = armies[legion].Soldiers;
 
-        Debug.Log(armies[legion].Soldiers.Count);
         for (int i = 0; i < soldiers.Count; i++)
         {
             var entity = soldiers[i];
