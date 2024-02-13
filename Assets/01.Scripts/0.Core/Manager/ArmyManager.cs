@@ -18,7 +18,7 @@ public class ArmyManager : MonoBehaviour
     }
     public void AddStat()
     {
-        var army = ArmySystem.Instace.GetCurArmy();
+        var army = ArmySystem.Instance.GetCurArmy();
         foreach (var soldier in army.Soldiers)
         {
             soldier.AddStat(10, StatType.Damage, StatMode.Increase);
@@ -26,7 +26,7 @@ public class ArmyManager : MonoBehaviour
     }
     public void RemoveStat()
     {
-        var army = ArmySystem.Instace.GetCurArmy();
+        var army = ArmySystem.Instance.GetCurArmy();
         foreach (var soldier in army.Soldiers)
         {
             soldier.RemoveStat(10, StatType.Damage, StatMode.Increase);

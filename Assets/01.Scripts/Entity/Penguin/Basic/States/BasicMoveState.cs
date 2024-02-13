@@ -1,8 +1,3 @@
-using Polyperfect.Common;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BasicMoveState : BasicBaseState
 {
     public BasicMoveState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animationBoolName)
