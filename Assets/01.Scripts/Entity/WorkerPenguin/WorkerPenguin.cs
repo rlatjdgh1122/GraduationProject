@@ -11,8 +11,9 @@ public class WorkerPenguin : Worker
 {
     public WorkerStateMachine<WorkerPenguinStateEnum> StateMachine { get; private set; }
 
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         StateMachine = new WorkerStateMachine<WorkerPenguinStateEnum>();
 
         foreach (WorkerPenguinStateEnum state in Enum.GetValues(typeof(WorkerPenguinStateEnum)))

@@ -12,7 +12,7 @@ public class Worker : MonoBehaviour
     public Animator AnimatorCompo { get; private set; }
     public NavMeshAgent NavAgentCompo { get; private set; } 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm.GetComponent<Animator>();
