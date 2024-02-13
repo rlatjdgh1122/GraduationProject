@@ -32,11 +32,11 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
         var info = new ArrangementInfo
         {
             legionIdx = _legionNumber,
-            SlotIdx = _slotNumber,
+            SlotIdx = _slotNumber - 1, //배열은 0부터 시작하는거 까먹엇당 ㅎ
             Type = data.penguinData.PenguinType
         };
 
-        ArrangementTest.Instance.InfoList.Add(info);
+        ArrangementTest.Instance.AddArrangementInfo(info);
     }
 
     public void OnPointerDown(PointerEventData eventData)

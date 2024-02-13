@@ -3229,18 +3229,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 102426438}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &105224005 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 539569831777354752, guid: 446f9bf1806445b43ac7891423e090b0,
-    type: 3}
-  m_PrefabInstance: {fileID: 60244243}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98354ecb5ac476b4b9726ee483e00362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &105844117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12094,18 +12082,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 451318341}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &451318348 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2163785626428387538, guid: 0d157e196d50f1a4598c391453dfd7c0,
-    type: 3}
-  m_PrefabInstance: {fileID: 451318341}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &451562502
 GameObject:
   m_ObjectHideFlags: 0
@@ -15464,18 +15440,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb9c7fe127919244af337189985d2ea, type: 3}
---- !u!114 &644334820 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7741800042478522081, guid: ecb9c7fe127919244af337189985d2ea,
-    type: 3}
-  m_PrefabInstance: {fileID: 644334819}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19d01ae11d8621e49a8f444877e07b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &644334821 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7124704069954103808, guid: ecb9c7fe127919244af337189985d2ea,
@@ -20512,18 +20476,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 866139726}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &866139728 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7741800042478522081, guid: ecb9c7fe127919244af337189985d2ea,
-    type: 3}
-  m_PrefabInstance: {fileID: 866139726}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19d01ae11d8621e49a8f444877e07b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &876865246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22515,7 +22467,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1861243456}
         m_TargetAssemblyTypeName: ArrangementTest, Assembly-CSharp
-        m_MethodName: OnModifyInfo
+        m_MethodName: OnModifyInfo_Btn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -37040,18 +36992,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1550788081}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1550788083 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2163785626428387538, guid: 0d157e196d50f1a4598c391453dfd7c0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1550788081}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1559561436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42237,12 +42177,7 @@ MonoBehaviour:
   armies:
   - Legion: 0
     IsMoving: 0
-    Soldiers:
-    - {fileID: 105224005}
-    - {fileID: 451318348}
-    - {fileID: 1550788083}
-    - {fileID: 866139728}
-    - {fileID: 644334820}
+    Soldiers: []
     General: {fileID: 0}
     info:
       totalCount: 0
@@ -42357,7 +42292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnPoint: {fileID: 2068902560}
-  distance: 3
+  distance: 1
   width: 5
   length: 7
   InfoList: []
@@ -48784,7 +48719,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2120009856}
-  - component: {fileID: 2120009855}
   - component: {fileID: 2120009857}
   m_Layer: 0
   m_Name: Manager
@@ -48793,22 +48727,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2120009855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120009854}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1aef0965d60f014d99e5ba0905a55e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 2800000, guid: 022116c31ab328041890a65a03dd1f2f, type: 3}
-  cursorTextureEnemy: {fileID: 2800000, guid: e8d5dcc36c271db41bcf9e4dd04f5ae7, type: 3}
-  color: {r: 1, g: 0, b: 0, a: 1}
-  size: 7
 --- !u!4 &2120009856
 Transform:
   m_ObjectHideFlags: 0

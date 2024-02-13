@@ -121,31 +121,19 @@ public class ArmySystem : Singleton<ArmySystem>
 
             if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
             {
-                SetArmyMovePostiton1(hit.point); //이게 기존에 쓰던거
-                //SetArmyMovePostiton1(hit.point);
-
+                SetArmyMovePostiton(hit.point);
                 ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
                 ClickParticle.Play();
             }
         }
     }
-    public void SetArmyMovePostiton1(Vector3 startPos) //배치 시스템 테스트중
+    public void SetArmyMovePostiton(Vector3 startPos) //배치 시스템 테스트중
     {
         var soldiers = armies[curLegion].Soldiers;
 
         for (int i = 0; i < soldiers.Count; i++)
         {
             soldiers[i].MoveToMySeat(startPos);
-        }
-    }
-    public void SetArmyMovePostiton(Vector3 startPos) //배치시스템 되면 필요없어짐
-    {
-        var soldiers = armies[curLegion].Soldiers;
-        var trms = Algorithm.AlignmentRule.GetPostionListAround(startPos, 2f, soldiers.Count);
-
-        for (int i = 0; i < soldiers.Count; i++)
-        {
-            soldiers[i].SetTarget(trms[i]);
         }
     }
 
@@ -214,9 +202,8 @@ public class ArmySystem : Singleton<ArmySystem>
     /// 마우스 위치 기준으로 배치된 포지션
     /// <returns></returns>
 
-    public T CreateSoldier<T>(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos) where T : Penguin
+    public T CreateSoldier<T>(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default) where T : Penguin
     {
-
         T obj = null;
         var prefab = soldierTypeDictionary[type];
 
