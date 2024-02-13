@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 public class BuildingFactory : EntityFactory<BaseBuilding>
 {
-    private PlacementSysytem _placementSysytem;
+    private InstallSysytem _placementSysytem;
 
     private void Awake()
     {
-        _placementSysytem = GetComponent<PlacementSysytem>();
+        _placementSysytem = GetComponent<InstallSysytem>();
     }
 
     public void SpawnBuildingHandler(BaseBuilding building)
