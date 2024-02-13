@@ -22,6 +22,7 @@ public class Worker : MonoBehaviour
     public void MoveToTarget()
     {
         NavAgentCompo.SetDestination(Target.transform.position);
+        Debug.Log("이동 중");
     }
 
     public float CheckDistance()
@@ -42,6 +43,12 @@ public class Worker : MonoBehaviour
     public void MoveEndToNexus()
     {
         gameObject.SetActive(false);
+    }
+
+    public void Work()
+    {
+        //work 내용 채워서 사용
+        EndWork = true;
     }
     
     public void LookTaget()

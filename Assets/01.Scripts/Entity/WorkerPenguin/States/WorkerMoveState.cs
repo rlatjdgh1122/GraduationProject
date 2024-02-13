@@ -15,8 +15,8 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_worker.CheckDistance() < 0.05f)
+        
+        if (_worker.CheckDistance() < 1f)
             _stateMachine.ChangeState(WorkerPenguinStateEnum.Work);
     }
 
