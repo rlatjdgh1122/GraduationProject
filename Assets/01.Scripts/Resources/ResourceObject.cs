@@ -5,10 +5,26 @@ public class ResourceObject : MonoBehaviour
     [SerializeField] private ResourceDataSO _resourceData;
     [SerializeField] private ResourceStat _resourceStat;
 
+    private string _resourceName;
+    public string ResourceName => _resourceName;
+    private Sprite _resourceIcon;
+    public Sprite ResourceImage => _resourceIcon;
+
     private int _receiveCountAtOnce;
+    public int ReceiveCountAtOnce => _receiveCountAtOnce;
     private int _receiveCountWhenCompleted;
+    public int ReceiveCountWhenCompleted => _receiveCountWhenCompleted;
 
     public Health HealthCompo { get; private set; }
+
+    NormalUI resourceUI
+    {
+        get
+        {
+            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Resource, out NormalUI resourceUI);
+            return resourceUI;
+        }
+    }
 
     private void Awake()
     {
@@ -20,6 +36,8 @@ public class ResourceObject : MonoBehaviour
 
     public void SetReceiveCount()
     {
+        _resourceName = _resourceStat.resourceName;
+        _resourceIcon = _resourceData.resourceIcon;
         _receiveCountAtOnce = _resourceStat.receiveCountAtOnce;
         _receiveCountWhenCompleted = _resourceStat.receiveCountWhenCompleted;
     }    
@@ -39,8 +57,11 @@ public class ResourceObject : MonoBehaviour
         ResourceManager.Instance.RemoveResource(_resourceData, count);
     }
 
-    private void OnMouseDown() //임시 디버그용
+    private void OnMouseDown() 
     {
-        ReceiveResourceOnce();
+        if (!WaveManager.Instance.IsPhase)
+        {
+            resourceUI.EnableUI(1f, this);
+        }
     }
 }
