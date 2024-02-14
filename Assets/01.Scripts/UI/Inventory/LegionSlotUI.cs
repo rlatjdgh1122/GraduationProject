@@ -43,20 +43,20 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
     {
         if (_data != null && Input.GetKey(KeyCode.LeftControl))
         {
-            LegionInventory.Instance.RemoveLegion(_data.penguinData, _legionNumber - 1);
+            LegionInventory.Instance.RemoveLegion(_data.penguinData, _legionNumber - 1); //이 슬롯의 데이터를 군단 인벤에서 제거
 
-            CleanUpSlot();
+            CleanUpSlot(); //슬롯 초기화
         }
 
-        if (_data == null && _info._data != null)
+        if (_data == null && _info._data != null) //UnitInformationUI의 데이터가 비어있지 않고 이 슬롯의 데이터가 비어있으면
         {
-            _data = _info._data;
+            _data = _info._data; //이 슬롯의 데이터는 UnitInformationUI의 데이터
 
             //if (_data.penguinData.JobType == PenguinJobType.General &&
             //    LegionInventory.Instance.LegionList[_legionNumber - 1].generalLimit) return;
 
-            LegionInventory.Instance.RemovePenguin(_info._data.penguinData);
-            LegionInventory.Instance.AddToLegion(_data.penguinData, _legionNumber - 1);
+            LegionInventory.Instance.RemovePenguin(_info._data.penguinData); //UnitInformationUI의 데이터를 지우고
+            LegionInventory.Instance.AddToLegion(_data.penguinData, _legionNumber - 1); //이 슬롯의 데이터와 이 슬롯의 군단번호를 군단 인벤에 넘겨줌
 
             UpdateSlot(_data);
         }
