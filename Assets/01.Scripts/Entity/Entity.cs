@@ -1,4 +1,6 @@
+using System.Security.Cryptography;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,15 +33,24 @@ public abstract class Entity : PoolableMono
     }
     private Vector3 _seatPos = Vector3.zero; //군단에서 배치된 자리 OK?
 
+    Vector3 curDir = Vector3.zero;
+    private Vector3 prevDir = Vector3.zero;
     private float Angle
     {
         get
         {
+            if (prevMousePos != Vector3.zero)
             {
-                Debug.Log(curMousePos + " : " + prevMousePos);
-                Vector3 vec = curMousePos - prevMousePos;
+                prevDir = curDir; //start dir
+                curDir = (curMousePos - prevMousePos); //end dir
+                Debug.Log(prevDir + " : " + curDir);
+
+                Vector3 vec = (curDir - prevDir);
+                Debug.Log(Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg);
                 return Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
             }
+            else
+                return 0;
         }
     }
 
@@ -47,9 +58,8 @@ public abstract class Entity : PoolableMono
     {
         get
         {
-
-            Vector3 direction = Quaternion.Euler(0, 0, Angle) * _seatPos;
-            Debug.Log(Angle + ":" + direction);
+            Vector3 direction = Quaternion.Euler(0, Angle, 0) * _seatPos;
+            Debug.Log(Angle + " : " + direction);
             return direction;
         }
         set { _seatPos = value; }
@@ -132,7 +142,6 @@ public abstract class Entity : PoolableMono
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
     {
         MousePos = mousePos;
-
         if (NavAgent.isActiveAndEnabled)
         {
 
