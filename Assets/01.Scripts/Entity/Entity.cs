@@ -41,13 +41,11 @@ public abstract class Entity : PoolableMono
         {
             if (prevMousePos != Vector3.zero)
             {
-                prevDir = curDir; //start dir
-                curDir = (curMousePos - prevMousePos); //end dir
-                Debug.Log(prevDir + " : " + curDir);
+                Vector3 vec = (curMousePos - prevMousePos);
 
-                Vector3 vec = (curDir - prevDir);
-                Debug.Log(Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg);
-                return Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
+                float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
+                //float result = Mathf.Floor(value);
+                return value; //0 ~ 360
             }
             else
                 return 0;
@@ -58,7 +56,7 @@ public abstract class Entity : PoolableMono
     {
         get
         {
-            Vector3 direction = Quaternion.Euler(0, Angle, 0) * _seatPos;
+            Vector3 direction = Quaternion.Euler(0, Angle, 0) * (_seatPos);
             Debug.Log(Angle + " : " + direction);
             return direction;
         }
