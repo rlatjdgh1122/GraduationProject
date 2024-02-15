@@ -7,6 +7,7 @@ public enum UIType
 {
     Victory,
     Defeat,
+    Resource,
 }
 
 public class UIManager : Singleton<UIManager>
