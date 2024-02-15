@@ -48,9 +48,16 @@ public class Worker : MonoBehaviour
     public void Work()
     {
         //work 내용 채워서 사용
-        EndWork = true;
+        StartCoroutine(Working());
+        
     }
     
+    IEnumerator Working()
+    {
+        yield return new WaitForSeconds(2f);
+        EndWork = true;
+    }
+
     public void LookTaget()
     {
         Vector3 directionToTarget = Target.position - transform.position;
