@@ -14,17 +14,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
     [SerializeField] private int width = 5;
     [SerializeField] private int length = 7;
 
-    public List<ArrangementInfo> InfoList = new();
+    [SerializeField] private List<ArrangementInfo> InfoList = new();
     private List<Vector3> seatPosList = new();
-
-    public override void Awake()
-    {
-        SignalHub.OnArrangementInfoModify += SettingArrangement;
-    }
-    private void OnDestroy()
-    {
-        SignalHub.OnArrangementInfoModify -= SettingArrangement;
-    }
 
     private void Start()
     {
@@ -37,25 +28,31 @@ public class ArrangementTest : Singleton<ArrangementTest>
         int CWNum = width / 2 + (width % 2 == 0 ? 0 : 1); //5 => 3
 
         //Debug.Log(CWNum + " : " + CLNum);
-        for (int i = (CLNum - 1); i > -CLNum; --i)
+        for (int i = (CLNum - 1); i > -CLNum; --i) //세로 
         {
-            for (int j = -(CWNum - 1); j < CWNum; ++j)
+            for (int j = -(CWNum - 1); j < CWNum; ++j) //가로
             {
                 seatPosList.Add(new Vector3(j * distance, 0, i * distance));
             }
         }
     }
 
-    public void OnClearInfo()
+    public void OnClearArrangementInfo()
     {
         InfoList.Clear();
     }
+    public void AddArrangementInfo(ArrangementInfo info)
+    {
+        InfoList.Add(info);
+    }
 
-    public void OnModifyInfo()
+
+    public void OnModifyInfo_Btn() //적용 
     {
         InfoList.ForEach(p =>
         {
             Penguin obj = null;
+
             if (p.Type == PenguinTypeEnum.Basic)
             {
                 obj = ArmySystem.Instance.CreateSoldier<MeleePenguin>
@@ -72,12 +69,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
                 obj = ArmySystem.Instance.CreateSoldier<ArcherPenguin>
                (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
             }
+
             ArmySystem.Instance.JoinArmyToSoldier(p.legionIdx, obj);
         });
-    }
-
-    private void SettingArrangement(ArrangementInfo info)
-    {
-
     }
 }
