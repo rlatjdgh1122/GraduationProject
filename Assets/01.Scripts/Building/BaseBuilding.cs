@@ -57,13 +57,13 @@ public abstract class BaseBuilding : PoolableMono
         Deselect();
     }
 
-    protected virtual void Update()
-    {
-        if(isInstalled)
-        {
-            Running(); // 설치 되면 역할 수행
-        }
-    }
+    //protected virtual void Update()
+    //{
+    //    if(isInstalled)
+    //    {
+    //        Running(); // 설치 되면 역할 수행
+    //    }
+    //}
 
     protected abstract void Running();
 }

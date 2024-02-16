@@ -45,5 +45,7 @@ public class Ground : MonoBehaviour
             _materialPropertyBlock.SetColor("_Color", _redColor);
             _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
         }
+
+        Debug.Log(_materialPropertyBlock.GetColor("_Color"));
     }
 }
