@@ -76,6 +76,7 @@ public class InstallSysytem : MonoBehaviour
 
             //curSelectedBuilding.Installed();
             _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
+            StopInstall();
             isInstalling = false;
         }
     }
