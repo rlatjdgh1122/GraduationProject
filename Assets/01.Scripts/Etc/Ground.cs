@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+
+public enum GroundOutlineColorType
+{
+    Green,
+    Red,
+    None
+}
 
 public class Ground : MonoBehaviour
 {
@@ -9,47 +17,36 @@ public class Ground : MonoBehaviour
 
     public bool IsInstalledBuilding => isInstalledBuilding;
 
-    private MaterialPropertyBlock _materialPropertyBlock;
-
-    private MeshRenderer _meshRenderer;
-
-    private Color _normalColor;
-
-    private Color _greenColor = new Color(0, 250, 154, 255);
-    private Color _redColor = new Color(255, 99, 71, 255);
-
-    public bool IsRedMT => _materialPropertyBlock.GetColor("_Color") == _redColor;
-    public bool IsGreenMT => _materialPropertyBlock.GetColor("_Color") == _greenColor;
+    private Outline _outline;
+    public Outline OutlineCompo =>_outline;
 
     private void Awake()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-        _materialPropertyBlock = new MaterialPropertyBlock();
-        _normalColor = _meshRenderer.material.color;
+        _outline = GetComponent<Outline>();
+        _outline.enabled = false;
     }
 
     public void InstallBuilding() //땅에 설치되었다고 처리
     {
         isInstalledBuilding = true;
-
-        _materialPropertyBlock.SetColor("_Color", _normalColor);
-        _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
+        _outline.enabled = false;
     }
 
-    public void ShowInstallPossibility(bool canInstall)
+    public void UpdateOutlineColor(GroundOutlineColorType type)
     {
-        if(canInstall) //설치가능하면
-        {
-            _materialPropertyBlock.SetColor("_Color", _greenColor);
-            _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
-        }
+        _outline.enabled = true;
 
-        else if(!canInstall) //설치 할 수 없으면
+        switch (type)
         {
-            _materialPropertyBlock.SetColor("_Color", _redColor);
-            _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
+            case GroundOutlineColorType.Green:
+                _outline.OutlineColor = Color.green;
+                break;
+            case GroundOutlineColorType.Red:
+                _outline.OutlineColor = Color.red;
+                break;
+            case GroundOutlineColorType.None:
+                _outline.enabled = false;
+                break;
         }
-
-        Debug.Log($"{canInstall}: {_materialPropertyBlock.GetColor("_Color")}");
     }
 }

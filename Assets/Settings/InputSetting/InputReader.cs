@@ -19,9 +19,11 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
         {
             _controls = new Controls();
             _controls.Penguin.SetCallbacks(this);
+            _controls.Building.SetCallbacks(this);
         }
 
         _controls.Penguin.Enable();
+        _controls.Building.Enable();
     }
 
     public void OnMouseRightClick(InputAction.CallbackContext context)
@@ -34,8 +36,9 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
 
     public void OnMouseLeftClick(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.performed && IsPointerOverUI())
         {
+            Debug.Log("Click");
             OnLeftClickEvent?.Invoke();
         }
     }

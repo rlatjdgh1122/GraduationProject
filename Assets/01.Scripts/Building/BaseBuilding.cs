@@ -11,14 +11,7 @@ public struct BuildingInfo
     [field: SerializeField]
     public int ID { get ; private set; }
     [field: SerializeField]
-    public Material TransparencyMaterial { get; private set; }
-
-    [HideInInspector]
-    public MeshRenderer MeshRendererCompo;
-    [HideInInspector]
-    public Material NormalMaterial;
-    [HideInInspector]
-    public Grid Grid;
+    public Grid GridCompo;
 }
 
 //[RequireComponent(typeof(Health))]
@@ -28,7 +21,6 @@ public abstract class BaseBuilding : PoolableMono
 {
     public BuildingInfo BuildingInfoCompo;
 
-    private bool isSelected = false;
     private bool isInstalled = false;
 
     private void Awake()
@@ -38,27 +30,12 @@ public abstract class BaseBuilding : PoolableMono
 
     private void SetUpCompo()
     {
-        BuildingInfoCompo.MeshRendererCompo = GetComponent<MeshRenderer>();
-        BuildingInfoCompo.NormalMaterial = BuildingInfoCompo.MeshRendererCompo.material;
-        BuildingInfoCompo.Grid = GetComponent<Grid>();
-    }
-
-    public void SetSelected()
-    {
-        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.TransparencyMaterial; // 선택되어 투명메테리얼로 바꿈
-        isSelected = true;
-    }
-
-    public void Deselect()
-    {
-        isSelected = false;
-        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.NormalMaterial; // 선택되어 원래메테리얼로 바꿈
+        BuildingInfoCompo.GridCompo = GetComponent<Grid>();
     }
 
     public void Installed()
     {
         isInstalled = true;
-        Deselect();
     }
 
     //protected virtual void Update()
