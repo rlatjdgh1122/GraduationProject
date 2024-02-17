@@ -763,7 +763,7 @@ Transform:
   m_GameObject: {fileID: 3129644745910179850}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 10.65, y: 2.22, z: -0.64}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -799,15 +799,23 @@ MonoBehaviour:
   moveSpeed: 4
   attackSpeed: 1.2
   maxDetectedCount: 1
+  provokeRange: 25
   CurrentTarget: {fileID: 0}
   IsClickToMoving: 0
   IsDead: 0
-  nearestEnemy:
-  - {fileID: 0}
   owner:
     Legion: 0
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!114 &6964161571943707159
 MonoBehaviour:

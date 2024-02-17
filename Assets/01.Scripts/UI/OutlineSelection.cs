@@ -21,7 +21,7 @@ public class OutlineSelection : MonoBehaviour
 
     private void Awake()
     {
-        cursorHotspot = new Vector2(cursorTexture.width/1.5f, cursorTexture.height/1.5f);
+        cursorHotspot = new Vector2(cursorTexture.width / 1.5f, cursorTexture.height / 1.5f);
         Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
     }
 

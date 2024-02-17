@@ -47,10 +47,16 @@ public class Worker : MonoBehaviour
 
     public void Work()
     {
-        //work 내용 채워서 사용
-        EndWork = true;
+        //work 내용 채워서 사용 현재는 2초뒤 State가 Work로 변경 되도록 해놓음
+        StartCoroutine(Working());
     }
     
+    IEnumerator Working()
+    {
+        yield return new WaitForSeconds(2f);
+        EndWork = true;
+    }
+
     public void LookTaget()
     {
         Vector3 directionToTarget = Target.position - transform.position;
