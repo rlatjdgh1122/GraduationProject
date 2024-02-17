@@ -52,6 +52,7 @@ public class ResourceUI : NormalUI
     public void SendWorkers()
     {
         //보내는 로직
+        WorkerManager.Instance.SendWorkers(_CurrentResource.CurrentWorkerCount);
         ClosePanel();
     }
 

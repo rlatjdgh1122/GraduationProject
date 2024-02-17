@@ -7,6 +7,8 @@ public class Worker : MonoBehaviour
 {
     public Transform Target;
     public Transform Nexus;
+
+    public bool CanWork = false;
     public bool EndWork = false;
 
     public Animator AnimatorCompo { get; private set; }
@@ -42,6 +44,7 @@ public class Worker : MonoBehaviour
 
     public void MoveEndToNexus()
     {
+        CanWork = false;
         gameObject.SetActive(false);
     }
 
