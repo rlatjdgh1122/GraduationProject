@@ -19,17 +19,11 @@ public class ArmyManager : MonoBehaviour
     public void AddStat()
     {
         var army = ArmySystem.Instance.GetCurArmy();
-        foreach (var soldier in army.Soldiers)
-        {
-            soldier.AddStat(10, StatType.Damage, StatMode.Increase);
-        }
+        army.AddStat(10, StatType.Damage, StatMode.Increase);
     }
     public void RemoveStat()
     {
         var army = ArmySystem.Instance.GetCurArmy();
-        foreach (var soldier in army.Soldiers)
-        {
-            soldier.RemoveStat(10, StatType.Damage, StatMode.Increase);
-        }
+        army.RemoveStat(10, StatType.Damage, StatMode.Increase);
     }
 }
