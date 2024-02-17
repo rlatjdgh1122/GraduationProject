@@ -89,7 +89,7 @@ public class GameManager : Singleton<GameManager>
     private int dummyPenguinCount;
     public int GetDummyPenguinCount => dummyPenguinCount;
 
-    [SerializeField] private InitBuildingList buildingList = null;
+    [SerializeField] private BuildingDatabaseSO buildingList = null;
     private Dictionary<string, BaseBuilding> _buildingDictionary = new();
 
     [SerializeField]

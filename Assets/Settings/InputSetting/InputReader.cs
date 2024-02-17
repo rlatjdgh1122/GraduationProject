@@ -1,11 +1,15 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "SO/InputReader")]
-public class InputReader : ScriptableObject, Controls.IPenguinActions
+public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.IBuildingActions
 {
-    public event Action ClickEvent;
+    public event Action RightClickEvent;
+    public event Action OnLeftClickEvent;
+
+    public event Action OnExitInstallEvent;
 
     private Controls _controls;
 
@@ -24,7 +28,25 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions
     {
         if (context.performed)
         {
-            ClickEvent?.Invoke();
+            RightClickEvent?.Invoke();
         }
     }
+
+    public void OnMouseLeftClick(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OnLeftClickEvent?.Invoke();
+        }
+    }
+
+    public void OnExitBuilding(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OnExitInstallEvent?.Invoke();
+        }
+    }
+
+    public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
 }

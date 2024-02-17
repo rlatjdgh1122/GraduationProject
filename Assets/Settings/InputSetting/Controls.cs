@@ -50,6 +50,54 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Building"",
+            ""id"": ""7743b0f0-ca88-47e7-9ece-847b5a1892c0"",
+            ""actions"": [
+                {
+                    ""name"": ""MouseLeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""773dba5e-d30b-4193-be79-eb9d9bb45e26"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitBuilding"",
+                    ""type"": ""Button"",
+                    ""id"": ""21b0714e-0a8a-4f01-b143-d6a6eea9a1a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c6f9d20b-f086-49b0-89ca-877a4350df88"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed350ea5-e6e1-42d4-bf41-1518b0cc25e6"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitBuilding"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -74,6 +122,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Penguin
         m_Penguin = asset.FindActionMap("Penguin", throwIfNotFound: true);
         m_Penguin_MouseRightClick = m_Penguin.FindAction("MouseRightClick", throwIfNotFound: true);
+        // Building
+        m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
+        m_Building_MouseLeftClick = m_Building.FindAction("MouseLeftClick", throwIfNotFound: true);
+        m_Building_ExitBuilding = m_Building.FindAction("ExitBuilding", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -177,6 +229,60 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public PenguinActions @Penguin => new PenguinActions(this);
+
+    // Building
+    private readonly InputActionMap m_Building;
+    private List<IBuildingActions> m_BuildingActionsCallbackInterfaces = new List<IBuildingActions>();
+    private readonly InputAction m_Building_MouseLeftClick;
+    private readonly InputAction m_Building_ExitBuilding;
+    public struct BuildingActions
+    {
+        private @Controls m_Wrapper;
+        public BuildingActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MouseLeftClick => m_Wrapper.m_Building_MouseLeftClick;
+        public InputAction @ExitBuilding => m_Wrapper.m_Building_ExitBuilding;
+        public InputActionMap Get() { return m_Wrapper.m_Building; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BuildingActions set) { return set.Get(); }
+        public void AddCallbacks(IBuildingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BuildingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BuildingActionsCallbackInterfaces.Add(instance);
+            @MouseLeftClick.started += instance.OnMouseLeftClick;
+            @MouseLeftClick.performed += instance.OnMouseLeftClick;
+            @MouseLeftClick.canceled += instance.OnMouseLeftClick;
+            @ExitBuilding.started += instance.OnExitBuilding;
+            @ExitBuilding.performed += instance.OnExitBuilding;
+            @ExitBuilding.canceled += instance.OnExitBuilding;
+        }
+
+        private void UnregisterCallbacks(IBuildingActions instance)
+        {
+            @MouseLeftClick.started -= instance.OnMouseLeftClick;
+            @MouseLeftClick.performed -= instance.OnMouseLeftClick;
+            @MouseLeftClick.canceled -= instance.OnMouseLeftClick;
+            @ExitBuilding.started -= instance.OnExitBuilding;
+            @ExitBuilding.performed -= instance.OnExitBuilding;
+            @ExitBuilding.canceled -= instance.OnExitBuilding;
+        }
+
+        public void RemoveCallbacks(IBuildingActions instance)
+        {
+            if (m_Wrapper.m_BuildingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IBuildingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BuildingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BuildingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public BuildingActions @Building => new BuildingActions(this);
     private int m_KeyboardAndMouseSchemeIndex = -1;
     public InputControlScheme KeyboardAndMouseScheme
     {
@@ -189,5 +295,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IPenguinActions
     {
         void OnMouseRightClick(InputAction.CallbackContext context);
+    }
+    public interface IBuildingActions
+    {
+        void OnMouseLeftClick(InputAction.CallbackContext context);
+        void OnExitBuilding(InputAction.CallbackContext context);
     }
 }

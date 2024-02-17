@@ -56,7 +56,7 @@ public class ArmySystem : Singleton<ArmySystem>
     public override void Awake()
     {
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-        _inputReader.ClickEvent += SetClickMovement;
+        _inputReader.RightClickEvent += SetClickMovement;
     }
 
     private void Start()
@@ -237,6 +237,6 @@ public class ArmySystem : Singleton<ArmySystem>
 
     private void OnDestroy()
     {
-        _inputReader.ClickEvent -= SetClickMovement;
+        _inputReader.RightClickEvent -= SetClickMovement;
     }
 }

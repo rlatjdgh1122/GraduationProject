@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Ground : MonoBehaviour
@@ -16,6 +17,9 @@ public class Ground : MonoBehaviour
 
     private Color _greenColor = new Color(0, 250, 154, 255);
     private Color _redColor = new Color(255, 99, 71, 255);
+
+    public bool IsRedMT => _materialPropertyBlock.GetColor("_Color") == _redColor;
+    public bool IsGreenMT => _materialPropertyBlock.GetColor("_Color") == _greenColor;
 
     private void Awake()
     {
@@ -34,18 +38,18 @@ public class Ground : MonoBehaviour
 
     public void ShowInstallPossibility(bool canInstall)
     {
-        if(canInstall && _materialPropertyBlock.GetColor("_Color") != _greenColor) //설치가능하면
+        if(canInstall) //설치가능하면
         {
             _materialPropertyBlock.SetColor("_Color", _greenColor);
             _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
         }
 
-        else if(!canInstall && _materialPropertyBlock.GetColor("_Color") != _redColor) //설치 할 수 없으면
+        else if(!canInstall) //설치 할 수 없으면
         {
             _materialPropertyBlock.SetColor("_Color", _redColor);
             _meshRenderer.SetPropertyBlock(_materialPropertyBlock);
         }
 
-        Debug.Log(_materialPropertyBlock.GetColor("_Color"));
+        Debug.Log($"{canInstall}: {_materialPropertyBlock.GetColor("_Color")}");
     }
 }

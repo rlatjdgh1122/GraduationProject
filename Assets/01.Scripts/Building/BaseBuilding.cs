@@ -8,11 +8,15 @@ using UnityEngine.UI;
 [Serializable]
 public struct BuildingInfo
 {
+    [field: SerializeField]
+    public int ID { get ; private set; }
+    [field: SerializeField]
+    public Material TransparencyMaterial { get; private set; }
+
     [HideInInspector]
     public MeshRenderer MeshRendererCompo;
     [HideInInspector]
     public Material NormalMaterial;
-    public Material TransparencyMaterial;
     [HideInInspector]
     public Grid Grid;
 }
