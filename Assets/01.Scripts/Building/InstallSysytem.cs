@@ -66,16 +66,17 @@ public class InstallSysytem : MonoBehaviour
         //}
 
         if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity, _groundLayer))
+                                                out var hit, Mathf.Infinity, _groundLayer) &&
+            !_previousGround.IsInstalledBuilding)
         {
             BaseBuilding curSelectedBuilding = PoolManager.Instance.Pop(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].Name) as BaseBuilding;
 
-            Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y, hit.transform.position.z);
+            Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y + 1, hit.transform.position.z);
             Vector3Int gridPosition = curSelectedBuilding.BuildingInfoCompo.GridCompo.WorldToCell(hitPos);
             curSelectedBuilding.transform.position = curSelectedBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
 
-            //curSelectedBuilding.Installed();
-            _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
+            curSelectedBuilding.Installed();
+            _previousGround?.InstallBuilding();
             StopInstall();
             isInstalling = false;
         }

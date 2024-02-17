@@ -29,7 +29,7 @@ public class Ground : MonoBehaviour
     public void InstallBuilding() //땅에 설치되었다고 처리
     {
         isInstalledBuilding = true;
-        _outline.enabled = false;
+        UpdateOutlineColor(GroundOutlineColorType.None);
     }
 
     public void UpdateOutlineColor(GroundOutlineColorType type)
