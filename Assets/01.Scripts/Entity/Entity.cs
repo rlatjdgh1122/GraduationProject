@@ -1,11 +1,12 @@
+using System.Security.Cryptography;
+using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class Entity : PoolableMono
 {
-    public int idx;
-
     [Header("Target info")]
     public Vector3 targetTrm;
     public float innerDistance = 4f;
@@ -15,12 +16,51 @@ public abstract class Entity : PoolableMono
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
 
+    #region 군단 포지션
+
+    private Vector3 curMousePos = Vector3.zero;
+    private Vector3 prevMousePos = Vector3.zero;
+    public Vector3 MousePos
+    {
+        get => curMousePos;
+        set
+        {
+            prevMousePos = curMousePos;
+            curMousePos = value;
+        }
+    }
     private Vector3 _seatPos = Vector3.zero; //군단에서 배치된 자리 OK?
+
+    Vector3 curDir = Vector3.zero;
+    private Vector3 prevDir = Vector3.zero;
+    private float Angle
+    {
+        get
+        {
+            if (prevMousePos != Vector3.zero)
+            {
+                Vector3 vec = (curMousePos - prevMousePos);
+
+                float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
+                //float result = Mathf.Floor(value);
+                return value; //0 ~ 360
+            }
+            else
+                return 0;
+        }
+    }
+
     public Vector3 SeatPos
     {
-        get => _seatPos;
+        get
+        {
+            Vector3 direction = Quaternion.Euler(0, Angle, 0) * (_seatPos);
+            Debug.Log(Angle + " : " + direction);
+            return direction;
+        }
         set { _seatPos = value; }
     }
+    #endregion
 
     #region Components
     public Animator AnimatorCompo { get; private set; }
@@ -94,26 +134,13 @@ public abstract class Entity : PoolableMono
     }
 
     #region �̵� ����
-    public void SetClickMovement()
-    {
-
-        Debug.Log("이 함수 사용하냐???");
-        RaycastHit hit;
-
-        if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
-        {
-            //ArmySystem.Instace.SetArmyMovePostiton(hit.point, idx);
-
-            ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
-            ClickParticle.Play();
-        }
-    }
 
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
     {
+        MousePos = mousePos;
         if (NavAgent.isActiveAndEnabled)
         {
-            //targetTrm = target;
+
             MoveToTarget(mousePos + SeatPos);
         }
     }
@@ -122,7 +149,6 @@ public abstract class Entity : PoolableMono
     {
         if (NavAgent.isActiveAndEnabled)
         {
-            //targetTrm = target;
             MoveToTarget(mousePos);
         }
     }

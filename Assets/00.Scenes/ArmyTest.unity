@@ -7257,6 +7257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f62f7d1ccf7d14a82e9946be691c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScreenCenterVec: {x: 232.5, y: 231.5}
+  offVec: {x: 232.5, y: -100}
 --- !u!1 &822686061
 GameObject:
   m_ObjectHideFlags: 0
@@ -10957,22 +10959,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnUI: {fileID: 562135043}
-  _legionSpawnPoints:
-  - {fileID: 172664271}
-  - {fileID: 1652696526}
-  - {fileID: 1571359607}
-  - {fileID: 823088680}
-  - {fileID: 1384600832}
-  - {fileID: 1901713840}
-  - {fileID: 1149569522}
-  - {fileID: 1655712636}
-  _initTrm: {fileID: 1658376550}
   onSpawnUIYPosValue: 340
   _spawnerLayer:
     serializedVersion: 2
     m_Bits: 16384
-  _spawnPoint: {fileID: 1667011556}
-  _campFireTrm: {fileID: 303848101}
   _btnTrm: {fileID: 623755286}
 --- !u!208 &1356469839
 NavMeshObstacle:
@@ -14600,10 +14590,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPhaseReadyTime: 1
-  clockHandImgTrm: {fileID: 1618046854}
-  timeText: {fileID: 1837234703}
-  wavCntText: {fileID: 864198661}
-  enemyCntText: {fileID: 417051877}
+  _tentTrm: {fileID: 1658376550}
+  _clockHandImgTrm: {fileID: 1618046854}
+  _timeText: {fileID: 1837234703}
+  _waveCntText: {fileID: 864198661}
+  _enemyCntText: {fileID: 417051877}
   isWin: 1
   targetColor: {r: 0, g: 0, b: 0, a: 0}
   CurrentStage: 0
@@ -14974,6 +14965,7 @@ MonoBehaviour:
   _crown: {fileID: 2452924120397455080, guid: 3c3f83f81f1522c4898a186bcd6bdf7e, type: 3}
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   ClickParticle: {fileID: 0}
+  soldierTypes: []
   armies:
   - Legion: 0
     IsMoving: 0
@@ -14983,18 +14975,63 @@ MonoBehaviour:
     - {fileID: 1550788083}
     - {fileID: 866139728}
     - {fileID: 644334820}
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 1
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 2
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 3
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
   - Legion: 4
     IsMoving: 0
     Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
 --- !u!4 &1861243453
 Transform:
   m_ObjectHideFlags: 0
@@ -17298,7 +17335,6 @@ GameObject:
   - component: {fileID: 2120009856}
   - component: {fileID: 2120009855}
   - component: {fileID: 2120009857}
-  - component: {fileID: 2120009858}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -17353,57 +17389,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingList: {fileID: 0}
   _poolingListSO: {fileID: 11400000, guid: 07de459dc533c5d4f90da9a22e6f7b16, type: 2}
---- !u!114 &2120009858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120009854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b55b5852dacd7b644ab1e772ef9b219f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LegionUIList:
-  - HeroCnt: 0
-    SlotUIPrefab: {fileID: 3585275359799384372, guid: febc8b1f1d3b310409a1cc86bd96829d,
-      type: 3}
-  - HeroCnt: 0
-    SlotUIPrefab: {fileID: 3585275359799384372, guid: a9b5854db294f004c8ce103ac93698c4,
-      type: 3}
-  - HeroCnt: 0
-    SlotUIPrefab: {fileID: 3585275359799384372, guid: 66319d68b7c18c74aa62b4413edf9266,
-      type: 3}
-  LegionCnt:
-  - SpawnSwordCnt: 0
-    SpawnArrowCnt: 0
-    SpawnShieldCnt: 0
-    TotalSwordCnt: 0
-    TotalArrowCnt: 0
-    TotalShieldCnt: 0
-    _LegionPannel: {fileID: 1237632861}
-  - SpawnSwordCnt: 0
-    SpawnArrowCnt: 0
-    SpawnShieldCnt: 0
-    TotalSwordCnt: 0
-    TotalArrowCnt: 0
-    TotalShieldCnt: 0
-    _LegionPannel: {fileID: 419344488}
-  - SpawnSwordCnt: 0
-    SpawnArrowCnt: 0
-    SpawnShieldCnt: 0
-    TotalSwordCnt: 0
-    TotalArrowCnt: 0
-    TotalShieldCnt: 0
-    _LegionPannel: {fileID: 1404628287}
-  - SpawnSwordCnt: 0
-    SpawnArrowCnt: 0
-    SpawnShieldCnt: 0
-    TotalSwordCnt: 0
-    TotalArrowCnt: 0
-    TotalShieldCnt: 0
-    _LegionPannel: {fileID: 79620730}
 --- !u!1001 &2127792721
 PrefabInstance:
   m_ObjectHideFlags: 0

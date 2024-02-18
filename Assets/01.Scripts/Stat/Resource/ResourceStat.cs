@@ -6,6 +6,7 @@ using UnityEngine;
 public class ResourceStat : BaseStat
 {
     [Header("Resource Info")]
+    public string resourceName;
     public int requiredWorkerCount; //자원 채굴에 필요한 최소 일꾼 갯수
 
     [Header("Receive Count")]

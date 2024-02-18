@@ -13,6 +13,7 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
     {
         base.Enter();
         _triggerCalled = false;
+        Debug.Log("working");
     }
 
     public override void UpdateState()
@@ -21,11 +22,13 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 
         _worker.LookTaget();
 
-        if(_triggerCalled)
-        {
+        _worker.Work();
+        
+        //if(_triggerCalled)
+        //{
             if (_worker.EndWork)
                 _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
-        }
+        //}
     }
 
     public override void Exit()

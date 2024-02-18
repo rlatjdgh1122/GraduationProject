@@ -25,7 +25,7 @@ public class VictoryUI : NormalUI
         });
     }
 
-    public override void EnableUI(float time)
+    public override void EnableUI(float time, object obj)
     {
         SetTexts();
         _background.DOFade(0.75f, time).OnComplete(() => _canvasGroup.DOFade(1, time));

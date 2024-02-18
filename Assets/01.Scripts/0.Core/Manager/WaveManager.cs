@@ -177,13 +177,13 @@ public class WaveManager : MonoBehaviour
 
     private void ShowDefeatUI()
     {
-        defeatUI.EnableUI(1);
+        defeatUI.EnableUI(1, null);
     }
 
     private void GetReward() // 보상 획득 함수
     {
         ShowEffect();
-        victoryUI.EnableUI(1f);
+        victoryUI.EnableUI(1f, null);
     }
 
     public void CloseWinPanel()

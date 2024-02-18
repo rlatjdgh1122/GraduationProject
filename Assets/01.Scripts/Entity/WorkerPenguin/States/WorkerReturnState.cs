@@ -14,6 +14,7 @@ public class WorkerReturnState : WorkerState<WorkerPenguinStateEnum>
         base.Enter();
         _triggerCalled = true;
         _worker.MoveToNexus();
+        Debug.Log("돌아가기 시작");
     }
 
     public override void UpdateState()
