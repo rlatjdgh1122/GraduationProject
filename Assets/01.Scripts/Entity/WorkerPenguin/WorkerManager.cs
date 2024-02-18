@@ -21,7 +21,7 @@ public class WorkerManager : Singleton<WorkerManager>
             _workerList.AddRange(workers);
     }
 
-    public void SendWorkers(int count)
+    public void SendWorkers(int count, Transform targetTrm)
     {
         int calledPenguinCount = 0;
 
@@ -31,7 +31,7 @@ public class WorkerManager : Singleton<WorkerManager>
             {
                 if (!worker.CanWork) //그중에 CanWork가 비활성화 된 애들만
                 {
-                    worker.CanWork = true; //활성화해주고
+                    worker.StartWork(targetTrm); //활성화해주고
                     calledPenguinCount++; //값을 1 늘림
                 }
 

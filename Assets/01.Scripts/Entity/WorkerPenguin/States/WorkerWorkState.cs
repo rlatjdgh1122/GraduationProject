@@ -22,13 +22,15 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 
         _worker.LookTaget();
 
-        _worker.Work();
-        
-        //if(_triggerCalled)
-        //{
-            if (_worker.EndWork)
-                _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
-        //}
+        if (_triggerCalled)
+        {
+            Debug.Log("Äµ´Ù");
+
+            _triggerCalled = false;
+        }
+
+        if (_worker.EndWork)
+            _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
     }
 
     public override void Exit()

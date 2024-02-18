@@ -89,6 +89,8 @@ public class GameManager : Singleton<GameManager>
     private int dummyPenguinCount;
     public int GetDummyPenguinCount => dummyPenguinCount;
 
+    public Transform NexusTrm => GameObject.Find("Nexus").transform;
+
     [SerializeField] private InitBuildingList buildingList = null;
     private Dictionary<string, BaseBuilding> _buildingDictionary = new();
 

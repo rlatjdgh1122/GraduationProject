@@ -74,9 +74,6 @@ public abstract class Entity : PoolableMono
     public ParticleSystem ClickParticle;
     public Outline OutlineCompo { get; private set; }
 
-    [SerializeField] protected SkinnedMeshRenderer _renderer;
-    public SkinnedMeshRenderer Renderer => _renderer;
-
     [SerializeField] protected CharacterStat _characterStat;
     public CharacterStat Stat => _characterStat;
     #endregion

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Worker : MonoBehaviour
+public class Worker : Entity
 {
     public Transform Target;
     public Transform Nexus;
@@ -11,19 +11,27 @@ public class Worker : MonoBehaviour
     public bool CanWork = false;
     public bool EndWork = false;
 
-    public Animator AnimatorCompo { get; private set; }
-    public NavMeshAgent NavAgentCompo { get; private set; } 
+    #region components
+    public new Animator AnimatorCompo { get; private set; }
+    public new NavMeshAgent NavAgent { get; private set; }
+    public new DamageCaster DamageCasterCompo { get; private set; }
+    #endregion
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
+        Nexus = GameManager.Instance.NexusTrm;
         AnimatorCompo = visualTrm.GetComponent<Animator>();
-        NavAgentCompo = GetComponent<NavMeshAgent>();
+        NavAgent = GetComponent<NavMeshAgent>();
+        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
+
+        DamageCasterCompo.SetOwner(this);
     }
 
+    #region 이동 관련
     public void MoveToTarget()
     {
-        NavAgentCompo.SetDestination(Target.transform.position);
+        NavAgent.SetDestination(Target.transform.position);
         Debug.Log("이동 중");
     }
 
@@ -34,7 +42,7 @@ public class Worker : MonoBehaviour
 
     public void MoveToNexus()
     {
-        NavAgentCompo.SetDestination(Nexus.transform.position);
+        NavAgent.SetDestination(Nexus.transform.position);
     }
 
     public float CheckNexusDistance()
@@ -47,17 +55,17 @@ public class Worker : MonoBehaviour
         CanWork = false;
         gameObject.SetActive(false);
     }
+    #endregion
 
-    public void Work()
+    public void StartWork(Transform target)
     {
-        //work 내용 채워서 사용 현재는 2초뒤 State가 Work로 변경 되도록 해놓음
-        StartCoroutine(Working());
+        Target = target;
+        CanWork = true;
     }
-    
-    IEnumerator Working()
+
+    public void HitResource()
     {
-        yield return new WaitForSeconds(2f);
-        EndWork = true;
+        DamageCasterCompo.CastDamage();
     }
 
     public void LookTaget()
@@ -72,5 +80,10 @@ public class Worker : MonoBehaviour
     public virtual void AnimationTrigger()
     {
 
+    }
+
+    protected override void HandleDie()
+    {
+        throw new System.NotImplementedException();
     }
 }

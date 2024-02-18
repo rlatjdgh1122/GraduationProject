@@ -19,6 +19,8 @@ public class ResourceUI : NormalUI
 
     public override void Awake()
     {
+        base.Awake();
+
         _canvasGroup = GetComponent<CanvasGroup>();
         _resourceNameText = transform.Find("_ResourceName").GetComponent<TextMeshProUGUI>();
         _recieveCountText = transform.Find("_RecieveCount").GetComponent<TextMeshProUGUI>();
@@ -29,6 +31,8 @@ public class ResourceUI : NormalUI
 
     public override void EnableUI(float time, object obj)
     {
+        base.EnableUI(time, obj);
+
         _CurrentResource = obj as ResourceObject;
         Setting();
         _canvasGroup.DOFade(1, time);
@@ -52,7 +56,7 @@ public class ResourceUI : NormalUI
     public void SendWorkers()
     {
         //보내는 로직
-        WorkerManager.Instance.SendWorkers(_CurrentResource.CurrentWorkerCount);
+        WorkerManager.Instance.SendWorkers(_CurrentResource.CurrentWorkerCount, _CurrentResource.transform);
         ClosePanel();
     }
 

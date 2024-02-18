@@ -10,8 +10,7 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
         base.Enter();
         _triggerCalled = true;
 
-        if (_worker.CanWork)
-            _worker.MoveToTarget();
+        _worker.MoveToTarget();
     }
 
     public override void UpdateState()

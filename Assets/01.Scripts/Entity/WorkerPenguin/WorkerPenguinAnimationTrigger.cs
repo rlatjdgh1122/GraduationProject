@@ -11,8 +11,9 @@ public class WorkerPenguinAnimationTrigger : MonoBehaviour
         _worker = transform.parent.GetComponent<Worker>();
     }
 
-    public void WorkTrigger()
+    private void WorkTrigger()
     {
-        //³ªÁß¿¡
+        _worker.AnimationTrigger();
+        _worker.HitResource();
     }
 }
