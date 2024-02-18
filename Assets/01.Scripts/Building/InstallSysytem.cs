@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class InstallSysytem : MonoBehaviour
@@ -53,7 +54,7 @@ public class InstallSysytem : MonoBehaviour
     {
         selectedBuildingIDX = -1;
 
-
+        _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnExitInstallEvent -= StopInstall;
     }
@@ -75,7 +76,7 @@ public class InstallSysytem : MonoBehaviour
             Vector3Int gridPosition = curSelectedBuilding.BuildingInfoCompo.GridCompo.WorldToCell(hitPos);
             curSelectedBuilding.transform.position = curSelectedBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
 
-            curSelectedBuilding.Installed();
+            curSelectedBuilding?.Installed();
             _previousGround?.InstallBuilding();
             StopInstall();
             isInstalling = false;
@@ -89,8 +90,8 @@ public class InstallSysytem : MonoBehaviour
          || !isInstalling)
         { return; }
 
-        if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity, _groundLayer))
+
+        if (Physics.Raycast(Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue()),out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
             if (!_groundDic.ContainsKey(hit.transform.gameObject.GetHashCode())) // 캐싱
             {

@@ -124,7 +124,7 @@ public class GameManager : Singleton<GameManager>
 
     public Ray RayPosition()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         
         return ray;
     }

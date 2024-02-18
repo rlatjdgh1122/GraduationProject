@@ -38,7 +38,6 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
     {
         if(context.performed && IsPointerOverUI())
         {
-            Debug.Log("Click");
             OnLeftClickEvent?.Invoke();
         }
     }
