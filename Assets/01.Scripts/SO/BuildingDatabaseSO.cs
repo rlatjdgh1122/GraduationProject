@@ -13,6 +13,8 @@ public class BuildingItemInfo
     public Vector2Int Size { get; private set; }
     [field: SerializeField]
     public GameObject Prefab { get; private set; }
+    [field: SerializeField]
+    public Texture2D UITexture { get; private set; }
 }
 [CreateAssetMenu(menuName = "SO/BuildingList")]
 public class BuildingDatabaseSO : ScriptableObject

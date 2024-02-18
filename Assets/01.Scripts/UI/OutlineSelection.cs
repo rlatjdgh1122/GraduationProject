@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 public class OutlineSelection : MonoBehaviour
 {
     //Ä¿¼­
-    [SerializeField] private Texture2D cursorTexture;
-    [SerializeField] private Texture2D cursorTextureEnemy;
+    [SerializeField] private Texture2D _defaultCursorTexture;
 
     private Vector2 cursorHotspot;
 
@@ -21,8 +20,18 @@ public class OutlineSelection : MonoBehaviour
 
     private void Awake()
     {
-        cursorHotspot = new Vector2(cursorTexture.width/1.5f, cursorTexture.height/1.5f);
-        Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
+        SetCursor(_defaultCursorTexture);
+    }
+
+    public void SetDefaultCursor()
+    {
+        SetCursor(_defaultCursorTexture);
+    }
+
+    public void SetCursor(Texture2D texture)
+    {
+        cursorHotspot = new Vector2(texture.width / 1.5f, texture.height / 1.5f);
+        Cursor.SetCursor(texture, cursorHotspot, CursorMode.Auto);
     }
 
     //void Update()

@@ -28,7 +28,14 @@ public class InstallSysytem : MonoBehaviour
     
     private Ground _previousGround;
 
+    private OutlineSelection _outlineSelection;
+
     private Ray _mousePointRay => Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+    private void Awake()
+    {
+        _outlineSelection = GameObject.FindAnyObjectByType<OutlineSelection>();
+    }
 
     private void Start()
     {
@@ -55,6 +62,7 @@ public class InstallSysytem : MonoBehaviour
 
         isInstalling = true;
         _cancleInstallBuildingText.enabled = true;
+        _outlineSelection.SetCursor(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].UITexture);
     }
 
     private void StopInstall()
@@ -64,6 +72,7 @@ public class InstallSysytem : MonoBehaviour
         _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
 
         _cancleInstallBuildingText.enabled = false;
+        _outlineSelection.SetDefaultCursor();
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnExitInstallEvent -= StopInstall;
