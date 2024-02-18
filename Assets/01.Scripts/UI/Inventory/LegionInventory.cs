@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Legion
 {
+    public bool UnLocked;
     public List<LegionInventoryData> legionInven;
     public Dictionary<PenguinUIDataSO, LegionInventoryData> legionDictionary = new();
 }
