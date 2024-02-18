@@ -2,12 +2,16 @@ using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class InstallSysytem : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshProUGUI _cancleInstallBuildingText;
+
     [SerializeField]
     private LayerMask _groundLayer;
 
@@ -23,6 +27,8 @@ public class InstallSysytem : MonoBehaviour
     private bool isInstalling;
     
     private Ground _previousGround;
+
+    private Ray _mousePointRay => Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
     private void Start()
     {
@@ -48,6 +54,7 @@ public class InstallSysytem : MonoBehaviour
         }
 
         isInstalling = true;
+        _cancleInstallBuildingText.enabled = true;
     }
 
     private void StopInstall()
@@ -55,6 +62,9 @@ public class InstallSysytem : MonoBehaviour
         selectedBuildingIDX = -1;
 
         _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
+
+        _cancleInstallBuildingText.enabled = false;
+
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnExitInstallEvent -= StopInstall;
     }
@@ -66,8 +76,7 @@ public class InstallSysytem : MonoBehaviour
         //    return;
         //}
 
-        if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity, _groundLayer) &&
+        if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer) &&
             !_previousGround.IsInstalledBuilding)
         {
             BaseBuilding curSelectedBuilding = PoolManager.Instance.Pop(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].Name) as BaseBuilding;
@@ -91,7 +100,7 @@ public class InstallSysytem : MonoBehaviour
         { return; }
 
 
-        if (Physics.Raycast(Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue()),out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
             if (!_groundDic.ContainsKey(hit.transform.gameObject.GetHashCode())) // Ä³½Ì
             {
