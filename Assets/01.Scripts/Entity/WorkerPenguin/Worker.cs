@@ -3,25 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Worker : MonoBehaviour
+public class Worker : Entity
 {
-    public Transform Target;
+    public ResourceObject Target;
     public Transform Nexus;
+
+    public bool CanWork = false;
     public bool EndWork = false;
 
-    public Animator AnimatorCompo { get; private set; }
-    public NavMeshAgent NavAgentCompo { get; private set; } 
+    #region components
+    public Animator WorkerAnimatorCompo { get; private set; }
+    public NavMeshAgent WorkerNavAgent { get; private set; }
+    public DamageCaster WorkerDamageCasterCompo { get; private set; }
+    #endregion
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
-        AnimatorCompo = visualTrm.GetComponent<Animator>();
-        NavAgentCompo = GetComponent<NavMeshAgent>();
+        Nexus = GameManager.Instance.NexusTrm;
+        WorkerAnimatorCompo = visualTrm.GetComponent<Animator>();
+        WorkerNavAgent = GetComponent<NavMeshAgent>();
+        WorkerDamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
+
+        WorkerDamageCasterCompo.SetOwner(this);
     }
 
+    #region 이동 관련
     public void MoveToTarget()
     {
-        NavAgentCompo.SetDestination(Target.transform.position);
+        WorkerNavAgent.SetDestination(Target.transform.position);
         Debug.Log("이동 중");
     }
 
@@ -32,7 +42,7 @@ public class Worker : MonoBehaviour
 
     public void MoveToNexus()
     {
-        NavAgentCompo.SetDestination(Nexus.transform.position);
+        WorkerNavAgent.SetDestination(Nexus.transform.position);
     }
 
     public float CheckNexusDistance()
@@ -42,24 +52,33 @@ public class Worker : MonoBehaviour
 
     public void MoveEndToNexus()
     {
+        CanWork = false;
         gameObject.SetActive(false);
     }
+    #endregion
 
-    public void Work()
+    #region 작업 관련
+    public void StartWork(ResourceObject target)
     {
-        //work 내용 채워서 사용 현재는 2초뒤 State가 Work로 변경 되도록 해놓음
-        StartCoroutine(Working());
+        Target = target;
+        CanWork = true;
     }
-    
-    IEnumerator Working()
+
+    public void FinishWork()
     {
-        yield return new WaitForSeconds(2f);
+        CanWork = false;
         EndWork = true;
     }
 
+    public void HitResource()
+    {
+        WorkerDamageCasterCompo.CastDamage();
+    }
+    #endregion
+
     public void LookTaget()
     {
-        Vector3 directionToTarget = Target.position - transform.position;
+        Vector3 directionToTarget = Target.transform.position - transform.position;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
@@ -69,5 +88,10 @@ public class Worker : MonoBehaviour
     public virtual void AnimationTrigger()
     {
 
+    }
+
+    protected override void HandleDie()
+    {
+        
     }
 }

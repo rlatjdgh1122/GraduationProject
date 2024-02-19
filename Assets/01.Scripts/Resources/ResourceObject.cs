@@ -5,15 +5,23 @@ public class ResourceObject : MonoBehaviour
     [SerializeField] private ResourceDataSO _resourceData;
     [SerializeField] private ResourceStat _resourceStat;
 
-    private string _resourceName;
-    public string ResourceName => _resourceName;
     private Sprite _resourceIcon;
-    public Sprite ResourceImage => _resourceIcon;
-
+    private string _resourceName;
+    private int _needWorkerCount;
+    private int _currentWorkerCount;
     private int _receiveCountAtOnce;
-    public int ReceiveCountAtOnce => _receiveCountAtOnce;
     private int _receiveCountWhenCompleted;
+
+    #region property
+    public Sprite ResourceImage => _resourceIcon;
+    public string ResourceName => _resourceName;
+    public int NeedWorkerCount => _needWorkerCount;
+    public int CurrentWorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }   
+    public int ReceiveCountAtOnce => _receiveCountAtOnce;
     public int ReceiveCountWhenCompleted => _receiveCountWhenCompleted;
+    #endregion
+
+    public bool CanWork = false;
 
     public Health HealthCompo { get; private set; }
 
@@ -31,11 +39,12 @@ public class ResourceObject : MonoBehaviour
         HealthCompo = GetComponent<Health>();
 
         HealthCompo.SetHealth(_resourceStat);
-        SetReceiveCount();
+        SetCount();
     }
 
-    public void SetReceiveCount()
+    public void SetCount()
     {
+        _needWorkerCount = _resourceStat.requiredWorkerCount;
         _resourceName = _resourceStat.resourceName;
         _resourceIcon = _resourceData.resourceIcon;
         _receiveCountAtOnce = _resourceStat.receiveCountAtOnce;
@@ -47,9 +56,11 @@ public class ResourceObject : MonoBehaviour
         ResourceManager.Instance.AddResource(_resourceData, _receiveCountAtOnce);
     }
 
-    public void RecieveResourceComplete() //다 캐면 얻는 자원
+    public void RecieveResourceComplete() //다 캐면 실행
     {
         ResourceManager.Instance.AddResource(_resourceData, _receiveCountWhenCompleted);
+        WorkerManager.Instance.ReturnWorkers(this);
+        gameObject.SetActive(false);
     }
 
     public void RemoveResource(int count)
