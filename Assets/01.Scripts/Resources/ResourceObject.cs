@@ -56,9 +56,11 @@ public class ResourceObject : MonoBehaviour
         ResourceManager.Instance.AddResource(_resourceData, _receiveCountAtOnce);
     }
 
-    public void RecieveResourceComplete() //다 캐면 얻는 자원
+    public void RecieveResourceComplete() //다 캐면 실행
     {
         ResourceManager.Instance.AddResource(_resourceData, _receiveCountWhenCompleted);
+        WorkerManager.Instance.ReturnWorkers(this);
+        gameObject.SetActive(false);
     }
 
     public void RemoveResource(int count)

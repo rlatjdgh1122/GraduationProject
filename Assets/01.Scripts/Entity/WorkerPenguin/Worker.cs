@@ -5,33 +5,33 @@ using UnityEngine.AI;
 
 public class Worker : Entity
 {
-    public Transform Target;
+    public ResourceObject Target;
     public Transform Nexus;
 
     public bool CanWork = false;
     public bool EndWork = false;
 
     #region components
-    public new Animator AnimatorCompo { get; private set; }
-    public new NavMeshAgent NavAgent { get; private set; }
-    public new DamageCaster DamageCasterCompo { get; private set; }
+    public Animator WorkerAnimatorCompo { get; private set; }
+    public NavMeshAgent WorkerNavAgent { get; private set; }
+    public DamageCaster WorkerDamageCasterCompo { get; private set; }
     #endregion
 
     protected override void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
         Nexus = GameManager.Instance.NexusTrm;
-        AnimatorCompo = visualTrm.GetComponent<Animator>();
-        NavAgent = GetComponent<NavMeshAgent>();
-        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
+        WorkerAnimatorCompo = visualTrm.GetComponent<Animator>();
+        WorkerNavAgent = GetComponent<NavMeshAgent>();
+        WorkerDamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
 
-        DamageCasterCompo.SetOwner(this);
+        WorkerDamageCasterCompo.SetOwner(this);
     }
 
     #region 이동 관련
     public void MoveToTarget()
     {
-        NavAgent.SetDestination(Target.transform.position);
+        WorkerNavAgent.SetDestination(Target.transform.position);
         Debug.Log("이동 중");
     }
 
@@ -42,7 +42,7 @@ public class Worker : Entity
 
     public void MoveToNexus()
     {
-        NavAgent.SetDestination(Nexus.transform.position);
+        WorkerNavAgent.SetDestination(Nexus.transform.position);
     }
 
     public float CheckNexusDistance()
@@ -57,20 +57,28 @@ public class Worker : Entity
     }
     #endregion
 
-    public void StartWork(Transform target)
+    #region 작업 관련
+    public void StartWork(ResourceObject target)
     {
         Target = target;
         CanWork = true;
     }
 
+    public void FinishWork()
+    {
+        CanWork = false;
+        EndWork = true;
+    }
+
     public void HitResource()
     {
-        DamageCasterCompo.CastDamage();
+        WorkerDamageCasterCompo.CastDamage();
     }
+    #endregion
 
     public void LookTaget()
     {
-        Vector3 directionToTarget = Target.position - transform.position;
+        Vector3 directionToTarget = Target.transform.position - transform.position;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
@@ -84,6 +92,6 @@ public class Worker : Entity
 
     protected override void HandleDie()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

@@ -24,13 +24,11 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 
         if (_triggerCalled)
         {
-            Debug.Log("Äµ´Ù");
+            if (_worker.EndWork)
+                _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
 
             _triggerCalled = false;
         }
-
-        if (_worker.EndWork)
-            _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
     }
 
     public override void Exit()
