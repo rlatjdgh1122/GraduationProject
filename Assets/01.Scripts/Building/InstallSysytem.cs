@@ -1,3 +1,4 @@
+using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
@@ -10,7 +11,7 @@ using UnityEngine.UIElements;
 public class InstallSysytem : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _cancleInstallBuildingText;
+    private TextMeshProUGUI _cancleInstallBuildingText, _buildingSpawnFailHudText;
 
     [SerializeField]
     private LayerMask _groundLayer;
@@ -85,9 +86,20 @@ public class InstallSysytem : MonoBehaviour
         //    return;
         //}
 
-        if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer) &&
-            !_previousGround.IsInstalledBuilding)
+        if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
+            if(_previousGround.IsInstalledBuilding)
+            {
+                UIManager.Instance.InitializeWarningTextSequence();
+                UIManager.Instance.WarningTextSequence.Prepend(_buildingSpawnFailHudText.DOFade(1f, 0.5f))
+                .Join(_buildingSpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y, 0.5f))
+                .Append(_buildingSpawnFailHudText.DOFade(0f, 0.5f))
+                .Join(_buildingSpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y - 50f, 0.5f));
+
+                return;
+            }
+            
+
             BaseBuilding curSelectedBuilding = PoolManager.Instance.Pop(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].Name) as BaseBuilding;
 
             Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y + 1, hit.transform.position.z);
