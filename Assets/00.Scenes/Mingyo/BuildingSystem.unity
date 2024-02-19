@@ -2622,6 +2622,7 @@ GameObject:
   - component: {fileID: 246457597}
   - component: {fileID: 246457596}
   - component: {fileID: 246457599}
+  - component: {fileID: 246457600}
   m_Layer: 3
   m_Name: GroundMesh
   m_TagString: Untagged
@@ -2728,6 +2729,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb104656ce7fe946a72c43c7c94308c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &246457600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246457594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &251311417
 GameObject:
   m_ObjectHideFlags: 0
@@ -2876,6 +2895,7 @@ GameObject:
   - component: {fileID: 294713243}
   - component: {fileID: 294713242}
   - component: {fileID: 294713245}
+  - component: {fileID: 294713246}
   m_Layer: 3
   m_Name: GroundMesh
   m_TagString: Untagged
@@ -2982,6 +3002,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb104656ce7fe946a72c43c7c94308c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &294713246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294713240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &299478265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3562,6 +3600,7 @@ GameObject:
   - component: {fileID: 305722568}
   - component: {fileID: 305722567}
   - component: {fileID: 305722570}
+  - component: {fileID: 305722571}
   m_Layer: 3
   m_Name: GroundMesh
   m_TagString: Untagged
@@ -3668,6 +3707,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb104656ce7fe946a72c43c7c94308c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &305722571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305722565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &312821050
 GameObject:
   m_ObjectHideFlags: 0
@@ -4483,7 +4540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -6600,7 +6657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -7042,6 +7099,141 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644653654}
+  m_CullTransparentMesh: 1
+--- !u!1 &644906178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 644906179}
+  - component: {fileID: 644906181}
+  - component: {fileID: 644906180}
+  m_Layer: 5
+  m_Name: CancleInstallBuildingText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &644906179
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644906178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1971149093}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 200}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &644906180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644906178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "ESC\uB97C \uB20C\uB7EC \uCDE8\uC18C"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0019043d6c9e6a54090cbc396a9d0838, type: 2}
+  m_sharedMaterial: {fileID: -7419187930917110359, guid: 0019043d6c9e6a54090cbc396a9d0838,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 55
+  m_fontSizeBase: 55
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &644906181
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644906178}
   m_CullTransparentMesh: 1
 --- !u!1 &653872414
 GameObject:
@@ -8980,7 +9172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -9875,6 +10067,7 @@ GameObject:
   - component: {fileID: 1018965947}
   - component: {fileID: 1018965946}
   - component: {fileID: 1018965949}
+  - component: {fileID: 1018965950}
   m_Layer: 3
   m_Name: GroundMesh
   m_TagString: Untagged
@@ -9981,6 +10174,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb104656ce7fe946a72c43c7c94308c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1018965950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018965944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1019960330
 GameObject:
   m_ObjectHideFlags: 0
@@ -10441,7 +10652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -13046,12 +13257,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1310494496}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1310494498 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7887673732677055087, guid: 7271be1e6299bcd4da7cf49f7ee1d118,
-    type: 3}
-  m_PrefabInstance: {fileID: 1310494496}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1318967453
 GameObject:
   m_ObjectHideFlags: 0
@@ -14665,7 +14870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -15504,7 +15709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -15985,6 +16190,7 @@ GameObject:
   - component: {fileID: 1608721806}
   - component: {fileID: 1608721805}
   - component: {fileID: 1608721808}
+  - component: {fileID: 1608721809}
   m_Layer: 3
   m_Name: GroundMesh
   m_TagString: Untagged
@@ -16091,6 +16297,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb104656ce7fe946a72c43c7c94308c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1608721809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608721803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1618046853
 GameObject:
   m_ObjectHideFlags: 0
@@ -16139,7 +16363,7 @@ GameObject:
   - component: {fileID: 1624352178}
   - component: {fileID: 1624352177}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SpawnFailHudText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17706,12 +17930,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1707780087}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1707780089 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7887673732677055087, guid: 7271be1e6299bcd4da7cf49f7ee1d118,
-    type: 3}
-  m_PrefabInstance: {fileID: 1707780087}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1735686937
 GameObject:
   m_ObjectHideFlags: 0
@@ -17989,7 +18207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -18094,6 +18312,7 @@ GameObject:
   - component: {fileID: 1826821058}
   - component: {fileID: 1826821057}
   - component: {fileID: 1826821060}
+  - component: {fileID: 1826821061}
   m_Layer: 3
   m_Name: GroundMesh
   m_TagString: Untagged
@@ -18200,6 +18419,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb104656ce7fe946a72c43c7c94308c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1826821061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826821055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &1836647965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18456,6 +18693,7 @@ MonoBehaviour:
   _crown: {fileID: 2452924120397455080, guid: 3c3f83f81f1522c4898a186bcd6bdf7e, type: 3}
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   ClickParticle: {fileID: 0}
+  soldierTypes: []
   armies:
   - Legion: 0
     IsMoving: 0
@@ -18905,12 +19143,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1893145835}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1893145837 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7887673732677055087, guid: 7271be1e6299bcd4da7cf49f7ee1d118,
-    type: 3}
-  m_PrefabInstance: {fileID: 1893145835}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1901713839
 GameObject:
   m_ObjectHideFlags: 0
@@ -19208,12 +19440,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1943980210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1528bb49fa552894493ddee1014f5494, type: 3}
+  m_Script: {fileID: 11500000, guid: 007161580ea11c145a7ca6b5b9e18aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cancleInstallBuildingText: {fileID: 644906180}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
+    type: 2}
+  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!1 &1947954001
 GameObject:
   m_ObjectHideFlags: 0
@@ -19356,7 +19592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -19597,6 +19833,7 @@ RectTransform:
   - {fileID: 740223842}
   - {fileID: 2146362168}
   - {fileID: 1624352176}
+  - {fileID: 644906179}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -19616,17 +19853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f123df10feaddaf44a0908d56f1a2c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _legionInventory: {fileID: 740223842}
-  _targetPos: -1570
-  _duration: 0.4
-  _slot:
-  - {fileID: 1707780089}
-  - {fileID: 1893145837}
-  - {fileID: 1310494498}
-  _cntText:
-  - {fileID: 1992766051}
-  - {fileID: 677789685}
-  - {fileID: 2007455365}
 --- !u!1001 &1979578106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20410,7 +20636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -20644,7 +20870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -21269,8 +21495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1aef0965d60f014d99e5ba0905a55e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 2800000, guid: 022116c31ab328041890a65a03dd1f2f, type: 3}
-  cursorTextureEnemy: {fileID: 2800000, guid: e8d5dcc36c271db41bcf9e4dd04f5ae7, type: 3}
+  _defaultCursorTexture: {fileID: 2800000, guid: 022116c31ab328041890a65a03dd1f2f,
+    type: 3}
   color: {r: 1, g: 0, b: 0, a: 1}
   size: 7
 --- !u!4 &2120009856

@@ -13,7 +13,7 @@ public class SpawnUI : MonoBehaviour
     private void Start()
     {
         _offSpawnUIVec = _buildingSpawnUI.position;
-        _onSpawnUIVec = _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, 340, 0); //대충값
+        _onSpawnUIVec = _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, 320, 0); //대충값
     }
 
     public void OnUnitPanel()
