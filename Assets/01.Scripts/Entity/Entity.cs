@@ -7,8 +7,6 @@ using UnityEngine.AI;
 
 public abstract class Entity : PoolableMono
 {
-    public int idx;
-
     [Header("Target info")]
     public Vector3 targetTrm;
     public float innerDistance = 4f;

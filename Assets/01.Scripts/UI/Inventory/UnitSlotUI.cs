@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class UnitSlotUI : SlotUI, IPointerDownHandler
 {
-    [SerializeField] protected UnitInformationUI _info;
     [SerializeField] protected TextMeshProUGUI _text;
+    [SerializeField] protected UnitInformationUI _info;
 
     public override void CleanUpSlot()
     {

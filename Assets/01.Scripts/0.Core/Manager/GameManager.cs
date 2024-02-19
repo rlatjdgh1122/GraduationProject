@@ -89,9 +89,7 @@ public class GameManager : Singleton<GameManager>
     private int dummyPenguinCount;
     public int GetDummyPenguinCount => dummyPenguinCount;
 
-    public Transform NexusTrm => GameObject.Find("Nexus").transform;
-
-    [SerializeField] private InitBuildingList buildingList = null;
+    [SerializeField] private BuildingDatabaseSO buildingList = null;
     private Dictionary<string, BaseBuilding> _buildingDictionary = new();
 
     [SerializeField]
@@ -126,7 +124,7 @@ public class GameManager : Singleton<GameManager>
 
     public Ray RayPosition()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         
         return ray;
     }

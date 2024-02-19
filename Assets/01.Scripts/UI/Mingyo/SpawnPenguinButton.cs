@@ -42,7 +42,7 @@ public class SpawnPenguinButton : MonoBehaviour
 
         if (WaveManager.Instance.RemainingPhaseReadyTime >= cooltime) // 남은 준비시간안에 생성할 수 있다면 생성한다.
         {
-            TestLegion.Instance.LegionUIList[0].HeroCnt++;
+            //TestLegion.Instance.LegionUIList[0].HeroCnt++;
 
             ButtonCooldown();
         }

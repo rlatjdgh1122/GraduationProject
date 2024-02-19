@@ -8,13 +8,10 @@ using UnityEngine.UI;
 [Serializable]
 public struct BuildingInfo
 {
-    [HideInInspector]
-    public MeshRenderer MeshRendererCompo;
-    [HideInInspector]
-    public Material NormalMaterial;
-    public Material TransparencyMaterial;
-    [HideInInspector]
-    public Grid Grid;
+    [field: SerializeField]
+    public int ID { get ; private set; }
+    [field: SerializeField]
+    public Grid GridCompo;
 }
 
 //[RequireComponent(typeof(Health))]
@@ -24,8 +21,7 @@ public abstract class BaseBuilding : PoolableMono
 {
     public BuildingInfo BuildingInfoCompo;
 
-    private bool isSelected = false;
-    private bool isPlaced = false;
+    private bool isInstalled = false;
 
     private void Awake()
     {
@@ -34,36 +30,21 @@ public abstract class BaseBuilding : PoolableMono
 
     private void SetUpCompo()
     {
-        BuildingInfoCompo.MeshRendererCompo = GetComponent<MeshRenderer>();
-        BuildingInfoCompo.NormalMaterial = BuildingInfoCompo.MeshRendererCompo.material;
-        BuildingInfoCompo.Grid = GetComponent<Grid>();
+        BuildingInfoCompo.GridCompo = GetComponent<Grid>();
     }
 
-    public void SetSelected()
+    public void Installed()
     {
-        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.TransparencyMaterial; // 선택되어 투명메테리얼로 바꿈
-        isSelected = true;
+        isInstalled = true;
     }
 
-    public void Deselect()
-    {
-        isSelected = false;
-        BuildingInfoCompo.MeshRendererCompo.material = BuildingInfoCompo.NormalMaterial; // 선택되어 원래메테리얼로 바꿈
-    }
-
-    public void Placed()
-    {
-        isPlaced = true;
-        Deselect();
-    }
-
-    protected virtual void Update()
-    {
-        if(isPlaced)
-        {
-            Running(); // 설치 되면 역할 수행
-        }
-    }
+    //protected virtual void Update()
+    //{
+    //    if(isInstalled)
+    //    {
+    //        Running(); // 설치 되면 역할 수행
+    //    }
+    //}
 
     protected abstract void Running();
 }
