@@ -11,6 +11,12 @@ public class MopAoEAttackState : MopBaseState
     public override void Enter()
     {
         base.Enter();
+
+        _triggerCalled = false;
+        _penguin.FindFirstNearestEnemy();
+        _penguin.owner.IsMoving = false;
+        _penguin.StopImmediately();
+        _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
     public override void UpdateState()
     {
