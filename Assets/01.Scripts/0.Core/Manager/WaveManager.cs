@@ -13,10 +13,6 @@ public class WaveManager : MonoBehaviour
 
     [Header("Wave Settings")]
     [SerializeField]
-    private int maxPhaseReadyTime;
-    private int remainingPhaseReadyTime;
-    public int RemainingPhaseReadyTime => remainingPhaseReadyTime;
-    [SerializeField]
     private Transform _tentTrm;
 
 
@@ -33,17 +29,16 @@ public class WaveManager : MonoBehaviour
 
     public int CurrentStage = 0;
 
-    public bool IsPhase = false;
+    public bool IsBattlePhase = false;
     public bool IsArrived = false;
     public bool CanTimer = true;
 
-    public event Action OnPhaseStartEvent = null;
-    public event Action OnPhaseEndEvent = null;
+    public event Action OnBattlePhaseStartEvent = null;
+    public event Action OnBattlePhaseEndEvent = null;
     public event Action OnIceArrivedEvent = null;
 
     private int maxEnemyCnt;
 
-    private bool isFirst = true;
     private List<Penguin> _curPTspawnPenguins = new List<Penguin> ();
 
     #endregion
@@ -102,21 +97,22 @@ public class WaveManager : MonoBehaviour
 
     public void OnEnable()
     {
-        OnPhaseStartEvent += OnPhaseStartHandle; // 전투페이즈 시작 이벤트 구독
-        OnPhaseEndEvent += OnPhaseEndHandle;     // 전투페이즈 종료 이벤트 
+        OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
+        OnBattlePhaseEndEvent += OnBattlePhaseEndHandle;     // 전투페이즈 종료 이벤트 
         OnIceArrivedEvent += OnIceArrivedHandle;
+        OnBattlePhaseStartEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, 90.0f), 1f, Ease.InOutBack);
+        OnBattlePhaseEndEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, -90.0f), 1f, Ease.InOutBack);
     }
 
     private void Start()
     {
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
-        SetReadyTime(); // 시간 초기화
-        InvokePhaseEndEvent(isWin);
+        BattlePhaseEndEventHandler(isWin);
     }
 
     private void Update()
     {
-        if (IsPhase)
+        if (IsBattlePhase)
         {
             if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
                 GetReward();
@@ -127,15 +123,6 @@ public class WaveManager : MonoBehaviour
                     ShowDefeatUI();
             }
         }
-        else if (Input.GetKeyDown(KeyCode.H))
-        {
-            remainingPhaseReadyTime -= 3;
-        }
-    }
-
-    private void SetReadyTime() // 준비 시간을 초기화한다.
-    {
-        remainingPhaseReadyTime = maxPhaseReadyTime;
     }
 
     private void OnIceArrivedHandle()
@@ -143,17 +130,16 @@ public class WaveManager : MonoBehaviour
         IsArrived = true;
     }
 
-    private void OnPhaseStartHandle() // 전투페이즈 시작
+    private void OnBattlePhaseStartHandle() // 전투페이즈 시작
     {
-        IsPhase = true;
+        IsBattlePhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
         _waveCntText.SetText($"Current Wave: {CurrentStage}");
-        UpdateTimeText();
     }
 
-    private void OnPhaseEndHandle() // 전투페이즈 종료
+    private void OnBattlePhaseEndHandle() // 전투페이즈 종료
     {
-        IsPhase = false;
+        IsBattlePhase = false;
         IsArrived = false;
 
         if (isWin)
@@ -165,7 +151,6 @@ public class WaveManager : MonoBehaviour
                 penguin.CurrentTarget = null;
             }
             _waveCntText.SetText($"Next Wave: {CurrentStage}");
-            UpdateUIOnEnemyCount();
         }
         else
         {
@@ -173,6 +158,17 @@ public class WaveManager : MonoBehaviour
         }
 
         //_currentEnemyGround = null;
+    }
+
+    private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // 시계 업데이트
+    {
+        _clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
+        {
+            foreach (var action in actions) //실행할 함수가 있다면 실행
+            {
+                action?.Invoke();
+            }
+        });
     }
 
     private void ShowDefeatUI()
@@ -188,9 +184,9 @@ public class WaveManager : MonoBehaviour
 
     public void CloseWinPanel()
     {
-        IsPhase = false;
+        IsBattlePhase = false;
 
-        victoryUI.DisableUI(1, OnPhaseEndEvent);
+        victoryUI.DisableUI(1, OnBattlePhaseEndEvent);
     }
 
     private void ShowEffect() // 이펙트
@@ -214,72 +210,15 @@ public class WaveManager : MonoBehaviour
         //}
     }
 
-    private void StartPhaseReadyRoutine() // 준비시간 계산 코루틴 실행용 함수
+    public void BattlePhaseStartEventHandler() // 전투페이즈 시작 이벤트 실행용 함수
     {
-        StartCoroutine(PhaseReadyRoutine());
+        OnBattlePhaseStartEvent?.Invoke();
     }
 
-    private IEnumerator PhaseReadyRoutine() // 준비시간 계산 코루틴
-    {
-        while (remainingPhaseReadyTime >= 0) // 현재 남은 준비 시간이 0보다 크다면
-        {
-            if (CanTimer)
-            {
-                UpdateClockHandRotation(); // 시계를 업데이트
-                UpdateTimeText(); // 시간 텍스트 업데이트
-
-                yield return new WaitForSeconds(1.0f); // 1초후
-                remainingPhaseReadyTime--; // 남은 준비시간 -1
-            }
-            else
-                yield return null;  
-        }
-
-        // 준비시간이 끝났다면
-
-        SetReadyTime(); // 남은 준비시간 초기화
-        InvokePhaseStartEvent(); // 전투 페이즈 시작
-    }
-
-    private void UpdateClockHandRotation() // 시계 업데이트
-    {
-        // 회전할 값
-        float rotationAngle = Mathf.Lerp(0,
-                                         -180,
-                                         1f - (remainingPhaseReadyTime / (float)maxPhaseReadyTime));
-        RotateClockHand(new Vector3(0, 0, rotationAngle), 1f, Ease.Linear); // 계산된 값으로 회전
-    }
-
-    private void UpdateTimeText() // 시간 텍스트 업데이트
-    {
-        int minutes = remainingPhaseReadyTime / 60;          // 분
-        int remainingSeconds = remainingPhaseReadyTime % 60; // 초
-
-        if (IsPhase) { _timeText.SetText($"전투 진행중"); }
-        else if (minutes > 0) { _timeText.SetText($"{minutes}: {remainingSeconds}"); } //분으로 나타낼 수 있다면 분까지 나타낸다.
-        else { _timeText.SetText($"{remainingSeconds}"); }
-    }
-
-    private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // 시계 업데이트
-    {
-        _clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
-        {
-            foreach (var action in actions) //실행할 함수가 있다면 실행
-            {
-                action?.Invoke();
-            }
-        });
-    }
-
-    public void InvokePhaseStartEvent() // 전투페이즈 시작 이벤트 실행용 함수
-    {
-        OnPhaseStartEvent?.Invoke();
-    }
-
-    public void InvokePhaseEndEvent(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
+    public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
     {
         isWin = _isWin;
-        OnPhaseEndEvent?.Invoke();
+        OnBattlePhaseEndEvent?.Invoke();
     }
 
     public void OnIceArrivedEventHanlder()
@@ -289,42 +228,9 @@ public class WaveManager : MonoBehaviour
 
     private void OnDisable()
     {
-        OnPhaseStartEvent -= OnPhaseStartHandle;
-        OnPhaseEndEvent -= OnPhaseEndHandle;
+        OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
+        OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
         OnIceArrivedEvent -= OnIceArrivedEventHanlder;
-    }
-
-    public void UpdateUIOnEnemyCount()
-    {
-        int enemyCnt = GameManager.Instance.GetCurrentEnemyCount();
-        int friendlyCnt = GameManager.Instance.GetCurrentPenguinCount();
-
-        if (enemyCnt == maxEnemyCnt)
-        {
-            RotateClockHand(new Vector3(0, 0, 0), 0.2f, Ease.Linear, StartPhaseReadyRoutine);
-        }
-        else if (enemyCnt <= 0)
-        {
-            GetReward();
-            InvokePhaseEndEvent(true);
-        }
-        else
-        {
-            float rotationAngle = -(180 / maxEnemyCnt) * (maxEnemyCnt - enemyCnt) + 180;
-            Vector3 rotationVec = new Vector3(0, 0, 5);
-            RotateClockHand(rotationVec, 0.2f, Ease.Linear);
-        }
-
-
-        if (friendlyCnt <= 0 && !isFirst)
-        {
-            ShowDefeatUI();
-            return;
-        }
-
-        _enemyCntText.SetText($"Enemy: {enemyCnt}");
-
-        isFirst = false;    
     }
 
     public void SetCurPTSpawnPenguins(List<Penguin> penguins)

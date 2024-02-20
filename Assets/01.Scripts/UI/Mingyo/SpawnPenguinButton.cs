@@ -29,7 +29,7 @@ public class SpawnPenguinButton : MonoBehaviour
 
     public void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
-        if(WaveManager.Instance.IsPhase)
+        if(WaveManager.Instance.IsBattlePhase)
         {
             UIManager.Instance.InitializeWarningTextSequence();
             UIManager.Instance.WarningTextSequence.Prepend(_penguinFactory.SpawnFailHudText.DOFade(1f, 0.5f))
@@ -40,9 +40,9 @@ public class SpawnPenguinButton : MonoBehaviour
             return;
         }
 
-        if (WaveManager.Instance.RemainingPhaseReadyTime >= cooltime) // 남은 준비시간안에 생성할 수 있다면 생성한다.
+        if (!WaveManager.Instance.IsBattlePhase) // 남은 준비시간안에 생성할 수 있다면 생성한다.
         {
-            TestLegion.Instance.LegionUIList[0].HeroCnt++;
+            //TestLegion.Instance.LegionUIList[0].HeroCnt++;
 
             ButtonCooldown();
         }

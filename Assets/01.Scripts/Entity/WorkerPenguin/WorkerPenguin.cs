@@ -2,6 +2,7 @@ using System;
 
 public enum WorkerPenguinStateEnum
 {
+    Idle,
     Move,
     Work,
     Return
@@ -27,12 +28,12 @@ public class WorkerPenguin : Worker
         }
     }
 
-    protected void Start()
+    protected override void Start()
     {
-        StateMachine.Init(WorkerPenguinStateEnum.Move);
+        StateMachine.Init(WorkerPenguinStateEnum.Idle);
     }
 
-    protected void Update()
+    protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
     }
