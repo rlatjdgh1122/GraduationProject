@@ -31,7 +31,7 @@ public class SpawnBuildingButton : MonoBehaviour
 
     private void SpawnPenguinEventHandler(BaseBuilding spawnBuilding) //Inspector 버튼 이벤트에서 구독할 함수
     {
-        if (WaveManager.Instance.IsPhase)
+        if (WaveManager.Instance.IsBattlePhase)
         {
             UIManager.Instance.InitializeWarningTextSequence();
             UIManager.Instance.WarningTextSequence.Prepend(_buildingFactory.SpawnFailHudText.DOFade(1f, 0.5f))

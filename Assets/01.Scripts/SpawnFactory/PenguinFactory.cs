@@ -48,13 +48,13 @@ public class PenguinFactory : EntityFactory<Penguin>
     private void OnEnable()
     {
         WaveManager.Instance.OnIceArrivedEvent += ResetPTInfo;
-        WaveManager.Instance.OnPhaseStartEvent += SetCurPTspawnPenguins;
+        WaveManager.Instance.OnBattlePhaseStartEvent += SetCurPTspawnPenguins;
     }
 
     public void OnDisable()
     {
         WaveManager.Instance.OnIceArrivedEvent -= ResetPTInfo;
-        WaveManager.Instance.OnPhaseStartEvent -= SetCurPTspawnPenguins;
+        WaveManager.Instance.OnBattlePhaseStartEvent -= SetCurPTspawnPenguins;
     }
 
     private void ResetPTInfo()

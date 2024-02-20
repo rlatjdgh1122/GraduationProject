@@ -59,7 +59,7 @@ public class PenguinSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsPhase)
+        if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsBattlePhase)
         {
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
                                                 out var hit, Mathf.Infinity, _spawnerLayer))

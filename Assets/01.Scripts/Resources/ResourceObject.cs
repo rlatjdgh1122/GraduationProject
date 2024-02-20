@@ -70,7 +70,7 @@ public class ResourceObject : MonoBehaviour
 
     private void OnMouseDown() 
     {
-        if (!WaveManager.Instance.IsPhase)
+        if (!WaveManager.Instance.IsBattlePhase)
         {
             resourceUI.EnableUI(1f, this);
         }
