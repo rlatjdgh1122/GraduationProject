@@ -28,6 +28,7 @@ public class InstallSysytem : MonoBehaviour
     private bool isInstalling;
     
     private Ground _previousGround;
+    private BaseBuilding _curBuilding;
 
     private OutlineSelection _outlineSelection;
 
@@ -48,6 +49,8 @@ public class InstallSysytem : MonoBehaviour
         _inputReader.OnLeftClickEvent += PlaceStructure;
         _inputReader.OnExitInstallEvent += StopInstall;
 
+        _curBuilding = building;
+
         StartInstall(building.BuildingInfoCompo.ID);
     }
 
@@ -63,7 +66,7 @@ public class InstallSysytem : MonoBehaviour
 
         isInstalling = true;
         _cancleInstallBuildingText.enabled = true;
-        _outlineSelection.SetCursor(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].UITexture);
+        //_outlineSelection.SetCursor(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].UITexture);
     }
 
     private void StopInstall()
@@ -98,15 +101,8 @@ public class InstallSysytem : MonoBehaviour
 
                 return;
             }
-            
 
-            BaseBuilding curSelectedBuilding = PoolManager.Instance.Pop(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].Name) as BaseBuilding;
-
-            Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y + 1, hit.transform.position.z);
-            Vector3Int gridPosition = curSelectedBuilding.BuildingInfoCompo.GridCompo.WorldToCell(hitPos);
-            curSelectedBuilding.transform.position = curSelectedBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
-
-            curSelectedBuilding?.Installed();
+            _curBuilding?.Installed();
             _previousGround?.InstallBuilding();
             StopInstall();
             isInstalling = false;
@@ -142,54 +138,14 @@ public class InstallSysytem : MonoBehaviour
                 else
                 {
                     _curGround.UpdateOutlineColor(GroundOutlineColorType.Green);
+
+                    Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y + 0.5f, hit.transform.position.z);
+                    Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(hitPos);
+                    _curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
                 }
             }
 
             _previousGround = _curGround;
         }
     }
-
-    //private IEnumerator BuildingFollowMousePosition(BaseBuilding curSelectedBuilding)
-    //{
-    //    while (true)
-    //    {
-    //        if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-    //                                            out var hit, Mathf.Infinity, _groundLayer))
-    //        {
-    //            if (!_groundDic.ContainsKey(hit.transform.gameObject.GetHashCode())) // 캐싱
-    //            {
-    //                _groundDic.Add(hit.transform.gameObject.GetHashCode(), hit.transform.GetComponent<Ground>());
-    //            }
-
-    //            Ground _curGround = _groundDic[hit.transform.gameObject.GetHashCode()];
-
-    //            // 만약 미리 설치되어 있으면 
-    //            if (_curGround.IsInstalledBuilding && !_curGround.IsRedMT)
-    //            {
-    //                Debug.Log("This ground already installed");
-    //                _curGround.UpdateOutlineColor(false); // 설치 불가능하다고 나타냄
-    //                yield return null;
-    //            }
-    //            else
-    //            {
-    //                if (!_curGround.IsGreenMT) { _curGround.UpdateOutlineColor(true); } // 설치 가능하다고 나타냄
-
-    //                Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y, hit.transform.position.z);
-    //                Vector3Int gridPosition = curSelectedBuilding.BuildingInfoCompo.GridCompo.WorldToCell(hitPos);
-    //                curSelectedBuilding.transform.position = curSelectedBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
-
-    //                if (Input.GetMouseButtonDown(0)) // 한번 더 누르면 설치
-    //                {
-    //                    curSelectedBuilding.transform.SetParent(hit.transform);
-    //                    curSelectedBuilding.Installed(); // 건물에 설치 처리
-    //                    _curGround.InstallBuilding(); // 땅에 설치 처리
-
-    //                    yield break; // 코루틴 종료
-    //                }
-    //            }
-    //        }
-
-    //        yield return null;
-    //    }
-    //}
 }
