@@ -15,7 +15,7 @@ public class PhaseChangeButton : MonoBehaviour
         get
         {
             if (gameObject.rectTransform().anchoredPosition.x == 1.0) { return -1.0f; }
-            else if (gameObject.rectTransform().anchoredPosition.x <= 300.0) { return 300.0f; }
+            else if (gameObject.rectTransform().anchoredPosition.x < 300.0) { return 300.0f; }
             return -300.0f;
         }
     }
@@ -23,6 +23,14 @@ public class PhaseChangeButton : MonoBehaviour
     private void Start()
     {
         WaveManager.Instance.OnBattlePhaseEndEvent += () => OnOffButton();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnOffButton();
+        }
     }
 
     private void Awake()
@@ -39,6 +47,6 @@ public class PhaseChangeButton : MonoBehaviour
 
     private void OnOffButton()
     {
-        gameObject.DOAnchorPos(gameObject.rectTransform().anchoredPosition + new Vector2(moveXValue, 0f), 0.7f).SetEase(Ease.InOutBack);
+        gameObject.DOAnchorPos(gameObject.rectTransform().anchoredPosition + new Vector2(moveXValue, 0f), 0.5f).SetEase(Ease.InOutBack);
     }
 }
