@@ -26,7 +26,7 @@ public class EnemyBasicWolf : Enemy
         foreach (EnemyWolfStateEnum state in Enum.GetValues(typeof(EnemyWolfStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"EnemyPenguin{typeName}State");
+            Type t = Type.GetType($"EnemyWolf{typeName}State");
             //리플렉션
             var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyWolfStateEnum>;
 
