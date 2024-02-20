@@ -5,61 +5,9 @@ using Define.Algorithem;
 using UnityEngine.Rendering;
 using System.Linq;
 
-[System.Serializable]
-public struct ArmyInfo //UI부분, 기획이 더 필요
+public class ArmyManager : Singleton<ArmyManager>
 {
-    //인원수
-    public int totalCount;
-    public int basicCount;
-    public int archerCount;
-    public int shieldCount;
-
-    //스탯이 몇배정도 증가하였는가
-    public float basicTimes;
-    public float archerTimes;
-    public float shieldTimes;
-}
-
-[System.Serializable]
-public class Army
-{
-    public int Legion;
-    public bool IsMoving;
-    public List<Penguin> Soldiers = new();
-    public Penguin General; //장군
-
-    public ArmyInfo info;
-
-    public void AddStat(int value, StatType type, StatMode mode)
-    {
-        foreach (var solider in Soldiers)
-        {
-            solider.AddStat(value, type, mode);
-        }
-    }
-    public void RemoveStat(int value, StatType type, StatMode mode)
-    {
-        foreach (var solider in Soldiers)
-        {
-            solider.RemoveStat(value, type, mode);
-        }
-    }
-}
-
-[System.Serializable]
-public class SoldierType
-{
-    public PenguinTypeEnum type;
-    public Penguin obj;
-}
-public class ArmySystem : Singleton<ArmySystem>
-{
-
-    [SerializeField] private GameObject _crown;
-    [SerializeField] private InputReader _inputReader;
-    public ParticleSystem ClickParticle;
-
-    [SerializeField] private List<SoldierType> soldierTypes = new();
+    [SerializeField] private SoldierTypeListSO soldierTypeListSO = null;
     private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
 
     [SerializeField] private List<Army> armies = new();
@@ -69,15 +17,9 @@ public class ArmySystem : Singleton<ArmySystem>
     public int CurLegion => curLegion;
     public int ArmyCount => armies.Count;
 
-    public override void Awake()
-    {
-        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-        _inputReader.RightClickEvent += SetClickMovement;
-    }
-
     private void Start()
     {
-        foreach (var solider in soldierTypes)
+        foreach (var solider in soldierTypeListSO.soldierTypes)
         {
             soldierTypeDictionary.Add(solider.type, solider.obj);
         }
@@ -129,75 +71,63 @@ public class ArmySystem : Singleton<ArmySystem>
                 s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
             })
 
-           ,p =>
+           , p =>
            p.Soldiers.ForEach(s =>
            {
                s.OutlineCompo.enabled = false;
                s.HealthCompo.OffUIUpdate?.Invoke();
-           }) );
-       /* for (int i = 0; i < armies.Count; i++)
-        {
-            if (i == index)
-                armies[i].Soldiers.ForEach(s =>
-                {
-                    s.OutlineCompo.enabled = true;
-                    s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
-                });
-            else
-                armies[i].Soldiers.ForEach(s =>
-                {
-                    s.OutlineCompo.enabled = false;
-                    s.HealthCompo.OffUIUpdate?.Invoke();
-                });
-        }*/
+           }));
     }
 
-    public void SetClickMovement()
+    #region 스탯 부분
+    /// <summary>
+    /// 현재 선택된 군단의 스탯을 상승 및 감소 
+    /// </summary>
+    /// <param name="value"> 값(%)</param>
+    /// <param name="type"> 값을 변경할 스탯타입 </param>
+    /// <param name="mode"> 상승 또는 감소</param>
+    public void AddStatCurAmry(int value, StatType type, StatMode mode)
     {
-        if (armies[curLegion].IsMoving && armies[curLegion].Soldiers.TrueForAll(s => s.NavAgent.enabled))
-        {
-            RaycastHit hit;
-
-            if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
-            {
-                SetArmyMovePostiton(hit.point);
-                ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
-                ClickParticle.Play();
-            }
-        }
+        armies[curLegion].AddStat(value, type, mode);
     }
 
     /// <summary>
-    /// 배치대로 이동
+    /// 현재 선택된 군단의 스탯을 삭제
     /// </summary>
-    /// <param name="mousePos"> 마우스 위치</param>
-
-    public void SetArmyMovePostiton(Vector3 mousePos)
+    /// <param name="value"> 삭제할 값(단, 똑같은 값이 존재해야함)</param>
+    /// <param name="type"> 값을 삭제할 스탯타입 </param>
+    /// <param name="mode"> 상승 또는 감소</param>
+    public void RemoveStatCurAmry(int value, StatType type, StatMode mode)
     {
-        var soldiers = armies[curLegion].Soldiers;
-
-        foreach (var soldier in soldiers)
-        {
-            soldier.MoveToMySeat(mousePos);
-        }
+        armies[curLegion].RemoveStat(value, type, mode);
     }
 
     /// <summary>
-    /// 펭귄 지우기
+    /// 군단의 스탯을 상승 및 감소
     /// </summary>
-    /// <param name="legion"> 몇번째 군단 *owner.Legion 입력*</param>
-    /// <param name="obj"> Penguin 타입만 가능 *this 입력*</param>
-
-    public void Remove(int legion, Penguin obj)
+    /// <param name="legion"> 몇번째 군단 </param>
+    /// <param name="value"> 값(%)</param>
+    /// <param name="type"> 값을 변경할 스탯타입</param>
+    /// <param name="mode"> 상승 또는 감소</param>
+    public void RemoveStat(int legion, int value, StatType type, StatMode mode)
     {
-        var soldiers = armies[legion].Soldiers;//
-        soldiers.Remove(obj); //리스트에서 제외
-        // 여기서 죽은 펭귄을 다시 push하는 코드가 필요
-
-        //var crown = GameObject.FindGameObjectWithTag("Crown");
-        //Destroy(crown);
+        armies[legion].RemoveStat(value, type, mode);
+    }
+    /// <summary>
+    /// 군단의 스탯을 삭제
+    /// </summary>
+    /// <param name="legion"> 몇번째 군단 </param>
+    /// <param name="value"> 값(%)</param>
+    /// <param name="type"> 값을 변경할 스탯타입</param>
+    /// <param name="mode"> 상승 또는 감소</param>
+    public void AddStat(int legion, int value, StatType type, StatMode mode)
+    {
+        armies[legion].AddStat(value, type, mode);
     }
 
+    #endregion
+
+    #region 군단 영입 부분
     /// <summary>
     /// 장군을 제외한 펭귄을 군단에 넣는 함수
     /// </summary>
@@ -235,7 +165,9 @@ public class ArmySystem : Singleton<ArmySystem>
         }
         armies[legion].General = obj;
     }
+    #endregion
 
+    #region 펭귄 및 군단 생성 부분
     /// <summary>
     /// 팽귄 생성하는 함수
     /// </summary>
@@ -256,6 +188,21 @@ public class ArmySystem : Singleton<ArmySystem>
     }
 
     /// <summary>
+    /// 펭귄 지우기
+    /// </summary>
+    /// <param name="legion"> 몇번째 군단 *owner.Legion 입력*</param>
+    /// <param name="obj"> Penguin 타입만 가능 *this 입력*</param>
+
+    public void Remove(int legion, Penguin obj)
+    {
+        var soldiers = armies[legion].Soldiers;
+        soldiers.Remove(obj); //리스트에서 제외
+
+        // 여기서 죽은 펭귄을 다시 push하는 코드가 필요
+
+    }
+
+    /// <summary>
     /// 새로운 군단 생성
     /// </summary>
     public void CreateArmy()
@@ -266,8 +213,5 @@ public class ArmySystem : Singleton<ArmySystem>
         armies.Add(newArmy);
     }
 
-    private void OnDestroy()
-    {
-        _inputReader.RightClickEvent -= SetClickMovement;
-    }
+    #endregion
 }

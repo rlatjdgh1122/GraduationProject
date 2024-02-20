@@ -8,13 +8,16 @@ using UnityEngine.AI;
 public abstract class Entity : PoolableMono
 {
     [Header("Target info")]
-    public Vector3 targetTrm;
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
     [Header("RangeAttack Info")]
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
+
+    [Header("MopGeneral Info")]
+    [SerializeField] public int AoEAttackCount = 3;
+
 
     #region 군단 포지션
 
@@ -30,9 +33,6 @@ public abstract class Entity : PoolableMono
         }
     }
     private Vector3 _seatPos = Vector3.zero; //군단에서 배치된 자리 OK?
-
-    Vector3 curDir = Vector3.zero;
-    private Vector3 prevDir = Vector3.zero;
     private float Angle
     {
         get
@@ -69,7 +69,6 @@ public abstract class Entity : PoolableMono
     public CharacterController CharController { get; private set; }
     public NavMeshAgent NavAgent { get; private set; }
     public EntityActionData ActionData { get; private set; }
-    public ParticleSystem ClickParticle;
     public Outline OutlineCompo { get; private set; }
 
     [SerializeField] protected SkinnedMeshRenderer _renderer;
@@ -88,7 +87,6 @@ public abstract class Entity : PoolableMono
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
         CharController = GetComponent<CharacterController>();
         NavAgent = GetComponent<NavMeshAgent>();
-        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         OutlineCompo = GetComponent<Outline>();
         ActionData = GetComponent<EntityActionData>();
 
