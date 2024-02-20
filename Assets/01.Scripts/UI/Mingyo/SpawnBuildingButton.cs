@@ -12,8 +12,6 @@ public class SpawnBuildingButton : MonoBehaviour
     private BuildingFactory _buildingFactory; // 팩토리
 
     private float installedTime; 
-    private string buildingName;     
-    private Texture2D _uiTexture;
 
     public void SetUpButtonInfo(Button button, BuildingFactory buildingFactory, BuildingItemInfo buildinginfo, SpawnUI spawnUI, PenguinSpawner penguinSpawner)
     {
@@ -31,7 +29,7 @@ public class SpawnBuildingButton : MonoBehaviour
         _btn.onClick.AddListener(() => penguinSpawner.UpdateSpawnUIBool());
     }
 
-    public void SpawnPenguinEventHandler(BaseBuilding spawnBuilding) //Inspector 버튼 이벤트에서 구독할 함수
+    private void SpawnPenguinEventHandler(BaseBuilding spawnBuilding) //Inspector 버튼 이벤트에서 구독할 함수
     {
         if (WaveManager.Instance.IsPhase)
         {

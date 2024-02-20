@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-public class InstallSysytem : MonoBehaviour
+public class InstallSystem : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI _cancleInstallBuildingText, _buildingSpawnFailHudText;
@@ -51,6 +51,8 @@ public class InstallSysytem : MonoBehaviour
 
         _curBuilding = building;
 
+        building.SetSelect();
+
         StartInstall(building.BuildingInfoCompo.ID);
     }
 
@@ -75,8 +77,15 @@ public class InstallSysytem : MonoBehaviour
 
         _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
 
+        if (_curBuilding != null && !_curBuilding.IsInstalled)
+        {
+            _curBuilding.CancleInsall();
+            PoolManager.Instance.Push(_curBuilding);
+            _curBuilding = null;
+        }
+
         _cancleInstallBuildingText.enabled = false;
-        _outlineSelection.SetDefaultCursor();
+        //_outlineSelection.SetDefaultCursor();
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnExitInstallEvent -= StopInstall;
@@ -103,6 +112,7 @@ public class InstallSysytem : MonoBehaviour
             }
 
             _curBuilding?.Installed();
+            _curBuilding?.transform.SetParent(_previousGround.transform);
             _previousGround?.InstallBuilding();
             StopInstall();
             isInstalling = false;
@@ -121,6 +131,7 @@ public class InstallSysytem : MonoBehaviour
         {
             if (!_groundDic.ContainsKey(hit.transform.gameObject.GetHashCode())) // 캐싱
             {
+                Debug.Log("Add new Ground");
                 _groundDic.Add(hit.transform.gameObject.GetHashCode(), hit.transform.GetComponent<Ground>());
             }
 
@@ -133,15 +144,19 @@ public class InstallSysytem : MonoBehaviour
 
                 if (_curGround.IsInstalledBuilding)
                 {
+                    _curBuilding.transform.position = new Vector3(-10f, -10f, -10f);
                     _curGround.UpdateOutlineColor(GroundOutlineColorType.Red);
                 }
                 else
                 {
                     _curGround.UpdateOutlineColor(GroundOutlineColorType.Green);
 
-                    Vector3 hitPos = new Vector3(hit.transform.position.x, hit.point.y + 0.5f, hit.transform.position.z);
-                    Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(hitPos);
-                    _curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
+                    Vector3 buildingPos = new Vector3(_curGround.transform.position.x, 0f, _curGround.transform.position.z);
+                    Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
+                    //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
+                    _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
+                                                                  2f,
+                                                                  _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
                 }
             }
 
