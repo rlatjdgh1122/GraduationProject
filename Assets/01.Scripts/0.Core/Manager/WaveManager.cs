@@ -100,6 +100,8 @@ public class WaveManager : MonoBehaviour
         OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
         OnBattlePhaseEndEvent += OnBattlePhaseEndHandle;     // 전투페이즈 종료 이벤트 
         OnIceArrivedEvent += OnIceArrivedHandle;
+        OnBattlePhaseStartEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, 90.0f), 1f, Ease.InOutBack);
+        OnBattlePhaseEndEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, -90.0f), 1f, Ease.InOutBack);
     }
 
     private void Start()
@@ -156,6 +158,17 @@ public class WaveManager : MonoBehaviour
         }
 
         //_currentEnemyGround = null;
+    }
+
+    private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // 시계 업데이트
+    {
+        _clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
+        {
+            foreach (var action in actions) //실행할 함수가 있다면 실행
+            {
+                action?.Invoke();
+            }
+        });
     }
 
     private void ShowDefeatUI()

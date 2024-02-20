@@ -8,8 +8,6 @@ public class PhaseChangeButton : MonoBehaviour
 {
     private Button _button;
 
-    private Vector2 originPos;
-
     private float moveXValue
     {
         get
