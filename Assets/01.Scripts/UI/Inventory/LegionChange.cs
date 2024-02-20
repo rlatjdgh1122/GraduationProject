@@ -35,21 +35,37 @@ public class LegionChange : MonoBehaviour
         SelectButton();
     }
 
-    public void ChangeButton()
+    public void ChangeButton() //군단 바꾸는 버튼
     {
         UIManager.Instance.InitializeWarningTextSequence();
 
         _backPanel.DOFade(0.5f, _changeTime);
 
-        for(int i = 0; i < _legionButtons.Length; i++)
+        for(int i = 0; i < LegionInventory.Instance.LegionList.Count; i++)
         {
             UIManager.Instance.WarningTextSequence
-                .Append(_legionButtons[i].DOFade(1, _changeTime));
-            _legionButtons[i].blocksRaycasts = true;
+            .Append(_legionButtons[i].DOFade(1, _changeTime));
+
+            Image obj = _legionButtons[i].transform.Find("Locked").GetComponent<Image>(); //LegionBtn 오브젝트 밑에 있는
+            //Locked 오브젝트 찾기
+
+            if (LegionInventory.Instance.LegionList[i].Locked) //군단이 잠겨있으면
+            {
+                _legionButtons[i].blocksRaycasts = false;
+
+
+                obj.gameObject.SetActive(true);
+            }
+            else
+            {
+                _legionButtons[i].blocksRaycasts = true;
+
+                obj.gameObject.SetActive(false);
+            }
         }
     }
 
-    private void SelectButton()
+    private void SelectButton() //군단 지정 버튼
     {
         UIManager.Instance.InitializeWarningTextSequence();
 
