@@ -2,9 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BuildingType
+{
+    DefenseBuilding,
+    BuffBuilding,
+    ResourceBuilding
+}
+
+public enum DefaultBuildingType
+{
+    ConstructionStation,
+    PenguinSpawn
+}
+
 [System.Serializable]
 public class BuildingItemInfo
 {
+    [field: SerializeField]
+    public BuildingType BuildingType { get; private set; }
+
     [field: SerializeField]
     public string Name { get; private set; }
     [field: SerializeField]

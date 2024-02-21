@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(Outline))]
 public class DefaultBuilding : BaseBuilding
 {
-    [SerializeField] private RectTransform _spawnUI;
+    [SerializeField] DefaultBuildingType _defaultBuildingType;
+
+    [SerializeField] private RectTransform _penguinSpawnUI;
+    [SerializeField] private RectTransform _constructionStationUI;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
     [SerializeField] private LayerMask _buildingLayer;
@@ -23,7 +27,7 @@ public class DefaultBuilding : BaseBuilding
     protected virtual void Start()
     {
         Installed();
-        _offSpawnUIVec = _spawnUI.position;
+        _offSpawnUIVec = _penguinSpawnUI.position;
         _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, onSpawnUIYPosValue, 0);
     }
 
@@ -48,7 +52,18 @@ public class DefaultBuilding : BaseBuilding
     public void SpawnButton()
     {
         Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
-        UIManager.Instance.UIMoveDot(_spawnUI, targetVec, 0.7f, Ease.OutCubic);
+
+        if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
+        {
+            UIManager.Instance.UIMoveDot(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic);
+            UIManager.Instance.UIMoveDot(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+        }
+        else
+        {
+            UIManager.Instance.UIMoveDot(_penguinSpawnUI, targetVec, 0.7f, Ease.OutCubic);
+            UIManager.Instance.UIMoveDot(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+        }
+        
         UpdateSpawnUIBool();
     }
 

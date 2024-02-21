@@ -10,10 +10,12 @@ public class SpawnButtonGenerator : MonoBehaviour
     [SerializeField]
     private BuildingDatabaseSO _buildingDatabaseSO;
 
-    private RectTransform _buildingBtnParent;
+    private RectTransform ResourceBuildingBtns;
+    private RectTransform BuffBuildingBtns;
+    private RectTransform DefenseBuildingBtns;
 
     [SerializeField]
-    private Button _buttonPrefab;
+    private Button _buildingButtonPrefab;
 
     private BuildingFactory _buildingFactory;
     private SpawnUI _spawnUI;
@@ -23,7 +25,9 @@ public class SpawnButtonGenerator : MonoBehaviour
     {
         _constructionStation = GameObject.FindAnyObjectByType<ConstructionStation>();
         _buildingFactory = GameObject.FindAnyObjectByType<BuildingFactory>();
-        _buildingBtnParent = transform.Find("BuildingPanel/Buttons").GetComponent<RectTransform>();
+        ResourceBuildingBtns = transform.Find("ConstructionStationPanel/ResourceBuildingPanel/Buttons").GetComponent<RectTransform>();
+        BuffBuildingBtns = transform.Find("ConstructionStationPanel/BuffBuildingPanel/Buttons").GetComponent<RectTransform>();
+        DefenseBuildingBtns = transform.Find("ConstructionStationPanel/DefenseBuildingPanel/Buttons").GetComponent<RectTransform>();
         _spawnUI = GetComponent<SpawnUI>();
         GenerateBuildingBtn();
     }
@@ -32,8 +36,21 @@ public class SpawnButtonGenerator : MonoBehaviour
     {
         foreach(var building in _buildingDatabaseSO.BuildingItems)
         {
-            var button = Instantiate(_buttonPrefab, Vector3.zero, Quaternion.identity);
-            button.transform.SetParent(_buildingBtnParent);
+            var button = Instantiate(_buildingButtonPrefab, Vector3.zero, Quaternion.identity);
+
+            switch (building.BuildingType)
+            {
+                case BuildingType.ResourceBuilding:
+                    button.transform.SetParent(ResourceBuildingBtns);
+                    break;
+                case BuildingType.DefenseBuilding:
+                    button.transform.SetParent(DefenseBuildingBtns);
+                    break;
+                case BuildingType.BuffBuilding:
+                    button.transform.SetParent(BuffBuildingBtns);
+                    break;
+            }
+
             button.transform.localScale = new Vector3(1.0f, 2.385f, 1.0f);
             button.AddComponent<SpawnBuildingButton>().SetUpButtonInfo(button, _buildingFactory, building, _spawnUI, _constructionStation);
         }

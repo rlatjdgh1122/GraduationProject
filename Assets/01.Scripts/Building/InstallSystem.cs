@@ -123,7 +123,6 @@ public class InstallSystem : MonoBehaviour
         {
             if (!_groundDic.ContainsKey(hit.transform.gameObject.GetHashCode())) // Ä³½Ì
             {
-                Debug.Log("Add new Ground");
                 _groundDic.Add(hit.transform.gameObject.GetHashCode(), hit.transform.GetComponent<Ground>());
             }
 
