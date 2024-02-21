@@ -1,31 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
 public class Legion
 {
+    public int price;
     public bool Locked;
     public List<LegionInventoryData> legionInven;
-    public Dictionary<PenguinUIDataSO, LegionInventoryData> legionDictionary = new();
+    public Dictionary<PenguinStat, LegionInventoryData> legionDictionary = new();
 }
 
 public class LegionInventory : Singleton<LegionInventory>
 {
+    [Header("PenguinInventory")]
     //==========================================
     //∆Î±œ ¿Œ∫•≈‰∏Æ
 
     //¿Â±∫
     public List<LegionInventoryData> generalInven = new();
-    public Dictionary<PenguinUIDataSO, LegionInventoryData> generalDictionary = new();
+    public Dictionary<PenguinStat, LegionInventoryData> generalDictionary = new();
 
     //∫¥ªÁ
     public List<LegionInventoryData> soliderInven = new();
-    public Dictionary<PenguinUIDataSO, LegionInventoryData> soliderDictionary = new();
+    public Dictionary<PenguinStat, LegionInventoryData> soliderDictionary = new();
     //==========================================
 
-
+    [Header("LegionInventory")]
     //±∫¥‹ ¿Œ∫•≈‰∏Æ
     public List<Legion> LegionList;
 
@@ -34,28 +37,39 @@ public class LegionInventory : Singleton<LegionInventory>
     [SerializeField] private Transform _warloadParent;
 
     private UnitSlotUI[] _soliderSlots;
-    private UnitSlotUI[] _warloadSlots;
+    private UnitSlotUI[] _generalSlots;
 
-    [SerializeField] private PenguinUIDataSO[] _penguinSo;
+    [Header("PenguinSO")]
+    [SerializeField] private PenguinStat[] _generalSO;
+    [SerializeField] private PenguinStat[] _soliderSO;
 
     public override void Awake()
     {
         base.Awake();
 
         _soliderSlots = _soliderParent.GetComponentsInChildren<UnitSlotUI>();
-        _warloadSlots = _warloadParent.GetComponentsInChildren<UnitSlotUI>();
+        _generalSlots = _warloadParent.GetComponentsInChildren<UnitSlotUI>();
     }
 
     private void Start()
     {
-        for(int i = 0; i < _penguinSo.Length; i++)
+        if(_soliderSlots.Length != _soliderSO.Length) Debug.LogError("∫¥ªÁ ΩΩ∑‘¿Ã ≥ π´ ∏π∞≈≥™ ¿˚¿Ω");
+        if(_generalSlots.Length != _generalSO.Length) Debug.LogError("¿Â±∫ ΩΩ∑‘¿Ã ≥ π´ ∏π∞≈≥™ ¿˚¿Ω");
+
+        InsertToStart(_generalSO);
+        InsertToStart(_soliderSO);
+    }
+
+    public void InsertToStart(PenguinStat[] penguinSO)
+    {
+        for (int i = 0; i < penguinSO.Length; i++)
         {
-            AddPenguin(_penguinSo[i]);
-            RemovePenguin(_penguinSo[i]);
+            AddPenguin(penguinSO[i]);
+            RemovePenguin(penguinSO[i]);
         }
     }
 
-    public void AddPenguin(PenguinUIDataSO type) //∆Î±œ √ﬂ∞°«œ¥¬ «‘ºˆ(∆Î±œ ≈∏¿‘¿∏∑Œ ∫–∑˘)
+    public void AddPenguin(PenguinStat type) //∆Î±œ √ﬂ∞°«œ¥¬ «‘ºˆ(∆Î±œ ≈∏¿‘¿∏∑Œ ∫–∑˘)
     {
         if (type.JobType == PenguinJobType.General) //∏∏æ‡ ¿Â±∫¿Ã∏È
         {
@@ -75,14 +89,14 @@ public class LegionInventory : Singleton<LegionInventory>
         {
             _soliderSlots[i].CleanUpSlot();
         }
-        for (int i = 0; i < _warloadSlots.Length; i++)
+        for (int i = 0; i < _generalSlots.Length; i++)
         {
-            _warloadSlots[i].CleanUpSlot();
+            _generalSlots[i].CleanUpSlot();
         }
 
         for (int i = 0; i < generalInven.Count; ++i)
         {
-            _warloadSlots[i].UpdateSlot(generalInven[i]);
+            _generalSlots[i].UpdateSlot(generalInven[i]);
         }
         for (int i = 0; i < soliderInven.Count; ++i)
         {
@@ -93,7 +107,7 @@ public class LegionInventory : Singleton<LegionInventory>
 
     #region ∆Î±œ ¿Œ∫•ø° ∆Î±œ √ﬂ∞°
 
-    public void AddToWarLoad(PenguinUIDataSO penguin)
+    public void AddToWarLoad(PenguinStat penguin)
     {
         if (generalDictionary.TryGetValue(penguin, out LegionInventoryData legionInven)) //∏∏æ‡ ∆Î±œ ¿Œ∫•ø° ¿÷¿∏∏È
         {
@@ -107,7 +121,7 @@ public class LegionInventory : Singleton<LegionInventory>
         }
     }
 
-    public void AddToSolider(PenguinUIDataSO penguin)
+    public void AddToSolider(PenguinStat penguin)
     {
         if (soliderDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))//∏∏æ‡ ∆Î±œ ¿Œ∫•ø° ¿÷¿∏∏È
         {
@@ -123,7 +137,7 @@ public class LegionInventory : Singleton<LegionInventory>
 
 #endregion
 
-    public void RemovePenguin(PenguinUIDataSO penguin, int count = 1)
+    public void RemovePenguin(PenguinStat penguin, int count = 1)
     {
         if (generalDictionary.TryGetValue(penguin, out LegionInventoryData warloadPenguin))
         {
@@ -154,7 +168,7 @@ public class LegionInventory : Singleton<LegionInventory>
         UpdateSlotUI();
     }
 
-    public void AddToLegion(PenguinUIDataSO penguin, int legionNumber)
+    public void AddToLegion(PenguinStat penguin, int legionNumber)
     {
 
         if (LegionList[legionNumber].legionDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))
@@ -170,7 +184,7 @@ public class LegionInventory : Singleton<LegionInventory>
     }
 
 
-    public void RemoveLegion(PenguinUIDataSO penguin, int i, int count = 1)
+    public void RemoveLegion(PenguinStat penguin, int i, int count = 1)
     {
         LegionList[i].legionDictionary.TryGetValue(penguin, out LegionInventoryData legion);
 

@@ -1,11 +1,14 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class LegionSlotUI : SlotUI, IPointerDownHandler
+public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private Image _slotImage;
     [SerializeField] protected UnitInformationUI _info;
     [SerializeField] private int _legionNumber;
     [SerializeField] private int _slotNumber;
@@ -20,7 +23,8 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
     public override void CleanUpSlot()
     {
         _data = null;
-        _unitImage.sprite = _emptyImage;
+        _unitImage.enabled = false;
+        _unitImage.sprite = null;
     }
 
     public override void UpdateSlot(LegionInventoryData data)
@@ -52,6 +56,8 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
         {
             _data = _info._data; //이 슬롯의 데이터는 UnitInformationUI의 데이터
 
+
+            _unitImage.enabled = true;
             //if (_data.penguinData.JobType == PenguinJobType.General &&
             //    LegionInventory.Instance.LegionList[_legionNumber - 1].generalLimit) return;
 
@@ -60,5 +66,15 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler
 
             UpdateSlot(_data);
         }
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _slotImage.color = new Color(255, 255, 255, 0.5f);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+
+        _slotImage.color = new Color(255,255,255,0);
     }
 }
