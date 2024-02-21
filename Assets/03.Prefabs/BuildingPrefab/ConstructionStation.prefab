@@ -9,8 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4137949411843694092}
+  - component: {fileID: 4133712563218479987}
+  - component: {fileID: 8333673544434276064}
   m_Layer: 0
-  m_Name: BuildUndungi
+  m_Name: ConstructionStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.5180979, y: 2.0340738, z: -7.759201}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8165966335703782711}
@@ -35,6 +37,39 @@ Transform:
   - {fileID: 938287992870520799}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4133712563218479987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7083600425547046399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a3da4fe495f9b46bd8c1916cdfb00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnFailHudText: {fileID: 0}
+--- !u!114 &8333673544434276064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7083600425547046399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c106f83077f2d4ead4bb55f164ef07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cancleInstallBuildingText: {fileID: 0}
+  _buildingSpawnFailHudText: {fileID: 0}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
+    type: 2}
+  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!1001 &761053946343235636
 PrefabInstance:
   m_ObjectHideFlags: 0

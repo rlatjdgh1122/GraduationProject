@@ -1,19 +1,9 @@
-using System;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.UI;
-using TMPro;
 
-public enum PenguinTypeEnum
-{
-    Basic,
-    Archer,
-    Shield
-}
-
-public class PenguinSpawner : DefaultBuilding
+public class ConstructionStation : DefaultBuilding
 {
     protected override void Start()
     {

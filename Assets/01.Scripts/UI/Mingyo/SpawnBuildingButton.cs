@@ -13,9 +13,7 @@ public class SpawnBuildingButton : MonoBehaviour
 
     private float installedTime;
 
-
-
-    public void SetUpButtonInfo(Button button, BuildingFactory buildingFactory, BuildingItemInfo buildinginfo, SpawnUI spawnUI, PenguinSpawner penguinSpawner)
+    public void SetUpButtonInfo(Button button, BuildingFactory buildingFactory, BuildingItemInfo buildinginfo, SpawnUI spawnUI, ConstructionStation constructionStation)
     {
         _buildingFactory = buildingFactory;
         _btn = button;
@@ -28,7 +26,8 @@ public class SpawnBuildingButton : MonoBehaviour
         _btn.onClick.AddListener(() => SpawnPenguinEventHandler(buildinginfo.Prefab.GetComponent<BaseBuilding>()));
         _btn.onClick.AddListener(() => spawnUI.OffUnitPanel());
         _btn.onClick.AddListener(() => spawnUI.OffBuildingPanel());
-        _btn.onClick.AddListener(() => penguinSpawner.UpdateSpawnUIBool());
+        _btn.onClick.AddListener(() => constructionStation.UpdateSpawnUIBool());
+
     }
 
     private void SpawnPenguinEventHandler(BaseBuilding spawnBuilding) //버튼 이벤트에 구독된 함수

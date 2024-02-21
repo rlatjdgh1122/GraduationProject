@@ -17,11 +17,11 @@ public class SpawnButtonGenerator : MonoBehaviour
 
     private BuildingFactory _buildingFactory;
     private SpawnUI _spawnUI;
-    private PenguinSpawner _penguinSpawner;
+    private ConstructionStation _constructionStation;
 
     private void Awake()
     {
-        _penguinSpawner = GameObject.FindAnyObjectByType<PenguinSpawner>();
+        _constructionStation = GameObject.FindAnyObjectByType<ConstructionStation>();
         _buildingFactory = GameObject.FindAnyObjectByType<BuildingFactory>();
         _buildingBtnParent = transform.Find("BuildingPanel/Buttons").GetComponent<RectTransform>();
         _spawnUI = GetComponent<SpawnUI>();
@@ -35,7 +35,7 @@ public class SpawnButtonGenerator : MonoBehaviour
             var button = Instantiate(_buttonPrefab, Vector3.zero, Quaternion.identity);
             button.transform.SetParent(_buildingBtnParent);
             button.transform.localScale = new Vector3(1.0f, 2.385f, 1.0f);
-            button.AddComponent<SpawnBuildingButton>().SetUpButtonInfo(button, _buildingFactory, building, _spawnUI, _penguinSpawner);
+            button.AddComponent<SpawnBuildingButton>().SetUpButtonInfo(button, _buildingFactory, building, _spawnUI, _constructionStation);
         }
     }
 }

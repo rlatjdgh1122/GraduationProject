@@ -28,7 +28,7 @@ public abstract class BaseBuilding : PoolableMono
     private bool isInstalled = false;
     public bool IsInstalled => isInstalled;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         SetUpCompo();
     }
