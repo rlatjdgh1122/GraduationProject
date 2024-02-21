@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Legion
 {
+    public bool Locked;
     public List<LegionInventoryData> legionInven;
     public Dictionary<PenguinUIDataSO, LegionInventoryData> legionDictionary = new();
 }
@@ -35,12 +36,23 @@ public class LegionInventory : Singleton<LegionInventory>
     private UnitSlotUI[] _soliderSlots;
     private UnitSlotUI[] _warloadSlots;
 
+    [SerializeField] private PenguinUIDataSO[] _penguinSo;
+
     public override void Awake()
     {
         base.Awake();
 
         _soliderSlots = _soliderParent.GetComponentsInChildren<UnitSlotUI>();
         _warloadSlots = _warloadParent.GetComponentsInChildren<UnitSlotUI>();
+    }
+
+    private void Start()
+    {
+        for(int i = 0; i < _penguinSo.Length; i++)
+        {
+            AddPenguin(_penguinSo[i]);
+            RemovePenguin(_penguinSo[i]);
+        }
     }
 
     public void AddPenguin(PenguinUIDataSO type) //Æë±Ï Ãß°¡ÇÏ´Â ÇÔ¼ö(Æë±Ï Å¸ÀÔÀ¸·Î ºÐ·ù)
@@ -115,27 +127,29 @@ public class LegionInventory : Singleton<LegionInventory>
     {
         if (generalDictionary.TryGetValue(penguin, out LegionInventoryData warloadPenguin))
         {
-            if (warloadPenguin.stackSize <= count)
-            {
-                generalInven.Remove(warloadPenguin);
-                generalDictionary.Remove(penguin);
-            }
-            else
-            {
-                warloadPenguin.RemoveStack(count);
-            }
+            warloadPenguin.RemoveStack(count);
+            //if (warloadPenguin.stackSize <= count)
+            //{
+            //    generalInven.Remove(warloadPenguin);
+            //    generalDictionary.Remove(penguin);
+            //}
+            //else
+            //{
+            //    warloadPenguin.RemoveStack(count);
+            //}
         }
         else if (soliderDictionary.TryGetValue(penguin, out LegionInventoryData soliderPenguin))
         {
-            if (soliderPenguin.stackSize <= count)
-            {
-                soliderInven.Remove(soliderPenguin);
-                soliderDictionary.Remove(penguin);
-            }
-            else
-            {
-                soliderPenguin.RemoveStack(count);
-            }
+            soliderPenguin.RemoveStack(count);
+            //if (soliderPenguin.stackSize <= count)
+            //{
+            //    soliderInven.Remove(soliderPenguin);
+            //    soliderDictionary.Remove(penguin);
+            //}
+            //else
+            //{
+            //    soliderPenguin.RemoveStack(count);
+            //}
         }
         UpdateSlotUI();
     }

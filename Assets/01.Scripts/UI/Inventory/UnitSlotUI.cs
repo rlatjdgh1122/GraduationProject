@@ -31,7 +31,7 @@ public class UnitSlotUI : SlotUI, IPointerDownHandler
         }
         else
         {
-            _text.text = string.Empty;
+            _text.text = "0";
         }
     }
 
