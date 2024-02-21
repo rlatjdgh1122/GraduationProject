@@ -2,20 +2,20 @@ using System;
 
 public class EnemyArcherWolf : Enemy
 {
-    public EnemyStateMachine<EnemyPenguinStateEnum> StateMachine { get; private set; }
+    public EnemyStateMachine<EnemyWolfStateEnum> StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new EnemyStateMachine<EnemyPenguinStateEnum>();
+        StateMachine = new EnemyStateMachine<EnemyWolfStateEnum>();
 
-        foreach (EnemyPenguinStateEnum state in Enum.GetValues(typeof(EnemyPenguinStateEnum)))
+        foreach (EnemyWolfStateEnum state in Enum.GetValues(typeof(EnemyWolfStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"EnemyPenguin{typeName}State");
+            Type t = Type.GetType($"EnemyWolf{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyPenguinStateEnum>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyWolfStateEnum>;
 
             StateMachine.AddState(state, newState);
         }
@@ -23,7 +23,7 @@ public class EnemyArcherWolf : Enemy
 
     protected override void Start()
     {
-        StateMachine.Init(EnemyPenguinStateEnum.Idle);
+        StateMachine.Init(EnemyWolfStateEnum.Idle);
     }
 
     protected override void Update()
@@ -31,7 +31,7 @@ public class EnemyArcherWolf : Enemy
         StateMachine.CurrentState.UpdateState();
 
         if (IsDead)
-            StateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
+            StateMachine.ChangeState(EnemyWolfStateEnum.Dead);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
