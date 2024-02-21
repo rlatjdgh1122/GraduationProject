@@ -57,6 +57,11 @@ public class Enemy : Entity
         base.Attack();
     }
 
+    public override void AoEAttack()
+    {
+        base.AoEAttack();
+    }
+
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);

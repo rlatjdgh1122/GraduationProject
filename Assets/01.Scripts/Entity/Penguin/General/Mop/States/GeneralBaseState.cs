@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MopBaseState : PenguinState<MopGeneralPenguinStateEnum>
+public class GeneralBaseState : PenguinState<MopGeneralPenguinStateEnum>
 {
-    public MopBaseState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralBaseState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
+
     }
 
     public override void Enter()

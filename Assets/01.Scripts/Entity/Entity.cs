@@ -1,12 +1,21 @@
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
+public enum PenguinEntityType
+{
+    Basic,
+    Shield,
+    Archer,
+    Mop,
+}
+
+[System.Serializable]
 public abstract class Entity : PoolableMono
 {
+    // 여기 변수 enum 값으로 커스텀 에디터 사용해서 보기편하게 바꾸기
+
+    public PenguinEntityType type;
     [Header("Target info")]
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
@@ -15,8 +24,15 @@ public abstract class Entity : PoolableMono
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
 
-    [Header("MopGeneral Info")]
-    [SerializeField] public int AoEAttackCount = 3;
+    [Header("Passive Info")]
+    //몇대 때릴때마다
+    public int EveryAttackCount = 3;
+    //몇대 때릴때마다
+    public float EverySecond = 10f;
+    //뒤에서 때릴때
+    public bool BackAttack = false; 
+    //뒤에서 때릴때
+    public int AroundEnemyCount =3; 
 
 
     #region 군단 포지션
@@ -124,6 +140,11 @@ public abstract class Entity : PoolableMono
     public virtual void Attack()
     {
         DamageCasterCompo?.CastDamage();
+    }
+
+    public virtual void AoEAttack()
+    {
+        DamageCasterCompo?.CaseAoEDamage();
     }
 
     public virtual void RangeAttack()

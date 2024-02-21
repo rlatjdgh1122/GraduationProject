@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PenguinAnimationTrigger : MonoBehaviour
@@ -12,6 +13,13 @@ public class PenguinAnimationTrigger : MonoBehaviour
     public void AttackTrigger()
     {
         _penguin.Attack();
+    }
+
+    public void AoEAttackTrigger()
+    {
+
+        Debug.Log("АјАн 1");
+        _penguin.AoEAttack();
     }
 
     private void RangeAttackTrigger()

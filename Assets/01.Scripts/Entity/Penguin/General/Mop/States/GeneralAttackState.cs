@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MopAttackState : MopBaseState
+public class GeneralAttackState : GeneralBaseState
 {
 
     private int curAttackCount = 0;
-    public MopAttackState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralAttackState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
@@ -22,7 +22,7 @@ public class MopAttackState : MopBaseState
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
 
         ++curAttackCount;
-        if (curAttackCount % _penguin.AoEAttackCount == 0)
+        if (curAttackCount % _penguin.EveryAttackCount == 0)
         {
             curAttackCount = 0;
             _stateMachine.ChangeState(MopGeneralPenguinStateEnum.AoEAttack);

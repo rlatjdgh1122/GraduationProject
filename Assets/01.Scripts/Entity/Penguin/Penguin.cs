@@ -1,11 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Define.Algorithem;
-using UnityEngine.EventSystems;
-using System;
-using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine.AI;
 
 public class Penguin : Entity
 {
