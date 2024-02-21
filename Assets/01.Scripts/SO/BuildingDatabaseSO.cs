@@ -15,8 +15,14 @@ public class BuildingItemInfo
     public GameObject Prefab { get; private set; }
     [field: SerializeField]
     public Sprite UISprite { get; private set; }
+
+
     [field: SerializeField]
     public float installedTime { get; private set; }
+    //[field: SerializeField]
+    //public float NecessaryResources { get; private set; } //앙 자원 원석의 자원 설명 필요.
+    [field: SerializeField]
+    public int NecessaryWokerCount { get; private set; }
 }
 [CreateAssetMenu(menuName = "SO/BuildingList")]
 public class BuildingDatabaseSO : ScriptableObject

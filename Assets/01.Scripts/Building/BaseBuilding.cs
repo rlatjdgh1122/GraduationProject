@@ -56,13 +56,13 @@ public abstract class BaseBuilding : PoolableMono
         _meshRenderer.material = BuildingInfoCompo.NormalMat;
     }
 
-    //protected virtual void Update()
-    //{
-    //    if(isInstalled)
-    //    {
-    //        Running(); // 설치 되면 역할 수행
-    //    }
-    //}
+    protected virtual void Update()
+    {
+        if(isInstalled)
+        {
+            Running(); // 설치 되면 역할 수행
+        }
+    }
 
     protected abstract void Running();
 }
