@@ -8,17 +8,20 @@ public class DialogueSystem : MonoBehaviour
 {
     public TMP_Text txtSentence;
     public GameObject panel;
+    private int dialCount = 1;
 
     Queue<string> sentences = new Queue<string>();
 
     public void Begin(Dialogue info)
     {
         panel.SetActive(true);
-        sentences.Clear();
 
-        foreach (var sentence in info.sentences)
+        if(dialCount == 1)
         {
-            sentences.Enqueue(sentence);
+            foreach (var sentence in info.sentences)
+            {
+                sentences.Enqueue(sentence);
+            }
         }
 
         Next();
@@ -26,7 +29,13 @@ public class DialogueSystem : MonoBehaviour
 
     public void Next()
     {
-        if (sentences.Count == 1)
+        if (dialCount == 1 && sentences.Count == 4)
+        {
+            End();
+            ++dialCount;
+        }
+
+        if (dialCount == 2 && sentences.Count == 1)
         {
             End();
         }
