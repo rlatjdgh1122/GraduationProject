@@ -16,30 +16,64 @@ public enum DefaultBuildingType
 }
 
 [System.Serializable]
+public struct BuffItemInfo
+{
+    [SerializeField]
+    private float innerDistance;
+    public float InnerDistance { get { return innerDistance; } }
+
+    [SerializeField]
+    private LayerMask targetLayer;
+    public LayerMask TargetLayer { get { return targetLayer; } }
+
+    [SerializeField]
+    private float defaultBuffValue;
+    public float DefaultBuffValue { get { return defaultBuffValue; } }
+}
+
+[System.Serializable]
 public class BuildingItemInfo
 {
-    [field: SerializeField]
-    public BuildingType BuildingType { get; private set; }
+    [SerializeField]
+    private BuildingType buildingTypeEnum;
+    public BuildingType BuildingTypeEnum { get { return buildingTypeEnum; } }
 
-    [field: SerializeField]
-    public string Name { get; private set; }
-    [field: SerializeField]
-    public int ID { get; private set; }
-    [field: SerializeField]
-    public Vector2Int Size { get; private set; }
-    [field: SerializeField]
-    public GameObject Prefab { get; private set; }
-    [field: SerializeField]
-    public Sprite UISprite { get; private set; }
+    [SerializeField]
+    private string name;
+    public string Name { get { return name; } }
 
+    [SerializeField]
+    private int id;
+    public int ID { get { return id; } }
 
-    [field: SerializeField]
-    public float installedTime { get; private set; }
-    //[field: SerializeField]
+    [SerializeField]
+    private Vector2Int size;
+    public Vector2Int Size { get { return size; } }
+
+    [SerializeField]
+    private GameObject prefab;
+    public GameObject Prefab { get { return prefab; } }
+
+    [SerializeField]
+    private Sprite uiSprite;
+    public Sprite UISprite { get { return uiSprite; } }
+
+    [SerializeField]
+    private float installedTime;
+    public float InstalledTime { get { return installedTime; } }
+
+    //[SerializeField]
     //public float NecessaryResources { get; private set; } //앙 자원 원석의 자원 설명 필요.
-    [field: SerializeField]
-    public int NecessaryWokerCount { get; private set; }
+
+    [SerializeField]
+    private int necessaryWokerCount;
+    public int NecessaryWokerCount { get { return necessaryWokerCount; } }
+
+    [SerializeField]
+    private BuffItemInfo buffItemInfo;
+    public BuffItemInfo BuffItemInfoST => buffItemInfo;
 }
+
 [CreateAssetMenu(menuName = "SO/BuildingList")]
 public class BuildingDatabaseSO : ScriptableObject
 {

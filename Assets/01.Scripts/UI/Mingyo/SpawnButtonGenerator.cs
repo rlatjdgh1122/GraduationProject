@@ -38,7 +38,7 @@ public class SpawnButtonGenerator : MonoBehaviour
         {
             var button = Instantiate(_buildingButtonPrefab, Vector3.zero, Quaternion.identity);
 
-            switch (building.BuildingType)
+            switch (building.BuildingTypeEnum)
             {
                 case BuildingType.ResourceBuilding:
                     button.transform.SetParent(ResourceBuildingBtns);
