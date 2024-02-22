@@ -14,7 +14,7 @@ public class GeneralAoEAttackState : GeneralBaseState
 
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
-        _penguin.owner.IsMoving = false;
+        _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
@@ -35,7 +35,7 @@ public class GeneralAoEAttackState : GeneralBaseState
     public override void Exit()
     {
         _penguin.AnimatorCompo.speed = 1;
-        _penguin.owner.IsMoving = true;
+        _penguin.Owner.IsMoving = true;
         base.Exit();
     }
 

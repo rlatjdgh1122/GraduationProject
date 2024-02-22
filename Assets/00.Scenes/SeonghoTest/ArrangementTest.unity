@@ -48438,6 +48438,16 @@ PrefabInstance:
       propertyPath: type
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2786243584357324009, guid: 658aad57e2fd8134088eb34943833733,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2786243584357324009, guid: 658aad57e2fd8134088eb34943833733,
+        type: 3}
+      propertyPath: Passive.IsAttackEvent
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6183761197577178501, guid: 658aad57e2fd8134088eb34943833733,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -48521,17 +48531,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c36d37824f9aa54eb4e4003f2fb922b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   innerDistance: 9
   attackDistance: 1.5
   _arrowPrefab: {fileID: 0}
   _firePos: {fileID: 0}
-  EveryAttackCount: 3
+  IsAttackEvent: 0
+  AttackCount: 3
+  IsSecondEvent: 0
   EverySecond: 10
-  BackAttack: 0
+  IsBackAttack: 0
+  IsAroundEnemyCountEventEvent: 0
+  AroundRadius: 3
   AroundEnemyCount: 3
   _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
+  type: 3
   moveSpeed: 3
   attackSpeed: 1
   maxDetectedCount: 0

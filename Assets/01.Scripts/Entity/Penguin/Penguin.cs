@@ -2,21 +2,33 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
+public enum PenguinEntityType
+{
+    Basic,
+    Shield,
+    Archer,
+    MeleeGeneral,
+    RangeGeneral,
+}
 public class Penguin : Entity
 {
-    [Header("Setting Values")]
+    public PenguinEntityType type;
+
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
     public float provokeRange = 25f;
 
-    [HideInInspector] public Enemy CurrentTarget;
+    public Enemy CurrentTarget;
 
     public bool IsDead = false;
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     public Army owner;
+
+    public Army Owner => owner;
 
     private void OnEnable()
     {
@@ -89,7 +101,7 @@ public class Penguin : Entity
 
     protected override void HandleDie()
     {
-        ArmyManager.Instance.Remove(owner.Legion, this);
+        ArmyManager.Instance.Remove(Owner.Legion, this);
         IsDead = true;
     }
 

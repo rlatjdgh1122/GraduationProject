@@ -1,39 +1,60 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[System.Serializable]
-public enum PenguinEntityType
-{
-    Basic,
-    Shield,
-    Archer,
-    Mop,
-}
-
-[System.Serializable]
 public abstract class Entity : PoolableMono
 {
-    // 여기 변수 enum 값으로 커스텀 에디터 사용해서 보기편하게 바꾸기
 
-    public PenguinEntityType type;
-    [Header("Target info")]
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
-    [Header("RangeAttack Info")]
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
 
-    [Header("Passive Info")]
-    //몇대 때릴때마다
-    public int EveryAttackCount = 3;
-    //몇대 때릴때마다
-    public float EverySecond = 10f;
-    //뒤에서 때릴때
-    public bool BackAttack = false; 
-    //뒤에서 때릴때
-    public int AroundEnemyCount =3; 
 
+    #region 패시브
+
+    //몇대 때릴때마다
+    public bool IsAttackEvent = false;
+    public int AttackCount = 3;
+
+    //몇 초 마다
+    public bool IsSecondEvent = false;
+    public float EverySecond = 10f;
+
+    //뒤에서 때릴때
+    public bool IsBackAttack = false;
+
+    //범위 안에 주변의 적이 몇명인가
+    public bool IsAroundEnemyCountEventEvent = false;
+    public float AroundRadius = 3;
+    public int AroundEnemyCount = 3;
+
+
+
+    /// <summary>
+    /// 몇 초마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAttackEventPassive() => IsAttackEvent;
+
+    /// <summary>
+    /// 몇 대마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckSecondEventPassive() => IsSecondEvent;
+
+    /// <summary>
+    /// 뒤치기 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckBackAttackEventPassive() => IsAttackEvent;
+
+    /// <summary>
+    /// 주변의 적 수 비례 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
+    #endregion
 
     #region 군단 포지션
 
@@ -152,8 +173,27 @@ public abstract class Entity : PoolableMono
 
     }
 
-    #region �̵� ����
+    #region 패시브 함수
+    public virtual void OnPassiveAttackEvent()
+    {
 
+    }
+    public virtual void OnPassiveSecondEvent()
+    {
+
+    }
+    public virtual void OnPassiveBackAttackEvent()
+    {
+
+    }
+    public virtual void OnPassiveAroundEvent()
+    {
+
+    }
+    #endregion
+
+
+    #region 움직임 관리
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
     {
         MousePos = mousePos;

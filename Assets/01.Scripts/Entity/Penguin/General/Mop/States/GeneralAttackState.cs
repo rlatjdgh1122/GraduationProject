@@ -17,16 +17,16 @@ public class GeneralAttackState : GeneralBaseState
         base.Enter();
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
-        _penguin.owner.IsMoving = false;
+        _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
 
         ++curAttackCount;
-        if (curAttackCount % _penguin.EveryAttackCount == 0)
+       /* if (curAttackCount % _penguin.EveryAttackCount == 0)
         {
             curAttackCount = 0;
             _stateMachine.ChangeState(MopGeneralPenguinStateEnum.AoEAttack);
-        }
+        }*/
     }
     public override void UpdateState()
     {
@@ -45,7 +45,7 @@ public class GeneralAttackState : GeneralBaseState
     public override void Exit()
     {
         _penguin.AnimatorCompo.speed = 1;
-        _penguin.owner.IsMoving = true;
+        _penguin.Owner.IsMoving = true;
         base.Exit();
     }
 
