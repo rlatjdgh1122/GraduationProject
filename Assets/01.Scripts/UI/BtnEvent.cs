@@ -10,7 +10,7 @@ enum HeroType
     Bow
 }
 
-public class ButtonEvent : MonoBehaviour
+public class BtnEvent : MonoBehaviour
 {
     public float CoolTime;
     [SerializeField] private int _maxCnt;

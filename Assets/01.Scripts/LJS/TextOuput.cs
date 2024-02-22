@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class TextOuput : MonoBehaviour
 {
-    private ButtonEvent _btnEvent;
+    private BtnEvent _btnEvent;
     public TextMeshProUGUI[] _cntText;
     public Image[] _img;
 
@@ -17,7 +17,7 @@ public class TextOuput : MonoBehaviour
 
     private void Awake()
     {
-        _btnEvent = GetComponent<ButtonEvent>();
+        _btnEvent = GetComponent<BtnEvent>();
         _btnEvent.OnCurCountChangedEvent += HandleValueChanged;
         _curTime = _btnEvent.CoolTime;
         _maxTime = _btnEvent.CoolTime;

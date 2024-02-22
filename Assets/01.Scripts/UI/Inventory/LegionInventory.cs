@@ -9,6 +9,7 @@ public class Legion
 {
     public int price;
     public bool Locked;
+    public Transform LegionPanels;
     public List<LegionInventoryData> legionInven;
     public Dictionary<PenguinStat, LegionInventoryData> legionDictionary = new();
 }
@@ -201,5 +202,22 @@ public class LegionInventory : Singleton<LegionInventory>
         AddPenguin(penguin); //±º´Ü¿¡¼­ ºüÁø Æë±ÏÀ» Æë±Ï ÀÎº¥¿¡ Ãß°¡
 
         UpdateSlotUI();
+    }
+
+    public void ChangeLegion(int number)
+    {
+        Debug.Log(number);
+
+        for(int i = 0; i < LegionList.Count; i++)
+        {
+            if(i == number)
+            {
+                LegionList[i].LegionPanels.gameObject.SetActive(true);
+            }
+            else
+            {
+                LegionList[i].LegionPanels.gameObject.SetActive(false);
+            }
+        }
     }
 }
