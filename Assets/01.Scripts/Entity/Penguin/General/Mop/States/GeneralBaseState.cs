@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneralBaseState : PenguinState<MopGeneralPenguinStateEnum>
+public class GeneralBaseState : PenguinState<GeneralPenguinStateEnum>
 {
-    public GeneralBaseState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralBaseState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
@@ -19,7 +19,7 @@ public class GeneralBaseState : PenguinState<MopGeneralPenguinStateEnum>
         base.UpdateState();
 
         if (_penguin.IsDead)
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Dead);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Dead);
     }
 
     public override void Exit()

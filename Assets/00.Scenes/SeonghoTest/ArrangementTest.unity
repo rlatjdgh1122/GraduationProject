@@ -48445,6 +48445,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786243584357324009, guid: 658aad57e2fd8134088eb34943833733,
         type: 3}
+      propertyPath: passiveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c1f015e560393d4fa8b3c03ade4ad4f,
+        type: 2}
+    - target: {fileID: 2786243584357324009, guid: 658aad57e2fd8134088eb34943833733,
+        type: 3}
       propertyPath: Passive.IsAttackEvent
       value: 0
       objectReference: {fileID: 0}
@@ -48543,6 +48549,7 @@ MonoBehaviour:
   IsAroundEnemyCountEventEvent: 0
   AroundRadius: 3
   AroundEnemyCount: 3
+  passiveData: {fileID: 0}
   _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
   type: 3
@@ -48933,7 +48940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7367823916589430677
 Transform:
   m_ObjectHideFlags: 0

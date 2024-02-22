@@ -6,14 +6,13 @@ public class GeneralAttackState : GeneralBaseState
 {
 
     private int curAttackCount = 0;
-    public GeneralAttackState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralAttackState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
 
     public override void Enter()
     {
-
         base.Enter();
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
@@ -21,12 +20,10 @@ public class GeneralAttackState : GeneralBaseState
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
 
-        ++curAttackCount;
-       /* if (curAttackCount % _penguin.EveryAttackCount == 0)
+        if (_penguin.CheckAttackEventPassive(++curAttackCount))
         {
-            curAttackCount = 0;
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.AoEAttack);
-        }*/
+            _penguin?.OnPassiveAttackEvent();
+        }
     }
     public override void UpdateState()
     {
@@ -35,10 +32,10 @@ public class GeneralAttackState : GeneralBaseState
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Chase);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
 
             if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Idle);
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
         }
     }
 

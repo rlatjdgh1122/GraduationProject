@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralMoveState : GeneralBaseState
 {
-    public GeneralMoveState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralMoveState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
@@ -19,10 +19,10 @@ public class GeneralMoveState : GeneralBaseState
     {
         base.UpdateState();
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Idle);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
 
         if (_penguin.IsInnerTargetRange)
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Chase);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
     }
 
     public override void Exit()

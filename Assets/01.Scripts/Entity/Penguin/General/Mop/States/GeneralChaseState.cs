@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralChaseState : GeneralBaseState
 {
-    public GeneralChaseState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralChaseState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 
@@ -22,10 +22,10 @@ public class GeneralChaseState : GeneralBaseState
             _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
 
         if (_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Attack);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Attack);
 
         if (_penguin.CurrentTarget == null)
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Idle);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
     }
 
     public override void Exit()

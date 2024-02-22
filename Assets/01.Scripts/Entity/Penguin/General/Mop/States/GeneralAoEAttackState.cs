@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralAoEAttackState : GeneralBaseState
 {
-    public GeneralAoEAttackState(Penguin penguin, PenguinStateMachine<MopGeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralAoEAttackState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 
@@ -17,18 +17,22 @@ public class GeneralAoEAttackState : GeneralBaseState
         _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
+
+        Debug.Log("±¤¿ª°ø°Ý");
     }
     public override void UpdateState()
     {
+
         base.UpdateState();
+
         _penguin.LookTarget();
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Chase);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
 
             if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(MopGeneralPenguinStateEnum.Idle);
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
         }
     }
 

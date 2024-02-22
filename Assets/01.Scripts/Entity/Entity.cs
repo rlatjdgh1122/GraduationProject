@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +10,6 @@ public abstract class Entity : PoolableMono
 
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
-
 
     #region 패시브
 
@@ -29,32 +29,7 @@ public abstract class Entity : PoolableMono
     public float AroundRadius = 3;
     public int AroundEnemyCount = 3;
 
-
-
-    /// <summary>
-    /// 몇 초마다 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckAttackEventPassive() => IsAttackEvent;
-
-    /// <summary>
-    /// 몇 대마다 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckSecondEventPassive() => IsSecondEvent;
-
-    /// <summary>
-    /// 뒤치기 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckBackAttackEventPassive() => IsAttackEvent;
-
-    /// <summary>
-    /// 주변의 적 수 비례 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
-    #endregion
+    public PassiveDataSO passiveData = null;
 
     #region 군단 포지션
 
@@ -127,6 +102,8 @@ public abstract class Entity : PoolableMono
         OutlineCompo = GetComponent<Outline>();
         ActionData = GetComponent<EntityActionData>();
 
+        passiveData?.SetOwner(this);
+
         DamageCasterCompo.SetOwner(this);
         HealthCompo.SetHealth(_characterStat);
         HealthCompo.OnHit += HandleHit;
@@ -148,12 +125,14 @@ public abstract class Entity : PoolableMono
 
     protected virtual void Start()
     {
-
+        if (passiveData == true)
+            passiveData.Start();
     }
 
     protected virtual void Update()
     {
-
+        if (passiveData == true)
+            passiveData.Update();
     }
 
     protected abstract void HandleDie();
@@ -174,6 +153,34 @@ public abstract class Entity : PoolableMono
     }
 
     #region 패시브 함수
+
+    /// <summary>
+    /// 몇 대마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAttackEventPassive(int curAttackCount)
+=> passiveData.CheckAttackEventPassive(curAttackCount);
+
+    /// <summary>
+    /// 몇 초마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
+
+    /// <summary>
+    /// 뒤치기 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckBackAttackEventPassive() 
+        => IsAttackEvent;
+
+    /// <summary>
+    /// 주변의 적 수 비례 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
+    #endregion
+
     public virtual void OnPassiveAttackEvent()
     {
 

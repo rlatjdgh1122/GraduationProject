@@ -1,31 +1,32 @@
 using System;
+using System.Diagnostics;
 
-public enum MopGeneralPenguinStateEnum
+public enum GeneralPenguinStateEnum
 {
     Idle,
     Move,
     Chase,
     Attack,
+    Dead,
     AoEAttack, //광격공격
-    Dead
 }
 
 public class MopGeneralPenguin : Penguin
 {
-    public PenguinStateMachine<MopGeneralPenguinStateEnum> StateMachine { get; private set; }
+    public PenguinStateMachine<GeneralPenguinStateEnum> StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new PenguinStateMachine<MopGeneralPenguinStateEnum>();
+        StateMachine = new PenguinStateMachine<GeneralPenguinStateEnum>();
 
-        foreach (MopGeneralPenguinStateEnum state in Enum.GetValues(typeof(MopGeneralPenguinStateEnum)))
+        foreach (GeneralPenguinStateEnum state in Enum.GetValues(typeof(GeneralPenguinStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"Mop{typeName}State");
+            Type t = Type.GetType($"General{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<MopGeneralPenguinStateEnum>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<GeneralPenguinStateEnum>;
 
             StateMachine.AddState(state, newState);
         }
@@ -33,12 +34,19 @@ public class MopGeneralPenguin : Penguin
 
     protected override void Start()
     {
-        StateMachine.Init(MopGeneralPenguinStateEnum.Idle);
+        StateMachine.Init(GeneralPenguinStateEnum.Idle);
     }
 
     protected override void Update()
     {
+        base.Update();
+
         StateMachine.CurrentState.UpdateState();
+    }
+
+    public override void OnPassiveAttackEvent()
+    {
+        StateMachine.ChangeState(GeneralPenguinStateEnum.AoEAttack);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
