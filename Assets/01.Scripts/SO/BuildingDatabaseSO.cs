@@ -35,8 +35,8 @@ public struct BuffItemInfo
 public class BuildingItemInfo
 {
     [SerializeField]
-    private BuildingType buildingTypeEnum;
-    public BuildingType BuildingTypeEnum { get { return buildingTypeEnum; } }
+    private BuildingType _buildingTypeEnum;
+    public BuildingType BuildingTypeEnum { get { return _buildingTypeEnum; } }
 
     [SerializeField]
     private string name;
@@ -47,8 +47,8 @@ public class BuildingItemInfo
     public int ID { get { return id; } }
 
     [SerializeField]
-    private Vector2Int size;
-    public Vector2Int Size { get { return size; } }
+    private Vector2Int _size;
+    public Vector2Int Size { get { return _size; } }
 
     [SerializeField]
     private GameObject prefab;
@@ -70,8 +70,8 @@ public class BuildingItemInfo
     public int NecessaryWokerCount { get { return necessaryWokerCount; } }
 
     [SerializeField]
-    private BuffItemInfo buffItemInfo;
-    public BuffItemInfo BuffItemInfoST => buffItemInfo;
+    private BuffItemInfo _buffItemInfo;
+    public BuffItemInfo BuffItemInfoST => _buffItemInfo;
 }
 
 [CreateAssetMenu(menuName = "SO/BuildingList")]

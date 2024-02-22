@@ -7,26 +7,20 @@ using UnityEngine;
 [CustomEditor(typeof(BuildingItemInfo))]
 public class CustomBuildingInspectorEditor : Editor
 {
-    SerializedProperty BuildingTypeEnum;
+    SerializedProperty BuildingTypeEnum_Property;
 
-    SerializedProperty Setting_InnerDistance_Prop;
-    SerializedProperty Setting__TargetLayer_Prop;
-    SerializedProperty Setting__DefaultBuffValue_Prop;
+    SerializedProperty BuffItemInfoST_Property;
 
     void OnEnable()
     {
-        BuildingTypeEnum = serializedObject.FindProperty("BuildingTypeEnum");
-        Setting_InnerDistance_Prop = serializedObject.FindProperty("InnerDistance");
-        Setting__TargetLayer_Prop = serializedObject.FindProperty("TargetLayer");
-        Setting__DefaultBuffValue_Prop = serializedObject.FindProperty("DefaultBuffValue");
+        BuildingTypeEnum_Property = serializedObject.FindProperty("_buildingTypeEnum");
+        BuffItemInfoST_Property = serializedObject.FindProperty("_buffItemInfoST");
     }
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
-
         EditorGUI.BeginChangeCheck();
-        EditorGUILayout.PropertyField(BuildingTypeEnum);
+        EditorGUILayout.PropertyField(BuildingTypeEnum_Property);
 
         // Building 프로퍼티 필드에 변경사항이 있다면
         if (EditorGUI.EndChangeCheck())
@@ -39,14 +33,11 @@ public class CustomBuildingInspectorEditor : Editor
 
     private void ChangeBuildingInfoInspector()
     {
-        BuildingType selectedEnum = (BuildingType)BuildingTypeEnum.enumValueIndex;
-        Debug.Log(selectedEnum);
+        BuildingType selectedEnum = (BuildingType)BuildingTypeEnum_Property.enumValueIndex;
         switch (selectedEnum)
         {
             case BuildingType.BuffBuilding:
-                EditorGUILayout.PropertyField(Setting_InnerDistance_Prop);
-                EditorGUILayout.PropertyField(Setting__TargetLayer_Prop);
-                EditorGUILayout.PropertyField(Setting__DefaultBuffValue_Prop);
+                EditorGUILayout.PropertyField(BuffItemInfoST_Property);
                 break;
             case BuildingType.DefenseBuilding:
                 break;
