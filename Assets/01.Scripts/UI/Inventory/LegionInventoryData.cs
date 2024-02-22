@@ -3,10 +3,10 @@ using System;
 [Serializable]
 public class LegionInventoryData
 {
-    public PenguinUIDataSO penguinData;
+    public PenguinStat penguinData;
     public int stackSize;
 
-    public LegionInventoryData(PenguinUIDataSO penguinData)
+    public LegionInventoryData(PenguinStat penguinData)
     {
         this.penguinData = penguinData;
         AddStack();

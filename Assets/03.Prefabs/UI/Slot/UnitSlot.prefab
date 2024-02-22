@@ -52,12 +52,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitImage: {fileID: 5239516284517662231}
-  _emptyImage: {fileID: 0}
+  _emptyImage: {fileID: 6562097911285224980}
   _data:
     penguinData: {fileID: 0}
     stackSize: 0
   _text: {fileID: 5890146656278663089}
   _info: {fileID: 0}
+  _lockImg: {fileID: 6562097911285224980}
 --- !u!1 &1166455682288916276
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ GameObject:
   - component: {fileID: 7295520700892322128}
   - component: {fileID: 6562097911285224980}
   m_Layer: 5
-  m_Name: Empty
+  m_Name: Lock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.6901961}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

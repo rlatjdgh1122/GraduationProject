@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CreatePenguinBtn : MonoBehaviour
 {
-    [SerializeField] private PenguinUIDataSO data;
+    [SerializeField] private PenguinStat data;
 
     public void CreatePenguin()
     {
