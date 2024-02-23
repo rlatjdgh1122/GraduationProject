@@ -15,7 +15,6 @@ public class StrengthBuffBuilding : BuffBuilding
 
     protected override void Running()
     {
-        Debug.Log("ckw");
         _colls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
         previousCollsLength = BuffRunning(_colls, previousCollsLength);
     }
