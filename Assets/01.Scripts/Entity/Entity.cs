@@ -79,8 +79,8 @@ public abstract class Entity : PoolableMono
     public NavMeshAgent NavAgent { get; private set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
-    [SerializeField] protected CharacterStat _characterStat;
-    public CharacterStat Stat => _characterStat;
+    [SerializeField] protected BaseStat _characterStat;
+    public BaseStat Stat => _characterStat;
     #endregion
 
     protected virtual void Awake()

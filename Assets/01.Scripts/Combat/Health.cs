@@ -32,7 +32,6 @@ public class Health : MonoBehaviour, IDamageable
 
     public void SetHealth(BaseStat owner)
     {
-        Instantiate(owner);
         currentHealth = maxHealth = owner.GetMaxHealthValue();
     }
 

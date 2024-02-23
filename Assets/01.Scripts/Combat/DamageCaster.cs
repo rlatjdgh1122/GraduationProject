@@ -11,9 +11,9 @@ public class DamageCaster : MonoBehaviour
 
     public LayerMask TargetLayer;
 
-    private CharacterStat _owner;
+    private BaseStat _owner;
 
-    public void SetOwner(CharacterStat owner)
+    public void SetOwner(BaseStat owner)
     {
         _owner = owner;
     }

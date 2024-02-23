@@ -28,7 +28,7 @@ public class PenguinDetailData
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Penguin")]
-public class PenguinStat : CharacterStat
+public class PenguinStat : BaseStat
 {
     [Header("Penguin UI Data")]
     public PenguinUniqueType UniqueType;

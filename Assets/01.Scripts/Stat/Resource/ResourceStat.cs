@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/Stat/Resource")]
-public class ResourceStat : CharacterStat
+public class ResourceStat : BaseStat
 {
     [Header("Resource Info")]
     public string resourceName;
