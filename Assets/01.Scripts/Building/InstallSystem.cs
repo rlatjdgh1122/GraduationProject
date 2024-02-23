@@ -40,13 +40,26 @@ public class InstallSystem : MonoBehaviour
     public void SelectBuilding(BaseBuilding building)
     {
         _inputReader.OnLeftClickEvent += PlaceStructure;
-        _inputReader.OnExitInstallEvent += StopInstall;
+        _inputReader.OnEscEvent += StopInstall;
+
+        _inputReader.OnEBtnEvent += RightRotateBuilding;
+        _inputReader.OnQBtnEvent += LeftRotateBuilding;
 
         _curBuilding = building;
 
         building.SetSelect();
 
         StartInstall(building.BuildingInfoCompo.ID);
+    }
+
+    private void RightRotateBuilding()
+    {
+        _curBuilding.transform.Rotate(0.0f, -90.0f, 0.0f);
+    }
+
+    private void LeftRotateBuilding()
+    {
+        _curBuilding.transform.Rotate(0.0f, 90.0f, 0.0f);
     }
 
     private void StartInstall(int id)
@@ -80,7 +93,9 @@ public class InstallSystem : MonoBehaviour
         //_outlineSelection.SetDefaultCursor();
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
-        _inputReader.OnExitInstallEvent -= StopInstall;
+        _inputReader.OnEscEvent -= StopInstall;
+        _inputReader.OnEBtnEvent -= RightRotateBuilding;
+        _inputReader.OnQBtnEvent -= LeftRotateBuilding;
     }
 
     private void PlaceStructure()

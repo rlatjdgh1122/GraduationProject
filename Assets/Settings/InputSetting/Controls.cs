@@ -72,6 +72,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b7ab4de-4fea-4f1e-9dda-f7b331342155"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""68643dc9-677d-4b0c-8338-edca5a85d951"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -94,6 +112,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ExitBuilding"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""649ac643-ba5c-4491-9ad1-0e7007f80f19"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""633813f7-6fbe-4a8c-ae1a-380de8272d95"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -126,6 +166,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
         m_Building_MouseLeftClick = m_Building.FindAction("MouseLeftClick", throwIfNotFound: true);
         m_Building_ExitBuilding = m_Building.FindAction("ExitBuilding", throwIfNotFound: true);
+        m_Building_RotateRight = m_Building.FindAction("RotateRight", throwIfNotFound: true);
+        m_Building_RotateLeft = m_Building.FindAction("RotateLeft", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -235,12 +277,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IBuildingActions> m_BuildingActionsCallbackInterfaces = new List<IBuildingActions>();
     private readonly InputAction m_Building_MouseLeftClick;
     private readonly InputAction m_Building_ExitBuilding;
+    private readonly InputAction m_Building_RotateRight;
+    private readonly InputAction m_Building_RotateLeft;
     public struct BuildingActions
     {
         private @Controls m_Wrapper;
         public BuildingActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseLeftClick => m_Wrapper.m_Building_MouseLeftClick;
         public InputAction @ExitBuilding => m_Wrapper.m_Building_ExitBuilding;
+        public InputAction @RotateRight => m_Wrapper.m_Building_RotateRight;
+        public InputAction @RotateLeft => m_Wrapper.m_Building_RotateLeft;
         public InputActionMap Get() { return m_Wrapper.m_Building; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +302,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ExitBuilding.started += instance.OnExitBuilding;
             @ExitBuilding.performed += instance.OnExitBuilding;
             @ExitBuilding.canceled += instance.OnExitBuilding;
+            @RotateRight.started += instance.OnRotateRight;
+            @RotateRight.performed += instance.OnRotateRight;
+            @RotateRight.canceled += instance.OnRotateRight;
+            @RotateLeft.started += instance.OnRotateLeft;
+            @RotateLeft.performed += instance.OnRotateLeft;
+            @RotateLeft.canceled += instance.OnRotateLeft;
         }
 
         private void UnregisterCallbacks(IBuildingActions instance)
@@ -266,6 +318,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ExitBuilding.started -= instance.OnExitBuilding;
             @ExitBuilding.performed -= instance.OnExitBuilding;
             @ExitBuilding.canceled -= instance.OnExitBuilding;
+            @RotateRight.started -= instance.OnRotateRight;
+            @RotateRight.performed -= instance.OnRotateRight;
+            @RotateRight.canceled -= instance.OnRotateRight;
+            @RotateLeft.started -= instance.OnRotateLeft;
+            @RotateLeft.performed -= instance.OnRotateLeft;
+            @RotateLeft.canceled -= instance.OnRotateLeft;
         }
 
         public void RemoveCallbacks(IBuildingActions instance)
@@ -300,5 +358,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnMouseLeftClick(InputAction.CallbackContext context);
         void OnExitBuilding(InputAction.CallbackContext context);
+        void OnRotateRight(InputAction.CallbackContext context);
+        void OnRotateLeft(InputAction.CallbackContext context);
     }
 }
