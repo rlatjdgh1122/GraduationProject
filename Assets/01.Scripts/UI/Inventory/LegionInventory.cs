@@ -7,11 +7,15 @@ using UnityEngine;
 [Serializable]
 public class Legion
 {
-    public int price;
-    public bool Locked;
-    public Transform LegionPanels;
-    public List<LegionInventoryData> legionInven;
-    public Dictionary<PenguinStat, LegionInventoryData> legionDictionary = new();
+    public int price;                               //군단 가격
+    public bool Locked;                             //군단이 잠겨있는가
+    public Transform LegionPanels;                  //군단 UI 부모
+    public int  MaxCount;                           //최대 군단 병사 수
+    public int CurrentCount  = 0;      //현재 군단 병사 수
+    public bool MaxGereral  { get; set; }           //군단에 장군이 꽉차있는가
+
+    [HideInInspector] public List<LegionInventoryData> LegionInven;
+    public Dictionary<PenguinStat, LegionInventoryData> legionDictionary { get; private set; } = new();
 }
 
 public class LegionInventory : Singleton<LegionInventory>
@@ -34,11 +38,13 @@ public class LegionInventory : Singleton<LegionInventory>
     public List<Legion> LegionList;
 
     [Header("Inventory UI")]
+    [SerializeField] private Transform _generalParent;
     [SerializeField] private Transform _soliderParent;
-    [SerializeField] private Transform _warloadParent;
+    [Header("LegionInventoryUI")]
+    [SerializeField] private LegionInventoryUI _legionUI;
 
-    private UnitSlotUI[] _soliderSlots;
     private UnitSlotUI[] _generalSlots;
+    private UnitSlotUI[] _soliderSlots;
 
     [Header("PenguinSO")]
     [SerializeField] private PenguinStat[] _generalSO;
@@ -48,25 +54,32 @@ public class LegionInventory : Singleton<LegionInventory>
     {
         base.Awake();
 
+        _generalSlots = _generalParent.GetComponentsInChildren<UnitSlotUI>();
         _soliderSlots = _soliderParent.GetComponentsInChildren<UnitSlotUI>();
-        _generalSlots = _warloadParent.GetComponentsInChildren<UnitSlotUI>();
     }
 
     private void Start()
     {
-        if(_soliderSlots.Length != _soliderSO.Length) Debug.LogError("병사 슬롯이 너무 많거나 적음");
-        if(_generalSlots.Length != _generalSO.Length) Debug.LogError("장군 슬롯이 너무 많거나 적음");
+        OffSlotByStartScene(_generalSlots, _generalSO);
+        OffSlotByStartScene(_soliderSlots, _soliderSO);
 
-        InsertToStart(_generalSO);
-        InsertToStart(_soliderSO);
+        LegionCountInformation(0);
     }
 
-    public void InsertToStart(PenguinStat[] penguinSO)
+    public void OffSlotByStartScene(UnitSlotUI[] slot, PenguinStat[] so)
     {
-        for (int i = 0; i < penguinSO.Length; i++)
+        for (int i = 0; i < slot.Length; i++)
         {
-            AddPenguin(penguinSO[i]);
-            RemovePenguin(penguinSO[i]);
+            if (i >= so.Length)
+            {
+                slot[i].gameObject.SetActive(false);
+            }
+        }
+
+        for (int i = 0; i < so.Length; i++)
+        {
+            AddPenguin(so[i]);
+            RemovePenguin(so[i]);
         }
     }
 
@@ -179,7 +192,7 @@ public class LegionInventory : Singleton<LegionInventory>
         else//없다면
         {
             LegionInventoryData newInven = new LegionInventoryData(penguin);
-            LegionList[legionNumber].legionInven.Add(newInven);//군단 인벤에 데이터 추가
+            LegionList[legionNumber].LegionInven.Add(newInven);//군단 인벤에 데이터 추가
             LegionList[legionNumber].legionDictionary.Add(penguin, newInven);
         }
     }
@@ -191,7 +204,7 @@ public class LegionInventory : Singleton<LegionInventory>
 
         if (legion.stackSize <= count) //군단인벤에서 완전히 삭제
         {
-            LegionList[i].legionInven.Remove(legion);
+            LegionList[i].LegionInven.Remove(legion);
             LegionList[i].legionDictionary.Remove(penguin);
         }
         else //군단 인벤에서 빼기
@@ -206,8 +219,6 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void ChangeLegion(int number)
     {
-        Debug.Log(number);
-
         for(int i = 0; i < LegionList.Count; i++)
         {
             if(i == number)
@@ -219,5 +230,15 @@ public class LegionInventory : Singleton<LegionInventory>
                 LegionList[i].LegionPanels.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void LegionCountInformation(int i)
+    {
+        _legionUI.LegionCountInformation(i);
+    }
+
+    public void ShowMessage(string message)
+    {
+        _legionUI.ShowMessage(message);
     }
 }

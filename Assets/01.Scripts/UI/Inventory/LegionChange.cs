@@ -8,6 +8,7 @@ using System;
 
 public class LegionChange : MonoBehaviour
 {
+
     [SerializeField] private float _changeTime = 0.2f;
 
     [SerializeField] private TextMeshProUGUI _curLegionNumberTex;
@@ -23,19 +24,12 @@ public class LegionChange : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _priceText;
     [SerializeField] private TextMeshProUGUI _finalCostText;
 
-    [SerializeField] private CanvasGroup _clickByByttonImg;
     [SerializeField] private float _waitFadeOffTime;
-    private TextMeshProUGUI _clickByByttonText;
 
     private int _curLegion;
 
     private int _finalCost;
     private bool _cantBuy;
-
-    private void Awake()
-    {
-        _clickByByttonText = _clickByByttonImg.GetComponentInChildren<TextMeshProUGUI>();
-    }
 
     private void Start()
     {
@@ -47,6 +41,7 @@ public class LegionChange : MonoBehaviour
         _curLegionNumberTex.text = $"{text} 군단";
 
         LegionInventory.Instance.ChangeLegion(text - 1);
+        LegionInventory.Instance.LegionCountInformation(text - 1);
     }
 
     public void SelectLegionNumber(int number) //군단 지정 UI를 클릭했을 때
@@ -103,12 +98,12 @@ public class LegionChange : MonoBehaviour
 
     private void BuyLegion(int number)
     {
-        _buyPanel.alpha = 1;
+        _buyPanel.alpha          = 1;
         _buyPanel.blocksRaycasts = true;
 
-        int curCost             = CostManager.Instance.CurrentCost;
-        int price               = LegionInventory.Instance.LegionList[number].price;
-        _finalCost           = curCost - price;
+        int curCost              = CostManager.Instance.CurrentCost;
+        int price                = LegionInventory.Instance.LegionList[number].price;
+        _finalCost               = curCost - price;
 
         if(_finalCost < 0)
         {
@@ -121,9 +116,9 @@ public class LegionChange : MonoBehaviour
             _cantBuy = false;
         }
 
-        _currentCostText.text   = $"{curCost}";
-        _priceText.text         = $"{price}";
-        _finalCostText.text     = $"{_finalCost}";
+        _currentCostText.text    = $"{curCost}";
+        _priceText.text          = $"{price}";
+        _finalCostText.text      = $"{_finalCost}";
     }
 
     public void BuyBtn()
@@ -132,23 +127,19 @@ public class LegionChange : MonoBehaviour
 
         if (_cantBuy)
         {
-            _clickByByttonText.text = "재화가 부족합니다!";
+            LegionInventory.Instance.ShowMessage("재화가 부족합니다!");
         }
         else
         {
             ChangeCurrentLegionNumber(_curLegion);
 
-            _clickByByttonText.text = $"{_curLegion}군단 구매 성공!";
+            LegionInventory.Instance.ShowMessage($"{_curLegion}군단 구매 성공!");
 
             CostManager.Instance.ChangeCost(_finalCost);
             LegionInventory.Instance.LegionList[_curLegion - 1].Locked = false;
 
             CloseBuyPanel();
         }
-
-        UIManager.Instance.WarningTextSequence.Append(_clickByByttonImg.DOFade(1, _changeTime))
-                .AppendInterval(_waitFadeOffTime)
-                .Append(_clickByByttonImg.DOFade(0, _changeTime));
     }
 
     public void CloseBuyPanel()
