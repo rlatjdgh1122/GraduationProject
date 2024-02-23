@@ -1,15 +1,20 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Define.Algorithem;
-using UnityEngine.EventSystems;
-using System;
-using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine.AI;
 
+[System.Serializable]
+public enum PenguinEntityType
+{
+    Basic,
+    Shield,
+    Archer,
+    MeleeGeneral,
+    RangeGeneral,
+}
 public class Penguin : Entity
 {
-    [Header("Setting Values")]
+    public PenguinEntityType type;
+
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -21,15 +26,13 @@ public class Penguin : Entity
 
     public Enemy CurrentTarget;
 
-    public bool IsClickToMoving = false;
     public bool IsDead = false;
-    public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(Algorithm.AlignmentRule.GetArmyCenterPostion(owner), CurrentTarget.transform.position) <= innerDistance;
+    public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     public Army owner;
 
-    [SerializeField] private InputReader _inputReader;
-    public InputReader Input => _inputReader;
+    public Army Owner => owner;
 
     private void OnEnable()
     {
@@ -99,7 +102,7 @@ public class Penguin : Entity
 
     protected override void HandleDie()
     {
-        ArmySystem.Instance.Remove(owner.Legion, this);
+        ArmyManager.Instance.Remove(Owner.Legion, this);
         IsDead = true;
     }
 

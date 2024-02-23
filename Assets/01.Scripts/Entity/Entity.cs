@@ -1,20 +1,35 @@
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Rendering;
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class Entity : PoolableMono
 {
-    [Header("Target info")]
-    public Vector3 targetTrm;
+
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
-    [Header("RangeAttack Info")]
     [SerializeField] protected Arrow _arrowPrefab;
     [SerializeField] protected Transform _firePos;
+
+    #region 패시브
+
+    //몇대 때릴때마다
+    public bool IsAttackEvent = false;
+    public int AttackCount = 3;
+
+    //몇 초 마다
+    public bool IsSecondEvent = false;
+    public float EverySecond = 10f;
+
+    //뒤에서 때릴때
+    public bool IsBackAttack = false;
+
+    //범위 안에 주변의 적이 몇명인가
+    public bool IsAroundEnemyCountEventEvent = false;
+    public float AroundRadius = 3;
+    public int AroundEnemyCount = 3;
+
+    public PassiveDataSO passiveData = null;
 
     #region 군단 포지션
 
@@ -30,9 +45,6 @@ public abstract class Entity : PoolableMono
         }
     }
     private Vector3 _seatPos = Vector3.zero; //군단에서 배치된 자리 OK?
-
-    Vector3 curDir = Vector3.zero;
-    private Vector3 prevDir = Vector3.zero;
     private float Angle
     {
         get
@@ -88,6 +100,8 @@ public abstract class Entity : PoolableMono
             HealthCompo.OnDied += HandleDie;
         }
 
+        passiveData?.SetOwner(this);
+
         HealthCompo.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
     }
@@ -105,23 +119,77 @@ public abstract class Entity : PoolableMono
 
     protected virtual void Start()
     {
-
+        if (passiveData == true)
+            passiveData.Start();
     }
 
     protected virtual void Update()
     {
-
+        if (passiveData == true)
+            passiveData.Update();
     }
 
     protected abstract void HandleDie();
+
+    public virtual void AoEAttack()
+    {
+        DamageCasterCompo?.CaseAoEDamage();
+    }
 
     public virtual void RangeAttack()
     {
 
     }
 
-    #region �̵� ����
+    #region 패시브 함수
 
+    /// <summary>
+    /// 몇 대마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAttackEventPassive(int curAttackCount)
+=> passiveData.CheckAttackEventPassive(curAttackCount);
+
+    /// <summary>
+    /// 몇 초마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
+
+    /// <summary>
+    /// 뒤치기 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckBackAttackEventPassive() 
+        => IsAttackEvent;
+
+    /// <summary>
+    /// 주변의 적 수 비례 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
+    #endregion
+
+    public virtual void OnPassiveAttackEvent()
+    {
+
+    }
+    public virtual void OnPassiveSecondEvent()
+    {
+
+    }
+    public virtual void OnPassiveBackAttackEvent()
+    {
+
+    }
+    public virtual void OnPassiveAroundEvent()
+    {
+
+    }
+    #endregion
+
+
+    #region 움직임 관리
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
     {
         MousePos = mousePos;

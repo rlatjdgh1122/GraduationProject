@@ -18,12 +18,44 @@ public class DamageCaster : MonoBehaviour
         _owner = owner;
     }
 
+    /// <summary>
+    /// 광역 데미지
+    /// </summary>
+    public void CaseAoEDamage() 
+    {
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+
+        foreach (var col in Colls)
+        {
+            RaycastHit raycastHit;
+
+            var dir = (col.transform.position - transform.position).normalized;
+            dir.y = 0;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+
+            Debug.Log(raycastSuccess);
+
+            if (raycastSuccess
+                && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable health))
+            {
+                int damage = _owner.Stat.damage.GetValue();
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 단일 데미지
+    /// </summary>
+    /// <returns> 공격 맞았나 여부</returns>
     public bool CastDamage()
     {
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
 
-        if (raycastSuccess && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
+        if (raycastSuccess
+            && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
             int damage = _owner.damage.GetValue();
             raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);

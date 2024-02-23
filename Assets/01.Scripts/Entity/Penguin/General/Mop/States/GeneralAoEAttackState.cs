@@ -1,34 +1,38 @@
-using System.Linq;
-using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class BasicAttackState : BasicBaseState
+public class GeneralAoEAttackState : GeneralBaseState
 {
-    public BasicAttackState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animationBoolName)
-        : base(penguin, stateMachine, animationBoolName)
+    public GeneralAoEAttackState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 
-    public override void Enter() //한명이 때리다가 죽으면 
+    public override void Enter()
     {
         base.Enter();
+
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
         _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
-    }
 
+        Debug.Log("광역공격");
+    }
     public override void UpdateState()
     {
+
         base.UpdateState();
+
         _penguin.LookTarget();
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
 
             if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
         }
     }
 
@@ -38,4 +42,5 @@ public class BasicAttackState : BasicBaseState
         _penguin.Owner.IsMoving = true;
         base.Exit();
     }
+
 }

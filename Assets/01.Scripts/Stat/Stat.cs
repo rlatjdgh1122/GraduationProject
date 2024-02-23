@@ -14,6 +14,11 @@ public class Stat
     public List<int> decreases; //감소 % (합연산)
     public int GetValue() //합연산으로 들어감
     {
+        return Modify();
+    }
+
+    private int Modify()
+    {
         var plusValue = StatCalculator.MultiOperValue(_baseValue, increases);
         var minusValue = StatCalculator.SumOperValue(plusValue, decreases);
 
@@ -21,7 +26,8 @@ public class Stat
 
         _fewTimes = StatCalculator.OperTimes(result, _baseValue);
         _finalValue = result;
-        return result;
+
+        return result;  
     }
 
     public void AddIncrease(int value)
@@ -30,22 +36,30 @@ public class Stat
 
         if (value != 0)
             increases.Add(value);
+
+        Modify();
     }
     public void AddDecrease(int value)
     {
         if (value != 0)
             decreases.Add(value);
+
+        Modify();
     }
 
     public void RemoveIncrease(int value)
     {
         if (value != 0)
             increases.Remove(value);
+
+        Modify();
     }
     public void RemoveDecrease(int value)
     {
         if (value != 0)
             decreases.Remove(value);
+
+        Modify();
     }
     public void SetDefaultValue(int value)
     {

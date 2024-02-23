@@ -58,6 +58,11 @@ public class Enemy : Entity
         CurrentTarget = FindNearestPenguin<Penguin>();
     }
 
+    public override void AoEAttack()
+    {
+        base.AoEAttack();
+    }
+
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
@@ -75,7 +80,7 @@ public class Enemy : Entity
         
     }
 
-    public T FindNearestPenguin<T>() where T : Penguin //OnProvoked bool·Î »©±â
+    public T FindNearestPenguin<T>() where T : Penguin //OnProvoked boolï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         var components = FindObjectsOfType<T>().Where(p => p.enabled);
 
