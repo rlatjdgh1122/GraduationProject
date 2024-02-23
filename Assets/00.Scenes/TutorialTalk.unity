@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 180954641}
   - component: {fileID: 180954640}
   m_Layer: 5
-  m_Name: Dialogue
+  m_Name: Dialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -520,17 +520,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: "\uB9D0 \uAC78\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0019043d6c9e6a54090cbc396a9d0838, type: 2}
+  m_sharedMaterial: {fileID: -7419187930917110359, guid: 0019043d6c9e6a54090cbc396a9d0838,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -553,7 +554,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1052,7 +1053,7 @@ GameObject:
   - component: {fileID: 1867788480}
   - component: {fileID: 1867788479}
   m_Layer: 0
-  m_Name: DialogueSystem
+  m_Name: DialogSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1071,7 +1072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtSentence: {fileID: 1354736864}
-  panel: {fileID: 180954638}
+  dialog: {fileID: 180954638}
 --- !u!4 &1867788480
 Transform:
   m_ObjectHideFlags: 0
@@ -1145,10 +1146,8 @@ MonoBehaviour:
     - "\uB098\uB294 \uD3AD\uADC4\uC774\uB77C\uACE0 \uD55C\uB2E4"
     - "\uADF8\uB7FC \uC774\uAC70\uC800\uAC70 \uD574\uBD10"
     - "\uC798\uD588\uB2E4"
-    - "\uC774 \uCE78\uC740 \uB9C8\uBB34\uB9AC \uC704\uD55C \uBE48\uCE78"
     - "\uC65C \uB2E4\uC2DC \uB9D0\uC744 \uAC78\uC5B4"
     - "\uAEBC\uC838\uB791"
-    - "\uC774 \uCE78\uC740 \uB9C8\uBB34\uB9AC \uC704\uD55C \uBE48\uCE78"
 --- !u!114 &1908516956
 MonoBehaviour:
   m_ObjectHideFlags: 0
