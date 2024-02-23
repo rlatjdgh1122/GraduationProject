@@ -33,7 +33,7 @@ public class DialogSystem : MonoBehaviour
         if (isTyping)
             return;
 
-        if (dialCount == 1 && sentences.Count == 2) 
+        if (dialCount == 1 && sentences.Count == 3) 
         {
             End();
             dialCount++;
