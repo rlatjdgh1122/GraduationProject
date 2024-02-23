@@ -26,8 +26,6 @@ public class Stat
 
     public void AddIncrease(int value)
     {
-        Debug.Log(value);
-
         if (value != 0)
             increases.Add(value);
     }

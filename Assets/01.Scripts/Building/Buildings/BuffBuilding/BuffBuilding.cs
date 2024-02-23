@@ -3,22 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BuffBuilding : BaseBuilding
+public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
 {
-    [Header("세탯들")]
-    [SerializeField] private float _rangeSize; //범위 크기
+    [SerializeField]
+    [Range(0.0f, 10.0f)]
+    protected float innerDistance;
 
-    [Header("그 외")]
-    [SerializeField] private LayerMask _targetLayer;
+    [SerializeField]
+    protected LayerMask _targetLayer;
 
-    private Collider[] _colls;
+    [SerializeField]
+    private int defaultBuffValue;
+    public int DefaultBuffValue => defaultBuffValue;
 
     private bool isChecked = false; //enter, stay, exit를 위한 변수(건들 필요 없음)
 
-    [SerializeField]
-    [Range(0.0f, 10.0f)]
-    protected float buffValue;
-    public float BuffValues
+    protected int buffValue;
+    public int BuffValues
     {
         get
         {
@@ -30,13 +31,17 @@ public abstract class BuffBuilding : BaseBuilding
         }
     }
 
-    private event Action<float> OnInsideRangeEnterEvent = null;  //범위 안에 들어왔을 때 이벤트. 매개변수는 증가수치
-    private event Action<float> OnInsideRangeExitEvent = null; 
+    private event Action OnInsideRangeEnterEvent = null;  //범위 안에 들어왔을 때 이벤트
+    private event Action<int> OnInsideRangeExitEvent = null;
 
-    protected override void Running()
+    protected override void Awake()
     {
-        _colls = Physics.OverlapSphere(transform.position, _rangeSize, _targetLayer);
-        if (_colls.Length > 0)
+        base.Awake();
+    }
+
+    public int BuffRunning(Collider[] _curcolls, int previousCollsLength)
+    {
+        if (_curcolls.Length > previousCollsLength)
         {
             if (isChecked == true)
             {
@@ -48,7 +53,7 @@ public abstract class BuffBuilding : BaseBuilding
             }
             isChecked = true;
         }
-        else
+        else if(_curcolls.Length == 0)
         {
             if (isChecked == true)
             {
@@ -56,6 +61,8 @@ public abstract class BuffBuilding : BaseBuilding
             }
             isChecked = false;
         }
+
+        return _curcolls.Length;
     }
 
     protected virtual void OnPenguinInsideRangeEnter()
@@ -63,7 +70,7 @@ public abstract class BuffBuilding : BaseBuilding
         // 범위 안에 들어오면 각각 버프이벤트 구독
         OnInsideRangeEnterEvent += BuffEvent;
 
-        OnInsideRangeEnterEvent?.Invoke(buffValue);
+        OnInsideRangeEnterEvent?.Invoke();
 
         Debug.Log("안에들어왔다");
     }
@@ -83,10 +90,10 @@ public abstract class BuffBuilding : BaseBuilding
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _rangeSize);
+        Gizmos.DrawWireSphere(transform.position, innerDistance);
     }
 
-    protected abstract void BuffEvent(float value);
-    protected abstract float SetBuffValue(float value);
-    protected abstract float GetBuffValue();
+    protected abstract void BuffEvent();
+    protected abstract void SetBuffValue(int value);
+    protected abstract int GetBuffValue();
 }

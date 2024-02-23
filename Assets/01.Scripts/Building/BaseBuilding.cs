@@ -48,6 +48,7 @@ public abstract class BaseBuilding : PoolableMono
 
     public void SetSelect()
     {
+        Debug.Log(this.gameObject);
         _meshRenderer.material = BuildingInfoCompo.TransparencyMat;
     }
 

@@ -16,22 +16,6 @@ public enum DefaultBuildingType
 }
 
 [System.Serializable]
-public struct BuffItemInfo
-{
-    [SerializeField]
-    private float innerDistance;
-    public float InnerDistance { get { return innerDistance; } }
-
-    [SerializeField]
-    private LayerMask targetLayer;
-    public LayerMask TargetLayer { get { return targetLayer; } }
-
-    [SerializeField]
-    private float defaultBuffValue;
-    public float DefaultBuffValue { get { return defaultBuffValue; } }
-}
-
-[System.Serializable]
 public class BuildingItemInfo
 {
     [SerializeField]
@@ -68,10 +52,6 @@ public class BuildingItemInfo
     [SerializeField]
     private int necessaryWokerCount;
     public int NecessaryWokerCount { get { return necessaryWokerCount; } }
-
-    [SerializeField]
-    private BuffItemInfo _buffItemInfo;
-    public BuffItemInfo BuffItemInfoST => _buffItemInfo;
 }
 
 [CreateAssetMenu(menuName = "SO/BuildingList")]
