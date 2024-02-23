@@ -17,6 +17,10 @@ public class Enemy : Entity
     public Action OnProvoked = null;
     public UnityEvent OnProvokedEvent;
 
+    #region componenets
+    public AttackableEntity AttackCompo { get; private set; }
+    #endregion
+
     public Penguin CurrentTarget;
     public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
@@ -35,6 +39,8 @@ public class Enemy : Entity
     {
         base.Awake();
         NavAgent.speed = moveSpeed;
+
+        AttackCompo = GetComponent<AttackableEntity>();
     }
 
     private void OnEnable()
@@ -52,15 +58,10 @@ public class Enemy : Entity
         CurrentTarget = FindNearestPenguin<Penguin>();
     }
 
-    public override void Attack()
-    {
-        base.Attack();
-    }
-
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(this, DamageCasterCompo.TargetLayer);
+        arrow.Setting(_characterStat, AttackCompo.DamageCasterCompo.TargetLayer);
         arrow.Fire(_firePos.forward);
     }
 

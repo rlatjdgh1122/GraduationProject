@@ -15,6 +15,10 @@ public class Penguin : Entity
     public int maxDetectedCount;
     public float provokeRange = 25f;
 
+    #region components
+    public AttackableEntity AttackCompo { get; private set; }
+    #endregion
+
     public Enemy CurrentTarget;
 
     public bool IsClickToMoving = false;
@@ -41,17 +45,14 @@ public class Penguin : Entity
     {
         base.Awake();
         NavAgent.speed = moveSpeed;
-    }
 
-    public override void Attack()
-    {
-        base.Attack();
+        AttackCompo = GetComponent<AttackableEntity>(); 
     }
 
     public override void RangeAttack()
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(this, DamageCasterCompo.TargetLayer);
+        arrow.Setting(_characterStat, AttackCompo.DamageCasterCompo.TargetLayer);
         arrow.Fire(_firePos.forward);
     }
 

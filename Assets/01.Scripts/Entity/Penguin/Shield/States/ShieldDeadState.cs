@@ -11,7 +11,7 @@ public class ShieldDeadState : ShieldBaseState
 
         _triggerCalled = true;
         _penguin.CurrentTarget = null;
-        _penguin.CharController.enabled = false;
+        //_penguin.CharController.enabled = false;
         _penguin.NavAgent.enabled = false;
         _penguin.enabled = false;
 

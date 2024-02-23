@@ -11,7 +11,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        _penguin.Attack();
+        _penguin.AttackCompo.Attack();
     }
 
     private void RangeAttackTrigger()

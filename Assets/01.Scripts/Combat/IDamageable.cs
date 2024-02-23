@@ -7,6 +7,8 @@ public enum HitType
     None,
     MeleeHit,
     ArrowHit,
+    RockHit,
+    WoodHit,
 }
 
 public interface IDamageable

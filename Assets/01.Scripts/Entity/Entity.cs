@@ -63,15 +63,11 @@ public abstract class Entity : PoolableMono
     #endregion
 
     #region Components
-    public Animator AnimatorCompo { get; private set; }
     public Health HealthCompo { get; private set; }
-    public DamageCaster DamageCasterCompo { get; private set; }
-    public CharacterController CharController { get; private set; }
+    public Animator AnimatorCompo { get; private set; }
     public NavMeshAgent NavAgent { get; private set; }
     public EntityActionData ActionData { get; private set; }
-    public ParticleSystem ClickParticle;
     public Outline OutlineCompo { get; private set; }
-
     [SerializeField] protected CharacterStat _characterStat;
     public CharacterStat Stat => _characterStat;
     #endregion
@@ -79,21 +75,20 @@ public abstract class Entity : PoolableMono
     protected virtual void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
-        AnimatorCompo = visualTrm.GetComponent<Animator>();
+        AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 이렇게 해놈
 
         HealthCompo = GetComponent<Health>();
-        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
-        CharController = GetComponent<CharacterController>();
         NavAgent = GetComponent<NavMeshAgent>();
-        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-        OutlineCompo = GetComponent<Outline>();
+        OutlineCompo = transform?.GetComponent<Outline>(); //이것도 빼야함
         ActionData = GetComponent<EntityActionData>();
 
-        DamageCasterCompo.SetOwner(this);
-        HealthCompo.SetHealth(_characterStat);
-        HealthCompo.OnHit += HandleHit;
-        HealthCompo.OnDied += HandleDie;
+        if (HealthCompo != null)
+        {
+            HealthCompo.OnHit += HandleHit;
+            HealthCompo.OnDied += HandleDie;
+        }
 
+        HealthCompo.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
     }
 
@@ -119,11 +114,6 @@ public abstract class Entity : PoolableMono
     }
 
     protected abstract void HandleDie();
-
-    public virtual void Attack()
-    {
-        DamageCasterCompo?.CastDamage();
-    }
 
     public virtual void RangeAttack()
     {
