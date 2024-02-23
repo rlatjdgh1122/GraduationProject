@@ -11,6 +11,7 @@ public enum PenguinEntityType
     MeleeGeneral,
     RangeGeneral,
 }
+
 public class Penguin : Entity
 {
     public PenguinEntityType type;
@@ -21,7 +22,7 @@ public class Penguin : Entity
     public float provokeRange = 25f;
 
     #region components
-    public AttackableEntity AttackCompo { get; private set; }
+    public EntityAttackData AttackCompo { get; private set; }
     #endregion
 
     public Enemy CurrentTarget;
@@ -49,14 +50,7 @@ public class Penguin : Entity
         base.Awake();
         NavAgent.speed = moveSpeed;
 
-        AttackCompo = GetComponent<AttackableEntity>(); 
-    }
-
-    public override void RangeAttack()
-    {
-        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(_characterStat, AttackCompo.DamageCasterCompo.TargetLayer);
-        arrow.Fire(_firePos.forward);
+        AttackCompo = GetComponent<EntityAttackData>(); 
     }
 
     public void SetOwner(Army army)

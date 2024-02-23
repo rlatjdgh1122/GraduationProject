@@ -12,7 +12,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        _penguin.AttackCompo.Attack();
+        _penguin.AttackCompo.MeleeAttack();
     }
 
     public void AoEAttackTrigger()
@@ -24,7 +24,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     private void RangeAttackTrigger()
     {
-        _penguin.RangeAttack();
+        _penguin.AttackCompo.RangeAttack();
     }
 
     public void DeadCompleteTrigger()

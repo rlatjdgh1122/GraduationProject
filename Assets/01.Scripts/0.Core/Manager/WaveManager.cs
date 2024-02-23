@@ -123,6 +123,14 @@ public class WaveManager : MonoBehaviour
                     ShowDefeatUI();
             }
         }
+
+
+
+
+        if (Input.GetKeyDown(KeyCode.U)) //디버그
+        {
+            BattlePhaseStartEventHandler();
+        }
     }
 
     private void OnIceArrivedHandle()

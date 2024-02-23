@@ -423,7 +423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _effectEndTime: 1.5
 --- !u!1 &2104040503757897203
 GameObject:
@@ -610,7 +609,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b24ce834742d47b4a862ec3ced7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _healEffect: {fileID: -198098653787150809, guid: 880628dabbf32df439f61db0b7a24c20,
     type: 3}
   _effectEndTime: 2
@@ -1042,6 +1040,7 @@ GameObject:
   - component: {fileID: 7124704069954103808}
   - component: {fileID: 7741800042478522081}
   - component: {fileID: 886979751048114177}
+  - component: {fileID: 7922328068077974963}
   - component: {fileID: 3642781213715931106}
   - component: {fileID: 3496813715336790843}
   - component: {fileID: 6997479935234560311}
@@ -1087,21 +1086,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d01ae11d8621e49a8f444877e07b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idx: 0
-  targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 6
   attackDistance: 6
-  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
-    type: 3}
-  _firePos: {fileID: 7060097859151106643}
-  ClickParticle: {fileID: 0}
+  IsAttackEvent: 0
+  AttackCount: 3
+  IsSecondEvent: 0
+  EverySecond: 10
+  IsBackAttack: 0
+  IsAroundEnemyCountEventEvent: 0
+  AroundRadius: 3
+  AroundEnemyCount: 3
+  passiveData: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
+  type: 0
   moveSpeed: 3.5
   attackSpeed: 0.6
   maxDetectedCount: 0
   provokeRange: 25
   CurrentTarget: {fileID: 0}
-  IsClickToMoving: 0
   IsDead: 0
   owner:
     Legion: 0
@@ -1116,7 +1118,6 @@ MonoBehaviour:
       basicTimes: 0
       archerTimes: 0
       shieldTimes: 0
-  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!114 &886979751048114177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1194,6 +1195,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7922328068077974963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c4cfc40efd3d344b81e8839ff9d88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
+    type: 3}
+  _firePos: {fileID: 7060097859151106643}
 --- !u!114 &3642781213715931106
 MonoBehaviour:
   m_ObjectHideFlags: 0

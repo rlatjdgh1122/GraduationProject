@@ -13,12 +13,12 @@ public class EnemyAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        _enemy.AttackCompo.Attack();
+        _enemy.AttackCompo.MeleeAttack();
     }
 
     private void RangeAttackTrigger()
     {
-        _enemy.RangeAttack();
+        _enemy.AttackCompo.RangeAttack();
     }
 
     public void DeadCompleteTrigger()

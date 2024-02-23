@@ -7,7 +7,7 @@ public class Worker : Entity
 {
     #region components
     public ResourceObject Target;
-    public AttackableEntity AttackCompo { get; private set; }
+    public EntityAttackData AttackCompo { get; private set; }
     public Transform Nexus;
     #endregion
 
@@ -18,7 +18,7 @@ public class Worker : Entity
     {
         base.Awake();
 
-        AttackCompo = GetComponent<AttackableEntity>();
+        AttackCompo = GetComponent<EntityAttackData>();
         Nexus = GameManager.Instance.NexusTrm;
     }
 
