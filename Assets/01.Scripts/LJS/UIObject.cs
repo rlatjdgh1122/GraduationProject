@@ -8,7 +8,7 @@ public class UIObject : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private Image _ui;
 
-    [SerializeField] private PenguinUIDataSO _itemData;
+    [SerializeField] private PenguinStat _itemData;
 
 #if UNITY_EDITOR
 

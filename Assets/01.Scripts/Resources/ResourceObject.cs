@@ -67,7 +67,7 @@ public class ResourceObject : Entity
 
     private void OnMouseDown() 
     {
-        if (!WaveManager.Instance.IsPhase)
+        if (!WaveManager.Instance.IsBattlePhase)
         {
             resourceUI.EnableUI(1f, this);
         }

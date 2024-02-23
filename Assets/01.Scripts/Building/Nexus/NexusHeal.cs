@@ -46,7 +46,7 @@ public class NexusHeal : MonoBehaviour
     private float curTime = 0f;
     private void Update()
     {
-        if (WaveManager.Instance.IsPhase == false) //웨이브가 끝나면
+        if (WaveManager.Instance.IsBattlePhase == false) //웨이브가 끝나면
         {
             _colls = Physics.OverlapSphere(transform.position, _rangeSize, _healingTargetLayer);
             if (_colls.Length > 0)

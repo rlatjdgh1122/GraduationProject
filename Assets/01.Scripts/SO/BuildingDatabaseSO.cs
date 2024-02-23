@@ -14,7 +14,9 @@ public class BuildingItemInfo
     [field: SerializeField]
     public GameObject Prefab { get; private set; }
     [field: SerializeField]
-    public Texture2D UITexture { get; private set; }
+    public Sprite UISprite { get; private set; }
+    [field: SerializeField]
+    public float installedTime { get; private set; }
 }
 [CreateAssetMenu(menuName = "SO/BuildingList")]
 public class BuildingDatabaseSO : ScriptableObject
