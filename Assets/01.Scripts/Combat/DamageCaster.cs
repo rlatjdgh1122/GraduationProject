@@ -39,7 +39,7 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable health))
             {
-                int damage = _owner.Stat.damage.GetValue();
+                int damage = _owner.damage.GetValue();
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             }
         }

@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public abstract class Entity : PoolableMono
 {
-
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
@@ -88,22 +87,20 @@ public abstract class Entity : PoolableMono
     {
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 이렇게 해놈
-
         HealthCompo = GetComponent<Health>();
         NavAgent = GetComponent<NavMeshAgent>();
         OutlineCompo = transform?.GetComponent<Outline>(); //이것도 빼야함
         ActionData = GetComponent<EntityActionData>();
+
+        passiveData?.SetOwner(this);
+        HealthCompo.SetHealth(_characterStat);
+        _characterStat = Instantiate(_characterStat);
 
         if (HealthCompo != null)
         {
             HealthCompo.OnHit += HandleHit;
             HealthCompo.OnDied += HandleDie;
         }
-
-        passiveData?.SetOwner(this);
-
-        HealthCompo.SetHealth(_characterStat);
-        _characterStat = Instantiate(_characterStat);
     }
 
     private void OnDestroy()
@@ -133,7 +130,7 @@ public abstract class Entity : PoolableMono
 
     public virtual void AoEAttack()
     {
-        DamageCasterCompo?.CaseAoEDamage();
+        //DamageCasterCompo?.CaseAoEDamage();
     }
 
     public virtual void RangeAttack()

@@ -14,7 +14,6 @@ public class EnemyWolfDeadState : EnemyWolfBaseState
         base.Enter();
         _triggerCalled = true;
         _enemy.enabled = false;
-        _enemy.CharController.enabled = false;
         _enemy.NavAgent.enabled = false;
     }
 
