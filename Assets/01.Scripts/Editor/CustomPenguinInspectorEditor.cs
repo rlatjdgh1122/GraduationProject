@@ -17,10 +17,6 @@ public class CustomPenguinInspectorEditor : Editor
 
     [Header("스탯")]
     SerializedProperty Setting_Stat_Prop;
-
-    [Header("투사체")]
-    SerializedProperty Archer_ArrowPrefab_Prop;
-    SerializedProperty Archer_FirePos_Prop;
     [Header("패시브")]
     SerializedProperty Passive_Prop;
 
@@ -36,10 +32,6 @@ public class CustomPenguinInspectorEditor : Editor
         Setting_ProvokeRange_Prop = serializedObject.FindProperty("provokeRange");
 
         Setting_Stat_Prop = serializedObject.FindProperty("_characterStat");
-
-        Archer_ArrowPrefab_Prop = serializedObject.FindProperty("_arrowPrefab");
-        Archer_FirePos_Prop = serializedObject.FindProperty("_firePos");
-
         Passive_Prop = serializedObject.FindProperty("passiveData");
 
     }
@@ -72,7 +64,6 @@ public class CustomPenguinInspectorEditor : Editor
                 break;
 
             case PenguinEntityType.Archer:
-                OnRangeWeapon();
                 break;
 
             case PenguinEntityType.Shield:
@@ -87,8 +78,6 @@ public class CustomPenguinInspectorEditor : Editor
 
             case PenguinEntityType.RangeGeneral:
 
-                OnRangeWeapon();
-
                 EditorGUILayout.PropertyField(Passive_Prop);
                 break;
 
@@ -97,13 +86,5 @@ public class CustomPenguinInspectorEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
-    }
-
-    public void OnRangeWeapon()
-    {
-        EditorGUILayout.LabelField("원거리 무기");
-        EditorGUILayout.PropertyField(Archer_ArrowPrefab_Prop);
-        EditorGUILayout.PropertyField(Archer_FirePos_Prop);
-        EditorGUILayout.Space(5);
     }
 }

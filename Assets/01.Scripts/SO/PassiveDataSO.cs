@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
+
+//[ExecuteInEditMode]
 [CreateAssetMenu(menuName = "SO/PassiveData")]
 public class PassiveDataSO : ScriptableObject
 {
@@ -27,9 +27,14 @@ public class PassiveDataSO : ScriptableObject
     private Entity Owner = null;
 
     private float curTime = 0f;
+
+    private void Awake()
+    {
+        EditorUtility.SetDirty(this);
+    }
     public void Start()
     {
-
+        
     }
     public void Update()
     {
@@ -98,5 +103,4 @@ public class PassiveDataSO : ScriptableObject
     /// </summary>
     /// <returns> °á°ú</returns>
     public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
-
 }
