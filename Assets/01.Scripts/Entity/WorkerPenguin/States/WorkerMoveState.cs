@@ -9,6 +9,7 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
     {
         base.Enter();
         _triggerCalled = true;
+
         _worker.MoveToTarget();
     }
 

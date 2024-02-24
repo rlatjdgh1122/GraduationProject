@@ -14,6 +14,8 @@ public class DefeatUI : NormalUI
 
     public override void Awake()
     {
+        base.Awake();
+
         _background = GetComponent<Image>();
         _canvasGroup = GetComponentInChildren<CanvasGroup>();
         _text = GetComponentInChildren<TextMeshProUGUI>();
@@ -30,6 +32,8 @@ public class DefeatUI : NormalUI
 
     public override void EnableUI(float time, object obj)
     {
+        base.EnableUI(time, obj);
+
         SetTexts();
         _background.DOFade(0.75f, time).OnComplete(() => _canvasGroup.DOFade(1, time));
     }

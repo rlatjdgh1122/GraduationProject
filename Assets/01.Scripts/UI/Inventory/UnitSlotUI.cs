@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UnitSlotUI : SlotUI, IPointerDownHandler
 {
-    [SerializeField] protected TextMeshProUGUI _text;
-    [SerializeField] protected UnitInformationUI _info;
+    [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private UnitInformationUI _info;
+    [SerializeField] private Image _lockImg;
+
+    private bool _locked;
 
     public override void CleanUpSlot()
     {
@@ -27,16 +31,23 @@ public class UnitSlotUI : SlotUI, IPointerDownHandler
 
         if (_data.stackSize > 0)
         {
-            _text.text = _data.stackSize.ToString();
+            _locked = false;
+            _text.text = $"{_data.stackSize} 마리";
         }
         else
         {
-            _text.text = string.Empty;
+            _locked = true;
+            _text.text = "0 마리";
         }
+        
+        _lockImg.gameObject.SetActive(_locked);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _info.UpdateSlot(_data);
+        if(!_locked)
+        {
+            _info.UpdateSlot(_data);
+        }
     }
 }

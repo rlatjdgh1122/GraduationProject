@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum UIType
@@ -54,5 +55,41 @@ public class UIManager : Singleton<UIManager>
                 action?.Invoke();
             }
         });
+    }
+
+    public void ChangeTextColorBoolean(TextMeshProUGUI text, bool value, Color beforeColor, Color afterColor, float dureation,
+        Ease ease = Ease.Linear, params Action[] actions)
+    {
+        if (value)
+        {
+            text.DOColor(beforeColor, dureation).SetEase(ease).OnComplete(() =>
+            {
+                foreach (Action action in actions)
+                {
+                    action?.Invoke();
+                }
+            }); ;
+        }
+        else
+        {
+            text.DOColor(afterColor, dureation).SetEase(ease).OnComplete(() =>
+            {
+                foreach (Action action in actions)
+                {
+                    action?.Invoke();
+                }
+            }); ;
+        }
+    }
+    public void ChangeTextColor(TextMeshProUGUI text, Color color, float dureation,
+        Ease ease = Ease.Linear, params Action[] actions)
+    {
+        text.DOColor(color, dureation).SetEase(ease).OnComplete(() =>
+        {
+            foreach (Action action in actions)
+            {
+                action?.Invoke();
+            }
+        }); ;
     }
 }

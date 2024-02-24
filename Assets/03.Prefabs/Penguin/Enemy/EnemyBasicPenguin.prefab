@@ -711,7 +711,6 @@ MonoBehaviour:
   _arrowPrefab: {fileID: 0}
   _firePos: {fileID: 0}
   ClickParticle: {fileID: 0}
-  _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   moveSpeed: 3.8
   attackSpeed: 1
@@ -735,6 +734,7 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   IsMove: 1
   IsDead: 0
+  IsProvoked: 0
 --- !u!114 &5804976368611461631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,7 +1705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectRange: 1
-  _hitType: 0
+  _hitType: 1
   TargetLayer:
     serializedVersion: 2
     m_Bits: 2048
