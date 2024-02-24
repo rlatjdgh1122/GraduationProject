@@ -8,14 +8,19 @@ public class WorkerFactroy : EntityFactory<WorkerPenguin>
     private List<WorkerPenguin> _workerList => WorkerManager.Instance.WorkerList;
     private List<WorkerPenguin> _spawnedPenguins = new List<WorkerPenguin>(); // 생성된 WorkerPenguin 추적용 리스트
 
-    public void SetWorkerHandler()
+    public void SetWorkerHandler() //이게 WorkerManager에다가 수만 늘려주는거고 (구매했을 때)
     {
         WorkerManager.Instance.SetWorker();
     }
 
-    public void SpawnPenguinHandler(WorkerPenguin worker)
+    public void SpawnPenguinHandler() //이게 이제 Worker를 실제로 생성하는거 (자원에 보내기 버튼 눌렀을 때)
     {
-        WorkerPenguin penguin = SpawnObject(worker, spawnPoint.position) as WorkerPenguin;
+        if (_workerList.Count > _spawnedPenguins.Count) // 아직 생성되지 않은 WorkerPenguin이 있다면
+        {
+            WorkerPenguin workerToSpawn = _workerList[_spawnedPenguins.Count]; // 생성되지 않은 다음 WorkerPenguin을 가져옴
+            WorkerPenguin spawnPenguin = SpawnObject(workerToSpawn, spawnPoint.position) as WorkerPenguin;
+            _spawnedPenguins.Add(spawnPenguin); // 생성된 WorkerPenguin을 추적 리스트에 추가
+        }
     }
 
     private void Update()
@@ -24,13 +29,9 @@ public class WorkerFactroy : EntityFactory<WorkerPenguin>
         {
             SetWorkerHandler();
         }
-
         if (Input.GetKeyDown(KeyCode.O))
         {
-            foreach (WorkerPenguin worker in _workerList)
-            {
-                SpawnPenguinHandler(worker);
-            }
+            SpawnPenguinHandler();
         }
     }
 

@@ -39,11 +39,10 @@ public class WorkerManager : Singleton<WorkerManager>
         {
             foreach (WorkerPenguin worker in WorkerList) //일꾼들 리스트를 반복돌리고
             {
-                _workerFactory.SpawnPenguinHandler(worker);
-
                 if (!worker.CanWork) //그중에 CanWork가 비활성화 된 애들만
                 {
                     worker.StartWork(target); //활성화해주고
+                    _workerFactory.SpawnPenguinHandler();
                     calledPenguinCount++; //값을 1 늘림
                 }
 
