@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public abstract class Entity : PoolableMono
 {
-
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
@@ -75,38 +74,33 @@ public abstract class Entity : PoolableMono
     #endregion
 
     #region Components
-    public Animator AnimatorCompo { get; private set; }
     public Health HealthCompo { get; private set; }
-    public DamageCaster DamageCasterCompo { get; private set; }
-    public CharacterController CharController { get; private set; }
+    public Animator AnimatorCompo { get; private set; }
     public NavMeshAgent NavAgent { get; private set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
-
-    [SerializeField] protected CharacterStat _characterStat;
-    public CharacterStat Stat => _characterStat;
+    [SerializeField] protected BaseStat _characterStat;
+    public BaseStat Stat => _characterStat;
     #endregion
 
     protected virtual void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
-        AnimatorCompo = visualTrm.GetComponent<Animator>();
-
+        AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 이렇게 해놈
         HealthCompo = GetComponent<Health>();
-        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
-        CharController = GetComponent<CharacterController>();
         NavAgent = GetComponent<NavMeshAgent>();
-        OutlineCompo = GetComponent<Outline>();
+        OutlineCompo = transform?.GetComponent<Outline>(); //이것도 빼야함
         ActionData = GetComponent<EntityActionData>();
 
         passiveData?.SetOwner(this);
-
-        DamageCasterCompo.SetOwner(this);
         HealthCompo.SetHealth(_characterStat);
-        HealthCompo.OnHit += HandleHit;
-        HealthCompo.OnDied += HandleDie;
-
         _characterStat = Instantiate(_characterStat);
+
+        if (HealthCompo != null)
+        {
+            HealthCompo.OnHit += HandleHit;
+            HealthCompo.OnDied += HandleDie;
+        }
     }
 
     private void OnDestroy()
@@ -134,14 +128,9 @@ public abstract class Entity : PoolableMono
 
     protected abstract void HandleDie();
 
-    public virtual void Attack()
-    {
-        DamageCasterCompo?.CastDamage();
-    }
-
     public virtual void AoEAttack()
     {
-        DamageCasterCompo?.CaseAoEDamage();
+        //DamageCasterCompo?.CaseAoEDamage();
     }
 
     public virtual void RangeAttack()

@@ -10,14 +10,8 @@ public class FeedbackPlayer : MonoBehaviour
 
     private void Awake()
     {
-        _owner = transform.parent.GetComponent<Entity>();
         _feedbackToPlay = new List<Feedback>();
         GetComponents<Feedback>(_feedbackToPlay); 
-
-        foreach (Feedback feedback in _feedbackToPlay)
-        {
-            feedback.owner = _owner;
-        }
     }
 
     public void PlayFeedback()

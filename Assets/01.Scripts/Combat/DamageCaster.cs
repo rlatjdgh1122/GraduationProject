@@ -11,9 +11,9 @@ public class DamageCaster : MonoBehaviour
 
     public LayerMask TargetLayer;
 
-    private Entity _owner;
+    private BaseStat _owner;
 
-    public void SetOwner(Entity owner)
+    public void SetOwner(BaseStat owner)
     {
         _owner = owner;
     }
@@ -39,7 +39,7 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable health))
             {
-                int damage = _owner.Stat.damage.GetValue();
+                int damage = _owner.damage.GetValue();
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             }
         }
@@ -57,7 +57,7 @@ public class DamageCaster : MonoBehaviour
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
-            int damage = _owner.Stat.damage.GetValue();
+            int damage = _owner.damage.GetValue();
             raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             return true;
             //float critical = _controller.CharData.BaseCritical; <- 크리티컬 데미지 관련 로직입니다.

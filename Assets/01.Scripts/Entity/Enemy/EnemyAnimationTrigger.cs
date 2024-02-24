@@ -13,7 +13,7 @@ public class EnemyAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        _enemy.Attack();
+        _enemy.AttackCompo.Attack();
     }
 
     private void RangeAttackTrigger()

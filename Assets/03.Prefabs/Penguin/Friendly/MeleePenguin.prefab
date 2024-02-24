@@ -605,7 +605,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b24ce834742d47b4a862ec3ced7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _healEffect: {fileID: -198098653787150809, guid: 880628dabbf32df439f61db0b7a24c20,
     type: 3}
   _effectEndTime: 2
@@ -730,7 +729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _effectEndTime: 1.5
 --- !u!1 &3129644745910179850
 GameObject:
@@ -742,6 +740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1241305011308058854}
   - component: {fileID: 2163785626428387538}
+  - component: {fileID: 920591038394385168}
   - component: {fileID: 6964161571943707159}
   - component: {fileID: 3029608363560809845}
   - component: {fileID: 7709827813026867361}
@@ -787,13 +786,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idx: 0
   targetTrm: {x: 0, y: 0, z: 0}
-  innerDistance: 6
+  innerDistance: 7
   attackDistance: 1.1
   _arrowPrefab: {fileID: 0}
   _firePos: {fileID: 0}
-  ClickParticle: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
   moveSpeed: 4
   attackSpeed: 1.2
@@ -816,6 +813,18 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
+--- !u!114 &920591038394385168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3129644745910179850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f0b49ab804d8e4ab7bb886c7dd5143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6964161571943707159
 MonoBehaviour:
   m_ObjectHideFlags: 0

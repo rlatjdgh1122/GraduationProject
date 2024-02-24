@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class ResourceObject : MonoBehaviour
+public class ResourceObject : Entity
 {
+    [Header("Resource Info")]
     [SerializeField] private ResourceDataSO _resourceData;
     [SerializeField] private ResourceStat _resourceStat;
 
@@ -21,10 +22,6 @@ public class ResourceObject : MonoBehaviour
     public int ReceiveCountWhenCompleted => _receiveCountWhenCompleted;
     #endregion
 
-    public bool CanWork = false;
-
-    public Health HealthCompo { get; private set; }
-
     NormalUI resourceUI
     {
         get
@@ -34,11 +31,11 @@ public class ResourceObject : MonoBehaviour
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        HealthCompo = GetComponent<Health>();
+        base.Awake();
 
-        HealthCompo.SetHealth(_resourceStat);
+        //HealthCompo.SetHealth(_resourceStat);
         SetCount();
     }
 
@@ -74,5 +71,10 @@ public class ResourceObject : MonoBehaviour
         {
             resourceUI.EnableUI(1f, this);
         }
+    }
+
+    protected override void HandleDie()
+    {
+        RecieveResourceComplete();
     }
 }

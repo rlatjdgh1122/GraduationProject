@@ -5,33 +5,27 @@ using UnityEngine.AI;
 
 public class Worker : Entity
 {
+    #region components
     public ResourceObject Target;
+    public AttackableEntity AttackCompo { get; private set; }
     public Transform Nexus;
+    #endregion
 
     public bool CanWork = false;
     public bool EndWork = false;
 
-    #region components
-    public Animator WorkerAnimatorCompo { get; private set; }
-    public NavMeshAgent WorkerNavAgent { get; private set; }
-    public DamageCaster WorkerDamageCasterCompo { get; private set; }
-    #endregion
-
     protected override void Awake()
     {
-        Transform visualTrm = transform.Find("Visual");
-        Nexus = GameManager.Instance.NexusTrm;
-        WorkerAnimatorCompo = visualTrm.GetComponent<Animator>();
-        WorkerNavAgent = GetComponent<NavMeshAgent>();
-        WorkerDamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
+        base.Awake();
 
-        WorkerDamageCasterCompo.SetOwner(this);
+        AttackCompo = GetComponent<AttackableEntity>();
+        Nexus = GameManager.Instance.NexusTrm;
     }
 
     #region 이동 관련
     public void MoveToTarget()
     {
-        WorkerNavAgent.SetDestination(Target.transform.position);
+        NavAgent.SetDestination(Target.transform.position);
         Debug.Log("이동 중");
     }
 
@@ -42,7 +36,7 @@ public class Worker : Entity
 
     public void MoveToNexus()
     {
-        WorkerNavAgent.SetDestination(Nexus.transform.position);
+        NavAgent.SetDestination(Nexus.transform.position);
     }
 
     public float CheckNexusDistance()
@@ -68,11 +62,6 @@ public class Worker : Entity
     {
         CanWork = false;
         EndWork = true;
-    }
-
-    public void HitResource()
-    {
-        WorkerDamageCasterCompo.CastDamage();
     }
     #endregion
 
