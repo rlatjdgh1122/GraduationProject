@@ -9,6 +9,11 @@ public class MeleeAttackableEntity : EntityAttackData
         base.Awake();
     }
 
+    public override void AoEAttack()
+    {
+        DamageCasterCompo.CaseAoEDamage();
+    }
+
     public override void MeleeAttack()
     {
         DamageCasterCompo.CastDamage();

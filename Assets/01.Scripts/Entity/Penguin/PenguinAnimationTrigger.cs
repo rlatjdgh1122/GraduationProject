@@ -17,9 +17,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     public void AoEAttackTrigger()
     {
-
-        Debug.Log("АјАн 1");
-        _penguin.AoEAttack();
+        _penguin.AttackCompo.AoEAttack();
     }
 
     private void RangeAttackTrigger()

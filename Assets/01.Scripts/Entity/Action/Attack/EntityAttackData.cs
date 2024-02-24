@@ -16,6 +16,11 @@ public class EntityAttackData : MonoBehaviour
         DamageCasterCompo.SetOwner(owner.Stat);
     }
 
+    public virtual void AoEAttack()
+    {
+
+    }
+
     public virtual void MeleeAttack()
     {
 

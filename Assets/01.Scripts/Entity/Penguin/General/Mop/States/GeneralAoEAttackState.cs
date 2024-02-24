@@ -18,7 +18,6 @@ public class GeneralAoEAttackState : GeneralBaseState
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
 
-        Debug.Log("±¤¿ª°ø°Ý");
     }
     public override void UpdateState()
     {

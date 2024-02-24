@@ -114,11 +114,6 @@ public abstract class Entity : PoolableMono
 
     protected abstract void HandleDie();
 
-    public virtual void AoEAttack()
-    {
-        //DamageCasterCompo?.CaseAoEDamage();
-    }
-
     #region 패시브 함수
 
     /// <summary>
