@@ -11,6 +11,11 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy = transform.parent.GetComponent<Enemy>();
     }
 
+    public void AoEAttackTrigger()
+    {
+        _enemy.AttackCompo.AoEAttack();
+    }
+
     public void AttackTrigger()
     {
         _enemy.AttackCompo.MeleeAttack();

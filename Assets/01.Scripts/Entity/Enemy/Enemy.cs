@@ -58,11 +58,6 @@ public class Enemy : Entity
         CurrentTarget = FindNearestPenguin<Penguin>();
     }
 
-    public override void AoEAttack()
-    {
-        base.AoEAttack();
-    }
-
     protected override void HandleDie()
     {
         IsDead = true;

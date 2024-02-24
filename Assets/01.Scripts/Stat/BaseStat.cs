@@ -1,6 +1,9 @@
+using System;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 [System.Serializable]
+[Flags]
 public enum StatType
 {
     MoveSpeed,
@@ -46,11 +49,186 @@ public abstract class BaseStat : ScriptableObject
     {
         return maxHealth.GetValue() + (vitality.GetValue() * 5);
     }
-
     public int GetDamage()
     {
         return damage.GetValue() + strength.GetValue();
     }
+
+    /// <summary>
+    /// 해당하는 타입 리셋
+    /// </summary>
+    /// <param name="type"> 스탯 타입</param>
+    /// <param name="mode"> (상승 스탯 또는 감소 스탯)</param>
+    public void ResetStatByStatType(StatType type, StatMode mode)
+    {
+        switch (type)
+        {
+            case StatType.Strength:
+                if (mode == StatMode.Increase)
+                {
+                    strength.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    strength.StatDecReset();
+                }
+                break;
+
+            case StatType.Agility:
+                if (mode == StatMode.Increase)
+                {
+                    agility.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    agility.StatDecReset();
+                }
+                break;
+
+            case StatType.Intelligence:
+                if (mode == StatMode.Increase)
+                {
+                    intelligence.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    intelligence.StatDecReset();
+                }
+                break;
+
+            case StatType.Vitality:
+                if (mode == StatMode.Increase)
+                {
+                    vitality.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    vitality.StatDecReset();
+                }
+                break;
+
+            case StatType.MaxHealth:
+                if (mode == StatMode.Increase)
+                {
+                    maxHealth.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    maxHealth.StatDecReset();
+                }
+                break;
+
+            case StatType.Armor:
+                if (mode == StatMode.Increase)
+                {
+                    armor.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    armor.StatDecReset();
+                }
+                break;
+
+            case StatType.MagicResistance:
+                if (mode == StatMode.Increase)
+                {
+                    magicResistance.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    magicResistance.StatDecReset();
+                }
+                break;
+
+            case StatType.Damage:
+                if (mode == StatMode.Increase)
+                {
+                    damage.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    damage.StatDecReset();
+                }
+                break;
+
+            case StatType.CriticalChance:
+                if (mode == StatMode.Increase)
+                {
+                    criticalChance.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    criticalChance.StatDecReset();
+                }
+                break;
+
+            case StatType.CriticalDamage:
+                if (mode == StatMode.Increase)
+                {
+                    criticalDamage.StatIncReset();
+                }
+                else if (mode == StatMode.Decrease)
+                {
+                    criticalDamage.StatDecReset();
+                }
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 해당되는 모드 리셋
+    /// </summary>
+    /// <param name="mode"> (상승 스탯 또는 감소 스탯)</param>
+    public void ResetStatByStatMode(StatMode mode)
+    {
+        if (mode == StatMode.Increase)
+        {
+            maxHealth.StatIncReset();
+            armor.StatIncReset();
+            evasion.StatIncReset();
+            magicResistance.StatIncReset();
+            strength.StatIncReset();
+            agility.StatIncReset();
+            intelligence.StatIncReset();
+            vitality.StatIncReset();
+            damage.StatIncReset();
+            criticalChance.StatIncReset();
+            criticalDamage.StatIncReset();
+        }
+        else
+        {
+            maxHealth.StatDecReset();
+            armor.StatDecReset();
+            evasion.StatDecReset();
+            magicResistance.StatDecReset();
+            strength.StatDecReset();
+            agility.StatDecReset();
+            intelligence.StatDecReset();
+            vitality.StatDecReset();
+            damage.StatDecReset();
+            criticalChance.StatDecReset();
+            criticalDamage.StatDecReset();
+        }
+    }
+
+    /// <summary>
+    /// 모든 스탯 리셋(스탯 초기화)
+    /// </summary>
+    public void ResetAllStat()
+    {
+        maxHealth.StatAllReset();
+        armor.StatAllReset();
+        evasion.StatAllReset();
+        magicResistance.StatAllReset();
+        strength.StatAllReset();
+        agility.StatAllReset();
+        intelligence.StatAllReset();
+        vitality.StatAllReset();
+        damage.StatAllReset();
+        criticalChance.StatAllReset();
+        criticalDamage.StatAllReset();
+    }
+
     public void AddStat(int value, StatType type, StatMode mode)
     {
         switch (type)
@@ -192,27 +370,27 @@ public abstract class BaseStat : ScriptableObject
     {
         switch (type)
         {
-           /* case StatType.MoveSpeed:
-                if (mode == StatMode.Increase)
-                {
-                    moveSpeed.RemoveIncrease(value);
-                }
-                else if (mode == StatMode.Decrease)
-                {
-                    moveSpeed.RemoveDecrease(value);
-                }
-                break;
+            /* case StatType.MoveSpeed:
+                 if (mode == StatMode.Increase)
+                 {
+                     moveSpeed.RemoveIncrease(value);
+                 }
+                 else if (mode == StatMode.Decrease)
+                 {
+                     moveSpeed.RemoveDecrease(value);
+                 }
+                 break;
 
-            case StatType.AttackSpeed:
-                if (mode == StatMode.Increase)
-                {
-                    attackSpeed.RemoveIncrease(value);
-                }
-                else if (mode == StatMode.Decrease)
-                {
-                    attackSpeed.RemoveDecrease(value);
-                }
-                break;*/
+             case StatType.AttackSpeed:
+                 if (mode == StatMode.Increase)
+                 {
+                     attackSpeed.RemoveIncrease(value);
+                 }
+                 else if (mode == StatMode.Decrease)
+                 {
+                     attackSpeed.RemoveDecrease(value);
+                 }
+                 break;*/
 
             case StatType.Strength:
                 if (mode == StatMode.Increase)
@@ -308,7 +486,7 @@ public abstract class BaseStat : ScriptableObject
                     criticalChance.RemoveIncrease(value);
                 }
                 else if (mode == StatMode.Decrease)
-                {   
+                {
                     criticalChance.RemoveDecrease(value);
                 }
                 break;
