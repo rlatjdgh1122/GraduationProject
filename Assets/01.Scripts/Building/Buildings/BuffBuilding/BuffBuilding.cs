@@ -31,46 +31,38 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         }
     }
 
-    private event Action OnInsideRangeEnterEvent = null;  //범위 안에 들어왔을 때 이벤트
-    private event Action<int> OnInsideRangeExitEvent = null;
-
     protected override void Awake()
     {
         base.Awake();
     }
 
-    public int BuffRunning(Collider[] _curcolls, int previousCollsLength)
+    public Collider[] BuffRunning(Collider[] _curcolls, Collider[] previousColls)
     {
-        if (_curcolls.Length > previousCollsLength)
+        if (_curcolls.Length > previousColls.Length)
         {
-            if (isChecked == true)
-            {
-                OnPenguinInsideRangeStay();
-            }
-            else
-            {
-                OnPenguinInsideRangeEnter();
-            }
+            OnPenguinInsideRangeEnter();
             isChecked = true;
         }
-        else if(_curcolls.Length == 0)
+        else if(_curcolls.Length < previousColls.Length)
         {
             if (isChecked == true)
             {
                 OnPenguinInsideRangeExit();
             }
-            isChecked = false;
+
+            if (_curcolls.Length == 0)
+            {
+                isChecked = false;
+            }
         }
 
-        return _curcolls.Length;
+        return _curcolls;
     }
 
     protected virtual void OnPenguinInsideRangeEnter()
     {
         // 범위 안에 들어오면 각각 버프이벤트 구독
-        OnInsideRangeEnterEvent += BuffEvent;
-
-        OnInsideRangeEnterEvent?.Invoke();
+        BuffEvent();
 
         Debug.Log("안에들어왔다");
     }
@@ -82,10 +74,11 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
 
     protected virtual void OnPenguinInsideRangeExit()
     {
-        OnInsideRangeEnterEvent -= BuffEvent;
+        CommenceBuffDecay();
 
         Debug.Log("나갔다");
     }
+
 
     private void OnDrawGizmos()
     {
@@ -93,7 +86,8 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         Gizmos.DrawWireSphere(transform.position, innerDistance);
     }
 
-    protected abstract void BuffEvent();
+    protected abstract void BuffEvent(); //범위 안에 들어오면 실행될 버프 이벤트
+    protected abstract void CommenceBuffDecay(); //범위 밖으로 나가면 실행될 버프 소멸 이벤트
     protected abstract void SetBuffValue(int value);
     protected abstract int GetBuffValue();
 }
