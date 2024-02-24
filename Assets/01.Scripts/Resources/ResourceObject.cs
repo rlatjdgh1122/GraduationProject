@@ -8,7 +8,7 @@ public class ResourceObject : Entity
 
     private Sprite _resourceIcon;
     private string _resourceName;
-    private int _needWorkerCount;
+    private int _requiredWorkerCount;
     private int _currentWorkerCount;
     private int _receiveCountAtOnce;
     private int _receiveCountWhenCompleted;
@@ -16,7 +16,7 @@ public class ResourceObject : Entity
     #region property
     public Sprite ResourceImage => _resourceIcon;
     public string ResourceName => _resourceName;
-    public int NeedWorkerCount => _needWorkerCount;
+    public int RequiredWorkerCount => _requiredWorkerCount;
     public int CurrentWorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }   
     public int ReceiveCountAtOnce => _receiveCountAtOnce;
     public int ReceiveCountWhenCompleted => _receiveCountWhenCompleted;
@@ -35,13 +35,12 @@ public class ResourceObject : Entity
     {
         base.Awake();
 
-        //HealthCompo.SetHealth(_resourceStat);
         SetCount();
     }
 
     public void SetCount()
     {
-        _needWorkerCount = _resourceStat.requiredWorkerCount;
+        _requiredWorkerCount = _resourceStat.requiredWorkerCount;
         _resourceName = _resourceStat.resourceName;
         _resourceIcon = _resourceData.resourceIcon;
         _receiveCountAtOnce = _resourceStat.receiveCountAtOnce;

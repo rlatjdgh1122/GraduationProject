@@ -11,7 +11,7 @@ public class Worker : Entity
     public Transform Nexus;
     #endregion
 
-    public bool CanWork = false;
+    public bool CanWork = true;
     public bool EndWork = false;
 
     protected override void Awake()
@@ -56,6 +56,7 @@ public class Worker : Entity
     {
         Target = target;
         CanWork = true;
+        EndWork = false;
     }
 
     public void FinishWork()

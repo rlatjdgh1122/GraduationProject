@@ -7459,16 +7459,59 @@ MonoBehaviour:
   generalInven: []
   soliderInven: []
   LegionList:
-  - legionInven: []
-  - legionInven: []
-  - legionInven: []
-  - legionInven: []
-  - legionInven: []
-  - legionInven: []
-  - legionInven: []
-  - legionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  - price: 0
+    Locked: 0
+    LegionPanels: {fileID: 0}
+    MaxCount: 0
+    CurrentCount: 0
+    LegionInven: []
+  _generalParent: {fileID: 0}
   _soliderParent: {fileID: 1875691138}
-  _warloadParent: {fileID: 372452910}
+  _legionUI: {fileID: 0}
+  _generalSO: []
+  _soliderSO: []
 --- !u!4 &310793082
 Transform:
   m_ObjectHideFlags: 0
@@ -11103,10 +11146,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095df61f9c10f3e4394da49743e86696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _list:
-  - {fileID: 2097124061}
-  - {fileID: 2022401900}
-  _onGameObj: {fileID: 1972516516}
+  OffObjectList: []
+  OnObjectList: []
+  InspectorCustomBtn:
+    TweenBtn: 0
+    OnGameObjectTween: 0
+    OffGameObjectTween: 0
+    Type: 0
+    Direction: 0
+    MoveX: 0
+    MoveY: 0
+    MoveAll: {x: 0, y: 0, z: 0}
+    ScaleX: 0
+    ScaleY: 0
+    ScaleAll: {x: 0, y: 0, z: 0}
+    Time: 0
+    FadeValue: 0
 --- !u!114 &446496952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11660,9 +11715,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095df61f9c10f3e4394da49743e86696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _list:
-  - {fileID: 1875691137}
-  _onGameObj: {fileID: 372452909}
+  OffObjectList: []
+  OnObjectList: []
+  InspectorCustomBtn:
+    TweenBtn: 0
+    OnGameObjectTween: 0
+    OffGameObjectTween: 0
+    Type: 0
+    Direction: 0
+    MoveX: 0
+    MoveY: 0
+    MoveAll: {x: 0, y: 0, z: 0}
+    ScaleX: 0
+    ScaleY: 0
+    ScaleAll: {x: 0, y: 0, z: 0}
+    Time: 0
+    FadeValue: 0
 --- !u!114 &453270377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12833,9 +12901,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095df61f9c10f3e4394da49743e86696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _list:
-  - {fileID: 372452909}
-  _onGameObj: {fileID: 1875691137}
+  OffObjectList: []
+  OnObjectList: []
+  InspectorCustomBtn:
+    TweenBtn: 0
+    OnGameObjectTween: 0
+    OffGameObjectTween: 0
+    Type: 0
+    Direction: 0
+    MoveX: 0
+    MoveY: 0
+    MoveAll: {x: 0, y: 0, z: 0}
+    ScaleX: 0
+    ScaleY: 0
+    ScaleAll: {x: 0, y: 0, z: 0}
+    Time: 0
+    FadeValue: 0
 --- !u!114 &498628719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13769,7 +13850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &600604591
 Transform:
   m_ObjectHideFlags: 0
@@ -17897,6 +17978,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796961423}
   m_CullTransparentMesh: 1
+--- !u!114 &800839958 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7741800042478522081, guid: ecb9c7fe127919244af337189985d2ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 644334819}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d01ae11d8621e49a8f444877e07b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &801896026
 GameObject:
   m_ObjectHideFlags: 0
@@ -31433,6 +31526,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389968397}
   m_CullTransparentMesh: 1
+--- !u!114 &1393200323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7741800042478522081, guid: ecb9c7fe127919244af337189985d2ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 866139726}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d01ae11d8621e49a8f444877e07b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1415062820
 GameObject:
   m_ObjectHideFlags: 0
@@ -38715,6 +38820,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735686937}
   m_CullTransparentMesh: 1
+--- !u!114 &1750363796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 539569831777354752, guid: 446f9bf1806445b43ac7891423e090b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 60244243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98354ecb5ac476b4b9726ee483e00362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1773753023
 GameObject:
   m_ObjectHideFlags: 0
@@ -39053,6 +39170,13 @@ MonoBehaviour:
   _data:
     penguinData: {fileID: 0}
     stackSize: 0
+  _name: {fileID: 0}
+  _className: {fileID: 0}
+  _weapon: {fileID: 0}
+  _type: {fileID: 0}
+  _characteristic: {fileID: 0}
+  _passive: {fileID: 0}
+  _Synergy: {fileID: 0}
 --- !u!114 &1793148349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39299,7 +39423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2cb6f3406fa2e54590c6fd8f0c61f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPhaseReadyTime: 30
   _tentTrm: {fileID: 1658376550}
   _clockHandImgTrm: {fileID: 1618046854}
   _timeText: {fileID: 1837234703}
@@ -39308,7 +39431,7 @@ MonoBehaviour:
   isWin: 1
   targetColor: {r: 0, g: 0, b: 0, a: 0}
   CurrentStage: 0
-  IsPhase: 0
+  IsBattlePhase: 0
   IsArrived: 0
   CanTimer: 1
 --- !u!1 &1826821055
@@ -40256,9 +40379,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soldierTypeListSO: {fileID: 11400000, guid: 538e6cee0073b7749a1d37f6b1648073, type: 2}
   armies:
-  - Legion: 0
+  - Legion: 1
     IsMoving: 0
-    Soldiers: []
+    Soldiers:
+    - {fileID: 1916857145}
+    - {fileID: 1750363796}
+    - {fileID: 2029149459}
+    - {fileID: 1393200323}
+    - {fileID: 800839958}
     General: {fileID: 0}
     info:
       totalCount: 0
@@ -41680,6 +41808,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1094673615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1916857145 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2163785626428387538, guid: 0d157e196d50f1a4598c391453dfd7c0,
+    type: 3}
+  m_PrefabInstance: {fileID: 451318341}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1925548384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44853,10 +44993,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095df61f9c10f3e4394da49743e86696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _list:
-  - {fileID: 1972516516}
-  - {fileID: 2097124061}
-  _onGameObj: {fileID: 1516102052}
+  OffObjectList: []
+  OnObjectList: []
+  InspectorCustomBtn:
+    TweenBtn: 0
+    OnGameObjectTween: 0
+    OffGameObjectTween: 0
+    Type: 0
+    Direction: 0
+    MoveX: 0
+    MoveY: 0
+    MoveAll: {x: 0, y: 0, z: 0}
+    ScaleX: 0
+    ScaleY: 0
+    ScaleAll: {x: 0, y: 0, z: 0}
+    Time: 0
+    FadeValue: 0
 --- !u!114 &2022401903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44951,6 +45103,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022401900}
   m_CullTransparentMesh: 1
+--- !u!114 &2029149459 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2163785626428387538, guid: 0d157e196d50f1a4598c391453dfd7c0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1550788081}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff103a4c65c77a14b98a0818001e5dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2029725658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45728,10 +45892,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095df61f9c10f3e4394da49743e86696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _list:
-  - {fileID: 1972516516}
-  - {fileID: 2022401900}
-  _onGameObj: {fileID: 1451330335}
+  OffObjectList: []
+  OnObjectList: []
+  InspectorCustomBtn:
+    TweenBtn: 0
+    OnGameObjectTween: 0
+    OffGameObjectTween: 0
+    Type: 0
+    Direction: 0
+    MoveX: 0
+    MoveY: 0
+    MoveAll: {x: 0, y: 0, z: 0}
+    ScaleX: 0
+    ScaleY: 0
+    ScaleAll: {x: 0, y: 0, z: 0}
+    Time: 0
+    FadeValue: 0
 --- !u!114 &2097124063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47192,7 +47368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b24ce834742d47b4a862ec3ced7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _healEffect: {fileID: -198098653787150809, guid: 880628dabbf32df439f61db0b7a24c20,
     type: 3}
   _effectEndTime: 2
@@ -47674,7 +47849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _effectEndTime: 1.5
 --- !u!224 &2451014956679301541
 RectTransform:
@@ -48539,8 +48713,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   innerDistance: 9
   attackDistance: 1.5
-  _arrowPrefab: {fileID: 0}
-  _firePos: {fileID: 0}
   IsAttackEvent: 0
   AttackCount: 3
   IsSecondEvent: 0
@@ -48550,7 +48722,6 @@ MonoBehaviour:
   AroundRadius: 3
   AroundEnemyCount: 3
   passiveData: {fileID: 0}
-  _renderer: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
   type: 3
   moveSpeed: 3
