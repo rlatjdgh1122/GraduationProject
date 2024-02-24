@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
 [System.Serializable]
+[Flags]
 public enum StatType
 {
     MoveSpeed,
