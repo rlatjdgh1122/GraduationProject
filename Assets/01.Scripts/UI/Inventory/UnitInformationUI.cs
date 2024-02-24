@@ -13,23 +13,37 @@ public class UnitInformationUI : SlotUI
     [SerializeField] TextMeshProUGUI _passive;
     [SerializeField] TextMeshProUGUI _Synergy;
 
+    public LegionInventoryData _infoData = null;
+
     public override void CleanUpSlot()
     {
         _data = null;
         _unitImage.sprite = _emptyImage;
     }
 
+    public void InfoDataSlot(LegionInventoryData data)
+    {
+        _infoData = data;
+
+        UpdateInformation(_infoData);
+    }
+
     public override void UpdateSlot(LegionInventoryData data)
     {
         _data = data;
 
-        if(_data != null)
-        {
-            _unitImage.sprite = _data.penguinData.PenguinIcon;
-            _name.text = _data.penguinData.PenguinName;
-            _className.text = _data.penguinData.PenguinJobTypeName();
+        UpdateInformation(_data);
+    }
 
-            _data.penguinData.PenguinInformationUpdate(_weapon, _type, _characteristic, _passive, _Synergy);
+    private void UpdateInformation(LegionInventoryData data)
+    {
+        if (data != null)
+        {
+            _unitImage.sprite = data.penguinData.PenguinIcon;
+            _name.text = data.penguinData.PenguinName;
+            _className.text = data.penguinData.PenguinJobTypeName();
+
+            data.penguinData.PenguinInformationUpdate(_weapon, _type, _characteristic, _passive, _Synergy);
         }
     }
 }

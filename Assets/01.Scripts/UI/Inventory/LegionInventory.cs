@@ -20,17 +20,17 @@ public class Legion
 
 public class LegionInventory : Singleton<LegionInventory>
 {
+    #region Property
     [Header("PenguinInventory")]
     //==========================================
     //∆Î±œ ¿Œ∫•≈‰∏Æ
-
     //¿Â±∫
-    public List<LegionInventoryData> generalInven = new();
-    public Dictionary<PenguinStat, LegionInventoryData> generalDictionary = new();
+    [HideInInspector] public List<LegionInventoryData> generalInven = new();
+    public Dictionary<PenguinStat, LegionInventoryData> generalDictionary { get; private set; } = new();
 
     //∫¥ªÁ
-    public List<LegionInventoryData> soliderInven = new();
-    public Dictionary<PenguinStat, LegionInventoryData> soliderDictionary = new();
+    [HideInInspector] public List<LegionInventoryData> soliderInven = new();
+    public Dictionary<PenguinStat, LegionInventoryData> soliderDictionary { get; private set; } = new();
     //==========================================
 
     [Header("LegionInventory")]
@@ -46,9 +46,11 @@ public class LegionInventory : Singleton<LegionInventory>
     private UnitSlotUI[] _generalSlots;
     private UnitSlotUI[] _soliderSlots;
 
-    [Header("PenguinSO")]
-    [SerializeField] private PenguinStat[] _generalSO;
-    [SerializeField] private PenguinStat[] _soliderSO;
+    [Header("!!Register PenguinSO!!")]
+    [SerializeField] private PenguinStat[] _legionSO;
+    private List<PenguinStat> _generalSO = new();
+    private List<PenguinStat> _soliderSO = new();
+    #endregion
 
     public override void Awake()
     {
@@ -56,27 +58,39 @@ public class LegionInventory : Singleton<LegionInventory>
 
         _generalSlots = _generalParent.GetComponentsInChildren<UnitSlotUI>();
         _soliderSlots = _soliderParent.GetComponentsInChildren<UnitSlotUI>();
+
+        foreach (PenguinStat soliderSO in _legionSO)
+        {
+            if (soliderSO.JobType == PenguinJobType.General)
+            {
+                _generalSO.Add(soliderSO);
+            }
+            else
+            {
+                _soliderSO.Add(soliderSO);
+            }
+        }
     }
 
     private void Start()
     {
+        LegionCountInformation(0);
+
         OffSlotByStartScene(_generalSlots, _generalSO);
         OffSlotByStartScene(_soliderSlots, _soliderSO);
-
-        LegionCountInformation(0);
     }
 
-    public void OffSlotByStartScene(UnitSlotUI[] slot, PenguinStat[] so)
+    public void OffSlotByStartScene(UnitSlotUI[] slot, List<PenguinStat> so)
     {
         for (int i = 0; i < slot.Length; i++)
         {
-            if (i >= so.Length)
+            if (i >= so.Count)
             {
                 slot[i].gameObject.SetActive(false);
             }
         }
 
-        for (int i = 0; i < so.Length; i++)
+        for (int i = 0; i < so.Count; i++)
         {
             AddPenguin(so[i]);
             RemovePenguin(so[i]);

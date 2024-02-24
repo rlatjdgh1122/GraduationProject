@@ -28,6 +28,8 @@ public class LegionChange : MonoBehaviour
 
     private int _curLegion;
 
+    private int _curCost;
+    private int _price;
     private int _finalCost;
     private bool _cantBuy;
 
@@ -101,9 +103,9 @@ public class LegionChange : MonoBehaviour
         _buyPanel.alpha          = 1;
         _buyPanel.blocksRaycasts = true;
 
-        int curCost              = CostManager.Instance.CurrentCost;
-        int price                = LegionInventory.Instance.LegionList[number].price;
-        _finalCost               = curCost - price;
+        _curCost                  = CostManager.Instance.Cost;
+        _price                    = LegionInventory.Instance.LegionList[number].price;
+        _finalCost               = _curCost - _price;
 
         if(_finalCost < 0)
         {
@@ -116,8 +118,8 @@ public class LegionChange : MonoBehaviour
             _cantBuy = false;
         }
 
-        _currentCostText.text    = $"{curCost}";
-        _priceText.text          = $"{price}";
+        _currentCostText.text    = $"{_curCost}";
+        _priceText.text          = $"{_price}";
         _finalCostText.text      = $"{_finalCost}";
     }
 
@@ -135,7 +137,7 @@ public class LegionChange : MonoBehaviour
 
             LegionInventory.Instance.ShowMessage($"{_curLegion}군단 구매 성공!");
 
-            CostManager.Instance.ChangeCost(_finalCost);
+            CostManager.Instance.ChangeCost(-_price);
             LegionInventory.Instance.LegionList[_curLegion - 1].Locked = false;
 
             CloseBuyPanel();
