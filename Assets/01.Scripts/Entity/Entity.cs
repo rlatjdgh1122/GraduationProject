@@ -1,4 +1,5 @@
 using DG.Tweening.Core.Easing;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,22 +9,6 @@ public abstract class Entity : PoolableMono
     public float attackDistance = 1.5f;
 
     #region 패시브
-    //몇대 때릴때마다
-    public bool IsAttackEvent = false;
-    public int AttackCount = 3;
-
-    //몇 초 마다
-    public bool IsSecondEvent = false;
-    public float EverySecond = 10f;
-
-    //뒤에서 때릴때
-    public bool IsBackAttack = false;
-
-    //범위 안에 주변의 적이 몇명인가
-    public bool IsAroundEnemyCountEventEvent = false;
-    public float AroundRadius = 3;
-    public int AroundEnemyCount = 3;
-
     public PassiveDataSO passiveData = null;
     #endregion
 
@@ -114,7 +99,11 @@ public abstract class Entity : PoolableMono
     protected virtual void Start()
     {
         if (passiveData == true)
+        {
             passiveData.Start();
+
+            //SerializedObject serializedObject = new SerializedObject(passiveData);
+        }
     }
 
     protected virtual void Update()
@@ -143,20 +132,22 @@ public abstract class Entity : PoolableMono
     /// 몇 초마다 패시브 활성화 확인 여부
     /// </summary>
     /// <returns> 결과</returns>
-    public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
+    public bool CheckSecondEventPassive(float curTime)
+        => passiveData.CheckSecondEventPassive(curTime);
 
     /// <summary>
     /// 뒤치기 패시브 활성화 확인 여부
     /// </summary>
     /// <returns> 결과</returns>
-    public bool CheckBackAttackEventPassive() 
-        => IsAttackEvent;
+    public bool CheckBackAttackEventPassive()
+        => passiveData.CheckBackAttackEventPassive();
 
     /// <summary>
     /// 주변의 적 수 비례 패시브 활성화 확인 여부
     /// </summary>
     /// <returns> 결과</returns>
-    public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
+    public bool CheckAroundEnemyCountEventPassive()
+        => passiveData.CheckAroundEnemyCountEventPassive();
     #endregion
 
     public virtual void OnPassiveAttackEvent()
