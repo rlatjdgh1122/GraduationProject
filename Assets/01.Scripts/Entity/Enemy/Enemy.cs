@@ -18,7 +18,7 @@ public class Enemy : Entity
     public UnityEvent OnProvokedEvent;
 
     #region componenets
-    public AttackableEntity AttackCompo { get; private set; }
+    public EntityAttackData AttackCompo { get; private set; }
     #endregion
 
     public Penguin CurrentTarget;
@@ -40,7 +40,7 @@ public class Enemy : Entity
         base.Awake();
         NavAgent.speed = moveSpeed;
 
-        AttackCompo = GetComponent<AttackableEntity>();
+        AttackCompo = GetComponent<EntityAttackData>();
     }
 
     private void OnEnable()
@@ -61,13 +61,6 @@ public class Enemy : Entity
     public override void AoEAttack()
     {
         base.AoEAttack();
-    }
-
-    public override void RangeAttack()
-    {
-        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(_characterStat, AttackCompo.DamageCasterCompo.TargetLayer);
-        arrow.Fire(_firePos.forward);
     }
 
     protected override void HandleDie()

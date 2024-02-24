@@ -833,7 +833,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3132410395210177913}
   - component: {fileID: 7319245969567128266}
-  - component: {fileID: 2837546269608725102}
+  - component: {fileID: 5446503461122516532}
   - component: {fileID: 7784602140742933622}
   - component: {fileID: 5197397325978698940}
   - component: {fileID: 5121196399348769439}
@@ -874,17 +874,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b2724c680edc046878e4d061d51892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 4
   attackDistance: 1.5
-  _arrowPrefab: {fileID: 0}
-  _firePos: {fileID: 0}
+  IsAttackEvent: 0
+  AttackCount: 3
+  IsSecondEvent: 0
+  EverySecond: 10
+  IsBackAttack: 0
+  IsAroundEnemyCountEventEvent: 0
+  AroundRadius: 3
+  AroundEnemyCount: 3
+  passiveData: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: 653e880614eb72b4eaea6216831949d7, type: 2}
   Target: {fileID: 0}
   Nexus: {fileID: 0}
   CanWork: 0
   EndWork: 0
---- !u!114 &2837546269608725102
+--- !u!114 &5446503461122516532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -893,7 +899,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5716602415672122028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f0b49ab804d8e4ab7bb886c7dd5143, type: 3}
+  m_Script: {fileID: 11500000, guid: f0ffbc512ca30d143ba6c3b604bbaccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7784602140742933622

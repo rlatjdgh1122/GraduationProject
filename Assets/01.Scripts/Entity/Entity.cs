@@ -7,11 +7,7 @@ public abstract class Entity : PoolableMono
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
-    [SerializeField] protected Arrow _arrowPrefab;
-    [SerializeField] protected Transform _firePos;
-
     #region 패시브
-
     //몇대 때릴때마다
     public bool IsAttackEvent = false;
     public int AttackCount = 3;
@@ -29,6 +25,7 @@ public abstract class Entity : PoolableMono
     public int AroundEnemyCount = 3;
 
     public PassiveDataSO passiveData = null;
+    #endregion
 
     #region 군단 포지션
 
@@ -86,10 +83,10 @@ public abstract class Entity : PoolableMono
     protected virtual void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
-        AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 이렇게 해놈
+        AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
         HealthCompo = GetComponent<Health>();
         NavAgent = GetComponent<NavMeshAgent>();
-        OutlineCompo = transform?.GetComponent<Outline>(); //이것도 빼야함
+        OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
 
         passiveData?.SetOwner(this);
@@ -131,11 +128,6 @@ public abstract class Entity : PoolableMono
     public virtual void AoEAttack()
     {
         //DamageCasterCompo?.CaseAoEDamage();
-    }
-
-    public virtual void RangeAttack()
-    {
-
     }
 
     #region 패시브 함수
@@ -183,8 +175,6 @@ public abstract class Entity : PoolableMono
     {
 
     }
-    #endregion
-
 
     #region 움직임 관리
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
