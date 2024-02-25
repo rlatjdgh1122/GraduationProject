@@ -31,9 +31,9 @@ public class Stat
         return result;  
     }
 
-    public int AddSum(int value, int mul1, int mul2)
+    public void AddSum(int value, int mul1, int mul2)
     {
-        return _baseValue = value + (mul1 * mul2);
+        _baseValue = value + (mul1 * mul2);
     }
 
     public void AddIncrease(int value)
