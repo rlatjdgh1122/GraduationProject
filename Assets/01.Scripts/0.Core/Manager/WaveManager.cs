@@ -27,7 +27,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     Color targetColor;
 
-    public int CurrentStage = 0;
+    private int currentWaveCount = 0;
+    public int CurrentWaveCount => currentWaveCount;
 
     public bool IsBattlePhase = false;
     public bool IsArrived = false;
@@ -124,12 +125,14 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-
-
-
         if (Input.GetKeyDown(KeyCode.U)) //디버그
         {
             BattlePhaseStartEventHandler();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S)) // 테스트Dragon
+        {
+            currentWaveCount++;
         }
     }
 
@@ -142,7 +145,7 @@ public class WaveManager : MonoBehaviour
     {
         IsBattlePhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
-        _waveCntText.SetText($"Current Wave: {CurrentStage}");
+        _waveCntText.SetText($"Current Wave: {CurrentWaveCount}");
     }
 
     private void OnBattlePhaseEndHandle() // 전투페이즈 종료
@@ -152,13 +155,13 @@ public class WaveManager : MonoBehaviour
 
         if (isWin)
         {
-            CurrentStage++;
+            currentWaveCount++;
             List<Penguin> penguins = FindObjectsOfType<Penguin>().Where(p => p.enabled).ToList();
             foreach (Penguin penguin in penguins)
             {
                 penguin.CurrentTarget = null;
             }
-            _waveCntText.SetText($"Next Wave: {CurrentStage}");
+            _waveCntText.SetText($"Next Wave: {CurrentWaveCount}");
         }
         else
         {
