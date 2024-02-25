@@ -22,7 +22,7 @@ public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
         if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
 
-        if (_enemy.NavAgent.remainingDistance < 0.1f && !_enemy.NavAgent.pathPending)
+        if (_enemy.NavAgent.remainingDistance < 0.1f /*&& !_enemy.NavAgent.pathPending*/)
         {
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
         }

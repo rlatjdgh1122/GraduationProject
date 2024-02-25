@@ -11,7 +11,7 @@ public class BasicDeadState : BasicBaseState
         _triggerCalled = true;
         _penguin.CurrentTarget = null;
         _penguin.enabled = false;
-        _penguin.CharController.enabled = false;
+        //_penguin.CharController.enabled = false;
         _penguin.NavAgent.enabled = false;
     }
 

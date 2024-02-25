@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PenguinAnimationTrigger : MonoBehaviour
@@ -11,12 +12,17 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger()
     {
-        _penguin.Attack();
+        _penguin.AttackCompo.MeleeAttack();
+    }
+
+    public void AoEAttackTrigger()
+    {
+        _penguin.AttackCompo.AoEAttack();
     }
 
     private void RangeAttackTrigger()
     {
-        _penguin.RangeAttack();
+        _penguin.AttackCompo.RangeAttack();
     }
 
     public void DeadCompleteTrigger()
