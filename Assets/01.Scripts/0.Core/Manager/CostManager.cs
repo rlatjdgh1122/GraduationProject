@@ -22,8 +22,7 @@ public class CostManager : Singleton<CostManager>
         }
     }
 
-    [SerializeField] private TextMeshProUGUI _curCostText;
-    [SerializeField] private TextMeshProUGUI _plusCostText;
+    [SerializeField] private CostUI _costUI;
 
     [Header("Default Cost Value")]
     [SerializeField] private int _defaultCost;
@@ -32,53 +31,41 @@ public class CostManager : Singleton<CostManager>
     {
         base.Awake();
 
-        ChangeCost(_defaultCost);
+        Cost = _defaultCost;
+        _costUI.OnlyCurrentCostView(Cost);
     }
 
-    private void Update()
+    private void Update() //임시
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            ChangeCost(-234);
+            AddFromCurrentCost(6, true,transform);
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
-            ChangeCost(123);
+            SubtractFromCurrentCost(6);
         }
     }
 
-    public void ChangeCost(int cost)
+    public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
     {
-        _plusCostText.text = $"{cost}";
-        _curCostText.text = $"{Cost}";
-
-        _currentCost += cost;
-
-        CostTween(cost);
+        _currentCost -= price;
+        _costUI.ChangeCost(-Mathf.Abs(price));
     }
 
-    public void CostTween(int cost)
+    //현재 재화에서 더하기
+    //만약 tween이 true면 돈 뿅뿅뿅하는거,
+    public void AddFromCurrentCost(int value, bool tween = false, Transform startTransform = null)
     {
-        UIManager.Instance.InitializeWarningTextSequence();
-
-        UIManager.Instance.WarningTextSequence.AppendCallback(() =>
+        if(tween)
         {
-            _plusCostText.alpha = 1;
-            _plusCostText.enabled = true;
-
-            UIManager.Instance.ChangeTextColorBoolean(
-            _plusCostText,
-            cost >= 0,
-            Color.green,
-            Color.red,
-            0);
-
-        }).Append(_plusCostText.DOFade(0, 1))
-        .AppendInterval(0.2f)
-        .AppendCallback(() =>
+            _costUI.CostTween(value, startTransform);
+        }
+        else 
         {
-            _plusCostText.enabled = false;
-            _curCostText.text = $"{Cost}";
-        });
+            _costUI.ChangeCost(value);
+        }
+
+        _currentCost += value;
     }
 }

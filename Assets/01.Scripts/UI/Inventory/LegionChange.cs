@@ -137,7 +137,7 @@ public class LegionChange : MonoBehaviour
 
             LegionInventory.Instance.ShowMessage($"{_curLegion}군단 구매 성공!");
 
-            CostManager.Instance.ChangeCost(-_price);
+            CostManager.Instance.SubtractFromCurrentCost(_price);
             LegionInventory.Instance.LegionList[_curLegion - 1].Locked = false;
 
             CloseBuyPanel();
