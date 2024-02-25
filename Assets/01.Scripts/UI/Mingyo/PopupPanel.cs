@@ -12,7 +12,7 @@ public class PopupPanel : MonoBehaviour
     private void Start()
     {
         _offSpawnUIVec = gameObject.rectTransform().position;
-        _onSpawnUIVec = _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, 320, 0); //대충값
+        _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, 320, 0); //대충값
     }
 
     public void OnOffPanel()
@@ -31,10 +31,12 @@ public class PopupPanel : MonoBehaviour
     public void OnPanel()
     {
         UIManager.Instance.UIMoveDot(gameObject.rectTransform(), _onSpawnUIVec, 0.7f, Ease.OutCubic);
+        isOn = true;
     }
 
     public void OffPanel()
     {
         UIManager.Instance.UIMoveDot(gameObject.rectTransform(), _offSpawnUIVec, 0.7f, Ease.OutCubic);
+        isOn = false;
     }
 }
