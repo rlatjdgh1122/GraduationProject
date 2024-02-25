@@ -18,6 +18,8 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
 
     private bool isChecked = false; //enter, stay, exit를 위한 변수(건들 필요 없음)
 
+    FeedbackPlayer _feedbackPlayer;
+
     protected int buffValue;
     public int BuffValues
     {
@@ -34,6 +36,8 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     protected override void Awake()
     {
         base.Awake();
+
+        _feedbackPlayer = transform.Find("BuffFeedback").GetComponent<FeedbackPlayer>();
     }
 
     public Collider[] BuffRunning(Collider[] _curcolls, Collider[] previousColls)
@@ -63,7 +67,7 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     {
         // 범위 안에 들어오면 각각 버프이벤트 구독
         BuffEvent();
-
+        _feedbackPlayer.PlayFeedback();
         Debug.Log("안에들어왔다");
     }
 
@@ -75,8 +79,33 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     protected virtual void OnPenguinInsideRangeExit()
     {
         CommenceBuffDecay();
+        _feedbackPlayer.FinishFeedback();
 
         Debug.Log("나갔다");
+    }
+
+    protected bool IsSameColliders(Collider[] colliders1, Collider[] colliders2)
+    {
+        if (colliders1 == null || colliders2 == null || colliders1.Length != colliders2.Length)
+        {
+            return false;
+        }
+
+        HashSet<int> hashSet = new HashSet<int>(); //HashSet을 사용해 중복여부 확인
+        foreach (var collider in colliders1)
+        {
+            hashSet.Add(collider.GetInstanceID());
+        }
+
+        foreach (var collider in colliders2)
+        {
+            if (!hashSet.Contains(collider.GetInstanceID()))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 

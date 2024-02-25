@@ -35,30 +35,6 @@ public class StrengthBuffBuilding : BuffBuilding
         }
     }
 
-    private bool IsSameColliders(Collider[] colliders1, Collider[] colliders2)
-    {
-        if (colliders1 == null || colliders2 == null || colliders1.Length != colliders2.Length)
-        {
-            return false;
-        }
-
-        HashSet<int> hashSet = new HashSet<int>();
-        foreach (var collider in colliders1)
-        {
-            hashSet.Add(collider.GetInstanceID());
-        }
-
-        foreach (var collider in colliders2)
-        {
-            if (!hashSet.Contains(collider.GetInstanceID()))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     protected override void BuffEvent()
     {
         int curPreviousCollsLength = previousColls.Length;
