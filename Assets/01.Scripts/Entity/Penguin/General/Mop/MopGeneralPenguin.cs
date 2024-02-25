@@ -1,16 +1,4 @@
 using System;
-using System.Diagnostics;
-
-public enum GeneralPenguinStateEnum
-{
-    Idle,
-    Move,
-    Chase,
-    Attack,
-    Dead,
-    AoEAttack, //±¤°Ý°ø°Ý
-}
-
 public class MopGeneralPenguin : Penguin
 {
     public PenguinStateMachine<GeneralPenguinStateEnum> StateMachine { get; private set; }

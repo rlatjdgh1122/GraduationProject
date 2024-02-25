@@ -27,7 +27,7 @@ public class CameraSystem : MonoBehaviour
     private bool isRotating = false;
     private Vector3 lastMousePosition;
 
-    private bool isMoving = true;
+    private bool isMoving = false;
     private void Update()
     {
         CameraControl();

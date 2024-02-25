@@ -1,5 +1,5 @@
 using System;
-public class AxeGeneralPenguin : Penguin
+public class SignGeneralPenguin : Penguin
 {
     public PenguinStateMachine<GeneralPenguinStateEnum> StateMachine { get; private set; }
 
@@ -12,11 +12,30 @@ public class AxeGeneralPenguin : Penguin
         foreach (GeneralPenguinStateEnum state in Enum.GetValues(typeof(GeneralPenguinStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"Mop{typeName}State");
+            Type t = Type.GetType($"General{typeName}State");
             //리플렉션
             var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<GeneralPenguinStateEnum>;
 
             StateMachine.AddState(state, newState);
         }
     }
+
+    protected override void Start()
+    {
+        StateMachine.Init(GeneralPenguinStateEnum.Idle);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        StateMachine.CurrentState.UpdateState();
+    }
+
+    public override void OnPassiveAttackEvent()
+    {
+        StateMachine.ChangeState(GeneralPenguinStateEnum.SmashAttack);
+    }
+
+    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }
