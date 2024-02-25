@@ -11,14 +11,19 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy = transform.parent.GetComponent<Enemy>();
     }
 
+    public void AoEAttackTrigger()
+    {
+        _enemy.AttackCompo.AoEAttack();
+    }
+
     public void AttackTrigger()
     {
-        _enemy.Attack();
+        _enemy.AttackCompo.MeleeAttack();
     }
 
     private void RangeAttackTrigger()
     {
-        _enemy.RangeAttack();
+        _enemy.AttackCompo.RangeAttack();
     }
 
     public void DeadCompleteTrigger()

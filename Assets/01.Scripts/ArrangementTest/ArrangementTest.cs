@@ -55,22 +55,22 @@ public class ArrangementTest : Singleton<ArrangementTest>
 
             if (p.Type == PenguinTypeEnum.Basic)
             {
-                obj = ArmySystem.Instance.CreateSoldier<MeleePenguin>
+                obj = ArmyManager.Instance.CreateSoldier<MeleePenguin>
                 (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
             }
             else if (p.Type == PenguinTypeEnum.Shield)
             {
-                obj = ArmySystem.Instance.CreateSoldier<ShieldPenguin>
+                obj = ArmyManager.Instance.CreateSoldier<ShieldPenguin>
                (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
 
             }
             else if (p.Type == PenguinTypeEnum.Archer)
             {
-                obj = ArmySystem.Instance.CreateSoldier<ArcherPenguin>
+                obj = ArmyManager.Instance.CreateSoldier<ArcherPenguin>
                (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
             }
 
-            ArmySystem.Instance.JoinArmyToSoldier(p.legionIdx, obj);
+            ArmyManager.Instance.JoinArmyToSoldier(p.legionIdx, obj);
         });
     }
 }

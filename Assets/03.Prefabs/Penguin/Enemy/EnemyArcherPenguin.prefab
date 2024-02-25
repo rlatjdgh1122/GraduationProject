@@ -772,6 +772,8 @@ GameObject:
   - component: {fileID: 1114431459249668274}
   - component: {fileID: 1598124227567866696}
   - component: {fileID: 4534826737116297947}
+  - component: {fileID: 2295223863668456905}
+  - component: {fileID: 4162266362641205096}
   - component: {fileID: 294678438657808925}
   - component: {fileID: 8392588929912488062}
   - component: {fileID: 3490279142008653527}
@@ -792,7 +794,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -2.29, y: 2.67, z: -8.97}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5857964566268004476}
@@ -815,15 +817,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9bfaf18cb9f3b409c99c54222c50ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idx: 0
-  targetTrm: {x: 0, y: 0, z: 0}
   innerDistance: 5.9
   attackDistance: 5.9
-  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
-    type: 3}
-  _firePos: {fileID: 8096066805892693343}
-  ClickParticle: {fileID: 0}
-  _renderer: {fileID: 0}
+  IsAttackEvent: 0
+  AttackCount: 3
+  IsSecondEvent: 0
+  EverySecond: 10
+  IsBackAttack: 0
+  IsAroundEnemyCountEventEvent: 0
+  AroundRadius: 3
+  AroundEnemyCount: 3
+  passiveData: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: ee1ec43b8b4d82d4c927d68871bb5d47, type: 2}
   moveSpeed: 3
   attackSpeed: 0.6
@@ -913,6 +917,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2295223863668456905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4389804514022249589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c4cfc40efd3d344b81e8839ff9d88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
+    type: 3}
+  _firePos: {fileID: 8096066805892693343}
+--- !u!114 &4162266362641205096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4389804514022249589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c4cfc40efd3d344b81e8839ff9d88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
+    type: 3}
+  _firePos: {fileID: 8096066805892693343}
 --- !u!114 &294678438657808925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,7 +1221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _effectEndTime: 1.5
 --- !u!1 &5385574575338272150
 GameObject:
@@ -1980,7 +2013,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c596b5941ad781d4cb8ec08c2857cdbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _provokedEffect: {fileID: 6060938240861186850, guid: 352304b7fbe11f445970df6ae36e6227,
     type: 3}
   _effectEndTime: 2

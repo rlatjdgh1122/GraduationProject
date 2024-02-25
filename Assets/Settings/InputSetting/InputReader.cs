@@ -9,7 +9,10 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
     public event Action RightClickEvent;
     public event Action OnLeftClickEvent;
 
-    public event Action OnExitInstallEvent;
+    public event Action OnEscEvent;
+
+    public event Action OnEBtnEvent;
+    public event Action OnQBtnEvent;
 
     private Controls _controls;
 
@@ -46,7 +49,23 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
     {
         if(context.performed)
         {
-            OnExitInstallEvent?.Invoke();
+            OnEscEvent?.Invoke();
+        }
+    }
+
+    public void OnRotateRight(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnEBtnEvent?.Invoke();
+        }
+    }
+
+    public void OnRotateLeft(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnQBtnEvent?.Invoke();
         }
     }
 

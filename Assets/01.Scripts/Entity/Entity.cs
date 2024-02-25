@@ -1,20 +1,16 @@
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Rendering;
+using DG.Tweening.Core.Easing;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class Entity : PoolableMono
 {
-    [Header("Target info")]
-    public Vector3 targetTrm;
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
-    [Header("RangeAttack Info")]
-    [SerializeField] protected Arrow _arrowPrefab;
-    [SerializeField] protected Transform _firePos;
+    #region 패시브
+    public PassiveDataSO passiveData = null;
+    #endregion
 
     #region 군단 포지션
 
@@ -30,9 +26,6 @@ public abstract class Entity : PoolableMono
         }
     }
     private Vector3 _seatPos = Vector3.zero; //군단에서 배치된 자리 OK?
-
-    Vector3 curDir = Vector3.zero;
-    private Vector3 prevDir = Vector3.zero;
     private float Angle
     {
         get
@@ -63,38 +56,33 @@ public abstract class Entity : PoolableMono
     #endregion
 
     #region Components
-    public Animator AnimatorCompo { get; private set; }
     public Health HealthCompo { get; private set; }
-    public DamageCaster DamageCasterCompo { get; private set; }
-    public CharacterController CharController { get; private set; }
+    public Animator AnimatorCompo { get; private set; }
     public NavMeshAgent NavAgent { get; private set; }
     public EntityActionData ActionData { get; private set; }
-    public ParticleSystem ClickParticle;
     public Outline OutlineCompo { get; private set; }
-
-    [SerializeField] protected CharacterStat _characterStat;
-    public CharacterStat Stat => _characterStat;
+    [SerializeField] protected BaseStat _characterStat;
+    public BaseStat Stat => _characterStat;
     #endregion
 
     protected virtual void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
-        AnimatorCompo = visualTrm.GetComponent<Animator>();
-
+        AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
         HealthCompo = GetComponent<Health>();
-        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
-        CharController = GetComponent<CharacterController>();
         NavAgent = GetComponent<NavMeshAgent>();
-        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-        OutlineCompo = GetComponent<Outline>();
+        OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
 
-        DamageCasterCompo.SetOwner(this);
+        passiveData?.SetOwner(this);
         HealthCompo.SetHealth(_characterStat);
-        HealthCompo.OnHit += HandleHit;
-        HealthCompo.OnDied += HandleDie;
-
         _characterStat = Instantiate(_characterStat);
+
+        if (HealthCompo != null)
+        {
+            HealthCompo.OnHit += HandleHit;
+            HealthCompo.OnDied += HandleDie;
+        }
     }
 
     private void OnDestroy()
@@ -110,28 +98,71 @@ public abstract class Entity : PoolableMono
 
     protected virtual void Start()
     {
+        if (passiveData == true)
+        {
+            passiveData.Start();
 
+            //SerializedObject serializedObject = new SerializedObject(passiveData);
+        }
     }
 
     protected virtual void Update()
     {
-
+        if (passiveData == true)
+            passiveData.Update();
     }
 
     protected abstract void HandleDie();
 
-    public virtual void Attack()
+    #region 패시브 함수
+
+    /// <summary>
+    /// 몇 대마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAttackEventPassive(int curAttackCount)
+=> passiveData.CheckAttackEventPassive(curAttackCount);
+
+    /// <summary>
+    /// 몇 초마다 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckSecondEventPassive(float curTime)
+        => passiveData.CheckSecondEventPassive(curTime);
+
+    /// <summary>
+    /// 뒤치기 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckBackAttackEventPassive()
+        => passiveData.CheckBackAttackEventPassive();
+
+    /// <summary>
+    /// 주변의 적 수 비례 패시브 활성화 확인 여부
+    /// </summary>
+    /// <returns> 결과</returns>
+    public bool CheckAroundEnemyCountEventPassive()
+        => passiveData.CheckAroundEnemyCountEventPassive();
+    #endregion
+
+    public virtual void OnPassiveAttackEvent()
     {
-        DamageCasterCompo?.CastDamage();
+
+    }
+    public virtual void OnPassiveSecondEvent()
+    {
+
+    }
+    public virtual void OnPassiveBackAttackEvent()
+    {
+
+    }
+    public virtual void OnPassiveAroundEvent()
+    {
+
     }
 
-    public virtual void RangeAttack()
-    {
-
-    }
-
-    #region �̵� ����
-
+    #region 움직임 관리
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
     {
         MousePos = mousePos;

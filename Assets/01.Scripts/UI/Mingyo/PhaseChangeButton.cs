@@ -23,14 +23,6 @@ public class PhaseChangeButton : MonoBehaviour
         WaveManager.Instance.OnBattlePhaseEndEvent += () => OnOffButton();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            OnOffButton();
-        }
-    }
-
     private void Awake()
     {
         _button = GetComponent<Button>();

@@ -47,7 +47,7 @@ public class GroundMove : MonoBehaviour
 
     private void GroundMoveHandle()
     {
-        if (WaveManager.Instance.CurrentStage == _enableStage)
+        if (WaveManager.Instance.CurrentWaveCount == _enableStage)
         {
             Debug.Log("일치하여 스타트");
             foreach (Enemy enemy in _enemies)

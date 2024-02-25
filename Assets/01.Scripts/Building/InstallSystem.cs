@@ -30,14 +30,7 @@ public class InstallSystem : MonoBehaviour
     private Ground _previousGround;
     private BaseBuilding _curBuilding;
 
-    private OutlineSelection _outlineSelection;
-
     private Ray _mousePointRay => Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-    private void Awake()
-    {
-        _outlineSelection = GameObject.FindAnyObjectByType<OutlineSelection>();
-    }
 
     private void Start()
     {
@@ -47,13 +40,26 @@ public class InstallSystem : MonoBehaviour
     public void SelectBuilding(BaseBuilding building)
     {
         _inputReader.OnLeftClickEvent += PlaceStructure;
-        _inputReader.OnExitInstallEvent += StopInstall;
+        _inputReader.OnEscEvent += StopInstall;
+
+        _inputReader.OnEBtnEvent += RightRotateBuilding;
+        _inputReader.OnQBtnEvent += LeftRotateBuilding;
 
         _curBuilding = building;
 
         building.SetSelect();
 
         StartInstall(building.BuildingInfoCompo.ID);
+    }
+
+    private void RightRotateBuilding()
+    {
+        _curBuilding.transform.Rotate(0.0f, -90.0f, 0.0f);
+    }
+
+    private void LeftRotateBuilding()
+    {
+        _curBuilding.transform.Rotate(0.0f, 90.0f, 0.0f);
     }
 
     private void StartInstall(int id)
@@ -68,7 +74,6 @@ public class InstallSystem : MonoBehaviour
 
         isInstalling = true;
         _cancleInstallBuildingText.enabled = true;
-        //_outlineSelection.SetCursor(_buildingDatabaseSO.BuildingItems[selectedBuildingIDX].UITexture);
     }
 
     private void StopInstall()
@@ -88,7 +93,9 @@ public class InstallSystem : MonoBehaviour
         //_outlineSelection.SetDefaultCursor();
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
-        _inputReader.OnExitInstallEvent -= StopInstall;
+        _inputReader.OnEscEvent -= StopInstall;
+        _inputReader.OnEBtnEvent -= RightRotateBuilding;
+        _inputReader.OnQBtnEvent -= LeftRotateBuilding;
     }
 
     private void PlaceStructure()
@@ -131,7 +138,6 @@ public class InstallSystem : MonoBehaviour
         {
             if (!_groundDic.ContainsKey(hit.transform.gameObject.GetHashCode())) // Ä³½Ì
             {
-                Debug.Log("Add new Ground");
                 _groundDic.Add(hit.transform.gameObject.GetHashCode(), hit.transform.GetComponent<Ground>());
             }
 

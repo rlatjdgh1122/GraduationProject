@@ -14,29 +14,45 @@ public struct BuildingInfo
     public Grid GridCompo;
     [field: SerializeField]
     public Material TransparencyMat { get; private set; }
-    [HideInInspector]
-    public Material NormalMat;
 }
 
 //[RequireComponent(typeof(Health))]
-[RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(Grid))]
 public abstract class BaseBuilding : PoolableMono
 {
-    private MeshRenderer _meshRenderer;
     public BuildingInfo BuildingInfoCompo;
     private bool isInstalled = false;
     public bool IsInstalled => isInstalled;
 
-    private void Awake()
+    private Material[] _meshNormalMats;
+    private MeshRenderer[] _meshRenderers;
+
+    private Material[] _skinNormalMats;
+    private SkinnedMeshRenderer[] _skinRenderers;
+
+    protected virtual void Awake()
     {
         SetUpCompo();
     }
 
     private void SetUpCompo()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-        BuildingInfoCompo.NormalMat = _meshRenderer.material;
+        _meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+        _skinRenderers = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        _meshNormalMats = new Material[_meshRenderers.Length];
+        _skinNormalMats = new Material[_skinRenderers.Length];
+
+        for (int i = 0; i < _meshRenderers.Length; i++)
+        {
+            _meshNormalMats[i] = _meshRenderers[i].material;
+        }
+
+        for (int i = 0; i < _skinRenderers.Length; i++)
+        {
+            _skinNormalMats[i] = _skinRenderers[i].material;
+        }
+
         BuildingInfoCompo.GridCompo = GetComponent<Grid>();
     }
 
@@ -48,21 +64,37 @@ public abstract class BaseBuilding : PoolableMono
 
     public void SetSelect()
     {
-        _meshRenderer.material = BuildingInfoCompo.TransparencyMat;
+        for (int i = 0; i < _meshRenderers.Length; i++)
+        {
+            _meshRenderers[i].material = BuildingInfoCompo.TransparencyMat;
+        }
+
+        for (int i = 0; i < _skinRenderers.Length; i++)
+        {
+            _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
+        }
     }
 
     public void CancleInsall()
     {
-        _meshRenderer.material = BuildingInfoCompo.NormalMat;
+        for (int i = 0; i < _meshRenderers.Length; i++)
+        {
+            _meshRenderers[i].material = _meshNormalMats[i];
+        }
+
+        for (int i = 0; i < _skinRenderers.Length; i++)
+        {
+            _skinRenderers[i].material = _skinNormalMats[i];
+        }
     }
 
-    //protected virtual void Update()
-    //{
-    //    if(isInstalled)
-    //    {
-    //        Running(); // 설치 되면 역할 수행
-    //    }
-    //}
+    protected virtual void Update()
+    {
+        if(isInstalled)
+        {
+            Running(); // 설치 되면 역할 수행
+        }
+    }
 
     protected abstract void Running();
 }

@@ -1,13 +1,14 @@
 using UnityEngine;
 
-public class ResourceObject : MonoBehaviour
+public class ResourceObject : Entity
 {
+    [Header("Resource Info")]
     [SerializeField] private ResourceDataSO _resourceData;
     [SerializeField] private ResourceStat _resourceStat;
 
     private Sprite _resourceIcon;
     private string _resourceName;
-    private int _needWorkerCount;
+    private int _requiredWorkerCount;
     private int _currentWorkerCount;
     private int _receiveCountAtOnce;
     private int _receiveCountWhenCompleted;
@@ -15,15 +16,11 @@ public class ResourceObject : MonoBehaviour
     #region property
     public Sprite ResourceImage => _resourceIcon;
     public string ResourceName => _resourceName;
-    public int NeedWorkerCount => _needWorkerCount;
+    public int RequiredWorkerCount => _requiredWorkerCount;
     public int CurrentWorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }   
     public int ReceiveCountAtOnce => _receiveCountAtOnce;
     public int ReceiveCountWhenCompleted => _receiveCountWhenCompleted;
     #endregion
-
-    public bool CanWork = false;
-
-    public Health HealthCompo { get; private set; }
 
     NormalUI resourceUI
     {
@@ -34,17 +31,16 @@ public class ResourceObject : MonoBehaviour
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        HealthCompo = GetComponent<Health>();
+        base.Awake();
 
-        HealthCompo.SetHealth(_resourceStat);
         SetCount();
     }
 
     public void SetCount()
     {
-        _needWorkerCount = _resourceStat.requiredWorkerCount;
+        _requiredWorkerCount = _resourceStat.requiredWorkerCount;
         _resourceName = _resourceStat.resourceName;
         _resourceIcon = _resourceData.resourceIcon;
         _receiveCountAtOnce = _resourceStat.receiveCountAtOnce;
@@ -74,5 +70,10 @@ public class ResourceObject : MonoBehaviour
         {
             resourceUI.EnableUI(1f, this);
         }
+    }
+
+    protected override void HandleDie()
+    {
+        RecieveResourceComplete();
     }
 }

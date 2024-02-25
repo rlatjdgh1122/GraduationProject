@@ -17,6 +17,10 @@ public class Enemy : Entity
     public Action OnProvoked = null;
     public UnityEvent OnProvokedEvent;
 
+    #region componenets
+    public EntityAttackData AttackCompo { get; private set; }
+    #endregion
+
     public Penguin CurrentTarget;
     public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
@@ -35,6 +39,8 @@ public class Enemy : Entity
     {
         base.Awake();
         NavAgent.speed = moveSpeed;
+
+        AttackCompo = GetComponent<EntityAttackData>();
     }
 
     private void OnEnable()
@@ -52,18 +58,6 @@ public class Enemy : Entity
         CurrentTarget = FindNearestPenguin<Penguin>();
     }
 
-    public override void Attack()
-    {
-        base.Attack();
-    }
-
-    public override void RangeAttack()
-    {
-        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(this, DamageCasterCompo.TargetLayer);
-        arrow.Fire(_firePos.forward);
-    }
-
     protected override void HandleDie()
     {
         IsDead = true;
@@ -74,7 +68,7 @@ public class Enemy : Entity
         
     }
 
-    public T FindNearestPenguin<T>() where T : Penguin //OnProvoked bool·Î »©±â
+    public T FindNearestPenguin<T>() where T : Penguin //OnProvoked boolï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         var components = FindObjectsOfType<T>().Where(p => p.enabled);
 
