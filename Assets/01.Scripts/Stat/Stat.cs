@@ -12,6 +12,7 @@ public class Stat
 
     public List<int> increases; //증가 % (곱연산)
     public List<int> decreases; //감소 % (합연산)
+
     public int GetValue() //합연산으로 들어감
     {
         return Modify();
@@ -30,6 +31,11 @@ public class Stat
         return result;  
     }
 
+    public int AddSum(int value, int mul1, int mul2)
+    {
+        return _baseValue = value + (mul1 * mul2);
+    }
+
     public void AddIncrease(int value)
     {
         Debug.Log(value);
@@ -39,6 +45,7 @@ public class Stat
 
         Modify();
     }
+
     public void AddDecrease(int value)
     {
         if (value != 0)
@@ -54,6 +61,7 @@ public class Stat
 
         Modify();
     }
+
     public void RemoveDecrease(int value)
     {
         if (value != 0)
@@ -61,6 +69,7 @@ public class Stat
 
         Modify();
     }
+
     public void SetDefaultValue(int value)
     {
         _baseValue = value;
