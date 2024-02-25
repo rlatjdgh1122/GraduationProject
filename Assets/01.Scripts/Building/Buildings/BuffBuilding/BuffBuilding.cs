@@ -57,6 +57,7 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
             if (_curcolls.Length == 0)
             {
                 isChecked = false;
+                _feedbackPlayer.FinishFeedback();
             }
         }
 
@@ -79,7 +80,6 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     protected virtual void OnPenguinInsideRangeExit()
     {
         CommenceBuffDecay();
-        _feedbackPlayer.FinishFeedback();
 
         Debug.Log("³ª°¬´Ù");
     }

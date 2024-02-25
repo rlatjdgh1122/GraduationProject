@@ -22,7 +22,6 @@ public class StrengthBuffBuilding : BuffBuilding
     {
         Collider[] newColls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
 
-        // 이전 콜라이더 배열과 비교하여 새로운 콜라이더 배열로 대체합니다.
         if (previousColls == default || !IsSameColliders(previousColls, newColls))
         {
             previousColls = _colls;
