@@ -9,5 +9,6 @@ namespace Bitgem.Core
 {
     public class FlagEnumAttribute : PropertyAttribute
     {
+
     }
 }

@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 
 public class BasicAttackState : BasicBaseState
 {
-    public BasicAttackState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animationBoolName)
+    public BasicAttackState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum,Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }

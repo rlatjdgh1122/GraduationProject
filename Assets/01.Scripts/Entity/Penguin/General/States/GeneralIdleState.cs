@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneralMoveState : GeneralBaseState
+public class GeneralIdleState : GeneralBaseState
 {
-    public GeneralMoveState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralIdleState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
-
     }
 
     public override void Enter()
@@ -18,8 +17,8 @@ public class GeneralMoveState : GeneralBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_penguin.NavAgent.velocity.magnitude < 0.05f)
-            _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
+        if (_penguin.NavAgent.velocity.magnitude > 0.05f)
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Move);
 
         if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
@@ -29,6 +28,7 @@ public class GeneralMoveState : GeneralBaseState
     {
         base.Exit();
     }
+
 
 
 }

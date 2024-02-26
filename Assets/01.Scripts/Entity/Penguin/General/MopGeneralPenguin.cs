@@ -1,32 +1,20 @@
 using System;
-using System.Diagnostics;
-
-public enum GeneralPenguinStateEnum
+public class MopGeneralPenguin : General
 {
-    Idle,
-    Move,
-    Chase,
-    Attack,
-    Dead,
-    AoEAttack, //광격공격
-}
-
-public class MopGeneralPenguin : Penguin
-{
-    public PenguinStateMachine<GeneralPenguinStateEnum> StateMachine { get; private set; }
+    public EntityStateMachine<GeneralPenguinStateEnum,General> StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new PenguinStateMachine<GeneralPenguinStateEnum>();
+        StateMachine = new EntityStateMachine<GeneralPenguinStateEnum,General>();
 
         foreach (GeneralPenguinStateEnum state in Enum.GetValues(typeof(GeneralPenguinStateEnum)))
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"General{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<GeneralPenguinStateEnum>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<GeneralPenguinStateEnum, General>;
 
             StateMachine.AddState(state, newState);
         }

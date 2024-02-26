@@ -14,20 +14,20 @@ public enum ShieldPenguinStateEnum
 
 public class ShieldPenguin : Penguin
 {
-    public PenguinStateMachine<ShieldPenguinStateEnum> StateMachine { get; private set; }
+    public EntityStateMachine<ShieldPenguinStateEnum, Penguin> StateMachine { get; private set; }
       
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new PenguinStateMachine<ShieldPenguinStateEnum>();
+        StateMachine = new EntityStateMachine<ShieldPenguinStateEnum, Penguin>();
 
         foreach (ShieldPenguinStateEnum state in Enum.GetValues(typeof(ShieldPenguinStateEnum)))
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Shield{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<ShieldPenguinStateEnum>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<ShieldPenguinStateEnum, Penguin>;
 
             StateMachine.AddState(state, newState);
         }

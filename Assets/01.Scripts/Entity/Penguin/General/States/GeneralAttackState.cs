@@ -6,7 +6,7 @@ public class GeneralAttackState : GeneralBaseState
 {
 
     private int curAttackCount = 0;
-    public GeneralAttackState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralAttackState(General penguin, EntityStateMachine<GeneralPenguinStateEnum,General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }

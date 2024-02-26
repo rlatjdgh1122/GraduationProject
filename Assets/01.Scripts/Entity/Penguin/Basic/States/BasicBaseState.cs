@@ -1,7 +1,6 @@
-public class BasicBaseState : PenguinState<BasicPenguinStateEnum> //상속받기 위해서 만든 짜바리 클래스
+public class BasicBaseState : EntityState<BasicPenguinStateEnum, Penguin> //상속받기 위해서 만든 짜바리 클래스
 {
-    public BasicBaseState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animBoolName) :
-        base(penguin, stateMachine, animBoolName)
+    public BasicBaseState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum,Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 

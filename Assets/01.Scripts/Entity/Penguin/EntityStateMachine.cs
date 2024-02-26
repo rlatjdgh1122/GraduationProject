@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-public class PenguinStateMachine<T> where T : Enum
+public class EntityStateMachine<T,G> where T : Enum where G : Entity
 {
-    public PenguinState<T> CurrentState { get; private set; }
-    public PenguinState<T> PrevState { get; private set; }
-    public Dictionary<T, PenguinState<T>> StateDictionary
-        = new Dictionary<T, PenguinState<T>>();
+    public EntityState<T,G> CurrentState { get; private set; }
+    public EntityState<T,G> PrevState { get; private set; }
+    public Dictionary<T, EntityState<T, G>> StateDictionary
+        = new Dictionary<T, EntityState<T, G>>();
 
     public void Init(T state)
     {
@@ -23,7 +23,7 @@ public class PenguinStateMachine<T> where T : Enum
         CurrentState.Enter();
     }
 
-    public void AddState(T state, PenguinState<T> playerState)
+    public void AddState(T state, EntityState<T, G> playerState)
     {
         StateDictionary.Add(state, playerState);
     }

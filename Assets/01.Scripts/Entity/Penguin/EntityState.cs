@@ -2,17 +2,17 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PenguinState<T> where T : Enum
+public class EntityState<T,G> where T : Enum where G : Entity
 {
-    protected PenguinStateMachine<T> _stateMachine;
-    protected Penguin _penguin;
+    protected EntityStateMachine<T,G> _stateMachine;   
+    protected G _penguin;
     protected NavMeshAgent _navAgent; //편의를 위해서 여기에도 NavAgent 선언
 
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
     
 
-    public PenguinState(Penguin penguin, PenguinStateMachine<T> stateMachine, string animationBoolName)
+    public EntityState(G penguin, EntityStateMachine<T, G> stateMachine, string animationBoolName)
     {
         _penguin = penguin;
         _stateMachine = stateMachine;

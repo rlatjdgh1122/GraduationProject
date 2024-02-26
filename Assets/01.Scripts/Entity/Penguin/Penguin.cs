@@ -1,21 +1,10 @@
+using Bitgem.Core;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public enum PenguinEntityType
-{
-    Basic,
-    Shield,
-    Archer,
-    MeleeGeneral,
-    RangeGeneral,
-}
-
 public class Penguin : Entity
 {
-    public PenguinEntityType type;
-
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -50,7 +39,7 @@ public class Penguin : Entity
         base.Awake();
         NavAgent.speed = moveSpeed;
 
-        AttackCompo = GetComponent<EntityAttackData>(); 
+        AttackCompo = GetComponent<EntityAttackData>();
     }
 
     public void SetOwner(Army army)
