@@ -29,32 +29,38 @@ public class CostBox : PoolableMono
     [SerializeField] private Transform _box;
 
     public BoxEvent InspectorCustomBox;
+    private bool _isClick;
+
+    private IEnumerator PlaySequentialTweens()
+    {
+        yield return InspectorCustomBox.Lid.DOLocalRotate(new Vector3(InspectorCustomBox.OpenLidAngle, 0, 0), InspectorCustomBox.Duration).WaitForCompletion();
+        yield return new WaitForSeconds(0.5f); // 임시 값
+        ClickEvent();
+    }
 
     private void OnMouseDown()
     {
-        switch (InspectorCustomBox.Type)
+        if (!_isClick)
         {
-            case BoxType.Golden:
+            switch (InspectorCustomBox.Type)
             {
-                UIManager.Instance.InitializHudTextSequence();
-                UIManager.Instance.HudTextSequence.Append(
-                InspectorCustomBox.Lid.DOLocalRotate(
-                    new Vector3(InspectorCustomBox.OpenLidAngle, 0, 0), InspectorCustomBox.Duration))
-                    .AppendInterval(0.5f) //임시 값
-                    .AppendCallback(() =>
+                case BoxType.Golden:
+                    {
+                        UIManager.Instance.InitializeWarningTextSequence();
+                        StartCoroutine(PlaySequentialTweens());
+                    }
+                    break;
+
+                default:
                     {
                         ClickEvent();
-                    });
+                    }
+                    break;
             }
-            break;
-
-            default:
-            {
-                ClickEvent();
-            }
-            break;
-        }        
+        }
+        _isClick = true;
     }
+
 
     private void ClickEvent()
     {
@@ -62,6 +68,8 @@ public class CostBox : PoolableMono
 
         _clickParticle.Play();
 
+        CostManager.Instance.AddFromCurrentCost(_cost, true, false, transform.position);
+        
         StartCoroutine(DisableBox());
     }
 
@@ -69,7 +77,6 @@ public class CostBox : PoolableMono
     {
         yield return new WaitForSeconds(_clickParticle.duration);
 
-        CostManager.Instance.AddFromCurrentCost(_cost, true, transform);
 
         PoolManager.Instance.Push(this);
     }

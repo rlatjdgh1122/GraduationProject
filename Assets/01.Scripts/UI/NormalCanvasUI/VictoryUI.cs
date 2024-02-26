@@ -8,7 +8,10 @@ public class VictoryUI : NormalUI
 {
     private Image _background;
     private CanvasGroup _canvasGroup;
+    
     [SerializeField] private TextMeshProUGUI[] _texts;
+    [SerializeField] private int _cost;
+
 
     public override void Awake()
     {
@@ -39,5 +42,11 @@ public class VictoryUI : NormalUI
     {
         _texts[0].text = $"처치한 적군 : {GameManager.Instance.GetCurrentDeadEnemyCount()}마리";
         _texts[1].text = $"전사한 아군 : {GameManager.Instance.GetDeadPenguinCount()}마리";
+        _texts[2].text = $"보상 : {_cost}";
+    }
+
+    public void CostViewer()
+    {
+        CostManager.Instance.AddFromCurrentCost(_cost, true, true, UIManager.Instance.ScreenCenterVec);
     }
 }

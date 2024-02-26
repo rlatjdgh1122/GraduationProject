@@ -1,8 +1,11 @@
+using AssetKits.ParticleImage;
+using AssetKits.ParticleImage.Editor;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CostUI : MonoBehaviour
@@ -11,74 +14,83 @@ public class CostUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentCostText;
     [SerializeField] private TextMeshProUGUI _addCostText;
     [SerializeField] private Image _fishIcon;
+    [SerializeField] private CostParticle _costParticleImage;
 
-    [Header("Max Repeat Count")]
-    [SerializeField] private int _repeatCnt;
+    [Header("Cost")]
+    [SerializeField] private int _maxCostCount;
 
-    [Header("Icon")]
-    [SerializeField] private float _scaleValue;
-    [SerializeField] private float _duration;
+    private int _cost;
+    private int _divideCost;
+
+    private CostParticle _particleImage;
 
 
-
-    private IEnumerator TweenCorou(int repeat)
+    public void CostTween(int value, bool isUI, Vector3 startPosition)
     {
-        for (int i = 0; i < repeat; i++)
+        _particleImage = PoolManager.Instance.Pop(_costParticleImage.name) as CostParticle;
+
+        _particleImage.TargetPosition(transform, _fishIcon);
+
+        _cost = value;
+        if(value > _maxCostCount)
         {
-            Tween scaleTween = _fishIcon.rectTransform.DOScale(_scaleValue, _duration);
-            yield return scaleTween.WaitForCompletion(); // Wait until the scaling up tween completes
-
-            Tween scaleDownTween = _fishIcon.rectTransform.DOScale(1, _duration);
-            yield return scaleDownTween.WaitForCompletion(); // Wait until the scaling down tween completes
-        }
-    }
-
-    public void CostTween(int value, Transform startPosition)
-    {
-        int repeat = value;
-
-        UIManager.Instance.InitializHudTextSequence();
-
-        if (value >= _repeatCnt)
-        {
-            repeat = _repeatCnt;
+            value = _maxCostCount;
         }
 
-        StartCoroutine(TweenCorou(repeat));
+        _divideCost = _cost / value;
 
-        ChangeCost(value);
+        _particleImage.SetBurst(0,0,value);
+        _particleImage.Setting(_cost, _divideCost);
+
+        if (!isUI)
+        {
+            startPosition = Camera.main.WorldToScreenPoint(startPosition);
+        }
+        _particleImage.Position(startPosition);
+        _particleImage.PlayParticle();
+        AddCost(_cost);
     }
 
+    #region ParticleImage
+    
 
-    public void ChangeCost(int value)
+    public void CostArriveText(int repeat)
     {
-        UIManager.Instance.InitializHudTextSequence();
+        _currentCostText.text = $"{repeat}";
+    }
 
+    public void CostStopText()
+    {
+        _currentCostText.text = $"{CostManager.Instance.Cost}";
+    }
+    #endregion
+
+
+    public void AddCost(int value)
+    {
         Color plusColor = new Color(0, 255, 0); //임시
+        _addCostText.color = plusColor;
+        _addCostText.text = $"+{value}";
+
+        ChangeCost();
+    }
+    public void SubtractCost(int value)
+    {
         Color minusColor = new Color(255, 0, 0); //임시
-        string sign;
-        
-        if(value > 0)
-        {
-            sign = "+";
-            _addCostText.color = plusColor;
-        }
-        else
-        {
-            sign = "";
-            _addCostText.color = minusColor;
-        }
+        _addCostText.color = minusColor;
+        _addCostText.text = $"{value}";
 
-        _addCostText.text = $"{sign}{value}";
+        ChangeCost();
+    }
+    public void ChangeCost()
+    {        
+        _addCostText.alpha = 1;
 
-        _addCostText.DOFade(0, 0.5f)
+        _addCostText.DOFade(0, 0.6f)
             .OnComplete(() =>
             {
                 _currentCostText.text = $"{CostManager.Instance.Cost}";
             });
-        
-        _addCostText.alpha = 1;
-
     }
 
     public void OnlyCurrentCostView(int cost)

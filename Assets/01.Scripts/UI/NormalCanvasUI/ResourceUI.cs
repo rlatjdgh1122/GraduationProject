@@ -40,7 +40,7 @@ public class ResourceUI : NormalUI
 
         CurrentResource = obj as ResourceObject;
         Setting();
-        _canvasGroup.DOFade(1, time);
+        _canvasGroup.DOFade(0.6f, time);
     }
 
     private void Setting()
@@ -105,7 +105,7 @@ public class ResourceUI : NormalUI
     public void ClosePanel()
     {
         CurrentResource.CurrentWorkerCount = 0;
-        DisableUI(1, null);
+        DisableUI(0.6f, null);
     }
 
     public override void DisableUI(float time, Action action)

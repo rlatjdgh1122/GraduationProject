@@ -150,20 +150,38 @@ public class ArmyManager : Singleton<ArmyManager>
     /// </summary>
     /// <param name="legion"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
-    public void JoinArmyToGeneral(int legion, Penguin obj) //들어가고 싶은 군단, 장군펭귄
+    public void JoinArmyToGeneral(int legion, General obj) //들어가고 싶은 군단, 장군펭귄
     {
+
+        var Army = armies[legion];
+
+        var IncValue = obj.ligeonStat.IncValue;
+        var DecValue = obj.ligeonStat.DecValue;
+
+        var IncType = obj.ligeonStat.IncStatType;
+        var DecType = obj.ligeonStat.DecStatType;
+
+
         if (armies.Find(p => p.Legion == legion) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
 
-        if (armies[legion].General != null)
+        if (Army.General != null)
         {
             Debug.Log($"현재 {legion}군단에는 장군이 존재합니다.");
             return;
         }
-        armies[legion].General = obj;
+
+        Army.General = obj;
+
+        if (IncType != StatType.None)
+            Army.AddStat(IncValue, IncType, StatMode.Increase);
+
+        if (DecType != StatType.None)
+            Army.AddStat(DecValue, DecType, StatMode.Decrease);
+
     }
     #endregion
 

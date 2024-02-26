@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using System.Diagnostics;
 
 [System.Serializable]
 public struct ArmyInfo //UI부분, 기획이 더 필요
@@ -28,6 +28,10 @@ public class Army
 
     public void AddStat(int value, StatType type, StatMode mode)
     {
+        Debug.WriteLine(type);
+
+        General?.AddStat(value, type, mode);
+
         foreach (var solider in Soldiers)
         {
             solider.AddStat(value, type, mode);
@@ -35,6 +39,8 @@ public class Army
     }
     public void RemoveStat(int value, StatType type, StatMode mode)
     {
+        General?.RemoveStat(value, type, mode);
+
         foreach (var solider in Soldiers)
         {
             solider.RemoveStat(value, type, mode);

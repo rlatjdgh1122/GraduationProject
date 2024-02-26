@@ -16,6 +16,4 @@ public enum StatType
     Damage              = 1 << 10,
     CriticalChance      = 1 << 11,
     CriticalDamage      = 1 << 12,
-
-    All                 = int.MaxValue
 }
