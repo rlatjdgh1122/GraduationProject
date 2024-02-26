@@ -7,8 +7,8 @@ public abstract class NormalUI : MonoBehaviour
     public UIType UIType;
 
     #region components
-    private Image _panel;
-    private CanvasGroup _cvg;
+    protected Image _panel;
+    protected CanvasGroup _cvg;
     #endregion
 
     public virtual void Awake()
@@ -22,6 +22,11 @@ public abstract class NormalUI : MonoBehaviour
             _cvg.interactable = false;
             _cvg.blocksRaycasts = false;
         }
+    }
+
+    public virtual void ExitButtonUI(float time = 0.5f)
+    {
+        DisableUI(time, null);
     }
 
     public virtual void EnableUI(float time, object obj)//UI를 띄울 때 사용하는 함수. DOFade로 서서히 활성화 하고 time으로 몇초동안 활성화할건지 정해준다.
