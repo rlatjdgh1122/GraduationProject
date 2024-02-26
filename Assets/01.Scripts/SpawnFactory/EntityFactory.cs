@@ -20,6 +20,11 @@ public abstract class EntityFactory<T>: MonoBehaviour
         return entity;
     }
 
+    public void SetSpawnFailHudText(string st)
+    {
+        SpawnFailHudText.SetText(st);
+    }
+
     protected abstract PoolableMono Create(T _type); //각각의 팩토리에서 재정의 한다.
 
 }

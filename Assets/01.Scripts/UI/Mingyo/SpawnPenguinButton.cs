@@ -32,6 +32,7 @@ public class SpawnPenguinButton : MonoBehaviour
         if(WaveManager.Instance.IsBattlePhase)
         {
             UIManager.Instance.InitializeWarningTextSequence();
+            _penguinFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
             UIManager.Instance.WarningTextSequence.Prepend(_penguinFactory.SpawnFailHudText.DOFade(1f, 0.5f))
             .Join(_penguinFactory.SpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y, 0.5f))
             .Append(_penguinFactory.SpawnFailHudText.DOFade(0f, 0.5f))
