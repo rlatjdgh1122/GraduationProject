@@ -1,20 +1,20 @@
 using System;
-public class MopGeneralPenguin : Penguin
+public class MopGeneralPenguin : General
 {
-    public PenguinStateMachine<GeneralPenguinStateEnum> StateMachine { get; private set; }
+    public PenguinStateMachine<GeneralPenguinStateEnum,General> StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new PenguinStateMachine<GeneralPenguinStateEnum>();
+        StateMachine = new PenguinStateMachine<GeneralPenguinStateEnum,General>();
 
         foreach (GeneralPenguinStateEnum state in Enum.GetValues(typeof(GeneralPenguinStateEnum)))
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"General{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<GeneralPenguinStateEnum>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<GeneralPenguinStateEnum, General>;
 
             StateMachine.AddState(state, newState);
         }

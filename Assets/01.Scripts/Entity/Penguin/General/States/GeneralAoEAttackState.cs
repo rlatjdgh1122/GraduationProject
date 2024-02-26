@@ -2,32 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneralAttackState : GeneralBaseState
+public class GeneralAoEAttackState : GeneralBaseState
 {
-
-    private int curAttackCount = 0;
-    public GeneralAttackState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralAoEAttackState(General penguin, PenguinStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
-
     }
 
     public override void Enter()
     {
         base.Enter();
+
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
         _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
 
-        if (_penguin.CheckAttackEventPassive(++curAttackCount))
-        {
-            _penguin?.OnPassiveAttackEvent();
-        }
     }
     public override void UpdateState()
     {
+
         base.UpdateState();
+
         _penguin.LookTarget();
 
         if (_triggerCalled)

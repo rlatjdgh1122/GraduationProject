@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneralAoEAttackState : GeneralBaseState
+public class GeneralSmashAttackState : GeneralBaseState
 {
-    public GeneralAoEAttackState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralSmashAttackState(General penguin, PenguinStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
-
     public override void Enter()
     {
         base.Enter();
@@ -41,5 +40,4 @@ public class GeneralAoEAttackState : GeneralBaseState
         _penguin.Owner.IsMoving = true;
         base.Exit();
     }
-
 }

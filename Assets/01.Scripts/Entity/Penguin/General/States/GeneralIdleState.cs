@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralIdleState : GeneralBaseState
 {
-    public GeneralIdleState(Penguin penguin, PenguinStateMachine<GeneralPenguinStateEnum> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralIdleState(General penguin, PenguinStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 

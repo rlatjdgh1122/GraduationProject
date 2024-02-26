@@ -1,5 +1,6 @@
 ﻿#region Using statements
 
+using Bitgem.Core;
 using UnityEditor;
 using UnityEngine;
 
