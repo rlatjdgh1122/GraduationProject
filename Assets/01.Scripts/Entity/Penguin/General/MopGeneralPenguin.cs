@@ -1,4 +1,6 @@
 using System;
+using UnityEngine;
+
 public class MopGeneralPenguin : General
 {
     public EntityStateMachine<GeneralPenguinStateEnum,General> StateMachine { get; private set; }
@@ -30,6 +32,13 @@ public class MopGeneralPenguin : General
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
+
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log(ligeonStat.IncStatType);
+            ArmyManager.Instance.GetCurArmy().AddStat(ligeonStat.IncValue, ligeonStat.IncStatType, StatMode.Increase);
+        }
     }
 
     public override void OnPassiveAttackEvent()
