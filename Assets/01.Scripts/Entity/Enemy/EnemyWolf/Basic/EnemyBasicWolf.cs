@@ -39,7 +39,7 @@ public class EnemyBasicWolf : Enemy
         StateMachine.Init(EnemyWolfStateEnum.Idle);
     }
 
-    
+
 
     protected override void Update()
     {

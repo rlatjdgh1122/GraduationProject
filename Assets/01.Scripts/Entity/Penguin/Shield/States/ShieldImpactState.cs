@@ -1,6 +1,6 @@
 public class ShieldImpactState : ShieldBaseState
 {
-    public ShieldImpactState(Penguin penguin, PenguinStateMachine<ShieldPenguinStateEnum> stateMachine, string animBoolName) 
+    public ShieldImpactState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
         : base(penguin, stateMachine, animBoolName)
     {
     }

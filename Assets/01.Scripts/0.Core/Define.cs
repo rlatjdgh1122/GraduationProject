@@ -12,9 +12,9 @@ namespace Define
         }
     }
 
-    namespace Algorithem
+    namespace Algorithem //¾È¾¸!!
     {
-        public static class Algorithm
+        public static class Algorithm 
         {
             public static class AlignmentRule
             {

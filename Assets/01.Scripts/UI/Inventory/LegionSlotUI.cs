@@ -48,7 +48,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
     {
         if(_data != null)
         {
-            _info.UpdateSlot(_data);
+            _info.InfoDataSlot(_data);
         }
 
         if (_data != null && Input.GetKey(KeyCode.LeftControl)) //이 슬롯의 데이터를 군단 인벤에서 제거
@@ -71,8 +71,10 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
             if (CurrentLegion.MaxGereral
                 && _info._data.penguinData.JobType == PenguinJobType.General)
             {
+
                 LegionInventory.Instance.ShowMessage("장군이 군단에 포함되어 있습니다!");
                 return; //만약 군단에 장군이 있다면 리턴
+
             }
 
 
