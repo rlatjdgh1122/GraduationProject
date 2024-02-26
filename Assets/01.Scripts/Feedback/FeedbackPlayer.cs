@@ -5,13 +5,19 @@ using UnityEngine;
 public class FeedbackPlayer : MonoBehaviour
 {
     private List<Feedback> _feedbackToPlay = null;
+    public List<Feedback> FeedbackToPlay => _feedbackToPlay;
 
     private Entity _owner;
 
     private void Awake()
     {
+        SetUpEffect();
+    }
+
+    public void SetUpEffect()
+    {
         _feedbackToPlay = new List<Feedback>();
-        GetComponents<Feedback>(_feedbackToPlay); 
+        GetComponents<Feedback>(_feedbackToPlay);
     }
 
     public void PlayFeedback()

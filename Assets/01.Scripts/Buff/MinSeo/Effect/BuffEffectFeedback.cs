@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatueEffectFeedback : Feedback
+public class BuffEffectFeedback : Feedback
 {
     [SerializeField] private EffectPlayer _effect;
+    public EffectPlayer Effect => _effect;
 
     private EffectPlayer _curEffect;
+
+    private float effectTime = Mathf.Infinity;
+
+    public void SetUpEffect(BuffEffectFeedback buffEffect, float effectTime)
+    {
+        _effect = buffEffect.Effect;
+        this.effectTime = effectTime;
+    }
 
     public override void CreateFeedback()
     {
@@ -14,7 +23,7 @@ public class StatueEffectFeedback : Feedback
         _curEffect = PoolManager.Instance.Pop(_effect.name) as EffectPlayer;
         _curEffect.transform.position = transform.position;
         _curEffect.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
-        _curEffect.StartPlay(Mathf.Infinity);
+        _curEffect.StartPlay(effectTime);
     }
 
     public override void FinishFeedback()

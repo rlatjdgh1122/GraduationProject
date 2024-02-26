@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,26 +36,32 @@ public class BuildingItemInfo
     public Vector2Int Size { get { return _size; } }
 
     [SerializeField]
-    private GameObject prefab;
-    public GameObject Prefab { get { return prefab; } }
+    private GameObject _prefab;
+    public GameObject Prefab { get { return _prefab; } }
 
     [SerializeField]
-    private Sprite uiSprite;
-    public Sprite UISprite { get { return uiSprite; } }
+    private Sprite _uiSprite;
+    public Sprite UISprite { get { return _uiSprite; } }
 
     [SerializeField]
     private float installedTime;
     public float InstalledTime { get { return installedTime; } }
 
-    //[SerializeField]
-    //public float NecessaryResources { get; private set; } //앙 자원 원석의 자원 설명 필요.
+
+    [SerializeField]
+    private Sprite _necessaryResourceSprite;
+    public Sprite NecessaryResourceSprite { get { return _necessaryResourceSprite; } }
+
+    [SerializeField]
+    private float necessaryResourceCount;
+    public float NecessaryResourceCount { get { return necessaryResourceCount; } }
 
     [SerializeField]
     private int necessaryWokerCount;
     public int NecessaryWokerCount { get { return necessaryWokerCount; } }
 }
 
-[CreateAssetMenu(menuName = "SO/BuildingList")]
+[CreateAssetMenu(menuName = "SO/Building/BuildingList")]
 public class BuildingDatabaseSO : ScriptableObject
 {
    public List<BuildingItemInfo> BuildingItems = null;

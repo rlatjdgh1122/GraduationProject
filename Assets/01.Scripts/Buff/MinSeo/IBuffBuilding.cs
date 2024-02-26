@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IBuffBuilding
 {
-    public abstract Collider[] BuffRunning(Collider[] _curcolls, Collider[] previousColls);
+    public abstract Collider[] BuffRunning(FeedbackPlayer feedbackPlayer, Collider[] _curcolls, Collider[] previousColls);
 }

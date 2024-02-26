@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -12,10 +13,16 @@ public class StrengthBuffBuilding : BuffBuilding
 
     private Dictionary<int , Penguin> _inRangePenguins = new Dictionary<int , Penguin>();
 
+    private FeedbackPlayer _feedbackPlayer;
+    private BuffEffectFeedback _feedbackEffect;
+
     protected override void Awake()
     {
         base.Awake();
-        SetBuffValue(DefaultBuffValue);
+
+        _feedbackPlayer = transform.Find("BuffFeedback").GetComponent<FeedbackPlayer>();
+        _feedbackEffect = transform.Find("BuffFeedback").GetComponent<BuffEffectFeedback>();
+        
     }
 
     protected override void Running()
@@ -29,7 +36,7 @@ public class StrengthBuffBuilding : BuffBuilding
 
             if (previousColls != null)
             {
-                previousColls = BuffRunning(_colls, previousColls);
+                previousColls = BuffRunning(_feedbackPlayer, _colls, previousColls);
             }
         }
     }
@@ -53,7 +60,9 @@ public class StrengthBuffBuilding : BuffBuilding
             }
 
             _inRangePenguins[instanceID].AddStat(GetBuffValue(), StatType.Strength, StatMode.Increase);
-            //_colls[i].GetComponent<Penguin>().AddStat(GetBuffValue(), StatType.Strength, StatMode.Increase);
+
+            
+
             Debug.Log($"{_inRangePenguins[instanceID].name}: increase");
         }
     }
@@ -77,6 +86,15 @@ public class StrengthBuffBuilding : BuffBuilding
             if (!found)
             {
                 _inRangePenguins[key].AddStat(GetBuffValue(), StatType.Strength, StatMode.Decrease);
+
+                EffectPlayer buffEffect = PoolManager.Instance.Pop(_feedbackEffect.Effect.name) as EffectPlayer;
+                buffEffect.transform.SetParent(_inRangePenguins[key].gameObject.transform);
+                buffEffect.transform.localPosition = Vector3.zero;
+                buffEffect.transform.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+
+                var main = buffEffect.Particles[0].main;
+                main.startSize = 0.3f;
+
                 Debug.Log($"{_inRangePenguins[key].name}: decrease");
                 _inRangePenguins.Remove(key);
                 break;
@@ -93,5 +111,15 @@ public class StrengthBuffBuilding : BuffBuilding
     protected override int GetBuffValue()
     {
         return this.buffValue;
+    }
+
+    protected override void SetOutoffRangeBuffDuration(float value)
+    {
+        this.OutoffRangeBuffDuration = value;
+    }
+
+    protected override float GetOutoffRangeBuffDuration()
+    {
+        return this.OutoffRangeBuffDuration;
     }
 }
