@@ -5,22 +5,22 @@ using UnityEngine;
 public class WorkerManager : Singleton<WorkerManager>
 {
     [SerializeField]
-    private WorkerPenguin _workerPrefab;
+    private MinerPenguin _workerPrefab;
     [SerializeField]
-    private List<WorkerPenguin> _workerList = new List<WorkerPenguin>();
+    private List<MinerPenguin> _workerList = new List<MinerPenguin>();
 
     private WorkerFactroy _workerFactory;
 
     #region property
     public int WorkerCount => _workerList.Count;
-    public List<WorkerPenguin> WorkerList => _workerList;
+    public List<MinerPenguin> WorkerList => _workerList;
     #endregion
 
     public override void Awake()
     {
         _workerFactory = GameObject.Find("Manager/WorkerManager").GetComponent<WorkerFactroy>();
 
-        WorkerPenguin[] workers = FindObjectsOfType<WorkerPenguin>();
+        MinerPenguin[] workers = FindObjectsOfType<MinerPenguin>();
 
         if (workers != null)
             _workerList.AddRange(workers);
@@ -37,7 +37,7 @@ public class WorkerManager : Singleton<WorkerManager>
 
         if (WorkerCount >= count) //현재 일꾼의 수가 요청받은 일꾼보다 같거나 많다면
         {
-            foreach (WorkerPenguin worker in WorkerList) //일꾼들 리스트를 반복돌리고
+            foreach (MinerPenguin worker in WorkerList) //일꾼들 리스트를 반복돌리고
             {
                 if (!worker.CanWork) //그중에 CanWork가 비활성화 된 애들만
                 {
@@ -54,7 +54,7 @@ public class WorkerManager : Singleton<WorkerManager>
 
     public void ReturnWorkers(ResourceObject resource)
     {
-        foreach (WorkerPenguin worker in WorkerList)
+        foreach (MinerPenguin worker in WorkerList)
         {
             if (worker.CanWork && worker.Target == resource)
             {
