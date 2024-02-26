@@ -27,32 +27,13 @@ public class CostManager : Singleton<CostManager>
     [Header("Default Cost Value")]
     [SerializeField] private int _defaultCost;
 
-    public VictoryUI _victoryUI;
-
     public override void Awake()
     {
         base.Awake();
 
         Cost = _defaultCost;
         _costUI.OnlyCurrentCostView(Cost);
-
-        _victoryUI.EnableUI(1f, null);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SubtractFromCurrentCost(100);   
-            
-        }
-    }
-
-    public void CloseWinPanel()
-    {
-        _victoryUI.DisableUI(1, null);
-    }
-
     public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
     {
         _currentCost -= price;
