@@ -1,20 +1,20 @@
 using System;
 public class SignGeneralPenguin : General
 {
-    public PenguinStateMachine<GeneralPenguinStateEnum, General> StateMachine { get; private set; }
+    public EntityStateMachine<GeneralPenguinStateEnum, General> StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new PenguinStateMachine<GeneralPenguinStateEnum, General>();
+        StateMachine = new EntityStateMachine<GeneralPenguinStateEnum, General>();
 
         foreach (GeneralPenguinStateEnum state in Enum.GetValues(typeof(GeneralPenguinStateEnum)))
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"General{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as PenguinState<GeneralPenguinStateEnum,General>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<GeneralPenguinStateEnum,General>;
 
             StateMachine.AddState(state, newState);
         }

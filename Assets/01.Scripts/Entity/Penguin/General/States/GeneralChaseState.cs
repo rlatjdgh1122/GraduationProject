@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralChaseState : GeneralBaseState
 {
-    public GeneralChaseState(General penguin, PenguinStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralChaseState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 

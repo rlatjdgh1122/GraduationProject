@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ShieldChaseState : ShieldBaseState
 {
-    public ShieldChaseState(Penguin penguin, PenguinStateMachine<ShieldPenguinStateEnum> stateMachine, string animationBoolName)
+    public ShieldChaseState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }

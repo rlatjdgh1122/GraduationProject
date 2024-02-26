@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneralBaseState : PenguinState<GeneralPenguinStateEnum, General>
+public class GeneralBaseState : EntityState<GeneralPenguinStateEnum, General>
 {
-    public GeneralBaseState(General penguin, PenguinStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralBaseState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 

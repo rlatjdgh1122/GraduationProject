@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralSmashAttackState : GeneralBaseState
 {
-    public GeneralSmashAttackState(General penguin, PenguinStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralSmashAttackState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
     public override void Enter()

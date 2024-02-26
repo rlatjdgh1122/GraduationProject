@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralAoEAttackState : GeneralBaseState
 {
-    public GeneralAoEAttackState(General penguin, PenguinStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralAoEAttackState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 

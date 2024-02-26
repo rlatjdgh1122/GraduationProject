@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ShieldMoveState : ShieldBaseState
 {
-    public ShieldMoveState(Penguin penguin, PenguinStateMachine<ShieldPenguinStateEnum> stateMachine, string animationBoolName)
+    public ShieldMoveState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }

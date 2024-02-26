@@ -24,7 +24,7 @@ public class PassiveDataSO : ScriptableObject
 
     public LayerMask CheckTarget;
 
-    private Entity Owner = null;
+    private General Owner = null;
 
     private float curTime = 0f;
 
@@ -64,7 +64,7 @@ public class PassiveDataSO : ScriptableObject
         }
     }
 
-    public void SetOwner(Entity obj)
+    public void SetOwner(General obj)
     {
         Owner = obj;
     }
