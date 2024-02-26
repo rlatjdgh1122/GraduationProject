@@ -46,6 +46,7 @@ public class General : Penguin
 
         if (passiveData == true)
             passiveData.Update();
+
     }
 
     #region 패시브 함수

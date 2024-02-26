@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public abstract class Entity : PoolableMono
 {
+
+    [SerializeField] protected BaseStat _characterStat;
+    public BaseStat Stat => _characterStat;
+
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
@@ -44,7 +48,6 @@ public abstract class Entity : PoolableMono
         get
         {
             Vector3 direction = Quaternion.Euler(0, Angle, 0) * (_seatPos);
-            Debug.Log(Angle + " : " + direction);
             return direction;
         }
         set { _seatPos = value; }
@@ -57,8 +60,7 @@ public abstract class Entity : PoolableMono
     public NavMeshAgent NavAgent { get; private set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
-    [SerializeField] protected BaseStat _characterStat;
-    public BaseStat Stat => _characterStat;
+
     #endregion
 
     protected virtual void Awake()
