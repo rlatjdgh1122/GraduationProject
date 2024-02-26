@@ -40,7 +40,7 @@ public class SpawnBuildingButton : MonoBehaviour
     {
         bool cantSpawnBuilding = false;
 
-        BuildingItemInfo building = buildingDatabaseSO.BuildingItems.Find(name => name.Name == spawnBuilding.gameObject.name); //소환할 빌딩
+        BuildingItemInfo building = buildingDatabaseSO.BuildingItems.Find(name => name.Prefab.name == spawnBuilding.gameObject.name); //소환할 빌딩
 
         #region 전투 페이즈
         if (WaveManager.Instance.IsBattlePhase)

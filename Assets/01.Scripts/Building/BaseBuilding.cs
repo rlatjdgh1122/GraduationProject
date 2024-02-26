@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,14 @@ public struct BuildingInfo
 [RequireComponent(typeof(Grid))]
 public abstract class BaseBuilding : PoolableMono
 {
+    [SerializeField]
+    private BuildingDatabaseSO _buildingDatabaseSO;
+
+    [SerializeField]
+    private TextMeshProUGUI _installedFinText;
+
+    private BuildingItemInfo _buildingItemInfo;
+
     public BuildingInfo BuildingInfoCompo;
     private bool isInstalled = false;
     public bool IsInstalled => isInstalled;
@@ -30,8 +39,21 @@ public abstract class BaseBuilding : PoolableMono
     private Material[] _skinNormalMats;
     private SkinnedMeshRenderer[] _skinRenderers;
 
+    private int installedTime = 0;
+
+    private bool isInstalling = false;
+    public bool IsInstalling => isInstalling;
+
     protected virtual void Awake()
     {
+        try
+        {
+            _buildingItemInfo = _buildingDatabaseSO.BuildingItems.Find(idx => idx.ID == BuildingInfoCompo.ID);
+        }
+        catch
+        {
+            Debug.LogError($"Not Founded id: {gameObject}");
+        }
         SetUpCompo();
     }
 
@@ -58,8 +80,27 @@ public abstract class BaseBuilding : PoolableMono
 
     public void Installed()
     {
-        isInstalled = true;
-        CancleInsall();
+        if (_buildingItemInfo != null)
+        {
+            WaveManager.Instance.OnBattlePhaseEndEvent += PlusInstalledTime;
+        }
+        else
+        {
+            SetInstalled();
+        }
+
+        isInstalling = true;
+    }
+
+    private void PlusInstalledTime()
+    {
+        installedTime++;
+
+        if (installedTime >= _buildingItemInfo.InstalledTime)
+        {
+            WaveManager.Instance.OnBattlePhaseEndEvent -= PlusInstalledTime;
+            SetInstalled();
+        }
     }
 
     public void SetSelect()
@@ -73,9 +114,10 @@ public abstract class BaseBuilding : PoolableMono
         {
             _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
         }
+
     }
 
-    public void CancleInsall()
+    public void SetInstalled()
     {
         for (int i = 0; i < _meshRenderers.Length; i++)
         {
@@ -85,6 +127,15 @@ public abstract class BaseBuilding : PoolableMono
         for (int i = 0; i < _skinRenderers.Length; i++)
         {
             _skinRenderers[i].material = _skinNormalMats[i];
+        }
+        isInstalled = true;
+        isInstalling = false;
+
+        if (_buildingItemInfo != null)
+        {
+            UIManager.Instance.InitializHudTextSequence();
+            _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
+            UIManager.Instance.SpawnHudText(_installedFinText);
         }
     }
 

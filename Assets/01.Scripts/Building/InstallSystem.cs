@@ -82,9 +82,8 @@ public class InstallSystem : MonoBehaviour
 
         _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
 
-        if (_curBuilding != null && !_curBuilding.IsInstalled)
+        if (_curBuilding != null && !_curBuilding.IsInstalling)
         {
-            _curBuilding.CancleInsall();
             PoolManager.Instance.Push(_curBuilding);
             _curBuilding = null;
         }
