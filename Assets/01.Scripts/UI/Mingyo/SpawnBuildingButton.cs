@@ -40,6 +40,7 @@ public class SpawnBuildingButton : MonoBehaviour
     {
         bool cantSpawnBuilding = false;
 
+        BuildingItemInfo building = buildingDatabaseSO.BuildingItems.Find(name => name.Name == spawnBuilding.gameObject.name); //소환할 빌딩
 
         #region 전투 페이즈
         if (WaveManager.Instance.IsBattlePhase)
@@ -50,7 +51,6 @@ public class SpawnBuildingButton : MonoBehaviour
         #endregion
 
         #region 자원 비교
-        BuildingItemInfo building = buildingDatabaseSO.BuildingItems.Find(name => name.Name == spawnBuilding.gameObject.name);
         Resource resource = ResourceManager.Instance.resourceStack.Find
             (icon => icon.resourceData.resourceIcon == building.NecessaryResourceSprite);
 
@@ -62,9 +62,22 @@ public class SpawnBuildingButton : MonoBehaviour
         else
         {
             _buildingFactory.SetSpawnFailHudText("자원이 부족합니다");
-
             cantSpawnBuilding = true;
         }
+        #endregion
+
+        #region 일꾼 수 비교
+
+        if(WorkerManager.Instance.WorkerCount >= building.NecessaryResourceCount)
+        {
+           // WorkerManager.Instance.SendWorkers(building.NecessaryResourceCount, 건물); 원석 바꾸면 수정
+        }
+        else
+        {
+            _buildingFactory.SetSpawnFailHudText("일꾼이 부족합니다");
+            cantSpawnBuilding = true;
+        }
+
         #endregion
 
 
