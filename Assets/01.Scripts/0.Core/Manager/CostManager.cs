@@ -27,45 +27,65 @@ public class CostManager : Singleton<CostManager>
     [Header("Default Cost Value")]
     [SerializeField] private int _defaultCost;
 
+    public VictoryUI _victoryUI;
+
     public override void Awake()
     {
         base.Awake();
 
         Cost = _defaultCost;
         _costUI.OnlyCurrentCostView(Cost);
+
+        _victoryUI.EnableUI(1f, null);
     }
 
-    private void Update() //임시
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            AddFromCurrentCost(6, true,transform);
+            SubtractFromCurrentCost(100);   
+            
         }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            SubtractFromCurrentCost(6);
-        }
+    }
+
+    public void CloseWinPanel()
+    {
+        _victoryUI.DisableUI(1, null);
     }
 
     public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
     {
         _currentCost -= price;
-        _costUI.ChangeCost(-Mathf.Abs(price));
+        _costUI.SubtractCost(-Mathf.Abs(price));
     }
 
     //현재 재화에서 더하기
     //만약 tween이 true면 돈 뿅뿅뿅하는거,
-    public void AddFromCurrentCost(int value, bool tween = false, Transform startTransform = null)
+    //UI가 아니면 false
+    public void AddFromCurrentCost(int value, bool tween = false, bool isUI = false, Vector3 startTransform = new())
     {
         if(tween)
         {
-            _costUI.CostTween(value, startTransform);
+            _costUI.CostTween(value, isUI, startTransform);
         }
         else 
         {
-            _costUI.ChangeCost(value);
+            _costUI.AddCost(value);
         }
+    }
 
+    public void OnlyCostUIUseThis(int value)
+    {
         _currentCost += value;
+    }
+
+    public void CostArriveText(int cost)
+    {
+        _costUI.CostArriveText(cost);
+    } 
+    
+    public void CostStopText()
+    {
+        _costUI.CostStopText();
     }
 }
