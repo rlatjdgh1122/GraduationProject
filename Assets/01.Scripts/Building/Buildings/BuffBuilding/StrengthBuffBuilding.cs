@@ -85,7 +85,7 @@ public class StrengthBuffBuilding : BuffBuilding
 
             if (!found)
             {
-                _inRangePenguins[key].AddStat(GetBuffValue(), StatType.Strength, StatMode.Decrease);
+                StartCoroutine(_inRangePenguins[key].AddStatCorou(OutoffRangeBuffDuration, GetBuffValue(), StatType.Strength, StatMode.Decrease));
 
                 EffectPlayer buffEffect = PoolManager.Instance.Pop(_feedbackEffect.Effect.name) as EffectPlayer;
                 buffEffect.transform.SetParent(_inRangePenguins[key].gameObject.transform);
@@ -94,6 +94,8 @@ public class StrengthBuffBuilding : BuffBuilding
 
                 var main = buffEffect.Particles[0].main;
                 main.startSize = 0.3f;
+
+                buffEffect.StartPlay(OutoffRangeBuffDuration);
 
                 Debug.Log($"{_inRangePenguins[key].name}: decrease");
                 _inRangePenguins.Remove(key);

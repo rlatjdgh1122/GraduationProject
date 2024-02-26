@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 [System.Serializable]
 public enum PenguinEntityType
@@ -107,5 +109,11 @@ public class Penguin : Entity
     public void RemoveStat(int value, StatType type, StatMode mode)
     {
         Stat.RemoveStat(value, type, mode);
+    }
+
+    public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
+    {
+        yield return new WaitForSeconds(time);
+        Stat.AddStat(value, type, mode);
     }
 }

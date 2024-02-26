@@ -33,7 +33,6 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     }
 
 
-
     private bool isChecked = false; //enter, stay, exit를 위한 변수(건들 필요 없음)
 
     protected int buffValue;

@@ -22,7 +22,12 @@ public class BuffEffectFeedback : Feedback
         if (_curEffect != null) { return; }
         _curEffect = PoolManager.Instance.Pop(_effect.name) as EffectPlayer;
         _curEffect.transform.position = transform.position;
-        _curEffect.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
+        _curEffect.transform.SetParent(null);
+
+        var main = _curEffect.Particles[0].main;
+        main.startSize = 1.5f;
+
+        _curEffect.transform.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
         _curEffect.StartPlay(effectTime);
     }
 
