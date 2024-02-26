@@ -6,7 +6,6 @@ public class EffectPlayer : PoolableMono
 {
     [SerializeField]
     private List<ParticleSystem> _particles;
-
     public List<ParticleSystem> Particles => _particles;
 
     public void StartPlay(float endTime)

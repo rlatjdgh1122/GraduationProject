@@ -1,7 +1,6 @@
-public class ShieldBaseState : PenguinState<ShieldPenguinStateEnum> //상속받기 위해서 만든 짜바리 클래스
+public class ShieldBaseState : EntityState<ShieldPenguinStateEnum,Penguin> //상속받기 위해서 만든 짜바리 클래스
 {
-    public ShieldBaseState(Penguin penguin, PenguinStateMachine<ShieldPenguinStateEnum> stateMachine, string animBoolName) :
-        base(penguin, stateMachine, animBoolName)
+    public ShieldBaseState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 

@@ -1,12 +1,10 @@
-using UnityEditor;
+/*using UnityEditor;
 using UnityEngine;
 
 
-[CustomEditor(typeof(Penguin), true)]
+[CustomEditor(typeof(General), true)]
 public class CustomPenguinInspectorEditor : Editor
 {
-    SerializedProperty Option_Prop;
-   
     [Header("기본 세팅")]
     SerializedProperty Setting_InnerDistance_Prop;
     SerializedProperty Setting_AttackDistance_Prop;
@@ -19,6 +17,8 @@ public class CustomPenguinInspectorEditor : Editor
     SerializedProperty Setting_Stat_Prop;
     [Header("패시브")]
     SerializedProperty Passive_Prop;
+    [Header("군단 능력치")]
+    SerializedProperty LegionStatType_Prop;
 
     private void OnEnable()
     {
@@ -33,7 +33,7 @@ public class CustomPenguinInspectorEditor : Editor
 
         Setting_Stat_Prop = serializedObject.FindProperty("_characterStat");
         Passive_Prop = serializedObject.FindProperty("passiveData");
-
+        LegionStatType_Prop = serializedObject.FindProperty("ligeonStat");
     }
 
     public override void OnInspectorGUI()
@@ -69,14 +69,7 @@ public class CustomPenguinInspectorEditor : Editor
             case PenguinEntityType.Shield:
 
                 break;
-
-            case PenguinEntityType.MeleeGeneral:
-
-                EditorGUILayout.PropertyField(Passive_Prop);
-
-                break;
-
-            case PenguinEntityType.RangeGeneral:
+            case PenguinEntityType.General:
 
                 EditorGUILayout.PropertyField(Passive_Prop);
                 break;
@@ -88,3 +81,4 @@ public class CustomPenguinInspectorEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+*/

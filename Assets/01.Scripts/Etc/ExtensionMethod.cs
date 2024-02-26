@@ -1,3 +1,4 @@
+using Define;
 using DG.Tweening;
 using Newtonsoft.Json;
 using System;
@@ -101,6 +102,13 @@ public static class ExtensionMethod
 
         // rectTransfor을 쓰는 오브젝트가 아니면, 그냥 DOMove로 이동
         return gameObject.transform.DOMove(endValue, duration);
+    }
+    #endregion
+
+    #region GetOrAddComponent
+    public static T GetOrAddComponent<T>(this GameObject go) where T : UnityEngine.Component
+    {
+        return Util.GetOrAddComponent<T>(go);
     }
     #endregion
 }

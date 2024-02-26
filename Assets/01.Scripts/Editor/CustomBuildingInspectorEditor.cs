@@ -8,27 +8,39 @@ using UnityEngine;
 public class CustomBuildingInspectorEditor : Editor
 {
     SerializedProperty BuildingTypeEnum_Property;
-
     SerializedProperty BuffItemInfoST_Property;
 
     void OnEnable()
     {
         BuildingTypeEnum_Property = serializedObject.FindProperty("_buildingTypeEnum");
-        BuffItemInfoST_Property = serializedObject.FindProperty("_buffItemInfoST");
+        BuffItemInfoST_Property = serializedObject.FindProperty("_innderDistance");
     }
 
     public override void OnInspectorGUI()
     {
-        EditorGUI.BeginChangeCheck();
-        EditorGUILayout.PropertyField(BuildingTypeEnum_Property);
-
-        // Building 프로퍼티 필드에 변경사항이 있다면
-        if (EditorGUI.EndChangeCheck())
+        serializedObject.Update();
+        BuildingType selectedEnum = (BuildingType)BuildingTypeEnum_Property.enumValueIndex;
+        switch (selectedEnum)
         {
-            // BuildingType에 맞게 교체해준다.
-            ChangeBuildingInfoInspector();
-            serializedObject.ApplyModifiedProperties();
+            case BuildingType.BuffBuilding:
+                EditorGUILayout.PropertyField(BuffItemInfoST_Property);
+                break;
+            case BuildingType.DefenseBuilding:
+                break;
+            case BuildingType.ResourceBuilding:
+                break;
         }
+        EditorUtility.SetDirty(target);
+        serializedObject.ApplyModifiedProperties();
+        //EditorGUI.BeginChangeCheck();
+        //EditorGUILayout.PropertyField(BuildingTypeEnum_Property);
+
+        //// Building 프로퍼티 필드에 변경사항이 있다면
+        //if (EditorGUI.EndChangeCheck())
+        //{
+        //    // BuildingType에 맞게 교체해준다.
+        //    ChangeBuildingInfoInspector();
+        //}
     }
 
     private void ChangeBuildingInfoInspector()
@@ -44,6 +56,7 @@ public class CustomBuildingInspectorEditor : Editor
             case BuildingType.ResourceBuilding:
                 break;
         }
-
+        EditorUtility.SetDirty(target);
+        serializedObject.ApplyModifiedProperties();
     }
 }

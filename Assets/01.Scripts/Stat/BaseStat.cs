@@ -1,24 +1,5 @@
-using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
-[System.Serializable]
-[Flags]
-public enum StatType
-{
-    MoveSpeed,
-    AttackSpeed,
-    Strength,
-    Agility,
-    Intelligence,
-    Vitality,
-    MaxHealth,
-    Armor,
-    MagicResistance,
-    Damage,
-    CriticalChance,
-    CriticalDamage,
-}
 [System.Serializable]
 public enum StatMode
 {

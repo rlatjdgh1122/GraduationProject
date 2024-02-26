@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
 {
     [SerializeField]
@@ -16,9 +15,25 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     private int defaultBuffValue;
     public int DefaultBuffValue => defaultBuffValue;
 
-    private bool isChecked = false; //enter, stay, exit를 위한 변수(건들 필요 없음)
+    [SerializeField]
+    private float defaultOutoffRangeBuffDuration;
+    public float DefaultOutoffRangeBuffDuration => defaultOutoffRangeBuffDuration;
 
-    FeedbackPlayer _feedbackPlayer;
+    private float outoffRangeBuffDuration;
+    public float OutoffRangeBuffDuration
+    {
+        get
+        {
+            return outoffRangeBuffDuration;
+        }
+        protected set
+        {
+            outoffRangeBuffDuration = value;
+        }
+    }
+
+
+    private bool isChecked = false; //enter, stay, exit를 위한 변수(건들 필요 없음)
 
     protected int buffValue;
     public int BuffValues
@@ -36,14 +51,15 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     protected override void Awake()
     {
         base.Awake();
-
-        _feedbackPlayer = transform.Find("BuffFeedback").GetComponent<FeedbackPlayer>();
+        SetBuffValue(DefaultBuffValue);
+        SetOutoffRangeBuffDuration(DefaultOutoffRangeBuffDuration);
     }
 
-    public Collider[] BuffRunning(Collider[] _curcolls, Collider[] previousColls)
+    public Collider[] BuffRunning(FeedbackPlayer feedbackPlayer, Collider[] _curcolls, Collider[] previousColls)
     {
         if (_curcolls.Length > previousColls.Length)
         {
+            feedbackPlayer.PlayFeedback();
             OnPenguinInsideRangeEnter();
             isChecked = true;
         }
@@ -57,7 +73,7 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
             if (_curcolls.Length == 0)
             {
                 isChecked = false;
-                _feedbackPlayer.FinishFeedback();
+                feedbackPlayer.FinishFeedback();
             }
         }
 
@@ -68,7 +84,6 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     {
         // 범위 안에 들어오면 각각 버프이벤트 구독
         BuffEvent();
-        _feedbackPlayer.PlayFeedback();
         Debug.Log("안에들어왔다");
     }
 
@@ -119,4 +134,6 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     protected abstract void CommenceBuffDecay(); //범위 밖으로 나가면 실행될 버프 소멸 이벤트
     protected abstract void SetBuffValue(int value);
     protected abstract int GetBuffValue();
+    protected abstract void SetOutoffRangeBuffDuration(float value);
+    protected abstract float GetOutoffRangeBuffDuration();
 }

@@ -1,6 +1,6 @@
 public class ShieldBlockState : ShieldBaseState
 {
-    public ShieldBlockState(Penguin penguin, PenguinStateMachine<ShieldPenguinStateEnum> stateMachine, string animBoolName) 
+    public ShieldBlockState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
         : base(penguin, stateMachine, animBoolName)
     {
     }

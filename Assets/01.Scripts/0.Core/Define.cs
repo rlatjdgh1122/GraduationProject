@@ -12,9 +12,9 @@ namespace Define
         }
     }
 
-    namespace Algorithem
+    namespace Algorithem //¾È¾¸!!
     {
-        public static class Algorithm
+        public static class Algorithm 
         {
             public static class AlignmentRule
             {
@@ -68,6 +68,19 @@ namespace Define
                     return GetCenterPostion(posList);
                 }
             }
+        }
+    }
+
+    public class Util
+    {
+        public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
+        {
+            T component = go.GetComponent<T>();
+            if (component == null)
+            {
+                component = go.AddComponent<T>();
+            }
+            return component;
         }
     }
 }

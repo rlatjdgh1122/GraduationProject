@@ -1,21 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-[System.Serializable]
-public enum PenguinEntityType
-{
-    Basic,
-    Shield,
-    Archer,
-    MeleeGeneral,
-    RangeGeneral,
-}
+using static UnityEngine.Rendering.DebugUI;
 
 public class Penguin : Entity
 {
-    public PenguinEntityType type;
-
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -50,7 +40,7 @@ public class Penguin : Entity
         base.Awake();
         NavAgent.speed = moveSpeed;
 
-        AttackCompo = GetComponent<EntityAttackData>(); 
+        AttackCompo = GetComponent<EntityAttackData>();
     }
 
     public void SetOwner(Army army)
@@ -107,5 +97,11 @@ public class Penguin : Entity
     public void RemoveStat(int value, StatType type, StatMode mode)
     {
         Stat.RemoveStat(value, type, mode);
+    }
+
+    public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
+    {
+        yield return new WaitForSeconds(time);
+        Stat.AddStat(value, type, mode);
     }
 }

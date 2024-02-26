@@ -1,6 +1,6 @@
 public class BasicIdleState : BasicBaseState
 {
-    public BasicIdleState(Penguin penguin, PenguinStateMachine<BasicPenguinStateEnum> stateMachine, string animationBoolName)
+    public BasicIdleState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }
