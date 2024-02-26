@@ -37,7 +37,7 @@ public class CostUI : MonoBehaviour
     {
         int repeat = value;
 
-        UIManager.Instance.InitializeWarningTextSequence();
+        UIManager.Instance.InitializHudTextSequence();
 
         if (value >= _repeatCnt)
         {
@@ -52,7 +52,7 @@ public class CostUI : MonoBehaviour
 
     public void ChangeCost(int value)
     {
-        UIManager.Instance.InitializeWarningTextSequence();
+        UIManager.Instance.InitializHudTextSequence();
 
         Color plusColor = new Color(0, 255, 0); //임시
         Color minusColor = new Color(255, 0, 0); //임시

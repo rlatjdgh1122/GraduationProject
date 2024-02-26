@@ -83,11 +83,8 @@ public class SpawnBuildingButton : MonoBehaviour
 
         if (cantSpawnBuilding)
         {
-            UIManager.Instance.InitializeWarningTextSequence();
-            UIManager.Instance.WarningTextSequence.Prepend(_buildingFactory.SpawnFailHudText.DOFade(1f, 0.5f))
-            .Join(_buildingFactory.SpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y, 0.5f))
-            .Append(_buildingFactory.SpawnFailHudText.DOFade(0f, 0.5f))
-            .Join(_buildingFactory.SpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y - 50f, 0.5f));
+            UIManager.Instance.InitializHudTextSequence();
+            UIManager.Instance.SpawnHudText(_buildingFactory.FailHudText);
 
             return;
         }
@@ -97,6 +94,9 @@ public class SpawnBuildingButton : MonoBehaviour
 
     private void ButtonCooldown(BaseBuilding spawnBuilding) // 버튼 누르면 실행될 함수
     {
+        UIManager.Instance.InitializHudTextSequence();
+        UIManager.Instance.SpawnHudText(_buildingFactory.SuccesHudText);
+
         _buildingFactory.SpawnBuildingHandler(spawnBuilding);
     }
 }

@@ -36,8 +36,8 @@ public class CostBox : PoolableMono
         {
             case BoxType.Golden:
             {
-                UIManager.Instance.InitializeWarningTextSequence();
-                UIManager.Instance.WarningTextSequence.Append(
+                UIManager.Instance.InitializHudTextSequence();
+                UIManager.Instance.HudTextSequence.Append(
                 InspectorCustomBox.Lid.DOLocalRotate(
                     new Vector3(InspectorCustomBox.OpenLidAngle, 0, 0), InspectorCustomBox.Duration))
                     .AppendInterval(0.5f) //ÀÓ½Ã °ª

@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WorkerFactroy : EntityFactory<WorkerPenguin>
@@ -10,6 +12,9 @@ public class WorkerFactroy : EntityFactory<WorkerPenguin>
 
     public void SetWorkerHandler() //이게 WorkerManager에다가 수만 늘려주는거고 (구매했을 때)
     {
+        UIManager.Instance.InitializHudTextSequence();
+        UIManager.Instance.SpawnHudText(SuccesHudText);
+
         WorkerManager.Instance.SetWorker();
     }
 

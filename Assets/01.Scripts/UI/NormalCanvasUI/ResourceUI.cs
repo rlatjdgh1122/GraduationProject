@@ -93,11 +93,11 @@ public class ResourceUI : NormalUI
 
     private void ShowWarningText(string message)
     {
-        UIManager.Instance.InitializeWarningTextSequence();
+        UIManager.Instance.InitializHudTextSequence();
 
         _warningText.text = message;
 
-        UIManager.Instance.WarningTextSequence.Append(_warningPanel.DOFade(1, 0.08f))
+        UIManager.Instance.HudTextSequence.Append(_warningPanel.DOFade(1, 0.08f))
                 .AppendInterval(0.8f)
                 .Append(_warningPanel.DOFade(0, 0.08f));
     }

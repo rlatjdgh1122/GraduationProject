@@ -109,12 +109,8 @@ public class InstallSystem : MonoBehaviour
         {
             if(_previousGround.IsInstalledBuilding)
             {
-                UIManager.Instance.InitializeWarningTextSequence();
-                UIManager.Instance.WarningTextSequence.Prepend(_buildingSpawnFailHudText.DOFade(1f, 0.5f))
-                .Join(_buildingSpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y, 0.5f))
-                .Append(_buildingSpawnFailHudText.DOFade(0f, 0.5f))
-                .Join(_buildingSpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y - 50f, 0.5f));
-
+                UIManager.Instance.InitializHudTextSequence();
+                UIManager.Instance.SpawnHudText(_buildingSpawnFailHudText);
                 return;
             }
 
