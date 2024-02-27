@@ -40,7 +40,7 @@ public class CostBox : PoolableMono
 
     private void OnMouseDown()
     {
-        if (!_isClick)
+        if (!_isClick && !WaveManager.Instance.IsBattlePhase)
         {
             switch (InspectorCustomBox.Type)
             {

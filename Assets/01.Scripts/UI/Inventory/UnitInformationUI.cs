@@ -1,22 +1,32 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitInformationUI : SlotUI
 {
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _className;
-    [SerializeField] TextMeshProUGUI _weapon;
-    [SerializeField] TextMeshProUGUI _type;
-    [SerializeField] TextMeshProUGUI _characteristic;
-    [SerializeField] TextMeshProUGUI _passive;
-    [SerializeField] TextMeshProUGUI _Synergy;
+    [Header("PenguinDataDetail")]
+    [SerializeField] private Slider _atk;
+    [SerializeField] private Slider _def;
+    [SerializeField] private Slider _range;
+    [SerializeField] private TextMeshProUGUI _weapon;
+
+    [Header("GeneralInfo")]
+    [SerializeField] private CanvasGroup _generalInfoCanvasGroup;
+    [SerializeField] private TextMeshProUGUI _passive;
+    [SerializeField] private TextMeshProUGUI _Synergy;
 
     public LegionInventoryData _infoData = null;
+    private LegionInventoryData _privateData = null;
 
     public override void CleanUpSlot()
     {
+        _infoData = null;
         _data = null;
         _unitImage.sprite = _emptyImage;
     }
@@ -39,11 +49,26 @@ public class UnitInformationUI : SlotUI
     {
         if (data != null)
         {
+            _privateData = data;
+
             _unitImage.sprite = data.penguinData.PenguinIcon;
             _name.text = data.penguinData.PenguinName;
             _className.text = data.penguinData.PenguinJobTypeName();
 
-            data.penguinData.PenguinInformationUpdate(_weapon, _type, _characteristic, _passive, _Synergy);
+            if(data.penguinData.JobType == PenguinJobType.General)
+            {
+                _generalInfoCanvasGroup.DOFade(1, 0.1f);
+            }
+            else
+            {
+                _generalInfoCanvasGroup.DOFade(0, 0.1f);
+            }
+
+            _atk.DOValue(_privateData.penguinData.PenguinData.atk, 0.2f);
+            _def.DOValue(_privateData.penguinData.PenguinData.def, 0.2f);
+            _range.DOValue(_privateData.penguinData.PenguinData.range, 0.2f);
+
+            data.penguinData.PenguinInformationTextUpdate(_weapon, _passive, _Synergy);
         }
     }
 }

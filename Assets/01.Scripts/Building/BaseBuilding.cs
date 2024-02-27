@@ -28,6 +28,7 @@ public abstract class BaseBuilding : WorkableObject
     private TextMeshProUGUI _installedFinText;
 
     private BuildingItemInfo _buildingItemInfo;
+    public BuildingItemInfo BuildingItemInfoCompo => _buildingItemInfo;
 
     public BuildingInfo BuildingInfoCompo;
     private bool isInstalled = false;
@@ -52,7 +53,7 @@ public abstract class BaseBuilding : WorkableObject
         }
         catch
         {
-            Debug.LogError($"Not Founded id: {gameObject}");
+            Debug.LogError($"Not Founded id: {gameObject}"); //빌딩이랑 Container는 이 오류가 뜨는게 맞다
         }
         SetUpCompo();
     }
