@@ -7,9 +7,9 @@ using Unity.VisualScripting;
 [Serializable]
 public class Stat
 {
-     public int baseValue; //기본 스탯
-    [ReadOnly] public float _fewTimes; //기본 스탯 기준 몇배인지 (인스펙터 용)
-    [ReadOnly] public float _finalValue; //기본 스탯 기준 몇배인지 (인스펙터 용)
+    [SerializeField] private int _baseValue; //기본 스탯
+    [ReadOnly] float _fewTimes; //기본 스탯 기준 몇배인지 (인스펙터 용)
+    [ReadOnly] float _finalValue; //기본 스탯 기준 몇배인지 (인스펙터 용)
 
     public List<int> increases; //증가 % (곱연산)
     public List<int> decreases; //감소 % (합연산)
@@ -20,22 +20,21 @@ public class Stat
 
     private int Modify()
     {
-        var plusValue = StatCalculator.MultiOperValue(baseValue, increases);
+        var plusValue = StatCalculator.MultiOperValue(_baseValue, increases);
         var minusValue = StatCalculator.SumOperValue(plusValue, decreases);
 
         var result = StatCalculator.GetValue(plusValue, minusValue);
 
-        _fewTimes = StatCalculator.OperTimes(result, baseValue);
+        _fewTimes = StatCalculator.OperTimes(result, _baseValue);
         _finalValue = result;
 
         return result;
     }
 
-    public float ReturnFewTimes() 
-        => _fewTimes;
-    public float ReturnFinalValue() 
-        => _finalValue;
-
+    public void AddSum(int value, int mul1, int mul2)
+    {
+        _baseValue = value + (mul1 * mul2);
+    }
     public void AddIncrease(int value)
     {
         if (value != 0)
@@ -89,6 +88,8 @@ public class Stat
 
     public void SetDefaultValue(int value)
     {
-        baseValue = value;
+        _baseValue = value;
     }
+
+
 }
