@@ -19,7 +19,7 @@ public struct BuildingInfo
 
 //[RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Grid))]
-public abstract class BaseBuilding : PoolableMono
+public abstract class BaseBuilding : WorkableObject
 {
     [SerializeField]
     private BuildingDatabaseSO _buildingDatabaseSO;
@@ -44,7 +44,7 @@ public abstract class BaseBuilding : PoolableMono
     private bool isInstalling = false;
     public bool IsInstalling => isInstalling;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         try
         {
@@ -134,7 +134,7 @@ public abstract class BaseBuilding : PoolableMono
         if (_buildingItemInfo != null)
         {
             UIManager.Instance.InitializHudTextSequence();
-            _installedFinText.SetText($"{_buildingItemInfo.Name: ¼³Ä¡ ¿Ï·á!}");
+            _installedFinText.SetText($"{_buildingItemInfo.Name: ï¿½ï¿½Ä¡ ï¿½Ï·ï¿½!}");
             UIManager.Instance.SpawnHudText(_installedFinText);
         }
     }
@@ -143,7 +143,7 @@ public abstract class BaseBuilding : PoolableMono
     {
         if(isInstalled)
         {
-            Running(); // ¼³Ä¡ µÇ¸é ¿ªÇÒ ¼öÇà
+            Running(); // ï¿½ï¿½Ä¡ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 

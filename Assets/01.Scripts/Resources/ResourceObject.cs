@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ResourceObject : Entity
+public class ResourceObject : WorkableObject
 {
     [Header("Resource Info")]
     [SerializeField] private ResourceDataSO _resourceData;

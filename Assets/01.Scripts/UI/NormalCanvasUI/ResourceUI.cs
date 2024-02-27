@@ -40,7 +40,7 @@ public class ResourceUI : NormalUI
 
         CurrentResource = obj as ResourceObject;
         Setting();
-        _canvasGroup.DOFade(0.6f, time);
+        _canvasGroup.DOFade(1, time);
     }
 
     private void Setting()

@@ -31,7 +31,7 @@ public class WorkerManager : Singleton<WorkerManager>
         _workerList.Add(_workerPrefab);
     }
 
-    public void SendWorkers(int count, ResourceObject target)
+    public void SendWorkers(int count, WorkableObject workableObject)
     {
         int calledPenguinCount = 0;
 
@@ -41,22 +41,22 @@ public class WorkerManager : Singleton<WorkerManager>
             {
                 if (!worker.CanWork) //그중에 CanWork가 비활성화 된 애들만
                 {
-                    worker.StartWork(target); //활성화해주고
-                    _workerFactory.SpawnPenguinHandler();
+                    worker.StartWork(workableObject); //활성화해주고
+                    //_workerFactory.SpawnPenguinHandler();
                     calledPenguinCount++; //값을 1 늘림
                 }
 
                 if (calledPenguinCount >= count) //값이 호출한 값과 같다면 반복문 중지
                     break;
-            }      
+            }
         }
     }
 
-    public void ReturnWorkers(ResourceObject resource)
+    public void ReturnWorkers(WorkableObject workableObject)
     {
         foreach (MinerPenguin worker in WorkerList)
         {
-            if (worker.CanWork && worker.Target == resource)
+            if (worker.CanWork && worker.Target == workableObject)
             {
                 worker.FinishWork();
             }
