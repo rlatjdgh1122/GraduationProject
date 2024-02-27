@@ -238,13 +238,6 @@ public class WaveManager : MonoBehaviour
         OnIceArrivedEvent?.Invoke();
     }
 
-    private void OnDestroy()
-    {
-        OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
-        OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
-        OnIceArrivedEvent -= OnIceArrivedEventHanlder;
-    }
-
     public void SetCurPTSpawnPenguins(List<Penguin> penguins)
     {
         _curPTspawnPenguins.Clear();
@@ -267,4 +260,12 @@ public class WaveManager : MonoBehaviour
             //else // 군단에 들어가 있다면 알아서 군단위치로 가게
         }
     }
+
+    private void OnDestroy()
+    {
+        OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
+        OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
+        OnIceArrivedEvent -= OnIceArrivedEventHanlder;
+    }
+
 }

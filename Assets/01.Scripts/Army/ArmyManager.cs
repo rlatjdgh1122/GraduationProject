@@ -139,7 +139,10 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        armies[legion].Soldiers.Add(obj);
+        var Army = armies[legion];
+
+        obj.SetOwner(Army);
+        Army.Soldiers.Add(obj);
     }
 
     /// <summary>
@@ -150,8 +153,6 @@ public class ArmyManager : Singleton<ArmyManager>
     public void JoinArmyToGeneral(int legion, General obj) //들어가고 싶은 군단, 장군펭귄
     {
 
-        var Army = armies[legion];
-        var LegionStat = obj.ligeonStat;
 
         if (armies.Find(p => p.Legion == legion) == null)
         {
@@ -159,12 +160,16 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
+        var Army = armies[legion];
+        var LegionStat = obj.ligeonStat;
+
         if (Army.General != null)
         {
             Debug.Log($"현재 {legion}군단에는 장군이 존재합니다.");
             return;
         }
 
+        obj.SetOwner(Army);
         Army.General = obj;
 
         Army.AddStat(LegionStat);
