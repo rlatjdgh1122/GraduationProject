@@ -59,6 +59,26 @@ public class LegionInventoryUI : MonoBehaviour
 
     #endregion
 
+    #region OnOffLegionInventoryUI
+    private CanvasGroup _legionInventory;
+
+    private void Awake()
+    {
+        _legionInventory = GetComponent<CanvasGroup>();
+    }
+
+    public void OnEnableLegionInventory()
+    {
+        _legionInventory.DOFade(1, 0.5f);
+        _legionInventory.blocksRaycasts = true;
+    }
+
+    public void OnDisableLegionInventory()
+    {
+        _legionInventory.DOFade(0, 0.5f);
+        _legionInventory.blocksRaycasts = false;
+    }
+    #endregion
 
     public void ShowMessage(string message) //값들 임시로 박아둔것
     {
@@ -70,4 +90,5 @@ public class LegionInventoryUI : MonoBehaviour
                 .AppendInterval(0.8f)
                 .Append(StatuesMessageImage.DOFade(0, 0.04f));
     }
+
 }
