@@ -12,6 +12,7 @@ public class VictoryUI : NormalUI
     [SerializeField] private TextMeshProUGUI[] _texts;
     [SerializeField] private int _cost;
 
+    private bool _canClick = false;
 
     public override void Awake()
     {
@@ -34,6 +35,7 @@ public class VictoryUI : NormalUI
     {
         base.EnableUI(time, obj);
 
+        _canClick = true;
         SetTexts();
         _background.DOFade(0.75f, time).OnComplete(() => _canvasGroup.DOFade(1, time));
     }
@@ -47,6 +49,10 @@ public class VictoryUI : NormalUI
 
     public void CostViewer()
     {
-        CostManager.Instance.AddFromCurrentCost(_cost, true, true, UIManager.Instance.ScreenCenterVec);
+        if(_canClick)
+        {
+            CostManager.Instance.AddFromCurrentCost(_cost, true, true, UIManager.Instance.ScreenCenterVec);
+            _canClick = false;
+        }
     }
 }
