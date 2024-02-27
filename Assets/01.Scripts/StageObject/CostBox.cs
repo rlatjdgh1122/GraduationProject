@@ -46,7 +46,7 @@ public class CostBox : PoolableMono
             {
                 case BoxType.Golden:
                     {
-                        UIManager.Instance.InitializeWarningTextSequence();
+                        UIManager.Instance.InitializHudTextSequence();
                         StartCoroutine(PlaySequentialTweens());
                     }
                     break;
