@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,9 +19,19 @@ public enum PenguinJobType
     Solider
 }
 
+public enum GeneralCharacterType
+{
+    Melee,
+    Range,
+    MiddleRange,
+}
+
 [Serializable]
 public class PenguinDetailData
 {
+    public int level = 1;
+    public int price;
+    public int levelUpPrice;
     public string _weapon;
     public string _type;
     [Range(0f, 1f)] public float atk;
@@ -29,6 +40,7 @@ public class PenguinDetailData
     public string _characteristic;
     public string _passive;
     public string _Synergy;
+    public GeneralCharacterType characterType;
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Penguin")]
@@ -61,8 +73,9 @@ public class PenguinStat : BaseStat
         }
     }
 
-    public void UpdateAblitiyUI(Slider atk, Slider def, Slider rng)
+    public void UpdateAblitiyUI(TextMeshProUGUI name, Slider atk, Slider def, Slider rng)
     {
+        name.text = PenguinName;
         atk.value = PenguinData.atk;
         def.value = PenguinData.def;
         rng.value = PenguinData.range;

@@ -1,22 +1,21 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GeneralInfoUI : MonoBehaviour
+public class GeneralUpgradeUI : MonoBehaviour
 {
     public PenguinStat GeneralStat;
 
-    [SerializeField] private List<GeneralTechTreeUI> _techTrees;
-
+    #region components
     private CanvasGroup _canvasGroup;
     private TextMeshProUGUI _nameText;
     private Slider _atkBox;
     private Slider _defBox;
     private Slider _rangeBox;
+    private TextMeshProUGUI _levelText;
     private TextMeshProUGUI _priceText;
+    #endregion
 
     private void Awake()
     {
@@ -25,29 +24,15 @@ public class GeneralInfoUI : MonoBehaviour
         _atkBox = transform.Find("GeneralInfo/_atk").GetComponent<Slider>();
         _defBox = transform.Find("GeneralInfo/_def").GetComponent<Slider>();
         _rangeBox = transform.Find("GeneralInfo/_range").GetComponent<Slider>();
+        _levelText = transform.Find("GeneralInfo/level").GetComponent<TextMeshProUGUI>();
         _priceText = transform.Find("GeneralInfo/PurchaseButton/text").GetComponent<TextMeshProUGUI>();
     }
 
     public void UpdateTexts()
     {
-        _priceText.text = $"¿µÀÔ  {GeneralStat.PenguinData.price}";
+        _levelText.text = $"LV {GeneralStat.PenguinData.level}";
+        _priceText.text = $"LV {GeneralStat.PenguinData.level} -> LV {GeneralStat.PenguinData.level + 1}  {GeneralStat.PenguinData.levelUpPrice}";
         GeneralStat.UpdateAblitiyUI(_nameText, _atkBox, _defBox, _rangeBox);
-    }
-
-    public void Purchase()
-    {
-        if (CostManager.Instance.Cost >= GeneralStat.PenguinData.price)
-        {
-            foreach (GeneralTechTreeUI techTreeUI in _techTrees)
-            {
-                if (techTreeUI.General == GeneralStat)
-                {
-                    techTreeUI.SetTechTree();
-                    PanelOff();
-                    break;
-                }
-            }
-        }
     }
 
     public void OpenPanel(PenguinStat stat)
