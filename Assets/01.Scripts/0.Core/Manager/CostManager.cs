@@ -34,38 +34,39 @@ public class CostManager : Singleton<CostManager>
         Cost = _defaultCost;
         _costUI.OnlyCurrentCostView(Cost);
     }
-
-    private void Update() //임시
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            AddFromCurrentCost(6, true,transform);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            SubtractFromCurrentCost(6);
-        }
-    }
-
     public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
     {
         _currentCost -= price;
-        _costUI.ChangeCost(-Mathf.Abs(price));
+        _costUI.SubtractCost(-Mathf.Abs(price));
     }
 
     //현재 재화에서 더하기
     //만약 tween이 true면 돈 뿅뿅뿅하는거,
-    public void AddFromCurrentCost(int value, bool tween = false, Transform startTransform = null)
+    //UI가 아니면 false
+    public void AddFromCurrentCost(int value, bool tween = false, bool isUI = false, Vector3 startTransform = new())
     {
         if(tween)
         {
-            _costUI.CostTween(value, startTransform);
+            _costUI.CostTween(value, isUI, startTransform);
         }
         else 
         {
-            _costUI.ChangeCost(value);
+            _costUI.AddCost(value);
         }
+    }
 
+    public void OnlyCostUIUseThis(int value)
+    {
         _currentCost += value;
+    }
+
+    public void CostArriveText(int cost)
+    {
+        _costUI.CostArriveText(cost);
+    } 
+    
+    public void CostStopText()
+    {
+        _costUI.CostStopText();
     }
 }

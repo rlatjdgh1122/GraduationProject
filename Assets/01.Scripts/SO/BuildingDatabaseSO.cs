@@ -53,8 +53,8 @@ public class BuildingItemInfo
     public Sprite NecessaryResourceSprite { get { return _necessaryResourceSprite; } }
 
     [SerializeField]
-    private float necessaryResourceCount;
-    public float NecessaryResourceCount { get { return necessaryResourceCount; } }
+    private int necessaryResourceCount;
+    public int NecessaryResourceCount { get { return necessaryResourceCount; } }
 
     [SerializeField]
     private int necessaryWokerCount;

@@ -31,12 +31,10 @@ public class SpawnPenguinButton : MonoBehaviour
     {
         if(WaveManager.Instance.IsBattlePhase)
         {
-            UIManager.Instance.InitializeWarningTextSequence();
-            UIManager.Instance.WarningTextSequence.Prepend(_penguinFactory.SpawnFailHudText.DOFade(1f, 0.5f))
-            .Join(_penguinFactory.SpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y, 0.5f))
-            .Append(_penguinFactory.SpawnFailHudText.DOFade(0f, 0.5f))
-            .Join(_penguinFactory.SpawnFailHudText.rectTransform.DOMoveY(UIManager.Instance.ScreenCenterVec.y - 50f, 0.5f));
+            UIManager.Instance.InitializHudTextSequence();
+            _penguinFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
 
+            UIManager.Instance.SpawnHudText(_penguinFactory.FailHudText);
             return;
         }
 
@@ -52,6 +50,9 @@ public class SpawnPenguinButton : MonoBehaviour
     {
         _btn.interactable = false;
         _coolingimg.fillAmount = 1f;
+
+        UIManager.Instance.InitializHudTextSequence();
+        UIManager.Instance.SpawnHudText(_penguinFactory.SuccesHudText);
 
         DOTween.To(() => _coolingimg.fillAmount, f => _coolingimg.fillAmount = f, 0f, cooltime).OnComplete(() => // 생성시간이 다 되었다면
         {

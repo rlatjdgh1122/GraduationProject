@@ -64,14 +64,14 @@ public class LegionChange : MonoBehaviour
 
     public void ChangeButton() //군단 바꾸는 버튼을 눌렀을 때
     {
-        UIManager.Instance.InitializeWarningTextSequence();
+        UIManager.Instance.InitializHudTextSequence();
         _backPanel.DOFade(0.5f, _changeTime);
 
         for (int i = 0; i < LegionInventory.Instance.LegionList.Count; i++)
         {
             _legionButtons[i].blocksRaycasts = true;
 
-            UIManager.Instance.WarningTextSequence.Append(_legionButtons[i].DOFade(1, _changeTime));
+            UIManager.Instance.HudTextSequence.Append(_legionButtons[i].DOFade(1, _changeTime));
 
             Image obj = _legionButtons[i].transform.Find("Locked").GetComponent<Image>(); //LegionBtn 오브젝트 밑에 있는
             //Locked 오브젝트 찾기
@@ -125,7 +125,7 @@ public class LegionChange : MonoBehaviour
 
     public void BuyBtn()
     {
-        UIManager.Instance.InitializeWarningTextSequence();
+        UIManager.Instance.InitializHudTextSequence();
 
         if (_cantBuy)
         {

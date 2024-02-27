@@ -62,11 +62,11 @@ public class LegionInventoryUI : MonoBehaviour
 
     public void ShowMessage(string message) //값들 임시로 박아둔것
     {
-        UIManager.Instance.InitializeWarningTextSequence();
+        UIManager.Instance.InitializHudTextSequence();
 
         StatuesMessageText.text = message;
 
-        UIManager.Instance.WarningTextSequence.Append(StatuesMessageImage.DOFade(1, 0.04f))
+        UIManager.Instance.HudTextSequence.Append(StatuesMessageImage.DOFade(1, 0.04f))
                 .AppendInterval(0.8f)
                 .Append(StatuesMessageImage.DOFade(0, 0.04f));
     }

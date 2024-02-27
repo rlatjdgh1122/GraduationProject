@@ -9,6 +9,8 @@ public enum UIType
     Victory,
     Defeat,
     Resource,
+    Nexus,
+    General
 }
 
 public class UIManager : Singleton<UIManager>
@@ -18,12 +20,12 @@ public class UIManager : Singleton<UIManager>
     public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
 
-    public Sequence WarningTextSequence;
+    public Sequence HudTextSequence;
 
-    public void InitializeWarningTextSequence()
+    public void InitializHudTextSequence()
     {
-        WarningTextSequence?.Kill(); // 기존 시퀀스를 중단
-        WarningTextSequence = DOTween.Sequence(); // 새로운 시퀀스 할당
+        HudTextSequence?.Kill(); // 기존 시퀀스를 중단
+        HudTextSequence = DOTween.Sequence(); // 새로운 시퀀스 할당
     }
 
     public override void Awake()
@@ -91,5 +93,14 @@ public class UIManager : Singleton<UIManager>
                 action?.Invoke();
             }
         }); ;
+    }
+
+    public void SpawnHudText(TextMeshProUGUI text)
+    {
+        InitializHudTextSequence();
+        HudTextSequence.Prepend(text.DOFade(1f, 0.5f))
+        .Join(text.rectTransform.DOMoveY(ScreenCenterVec.y, 0.5f))
+        .Append(text.DOFade(0f, 0.5f))
+        .Join(text.rectTransform.DOMoveY(ScreenCenterVec.y - 50f, 0.5f));
     }
 }

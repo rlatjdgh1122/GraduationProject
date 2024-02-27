@@ -1,6 +1,6 @@
 using System;
 
-public enum WorkerPenguinStateEnum
+public enum BuilderPenguinStateEnum
 {
     Idle,
     Move,
@@ -8,7 +8,7 @@ public enum WorkerPenguinStateEnum
     Return
 }
 
-public class WorkerPenguin : Worker
+public class BuilderPenguin : Worker
 {
     public WorkerStateMachine<WorkerPenguinStateEnum> StateMachine { get; private set; }
 
