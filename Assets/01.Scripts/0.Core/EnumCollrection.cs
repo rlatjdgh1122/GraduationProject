@@ -1,6 +1,4 @@
 
-
-[System.Flags]
 public enum StatType
 {
     None                = 1 << 0,

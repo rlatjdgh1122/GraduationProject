@@ -103,4 +103,9 @@ public class Penguin : Entity
         yield return new WaitForSeconds(time);
         Stat.AddStat(value, type, mode);
     }
+
+    public override void Init()
+    {
+        owner = null;
+    }
 }

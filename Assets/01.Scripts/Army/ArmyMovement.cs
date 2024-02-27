@@ -47,6 +47,10 @@ public class ArmyMovement : MonoBehaviour
     private void SetArmyMovePostiton(Vector3 mousePos)
     {
         var soldiers = curArmy.Soldiers;
+        var general = curArmy.General;
+
+        if(general != null)
+            general.MoveToMySeat(mousePos);
 
         foreach (var soldier in soldiers)
         {

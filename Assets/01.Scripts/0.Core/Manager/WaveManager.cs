@@ -73,6 +73,7 @@ public class WaveManager : MonoBehaviour
             if (_instance == null)
             {
                 _instance = FindObjectOfType<WaveManager>();
+
                 if (_instance == null)
                 {
                     Debug.LogError("WaveManager is Multiple.");
@@ -237,7 +238,7 @@ public class WaveManager : MonoBehaviour
         OnIceArrivedEvent?.Invoke();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
         OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
-    [SerializeField] private SoldierTypeListSO soldierTypeListSO = null;
+    [SerializeField] private SoldierListSO soldierTypeListSO = null;
     private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
 
     [SerializeField] private List<Army> armies = new();
@@ -17,7 +17,8 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         foreach (var solider in soldierTypeListSO.soldierTypes)
         {
-            soldierTypeDictionary.Add(solider.type, solider.obj);
+            var type = (solider.Stat as PenguinStat).PenguinType;
+            soldierTypeDictionary.Add(type, solider);
         }
 
         foreach (var army in armies)
@@ -150,13 +151,7 @@ public class ArmyManager : Singleton<ArmyManager>
     {
 
         var Army = armies[legion];
-
-        var IncValue = obj.ligeonStat.IncValue;
-        var DecValue = obj.ligeonStat.DecValue;
-
-        var IncType = obj.ligeonStat.IncStatType;
-        var DecType = obj.ligeonStat.DecStatType;
-
+        var LegionStat = obj.ligeonStat;
 
         if (armies.Find(p => p.Legion == legion) == null)
         {
@@ -172,11 +167,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
         Army.General = obj;
 
-        if (IncType != StatType.None)
-            Army.AddStat(IncValue, IncType, StatMode.Increase);
-
-        if (DecType != StatType.None)
-            Army.AddStat(DecValue, DecType, StatMode.Decrease);
+        Army.AddStat(LegionStat);
 
     }
     #endregion
@@ -196,6 +187,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var prefab = soldierTypeDictionary[type];
 
         obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
+        obj.transform.position = SpawnPoint;
         obj.SeatPos = seatPos;
         return obj;
     }
@@ -212,7 +204,7 @@ public class ArmyManager : Singleton<ArmyManager>
         soldiers.Remove(obj); //리스트에서 제외
 
         // 여기서 죽은 펭귄을 다시 push하는 코드가 필요
-
+        PoolManager.Instance.Push(obj);
     }
 
     /// <summary>
