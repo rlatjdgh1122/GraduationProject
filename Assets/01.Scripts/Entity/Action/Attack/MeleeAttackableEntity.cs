@@ -9,14 +9,18 @@ public class MeleeAttackableEntity : EntityAttackData
         base.Awake();
     }
 
+    /// <summary>
+    ///  몇 배 만큼 타격
+    /// </summary>
+    /// <param name="AfewTimes"> 몇 배</param>
     public override void SpecialAttack(float AfewTimes)
     {
         DamageCasterCompo.CastSpecialDamage(AfewTimes);
     }
 
-    public override void AoEAttack()
+    public override void AoEAttack(bool Knb, float value)
     {
-        DamageCasterCompo.CaseAoEDamage();
+        DamageCasterCompo.CaseAoEDamage(Knb, value);
     }
 
     public override void MeleeAttack()

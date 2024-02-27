@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Define.Algorithem;
-using UnityEngine.Rendering;
-using System.Linq;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
@@ -194,13 +190,12 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="seatPos"> 배치 위치 *되도록이면 사용하지 말것*</param>
     /// <returns> 니가 만든 펭귄</returns>
 
-    public T CreateSoldier<T>(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default) where T : Penguin
+    public Penguin CreateSoldier(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default)
     {
-        T obj = null;
+        Penguin obj;
         var prefab = soldierTypeDictionary[type];
 
-        //obj = Instantiate(prefab, SpawnPoint, Quaternion.identity) as T;
-        obj = PoolManager.Instance.Pop(prefab.name) as T;
+        obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
         obj.SeatPos = seatPos;
         return obj;
     }

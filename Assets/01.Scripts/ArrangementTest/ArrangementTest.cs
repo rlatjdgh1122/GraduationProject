@@ -53,22 +53,20 @@ public class ArrangementTest : Singleton<ArrangementTest>
         {
             Penguin obj = null;
 
-            if (p.Type == PenguinTypeEnum.Basic)
+            /*if (p.Type == PenguinTypeEnum.Basic)
             {
-                obj = ArmyManager.Instance.CreateSoldier<MeleePenguin>
-                (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
+                obj = ArmyManager.Instance.CreateSoldier(p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
             }
             else if (p.Type == PenguinTypeEnum.Shield)
             {
-                obj = ArmyManager.Instance.CreateSoldier<ShieldPenguin>
-               (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
+                obj = ArmyManager.Instance.CreateSoldier(p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
 
             }
             else if (p.Type == PenguinTypeEnum.Archer)
             {
-                obj = ArmyManager.Instance.CreateSoldier<ArcherPenguin>
-               (p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
-            }
+                obj = ArmyManager.Instance.CreateSoldier(p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
+            }*/
+            obj = ArmyManager.Instance.CreateSoldier(p.Type, SpawnPoint.position, seatPosList[p.SlotIdx]);
 
             ArmyManager.Instance.JoinArmyToSoldier(p.legionIdx, obj);
         });

@@ -1,22 +1,22 @@
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
+
 
 public class PenguinAnimationTrigger : MonoBehaviour
 {
     private Penguin _penguin;
 
-    [SerializeField] private UnityEvent OnPrevAttackEffectEvent          = null;
-    [SerializeField] private UnityEvent OnEndAttackEffectEvent           = null;
+    [SerializeField] private UnityEvent OnPrevAttackEffectEvent = null;
+    [SerializeField] private UnityEvent OnEndAttackEffectEvent = null;
 
-    [SerializeField] private UnityEvent OnSpecialAttackTriggerEvent      = null;
-    [SerializeField] private UnityEvent OnAttackTriggerEvent             = null;
-    [SerializeField] private UnityEvent OnAoEAttackTriggerEvent          = null;
-    [SerializeField] private UnityEvent OnRangeAttackTriggerEvent        = null;
+    [SerializeField] private UnityEvent OnSpecialAttackTriggerEvent = null;
+    [SerializeField] private UnityEvent OnAttackTriggerEvent = null;
+    [SerializeField] private UnityEvent OnAoEAttackTriggerEvent = null;
+    [SerializeField] private UnityEvent OnRangeAttackTriggerEvent = null;
 
-    [SerializeField] private UnityEvent OnDeadCompleteTriggerEvent       = null;
+    [SerializeField] private UnityEvent OnDeadCompleteTriggerEvent = null;
 
-    [SerializeField] private UnityEvent OnAnimationEndTriggerEvent       = null;
+    [SerializeField] private UnityEvent OnAnimationEndTriggerEvent = null;
 
     private void Awake()
     {
@@ -42,20 +42,20 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.AttackCompo.SpecialAttack(AfewTimes);
         OnSpecialAttackTriggerEvent?.Invoke();
     }
+
+    /// <summary>
+    /// ±¤¿ª °ø°Ý
+    /// </summary>
+    public void AoEAttackTrigger(int isKnb)
+    {
+        _penguin.AttackCompo.AoEAttack(isKnb  == 0 ? false : true, 1.2f);
+        OnAoEAttackTriggerEvent?.Invoke();
+    }
     public void AttackTrigger()
     {
         _penguin.AttackCompo.MeleeAttack();
         OnAttackTriggerEvent?.Invoke();
 
-    }
-
-    /// <summary>
-    /// ±¤¿ª °ø°Ý
-    /// </summary>
-    public void AoEAttackTrigger()
-    {
-        _penguin.AttackCompo.AoEAttack();
-        OnAoEAttackTriggerEvent?.Invoke();
     }
 
     private void RangeAttackTrigger()

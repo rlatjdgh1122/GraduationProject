@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 [Serializable]
 public class Stat
 {
-    [SerializeField] private int _baseValue; //기본 스탯
+     public int baseValue; //기본 스탯
     [ReadOnly] public float _fewTimes; //기본 스탯 기준 몇배인지 (인스펙터 용)
     [ReadOnly] public float _finalValue; //기본 스탯 기준 몇배인지 (인스펙터 용)
 
@@ -20,16 +20,21 @@ public class Stat
 
     private int Modify()
     {
-        var plusValue = StatCalculator.MultiOperValue(_baseValue, increases);
+        var plusValue = StatCalculator.MultiOperValue(baseValue, increases);
         var minusValue = StatCalculator.SumOperValue(plusValue, decreases);
 
         var result = StatCalculator.GetValue(plusValue, minusValue);
 
-        _fewTimes = StatCalculator.OperTimes(result, _baseValue);
+        _fewTimes = StatCalculator.OperTimes(result, baseValue);
         _finalValue = result;
 
         return result;
     }
+
+    public float ReturnFewTimes() 
+        => _fewTimes;
+    public float ReturnFinalValue() 
+        => _finalValue;
 
     public void AddIncrease(int value)
     {
@@ -84,6 +89,6 @@ public class Stat
 
     public void SetDefaultValue(int value)
     {
-        _baseValue = value;
+        baseValue = value;
     }
 }

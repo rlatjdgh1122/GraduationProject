@@ -55,7 +55,7 @@ public class DamageCaster : MonoBehaviour
     /// <summary>
     /// 광역 데미지
     /// </summary>
-    public void CaseAoEDamage() 
+    public void CaseAoEDamage(bool Knb, float value)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -68,13 +68,15 @@ public class DamageCaster : MonoBehaviour
 
             bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
 
-            Debug.Log(raycastSuccess);
-
             if (raycastSuccess
-                && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable health))
+                && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
                 int damage = _owner.damage.GetValue();
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+
+                if (Knb == true)
+                    health.KnockBack(value, raycastHit.normal);
+
             }
         }
     }

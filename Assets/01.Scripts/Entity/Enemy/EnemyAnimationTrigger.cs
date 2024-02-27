@@ -1,6 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+
+[System.Serializable]
+public class ParameterKnockbackEvent
+{
+    public bool knockback = false;
+    public float value = 1f;
+}
 
 public class EnemyAnimationTrigger : MonoBehaviour
 {
@@ -11,9 +19,9 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy = transform.parent.GetComponent<Enemy>();
     }
 
-    public void AoEAttackTrigger()
+    public void AoEAttackTrigger(bool Knb, float value)
     {
-        _enemy.AttackCompo.AoEAttack();
+        _enemy.AttackCompo.AoEAttack(Knb, value);
     }
 
     public void AttackTrigger()
