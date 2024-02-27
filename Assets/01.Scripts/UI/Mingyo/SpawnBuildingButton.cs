@@ -49,18 +49,27 @@ public class SpawnBuildingButton : MonoBehaviour
 
         #region 자원 비교
 
-        Resource resource = ResourceManager.Instance.resourceStack.Find
+        try
+        {
+            Resource resource = ResourceManager.Instance.resourceStack.Find
             (icon => icon.resourceData.resourceIcon == buildinginfo.NecessaryResourceSprite);
 
-        if (resource.stackSize >= buildinginfo.NecessaryResourceCount)
-        {
-            ResourceManager.Instance.RemoveResource(resource.resourceData, buildinginfo.NecessaryResourceCount);
+            if (resource.stackSize >= buildinginfo.NecessaryResourceCount)
+            {
+                ResourceManager.Instance.RemoveResource(resource.resourceData, buildinginfo.NecessaryResourceCount);
+            }
+            else
+            {
+                _buildingFactory.SetSpawnFailHudText("자원이 부족합니다");
+                cantSpawnBuilding = true;
+            }
         }
-        else
+        catch
         {
             _buildingFactory.SetSpawnFailHudText("자원이 부족합니다");
             cantSpawnBuilding = true;
         }
+        
         #endregion
 
         #region 일꾼 수 비교
