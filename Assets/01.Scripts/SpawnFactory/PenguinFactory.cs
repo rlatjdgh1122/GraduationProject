@@ -44,7 +44,7 @@ public class PenguinFactory : EntityFactory<Penguin>
         Penguin spawnPenguin =  SpawnObject(penguin, _campFireSpawnPoints[campFireidx].position) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
         _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
 
-        LegionInventory.Instance.AddPenguin(spawnPenguin.Stat as PenguinStat);
+        LegionInventory.Instance.AddPenguin(spawnPenguin.ReturnGenericStat<PenguinStat>());
     }
 
     private void OnEnable()

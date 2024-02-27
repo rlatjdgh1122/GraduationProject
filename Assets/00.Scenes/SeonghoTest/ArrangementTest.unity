@@ -11818,21 +11818,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LegionInventory, Assembly-CSharp
-        m_MethodName: MoveLegionUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PenguinSpawner, Assembly-CSharp
-        m_MethodName: SpawnButton
+      - m_Target: {fileID: 1391025914}
+        m_TargetAssemblyTypeName: LegionInventoryUI, Assembly-CSharp
+        m_MethodName: OnEnableLegionInventory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20521,6 +20509,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1689629792}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1391025914 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7809252178271119264, guid: c6152c76d85c68d468df20964304ae72,
+    type: 3}
+  m_PrefabInstance: {fileID: 1689629792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391025912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a46215401361b6439f01a1b17d650fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1410976042
 GameObject:
   m_ObjectHideFlags: 0
@@ -25604,6 +25604,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2040899973}
     m_Modifications:
+    - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1861243456}
+    - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnModifyInfo_Btn
+      objectReference: {fileID: 0}
+    - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ArrangementTest, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 559149335748696429, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -25872,6 +25907,16 @@ PrefabInstance:
     - target: {fileID: 2547961970387773876, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698071731623223917, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698071731623223917, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_BlocksRaycasts
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2717638167923184992, guid: c6152c76d85c68d468df20964304ae72,
@@ -26569,6 +26614,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5525143537261621840, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5550460791922477999, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -26946,6 +26996,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7626470616449451418, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4.3704834
+      objectReference: {fileID: 0}
     - target: {fileID: 7631442606236931425, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -26974,6 +27029,11 @@ PrefabInstance:
     - target: {fileID: 7631442606236931425, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641091776783993754, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7717766523617214931, guid: c6152c76d85c68d468df20964304ae72,
@@ -27124,6 +27184,11 @@ PrefabInstance:
     - target: {fileID: 8117783107874781583, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216340426169151136, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8271959479750533866, guid: c6152c76d85c68d468df20964304ae72,
@@ -30166,7 +30231,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _penguinSpawnUI
       value: 
-      objectReference: {fileID: 1742249947}
+      objectReference: {fileID: 987335821}
     - target: {fileID: 2106412092684875463, guid: 02ea4ea2941f25240bb390a3d8f587d8,
         type: 3}
       propertyPath: _constructionStationUI

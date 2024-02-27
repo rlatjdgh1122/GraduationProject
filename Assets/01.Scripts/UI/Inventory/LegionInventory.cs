@@ -99,6 +99,10 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void AddPenguin(PenguinStat type) //펭귄 추가하는 함수(펭귄 타입으로 분류)
     {
+
+        Debug.Log(type);
+        Debug.Log(type.JobType);
+
         if (type.JobType == PenguinJobType.General) //만약 장군이면
         {
             AddToWarLoad(type);
