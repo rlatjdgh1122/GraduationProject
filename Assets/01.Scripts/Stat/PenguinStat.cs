@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PenguinUniqueType
 {
@@ -22,6 +23,9 @@ public class PenguinDetailData
 {
     public string _weapon;
     public string _type;
+    [Range(0f, 1f)] public float atk;
+    [Range(0f, 1f)] public float def;
+    [Range(0f, 1f)] public float range;
     public string _characteristic;
     public string _passive;
     public string _Synergy;
@@ -55,6 +59,13 @@ public class PenguinStat : BaseStat
         {
             return "º´»ç";
         }
+    }
+
+    public void UpdateAblitiyUI(Slider atk, Slider def, Slider rng)
+    {
+        atk.value = PenguinData.atk;
+        def.value = PenguinData.def;
+        rng.value = PenguinData.range;
     }
 
     public void PenguinInformationUpdate(TextMeshProUGUI weapon, TextMeshProUGUI type, TextMeshProUGUI characteristic

@@ -10,6 +10,7 @@ public enum UIType
     Defeat,
     Resource,
     Nexus,
+    General
 }
 
 public class UIManager : Singleton<UIManager>

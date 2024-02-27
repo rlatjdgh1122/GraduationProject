@@ -18,7 +18,7 @@ public struct BuildingInfo
 
 //[RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Grid))]
-public abstract class BaseBuilding : PoolableMono
+public abstract class BaseBuilding : WorkableObject
 {
     public BuildingInfo BuildingInfoCompo;
     private bool isInstalled = false;
@@ -30,7 +30,7 @@ public abstract class BaseBuilding : PoolableMono
     private Material[] _skinNormalMats;
     private SkinnedMeshRenderer[] _skinRenderers;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         SetUpCompo();
     }

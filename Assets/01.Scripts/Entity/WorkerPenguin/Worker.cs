@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Worker : Entity
 {
     #region components
-    public ResourceObject Target;
+    public WorkableObject Target;
     public EntityAttackData AttackCompo { get; private set; }
     public Transform Nexus;
     #endregion
@@ -52,7 +52,7 @@ public class Worker : Entity
     #endregion
 
     #region 작업 관련
-    public void StartWork(ResourceObject target)
+    public void StartWork(WorkableObject target)
     {
         Target = target;
         CanWork = true;
