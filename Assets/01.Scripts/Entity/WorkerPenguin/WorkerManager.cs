@@ -42,7 +42,7 @@ public class WorkerManager : Singleton<WorkerManager>
                 if (!worker.CanWork) //그중에 CanWork가 비활성화 된 애들만
                 {
                     worker.StartWork(workableObject); //활성화해주고
-                    //_workerFactory.SpawnPenguinHandler();
+                    _workerFactory.SpawnPenguinHandler();
                     calledPenguinCount++; //값을 1 늘림
                 }
 
