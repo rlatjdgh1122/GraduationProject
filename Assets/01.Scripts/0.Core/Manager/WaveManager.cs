@@ -93,11 +93,13 @@ public class WaveManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        BattlePhaseSubscribe();
     }
 
     #endregion
 
-    public void OnEnable()
+    public void BattlePhaseSubscribe()
     {
         OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
         OnBattlePhaseEndEvent += OnBattlePhaseEndHandle;     // 전투페이즈 종료 이벤트 
