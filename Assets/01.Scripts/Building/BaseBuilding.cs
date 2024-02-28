@@ -45,6 +45,9 @@ public abstract class BaseBuilding : WorkableObject
     private bool isInstalling = false;
     public bool IsInstalling => isInstalling;
 
+    private TimeRemain _remainTimeUI;
+    public TimeRemain RemainTimeUI => _remainTimeUI;
+
     protected override void Awake()
     {
         try
@@ -54,6 +57,15 @@ public abstract class BaseBuilding : WorkableObject
         catch
         {
             Debug.LogError($"Not Founded id: {gameObject}"); //빌딩이랑 Container는 이 오류가 뜨는게 맞다
+        }
+
+        try
+        {
+            _remainTimeUI = transform.Find("Canvas").GetComponent<TimeRemain>();
+        }
+        catch
+        {
+
         }
         SetUpCompo();
     }
@@ -84,6 +96,8 @@ public abstract class BaseBuilding : WorkableObject
         if (_buildingItemInfo != null)
         {
             WaveManager.Instance.OnBattlePhaseEndEvent += PlusInstalledTime;
+            RemainTimeUI.OnRemainUI();
+            RemainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
         }
         else
         {
@@ -96,11 +110,13 @@ public abstract class BaseBuilding : WorkableObject
     private void PlusInstalledTime()
     {
         installedTime++;
+        RemainTimeUI.SetText((int)_buildingItemInfo.InstalledTime - installedTime);
 
         if (installedTime >= _buildingItemInfo.InstalledTime)
         {
             WaveManager.Instance.OnBattlePhaseEndEvent -= PlusInstalledTime;
             SetInstalled();
+            RemainTimeUI.OffRemainUI();
         }
     }
 
@@ -135,7 +151,7 @@ public abstract class BaseBuilding : WorkableObject
         if (_buildingItemInfo != null)
         {
             UIManager.Instance.InitializHudTextSequence();
-            _installedFinText.SetText($"{_buildingItemInfo.Name: ��ġ �Ϸ�!}");
+            _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
             UIManager.Instance.SpawnHudText(_installedFinText);
         }
     }

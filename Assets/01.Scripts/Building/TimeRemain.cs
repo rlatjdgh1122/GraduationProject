@@ -10,25 +10,42 @@ public class TimeRemain : MonoBehaviour
 {
     private Canvas _canvas;
     private TextMeshProUGUI _container;
-    private Camera _cam;
+
+    private bool installing;
 
     private void Awake()
     {
         _canvas = GetComponent<Canvas>();
 
-        _cam = Cam.MainCam;
-        _canvas.worldCamera = _cam;
+
+        _canvas.worldCamera = Cam.MainCam;
 
         _container = _canvas.transform.Find("TimeRemainText").GetComponent<TextMeshProUGUI>();
+        _container.enabled = false;
     }
 
-    public void Text(int time)
+    public void OnRemainUI()
+    {
+        _container.enabled = true;
+        installing = true;
+    }
+
+    public void OffRemainUI()
+    {
+        _container.enabled = false;
+        installing = false;
+    }
+
+    public void SetText(int time)
     {
         _container.text = $"{time}≈œ ≥≤¿Ω";
     }
 
     private void Update()
     {
-        _container.transform.rotation = Quaternion.LookRotation(_container.transform.position - _cam.transform.position);
+        if (installing)
+        {
+            _container.transform.rotation = Quaternion.LookRotation(_container.transform.position - Cam.MainCam.transform.position);
+        }
     }
 }
