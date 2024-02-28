@@ -61,15 +61,18 @@ public class LegionInventory : Singleton<LegionInventory>
 
         foreach (PenguinStat soliderSO in _legionSO)
         {
-            if (soliderSO.UniqueType == PenguinUniqueType.Production) return; //생산직이면
+            if (soliderSO.UniqueType == PenguinUniqueType.Fight)
+            {
 
-            if (soliderSO.JobType == PenguinJobType.General)
-            {
-                _generalSO.Add(soliderSO);
-            }
-            else
-            {
-                _soliderSO.Add(soliderSO);
+                if (soliderSO.JobType == PenguinJobType.General)
+                {
+                    _generalSO.Add(soliderSO);
+                }
+                else
+                {
+                    _soliderSO.Add(soliderSO);
+                }
+
             }
         }
     }
