@@ -6,9 +6,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class WaveManager : MonoBehaviour
 {
+
+    #region 타임라인에 사용 된 변수
+    private PlayableDirector pd;
+    public TimelineAsset[] ta;
+    #endregion
+
     #region 사용 변수들
 
     [Header("Wave Settings")]
@@ -149,6 +157,11 @@ public class WaveManager : MonoBehaviour
         IsBattlePhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
         _waveCntText.SetText($"Current Wave: {CurrentWaveCount}");
+
+        if(currentWaveCount == 4)
+        {
+            pd.Play(ta[0]);
+        }
     }
 
     private void OnBattlePhaseEndHandle() // 전투페이즈 종료
