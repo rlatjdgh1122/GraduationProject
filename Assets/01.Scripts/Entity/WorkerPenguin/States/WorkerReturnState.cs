@@ -20,7 +20,7 @@ public class WorkerReturnState : WorkerState<WorkerPenguinStateEnum>
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_worker.CheckNexusDistance() < .325f)
+        if (_worker.CheckNexusDistance() < .5f)
             _worker.MoveEndToNexus();
     }
 
