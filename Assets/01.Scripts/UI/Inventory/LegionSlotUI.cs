@@ -85,6 +85,10 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
             {
                 CurrentLegion.MaxGereral = true;
             }
+            else
+            {
+                CurrentLegion.CurrentCount++;
+            }
 
             _unitImage.enabled = true;
 
@@ -93,8 +97,6 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
             LegionInventory.Instance.AddToLegion(_data.penguinData, _legionNumber - 1); //이 슬롯의 데이터와 이 슬롯의 군단번호를 군단 인벤에 넘겨줌
 
             UpdateSlot(_data);
-
-            CurrentLegion.CurrentCount++;
         }
 
         if(CurrentLegion.CurrentCount >= CurrentLegion.MaxCount)
