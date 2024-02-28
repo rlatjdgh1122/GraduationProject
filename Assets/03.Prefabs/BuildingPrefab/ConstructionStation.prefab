@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a3da4fe495f9b46bd8c1916cdfb00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnFailHudText: {fileID: 0}
+  _succesHudText: {fileID: 0}
+  _failHudText: {fileID: 0}
 --- !u!114 &8333673544434276064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,14 +506,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac4d582ce94d7d40beb7584af570bd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterStat: {fileID: 0}
+  _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
+    type: 2}
+  _installedFinText: {fileID: 0}
   BuildingInfoCompo:
     <ID>k__BackingField: 100
     GridCompo: {fileID: 0}
     <TransparencyMat>k__BackingField: {fileID: 2100000, guid: 79dc316bddf0f9a46a2a2f4213747b5f,
       type: 2}
-    NormalMat: {fileID: 0}
-  _spawnUI: {fileID: 0}
-  onSpawnUIYPosValue: 340
+  _defaultBuildingType: 0
+  _penguinSpawnUI: {fileID: 0}
+  _constructionStationUI: {fileID: 0}
+  onSpawnUIYPosValue: 320
   _buildingLayer:
     serializedVersion: 2
     m_Bits: 32768

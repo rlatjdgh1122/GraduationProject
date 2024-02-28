@@ -73,6 +73,7 @@ public class WaveManager : MonoBehaviour
             if (_instance == null)
             {
                 _instance = FindObjectOfType<WaveManager>();
+
                 if (_instance == null)
                 {
                     Debug.LogError("WaveManager is Multiple.");
@@ -237,13 +238,6 @@ public class WaveManager : MonoBehaviour
         OnIceArrivedEvent?.Invoke();
     }
 
-    private void OnDisable()
-    {
-        OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
-        OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
-        OnIceArrivedEvent -= OnIceArrivedEventHanlder;
-    }
-
     public void SetCurPTSpawnPenguins(List<Penguin> penguins)
     {
         _curPTspawnPenguins.Clear();
@@ -266,4 +260,12 @@ public class WaveManager : MonoBehaviour
             //else // 군단에 들어가 있다면 알아서 군단위치로 가게
         }
     }
+
+    private void OnDestroy()
+    {
+        OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
+        OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
+        OnIceArrivedEvent -= OnIceArrivedEventHanlder;
+    }
+
 }

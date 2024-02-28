@@ -13,7 +13,7 @@ public class SpawnBuildingButton : MonoBehaviour
 
     private float installedTime;
 
-    public void SetUpButtonInfo(BuildingDatabaseSO buildingDatabaseSO, Button button, BuildingFactory buildingFactory, BuildingItemInfo buildinginfo, SpawnUI spawnUI, ConstructionStation constructionStation)
+    public void SetUpButtonInfo(Button button, BuildingFactory buildingFactory, BuildingItemInfo buildinginfo, SpawnUI spawnUI, ConstructionStation constructionStation)
     {
         _buildingFactory = buildingFactory;
         _btn = button;
@@ -29,18 +29,15 @@ public class SpawnBuildingButton : MonoBehaviour
 
         installedTime = buildinginfo.InstalledTime; //일단 쿨타임 받아오는데 건물 누르면 앞으로 몇 페이즈가 지나야 완성되는지 뜨게 할듯
 
-        _btn.onClick.AddListener(() => SpawnBuildingEventHandler(buildinginfo.Prefab.GetComponent<BaseBuilding>(), buildingDatabaseSO));
+        _btn.onClick.AddListener(() => SpawnBuildingEventHandler(buildinginfo.Prefab.GetComponent<BaseBuilding>(), buildinginfo));
         _btn.onClick.AddListener(() => spawnUI.OffUnitPanel());
         _btn.onClick.AddListener(() => spawnUI.OffBuildingPanel());
         _btn.onClick.AddListener(() => constructionStation.UpdateSpawnUIBool());
-
     }
 
-    private void SpawnBuildingEventHandler(BaseBuilding spawnBuilding, BuildingDatabaseSO buildingDatabaseSO) //버튼 이벤트에 구독된 함수
+    private void SpawnBuildingEventHandler(BaseBuilding spawnBuilding, BuildingItemInfo buildinginfo) //버튼 이벤트에 구독된 함수
     {
         bool cantSpawnBuilding = false;
-
-        BuildingItemInfo building = buildingDatabaseSO.BuildingItems.Find(name => name.Prefab.name == spawnBuilding.gameObject.name); //소환할 빌딩
 
         #region 전투 페이즈
         if (WaveManager.Instance.IsBattlePhase)
@@ -51,28 +48,33 @@ public class SpawnBuildingButton : MonoBehaviour
         #endregion
 
         #region 자원 비교
-        Resource resource = ResourceManager.Instance.resourceStack.Find
-            (icon => icon.resourceData.resourceIcon == building.NecessaryResourceSprite);
 
-
-        if (resource.stackSize >= building.NecessaryResourceCount)
+        try
         {
-            ResourceManager.Instance.RemoveResource(resource.resourceData, building.NecessaryResourceCount);
+            Resource resource = ResourceManager.Instance.resourceStack.Find
+            (icon => icon.resourceData.resourceIcon == buildinginfo.NecessaryResourceSprite);
+
+            if (resource.stackSize >= buildinginfo.NecessaryResourceCount)
+            {
+                ResourceManager.Instance.RemoveResource(resource.resourceData, buildinginfo.NecessaryResourceCount);
+            }
+            else
+            {
+                _buildingFactory.SetSpawnFailHudText("자원이 부족합니다");
+                cantSpawnBuilding = true;
+            }
         }
-        else
+        catch
         {
             _buildingFactory.SetSpawnFailHudText("자원이 부족합니다");
             cantSpawnBuilding = true;
         }
+        
         #endregion
 
         #region 일꾼 수 비교
 
-        if(WorkerManager.Instance.WorkerCount >= building.NecessaryResourceCount)
-        {
-           // WorkerManager.Instance.SendWorkers(building.NecessaryResourceCount, 건물); 원석 바꾸면 수정
-        }
-        else
+        if(!(WorkerManager.Instance.WorkerCount >= buildinginfo.NecessaryResourceCount))
         {
             _buildingFactory.SetSpawnFailHudText("일꾼이 부족합니다");
             cantSpawnBuilding = true;

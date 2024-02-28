@@ -22,10 +22,25 @@ public class Army
     public int Legion; //몇번째 군단
     public bool IsMoving; //움직이는 중인가
     public List<Penguin> Soldiers = new(); //군인 펭귄들
-    public Penguin General; //장군
+    public General General; //장군
 
     public ArmyInfo info;
 
+    public void AddStat(LigeonStatAdjustment ligeonStat)
+    {
+        var IncStatList = ligeonStat.IncStat;
+        var DecStatList = ligeonStat.DecStat;
+
+        foreach (var incStat in IncStatList)
+        {
+            AddStat(incStat.value, incStat.type, StatMode.Increase);
+        }
+
+        foreach (var DecStat in DecStatList)
+        {
+            AddStat(DecStat.value, DecStat.type, StatMode.Decrease);
+        }
+    }
     public void AddStat(int value, StatType type, StatMode mode)
     {
         Debug.WriteLine(type);

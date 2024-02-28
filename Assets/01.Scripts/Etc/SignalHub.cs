@@ -7,7 +7,8 @@ public struct ArrangementInfo
 {
     public int legionIdx;
     public int SlotIdx;
-    public PenguinTypeEnum Type;
+    public PenguinJobType JobType;
+    public PenguinTypeEnum PenguinType;
 }
 
 public delegate void ChangedArmy(Army prevArmy, Army newArmy);

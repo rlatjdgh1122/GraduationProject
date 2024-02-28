@@ -32,15 +32,15 @@ public class PenguinDetailData
     public int level = 1;
     public int price;
     public int levelUpPrice;
-    public string _weapon;
     public string _type;
+    public string _characteristic;
+    public GeneralCharacterType characterType;
+    public string Weapon;
     [Range(0f, 1f)] public float atk;
     [Range(0f, 1f)] public float def;
     [Range(0f, 1f)] public float range;
-    public string _characteristic;
-    public string _passive;
-    public string _Synergy;
-    public GeneralCharacterType characterType;
+    public string Passive;
+    public string Synergy;
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Penguin")]
@@ -65,11 +65,11 @@ public class PenguinStat : BaseStat
     {
         if (JobType == PenguinJobType.General)
         {
-            return "Àå±º";
+            return "ï¿½å±º";
         }
         else
         {
-            return "º´»ç";
+            return "ï¿½ï¿½ï¿½ï¿½";
         }
     }
 
@@ -81,13 +81,10 @@ public class PenguinStat : BaseStat
         rng.value = PenguinData.range;
     }
 
-    public void PenguinInformationUpdate(TextMeshProUGUI weapon, TextMeshProUGUI type, TextMeshProUGUI characteristic
-        , TextMeshProUGUI passive, TextMeshProUGUI synergy)
+    public void PenguinInformationTextUpdate(TextMeshProUGUI weapon, TextMeshProUGUI passive, TextMeshProUGUI synergy)
     {
-        weapon.text = PenguinData._passive;
-        type.text = PenguinData._type;
-        characteristic.text = PenguinData._characteristic;
-        passive.text = PenguinData._passive;
-        synergy.text = PenguinData._Synergy;
+        weapon.text = PenguinData.Weapon;
+        passive.text = PenguinData.Passive;
+        synergy.text = PenguinData.Synergy;
     }
 }

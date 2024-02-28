@@ -5,15 +5,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+public class LigeonStat
+{
+    public StatType type;
+    public int value = 10;
+}
+
+
+[Serializable]
 public class LigeonStatAdjustment
 {
-    [FlagEnum]
-    public StatType IncStatType;
-    public int IncValue = 10;
-
-    [FlagEnum]
-    public StatType DecStatType;
-    public int DecValue = 10;
+    public List<LigeonStat> IncStat;
+    public List<LigeonStat> DecStat;
 }
 public class General : Penguin
 {

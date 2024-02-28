@@ -36,8 +36,7 @@ public class SpawnButtonGenerator : MonoBehaviour
     {
         foreach(var building in _buildingDatabaseSO.BuildingItems)
         {
-            var button = Instantiate(_buildingButtonPrefab, Vector3.zero, Quaternion.identity);
-
+            var button = Instantiate(_buildingButtonPrefab, Vector3.zero, Quaternion.identity).GetComponent<Button>();
             switch (building.BuildingTypeEnum)
             {
                 case BuildingType.ResourceBuilding:
@@ -51,8 +50,8 @@ public class SpawnButtonGenerator : MonoBehaviour
                     break;
             }
 
-            button.transform.localScale = new Vector3(1.0f, 2.385f, 1.0f);
-            button.AddComponent<SpawnBuildingButton>().SetUpButtonInfo(_buildingDatabaseSO, button, _buildingFactory, building, _spawnUI, _constructionStation);
+            //button.transform.localScale = new Vector3(1.0f, 2.385f, 1.0f);
+            button.AddComponent<SpawnBuildingButton>().SetUpButtonInfo(button, _buildingFactory, building, _spawnUI, _constructionStation);
         }
     }
 }

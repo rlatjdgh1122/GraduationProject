@@ -10,7 +10,10 @@ public enum PenguinTypeEnum
 {
     Basic,
     Archer,
-    Shield
+    Shield,
+    Mop,
+    Sign,
+    Worker
 }
 
 public class PenguinSpawner : DefaultBuilding

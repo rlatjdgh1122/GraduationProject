@@ -10,9 +10,9 @@ public class Legion
     public int price;                               //군단 가격
     public bool Locked;                             //군단이 잠겨있는가
     public Transform LegionPanels;                  //군단 UI 부모
-    public int  MaxCount;                           //최대 군단 병사 수
-    public int CurrentCount  = 0;      //현재 군단 병사 수
-    public bool MaxGereral  { get; set; }           //군단에 장군이 꽉차있는가
+    public int MaxCount;                           //최대 군단 병사 수
+    public int CurrentCount = 0;      //현재 군단 병사 수
+    public bool MaxGereral { get; set; }           //군단에 장군이 꽉차있는가
 
     [HideInInspector] public List<LegionInventoryData> LegionInven;
     public Dictionary<PenguinStat, LegionInventoryData> legionDictionary { get; private set; } = new();
@@ -25,12 +25,12 @@ public class LegionInventory : Singleton<LegionInventory>
     //==========================================
     //펭귄 인벤토리
     //장군
-    [HideInInspector] public List<LegionInventoryData> generalInven = new();
-    public Dictionary<PenguinStat, LegionInventoryData> generalDictionary { get; private set; } = new();
+    public List<LegionInventoryData> generalInven = new();
+    public Dictionary<PenguinTypeEnum, LegionInventoryData> generalDictionary { get; private set; } = new();
 
     //병사
-    [HideInInspector] public List<LegionInventoryData> soliderInven = new();
-    public Dictionary<PenguinStat, LegionInventoryData> soliderDictionary { get; private set; } = new();
+    public List<LegionInventoryData> soliderInven = new();
+    public Dictionary<PenguinTypeEnum, LegionInventoryData> soliderDictionary { get; private set; } = new();
     //==========================================
 
     [Header("LegionInventory")]
@@ -61,13 +61,18 @@ public class LegionInventory : Singleton<LegionInventory>
 
         foreach (PenguinStat soliderSO in _legionSO)
         {
-            if (soliderSO.JobType == PenguinJobType.General)
+            if (soliderSO.UniqueType == PenguinUniqueType.Fight)
             {
-                _generalSO.Add(soliderSO);
-            }
-            else
-            {
-                _soliderSO.Add(soliderSO);
+
+                if (soliderSO.JobType == PenguinJobType.General)
+                {
+                    _generalSO.Add(soliderSO);
+                }
+                else
+                {
+                    _soliderSO.Add(soliderSO);
+                }
+
             }
         }
     }
@@ -99,13 +104,21 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void AddPenguin(PenguinStat type) //펭귄 추가하는 함수(펭귄 타입으로 분류)
     {
-        if (type.JobType == PenguinJobType.General) //만약 장군이면
+        if (type.UniqueType == PenguinUniqueType.Fight)
         {
-            AddToWarLoad(type);
+            if (type.JobType == PenguinJobType.General) //만약 장군이면
+            {
+                AddToWarLoad(type);
+            }
+            else if (type.JobType == PenguinJobType.Solider) //만약 병사면
+            {
+                AddToSolider(type);
+            }
         }
-        else if (type.JobType == PenguinJobType.Solider) //만약 병사면
+        else //일꾼이라면
         {
-            AddToSolider(type);
+            Debug.Log("일꾼임");
+            return;
         }
 
         UpdateSlotUI();
@@ -135,63 +148,52 @@ public class LegionInventory : Singleton<LegionInventory>
 
     #region 펭귄 인벤에 펭귄 추가
 
-    public void AddToWarLoad(PenguinStat penguin)
+    public void AddToWarLoad(PenguinStat penguin) //추가를 해야되는데 타입이 같다 그러면?
+                                                  //++해주고 펭귄 key도 들어온걸로 교체
     {
-        if (generalDictionary.TryGetValue(penguin, out LegionInventoryData legionInven)) //만약 펭귄 인벤에 있으면
+        if (generalDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData legionInven))//만약 펭귄 인벤에 있으면
         {
-            legionInven.AddStack(); //값 증가
+            legionInven.penguinData = penguin;
+            legionInven.AddStack();//값 증가
         }
-        else //없으면
+        else//없으면
         {
             LegionInventoryData newInven = new LegionInventoryData(penguin);
-            generalInven.Add(newInven); //장군에 데이터 추가
-            generalDictionary.Add(penguin, newInven);
+            generalInven.Add(newInven);//병사에 데이터 추가
+            generalDictionary.Add(penguin.PenguinType, newInven);
         }
     }
 
     public void AddToSolider(PenguinStat penguin)
     {
-        if (soliderDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))//만약 펭귄 인벤에 있으면
+        Debug.Log("ㅎㅇㅋㅋ");
+
+        if (soliderDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData legionInven))//만약 펭귄 인벤에 있으면
         {
+            legionInven.penguinData = penguin;
             legionInven.AddStack();//값 증가
         }
         else//없으면
         {
             LegionInventoryData newInven = new LegionInventoryData(penguin);
             soliderInven.Add(newInven);//병사에 데이터 추가
-            soliderDictionary.Add(penguin, newInven);
+            soliderDictionary.Add(penguin.PenguinType, newInven);
         }
     }
 
-#endregion
+    #endregion
 
     public void RemovePenguin(PenguinStat penguin, int count = 1)
     {
-        if (generalDictionary.TryGetValue(penguin, out LegionInventoryData warloadPenguin))
+        if (generalDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData warloadPenguin))
         {
+            warloadPenguin.penguinData = penguin;
             warloadPenguin.RemoveStack(count);
-            //if (warloadPenguin.stackSize <= count)
-            //{
-            //    generalInven.Remove(warloadPenguin);
-            //    generalDictionary.Remove(penguin);
-            //}
-            //else
-            //{
-            //    warloadPenguin.RemoveStack(count);
-            //}
         }
-        else if (soliderDictionary.TryGetValue(penguin, out LegionInventoryData soliderPenguin))
+        else if (soliderDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData soliderPenguin))
         {
+            soliderPenguin.penguinData = penguin;
             soliderPenguin.RemoveStack(count);
-            //if (soliderPenguin.stackSize <= count)
-            //{
-            //    soliderInven.Remove(soliderPenguin);
-            //    soliderDictionary.Remove(penguin);
-            //}
-            //else
-            //{
-            //    soliderPenguin.RemoveStack(count);
-            //}
         }
         UpdateSlotUI();
     }
@@ -201,6 +203,8 @@ public class LegionInventory : Singleton<LegionInventory>
 
         if (LegionList[legionNumber].legionDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))
         {//만약 군단에 이 데이터가 있다면
+
+            legionInven.penguinData = penguin;
             legionInven.AddStack(); //증가
         }
         else//없다면
@@ -223,6 +227,7 @@ public class LegionInventory : Singleton<LegionInventory>
         }
         else //군단 인벤에서 빼기
         {
+
             legion.RemoveStack(count);
         }
 
@@ -233,9 +238,9 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void ChangeLegion(int number)
     {
-        for(int i = 0; i < LegionList.Count; i++)
+        for (int i = 0; i < LegionList.Count; i++)
         {
-            if(i == number)
+            if (i == number)
             {
                 LegionList[i].LegionPanels.gameObject.SetActive(true);
             }
