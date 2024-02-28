@@ -45,6 +45,8 @@ public class NexusUI : NormalUI
 
     public override void DisableUI(float time, Action action)
     {
+        base.DisableUI(time, action);
+
         _cvg.DOFade(0, time);   
     }
 }

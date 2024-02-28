@@ -38,6 +38,18 @@ public abstract class NormalUI : MonoBehaviour
             _cvg.blocksRaycasts = true;
         }
     }
-    
-    public abstract void DisableUI(float time, Action action); //UI를 끌 때 사용하는 함수. DOFade로 서서히 비활성화 하고 마찬가지로 time으로 비활성화 시간 정해주는데, Action도 매개변수로 넘겨 비활성화 이후에 무엇을 할것인지 정해줄 수 있다.
+    /// <summary>
+    /// UI를 끌 때 사용하는 함수. DOFade로 서서히 비활성화 하고 마찬가지로 time으로 비활성화 시간 정해주는데, Action도 매개변수로 넘겨 비활성화 이후에 무엇을 할것인지 정해줄 수 있다.
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="action"></param>
+    public virtual void DisableUI(float time, Action action)
+    {
+        _panel.raycastTarget = false;
+        if (_cvg != null)
+        {
+            _cvg.interactable = false;
+            _cvg.blocksRaycasts = false;
+        }
+    }
 }

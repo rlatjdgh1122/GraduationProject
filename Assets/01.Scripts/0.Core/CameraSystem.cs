@@ -41,7 +41,6 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            Debug.Log("´­¸²");
             isMoving = !isMoving;
 
             transform.position = new Vector3(0, transform.position.y, 0);

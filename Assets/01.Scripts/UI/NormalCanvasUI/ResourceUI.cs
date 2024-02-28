@@ -110,6 +110,8 @@ public class ResourceUI : NormalUI
 
     public override void DisableUI(float time, Action action)
     {
+        base.DisableUI(time, action);
+
         _canvasGroup.DOFade(0, time);
     }
 }

@@ -1,4 +1,4 @@
-  using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,7 +63,7 @@ public class DefaultBuilding : BaseBuilding
             UIManager.Instance.UIMoveDot(_penguinSpawnUI, targetVec, 0.7f, Ease.OutCubic);
             UIManager.Instance.UIMoveDot(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
         }
-        
+
         UpdateSpawnUIBool();
     }
 
@@ -78,9 +78,15 @@ public class DefaultBuilding : BaseBuilding
         // 마우스 포인터가 UI 위에 있는지 확인
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        var results = new System.Collections.Generic.List<RaycastResult>();
+        var results = new List<RaycastResult>();
+
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        Debug.Log(results.Count);
+
+        /*Debug.Log(results.Count);
+        foreach (var a in results)
+        {
+            Debug.Log(a.gameObject.transform.parent.name);
+        }*/
         return results.Count > 0;
     }
 }
