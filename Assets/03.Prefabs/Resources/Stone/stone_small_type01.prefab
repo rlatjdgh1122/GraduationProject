@@ -50,20 +50,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dffdc258012305c43a87df5e09ac0da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  innerDistance: 4
-  attackDistance: 1.5
-  IsAttackEvent: 0
-  AttackCount: 3
-  IsSecondEvent: 0
-  EverySecond: 10
-  IsBackAttack: 0
-  IsAroundEnemyCountEventEvent: 0
-  AroundRadius: 3
-  AroundEnemyCount: 3
-  passiveData: {fileID: 0}
   _characterStat: {fileID: 11400000, guid: 5931134bf3f441247849b17b20e32131, type: 2}
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   _resourceStat: {fileID: 11400000, guid: 5931134bf3f441247849b17b20e32131, type: 2}
+  OnRecieveResourceEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5127376568444225430}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5724402229629723787}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnReviveInitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5127376568444225430}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 5724402229629723787}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &3029730303218159920
 MonoBehaviour:
   m_ObjectHideFlags: 0

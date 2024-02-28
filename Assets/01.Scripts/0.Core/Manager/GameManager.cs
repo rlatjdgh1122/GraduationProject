@@ -90,6 +90,7 @@ public class GameManager : Singleton<GameManager>
     public int GetDummyPenguinCount => dummyPenguinCount;
 
     public Transform NexusTrm => GameObject.Find("Nexus").transform;
+    public Transform WorkerSpawnPoint => GameObject.Find("WorkerSpawnPoint").transform;
 
     [SerializeField] private BuildingDatabaseSO buildingList = null;
     private Dictionary<string, BaseBuilding> _buildingDictionary = new();
