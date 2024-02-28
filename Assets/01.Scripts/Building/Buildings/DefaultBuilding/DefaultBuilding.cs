@@ -73,7 +73,7 @@ public class DefaultBuilding : BaseBuilding
         _outline.enabled = isSpawnUIOn;
     }
 
-    bool IsPointerOverUIObject()
+    protected bool IsPointerOverUIObject()
     {
         // 마우스 포인터가 UI 위에 있는지 확인
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
