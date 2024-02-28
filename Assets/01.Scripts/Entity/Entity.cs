@@ -1,4 +1,5 @@
 using DG.Tweening.Core.Easing;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,7 +10,7 @@ public abstract class Entity : PoolableMono
     [SerializeField] protected BaseStat _characterStat;
     public BaseStat Stat => _characterStat;
 
-    public T ReturnGenericStat<T>() where T : BaseStat
+    public T ReturnGenericStat<T>() where T : BaseStat //사실 as랑 같음
     {
         if (_characterStat is T)
         {
@@ -85,6 +86,7 @@ public abstract class Entity : PoolableMono
 
         HealthCompo.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
+
 
         if (HealthCompo != null)
         {
