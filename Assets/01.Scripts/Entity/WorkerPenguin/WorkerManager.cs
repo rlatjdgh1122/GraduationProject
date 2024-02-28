@@ -56,11 +56,11 @@ public class WorkerManager : Singleton<WorkerManager>
     public void ReturnWorkers(WorkableObject workableObject)
     {
         Debug.Log("돌아가자");
-        foreach (MinerPenguin worker in WorkerList)
-        {
 
-            if (worker.CanWork
-                && worker.Target.Equals(workableObject))
+        foreach (MinerPenguin worker in _workerFactory.spawnedPenguins)
+        {
+            if (worker.CanWork 
+                && worker.Target == workableObject)
             {
                 Debug.Log("고우고우");
                 _workerFactory.DeSpawnPenguinHandler(worker);
