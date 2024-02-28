@@ -15,11 +15,15 @@ public class GeneralTechTreeUI : MonoBehaviour
     private TextMeshProUGUI _levelText;
     private Image _upgradeImage;
     private Button _upgradeButton;
+    private CanvasGroup _upgradeElements;
     #endregion
 
     #region techtree
-    private TreeUI _treeUI;
+    public TreeUI[] _treeUI;
+    public int num = 0;
     #endregion
+
+    public bool CanUpgrade => _treeUI[num].TreeBoxList.Count == 1;
 
     private void Awake()
     {
@@ -30,12 +34,13 @@ public class GeneralTechTreeUI : MonoBehaviour
         _upgradeImage = transform.Find("Image").GetComponent<Image>();
         _button = GetComponent<Button>();
         _upgradeButton = transform.Find("upgradeButton").GetComponent<Button>();
-
-        _treeUI = transform.Find("tree01").GetComponent<TreeUI>();
+        _upgradeElements = transform.Find("upgradeElements").GetComponent<CanvasGroup>();
     }
 
     public void SetTechTree()
     {
+        _treeUI[num].GeneralStat = General;
+
         _lockedImage.gameObject.SetActive(false);
         _upgradeImage.enabled = true;
         _levelText.enabled = true;
@@ -45,11 +50,20 @@ public class GeneralTechTreeUI : MonoBehaviour
         _upgradeButton.enabled = true;
         _upgradeButton.onClick.AddListener(() => _upgradeUI.OpenPanel(General));
 
-        _treeUI.GeneralStat = General;
+        _treeUI[num].SetRandom();
 
         _generalImage.rectTransform.DOAnchorPosX(-425, 1.5f).SetEase(Ease.OutQuint).OnComplete(() =>
         {
-            _treeUI.SetTree();
+            _upgradeElements.DOFade(1, 0.4f);
+            _treeUI[num].SetTree();
         });
+    }
+
+    public void ContinueTechTree()
+    {
+        num++;
+        _treeUI[num].GeneralStat = General;
+        _treeUI[num].SetRandom();
+        _treeUI[num].SetTree();
     }
 }

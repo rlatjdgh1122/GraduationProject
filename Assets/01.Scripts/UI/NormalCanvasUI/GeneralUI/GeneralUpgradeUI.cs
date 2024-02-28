@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,9 @@ using UnityEngine.UI;
 public class GeneralUpgradeUI : MonoBehaviour
 {
     public PenguinStat GeneralStat;
+
+    [SerializeField] private List<GeneralTechTreeUI> _techTrees;
+    [SerializeField] private TextMeshProUGUI _level; //이거 쌉 임시임
 
     #region components
     private CanvasGroup _canvasGroup;
@@ -33,6 +37,28 @@ public class GeneralUpgradeUI : MonoBehaviour
         _levelText.text = $"LV {GeneralStat.PenguinData.level}";
         _priceText.text = $"LV {GeneralStat.PenguinData.level} -> LV {GeneralStat.PenguinData.level + 1}  {GeneralStat.PenguinData.levelUpPrice}";
         GeneralStat.UpdateAblitiyUI(_nameText, _atkBox, _defBox, _rangeBox);
+        _level.text = $"LV {GeneralStat.PenguinData.level}";
+    }
+
+    public void UpgradePurchase()
+    {
+        if (CostManager.Instance.Cost >= GeneralStat.PenguinData.levelUpPrice)
+        {
+            foreach (GeneralTechTreeUI techTreeUI in _techTrees)
+            {
+                if (techTreeUI.General == GeneralStat)
+                {
+                    if (techTreeUI.CanUpgrade)
+                    {
+                        GeneralStat.PenguinData.level++;
+                        UpdateTexts();
+                        techTreeUI.ContinueTechTree();
+                        PanelOff();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void OpenPanel(PenguinStat stat)

@@ -20,17 +20,24 @@ public class TreeUI : MonoBehaviour
 
     public void SetTree()
     {
-        TreeBoxList[0].RandomType = RandomTreeType.General;
-        TreeBoxList[1].RandomType = RandomTreeType.Legion;
-
         _imageTransform.DOSizeDelta(new Vector2(70, 8.3f), 1f).OnComplete(() =>
         {
             _buttonGroup.DOFade(1, 0.4f);
         });
     }
 
+    public void SetRandom()
+    {
+        foreach (TreeRandomBoxUI treeRandomBoxUI in TreeBoxList)
+        {
+            treeRandomBoxUI.button.enabled = true;
+            treeRandomBoxUI.SetRandom();
+        }
+    }
+
     public void CloseUnselectedBox()
     {
+        TreeBoxList[0].button.enabled = false;
         TreeBoxList[0].canvasGroup.interactable = false;
         TreeBoxList[0].canvasGroup.DOFade(0, 0.5f);
     }
