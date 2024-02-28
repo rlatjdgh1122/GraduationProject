@@ -61,6 +61,8 @@ public class LegionInventory : Singleton<LegionInventory>
 
         foreach (PenguinStat soliderSO in _legionSO)
         {
+            if (soliderSO.UniqueType == PenguinUniqueType.Production) return; //생산직이면
+
             if (soliderSO.JobType == PenguinJobType.General)
             {
                 _generalSO.Add(soliderSO);
@@ -99,16 +101,21 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void AddPenguin(PenguinStat type) //펭귄 추가하는 함수(펭귄 타입으로 분류)
     {
-        Debug.Log(type);
-        Debug.Log(type.JobType);
-
-        if (type.JobType == PenguinJobType.General) //만약 장군이면
+        if (type.UniqueType == PenguinUniqueType.Fight)
         {
-            AddToWarLoad(type);
+            if (type.JobType == PenguinJobType.General) //만약 장군이면
+            {
+                AddToWarLoad(type);
+            }
+            else if (type.JobType == PenguinJobType.Solider) //만약 병사면
+            {
+                AddToSolider(type);
+            }
         }
-        else if (type.JobType == PenguinJobType.Solider) //만약 병사면
+        else //일꾼이라면
         {
-            AddToSolider(type);
+            Debug.Log("일꾼임");
+            return;
         }
 
         UpdateSlotUI();
@@ -156,6 +163,8 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void AddToSolider(PenguinStat penguin)
     {
+        Debug.Log("ㅎㅇㅋㅋ");
+
         if (soliderDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData legionInven))//만약 펭귄 인벤에 있으면
         {
             legionInven.penguinData = penguin;

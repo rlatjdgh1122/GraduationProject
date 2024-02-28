@@ -43,8 +43,6 @@ public class PenguinFactory : EntityFactory<Penguin>
         campFireidx++; // 생성 위치를 위한 idx
         Penguin spawnPenguin =  SpawnObject(penguin, _campFireSpawnPoints[campFireidx].position) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
         _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
-
-        LegionInventory.Instance.AddPenguin(spawnPenguin.ReturnGenericStat<PenguinStat>());
     }
 
     private void OnEnable()

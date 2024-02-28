@@ -69,5 +69,14 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
         }
     }
 
-    //public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
+   public bool IsPointerOverUI()
+    {
+        // 마우스 포인터가 UI 위에 있는지 확인
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        var results = new System.Collections.Generic.List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        Debug.Log(results.Count);
+        return results.Count > 0;
+    }
 }

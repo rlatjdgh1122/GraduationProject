@@ -1,8 +1,8 @@
-using DG.Tweening;
+  using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Outline))]
 public class DefaultBuilding : BaseBuilding
@@ -39,7 +39,7 @@ public class DefaultBuilding : BaseBuilding
 
     protected override void Running()
     {
-        if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsBattlePhase)
+        if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsBattlePhase && !IsPointerOverUIObject())
         {
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
                                                 out var hit, Mathf.Infinity, _buildingLayer))
@@ -71,5 +71,16 @@ public class DefaultBuilding : BaseBuilding
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
         _outline.enabled = isSpawnUIOn;
+    }
+
+    bool IsPointerOverUIObject()
+    {
+        // 마우스 포인터가 UI 위에 있는지 확인
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        var results = new System.Collections.Generic.List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        Debug.Log(results.Count);
+        return results.Count > 0;
     }
 }
