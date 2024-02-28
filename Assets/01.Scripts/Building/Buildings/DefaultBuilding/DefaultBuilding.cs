@@ -35,6 +35,8 @@ public class DefaultBuilding : BaseBuilding
     {
         base.Awake();
         _outline = GetComponent<Outline>();
+
+        WaveManager.Instance.OnBattlePhaseStartEvent += DisableAllUI;
     }
 
     protected override void Running()
@@ -71,6 +73,23 @@ public class DefaultBuilding : BaseBuilding
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
         _outline.enabled = isSpawnUIOn;
+    }
+
+
+    private void DisableAllUI()
+    {
+        if (isSpawnUIOn)
+        {
+            if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
+            {
+                UIManager.Instance.UIMoveDot(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+            }
+            else
+            {
+                UIManager.Instance.UIMoveDot(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+            }
+        }
+        
     }
 
     protected bool IsPointerOverUIObject()
