@@ -48,7 +48,7 @@ public class Enemy : Entity
         WaveManager.Instance.OnIceArrivedEvent += SetTarget;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         WaveManager.Instance.OnIceArrivedEvent -= SetTarget;
     }

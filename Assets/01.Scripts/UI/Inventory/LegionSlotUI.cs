@@ -38,7 +38,8 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
         {
             legionIdx = _legionNumber,
             SlotIdx = _slotNumber - 1, //배열은 0부터 시작하는거 까먹엇당 ㅎ
-            Type = data.penguinData.PenguinType
+            JobType = data.penguinData.JobType,
+            PenguinType = data.penguinData.PenguinType
         };
 
         ArrangementTest.Instance.AddArrangementInfo(info);

@@ -54,6 +54,8 @@ public class SpawnPenguinButton : MonoBehaviour
         UIManager.Instance.InitializHudTextSequence();
         UIManager.Instance.SpawnHudText(_penguinFactory.SuccesHudText);
 
+        LegionInventory.Instance.AddPenguin(spawnPenguin.ReturnGenericStat<PenguinStat>());
+
         DOTween.To(() => _coolingimg.fillAmount, f => _coolingimg.fillAmount = f, 0f, cooltime).OnComplete(() => // 생성시간이 다 되었다면
         {
             _btn.interactable = true;

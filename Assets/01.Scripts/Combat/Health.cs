@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,6 +34,17 @@ public class Health : MonoBehaviour, IDamageable
     public void SetHealth(BaseStat owner)
     {
         currentHealth = maxHealth = owner.GetMaxHealthValue();
+    }
+
+    public bool KnockBack(float value = 1, Vector3 normal = default)
+    {
+        Vector3 currentPosition = transform.position;
+
+        Vector3 knockbackPosition = currentPosition - new Vector3(normal.x, 0f, normal.z) * value;
+
+        transform.DOMove(knockbackPosition, 0.5f);
+
+        return true;
     }
 
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)

@@ -1,4 +1,5 @@
 using DG.Tweening.Core.Easing;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,17 @@ public abstract class Entity : PoolableMono
 
     [SerializeField] protected BaseStat _characterStat;
     public BaseStat Stat => _characterStat;
+
+    public T ReturnGenericStat<T>() where T : BaseStat //사실 as랑 같음
+    {
+        if (_characterStat is T)
+        {
+            return _characterStat as T;
+        }
+
+        Debug.LogError("니가 넣은 스탯 타입이 아니잖아;;");
+        return null;
+    }
 
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
@@ -75,6 +87,7 @@ public abstract class Entity : PoolableMono
         HealthCompo.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
 
+
         if (HealthCompo != null)
         {
             HealthCompo.OnHit += HandleHit;
@@ -95,12 +108,12 @@ public abstract class Entity : PoolableMono
 
     protected virtual void Start()
     {
-       
+
     }
 
     protected virtual void Update()
     {
-        
+
     }
 
     protected abstract void HandleDie();

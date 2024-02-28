@@ -1,13 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Define.Algorithem;
-using UnityEngine.Rendering;
-using System.Linq;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
-    [SerializeField] private SoldierTypeListSO soldierTypeListSO = null;
+    [SerializeField] private SoldierListSO soldierTypeListSO = null;
     private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
 
     [SerializeField] private List<Army> armies = new();
@@ -21,7 +17,8 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         foreach (var solider in soldierTypeListSO.soldierTypes)
         {
-            soldierTypeDictionary.Add(solider.type, solider.obj);
+            var type = (solider.Stat as PenguinStat).PenguinType;
+            soldierTypeDictionary.Add(type, solider);
         }
 
         foreach (var army in armies)
@@ -142,7 +139,10 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        armies[legion].Soldiers.Add(obj);
+        var Army = armies[legion];
+
+        obj.SetOwner(Army);
+        Army.Soldiers.Add(obj);
     }
 
     /// <summary>
@@ -153,14 +153,6 @@ public class ArmyManager : Singleton<ArmyManager>
     public void JoinArmyToGeneral(int legion, General obj) //들어가고 싶은 군단, 장군펭귄
     {
 
-        var Army = armies[legion];
-
-        var IncValue = obj.ligeonStat.IncValue;
-        var DecValue = obj.ligeonStat.DecValue;
-
-        var IncType = obj.ligeonStat.IncStatType;
-        var DecType = obj.ligeonStat.DecStatType;
-
 
         if (armies.Find(p => p.Legion == legion) == null)
         {
@@ -168,19 +160,19 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
+        var Army = armies[legion];
+        var LegionStat = obj.ligeonStat;
+
         if (Army.General != null)
         {
             Debug.Log($"현재 {legion}군단에는 장군이 존재합니다.");
             return;
         }
 
+        obj.SetOwner(Army);
         Army.General = obj;
 
-        if (IncType != StatType.None)
-            Army.AddStat(IncValue, IncType, StatMode.Increase);
-
-        if (DecType != StatType.None)
-            Army.AddStat(DecValue, DecType, StatMode.Decrease);
+        Army.AddStat(LegionStat);
 
     }
     #endregion
@@ -194,13 +186,13 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="seatPos"> 배치 위치 *되도록이면 사용하지 말것*</param>
     /// <returns> 니가 만든 펭귄</returns>
 
-    public T CreateSoldier<T>(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default) where T : Penguin
+    public Penguin CreateSoldier(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default)
     {
-        T obj = null;
+        Penguin obj;
         var prefab = soldierTypeDictionary[type];
 
-        //obj = Instantiate(prefab, SpawnPoint, Quaternion.identity) as T;
-        obj = PoolManager.Instance.Pop(prefab.name) as T;
+        obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
+        obj.transform.position = SpawnPoint;
         obj.SeatPos = seatPos;
         return obj;
     }
@@ -217,7 +209,7 @@ public class ArmyManager : Singleton<ArmyManager>
         soldiers.Remove(obj); //리스트에서 제외
 
         // 여기서 죽은 펭귄을 다시 push하는 코드가 필요
-
+        PoolManager.Instance.Push(obj);
     }
 
     /// <summary>

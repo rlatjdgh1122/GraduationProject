@@ -7,14 +7,13 @@ using Unity.VisualScripting;
 [Serializable]
 public class Stat
 {
-    [SerializeField] private int _baseValue; //ï¿½âº» ï¿½ï¿½ï¿½ï¿½
-    [ReadOnly] public float _fewTimes; //ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Î½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
-    [ReadOnly] public float _finalValue; //ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Î½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
+    [SerializeField] private int _baseValue; //±âº» ½ºÅÈ
+    [ReadOnly] float _fewTimes; //±âº» ½ºÅÈ ±âÁØ ¸î¹èÀÎÁö (ÀÎ½ºÆåÅÍ ¿ë)
+    [ReadOnly] float _finalValue; //±âº» ½ºÅÈ ±âÁØ ¸î¹èÀÎÁö (ÀÎ½ºÆåÅÍ ¿ë)
 
-    public List<int> increases; //ï¿½ï¿½ï¿½ï¿½ % (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
-    public List<int> decreases; //ï¿½ï¿½ï¿½ï¿½ % (ï¿½Õ¿ï¿½ï¿½ï¿½)
-
-    public int GetValue() //ï¿½Õ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¨
+    public List<int> increases; //Áõ°¡ % (°ö¿¬»ê)
+    public List<int> decreases; //°¨¼Ò % (ÇÕ¿¬»ê)
+    public int GetValue()
     {
         return Modify();
     }
@@ -36,7 +35,6 @@ public class Stat
     {
         _baseValue = value + (mul1 * mul2);
     }
-
     public void AddIncrease(int value)
     {
         if (value != 0)
@@ -44,7 +42,6 @@ public class Stat
 
         Modify();
     }
-
     public void AddDecrease(int value)
     {
         if (value != 0)
@@ -60,7 +57,6 @@ public class Stat
 
         Modify();
     }
-
     public void RemoveDecrease(int value)
     {
         if (value != 0)
@@ -94,4 +90,6 @@ public class Stat
     {
         _baseValue = value;
     }
+
+
 }

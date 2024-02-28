@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class MopGeneralPenguin : General
 {
@@ -36,8 +37,10 @@ public class MopGeneralPenguin : General
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Debug.Log(ligeonStat.IncStatType);
-            ArmyManager.Instance.GetCurArmy().AddStat(ligeonStat.IncValue, ligeonStat.IncStatType, StatMode.Increase);
+            Debug.Log(ArmyManager.Instance.GetCurArmy().Legion);
+            Debug.Log(ArmyManager.Instance.GetCurArmy().Soldiers.Count);
+
+            ArmyManager.Instance.GetCurArmy().AddStat(ligeonStat);
         }
     }
 

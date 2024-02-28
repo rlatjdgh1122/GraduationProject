@@ -1,6 +1,9 @@
 using System;
+using UnityEngine;
+
 public class SignGeneralPenguin : General
 {
+    [SerializeField] private int healValue = 10;
     public EntityStateMachine<GeneralPenguinStateEnum, General> StateMachine { get; private set; }
 
     protected override void Awake()
@@ -35,6 +38,8 @@ public class SignGeneralPenguin : General
     public override void OnPassiveAttackEvent()
     {
         StateMachine.ChangeState(GeneralPenguinStateEnum.SmashAttack);
+
+        HealthCompo.ApplyHeal(healValue);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

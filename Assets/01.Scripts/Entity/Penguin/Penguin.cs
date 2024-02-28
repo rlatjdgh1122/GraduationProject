@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Penguin : Entity
 {
@@ -103,5 +102,10 @@ public class Penguin : Entity
     {
         yield return new WaitForSeconds(time);
         Stat.AddStat(value, type, mode);
+    }
+
+    public override void Init()
+    {
+        owner = null;
     }
 }
