@@ -35,6 +35,8 @@ public class DefaultBuilding : BaseBuilding
     {
         base.Awake();
         _outline = GetComponent<Outline>();
+
+        WaveManager.Instance.OnBattlePhaseStartEvent += DisableAllUI;
     }
 
     protected override void Running()
@@ -73,7 +75,24 @@ public class DefaultBuilding : BaseBuilding
         _outline.enabled = isSpawnUIOn;
     }
 
-    bool IsPointerOverUIObject()
+
+    private void DisableAllUI()
+    {
+        if (isSpawnUIOn)
+        {
+            if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
+            {
+                UIManager.Instance.UIMoveDot(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+            }
+            else
+            {
+                UIManager.Instance.UIMoveDot(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+            }
+        }
+        
+    }
+
+    protected bool IsPointerOverUIObject()
     {
         // 마우스 포인터가 UI 위에 있는지 확인
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);

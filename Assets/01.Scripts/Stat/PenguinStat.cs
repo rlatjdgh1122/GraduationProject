@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,9 +19,22 @@ public enum PenguinJobType
     Solider
 }
 
+public enum GeneralCharacterType
+{
+    Melee,
+    Range,
+    MiddleRange,
+}
+
 [Serializable]
 public class PenguinDetailData
 {
+    public int level = 1;
+    public int price;
+    public int levelUpPrice;
+    public string _type;
+    public string _characteristic;
+    public GeneralCharacterType characterType;
     public string Weapon;
     [Range(0f, 1f)] public float atk;
     [Range(0f, 1f)] public float def;
@@ -51,16 +65,17 @@ public class PenguinStat : BaseStat
     {
         if (JobType == PenguinJobType.General)
         {
-            return "Àå±º";
+            return "ï¿½å±º";
         }
         else
         {
-            return "º´»ç";
+            return "ï¿½ï¿½ï¿½ï¿½";
         }
     }
 
-    public void UpdateAblitiyUI(Slider atk, Slider def, Slider rng)
+    public void UpdateAblitiyUI(TextMeshProUGUI name, Slider atk, Slider def, Slider rng)
     {
+        name.text = PenguinName;
         atk.value = PenguinData.atk;
         def.value = PenguinData.def;
         rng.value = PenguinData.range;

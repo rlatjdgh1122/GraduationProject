@@ -15,6 +15,9 @@ public class NexusBase : MonoBehaviour
     public Health HealthCompo => _health;
     #endregion
 
+    [SerializeField]
+    private InputReader _reader;
+
     private NexusUI _nexusUI
     {
         get
@@ -42,12 +45,18 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        _nexusUI.EnableUI(0.5f, null);
+        if (!WaveManager.Instance.IsBattlePhase && !_reader.IsPointerOverUI())
+        {
+            _nexusUI.EnableUI(0.5f, null);
+        }
     }
 
     private void OnMouseEnter()
     {
-        _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
+        if (!WaveManager.Instance.IsBattlePhase && !_reader.IsPointerOverUI())
+        {
+            _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
+        }
     }
 
     private void OnMouseExit()
