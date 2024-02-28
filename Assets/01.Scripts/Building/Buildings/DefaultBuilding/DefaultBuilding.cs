@@ -83,6 +83,7 @@ public class DefaultBuilding : BaseBuilding
             if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
             {
                 UIManager.Instance.UIMoveDot(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+                _outline.enabled = false;
             }
             else
             {
