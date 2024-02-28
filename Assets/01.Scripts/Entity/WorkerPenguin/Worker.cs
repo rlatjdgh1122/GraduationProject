@@ -20,6 +20,8 @@ public class Worker : Entity
 
         AttackCompo = GetComponent<EntityAttackData>();
         Nexus = GameManager.Instance.NexusTrm;
+
+        Init();
     }
 
     #region 이동 관련
@@ -82,5 +84,11 @@ public class Worker : Entity
     protected override void HandleDie()
     {
         
+    }
+
+    public override void Init()
+    {
+        CanWork = false;
+        EndWork = false;
     }
 }

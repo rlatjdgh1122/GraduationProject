@@ -38,5 +38,11 @@ public class MinerPenguin : Worker
         StateMachine.CurrentState.UpdateState();
     }
 
+    public override void Init()
+    {
+        CanWork = false;
+        EndWork = false;
+    }
+
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }

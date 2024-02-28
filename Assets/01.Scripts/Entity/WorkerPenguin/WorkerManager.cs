@@ -41,8 +41,9 @@ public class WorkerManager : Singleton<WorkerManager>
             {
                 if (!worker.CanWork) //그중에 CanWork가 비활성화 된 애들만
                 {
-                    worker.StartWork(workableObject); //활성화해주고
-                    _workerFactory.SpawnPenguinHandler();
+                    var penguin = _workerFactory.SpawnPenguinHandler();
+                    penguin.StartWork(workableObject); //활성화해주고
+
                     calledPenguinCount++; //값을 1 늘림
                 }
 
@@ -54,10 +55,15 @@ public class WorkerManager : Singleton<WorkerManager>
 
     public void ReturnWorkers(WorkableObject workableObject)
     {
+        Debug.Log("돌아가자");
         foreach (MinerPenguin worker in WorkerList)
         {
-            if (worker.CanWork && worker.Target == workableObject)
+
+            if (worker.CanWork
+                && worker.Target.Equals(workableObject))
             {
+                Debug.Log("고우고우");
+                _workerFactory.DeSpawnPenguinHandler(worker);
                 worker.FinishWork();
             }
         }

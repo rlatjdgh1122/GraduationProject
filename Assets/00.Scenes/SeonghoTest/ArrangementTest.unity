@@ -10988,6 +10988,11 @@ PrefabInstance:
       propertyPath: _constructionStationUI
       value: 
       objectReference: {fileID: 849599668}
+    - target: {fileID: 9109645053425442958, guid: 22e4082eb856f18439d298192cae598d,
+        type: 3}
+      propertyPath: BuildingInfoCompo.<ID>k__BackingField
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16265,7 +16270,6 @@ GameObject:
   - component: {fileID: 1151245184}
   - component: {fileID: 1151245187}
   - component: {fileID: 1151245186}
-  - component: {fileID: 1151245185}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -16301,18 +16305,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -9.0946}
   m_SizeDelta: {x: 485.1241, y: 296.2986}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &1151245185
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151245183}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!114 &1151245186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31039,7 +31031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d23d74eff5a5b843b789622c083a4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingList: {fileID: 0}
+  buildingList: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909, type: 2}
   _poolingListSO: {fileID: 11400000, guid: 07de459dc533c5d4f90da9a22e6f7b16, type: 2}
 --- !u!1001 &2127792721
 PrefabInstance:
