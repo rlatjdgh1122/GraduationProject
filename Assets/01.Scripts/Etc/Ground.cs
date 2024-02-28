@@ -11,6 +11,7 @@ public enum GroundOutlineColorType
     None
 }
 
+[RequireComponent(typeof(Outline))]
 public class Ground : MonoBehaviour
 {
     private bool isInstalledBuilding;
