@@ -65,11 +65,11 @@ public class PenguinStat : BaseStat
     {
         if (JobType == PenguinJobType.General)
         {
-            return "�屺";
+            return "장군";
         }
         else
         {
-            return "����";
+            return "병사";
         }
     }
 
