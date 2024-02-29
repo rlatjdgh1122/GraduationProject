@@ -6,15 +6,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Playables;
-using UnityEngine.Timeline;
 
 public class WaveManager : MonoBehaviour
 {
+    #region 타이머 변수
+    [Header("Timer Settings")]
+    [SerializeField]
+    private float _startTime; // 웨이브 시작 시간
+    private bool _timerRunning; // 타이머 동작 여부
 
-    #region 타임라인에 사용 된 변수
-    private PlayableDirector pd;
-    public TimelineAsset[] ta;
+    private void StartTimer()
+    {
+        _startTime = Time.time; // 시작 시간 기록
+        _timerRunning = true; // 타이머 시작
+    }
+
+    private void UpdateTimer()
+    {
+        if (_timerRunning)
+        {
+            float elapsedTime = Time.time - _startTime; // 경과 시간 계산
+
+            // MM:SS 형식으로 변환하여 텍스트로 표시
+            string minutes = Mathf.Floor(elapsedTime / 60).ToString("00");
+            string seconds = Mathf.Floor(elapsedTime % 60).ToString("00");
+            _timeText.SetText($"{minutes} : {seconds}");
+        }
+    }
+
+    private void ResetTimer()
+    {
+        _timeText.SetText("00 : 00"); // 타이머 초기화
+        _timerRunning = false; // 타이머 중지
+    }
     #endregion
 
     #region 사용 변수들
@@ -124,6 +148,8 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
+        UpdateTimer(); // 타이머 업데이트
+
         if (IsBattlePhase)
         {
             if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
@@ -154,14 +180,11 @@ public class WaveManager : MonoBehaviour
 
     private void OnBattlePhaseStartHandle() // 전투페이즈 시작
     {
+        StartTimer(); //타이머를 시작
+
         IsBattlePhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
-        _waveCntText.SetText($"Current Wave: {CurrentWaveCount}");
-
-        if(currentWaveCount == 4)
-        {
-            pd.Play(ta[0]);
-        }
+        _waveCntText.SetText($"{CurrentWaveCount} 웨이브");
     }
 
     private void OnBattlePhaseEndHandle() // 전투페이즈 종료
@@ -177,13 +200,14 @@ public class WaveManager : MonoBehaviour
             {
                 penguin.CurrentTarget = null;
             }
-            _waveCntText.SetText($"Next Wave: {CurrentWaveCount}");
+            //_waveCntText.SetText($"Next Wave: {CurrentWaveCount}");
         }
         else
         {
             ShowDefeatUI();
         }
 
+        ResetTimer(); // 타이머 00:00으로 초기화
         //_currentEnemyGround = null;
     }
 
@@ -274,6 +298,11 @@ public class WaveManager : MonoBehaviour
             _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
             //else // 군단에 들어가 있다면 알아서 군단위치로 가게
         }
+    }
+
+    public bool IsCurrentWaveCountEqualTo(int value)
+    {
+        return currentWaveCount == value; //TimeLineHolder에서 웨이브 수를 알기 위해서
     }
 
     private void OnDestroy()
