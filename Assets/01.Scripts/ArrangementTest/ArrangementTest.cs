@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Unity.Jobs.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -44,31 +45,46 @@ public class ArrangementTest : Singleton<ArrangementTest>
     public void AddArrangementInfo(ArrangementInfo info)
     {
         InfoList.Add(info);
+
+        OnModifyInfo_Btn(info);
     }
 
 
-    public void OnModifyInfo_Btn() //적용 
+    private void OnModifyInfo_Btn(ArrangementInfo info) //적용 
     {
-        InfoList.ForEach(p =>
+        if(info.JobType == PenguinJobType.Solider)
         {
+            Penguin obj = null;
+            obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
+            ArmyManager.Instance.JoinArmyToSoldier(info.legionIdx, obj as Penguin);
+        }
 
-            if (p.JobType == PenguinJobType.Solider)
-            {
-                Penguin obj = null;
-                obj = ArmyManager.Instance.CreateSoldier(p.PenguinType, SpawnPoint.position, seatPosList[p.SlotIdx]);
+        if (info.JobType == PenguinJobType.General)
+        {
+              General obj = null;
+              obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
 
-                ArmyManager.Instance.JoinArmyToSoldier(p.legionIdx, obj as Penguin);
-            }
+              ArmyManager.Instance.JoinArmyToGeneral(info.legionIdx, obj);
+        }
 
-            if (p.JobType == PenguinJobType.General)
-            {
-                General obj = null;
-                obj = ArmyManager.Instance.CreateSoldier(p.PenguinType, SpawnPoint.position, seatPosList[p.SlotIdx]) as General;
+        //InfoList.ForEach(p =>
+        //{
 
-                ArmyManager.Instance.JoinArmyToGeneral(p.legionIdx, obj);
-            }
+        //    if (p.JobType == PenguinJobType.Solider)
+        //    {
+        //        Penguin obj = null;
+        //        obj = ArmyManager.Instance.CreateSoldier(p.PenguinType, SpawnPoint.position, seatPosList[p.SlotIdx]);
 
+        //        ArmyManager.Instance.JoinArmyToSoldier(p.legionIdx, obj as Penguin);
+        //    }
 
-        });
+        //    if (p.JobType == PenguinJobType.General)
+        //    {
+        //        General obj = null;
+        //        obj = ArmyManager.Instance.CreateSoldier(p.PenguinType, SpawnPoint.position, seatPosList[p.SlotIdx]) as General;
+
+        //        ArmyManager.Instance.JoinArmyToGeneral(p.legionIdx, obj);
+        //    }
+        //});
     }
 }

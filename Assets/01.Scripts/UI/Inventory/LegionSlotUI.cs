@@ -63,7 +63,10 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
             CleanUpSlot(); //슬롯 초기화
 
-            CurrentLegion.CurrentCount--;
+            if(CurrentLegion.CurrentCount > 0)
+            {
+                CurrentLegion.CurrentCount--;
+            }
         }
 
         //UnitInformationUI의 데이터가 비어있지 않고 이 슬롯의 데이터가 비어있고 병사들이 군단에 꽉차있지 않으면

@@ -24,7 +24,7 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 
         if (_triggerCalled)
         {
-            if (_worker.EndWork)
+            if (_worker.EndWork || WaveManager.Instance.IsBattlePhase)
                 _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
 
             _triggerCalled = false;
