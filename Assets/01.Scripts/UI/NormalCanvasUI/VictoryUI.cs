@@ -11,6 +11,7 @@ public class VictoryUI : NormalUI
     
     [SerializeField] private TextMeshProUGUI[] _texts;
     [SerializeField] private int _cost;
+    [SerializeField] private Image _btn;
 
     private bool _canClick = false;
 
@@ -53,7 +54,7 @@ public class VictoryUI : NormalUI
     {
         if(_canClick)
         {
-            CostManager.Instance.AddFromCurrentCost(_cost, true, true, UIManager.Instance.ScreenCenterVec);
+            CostManager.Instance.AddFromCurrentCost(_cost, true, true, _btn.rectTransform.position);
             _canClick = false;
         }
     }
