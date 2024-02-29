@@ -19,24 +19,24 @@ public class PopupPanel : MonoBehaviour
     {
         if (isOn)
         {
-            UIManager.Instance.UIMoveDot(gameObject.rectTransform(), _offSpawnUIVec, 0.7f, Ease.OutCubic);
+            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(gameObject.rectTransform(), _offSpawnUIVec, 0.7f, Ease.OutCubic));
         }
         else
         {
-            UIManager.Instance.UIMoveDot(gameObject.rectTransform(), _onSpawnUIVec, 0.7f, Ease.OutCubic);
+            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(gameObject.rectTransform(), _onSpawnUIVec, 0.7f, Ease.OutCubic));
         }
         isOn = !isOn;
     }
 
     public void OnPanel()
     {
-        UIManager.Instance.UIMoveDot(gameObject.rectTransform(), _onSpawnUIVec, 0.7f, Ease.OutCubic);
+        StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(gameObject.rectTransform(), _onSpawnUIVec, 0.7f, Ease.OutCubic));
         isOn = true;
     }
 
     public void OffPanel()
     {
-        UIManager.Instance.UIMoveDot(gameObject.rectTransform(), _offSpawnUIVec, 0.7f, Ease.OutCubic);
+        StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(gameObject.rectTransform(), _offSpawnUIVec, 0.7f, Ease.OutCubic));
         isOn = false;
     }
 }

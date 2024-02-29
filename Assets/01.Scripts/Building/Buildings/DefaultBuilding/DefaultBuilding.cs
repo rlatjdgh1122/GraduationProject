@@ -22,7 +22,10 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] private Transform _btnTrm;
 
-    private Outline _outline;
+    protected Outline _outline;
+
+    private ConstructionStation _constructionStation;
+    private PenguinSpawner _penguinSpawner;
 
     protected virtual void Start()
     {
@@ -35,6 +38,9 @@ public class DefaultBuilding : BaseBuilding
     {
         base.Awake();
         _outline = GetComponent<Outline>();
+
+        _penguinSpawner = FindAnyObjectByType<PenguinSpawner>().GetComponent<PenguinSpawner>();
+        _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
 
         WaveManager.Instance.OnBattlePhaseStartEvent += DisableAllUI;
     }
@@ -54,19 +60,28 @@ public class DefaultBuilding : BaseBuilding
     public void SpawnButton()
     {
         Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
+        UpdateSpawnUIBool();
 
         if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
         {
-            UIManager.Instance.UIMoveDot(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic);
-            UIManager.Instance.UIMoveDot(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic));
+            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+
+            if (_penguinSpawner.isSpawnUIOn)
+            {
+                _penguinSpawner.UpdateSpawnUIBool();
+            }
         }
         else
         {
-            UIManager.Instance.UIMoveDot(_penguinSpawnUI, targetVec, 0.7f, Ease.OutCubic);
-            UIManager.Instance.UIMoveDot(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
-        }
+            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, targetVec, 0.7f, Ease.OutCubic));
+            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
 
-        UpdateSpawnUIBool();
+            if (_constructionStation.isSpawnUIOn)
+            {
+                _constructionStation.UpdateSpawnUIBool();
+            }
+        }
     }
 
     public virtual void UpdateSpawnUIBool()
@@ -74,20 +89,18 @@ public class DefaultBuilding : BaseBuilding
         isSpawnUIOn = isSpawnUIOn ? false : true;
         _outline.enabled = isSpawnUIOn;
     }
-
-
     private void DisableAllUI()
     {
         if (isSpawnUIOn)
         {
             if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
             {
-                UIManager.Instance.UIMoveDot(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+                StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
                 _outline.enabled = false;
             }
             else
             {
-                UIManager.Instance.UIMoveDot(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic);
+                StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
             }
         }
         
