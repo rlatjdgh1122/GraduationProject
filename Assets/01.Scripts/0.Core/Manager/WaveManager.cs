@@ -6,17 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Playables;
-using UnityEngine.Timeline;
 
 public class WaveManager : MonoBehaviour
 {
-
-    #region 타임라인에 사용 된 변수
-    private PlayableDirector pd;
-    public TimelineAsset[] ta;
-    #endregion
-
     #region 타이머 변수
     [Header("Timer Settings")]
     [SerializeField]
@@ -187,9 +179,6 @@ public class WaveManager : MonoBehaviour
     private void OnBattlePhaseStartHandle() // 전투페이즈 시작
     {
         StartTimer(); //타이머를 시작
-        
-        if (currentWaveCount == 4)
-            pd.Play(ta[0]);
 
         IsBattlePhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
@@ -307,6 +296,11 @@ public class WaveManager : MonoBehaviour
             _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
             //else // 군단에 들어가 있다면 알아서 군단위치로 가게
         }
+    }
+
+    public bool IsCurrentWaveCountEqualTo(int value)
+    {
+        return currentWaveCount == value; //TimeLineHolder에서 웨이브 수를 알기 위해서
     }
 
     private void OnDestroy()
