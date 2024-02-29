@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ResourceObject : WorkableObject
 {
     [Header("Resource Info")]
     [SerializeField] private ResourceDataSO _resourceData;
     [SerializeField] private ResourceStat _resourceStat;
+    [SerializeField] private UnityEvent OnRecieveResourceEvent = null;
+    [SerializeField] private UnityEvent OnReviveInitEvent = null;
 
     private Sprite _resourceIcon;
     private string _resourceName;
@@ -54,9 +57,10 @@ public class ResourceObject : WorkableObject
 
     public void RecieveResourceComplete() //다 캐면 실행
     {
+        OnRecieveResourceEvent?.Invoke();
+
         ResourceManager.Instance.AddResource(_resourceData, _receiveCountWhenCompleted);
         WorkerManager.Instance.ReturnWorkers(this);
-        gameObject.SetActive(false);
     }
 
     public void RemoveResource(int count)
@@ -75,5 +79,10 @@ public class ResourceObject : WorkableObject
     protected override void HandleDie()
     {
         RecieveResourceComplete();
+    }
+
+    public override void Init()
+    {
+        OnReviveInitEvent?.Invoke();
     }
 }

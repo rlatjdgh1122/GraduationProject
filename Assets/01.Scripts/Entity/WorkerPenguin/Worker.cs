@@ -8,7 +8,7 @@ public class Worker : Entity
     #region components
     public WorkableObject Target;
     public EntityAttackData AttackCompo { get; private set; }
-    public Transform Nexus;
+    public Transform WorkerHomeTrm;
     #endregion
 
     public bool CanWork = false;
@@ -19,7 +19,7 @@ public class Worker : Entity
         base.Awake();
 
         AttackCompo = GetComponent<EntityAttackData>();
-        Nexus = GameManager.Instance.NexusTrm;
+        WorkerHomeTrm = GameManager.Instance.WorkerSpawnPoint;
 
         Init();
     }
@@ -38,24 +38,28 @@ public class Worker : Entity
 
     public void MoveToNexus()
     {
-        NavAgent.SetDestination(Nexus.transform.position);
+        NavAgent.SetDestination(WorkerHomeTrm.transform.position);
     }
 
     public float CheckNexusDistance()
     {
-        return Vector3.Distance(transform.position, Nexus.transform.position);
+        return Vector3.Distance(transform.position, WorkerHomeTrm.transform.position);
     }
 
     public void MoveEndToNexus()
     {
         CanWork = false;
-        gameObject.SetActive(false);
+        PoolManager.Instance.Push(this);
+        Debug.Log("3");
+        //gameObject.SetActive(false);
     }
     #endregion
 
     #region 작업 관련
     public void StartWork(WorkableObject target)
     {
+        Debug.Log("2");
+
         Target = target;
         CanWork = true;
     }
@@ -88,6 +92,7 @@ public class Worker : Entity
 
     public override void Init()
     {
+        Debug.Log("1");
         CanWork = false;
         EndWork = false;
     }

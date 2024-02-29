@@ -5,15 +5,19 @@ using UnityEngine;
 public class WorkerManager : Singleton<WorkerManager>
 {
     [SerializeField]
-    private MinerPenguin _workerPrefab;
-    [SerializeField]
-    private List<MinerPenguin> _workerList = new List<MinerPenguin>();
+    private Worker _workerPrefab;
+
+    [SerializeField] private List<Worker> _workerList = new List<Worker>();
+
+    [SerializeField] private List<Worker> _spawnedPenguinList = new List<Worker>();
 
     private WorkerFactroy _workerFactory;
 
     #region property
     public int WorkerCount => _workerList.Count;
-    public List<MinerPenguin> WorkerList => _workerList;
+    public int SpawnedPenguinCount => _spawnedPenguinList.Count;
+    public List<Worker> WorkerList => _workerList;
+    public List<Worker> SpawnedPenguinList => _spawnedPenguinList;
     #endregion
 
     public override void Awake()
@@ -31,41 +35,66 @@ public class WorkerManager : Singleton<WorkerManager>
         _workerList.Add(_workerPrefab);
     }
 
+
     public void SendWorkers(int count, WorkableObject workableObject)
     {
         int calledPenguinCount = 0;
+        var List = WorkerList;
 
-        if (WorkerCount >= count) //현재 일꾼의 수가 요청받은 일꾼보다 같거나 많다면
+        if (WorkerCount + SpawnedPenguinCount >= count)
         {
-            foreach (MinerPenguin worker in WorkerList) //일꾼들 리스트를 반복돌리고
+            // 여기는 기존에 스폰되어있는 애들이 일이 끝나 집으로 돌아가는 애들
+            foreach (Worker worker in SpawnedPenguinList)
             {
-                if (!worker.CanWork) //그중에 CanWork가 비활성화 된 애들만
+                if (worker.EndWork == true)
                 {
-                    var penguin = _workerFactory.SpawnPenguinHandler();
-                    penguin.StartWork(workableObject); //활성화해주고
+                    worker.StartWork(workableObject);
 
-                    calledPenguinCount++; //값을 1 늘림
+                    calledPenguinCount++;
+                    if (calledPenguinCount >= count)
+                        break;
                 }
+            }
+
+            foreach (Worker worker in List) //일꾼들 리스트를 반복돌리고
+            {
+                var penguin = _workerFactory.SpawnPenguinHandler(worker);
+                penguin.StartWork(workableObject); //활성화해주고
+                OnSpawnMinerrPenguin(penguin);
+
+                calledPenguinCount++; //값을 1 늘림
 
                 if (calledPenguinCount >= count) //값이 호출한 값과 같다면 반복문 중지
                     break;
             }
+
+        }
+    }
+    public void ReturnWorkers(WorkableObject workableObject)
+    {
+        // 새로운 리스트에 SpawnedPenguinList를 복사합니다.
+        List<Worker> list = new List<Worker>(SpawnedPenguinList);
+
+        // SpawnedPenguinList를 수정하지 않고 새로운 리스트를 반복합니다.
+        foreach (Worker worker in list)
+        {
+            if (worker.CanWork && worker.Target == workableObject)
+            {
+                worker.FinishWork();
+                OnDeSpawnMinerrPenguin(worker);
+            }
         }
     }
 
-    public void ReturnWorkers(WorkableObject workableObject)
-    {
-        Debug.Log("돌아가자");
-        foreach (MinerPenguin worker in WorkerList)
-        {
 
-            if (worker.CanWork
-                && worker.Target.Equals(workableObject))
-            {
-                Debug.Log("고우고우");
-                _workerFactory.DeSpawnPenguinHandler(worker);
-                worker.FinishWork();
-            }
-        }
+    public void OnSpawnMinerrPenguin(Worker miner)
+    {
+        _workerList.RemoveAt(_workerList.Count - 1);
+        _spawnedPenguinList.Add(miner);
+    }
+    public void OnDeSpawnMinerrPenguin(Worker miner)
+    {
+        _spawnedPenguinList.Remove(miner);
+        _workerList.Add(miner);
     }
 }

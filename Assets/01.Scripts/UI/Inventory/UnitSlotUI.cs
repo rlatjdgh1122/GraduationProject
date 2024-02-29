@@ -10,9 +10,9 @@ public class UnitSlotUI : SlotUI, IPointerDownHandler
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private UnitInformationUI _info;
     [SerializeField] private Image _lockImg;
+    [SerializeField] private RectTransform _selectImg;
 
     private bool _locked;
-
     public override void CleanUpSlot()
     {
         _data = null;
@@ -49,5 +49,7 @@ public class UnitSlotUI : SlotUI, IPointerDownHandler
         {
             _info.UpdateSlot(_data);
         }
+
+        _legionInventoryUI.ShowSelectImage(_selectImg);
     }
 }

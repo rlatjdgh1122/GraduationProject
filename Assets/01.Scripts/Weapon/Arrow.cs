@@ -38,8 +38,6 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider coll)
     {
-        _damageCaster.CastDamage();
-
         if (_damageCaster.CastDamage())
         {
             Destroy(this.gameObject);
