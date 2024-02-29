@@ -49,13 +49,17 @@ public class Worker : Entity
     public void MoveEndToNexus()
     {
         CanWork = false;
-        gameObject.SetActive(false);
+        PoolManager.Instance.Push(this);
+        Debug.Log("3");
+        //gameObject.SetActive(false);
     }
     #endregion
 
     #region 작업 관련
     public void StartWork(WorkableObject target)
     {
+        Debug.Log("2");
+
         Target = target;
         CanWork = true;
     }
@@ -88,6 +92,7 @@ public class Worker : Entity
 
     public override void Init()
     {
+        Debug.Log("1");
         CanWork = false;
         EndWork = false;
     }

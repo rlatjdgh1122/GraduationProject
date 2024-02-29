@@ -17,7 +17,7 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
     {
         base.UpdateState();
         
-        if (_worker.CheckDistance() < 1f)
+        if (_worker.CheckDistance() < 2f)
             _stateMachine.ChangeState(WorkerPenguinStateEnum.Work);
     }
 

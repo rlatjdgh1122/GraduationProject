@@ -94,7 +94,7 @@ public class DamageCaster : MonoBehaviour
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
             int damage = _owner.damage.GetValue();
-            raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             return true;
             //float critical = _controller.CharData.BaseCritical; <- 크리티컬 데미지 관련 로직입니다.
             //float criticalDamage = _controller.CharData.BaseCriticalDamage; 
