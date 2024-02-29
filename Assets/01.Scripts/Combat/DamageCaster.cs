@@ -96,6 +96,19 @@ public class DamageCaster : MonoBehaviour
             int damage = _owner.damage.GetValue();
             raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             return true;
+            //float critical = _controller.CharData.BaseCritical; <- 크리티컬 데미지 관련 로직입니다.
+            //float criticalDamage = _controller.CharData.BaseCriticalDamage; 
+
+            //float dice = Random.value; 
+            //int fontSize = 10;
+            //Color fontColor = Color.white;
+
+            //if (dice < critical)
+            //{
+            //    damage = Mathf.CeilToInt(damage * criticalDamage);
+            //    fontSize = 15;
+            //    fontColor = Color.red;
+            //}
         }
 
         return false;
