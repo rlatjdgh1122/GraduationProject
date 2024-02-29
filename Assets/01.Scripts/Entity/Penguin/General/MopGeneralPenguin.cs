@@ -33,15 +33,6 @@ public class MopGeneralPenguin : General
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
-
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Debug.Log(ArmyManager.Instance.GetCurArmy().Legion);
-            Debug.Log(ArmyManager.Instance.GetCurArmy().Soldiers.Count);
-
-            ArmyManager.Instance.GetCurArmy().AddStat(ligeonStat);
-        }
     }
 
     public override void OnPassiveAttackEvent()

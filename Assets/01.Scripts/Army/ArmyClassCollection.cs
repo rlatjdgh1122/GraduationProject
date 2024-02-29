@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using System.Diagnostics;
+using Unity.VisualScripting;
+using UnityEngine;
 
 [System.Serializable]
 public struct ArmyInfo //UI부분, 기획이 더 필요
@@ -26,37 +27,34 @@ public class Army
 
     public ArmyInfo info;
 
-    public void AddStat(LigeonStatAdjustment ligeonStat)
+    public void AddStat(Army army, LigeonStatAdjustment ligeonStat)
     {
         var IncStatList = ligeonStat.IncStat;
         var DecStatList = ligeonStat.DecStat;
 
         foreach (var incStat in IncStatList)
         {
-            AddStat(incStat.value, incStat.type, StatMode.Increase);
+            AddStat(army, incStat.value, incStat.type, StatMode.Increase);
         }
 
         foreach (var DecStat in DecStatList)
         {
-            AddStat(DecStat.value, DecStat.type, StatMode.Decrease);
+            AddStat(army, DecStat.value, DecStat.type, StatMode.Decrease);
         }
     }
-    public void AddStat(int value, StatType type, StatMode mode)
+    public void AddStat(Army army, int value, StatType type, StatMode mode)
     {
-        Debug.WriteLine(type);
-
-        General?.AddStat(value, type, mode);
-
-        foreach (var solider in Soldiers)
+        army.General?.AddStat(value, type, mode);
+        foreach (var solider in army.Soldiers)
         {
             solider.AddStat(value, type, mode);
         }
     }
-    public void RemoveStat(int value, StatType type, StatMode mode)
+    public void RemoveStat(Army army,int value, StatType type, StatMode mode)
     {
-        General?.RemoveStat(value, type, mode);
+        army.General?.RemoveStat(value, type, mode);
 
-        foreach (var solider in Soldiers)
+        foreach (var solider in army.Soldiers)
         {
             solider.RemoveStat(value, type, mode);
         }

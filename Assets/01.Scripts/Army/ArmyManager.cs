@@ -49,6 +49,11 @@ public class ArmyManager : Singleton<ArmyManager>
         return armies[curLegion];
     }
 
+    public Army GetArmy(int legion) //현재 army 리턴
+    {
+        return armies[legion];
+    }
+
     /// <summary>
     /// 군단 변경
     /// </summary>
@@ -85,7 +90,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curLegion].AddStat(value, type, mode);
+        armies[curLegion].AddStat(armies[curLegion],value, type, mode);
     }
 
     /// <summary>
@@ -96,7 +101,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curLegion].RemoveStat(value, type, mode);
+        armies[curLegion].RemoveStat(armies[curLegion], value, type, mode);
     }
 
     /// <summary>
@@ -108,7 +113,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion].RemoveStat(value, type, mode);
+        armies[legion].RemoveStat(armies[legion],value, type, mode);
     }
     /// <summary>
     /// 군단의 스탯을 삭제
@@ -119,7 +124,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion].AddStat(value, type, mode);
+        armies[legion].AddStat(armies[legion],value, type, mode);
     }
 
     #endregion
@@ -152,8 +157,6 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="obj"> Penguin 타입만 가능</param>
     public void JoinArmyToGeneral(int legion, General obj) //들어가고 싶은 군단, 장군펭귄
     {
-
-
         if (armies.Find(p => p.Legion == legion) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
@@ -172,7 +175,7 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.General = obj;
 
-        Army.AddStat(LegionStat);
+        Army.AddStat(Army,LegionStat);
 
     }
     #endregion

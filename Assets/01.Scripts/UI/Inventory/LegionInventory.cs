@@ -166,7 +166,6 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void AddToSolider(PenguinStat penguin)
     {
-        Debug.Log("§æ§∑§ª§ª");
 
         if (soliderDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData legionInven))//∏∏æ‡ ∆Î±œ ¿Œ∫•ø° ¿÷¿∏∏È
         {

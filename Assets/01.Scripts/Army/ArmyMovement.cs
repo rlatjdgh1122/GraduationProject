@@ -12,18 +12,6 @@ public class ArmyMovement : MonoBehaviour
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         _inputReader.RightClickEvent += SetClickMovement;
     }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            curArmy.AddStat(10,StatType.Damage,StatMode.Increase);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            curArmy.RemoveStat(10, StatType.Damage, StatMode.Increase);
-        }
-    }
-
     public void SetClickMovement()
     {
         if (/*curArmy.IsMoving
