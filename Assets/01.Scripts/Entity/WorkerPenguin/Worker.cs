@@ -92,7 +92,6 @@ public class Worker : Entity
 
     public override void Init()
     {
-        Debug.Log("1");
         CanWork = false;
         EndWork = false;
     }

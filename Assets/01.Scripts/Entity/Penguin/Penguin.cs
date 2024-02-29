@@ -103,6 +103,11 @@ public class Penguin : Entity
         yield return new WaitForSeconds(time);
         Stat.AddStat(value, type, mode);
     }
+    public IEnumerator RemoveStatCorou(float time, int value, StatType type, StatMode mode)
+    {
+        yield return new WaitForSeconds(time);
+        Stat.RemoveStat(value, type, mode);
+    }
 
     public override void Init()
     {
