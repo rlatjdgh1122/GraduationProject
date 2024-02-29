@@ -8,8 +8,8 @@ using Unity.VisualScripting;
 public class Stat
 {
     [SerializeField] private int _baseValue; //기본 스탯
-    [ReadOnly] float _fewTimes; //기본 스탯 기준 몇배인지 (인스펙터 용)
-    [ReadOnly] float _finalValue; //기본 스탯 기준 몇배인지 (인스펙터 용)
+    [ReadOnly] public float _fewTimes; //기본 스탯 기준 몇배인지 (인스펙터 용)
+    [ReadOnly] public float _finalValue; //기본 스탯 기준 몇배인지 (인스펙터 용)
 
     public List<int> increases; //증가 % (곱연산)
     public List<int> decreases; //감소 % (합연산)
