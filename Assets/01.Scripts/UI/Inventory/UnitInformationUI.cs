@@ -29,6 +29,17 @@ public class UnitInformationUI : SlotUI
         _infoData = null;
         _data = null;
         _unitImage.sprite = _emptyImage;
+
+        _atk.DOValue(0, 0.2f);
+        _def.DOValue(0, 0.2f);
+        _range.DOValue(0, 0.2f);
+
+        _generalInfoCanvasGroup.DOFade(0, 0.1f);
+        _name.text = null;
+        _className.text = null;
+        _weapon.text = null;
+        _passive.text = null;
+        _Synergy.text = null;
     }
 
     public void InfoDataSlot(LegionInventoryData data)

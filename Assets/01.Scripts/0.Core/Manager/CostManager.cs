@@ -32,7 +32,7 @@ public class CostManager : Singleton<CostManager>
         base.Awake();
 
         Cost = _defaultCost;
-        //_costUI.OnlyCurrentCostView(Cost);
+        _costUI.OnlyCurrentCostView(Cost);
     }
     public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
     {

@@ -12,6 +12,7 @@ public class LegionInventoryUI : MonoBehaviour
     [Header("Public Property")]
     public CanvasGroup StatuesMessageImage;
     public TextMeshProUGUI StatuesMessageText;
+    public UnitInformationUI UnitInfoUI;
 
     #endregion
 
@@ -19,11 +20,27 @@ public class LegionInventoryUI : MonoBehaviour
 
     [Header("Penguin Inventory")]
     [SerializeField] private TextMeshProUGUI _curInventoryName;
+    [SerializeField] private Image _selectImg;
 
-    public void OnClickPenguinTypeBtn(string name)
+    public void OnClickPenguinTypeBtn(string name) //장군 병사 지정 버튼
     {
         _curInventoryName.text = name;
+        UnitInfoUI.CleanUpSlot();
+        DisableSelectImage();
     }
+
+    ///////선택 이미지////////////
+    public void ShowSelectImage(RectTransform trm)
+    {
+        _selectImg.rectTransform.position = trm.position;
+        _selectImg.DOFade(1, 0f);
+    }
+
+    public void DisableSelectImage()
+    {
+        _selectImg.DOFade(0, 0f);
+    }
+    //////////////////////
 
     #endregion
 
@@ -76,6 +93,7 @@ public class LegionInventoryUI : MonoBehaviour
     public void OnDisableLegionInventory()
     {
         _legionInventory.DOFade(0, 0.5f);
+        DisableSelectImage();
         _legionInventory.blocksRaycasts = false;
     }
     #endregion
