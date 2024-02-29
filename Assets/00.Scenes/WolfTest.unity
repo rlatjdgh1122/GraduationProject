@@ -471,6 +471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 19333810}
   - component: {fileID: 19333809}
+  - component: {fileID: 19333811}
   m_Layer: 0
   m_Name: TimeLineHolder
   m_TagString: Untagged
@@ -522,6 +523,21 @@ Transform:
   - {fileID: 1672982613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &19333811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19333808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a723d81bc26a149afd60ea7baf4737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ta:
+  - {fileID: 11400000, guid: 7c4a0218df04c134cb61e13bc9301173, type: 2}
+  isFirst: 0
 --- !u!1 &34195676
 GameObject:
   m_ObjectHideFlags: 0
@@ -20153,8 +20169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2cb6f3406fa2e54590c6fd8f0c61f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ta:
-  - {fileID: 11400000, guid: 7c4a0218df04c134cb61e13bc9301173, type: 2}
   _startTime: 0
   _tentTrm: {fileID: 1356469832}
   _clockHandImgTrm: {fileID: 0}
