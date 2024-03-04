@@ -101,6 +101,7 @@ public class DefaultBuilding : BaseBuilding
             else
             {
                 StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+                _outline.enabled = false;
             }
         }
         

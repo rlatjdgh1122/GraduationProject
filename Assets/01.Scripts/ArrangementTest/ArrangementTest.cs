@@ -18,6 +18,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
     [SerializeField] private List<ArrangementInfo> InfoList = new();
     private List<Vector3> seatPosList = new();
 
+    private Queue<Action> _spawnPenguinArmyQueue = new(); // 이번 배틀 페이즈에 생성될 군단에 포함된 펭귄들
+
     private void Start()
     {
         Setting();
@@ -46,7 +48,13 @@ public class ArrangementTest : Singleton<ArrangementTest>
     {
         InfoList.Add(info);
 
-        OnModifyInfo_Btn(info);
+        Action subscribeAction = () => OnModifyInfo_Btn(info);
+        _spawnPenguinArmyQueue.Enqueue(subscribeAction);
+
+        // 이벤트에 메서드를 구독
+        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += subscribeAction;
+
+        Debug.Log("구독합니다");
     }
 
 
@@ -66,6 +74,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
 
               ArmyManager.Instance.JoinArmyToGeneral(info.legionIdx, obj);
         }
+
+        WaveManager.Instance.OnDummyPenguinInitTentFinEvent -= _spawnPenguinArmyQueue.Dequeue();
 
         //InfoList.ForEach(p =>
         //{
