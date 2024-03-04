@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 180954642}
   - component: {fileID: 180954641}
   - component: {fileID: 180954640}
+  - component: {fileID: 180954643}
   m_Layer: 5
   m_Name: Dialog
   m_TagString: Untagged
@@ -319,6 +320,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &180954643
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180954638}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &670955378
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,6 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae3b7ed7690c44d499b84354737a8bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 180954643}
   txtSentence: {fileID: 1354736864}
   dialog: {fileID: 180954638}
 --- !u!4 &1867788480
@@ -1244,7 +1258,6 @@ MonoBehaviour:
     - "\uB098\uB294 \uD3AD\uADC4\uC774\uB77C\uACE0 \uD55C\uB2E4"
     - "\uC774\uAC70\uC800\uAC70 \uD574\uBD10\uB77C"
     - "\uC798\uD588\uB2E4"
-    - "\uACF5\uBC31"
     - "\uC65C \uB2E4\uC2DC \uB9D0\uC744 \uAC70\uB2C8"
     - "\uAEBC\uC9C0\uB3C4\uB85D\uD558\uB834"
 --- !u!114 &1908516956

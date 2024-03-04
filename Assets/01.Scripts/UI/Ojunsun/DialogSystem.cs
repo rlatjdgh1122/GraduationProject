@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class DialogSystem : MonoBehaviour
 {
-    public TMP_Text txtSentence;
-    public GameObject dialog;
+    [SerializeField] CanvasGroup canvasGroup;
+
+    [SerializeField] TMP_Text txtSentence;
+    [SerializeField] GameObject dialog;
+
+    private Tween fadeTween;
+
     private int dialCount = 1; //dialog가 켜진 횟수
     bool isTyping = false; //글자가 모두 출력되기 전에 스킵 하는 걸 막기 위한 변수
+    bool canClick = true;
 
     Queue<string> sentences = new Queue<string>();
 
     public void Begin(Dialog info)
     {
         dialog.SetActive(true);
+        FadeIn(2f);
 
         if (dialCount == 1)
         {
@@ -30,24 +38,27 @@ public class DialogSystem : MonoBehaviour
 
     public void Next()
     {
-        if (isTyping)
-            return;
-
-        if (dialCount == 1 && sentences.Count == 3) 
+        if(canClick)
         {
-            End();
-            dialCount++;
-        }
+            if (isTyping)
+                return;
 
-        if (dialCount == 2 && sentences.Count == 0)
-        {
-            End();
-        }
+            if (dialCount == 1 && sentences.Count == 3)
+            {
+                End();
+                dialCount++;
+            }
 
-        if (sentences.Count > 0)
-        {
-            string sentence = sentences.Dequeue();
-            StartCoroutine(TypeSentence(sentence));
+            if (dialCount == 2 && sentences.Count == 0)
+            {
+                End();
+            }
+
+            if (sentences.Count > 0)
+            {
+                string sentence = sentences.Dequeue();
+                StartCoroutine(TypeSentence(sentence));
+            }
         }
     }
 
@@ -67,6 +78,44 @@ public class DialogSystem : MonoBehaviour
 
     private void End()
     {
+        canClick = false;
+        FadeOut(2f);
+        StartCoroutine(FadeTime());
+    }
+
+    IEnumerator FadeTime()
+    {
+        yield return new WaitForSeconds(2f);
         dialog.SetActive(false);
+        canClick = true;
+    }
+
+    public void FadeIn(float duration)
+    {
+        Fade(1f, duration, () =>
+        {
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        });
+    }
+
+    public void FadeOut(float duration)
+    {
+        Fade(0f, duration, () =>
+        {
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        });
+    }
+
+    private void Fade(float endValue, float duration, TweenCallback onEnd)
+    {
+        if (fadeTween != null)
+        {
+            fadeTween.Kill(false);
+        }
+
+        fadeTween = canvasGroup.DOFade(endValue, duration);
+        fadeTween.onComplete += onEnd;
     }
 }
