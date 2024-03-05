@@ -24,6 +24,11 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy.AttackCompo.AoEAttack(Knb, value);
     }
 
+    public void SphereAttackTrigger()
+    {
+        _enemy.AttackCompo.MeleeSphereAttack();
+    }
+
     public void AttackTrigger()
     {
         _enemy.AttackCompo.MeleeAttack();
@@ -39,7 +44,7 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy.enabled = false;
     }
 
-    private void AnimationEndTrigger()
+    public void AnimationEndTrigger()
     {
         _enemy.AnimationTrigger();
     }

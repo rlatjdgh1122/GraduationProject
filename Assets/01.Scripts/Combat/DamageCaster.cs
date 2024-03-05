@@ -114,6 +114,19 @@ public class DamageCaster : MonoBehaviour
         return false;
     }
 
+    public bool CastSphere()
+    {
+        RaycastHit[] raySphere = Physics.SphereCastAll(transform.position, _detectRange, transform.forward, 0,  TargetLayer);
+
+        foreach(var ray in raySphere)
+        {
+            ray.collider.TryGetComponent(out IDamageable raycastHealth);
+            int damage = _owner.damage.GetValue();
+            raycastHealth.ApplyDamage(damage, ray.point, ray.normal, _hitType);
+        }
+        return false;
+    }
+
 
 
 #if UNITY_EDITOR
