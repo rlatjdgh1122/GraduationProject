@@ -12,8 +12,6 @@ public class EnemyWolfChaseState : EnemyWolfBaseState
     {
         base.Enter();
         _triggerCalled = true;
-
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
     }
 
     public override void UpdateState()

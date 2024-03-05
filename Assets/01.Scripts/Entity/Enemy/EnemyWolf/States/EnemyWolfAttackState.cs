@@ -1,5 +1,9 @@
+using UnityEngine;
+
 public class EnemyWolfAttackState : EnemyWolfBaseState
 {
+    [SerializeField] private int _attackStartEventValue;
+
     public EnemyWolfAttackState(Enemy enemyBase, EnemyStateMachine<EnemyWolfStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
@@ -8,8 +12,9 @@ public class EnemyWolfAttackState : EnemyWolfBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = false;
         _enemy.StopImmediately();
+        _attackStartEventValue++;
+        Debug.Log(_attackStartEventValue);
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
@@ -18,18 +23,20 @@ public class EnemyWolfAttackState : EnemyWolfBaseState
         base.UpdateState();
 
         _enemy.LookTarget();
-
         if (_triggerCalled) //공격이 한 차례 끝났을 때,
         {
             if (_enemy.IsTargetPlayerInside)
                 _stateMachine.ChangeState(EnemyWolfStateEnum.Chase); //사거리 안에 타겟 플레이어가 있다 -> 따라가
             else
                 _stateMachine.ChangeState(EnemyWolfStateEnum.Move); //없다 -> 넥서스로 Move
+
+            _triggerCalled = false;
         }
     }
 
     public override void Exit()
     {
+        _attackStartEventValue = 0;
         _enemy.AnimatorCompo.speed = 1;
         base.Exit();
     }

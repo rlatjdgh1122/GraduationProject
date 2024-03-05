@@ -11,7 +11,8 @@ public class EntityAttackData : MonoBehaviour
 
     protected virtual void Awake()
     {
-        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
+        
+        DamageCasterCompo = transform.GetComponentInChildren<DamageCaster>();
         owner = GetComponent<Entity>();
         DamageCasterCompo.SetOwner(owner.Stat);
     }
@@ -22,6 +23,11 @@ public class EntityAttackData : MonoBehaviour
     }
 
     public virtual void MeleeAttack()
+    {
+
+    }
+
+    public virtual void MeleeSphereAttack()
     {
 
     }

@@ -11,6 +11,8 @@ public class EnemyWolfMoveState : EnemyWolfBaseState
         base.Enter();
         _enemy.StopImmediately(); //움직이면서 공격하는거 방지
         _triggerCalled = true;
+
+        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
     }
 
     public override void UpdateState()
