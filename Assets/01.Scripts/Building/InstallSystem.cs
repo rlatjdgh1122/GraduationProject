@@ -113,7 +113,6 @@ public class InstallSystem : MonoBehaviour
                 return;
             }
 
-            WorkerManager.Instance.SendWorkers(_curBuilding.BuildingItemInfoCompo.NecessaryResourceCount, _curBuilding);
             _curBuilding?.Installed();
             _curBuilding?.transform.SetParent(_previousGround.transform);
             _previousGround?.InstallBuilding();

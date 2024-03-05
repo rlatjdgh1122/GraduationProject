@@ -95,8 +95,10 @@ public abstract class BaseBuilding : WorkableObject
 
     public void Installed()
     {
-        if (_buildingItemInfo != null)
+        if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
         {
+            WorkerManager.Instance.SendWorkers(_buildingItemInfo.NecessaryResourceCount, this);
+
             WaveManager.Instance.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnWorkers(this);
             WaveManager.Instance.OnBattlePhaseEndEvent += PlusInstalledTime;
             RemainTimeUI.OnRemainUI();

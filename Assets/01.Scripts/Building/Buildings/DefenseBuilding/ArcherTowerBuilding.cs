@@ -17,7 +17,7 @@ public class ArcherTowerBuilding : BaseBuilding
 
     protected override void Running()
     {
-        if(_visibleTargets.Count >= 0)
+        if(_visibleTargets.Count > 0)
         {
             Debug.Log("발견을했다????");
         }
