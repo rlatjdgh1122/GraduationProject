@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-public class WaveManager : MonoBehaviour
+public class WaveManager : Singleton<WaveManager>
 {
     #region 타이머 변수
     [Header("Timer Settings")]
@@ -101,34 +101,35 @@ public class WaveManager : MonoBehaviour
     #endregion
 
     #region SingleTon
-    private static WaveManager _instance;
-    public static WaveManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<WaveManager>();
+    //private static WaveManager _instance;
+    //public static WaveManager Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            _instance = FindObjectOfType<WaveManager>();
 
-                if (_instance == null)
-                {
-                    Debug.LogError("WaveManager is Multiple.");
-                }
-            }
-            return _instance;
-        }
-    }
+    //            if (_instance == null)
+    //            {
+    //                Debug.LogError("WaveManager is Multiple.");
+    //            }
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
-    private void Awake()
+    public override void Awake()
     {
-        if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
+        //if (_instance != this)
+        //{
+        //    Destroy(gameObject);
+        //}
+        //else
+        //{
+        //    _instance = this;
+        //}
+        base.Awake();
 
         BattlePhaseSubscribe();
     }

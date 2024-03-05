@@ -9,7 +9,7 @@ public class GeneralInfoUI : MonoBehaviour
 {
     public PenguinStat GeneralStat;
 
-    [SerializeField] private List<GeneralTechTreeUI> _techTrees;
+    [SerializeField] private List<GeneralMainUI> _generalUIList;
 
     private CanvasGroup _canvasGroup;
     private TextMeshProUGUI _nameText;
@@ -38,11 +38,11 @@ public class GeneralInfoUI : MonoBehaviour
     {
         if (CostManager.Instance.Cost >= GeneralStat.PenguinData.price)
         {
-            foreach (GeneralTechTreeUI techTreeUI in _techTrees)
+            foreach (GeneralMainUI generalUI in _generalUIList)
             {
-                if (techTreeUI.General == GeneralStat)
+                if (generalUI.GeneralStat == GeneralStat)
                 {
-                    techTreeUI.SetTechTree();
+                    generalUI.SetUpgradeUI();
                     PanelOff();
                     break;
                 }
@@ -50,11 +50,11 @@ public class GeneralInfoUI : MonoBehaviour
         }
     }
 
-    public void OpenPanel(PenguinStat stat)
+    public void OpenPanel(GeneralMainUI generalUI)
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
-        GeneralStat = stat;
+        GeneralStat = generalUI.GeneralStat;
         UpdateTexts();
         _canvasGroup.DOFade(1, 0.4f);
     }
