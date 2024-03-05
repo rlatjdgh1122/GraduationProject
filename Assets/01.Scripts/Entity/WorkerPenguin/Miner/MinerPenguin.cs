@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public enum WorkerPenguinStateEnum
 {
@@ -35,6 +36,11 @@ public class MinerPenguin : Worker
 
     protected override void Update()
     {
+        if(WorkerStateCheck)
+        {
+            StateMachine.Init(WorkerPenguinStateEnum.Idle);
+            WorkerStateCheck = false;
+        }
         StateMachine.CurrentState.UpdateState();
     }
 
