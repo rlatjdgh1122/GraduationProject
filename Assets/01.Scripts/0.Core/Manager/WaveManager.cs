@@ -70,9 +70,13 @@ public class WaveManager : Singleton<WaveManager>
     public event Action OnBattlePhaseEndEvent = null;
     public event Action OnIceArrivedEvent = null;
 
+
+    public event Action OnDummyPenguinInitTentFinEvent = null;
+
     private int maxEnemyCnt;
 
-    private List<Penguin> _curPTspawnPenguins = new List<Penguin> ();
+    private List<Penguin> _curPTspawnPenguins = new();
+    public int CurPTspawnPenguinCount => _curPTspawnPenguins.Count;
 
     #endregion
 
@@ -145,6 +149,7 @@ public class WaveManager : Singleton<WaveManager>
     {
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
         BattlePhaseEndEventHandler(isWin);
+
     }
 
     private void Update()
@@ -282,7 +287,7 @@ public class WaveManager : Singleton<WaveManager>
     {
         _curPTspawnPenguins.Clear();
 
-        for(int i = 0; i < penguins.Count; i++) //넘겨 받은 리스트를 저장하고
+        for (int i = 0; i < penguins.Count; i++) //넘겨 받은 리스트를 저장하고
         {
             _curPTspawnPenguins.Add(penguins[i]);
         }
@@ -294,16 +299,19 @@ public class WaveManager : Singleton<WaveManager>
     {
         for (int i = 0; i < _curPTspawnPenguins.Count; i++)
         {
-            //if () // 생성된 펭귄이 군단에 들어가있지 않으면 텐트로 돌아가게.
             _curPTspawnPenguins[i].SetCanInitTent(true);
             _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
-            //else // 군단에 들어가 있다면 알아서 군단위치로 가게
         }
     }
 
     public bool IsCurrentWaveCountEqualTo(int value)
     {
         return currentWaveCount == value; //TimeLineHolder에서 웨이브 수를 알기 위해서
+    }
+
+    public void DummyPenguinInitTentFinHandle()
+    {
+        OnDummyPenguinInitTentFinEvent?.Invoke();
     }
 
     private void OnDestroy()

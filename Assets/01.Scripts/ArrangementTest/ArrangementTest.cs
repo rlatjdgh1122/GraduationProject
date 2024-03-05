@@ -18,9 +18,13 @@ public class ArrangementTest : Singleton<ArrangementTest>
     [SerializeField] private List<ArrangementInfo> InfoList = new();
     private List<Vector3> seatPosList = new();
 
+    private List<Penguin> _spawnPenguins = new(); //아직 스폰 안 돼서 이번 전투 페이즈에 생성 될 펭귄들
+
     private void Start()
     {
         Setting();
+
+        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
     }
 
     private void Setting() // 이전 좌표랑 새로 찍은 좌표랑 비교해서 바라보는 방향까지 정하기
@@ -42,6 +46,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
     {
         InfoList.Clear();
     }
+
     public void AddArrangementInfo(ArrangementInfo info)
     {
         InfoList.Add(info);
@@ -49,6 +54,14 @@ public class ArrangementTest : Singleton<ArrangementTest>
         OnModifyInfo_Btn(info);
     }
 
+    private void SpawnPenguins()
+    {
+        for(int i = 0; i < _spawnPenguins.Count; i++)
+        {
+            _spawnPenguins[i].gameObject.SetActive(true);
+        }
+        _spawnPenguins.Clear();
+    }
 
     private void OnModifyInfo_Btn(ArrangementInfo info) //적용 
     {
@@ -57,6 +70,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
             Penguin obj = null;
             obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
             ArmyManager.Instance.JoinArmyToSoldier(info.legionIdx, obj as Penguin);
+
+            _spawnPenguins.Add(obj);
         }
 
         if (info.JobType == PenguinJobType.General)
@@ -65,8 +80,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
               obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
 
               ArmyManager.Instance.JoinArmyToGeneral(info.legionIdx, obj);
+            _spawnPenguins.Add(obj);
         }
-
         //InfoList.ForEach(p =>
         //{
 

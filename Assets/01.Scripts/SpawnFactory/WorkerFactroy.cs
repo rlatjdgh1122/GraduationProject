@@ -33,6 +33,7 @@ public class WorkerFactroy : EntityFactory<Worker>
         string resultString = originalString.Substring(0, originalString.LastIndexOf(" "));
 
         Worker spawnPenguin = PoolManager.Instance.Pop(resultString) as Worker;
+        spawnPenguin.WorkerStateChange();
         spawnPenguin.SetCanInitTent(false);
         return spawnPenguin;
     }
