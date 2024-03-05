@@ -8,7 +8,7 @@ public class GeneralUpgradeUI : MonoBehaviour
 {
     public PenguinStat GeneralStat;
 
-    [SerializeField] private List<GeneralTechTreeUI> _techTrees;
+    //[SerializeField] private List<GeneralTechTreeUI> _techTrees;
     [SerializeField] private TextMeshProUGUI _level; //이거 쌉 임시임
 
     #region components
@@ -42,30 +42,30 @@ public class GeneralUpgradeUI : MonoBehaviour
 
     public void UpgradePurchase()
     {
-        if (CostManager.Instance.Cost >= GeneralStat.PenguinData.levelUpPrice)
-        {
-            foreach (GeneralTechTreeUI techTreeUI in _techTrees)
-            {
-                if (techTreeUI.General == GeneralStat)
-                {
-                    if (techTreeUI.CanUpgrade)
-                    {
-                        GeneralStat.PenguinData.level++;
-                        UpdateTexts();
-                        techTreeUI.ContinueTechTree();
-                        PanelOff();
-                        break;
-                    }
-                }
-            }
-        }
+        //if (CostManager.Instance.Cost >= GeneralStat.PenguinData.levelUpPrice)
+        //{
+        //    foreach (GeneralTechTreeUI techTreeUI in _techTrees)
+        //    {
+        //        if (techTreeUI.General == GeneralStat)
+        //        {
+        //            if (techTreeUI.CanUpgrade)
+        //            {
+        //                GeneralStat.PenguinData.level++;
+        //                UpdateTexts();
+        //                techTreeUI.ContinueTechTree();
+        //                PanelOff();
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
-    public void OpenPanel(PenguinStat stat)
+    public void OpenPanel(GeneralMainUI generalUI)
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
-        GeneralStat = stat;
+        GeneralStat = generalUI.GeneralStat;
         UpdateTexts();
         _canvasGroup.DOFade(1, 0.4f);
     }

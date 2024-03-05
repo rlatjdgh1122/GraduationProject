@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -47,16 +48,15 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    public void UIMoveDot(RectTransform transform, Vector3 targetVec, float duration,
-                          Ease ease = Ease.Linear, params Action[] actions)
+    public IEnumerator UIMoveDotCoroutine(RectTransform transform, Vector3 targetVec, float duration,
+                                      Ease ease = Ease.Linear, params Action[] actions)
     {
-        transform.DOMove(targetVec, duration).SetEase(ease).OnComplete(() =>
+        yield return transform.DOMove(targetVec, duration).SetEase(ease).WaitForCompletion();
+
+        foreach (Action action in actions)
         {
-            foreach (Action action in actions)
-            {
-                action?.Invoke();
-            }
-        });
+            action?.Invoke();
+        }
     }
 
     public void ChangeTextColorBoolean(TextMeshProUGUI text, bool value, Color beforeColor, Color afterColor, float dureation,
