@@ -69,6 +69,7 @@ public abstract class BaseBuilding : WorkableObject
 
         }
         SetUpCompo();
+
     }
 
     private void SetUpCompo()
@@ -96,6 +97,7 @@ public abstract class BaseBuilding : WorkableObject
     {
         if (_buildingItemInfo != null)
         {
+            WaveManager.Instance.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnWorkers(this);
             WaveManager.Instance.OnBattlePhaseEndEvent += PlusInstalledTime;
             RemainTimeUI.OnRemainUI();
             RemainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
@@ -118,6 +120,10 @@ public abstract class BaseBuilding : WorkableObject
             WaveManager.Instance.OnBattlePhaseEndEvent -= PlusInstalledTime;
             SetInstalled();
             RemainTimeUI.OffRemainUI();
+        }
+        else
+        {
+            WorkerManager.Instance.SendWorkers(_buildingItemInfo.NecessaryResourceCount, this);
         }
     }
 
@@ -154,6 +160,8 @@ public abstract class BaseBuilding : WorkableObject
             UIManager.Instance.InitializHudTextSequence();
             _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
             UIManager.Instance.SpawnHudText(_installedFinText);
+            
+            WaveManager.Instance.OnBattlePhaseStartEvent -= () => WorkerManager.Instance.ReturnWorkers(this);
         }
     }
 
