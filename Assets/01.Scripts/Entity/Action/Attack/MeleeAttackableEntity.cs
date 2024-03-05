@@ -27,9 +27,4 @@ public class MeleeAttackableEntity : EntityAttackData
     {
         DamageCasterCompo.CastDamage();
     }
-
-    public override void MeleeSphereAttack()
-    {
-        DamageCasterCompo.CastSphere();
-    }
 }

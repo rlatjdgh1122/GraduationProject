@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class DamageCaster : MonoBehaviour
@@ -114,17 +115,27 @@ public class DamageCaster : MonoBehaviour
         return false;
     }
 
-    public bool CastSphere()
+    public bool BleedCast(int damage, int repeat, float duration, HitType hitType)
     {
         RaycastHit[] raySphere = Physics.SphereCastAll(transform.position, _detectRange, transform.forward, 0,  TargetLayer);
 
         foreach(var ray in raySphere)
         {
             ray.collider.TryGetComponent(out IDamageable raycastHealth);
-            int damage = _owner.damage.GetValue();
-            raycastHealth.ApplyDamage(damage, ray.point, ray.normal, _hitType);
+
+            StartCoroutine(BleedStart(damage, repeat, duration, raycastHealth, ray, hitType));
         }
         return false;
+    }
+
+    private IEnumerator BleedStart(int damage, int repeat, float duration, IDamageable raycastHealth, RaycastHit ray, HitType hitType)
+    {
+        for(int i = 0; i < repeat; i++)
+        {
+            yield return new WaitForSeconds(duration);
+            raycastHealth.ApplyDamage(damage, ray.point, ray.normal, hitType);
+            Debug.Log(damage);
+        }
     }
 
 

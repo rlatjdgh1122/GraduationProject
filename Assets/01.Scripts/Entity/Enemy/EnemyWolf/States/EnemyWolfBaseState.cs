@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class EnemyWolfBaseState : EnemyState<EnemyWolfStateEnum>
 {
+    protected BleedAttackableEntity _bleed;
     public EnemyWolfBaseState(Enemy enemyBase, EnemyStateMachine<EnemyWolfStateEnum> stateMachine, string animBoolName) 
         : base(enemyBase, stateMachine, animBoolName)
     {
+        _bleed = enemyBase.GetComponent<BleedAttackableEntity>();
     }
 
     public override void Enter()
