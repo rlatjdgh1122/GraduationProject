@@ -34,10 +34,10 @@ public class GeneralUpgradeUI : MonoBehaviour
 
     public void UpdateTexts()
     {
-        _levelText.text = $"LV {GeneralStat.PenguinData.level}";
-        _priceText.text = $"LV {GeneralStat.PenguinData.level} -> LV {GeneralStat.PenguinData.level + 1}  {GeneralStat.PenguinData.levelUpPrice}";
-        GeneralStat.UpdateAblitiyUI(_nameText, _atkBox, _defBox, _rangeBox);
-        _level.text = $"LV {GeneralStat.PenguinData.level}";
+        //_levelText.text = $"LV {GeneralStat.PenguinData.level}";
+        //_priceText.text = $"LV {GeneralStat.PenguinData.level} -> LV {GeneralStat.PenguinData.level + 1}  {GeneralStat.PenguinData.levelUpPrice}";
+        //GeneralStat.UpdateAblitiyUI(_nameText, _atkBox, _defBox, _rangeBox);
+        //_level.text = $"LV {GeneralStat.PenguinData.level}";
     }
 
     public void UpgradePurchase()
@@ -65,7 +65,7 @@ public class GeneralUpgradeUI : MonoBehaviour
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
-        GeneralStat = generalUI.GeneralStat;
+        //GeneralStat = generalUI.GeneralStat;
         UpdateTexts();
         _canvasGroup.DOFade(1, 0.4f);
     }
