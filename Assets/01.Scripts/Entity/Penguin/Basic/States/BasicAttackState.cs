@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public class BasicAttackState : BasicBaseState
 {
@@ -8,10 +10,11 @@ public class BasicAttackState : BasicBaseState
     {
     }
 
-    public override void Enter() //한명이 때리다가 죽으면 
+    public override void Enter()
     {
         base.Enter();
         _triggerCalled = false;
+        _penguin.WaitTrueAnimEndTrigger = false;
 
         _penguin.FindFirstNearestEnemy();
         _penguin.Owner.IsMoving = false;
@@ -30,6 +33,19 @@ public class BasicAttackState : BasicBaseState
 
             if (_penguin.CurrentTarget == null)
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+        }
+
+        if (_penguin.ArmyTriggerCalled)
+        {
+            float animTime =
+                _penguin.AnimatorCompo.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (animTime >= 1f)
+            {
+                Debug.Log("애니메이션 끝");
+                _penguin.WaitTrueAnimEndTrigger = true;
+                _penguin.MoveToTarget(_penguin.GetSeatPosition());
+                //_stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+            }
         }
     }
 

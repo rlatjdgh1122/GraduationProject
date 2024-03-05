@@ -9,6 +9,7 @@ public class BasicIdleState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
     }
 
     public override void UpdateState()

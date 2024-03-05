@@ -28,7 +28,6 @@ public class ArmyMovement : MonoBehaviour
     }
 
 
-
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
         SetArmyNumber();
@@ -78,23 +77,28 @@ public class ArmyMovement : MonoBehaviour
 
     }
 
-    private bool AllCanMovingInList() => _returnResult;
+    private bool AllCanMovingInList() =>
+        _returnResult;
     private IEnumerator WaitForAllTrue(Vector3 mousePos)
     {
+        _returnResult = false;
+
+        Debug.Log("true");
+        foreach (var item in armySoldierList)
+        {
+            item.Soldier.ArmyTriggerCalled = true;
+        }
+
         // 리스트의 모든 AA 객체가 qwer가 true가 될 때까지 반복
         while (!AllTrueInList(mousePos))
         {
             // heartbeat 시간까지 게임시간 단위로 기다림
-
-            var heartbeat = 2f;
-            Time.timeScale = .5f;
             yield return new WaitForSecondsRealtime(heartbeat);
-            // => 4초 기다림
 
         }
 
         // 모두 true일 때 여기로 진행
-        Debug.Log("모두 true입니다!");
+        _returnResult = true;
     }
 
     private bool AllTrueInList(Vector3 mousePos)
@@ -106,13 +110,13 @@ public class ArmyMovement : MonoBehaviour
 
         foreach (var item in armySoldierList)
         {
-            if (item.Soldier.IsAbsoluteMovement)
+            if (item.Soldier.WaitTrueAnimEndTrigger)
             {
-                result = false;
+                SetSoldierMovePosition(mousePos, item.Soldier);
             }
             else
             {
-                SetSoldierMovePosition(mousePos, item.Soldier);
+                result = false;
             }
         }
 

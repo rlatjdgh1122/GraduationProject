@@ -27,8 +27,8 @@ public abstract class Entity : PoolableMono
     #region 군단 포지션
 
     private bool isAbsoluteMovement = false;
-
-    public bool IsAbsoluteMovement
+    public bool WaitTrueAnimEndTrigger = true;
+    public bool ArmyTriggerCalled
     {
         get { return isAbsoluteMovement; }
         set { isAbsoluteMovement = value; }
@@ -133,7 +133,6 @@ public abstract class Entity : PoolableMono
         MousePos = mousePos;
         if (NavAgent.isActiveAndEnabled)
         {
-
             MoveToTarget(mousePos + SeatPos);
         }
     }
@@ -145,6 +144,9 @@ public abstract class Entity : PoolableMono
             MoveToTarget(mousePos);
         }
     }
+
+    public Vector3 GetSeatPosition() => MousePos + SeatPos;
+
 
     public void MoveToTarget(Vector3 pos)
     {
