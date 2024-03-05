@@ -17,9 +17,6 @@ public class FieldOfView : MonoBehaviour
     [SerializeField]
     private LayerMask _targetLayer, _obstacleLayer;
 
-    // Target layer에 ray hit된 transform을 보관하는 리스트
-    private HashSet<Transform> _visibleTargets = new (); //중복되면 안되니까 HashSet
-
     void Start()
     {
         StartCoroutine(FindTargetsWithDelay(0.2f));
@@ -31,20 +28,13 @@ public class FieldOfView : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
-
-            if (_visibleTargets.Count > 0)
-            {
-                foreach (Transform t in _visibleTargets)
-                {
-                    Debug.Log(t.gameObject);
-                }
-            }
         }
     }
 
     public HashSet<Transform> FindVisibleTargets()
     {
-        _visibleTargets.Clear();
+        HashSet<Transform> visibleTargets = new();
+
         // viewRadius를 반지름으로 한 원 영역 내 _targetLayer 레이어인 콜라이더를 모두 가져옴
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, _targetLayer);
 
@@ -62,13 +52,12 @@ public class FieldOfView : MonoBehaviour
                 // 타겟으로 가는 레이캐스트에 _obstacleLayer 걸리지 않으면 _visibleTargets에 Add
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleLayer))
                 {
-                    Debug.Log("발견!!!!");
-                    _visibleTargets.Add(target);
+                    visibleTargets.Add(target);
                 }
             }
         }
 
-        return _visibleTargets;
+        return visibleTargets;
     }
 
     // y축 오일러 각을 3차원 방향 벡터로 변환한다.
