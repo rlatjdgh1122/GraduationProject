@@ -26,6 +26,14 @@ public abstract class Entity : PoolableMono
 
     #region 군단 포지션
 
+    private bool isAbsoluteMovement = false;
+
+    public bool IsAbsoluteMovement
+    {
+        get { return isAbsoluteMovement; }
+        set { isAbsoluteMovement = value; }
+    }
+
     private Vector3 curMousePos = Vector3.zero;
     private Vector3 prevMousePos = Vector3.zero;
     public Vector3 MousePos

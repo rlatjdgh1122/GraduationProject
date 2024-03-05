@@ -10,6 +10,7 @@ public class EntityState<T,G> where T : Enum where G : Entity
 
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
+    protected bool _triggerAbsoluteMovement = false; //절대적인 움직임
     
 
     public EntityState(G penguin, EntityStateMachine<T, G> stateMachine, string animationBoolName)

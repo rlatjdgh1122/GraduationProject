@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 
 public class BasicAttackState : BasicBaseState
 {
-    public BasicAttackState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum,Penguin> stateMachine, string animationBoolName)
+    public BasicAttackState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -12,6 +12,7 @@ public class BasicAttackState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = false;
+
         _penguin.FindFirstNearestEnemy();
         _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();

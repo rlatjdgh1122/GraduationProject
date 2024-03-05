@@ -62,6 +62,8 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         if (curLegion == index) return;
 
+        SignalHub.OnArmyChanged.Invoke(armies[curLegion], armies[index]);
+
         curLegion = index;
 
         armies.IdxExcept(
