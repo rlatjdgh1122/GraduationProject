@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ArcherTowerBuilding : BaseBuilding
@@ -7,6 +8,8 @@ public class ArcherTowerBuilding : BaseBuilding
     FieldOfView _fov;
 
     HashSet<Transform> _visibleTargets => _fov.FindVisibleTargets();
+
+    ArcherPenguin[] _archerPenguins;
 
     protected override void Awake()
     {
@@ -17,9 +20,6 @@ public class ArcherTowerBuilding : BaseBuilding
 
     protected override void Running()
     {
-        if(_visibleTargets.Count > 0)
-        {
-            Debug.Log("발견을했다????");
-        }
+
     }
 }
