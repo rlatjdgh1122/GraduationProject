@@ -133,6 +133,7 @@ public class DamageCaster : MonoBehaviour
         for(int i = 0; i < repeat; i++)
         {
             yield return new WaitForSeconds(duration);
+            Debug.Log($"{damage} , {ray.point}, {ray.normal} , {hitType}");
             raycastHealth.ApplyDamage(damage, ray.point, ray.normal, hitType);
             Debug.Log(damage);
         }

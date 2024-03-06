@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class BleedAttackableEntity : EntityAttackData
 {
+    [SerializeField] private ParticleSystem _bleedParticle;
     [SerializeField] private int _attackEventValue;
+    [SerializeField] private int _bleedDmg;
+
+    [SerializeField] private int _repeat;
+    [SerializeField] private float _duration;
 
     public int AttackEventValue
     {
@@ -25,7 +30,8 @@ public class BleedAttackableEntity : EntityAttackData
     {
         if(Bleed)
         {
-            DamageCasterCompo.BleedCast(5, 3, 0.5f, HitType.BleedHit);
+            _bleedParticle.Play();
+            DamageCasterCompo.BleedCast(_bleedDmg, _repeat, _duration, HitType.BleedHit);
             Bleed = false;
         }
         else
