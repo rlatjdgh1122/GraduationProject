@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BleedAttackableEntity : EntityAttackData
 {
-    [SerializeField] private ParticleSystem _bleedParticle;
+    [SerializeField] private CanvasLookToCamera _canvasCamera;
     [SerializeField] private int _attackEventValue;
     [SerializeField] private int _bleedDmg;
 
@@ -30,13 +30,21 @@ public class BleedAttackableEntity : EntityAttackData
     {
         if(Bleed)
         {
-            _bleedParticle.Play();
-            DamageCasterCompo.BleedCast(_bleedDmg, _repeat, _duration, HitType.BleedHit);
+            StartCoroutine(BleedAnimation());
+
             Bleed = false;
+            DamageCasterCompo.BleedCast(_bleedDmg, _repeat, _duration, HitType.BleedHit);
         }
         else
         {
             DamageCasterCompo.CaseAoEDamage(false, 0);
         }
+    }
+
+    private IEnumerator BleedAnimation()
+    {
+        _canvasCamera.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        _canvasCamera.gameObject.SetActive(false);
     }
 }
