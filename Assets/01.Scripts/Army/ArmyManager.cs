@@ -9,9 +9,14 @@ public class ArmyManager : Singleton<ArmyManager>
     [SerializeField] private List<Army> armies = new();
     public List<Army> Armies { get { return armies; } }
 
-    private int curLegion = 0;
-    public int CurLegion => curLegion;
-    public int ArmyCount => armies.Count;
+
+    private bool battleMode = false;
+    public bool BattleMode => battleMode;
+
+    private int curArmyIdx = 0;
+    public int CurLegion => curArmyIdx + 1;
+
+    public int ArmiesCount => armies.Count;
 
     private void Start()
     {
@@ -24,7 +29,7 @@ public class ArmyManager : Singleton<ArmyManager>
         foreach (var army in armies)
         {
             army.Soldiers.ForEach(s => s.SetOwner(army));
-            army.IsMoving = true;
+            army.IsCanReadyAttackInCurArmySoldiersList = true;
         }
 
         ChangeArmy(1);
@@ -38,6 +43,11 @@ public class ArmyManager : Singleton<ArmyManager>
             ChangeArmy(2);
         else if (Input.GetKeyDown(KeyCode.Alpha3))
             ChangeArmy(3);
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            battleMode = !battleMode;
+        }
     }
 
     /// <summary>
@@ -46,28 +56,28 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <returns> Army를 리던</returns>
     public Army GetCurArmy() //현재 army 리턴
     {
-        return armies[curLegion];
+        return armies[curArmyIdx];
     }
 
     public Army GetArmy(int legion) //현재 army 리턴
     {
-        return armies[legion];
+        return armies[legion - 1];
     }
 
     /// <summary>
     /// 군단 변경
     /// </summary>
-    /// <param name="index"> 몇번째 군단</param>
-    private void ChangeArmy(int index)
+    /// <param name="legion"> 몇번째 군단</param>
+    private void ChangeArmy(int legion)
     {
-        if (curLegion == index) return;
+        int Idx = legion - 1;
+        if (curArmyIdx == Idx) return;
+        SignalHub.OnArmyChanged.Invoke(armies[curArmyIdx], armies[Idx]);
 
-        SignalHub.OnArmyChanged.Invoke(armies[curLegion], armies[index]);
-
-        curLegion = index;
+        curArmyIdx = Idx;
 
         armies.IdxExcept(
-            index,
+            Idx,
             p =>
             p.Soldiers.ForEach(s =>
             {
@@ -92,7 +102,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curLegion].AddStat(armies[curLegion],value, type, mode);
+        armies[curArmyIdx].AddStat(armies[curArmyIdx], value, type, mode);
     }
 
     /// <summary>
@@ -103,7 +113,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curLegion].RemoveStat(armies[curLegion], value, type, mode);
+        armies[curArmyIdx].RemoveStat(armies[curArmyIdx], value, type, mode);
     }
 
     /// <summary>
@@ -115,7 +125,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion].RemoveStat(armies[legion],value, type, mode);
+        armies[legion - 1].RemoveStat(armies[legion], value, type, mode);
     }
     /// <summary>
     /// 군단의 스탯을 삭제
@@ -126,7 +136,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion].AddStat(armies[legion],value, type, mode);
+        armies[legion - 1].AddStat(armies[legion], value, type, mode);
     }
 
     #endregion
@@ -146,7 +156,7 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        var Army = armies[legion];
+        var Army = armies[legion - 1];
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
@@ -165,7 +175,7 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        var Army = armies[legion];
+        var Army = armies[legion - 1];
         var LegionStat = obj.ligeonStat;
 
         if (Army.General != null)
@@ -177,7 +187,7 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.General = obj;
 
-        Army.AddStat(Army,LegionStat);
+        Army.AddStat(Army, LegionStat);
 
     }
     #endregion
@@ -210,7 +220,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public void Remove(int legion, Penguin obj)
     {
-        var soldiers = armies[legion].Soldiers;
+        var soldiers = armies[legion - 1].Soldiers;
         soldiers.Remove(obj); //리스트에서 제외
 
         // 여기서 죽은 펭귄을 다시 push하는 코드가 필요
@@ -223,8 +233,8 @@ public class ArmyManager : Singleton<ArmyManager>
     public void CreateArmy()
     {
         Army newArmy = new Army();
-        newArmy.Legion = ArmyCount + 1;
-        newArmy.IsMoving = true;
+        newArmy.Legion = ArmiesCount + 1;
+        newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
         armies.Add(newArmy);
     }
 

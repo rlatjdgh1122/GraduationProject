@@ -21,7 +21,7 @@ public struct ArmyInfo //UI부분, 기획이 더 필요
 public class Army
 {
     public int Legion; //몇번째 군단
-    public bool IsMoving; //움직이는 중인가
+    public bool IsCanReadyAttackInCurArmySoldiersList = true; //군단 전체가 움직일 준비가 되었는가
     public List<Penguin> Soldiers = new(); //군인 펭귄들
     public General General; //장군
 

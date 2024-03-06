@@ -640,7 +640,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1422658230}
   m_Lens:
-    FieldOfView: 39.99999
+    FieldOfView: 25
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -10603,7 +10603,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 39.99999
+  field of view: 25
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -14926,6 +14926,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1971149093}
     m_Modifications:
+    - target: {fileID: 36826864115223563, guid: b9fe14e4bcb329f47a9e5070aabceb31,
+        type: 3}
+      propertyPath: cooltime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1132691168690863477, guid: b9fe14e4bcb329f47a9e5070aabceb31,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -15150,6 +15155,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: WorkerFactroy, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6524015426866678307, guid: b9fe14e4bcb329f47a9e5070aabceb31,
+        type: 3}
+      propertyPath: cooltime
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7530349500275401161, guid: b9fe14e4bcb329f47a9e5070aabceb31,
         type: 3}
@@ -16888,7 +16898,7 @@ MonoBehaviour:
   soldierTypeListSO: {fileID: 11400000, guid: 538e6cee0073b7749a1d37f6b1648073, type: 2}
   armies:
   - Legion: 1
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
     info:
@@ -16900,7 +16910,7 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 2
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
     info:
@@ -16912,7 +16922,7 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 3
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
     info:
@@ -16924,7 +16934,7 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 4
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
     info:
@@ -16936,7 +16946,7 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 5
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
     info:
@@ -16948,7 +16958,7 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 6
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
     info:
@@ -16987,7 +16997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
-  heartbeat: 0.05
+  armySoldierList: []
 --- !u!114 &1861243456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17068,7 +17078,7 @@ PrefabInstance:
     - target: {fileID: 2350100254840239150, guid: 02ea4ea2941f25240bb390a3d8f587d8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2350100254840239150, guid: 02ea4ea2941f25240bb390a3d8f587d8,
         type: 3}
@@ -17078,7 +17088,7 @@ PrefabInstance:
     - target: {fileID: 2350100254840239150, guid: 02ea4ea2941f25240bb390a3d8f587d8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2350100254840239150, guid: 02ea4ea2941f25240bb390a3d8f587d8,
         type: 3}

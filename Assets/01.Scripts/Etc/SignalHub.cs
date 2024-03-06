@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public struct ArrangementInfo
 {
-    public int legionIdx;
+    public int legion;
     public int SlotIdx;
     public PenguinJobType JobType;
     public PenguinTypeEnum PenguinType;

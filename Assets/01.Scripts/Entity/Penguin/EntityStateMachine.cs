@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-public class EntityStateMachine<T,G> where T : Enum where G : Entity
+public class EntityStateMachine<T, G> where T : Enum where G : Entity
 {
-    public EntityState<T,G> CurrentState { get; private set; }
-    public EntityState<T,G> PrevState { get; private set; }
+    public EntityState<T, G> CurrentState { get; private set; }
+    public EntityState<T, G> PrevState { get; private set; }
     public Dictionary<T, EntityState<T, G>> StateDictionary
         = new Dictionary<T, EntityState<T, G>>();
 
@@ -21,6 +21,8 @@ public class EntityStateMachine<T,G> where T : Enum where G : Entity
         CurrentState.Exit();
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
+
+        UnityEngine.Debug.Log("이 전 : " + PrevState + " : 지금 : " + CurrentState);
     }
 
     public void AddState(T state, EntityState<T, G> playerState)

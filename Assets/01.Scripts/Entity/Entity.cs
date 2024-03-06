@@ -26,13 +26,10 @@ public abstract class Entity : PoolableMono
 
     #region 군단 포지션
 
-    private bool isAbsoluteMovement = false;
+    public bool ArmyTriggerCalled = false;
     public bool WaitTrueAnimEndTrigger = true;
-    public bool ArmyTriggerCalled
-    {
-        get { return isAbsoluteMovement; }
-        set { isAbsoluteMovement = value; }
-    }
+    public bool SuccessfulToSeatMyPostion = false;
+    public bool BattleMode = false;
 
     private Vector3 curMousePos = Vector3.zero;
     private Vector3 prevMousePos = Vector3.zero;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ArmyNumber
 {
     public Entity Soldier;
@@ -11,14 +12,24 @@ public class ArmyNumber
 public class ArmyMovement : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private float heartbeat = 0.1f;
     private ParticleSystem ClickParticle;
-    private Army curArmy => ArmyManager.Instance.GetCurArmy();
+    private Army curArmy = null;
 
-    private List<ArmyNumber> armySoldierList = new List<ArmyNumber>();
+    public List<ArmyNumber> armySoldierList = new List<ArmyNumber>();
 
-    private bool _returnResult = false;
+    private bool isCanMove = false;
+    private bool successfulSeatMyPos = false;
+    private bool BattleMode => ArmyManager.Instance.BattleMode;
+
+    //움직이지 않고 모두가 위치에 이동했다면
+    private bool result => successfulSeatMyPos && isCanMove;
+
     private Coroutine WaitForAllTrueCoutine = null;
+    private Coroutine AllTrueToCanMoveCoutine = null;
+    private Coroutine AllTrueToSeatMyPostionCoutine = null;
+
+    private static float heartbeat = 0.1f;
+    private static WaitForSecondsRealtime waitingByheartbeat = new WaitForSecondsRealtime(heartbeat);
 
     private void Awake()
     {
@@ -26,10 +37,14 @@ public class ArmyMovement : MonoBehaviour
         _inputReader.RightClickEvent += SetClickMovement;
         SignalHub.OnArmyChanged += OnArmyChangedHandler;
     }
-
+    private void Start()
+    {
+        curArmy = ArmyManager.Instance.GetCurArmy();
+    }
 
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
+        curArmy = newArmy;
         SetArmyNumber();
     }
 
@@ -66,61 +81,108 @@ public class ArmyMovement : MonoBehaviour
             if (WaitForAllTrueCoutine != null)
                 StopCoroutine(WaitForAllTrueCoutine);
 
-            WaitForAllTrueCoutine = StartCoroutine(WaitForAllTrue(hit.point));
+            WaitForAllTrueCoutine = StartCoroutine(WaitForAllTrue_Corou(hit.point));
 
-            //SetArmyMovePostiton(hit.point);
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
         }
-
-
-
     }
 
-    private bool AllCanMovingInList() =>
-        _returnResult;
-    private IEnumerator WaitForAllTrue(Vector3 mousePos)
+    private IEnumerator WaitForAllTrue_Corou(Vector3 mousePos)
     {
-        _returnResult = false;
+        isCanMove = false;
+        successfulSeatMyPos = false;
 
-        Debug.Log("true");
+        curArmy.IsCanReadyAttackInCurArmySoldiersList = false;
+
         foreach (var item in armySoldierList)
         {
             item.Soldier.ArmyTriggerCalled = true;
+            item.Soldier.BattleMode = battleMode;
         }
 
-        // 리스트의 모든 AA 객체가 qwer가 true가 될 때까지 반복
-        while (!AllTrueInList(mousePos))
+        //모두가 움직일 수 있는 상태인지 확인하기 위해 코루틴 돌려줌
+        if (AllTrueToCanMoveCoutine != null)
+            StopCoroutine(AllTrueToCanMoveCoutine);
+
+        AllTrueToCanMoveCoutine = StartCoroutine(AllTrueToCanMove_Corou(mousePos));
+
+        yield return new WaitUntil(() => result == true);
+
+        // 성공적으로 해결되었다면
+        Debug.Log("오케이");
+        //값복사라 적용이 안되는듯함
+        curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+    }
+    private IEnumerator AllTrueToCanMove_Corou(Vector3 mousePos)
+    {
+        isCanMove = false;
+
+        if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
-            // heartbeat 시간까지 게임시간 단위로 기다림
-            yield return new WaitForSecondsRealtime(heartbeat);
-
+            Debug.Log("문제가 있다1");
         }
 
-        // 모두 true일 때 여기로 진행
-        _returnResult = true;
+        while (!isCanMove)
+        {
+            foreach (var item in armySoldierList)
+            {
+                //공격 애니메이션이 끝났다면 움직일 수 있음
+                if (item.Soldier.WaitTrueAnimEndTrigger)
+                {
+                    isCanMove = true;
+                    //움직여주기
+                    SetSoldierMovePosition(mousePos, item.Soldier);
+                }
+                else
+                {
+                    isCanMove = false;
+                }
+            }
+
+            //모두가 위치로 움직일 수 있을때까지 대기
+            yield return waitingByheartbeat;
+        }
+
+        //모두가 움직일 수 있다면
+        // 모두가 자리에 위치해 있는지 확인하기 위해 코루틴을 돌려줌 
+        if (AllTrueToSeatMyPostionCoutine != null)
+            StopCoroutine(AllTrueToSeatMyPostionCoutine);
+
+        AllTrueToSeatMyPostionCoutine = StartCoroutine(AllTrueToSeatMyPostion_Corou());
     }
 
-    private bool AllTrueInList(Vector3 mousePos)
+    private IEnumerator AllTrueToSeatMyPostion_Corou()
     {
+        successfulSeatMyPos = false;
+
         if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
-            return false;
-
-        bool result = true;
-
-        foreach (var item in armySoldierList)
         {
-            if (item.Soldier.WaitTrueAnimEndTrigger)
-            {
-                SetSoldierMovePosition(mousePos, item.Soldier);
-            }
-            else
-            {
-                result = false;
-            }
+            Debug.Log("문제가 있다2");
         }
 
-        return result; // 모든 항목이 true일 경우 true 반환
+        while (!successfulSeatMyPos)
+        {
+            foreach (var item in armySoldierList)
+            {
+                //공격 애니메이션이 끝났다면 움직일 수 있음
+                if (item.Soldier.SuccessfulToSeatMyPostion)
+                {
+                    successfulSeatMyPos = true;
+                }
+                else
+                {
+                    successfulSeatMyPos = false;
+                }
+            }
+
+            yield return waitingByheartbeat;
+        }
+    }
+
+    private void SetSoldierMovePosition(Vector3 mousePos, Entity entity)
+    {
+        entity.MoveToMySeat(mousePos);
     }
 
     /// <summary>
@@ -141,10 +203,6 @@ public class ArmyMovement : MonoBehaviour
         }
     }
 
-    private void SetSoldierMovePosition(Vector3 mousePos, Entity entity)
-    {
-        entity.MoveToMySeat(mousePos);
-    }
 
     private void OnDestroy()
     {
