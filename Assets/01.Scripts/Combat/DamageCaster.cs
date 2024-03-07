@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class DamageCaster : MonoBehaviour
     private float _detectRange = 1f;
     [SerializeField]
     private HitType _hitType;
+
 
     public LayerMask TargetLayer;
 
@@ -73,6 +75,7 @@ public class DamageCaster : MonoBehaviour
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
                 int damage = _owner.damage.GetValue();
+
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
 
                 if (Knb == true)
@@ -114,26 +117,32 @@ public class DamageCaster : MonoBehaviour
 
         return false;
     }
-
-    public bool BleedCast(int damage, int repeat, float duration, HitType hitType)
+    public void BleedCast(int damage, int repeat, float duration, HitType hitType)
     {
-        RaycastHit[] raySphere = Physics.SphereCastAll(transform.position, _detectRange, transform.forward, 0,  TargetLayer);
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
-        foreach(var ray in raySphere)
+        foreach (var col in Colls)
         {
-            ray.collider.TryGetComponent(out IDamageable raycastHealth);
+            RaycastHit raycastHit;
 
-            StartCoroutine(BleedStart(damage, repeat, duration, raycastHealth, ray, hitType));
+            var dir = (col.transform.position - transform.position).normalized;
+            dir.y = 0;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+
+            if (raycastSuccess
+                && raycastHit.collider.TryGetComponent<Health>(out Health health))
+            {
+                StartCoroutine(BleedStart(damage, repeat, duration, health, raycastHit, hitType));
+            }
         }
-        return false;
     }
 
-    private IEnumerator BleedStart(int damage, int repeat, float duration, IDamageable raycastHealth, RaycastHit ray, HitType hitType)
+    private IEnumerator BleedStart(int damage, int repeat, float duration, Health raycastHealth, RaycastHit ray, HitType hitType)
     {
-        for(int i = 0; i < repeat; i++)
+        for (int i = 0; i < repeat; i++)
         {
             yield return new WaitForSeconds(duration);
-            Debug.Log($"{damage} , {ray.point}, {ray.normal} , {hitType}");
             raycastHealth.ApplyDamage(damage, ray.point, ray.normal, hitType);
             Debug.Log(damage);
         }
