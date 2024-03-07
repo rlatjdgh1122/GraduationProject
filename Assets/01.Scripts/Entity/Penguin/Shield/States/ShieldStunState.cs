@@ -13,7 +13,6 @@ public class ShieldStunState : ShieldBaseState
         base.Enter();
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
-        _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
@@ -35,7 +34,6 @@ public class ShieldStunState : ShieldBaseState
     public override void Exit()
     {
         _penguin.AnimatorCompo.speed = 1;
-        _penguin.Owner.IsMoving = true;
         base.Exit();
     }
 }

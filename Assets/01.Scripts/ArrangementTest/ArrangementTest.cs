@@ -50,22 +50,33 @@ public class ArrangementTest : Singleton<ArrangementTest>
     public void AddArrangementInfo(ArrangementInfo info)
     {
         InfoList.Add(info);
+        OnJoinArmyByInfo(info);
+    }
+    public void RemoveArrangementInfoByLegionAndSlotIdx(int legion, int slotIdx)
+    {
+        var findInfo = 
+            InfoList.Find(x => x.legion == legion && x.SlotIdx == slotIdx);
 
-        OnModifyInfo_Btn(info);
+        OnRemoveArmyByInfo(findInfo);
     }
 
     private void SpawnPenguins()
     {
-        for(int i = 0; i < _spawnPenguins.Count; i++)
+        for (int i = 0; i < _spawnPenguins.Count; i++)
         {
             _spawnPenguins[i].gameObject.SetActive(true);
         }
         _spawnPenguins.Clear();
     }
 
-    private void OnModifyInfo_Btn(ArrangementInfo info) //���� 
+    private void OnRemoveArmyByInfo(ArrangementInfo info)
     {
-        if(info.JobType == PenguinJobType.Solider)
+        InfoList.Remove(info);
+
+    }
+    private void OnJoinArmyByInfo(ArrangementInfo info) //���� 
+    {
+        if (info.JobType == PenguinJobType.Solider)
         {
             Penguin obj = null;
             obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
@@ -75,10 +86,10 @@ public class ArrangementTest : Singleton<ArrangementTest>
 
         if (info.JobType == PenguinJobType.General)
         {
-              General obj = null;
-              obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
+            General obj = null;
+            obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
 
-              ArmyManager.Instance.JoinArmyToGeneral(info.legion, obj);
+            ArmyManager.Instance.JoinArmyToGeneral(info.legion, obj);
             _spawnPenguins.Add(obj);
         }
         //InfoList.ForEach(p =>

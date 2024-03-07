@@ -26,6 +26,10 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
         _data = null;
         _unitImage.enabled = false;
         _unitImage.sprite = null;
+
+        var info = _data.penguinData;
+
+        ArrangementTest.Instance.RemoveArrangementInfoByLegionAndSlotIdx(_legionNumber, _slotNumber - 1);
     }
 
     public override void UpdateSlot(LegionInventoryData data)
@@ -47,14 +51,14 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_data != null)
+        if (_data != null)
         {
             _info.InfoDataSlot(_data);
         }
 
         if (_data != null && Input.GetKey(KeyCode.LeftControl)) //이 슬롯의 데이터를 군단 인벤에서 제거
         {
-            if(_data.penguinData.JobType == PenguinJobType.General)
+            if (_data.penguinData.JobType == PenguinJobType.General)
             {
                 CurrentLegion.MaxGereral = false;
             }
@@ -63,7 +67,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
             CleanUpSlot(); //슬롯 초기화
 
-            if(CurrentLegion.CurrentCount > 0)
+            if (CurrentLegion.CurrentCount > 0)
             {
                 CurrentLegion.CurrentCount--;
             }
@@ -84,7 +88,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
             _data = _info._data; //이 슬롯의 데이터는 UnitInformationUI의 데이터
 
-            if(_data.penguinData.JobType == PenguinJobType.General)
+            if (_data.penguinData.JobType == PenguinJobType.General)
             {
                 CurrentLegion.MaxGereral = true;
             }
@@ -102,11 +106,11 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
             UpdateSlot(_data);
         }
 
-        if(CurrentLegion.CurrentCount >= CurrentLegion.MaxCount)
+        if (CurrentLegion.CurrentCount >= CurrentLegion.MaxCount)
         {
             LegionInventory.Instance.ShowMessage("군단이 가득찼습니다!");
         }
-        
+
 
         LegionInventory.Instance.LegionCountInformation(_legionNumber - 1);
     }
@@ -120,7 +124,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _slotImage.color = new Color(255,255,255,0);
+        _slotImage.color = new Color(255, 255, 255, 0);
     }
 
     #endregion

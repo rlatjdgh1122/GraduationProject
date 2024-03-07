@@ -640,7 +640,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1422658230}
   m_Lens:
-    FieldOfView: 35
+    FieldOfView: 30
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -2689,13 +2689,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df66db9ea875b4949a7290cb7c34d1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIType: 3
-  _nexusStat: {fileID: 11400000, guid: 390a69cde83dbd04ea1fe35b49bb15fb, type: 2}
-  _currentLevel: {fileID: 107132116}
-  _upgradedLevel: {fileID: 253844641}
-  _currentHp: {fileID: 25242867}
-  _upgradedHp: {fileID: 1657218689}
-  _upgradePrice: {fileID: 19635178}
+  _panelFadeTime: 0
+  currentLevel: {fileID: 0}
+  nextLevel: {fileID: 0}
+  currentHp: {fileID: 0}
+  nextHp: {fileID: 0}
+  upgradePrice: {fileID: 0}
 --- !u!225 &245494528
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7633,6 +7632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f62f7d1ccf7d14a82e9946be691c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasTrm: {fileID: 0}
   ScreenCenterVec: {x: 232.5, y: 231.5}
   offVec: {x: 232.5, y: -100}
 --- !u!1 &837513323
@@ -10603,7 +10603,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 35
+  field of view: 30
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -13193,7 +13193,7 @@ PrefabInstance:
     - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
