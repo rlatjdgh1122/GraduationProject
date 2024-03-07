@@ -11,6 +11,12 @@ public class PopupUI : MonoBehaviour
     public virtual void Awake()
     {
         _panel = GetComponent<CanvasGroup>();
+
+        if (_panel != null)
+        {
+            _panel.alpha = 0;
+            _panel.blocksRaycasts = false;
+        }
     }
 
     public virtual void ShowPanel()

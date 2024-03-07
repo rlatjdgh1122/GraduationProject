@@ -7,7 +7,7 @@ public class GeneralShip : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        UIManager.Instance.ShowPanel("GeneralStore");
+        UIManager.Instance.ShowPanel("GeneralUI");
     }
 
     private void Start()
