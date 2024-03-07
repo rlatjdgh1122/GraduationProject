@@ -70,6 +70,20 @@ public class PassiveDataSO : ScriptableObject
     }
 
     /// <summary>
+    /// 체력이 50이하 일 때 페시브 활성화 확인 여부
+    /// </summary>>
+    /// <returns> 결과</returns>
+    public bool CheckStunEventPassive(float maxHp, float currentHP)
+    {
+        if(maxHp / 2 > currentHP)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// 몇 대마다 패시브 활성화 확인 여부
     /// </summary>
     /// <returns> 결과</returns>

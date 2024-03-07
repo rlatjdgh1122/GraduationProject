@@ -45,7 +45,7 @@ public class Penguin : Entity
         AttackCompo = GetComponent<EntityAttackData>();
     }
 
-    #region 나중에 지우셈
+    #region 일반 병사들 페시브
     //General에서 뺴옴 ㅋ
     public bool CheckAttackEventPassive(int curAttackCount)
 => passiveData.CheckAttackEventPassive(curAttackCount);
@@ -54,7 +54,16 @@ public class Penguin : Entity
     {
 
     }
+    public bool CheckStunEventPassive(float maxHp, float currentHP)
+ =>passiveData.CheckStunEventPassive(maxHp, currentHP);
+
+    public virtual void OnPassiveStunEvent()
+    {
+
+    }
     #endregion
+
+
 
     public void SetOwner(Army army)
     {
