@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 
 public class ShieldStunState : ShieldBaseState
 {
+
     public ShieldStunState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum,Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {

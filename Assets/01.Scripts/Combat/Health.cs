@@ -47,6 +47,45 @@ public class Health : MonoBehaviour, IDamageable
         return true;
     }
 
+    public bool Stun(RaycastHit ray, float duration)
+    {
+        GameObject enemy = ray.collider.gameObject;
+        Debug.Log(enemy.name + "이(가) 스턴 상태가 되었습니다.");
+        
+        StartCoroutine(StunCoroutine(enemy, duration));
+        
+        Debug.Log(enemy.name + "이(가) 스턴 상태에서 벗어났습니다.");
+        return true;
+    }
+
+    private IEnumerator StunCoroutine(GameObject enemy ,float duration)
+    {
+        Animator animator = enemy.GetComponentInChildren<Animator>();
+
+        if (animator != null)
+        {
+            animator.speed = 0f;
+        }
+
+        CharacterController controller = enemy.GetComponent<CharacterController>();
+        if (controller != null)
+        {
+            controller.enabled = false; // Disable movement
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        if (animator != null)
+        {
+            animator.speed = 1f; 
+        }
+
+        if (controller != null)
+        {
+            controller.enabled = true; 
+        }
+    }
+
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
     {
         if (_isDead) return;

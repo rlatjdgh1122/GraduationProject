@@ -86,6 +86,28 @@ public class DamageCaster : MonoBehaviour
     }
 
     /// <summary>
+    /// 단일 스턴 데미지
+    /// </summary>
+    /// <returns> 공격 맞았나 여부</returns>
+    public void CastStunDamage(bool Stun, float duration)
+    {
+        RaycastHit raycastHit;
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
+
+        if (raycastSuccess
+            && raycastHit.collider.TryGetComponent<Health>(out Health health))
+        {
+            int damage = _owner.damage.GetValue();
+
+            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+
+            if (Stun == true)
+                health.Stun(raycastHit, duration);
+        }
+
+    }
+
+    /// <summary>
     /// 단일 데미지
     /// </summary>
     /// <returns> 공격 맞았나 여부</returns>
