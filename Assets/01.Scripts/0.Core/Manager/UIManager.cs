@@ -17,6 +17,9 @@ public enum UIType
 public class UIManager : Singleton<UIManager>
 {
     public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
+    public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>();
+
+    public Transform canvasTrm;
 
     public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
@@ -31,9 +34,22 @@ public class UIManager : Singleton<UIManager>
 
     public override void Awake()
     {
-        GameObject overlayCanvasRoot = GameObject.Find("Canvas");
+        canvasTrm = GameObject.Find("Canvas").transform;
 
-        NormalUI[] overlayUIArray = overlayCanvasRoot.GetComponentsInChildren<NormalUI>();
+        NormalUI[] overlayUIArray = canvasTrm.GetComponentsInChildren<NormalUI>();
+        PopupUI[] popupUIs = canvasTrm.GetComponentsInChildren<PopupUI>();
+
+        foreach (PopupUI popupUI in popupUIs)
+        {
+            if (!popupUIDictionary.ContainsKey(popupUI.name))
+            {
+                popupUIDictionary.Add(popupUI.name, popupUI);
+            }
+            else
+            {
+                Debug.Log($"중복 키 : {popupUI.name}");
+            }
+        }
 
         foreach (NormalUI overlayUI in overlayUIArray)
         {
@@ -46,6 +62,24 @@ public class UIManager : Singleton<UIManager>
                 Debug.LogWarning("키 중복 : " + overlayUI.name);
             }
         }
+
+        foreach (PopupUI popup in popupUIDictionary.Values)
+        {
+            Debug.Log(popup.name);
+        }
+    }
+
+    public void ShowPanel(string uiName)
+    {
+        popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
+        if (popupUI != null)
+            popupUI.ShowPanel();
+    }
+
+    public void HidePanel(string uiName)
+    {
+        popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
+        popupUI.HidePanel();
     }
 
     public IEnumerator UIMoveDotCoroutine(RectTransform transform, Vector3 targetVec, float duration,

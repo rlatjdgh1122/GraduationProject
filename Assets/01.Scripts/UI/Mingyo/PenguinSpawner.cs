@@ -13,7 +13,8 @@ public enum PenguinTypeEnum
     Shield,
     Mop,
     Sign,
-    Worker
+    Worker,
+    ShieldGeneral
 }
 
 public class PenguinSpawner : DefaultBuilding

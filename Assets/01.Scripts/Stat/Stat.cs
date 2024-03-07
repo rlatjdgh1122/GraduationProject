@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using StatOperator;
-using Unity.VisualScripting;
 
 [Serializable]
 public class Stat
@@ -13,6 +12,7 @@ public class Stat
 
     public List<int> increases; //증가 % (곱연산)
     public List<int> decreases; //감소 % (합연산)
+
     public int GetValue()
     {
         return Modify();
@@ -35,6 +35,7 @@ public class Stat
     {
         _baseValue = value + (mul1 * mul2);
     }
+
     public void AddIncrease(int value)
     {
         if (value != 0)
@@ -42,6 +43,7 @@ public class Stat
 
         Modify();
     }
+
     public void AddDecrease(int value)
     {
         if (value != 0)
@@ -57,6 +59,7 @@ public class Stat
 
         Modify();
     }
+
     public void RemoveDecrease(int value)
     {
         if (value != 0)
@@ -72,6 +75,7 @@ public class Stat
             decreases.Clear();
         }
     }
+
     public void StatIncReset()
     {
         if (increases.Count > 0)
@@ -90,6 +94,4 @@ public class Stat
     {
         _baseValue = value;
     }
-
-
 }

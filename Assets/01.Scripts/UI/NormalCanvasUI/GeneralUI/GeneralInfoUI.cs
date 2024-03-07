@@ -9,7 +9,7 @@ public class GeneralInfoUI : MonoBehaviour
 {
     public PenguinStat GeneralStat;
 
-    [SerializeField] private List<GeneralMainUI> _generalUIList;
+    [SerializeField] private List<GeneralPresenter> _generalUIList;
 
     private CanvasGroup _canvasGroup;
     private TextMeshProUGUI _nameText;
@@ -31,30 +31,30 @@ public class GeneralInfoUI : MonoBehaviour
     public void UpdateTexts()
     {
         _priceText.text = $"¿µÀÔ  {GeneralStat.PenguinData.price}";
-        GeneralStat.UpdateAblitiyUI(_nameText, _atkBox, _defBox, _rangeBox);
+        //GeneralStat.UpdateAblitiyUI(_nameText, _atkBox, _defBox, _rangeBox);
     }
 
     public void Purchase()
     {
-        if (CostManager.Instance.Cost >= GeneralStat.PenguinData.price)
-        {
-            foreach (GeneralMainUI generalUI in _generalUIList)
-            {
-                if (generalUI.GeneralStat == GeneralStat)
-                {
-                    generalUI.SetUpgradeUI();
-                    PanelOff();
-                    break;
-                }
-            }
-        }
+        //if (CostManager.Instance.Cost >= GeneralStat.PenguinData.price)
+        //{
+        //    foreach (GeneralMainUI generalUI in _generalUIList)
+        //    {
+        //        if (generalUI.GeneralStat == GeneralStat)
+        //        {
+        //            generalUI.SetUpgradeUI();
+        //            PanelOff();
+        //            break;
+        //        }
+        //    }
+        //}
     }
 
-    public void OpenPanel(GeneralMainUI generalUI)
+    public void OpenPanel(GeneralPresenter generalUI)
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
-        GeneralStat = generalUI.GeneralStat;
+        //GeneralStat = generalUI.GeneralStat;
         UpdateTexts();
         _canvasGroup.DOFade(1, 0.4f);
     }
