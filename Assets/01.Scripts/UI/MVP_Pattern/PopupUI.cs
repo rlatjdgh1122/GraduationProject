@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public abstract class PopupUI : MonoBehaviour
+public class PopupUI : MonoBehaviour
 {
     [SerializeField]
     private float _panelFadeTime;
@@ -23,10 +23,5 @@ public abstract class PopupUI : MonoBehaviour
     {
         _panel.blocksRaycasts = false;
         _panel.DOFade(0, _panelFadeTime);
-    }
-
-    public virtual void ExitButton()
-    {
-        HidePanel();
     }
 }

@@ -6,10 +6,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class GeneralView : MonoBehaviour, IPointerEnterHandler
+public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 {
     public GeneralStat generalStat;
-    public GeneralMainUI MainUI;
 
     [SerializeField] private Color _outlineColor;
 
@@ -24,8 +23,10 @@ public class GeneralView : MonoBehaviour, IPointerEnterHandler
     public Button purchaseButton;
     public Button upgradeButton;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         if (generalStat.GeneralData.IsAvailable)
             SetUpgradeUI(generalStat);
         else
@@ -59,16 +60,17 @@ public class GeneralView : MonoBehaviour, IPointerEnterHandler
 
     public void OnPurchase()
     {
-        MainUI.Purchase(generalStat);
+        presenter.Purchase(generalStat);
     }
 
     public void OnUpgrade()
     {
-        MainUI.ShowUpgradePanel(generalStat);
+        presenter.ShowUpgradePanel();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        MainUI.SetGeneralView(this);
+        if (presenter != null)
+            presenter.SetCurrentView(this);
     }
 }

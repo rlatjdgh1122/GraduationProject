@@ -9,7 +9,7 @@ public class GeneralInfoUI : MonoBehaviour
 {
     public PenguinStat GeneralStat;
 
-    [SerializeField] private List<GeneralMainUI> _generalUIList;
+    [SerializeField] private List<GeneralPresenter> _generalUIList;
 
     private CanvasGroup _canvasGroup;
     private TextMeshProUGUI _nameText;
@@ -50,7 +50,7 @@ public class GeneralInfoUI : MonoBehaviour
         //}
     }
 
-    public void OpenPanel(GeneralMainUI generalUI)
+    public void OpenPanel(GeneralPresenter generalUI)
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;

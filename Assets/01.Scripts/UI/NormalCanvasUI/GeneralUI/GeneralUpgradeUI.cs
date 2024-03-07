@@ -61,7 +61,7 @@ public class GeneralUpgradeUI : MonoBehaviour
         //}
     }
 
-    public void OpenPanel(GeneralMainUI generalUI)
+    public void OpenPanel(GeneralPresenter generalUI)
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
