@@ -3,35 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ArcherTowerBuilding : BaseBuilding
+public class ArcherTowerBuilding : DefenseBuilding
 {
-    FieldOfView _fov;
-
-    HashSet<Transform> _visibleTargets => _fov.FindVisibleTargets();
-
     ArcherTowerPenguin[] _archerPenguins;
-
-    private MeshRenderer _archerAttackRangeMesh;
-    private Material _rangeMat;
 
     protected override void Awake()
     {
         base.Awake();
 
-        _fov = GetComponent<FieldOfView>();
-
         _archerPenguins = transform.GetComponentsInChildren<ArcherTowerPenguin>();
-        _archerAttackRangeMesh = transform.Find("AttackRange/Slinder").GetComponent<MeshRenderer>();
-        _rangeMat = _archerAttackRangeMesh.material;
-
-        _archerAttackRangeMesh.gameObject.SetActive(false);
-
-        SetUpPenguinsCompo(_fov.ViewRadius, true);
-    }
-
-    protected override void Running()
-    {
-
+        SetUpPenguinsCompo(FOV.ViewRadius, true);
     }
 
     private void SetUpPenguinsCompo(float attackDistance, bool isFirst = false)
@@ -47,14 +28,6 @@ public class ArcherTowerBuilding : BaseBuilding
         }
     }
 
-    public override void SetSelect()
-    {
-        base.SetSelect();
-
-        _archerAttackRangeMesh.gameObject.SetActive(true);
-        _archerAttackRangeMesh.material = _rangeMat;
-    }
-
     protected override void SetInstalled()
     {
         base.SetInstalled();
@@ -63,7 +36,5 @@ public class ArcherTowerBuilding : BaseBuilding
         {
             _archerPenguins[i].gameObject.SetActive(true);
         }
-
-        _archerAttackRangeMesh.gameObject.SetActive(false);
     }
 }
