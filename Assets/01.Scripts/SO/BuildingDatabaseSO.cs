@@ -28,6 +28,10 @@ public class BuildingItemInfo
     public string Name { get { return name; } }
 
     [SerializeField]
+    private string _codeName;
+    public string CodeName { get { return _codeName; } }
+
+    [SerializeField]
     private int id;
     public int ID { get { return id; } }
 
@@ -47,10 +51,13 @@ public class BuildingItemInfo
     private float installedTime;
     public float InstalledTime { get { return installedTime; } }
 
+    [SerializeField]
+    private int _maxInstallableCount;
+    public int MaxInstallableCount { get { return _maxInstallableCount; } }
 
     [SerializeField]
-    private Sprite _necessaryResourceSprite;
-    public Sprite NecessaryResourceSprite { get { return _necessaryResourceSprite; } }
+    private Resource _necessaryResources; //이거 여러개로 나중에
+    public Resource NecessaryResource { get { return _necessaryResources; } }
 
     [SerializeField]
     private int necessaryResourceCount;
@@ -59,6 +66,8 @@ public class BuildingItemInfo
     [SerializeField]
     private int necessaryWokerCount;
     public int NecessaryWokerCount { get { return necessaryWokerCount; } }
+
+    public bool IsUnlocked = false;
 }
 
 [CreateAssetMenu(menuName = "SO/Building/BuildingList")]

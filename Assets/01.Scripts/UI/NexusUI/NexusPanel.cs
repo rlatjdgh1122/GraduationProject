@@ -18,7 +18,10 @@ public class NexusPanel : NexusPopupUI
     public override void Awake()
     {
         base.Awake();
+    }
 
+    private void Start()
+    {
         presenter.OnUpdateNexusUI += UpdateUI;
         UpdateUI();
     }
@@ -37,7 +40,12 @@ public class NexusPanel : NexusPopupUI
         presenter.LevelUp();
     }
 
-    private void OnDestroy()
+    public override void MovePanel(float x, float y, float fadeTime)
+    {
+        base.MovePanel(x, y, fadeTime);
+    }
+
+    private void OnDisable()
     {
         presenter.OnUpdateNexusUI -= UpdateUI;
     }

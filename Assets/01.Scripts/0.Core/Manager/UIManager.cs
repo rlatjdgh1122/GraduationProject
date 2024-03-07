@@ -16,7 +16,6 @@ public enum UIType
 
 public class UIManager : Singleton<UIManager>
 {
-    [HideInInspector]
     public Transform canvasTrm;
 
     public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
@@ -81,6 +80,12 @@ public class UIManager : Singleton<UIManager>
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         popupUI.HidePanel();
+    }
+
+    public void MovePanel(string uiName, float x, float y, float fadeTime)
+    {
+        popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
+        popupUI.MovePanel(x, y, fadeTime);
     }
 
     public IEnumerator UIMoveDotCoroutine(RectTransform transform, Vector3 targetVec, float duration,
