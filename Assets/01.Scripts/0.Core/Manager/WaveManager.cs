@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-public class WaveManager : MonoBehaviour
+public class WaveManager : Singleton<WaveManager>
 {
     #region 타이머 변수
     [Header("Timer Settings")]
@@ -70,9 +70,13 @@ public class WaveManager : MonoBehaviour
     public event Action OnBattlePhaseEndEvent = null;
     public event Action OnIceArrivedEvent = null;
 
+
+    public event Action OnDummyPenguinInitTentFinEvent = null;
+
     private int maxEnemyCnt;
 
-    private List<Penguin> _curPTspawnPenguins = new List<Penguin> ();
+    private List<Penguin> _curPTspawnPenguins = new();
+    public int CurPTspawnPenguinCount => _curPTspawnPenguins.Count;
 
     #endregion
 
@@ -97,34 +101,35 @@ public class WaveManager : MonoBehaviour
     #endregion
 
     #region SingleTon
-    private static WaveManager _instance;
-    public static WaveManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<WaveManager>();
+    //private static WaveManager _instance;
+    //public static WaveManager Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            _instance = FindObjectOfType<WaveManager>();
 
-                if (_instance == null)
-                {
-                    Debug.LogError("WaveManager is Multiple.");
-                }
-            }
-            return _instance;
-        }
-    }
+    //            if (_instance == null)
+    //            {
+    //                Debug.LogError("WaveManager is Multiple.");
+    //            }
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
-    private void Awake()
+    public override void Awake()
     {
-        if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
+        //if (_instance != this)
+        //{
+        //    Destroy(gameObject);
+        //}
+        //else
+        //{
+        //    _instance = this;
+        //}
+        base.Awake();
 
         BattlePhaseSubscribe();
     }
@@ -144,6 +149,7 @@ public class WaveManager : MonoBehaviour
     {
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
         BattlePhaseEndEventHandler(isWin);
+
     }
 
     private void Update()
@@ -281,7 +287,7 @@ public class WaveManager : MonoBehaviour
     {
         _curPTspawnPenguins.Clear();
 
-        for(int i = 0; i < penguins.Count; i++) //넘겨 받은 리스트를 저장하고
+        for (int i = 0; i < penguins.Count; i++) //넘겨 받은 리스트를 저장하고
         {
             _curPTspawnPenguins.Add(penguins[i]);
         }
@@ -293,16 +299,19 @@ public class WaveManager : MonoBehaviour
     {
         for (int i = 0; i < _curPTspawnPenguins.Count; i++)
         {
-            //if () // 생성된 펭귄이 군단에 들어가있지 않으면 텐트로 돌아가게.
             _curPTspawnPenguins[i].SetCanInitTent(true);
             _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
-            //else // 군단에 들어가 있다면 알아서 군단위치로 가게
         }
     }
 
     public bool IsCurrentWaveCountEqualTo(int value)
     {
         return currentWaveCount == value; //TimeLineHolder에서 웨이브 수를 알기 위해서
+    }
+
+    public void DummyPenguinInitTentFinHandle()
+    {
+        OnDummyPenguinInitTentFinEvent?.Invoke();
     }
 
     private void OnDestroy()

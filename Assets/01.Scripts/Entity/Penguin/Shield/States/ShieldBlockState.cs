@@ -12,10 +12,10 @@ public class ShieldBlockState : ShieldBaseState
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
 
-        foreach (var enemy in _penguin.FindNearestEnemy(5)) //일단 임시로 5마리도발 이것도 SO로 뺄거임
+        /*foreach (var enemy in _penguin.FindNearestEnemy(5)) //일단 임시로 5마리도발 이것도 SO로 뺄거임
         {
             enemy.IsProvoked = true;
-        }
+        }*/
 
         _penguin.HealthCompo.OnHit += ImpactShield;
     }
@@ -31,6 +31,11 @@ public class ShieldBlockState : ShieldBaseState
 
         if (_penguin.CurrentTarget == null)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
+
+        if(_penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth,_penguin.HealthCompo.currentHealth))
+        {
+            _penguin?.OnPassiveStunEvent();
+        }
     }
 
     private void ImpactShield()

@@ -9,6 +9,7 @@ public enum HitType
     ArrowHit,
     RockHit,
     WoodHit,
+    BleedHit,
 }
 
 public interface IDamageable

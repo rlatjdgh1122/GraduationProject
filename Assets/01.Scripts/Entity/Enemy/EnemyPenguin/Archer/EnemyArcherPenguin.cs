@@ -29,9 +29,6 @@ public class EnemyArcherPenguin : Enemy
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
-
-        if (IsDead)
-            StateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

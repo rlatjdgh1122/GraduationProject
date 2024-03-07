@@ -18,20 +18,24 @@ public class ArrangementTest : Singleton<ArrangementTest>
     [SerializeField] private List<ArrangementInfo> InfoList = new();
     private List<Vector3> seatPosList = new();
 
+    private List<Penguin> _spawnPenguins = new(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Å¼ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ïµï¿½
+
     private void Start()
     {
         Setting();
+
+        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
     }
 
-    private void Setting() // ÀÌÀü ÁÂÇ¥¶û »õ·Î ÂïÀº ÁÂÇ¥¶û ºñ±³ÇØ¼­ ¹Ù¶óº¸´Â ¹æÇâ±îÁö Á¤ÇÏ±â
+    private void Setting() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
     {
         int CLNum = length / 2 + (length % 2 == 0 ? 0 : 1); //7 => 4
         int CWNum = width / 2 + (width % 2 == 0 ? 0 : 1); //5 => 3
 
         //Debug.Log(CWNum + " : " + CLNum);
-        for (int i = (CLNum - 1); i > -CLNum; --i) //¼¼·Î 
+        for (int i = (CLNum - 1); i > -CLNum; --i) //ï¿½ï¿½ï¿½ï¿½ 
         {
-            for (int j = -(CWNum - 1); j < CWNum; ++j) //°¡·Î
+            for (int j = -(CWNum - 1); j < CWNum; ++j) //ï¿½ï¿½ï¿½ï¿½
             {
                 seatPosList.Add(new Vector3(j * distance, 0, i * distance));
             }
@@ -42,6 +46,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
     {
         InfoList.Clear();
     }
+
     public void AddArrangementInfo(ArrangementInfo info)
     {
         InfoList.Add(info);
@@ -49,14 +54,23 @@ public class ArrangementTest : Singleton<ArrangementTest>
         OnModifyInfo_Btn(info);
     }
 
+    private void SpawnPenguins()
+    {
+        for(int i = 0; i < _spawnPenguins.Count; i++)
+        {
+            _spawnPenguins[i].gameObject.SetActive(true);
+        }
+        _spawnPenguins.Clear();
+    }
 
-    private void OnModifyInfo_Btn(ArrangementInfo info) //Àû¿ë 
+    private void OnModifyInfo_Btn(ArrangementInfo info) //ï¿½ï¿½ï¿½ï¿½ 
     {
         if(info.JobType == PenguinJobType.Solider)
         {
             Penguin obj = null;
             obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
             ArmyManager.Instance.JoinArmyToSoldier(info.legion, obj as Penguin);
+            _spawnPenguins.Add(obj);
         }
 
         if (info.JobType == PenguinJobType.General)
@@ -65,8 +79,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
               obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
 
               ArmyManager.Instance.JoinArmyToGeneral(info.legion, obj);
+            _spawnPenguins.Add(obj);
         }
-
         //InfoList.ForEach(p =>
         //{
 

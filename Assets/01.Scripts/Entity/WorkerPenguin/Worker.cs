@@ -14,6 +14,8 @@ public class Worker : Entity
     public bool CanWork = false;
     public bool EndWork = false;
 
+    public bool WorkerStateCheck = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -39,6 +41,11 @@ public class Worker : Entity
     public void MoveToNexus()
     {
         NavAgent.SetDestination(WorkerHomeTrm.transform.position);
+    }
+
+    public void WorkerStateChange()
+    {
+        WorkerStateCheck = true;
     }
 
     public float CheckNexusDistance()

@@ -76,10 +76,10 @@ public class UnitInformationUI : SlotUI
             }
 
             _atk.DOValue(_privateData.penguinData.PenguinData.atk, 0.2f);
-            _def.DOValue(_privateData.penguinData.PenguinData.def, 0.2f);
+            _def.DOValue(_privateData.penguinData.PenguinData.hp, 0.2f);
             _range.DOValue(_privateData.penguinData.PenguinData.range, 0.2f);
 
-            data.penguinData.PenguinInformationTextUpdate(_weapon, _passive, _Synergy);
+            //data.penguinData.PenguinInformationTextUpdate(_weapon, _passive, _Synergy);
         }
     }
 }

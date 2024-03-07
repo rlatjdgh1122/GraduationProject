@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ public class Penguin : Entity
     public float attackSpeed = 1f;
     public int maxDetectedCount;
     public float provokeRange = 25f;
+
+    public PassiveDataSO passiveData = null;
 
     #region components
     public EntityAttackData AttackCompo { get; private set; }
@@ -41,6 +44,26 @@ public class Penguin : Entity
 
         AttackCompo = GetComponent<EntityAttackData>();
     }
+
+    #region 일반 병사들 페시브
+    //General에서 뺴옴 ㅋ
+    public bool CheckAttackEventPassive(int curAttackCount)
+=> passiveData.CheckAttackEventPassive(curAttackCount);
+
+    public virtual void OnPassiveAttackEvent()
+    {
+
+    }
+    public bool CheckStunEventPassive(float maxHp, float currentHP)
+ =>passiveData.CheckStunEventPassive(maxHp, currentHP);
+
+    public virtual void OnPassiveStunEvent()
+    {
+
+    }
+    #endregion
+
+
 
     public void SetOwner(Army army)
     {
