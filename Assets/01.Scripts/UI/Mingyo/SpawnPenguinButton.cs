@@ -10,13 +10,8 @@ public class SpawnPenguinButton : MonoBehaviour
 {
     private Button _btn;
 
-    [Tooltip("쿨타임을 알려줄 이미지 (자식에 있다)")]
-    [SerializeField] private Image _coolingimg;
-
-    [Tooltip("쿨타임")]
-    [SerializeField] private float cooltime;
-
     [Tooltip("무엇을 생성할 것인지. Prefab을 넣어주면 된다.")]
+    [SerializeField] private PenguinStat _penguinStat;
     [SerializeField] private Penguin spawnPenguin;
     
     private PenguinFactory _penguinFactory; // 팩토리
@@ -48,19 +43,19 @@ public class SpawnPenguinButton : MonoBehaviour
 
     private void ButtonCooldown() // 버튼 누르면 실행될 함수
     {
-        _btn.interactable = false;
-        _coolingimg.fillAmount = 1f;
+        //_btn.interactable = false;
+        //_coolingimg.fillAmount = 1f;
 
-        UIManager.Instance.InitializHudTextSequence();
-        UIManager.Instance.SpawnHudText(_penguinFactory.SuccesHudText);
+        //UIManager.Instance.InitializHudTextSequence();
+        //UIManager.Instance.SpawnHudText(_penguinFactory.SuccesHudText);
 
-        LegionInventory.Instance.AddPenguin(spawnPenguin.ReturnGenericStat<PenguinStat>());
+        //LegionInventory.Instance.AddPenguin(spawnPenguin.ReturnGenericStat<PenguinStat>());
 
-        DOTween.To(() => _coolingimg.fillAmount, f => _coolingimg.fillAmount = f, 0f, cooltime).OnComplete(() => // 생성시간이 다 되었다면
-        {
-            _btn.interactable = true;
-            _penguinFactory.SpawnPenguinHandler(spawnPenguin); // 팩토리에서 생성하는 함수 실행
-        });
+        //DOTween.To(() => _coolingimg.fillAmount, f => _coolingimg.fillAmount = f, 0f, cooltime).OnComplete(() => // 생성시간이 다 되었다면
+        //{
+        //    _btn.interactable = true;
+        //    _penguinFactory.SpawnPenguinHandler(spawnPenguin); // 팩토리에서 생성하는 함수 실행
+        //});
     }
 
 }
