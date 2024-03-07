@@ -727,13 +727,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 859666678169623112}
-  - component: {fileID: 179661087374311081}
-  - component: {fileID: 7296114736050028617}
   - component: {fileID: 360267866002048507}
   - component: {fileID: 6594374755693866922}
   - component: {fileID: 6451691636579873651}
   - component: {fileID: 581567147176288639}
   - component: {fileID: 8440470828257332474}
+  - component: {fileID: 2618430406744020540}
   m_Layer: 11
   m_Name: ArcherTowerPenguin
   m_TagString: Player
@@ -751,7 +750,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.025, y: 0.030251695, z: 0.025}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 645333373561872923}
@@ -763,117 +762,6 @@ Transform:
   - {fileID: 8464619471372183845}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &179661087374311081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3059422080729098496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19d01ae11d8621e49a8f444877e07b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterStat: {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
-  innerDistance: 6
-  attackDistance: 6
-  moveSpeed: 3.5
-  attackSpeed: 0.6
-  maxDetectedCount: 0
-  provokeRange: 25
-  CurrentTarget: {fileID: 0}
-  IsDead: 0
-  owner:
-    Legion: 0
-    IsMoving: 0
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
---- !u!114 &7296114736050028617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3059422080729098496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5d59ff96f7e14443b783782b3cde1a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 0
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 991521917423804831}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9213824799146498679}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDeathEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnUIUpdate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8807243176831884628}
-        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
-        m_MethodName: UpdateHpbarUI
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OffUIUpdate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8807243176831884628}
-        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
-        m_MethodName: FadeOutImmediately
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &360267866002048507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -971,6 +859,40 @@ MonoBehaviour:
   IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
+--- !u!114 &2618430406744020540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059422080729098496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671e8504ea113a246aaf5d2b3a376e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterStat: {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
+  innerDistance: 4
+  attackDistance: 1.5
+  moveSpeed: 4.5
+  attackSpeed: 1
+  maxDetectedCount: 0
+  provokeRange: 25
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
+  owner:
+    Legion: 0
+    IsMoving: 0
+    Soldiers: []
+    General: {fileID: 0}
+    info:
+      totalCount: 0
+      basicCount: 0
+      archerCount: 0
+      shieldCount: 0
+      basicTimes: 0
+      archerTimes: 0
+      shieldTimes: 0
 --- !u!1 &3199108643032755049
 GameObject:
   m_ObjectHideFlags: 0

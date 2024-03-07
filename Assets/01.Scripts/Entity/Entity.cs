@@ -79,12 +79,12 @@ public abstract class Entity : PoolableMono
     {
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
-        HealthCompo = GetComponent<Health>();
+        HealthCompo = transform?.GetComponent<Health>();
         NavAgent = GetComponent<NavMeshAgent>();
         OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
 
-        HealthCompo.SetHealth(_characterStat);
+        HealthCompo?.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
 
 
@@ -97,8 +97,11 @@ public abstract class Entity : PoolableMono
 
     private void OnDestroy()
     {
-        HealthCompo.OnHit -= HandleHit;
-        HealthCompo.OnDied -= HandleDie;
+        if (HealthCompo != null)
+        {
+            HealthCompo.OnHit -= HandleHit;
+            HealthCompo.OnDied -= HandleDie;
+        }
     }
 
     protected virtual void HandleHit()

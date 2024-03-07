@@ -18,6 +18,8 @@ public class ArcherTowerPenguin : Penguin
 
     protected override void Awake()
     {
+        base.Awake();
+
         StateMachine = new EntityStateMachine<ArcherTowerPenguinStateEnum, Penguin>();
 
         foreach (ArcherTowerPenguinStateEnum state in Enum.GetValues(typeof(ArcherTowerPenguinStateEnum)))
