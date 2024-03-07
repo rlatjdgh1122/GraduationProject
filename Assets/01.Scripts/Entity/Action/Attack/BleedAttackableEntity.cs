@@ -12,7 +12,7 @@ public class BleedAttackableEntity : EntityAttackData
     [SerializeField] private float _duration;
 
     public int AttackEventValue
-    {
+    {  
         get
         {
             return _attackEventValue;
