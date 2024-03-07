@@ -15,30 +15,32 @@ public class SpawnPenguinButton : MonoBehaviour
     [SerializeField] private Penguin spawnPenguin;
     
     private PenguinFactory _penguinFactory; // 팩토리
+    private PenguinStoreUI _penguinStore;
 
     protected virtual void Awake()
     {
+        _penguinStore = transform.parent.parent.parent.GetComponent<PenguinStoreUI>();
         _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
         _btn = GetComponent<Button>();
     }
 
     public void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
-        if(WaveManager.Instance.IsBattlePhase)
-        {
-            UIManager.Instance.InitializHudTextSequence();
-            _penguinFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
+        _penguinStore.OnEnableBuyPanel();
 
-            UIManager.Instance.SpawnHudText(_penguinFactory.FailHudText);
-            return;
-        }
+        //if(WaveManager.Instance.IsBattlePhase)
+        //{
+        //    UIManager.Instance.InitializHudTextSequence();
+        //    _penguinFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
 
-        if (!WaveManager.Instance.IsBattlePhase) // 남은 준비시간안에 생성할 수 있다면 생성한다.
-        {
-            //TestLegion.Instance.LegionUIList[0].HeroCnt++;
+        //    UIManager.Instance.SpawnHudText(_penguinFactory.FailHudText);
+        //    return;
+        //}
 
-            ButtonCooldown();
-        }
+        //if (!WaveManager.Instance.IsBattlePhase) // 남은 준비시간안에 생성할 수 있다면 생성한다.
+        //{
+
+        //}
     }
 
     private void ButtonCooldown() // 버튼 누르면 실행될 함수
