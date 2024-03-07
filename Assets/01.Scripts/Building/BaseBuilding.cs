@@ -143,7 +143,7 @@ public abstract class BaseBuilding : WorkableObject
 
     }
 
-    public void SetInstalled()
+    protected virtual void SetInstalled()
     {
         for (int i = 0; i < _meshRenderers.Length; i++)
         {

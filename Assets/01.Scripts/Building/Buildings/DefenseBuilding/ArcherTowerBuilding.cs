@@ -9,17 +9,34 @@ public class ArcherTowerBuilding : BaseBuilding
 
     HashSet<Transform> _visibleTargets => _fov.FindVisibleTargets();
 
-    ArcherPenguin[] _archerPenguins;
+    ArcherTowerPenguin[] _archerPenguins;
 
     protected override void Awake()
     {
         base.Awake();
 
         _fov = GetComponent<FieldOfView>();
+
+        _archerPenguins = transform.GetComponentsInChildren<ArcherTowerPenguin>();
+
+        for(int i = 0; i < _archerPenguins.Length; i++)
+        {
+            _archerPenguins[i].gameObject.SetActive(false);
+        }
     }
 
     protected override void Running()
     {
 
+    }
+
+    protected override void SetInstalled()
+    {
+        base.SetInstalled();
+
+        for (int i = 0; i < _archerPenguins.Length; i++)
+        {
+            _archerPenguins[i].gameObject.SetActive(true);
+        }
     }
 }
