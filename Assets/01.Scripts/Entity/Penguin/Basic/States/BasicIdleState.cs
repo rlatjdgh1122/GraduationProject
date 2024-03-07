@@ -11,6 +11,7 @@ public class BasicIdleState : BasicBaseState
         _triggerCalled = true;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToSeatMyPostion = true;
+        _penguin.WaitTrueAnimEndTrigger = true;
     }
 
     public override void UpdateState()

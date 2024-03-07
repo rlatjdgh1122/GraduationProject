@@ -1,8 +1,10 @@
 using DG.Tweening.Core.Easing;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public abstract class Entity : PoolableMono
 {
@@ -24,7 +26,7 @@ public abstract class Entity : PoolableMono
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
-    #region 군단 포지션
+    #region 군단 포지션 관련
 
     public bool ArmyTriggerCalled = false;
     public bool WaitTrueAnimEndTrigger = true;
@@ -51,9 +53,9 @@ public abstract class Entity : PoolableMono
             {
                 Vector3 vec = (curMousePos - prevMousePos);
 
-                float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
-                //float result = Mathf.Floor(value);
-                return value; //0 ~ 360
+                float value = Quaternion.LookRotation(vec).eulerAngles.y;
+                value = (value > 180f) ? value - 360f : value; // 변환
+                return value; // -180 ~ 180
             }
             else
                 return 0;
@@ -64,8 +66,8 @@ public abstract class Entity : PoolableMono
     {
         get
         {
-            Vector3 direction = Quaternion.Euler(0, Angle, 0) * (_seatPos);
-            return direction;
+            //Vector3 direction = Quaternion.Euler(0, Angle, 0) * (_seatPos);
+            return _seatPos;
         }
         set { _seatPos = value; }
     }
@@ -130,8 +132,50 @@ public abstract class Entity : PoolableMono
         MousePos = mousePos;
         if (NavAgent.isActiveAndEnabled)
         {
-            MoveToTarget(mousePos + SeatPos);
+            if (prevMousePos != Vector3.zero)
+            {
+                StartCoroutine(Moving());
+            }
+            else
+                MoveToTarget(mousePos + SeatPos);
         }
+    }
+    float totalTime = 1f; // 총 시간 (1초로 가정)
+    float balancingValue = 10f;
+    float currentTime = 0f; // 현재 시간
+
+    private IEnumerator Moving()
+    {
+        currentTime = 0f;
+        float t = 0f;
+
+        float AC = Vector3.Distance(MousePos, SeatPos);
+        Vector3 movePos = Quaternion.Euler(0, Angle, 0) * SeatPos;
+        float AB = Vector3.Distance(MousePos, movePos);
+
+        float BC =
+            Mathf.Pow(AB, 2) + Mathf.Pow(AC, 2) - (2 * AC * AB) * Mathf.Cos(Angle);
+        //마우스 위치부터 나의 위치와 움직일 위치에 거리
+        float result = Mathf.Sqrt(BC); //이게 클수록 수는 쭐어야함
+        totalTime = result / balancingValue;
+        Debug.Log("처음 :" + totalTime);
+
+        while (currentTime <= totalTime)
+        {
+            t = currentTime / totalTime;
+
+            Vector3 frameMousePos = Vector3.Lerp(prevMousePos, curMousePos, t);
+
+            Vector3 finalPos = frameMousePos + movePos;
+
+            MoveToTarget(finalPos);
+
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        Debug.Log("끝 :" + Angle);
+        Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
+        MoveToTarget(pos);
     }
 
     public void SetTarget(Vector3 mousePos)
@@ -154,7 +198,10 @@ public abstract class Entity : PoolableMono
     public void StopImmediately()
     {
         if (NavAgent.isActiveAndEnabled)
+        {
             NavAgent.isStopped = true;
+            NavAgent.velocity = Vector3.zero; //미끄러짐 방지
+        }
     }
     #endregion
 }

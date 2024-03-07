@@ -25,7 +25,8 @@ public class Army
     public List<Penguin> Soldiers = new(); //군인 펭귄들
     public General General; //장군
 
-    public ArmyInfo info;
+    public GameObject AsrmyParentObj; //군단 오브젝트
+    public ArmyInfo Info; //정보
 
     public void AddStat(Army army, LigeonStatAdjustment ligeonStat)
     {

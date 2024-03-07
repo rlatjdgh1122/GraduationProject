@@ -1,21 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public class ArmyNumber
-{
-    public Entity Soldier;
-    public bool check;
-}
-
 public class ArmyMovement : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     private ParticleSystem ClickParticle;
     private Army curArmy = null;
 
-    public List<ArmyNumber> armySoldierList = new List<ArmyNumber>();
+    public List<Entity> armySoldierList = new List<Entity>();
 
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
@@ -37,10 +29,6 @@ public class ArmyMovement : MonoBehaviour
         _inputReader.RightClickEvent += SetClickMovement;
         SignalHub.OnArmyChanged += OnArmyChangedHandler;
     }
-    private void Start()
-    {
-        curArmy = ArmyManager.Instance.GetCurArmy();
-    }
 
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
@@ -55,20 +43,12 @@ public class ArmyMovement : MonoBehaviour
 
         for (int i = 0; i < curArmy.Soldiers.Count; ++i)
         {
-            var soldier = new ArmyNumber();
-            soldier.Soldier = curArmy.Soldiers[i];
-            soldier.check = false;
-
-            armySoldierList.Add(soldier);
+            armySoldierList.Add(curArmy.Soldiers[i]);
         }
 
         if (curArmy.General != null)
         {
-            var soldier = new ArmyNumber();
-            soldier.Soldier = curArmy.General;
-            soldier.check = false;
-
-            armySoldierList.Add(soldier);
+            armySoldierList.Add(curArmy.General);
         }
     }
 
@@ -97,8 +77,8 @@ public class ArmyMovement : MonoBehaviour
 
         foreach (var item in armySoldierList)
         {
-            item.Soldier.ArmyTriggerCalled = true;
-            item.Soldier.BattleMode = battleMode;
+            item.ArmyTriggerCalled = true;
+            item.BattleMode = BattleMode;
         }
 
         //모두가 움직일 수 있는 상태인지 확인하기 위해 코루틴 돌려줌
@@ -110,33 +90,31 @@ public class ArmyMovement : MonoBehaviour
         yield return new WaitUntil(() => result == true);
 
         // 성공적으로 해결되었다면
-        Debug.Log("오케이");
-        //값복사라 적용이 안되는듯함
         curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
     }
     private IEnumerator AllTrueToCanMove_Corou(Vector3 mousePos)
     {
+        var check = false;
         isCanMove = false;
 
         if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
             Debug.Log("문제가 있다1");
         }
-
-        while (!isCanMove)
+        while (!check)
         {
             foreach (var item in armySoldierList)
             {
                 //공격 애니메이션이 끝났다면 움직일 수 있음
-                if (item.Soldier.WaitTrueAnimEndTrigger)
+                if (item.WaitTrueAnimEndTrigger)
                 {
-                    isCanMove = true;
+                    check = true;
                     //움직여주기
-                    SetSoldierMovePosition(mousePos, item.Soldier);
+                    SetSoldierMovePosition(mousePos, item);
                 }
                 else
                 {
-                    isCanMove = false;
+                    check = false;
                 }
             }
 
@@ -146,6 +124,9 @@ public class ArmyMovement : MonoBehaviour
 
         //모두가 움직일 수 있다면
         // 모두가 자리에 위치해 있는지 확인하기 위해 코루틴을 돌려줌 
+
+        isCanMove = true;
+
         if (AllTrueToSeatMyPostionCoutine != null)
             StopCoroutine(AllTrueToSeatMyPostionCoutine);
 
@@ -160,24 +141,11 @@ public class ArmyMovement : MonoBehaviour
         {
             Debug.Log("문제가 있다2");
         }
-
-        while (!successfulSeatMyPos)
+        while (!armySoldierList.TrueForAll(p => p.SuccessfulToSeatMyPostion))
         {
-            foreach (var item in armySoldierList)
-            {
-                //공격 애니메이션이 끝났다면 움직일 수 있음
-                if (item.Soldier.SuccessfulToSeatMyPostion)
-                {
-                    successfulSeatMyPos = true;
-                }
-                else
-                {
-                    successfulSeatMyPos = false;
-                }
-            }
-
             yield return waitingByheartbeat;
         }
+        successfulSeatMyPos = true;
     }
 
     private void SetSoldierMovePosition(Vector3 mousePos, Entity entity)

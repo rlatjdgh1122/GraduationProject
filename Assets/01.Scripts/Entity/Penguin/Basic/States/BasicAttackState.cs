@@ -8,6 +8,7 @@ public class BasicAttackState : BasicBaseState
     public BasicAttackState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
+
     }
 
     public override void Enter()

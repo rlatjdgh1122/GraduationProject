@@ -207,7 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _effectEndTime: 1.5
 --- !u!1 &1041964338154175969
 GameObject:
@@ -266,7 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b24ce834742d47b4a862ec3ced7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   _healEffect: {fileID: -198098653787150809, guid: 880628dabbf32df439f61db0b7a24c20,
     type: 3}
   _effectEndTime: 2
@@ -598,6 +596,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f41c3fa95d8d5a44ac80358b7ca68ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPrevAttackEffectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndAttackEffectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpecialAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAoEAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRangeAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeadCompleteTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2052089806965032453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,28 +1077,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98354ecb5ac476b4b9726ee483e00362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idx: 0
-  targetTrm: {x: 0, y: 0, z: 0}
+  _characterStat: {fileID: 11400000, guid: 02f0f4bf281ab6d408968c5a17a61d56, type: 2}
   innerDistance: 7
   attackDistance: 1.2
-  _arrowPrefab: {fileID: 0}
-  _firePos: {fileID: 0}
-  ClickParticle: {fileID: 0}
-  _renderer: {fileID: 0}
-  _characterStat: {fileID: 11400000, guid: 02f0f4bf281ab6d408968c5a17a61d56, type: 2}
+  ArmyTriggerCalled: 0
+  WaitTrueAnimEndTrigger: 1
+  SuccessfulToSeatMyPostion: 0
+  BattleMode: 0
   moveSpeed: 4
   attackSpeed: 1
   maxDetectedCount: 3
   provokeRange: 25
   CurrentTarget: {fileID: 0}
-  IsClickToMoving: 0
   IsDead: 0
   owner:
     Legion: 0
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -1084,7 +1104,6 @@ MonoBehaviour:
       basicTimes: 0
       archerTimes: 0
       shieldTimes: 0
-  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
 --- !u!114 &6242188954284128527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,7 +1238,7 @@ NavMeshAgent:
   m_AngularSpeed: 2500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.33
   m_BaseOffset: -0
@@ -1241,6 +1260,7 @@ MonoBehaviour:
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 0
   precomputeOutline: 0
+  IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
 --- !u!1 &4562683283069987933

@@ -1086,11 +1086,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d01ae11d8621e49a8f444877e07b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterStat: {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
   innerDistance: 6
   attackDistance: 6
-  passiveData: {fileID: 0}
-  _characterStat: {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
-  type: 0
+  ArmyTriggerCalled: 0
+  WaitTrueAnimEndTrigger: 1
+  SuccessfulToSeatMyPostion: 0
+  BattleMode: 0
   moveSpeed: 3.5
   attackSpeed: 0.6
   maxDetectedCount: 0
@@ -1099,10 +1101,11 @@ MonoBehaviour:
   IsDead: 0
   owner:
     Legion: 0
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -1259,7 +1262,7 @@ NavMeshAgent:
   m_AngularSpeed: 2500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.33
   m_BaseOffset: -0
@@ -1281,6 +1284,7 @@ MonoBehaviour:
   outlineColor: {r: 1, g: 1, b: 1, a: 0}
   outlineWidth: 0
   precomputeOutline: 0
+  IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
 --- !u!1 &5002279329585421089
@@ -1480,6 +1484,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f41c3fa95d8d5a44ac80358b7ca68ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPrevAttackEffectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndAttackEffectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpecialAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAoEAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRangeAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeadCompleteTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6585853243621938182
 GameObject:
   m_ObjectHideFlags: 0

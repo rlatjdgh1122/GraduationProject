@@ -21,8 +21,9 @@ public class BasicChaseState : BasicBaseState
     {
         base.UpdateState();
 
-        //따라가던 도중 마우스 클릭되면 이동
-        if (_penguin.ArmyTriggerCalled)
+        // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
+        if (_penguin.ArmyTriggerCalled
+            && _penguin.BattleMode == false)
         {
             _penguin.SetTarget(_penguin.GetSeatPosition());
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);

@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
@@ -8,12 +11,12 @@ public class ArmyManager : Singleton<ArmyManager>
 
     [SerializeField] private List<Army> armies = new();
     public List<Army> Armies { get { return armies; } }
-
+    private Dictionary<KeyCode, Action> keyDictionary;
 
     private bool battleMode = false;
     public bool BattleMode => battleMode;
 
-    private int curArmyIdx = 0;
+    private int curArmyIdx = -1;
     public int CurLegion => curArmyIdx + 1;
 
     public int ArmiesCount => armies.Count;
@@ -26,27 +29,38 @@ public class ArmyManager : Singleton<ArmyManager>
             soldierTypeDictionary.Add(type, solider);
         }
 
-        foreach (var army in armies)
+        CreateArmy();
+        SignalHub.OnArmyChanged.Invoke(armies[0], armies[0]);
+        KeySetting();
+    }
+    private void KeySetting()
+    {
+        keyDictionary = new Dictionary<KeyCode, Action>()
         {
-            army.Soldiers.ForEach(s => s.SetOwner(army));
-            army.IsCanReadyAttackInCurArmySoldiersList = true;
-        }
-
-        ChangeArmy(1);
+             {KeyCode.Alpha1, ()=> ChangeArmy(1) },
+             {KeyCode.Alpha2, ()=> ChangeArmy(2) },
+             {KeyCode.Alpha3, ()=> ChangeArmy(3) },
+             {KeyCode.Alpha4, ()=> ChangeArmy(4) },
+             {KeyCode.Alpha5, ()=> ChangeArmy(5) },
+             {KeyCode.Alpha6, ()=> ChangeArmy(6) },
+             {KeyCode.Alpha7, ()=> ChangeArmy(7) },
+             {KeyCode.Alpha8, ()=> ChangeArmy(8) },
+             {KeyCode.Alpha9, ()=> ChangeArmy(9) },
+             {KeyCode.A,      ()=> battleMode = !battleMode },
+        };
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeArmy(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeArmy(2);
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeArmy(3);
-
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.anyKeyDown)
         {
-            battleMode = !battleMode;
+            foreach (var dic in keyDictionary)
+            {
+                if (Input.GetKeyDown(dic.Key))
+                {
+                    dic.Value();
+                }
+            }
         }
     }
 
@@ -72,7 +86,10 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         int Idx = legion - 1;
         if (curArmyIdx == Idx) return;
-        SignalHub.OnArmyChanged.Invoke(armies[curArmyIdx], armies[Idx]);
+        if (armies.Count < legion) return;
+
+        var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
+        SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
 
         curArmyIdx = Idx;
 
@@ -233,8 +250,16 @@ public class ArmyManager : Singleton<ArmyManager>
     public void CreateArmy()
     {
         Army newArmy = new Army();
+
         newArmy.Legion = ArmiesCount + 1;
         newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+
+        GameObject armyObj = new GameObject($"{newArmy.Legion}Legion_ArmyParentObject");
+        armyObj.transform.AddComponent<NavMeshAgent>();
+
+        newArmy.AsrmyParentObj = armyObj;
+
+
         armies.Add(newArmy);
     }
 

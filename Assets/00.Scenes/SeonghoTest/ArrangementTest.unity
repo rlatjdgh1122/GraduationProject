@@ -640,7 +640,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1422658230}
   m_Lens:
-    FieldOfView: 25
+    FieldOfView: 35
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -10603,7 +10603,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 25
+  field of view: 35
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -14472,6 +14472,11 @@ PrefabInstance:
       propertyPath: LegionList.Array.data[3].price
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 6952732376769922396, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
+      propertyPath: LegionList.Array.data[0].MaxCount
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 7040208568515726775, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -15115,6 +15120,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523298332678709327, guid: b9fe14e4bcb329f47a9e5070aabceb31,
+        type: 3}
+      propertyPath: cooltime
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5887036884813448897, guid: b9fe14e4bcb329f47a9e5070aabceb31,
         type: 3}
@@ -16896,79 +16906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soldierTypeListSO: {fileID: 11400000, guid: 538e6cee0073b7749a1d37f6b1648073, type: 2}
-  armies:
-  - Legion: 1
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
-  - Legion: 2
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
-  - Legion: 3
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
-  - Legion: 4
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
-  - Legion: 5
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
-  - Legion: 6
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
+  armies: []
 --- !u!4 &1861243453
 Transform:
   m_ObjectHideFlags: 0
