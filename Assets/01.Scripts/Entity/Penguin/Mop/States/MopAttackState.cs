@@ -1,5 +1,7 @@
 public class MopAttackState : MopBaseState
 {
+
+    private int curAttackCount = 0;
     public MopAttackState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
         : base(penguin, stateMachine, animBoolName)
     {
@@ -13,6 +15,11 @@ public class MopAttackState : MopBaseState
         _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
+
+        if (_penguin.CheckAttackEventPassive(++curAttackCount))
+        {
+            _penguin?.OnPassiveAttackEvent();
+        }
     }
 
     public override void UpdateState()

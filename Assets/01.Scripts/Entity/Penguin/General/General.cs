@@ -21,7 +21,7 @@ public class LigeonStatAdjustment
 public class General : Penguin
 {
     #region 패시브
-    public PassiveDataSO passiveData = null;
+    //public PassiveDataSO passiveData = null;
     #endregion
     public LigeonStatAdjustment ligeonStat = null;
 
@@ -59,8 +59,8 @@ public class General : Penguin
     /// </summary>
     /// <returns> 결과</returns>
 
-    public bool CheckAttackEventPassive(int curAttackCount)
-=> passiveData.CheckAttackEventPassive(curAttackCount);
+    /*public bool CheckAttackEventPassive(int curAttackCount)
+=> passiveData.CheckAttackEventPassive(curAttackCount);*/
 
     /// <summary>
     /// 몇 초마다 패시브 활성화 확인 여부

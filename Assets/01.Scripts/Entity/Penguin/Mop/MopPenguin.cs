@@ -11,7 +11,7 @@ public enum MopPenguinStateEnum
     Dead
 }
 
-public class MopPenguin : General
+public class MopPenguin : Penguin
 {
     public EntityStateMachine<MopPenguinStateEnum, Penguin> StateMachine { get; private set; }
 
@@ -24,7 +24,7 @@ public class MopPenguin : General
         foreach (MopPenguinStateEnum state in Enum.GetValues(typeof(MopPenguinStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"General{typeName}State");
+            Type t = Type.GetType($"Mop{typeName}State");
             //리플렉션
             var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<MopPenguinStateEnum, Penguin>;
 
