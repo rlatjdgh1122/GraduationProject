@@ -18,13 +18,11 @@ public class NormalHpBarUI : MonoBehaviour
 
     public void UpdateHpbarUI(float current, float max)
     {
-        UIManager.Instance.InitializHudTextSequence();
+        _hpbar.DOFillAmount(current / max, _waitToDisapper);
+    }
 
-        UIManager.Instance.HudTextSequence.Append(_hpbar.DOFillAmount(current / max, _waitToDisapper));
-
-        if(current <= 0)
-        {
-            _container.DOFade(0, _waitToDisapper);
-        }
+    public void OffHpbarsUI()
+    {
+        _container.DOFade(0, _waitToDisapper);
     }
 }
