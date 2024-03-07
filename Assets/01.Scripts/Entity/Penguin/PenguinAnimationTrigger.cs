@@ -60,7 +60,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     private void RangeAttackTrigger()
     {
-        _penguin.AttackCompo.RangeAttack();
+        _penguin.AttackCompo.RangeAttack(_penguin.CurrentTarget.transform.position);
         OnRangeAttackTriggerEvent?.Invoke();
 
     }

@@ -129,7 +129,7 @@ public abstract class BaseBuilding : WorkableObject
         }
     }
 
-    public void SetSelect()
+    public virtual void SetSelect()
     {
         for (int i = 0; i < _meshRenderers.Length; i++)
         {

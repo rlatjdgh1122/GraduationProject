@@ -6,7 +6,6 @@ using UnityEngine;
 public enum ArcherTowerPenguinStateEnum
 {
     Idle,
-    Chase,
     Attack,
     Dead
 }
@@ -44,15 +43,6 @@ public class ArcherTowerPenguin : Penguin
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-
-    public void LookTarget(Transform target)
-    {
-        Vector3 directionToTarget = target.transform.position - transform.position;
-
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f);
-    }
 
     protected override void HandleDie()
     {
