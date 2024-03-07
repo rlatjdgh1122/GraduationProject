@@ -80,7 +80,8 @@ public class InstallSystem : MonoBehaviour
     {
         selectedBuildingIDX = -1;
 
-        _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
+        _curBuilding?.StopInstall();
+        //_previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
 
         if (_curBuilding != null && !_curBuilding.IsInstalling)
         {

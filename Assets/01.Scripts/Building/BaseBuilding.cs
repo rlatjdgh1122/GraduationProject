@@ -49,6 +49,9 @@ public abstract class BaseBuilding : WorkableObject
     private TimeRemain _remainTimeUI;
     public TimeRemain RemainTimeUI => _remainTimeUI;
 
+    private bool isSelected;
+    public bool IsSelected => isSelected;
+
     protected override void Awake()
     {
         try
@@ -110,6 +113,7 @@ public abstract class BaseBuilding : WorkableObject
         }
 
         isInstalling = true;
+        StopInstall();
     }
 
     private void PlusInstalledTime()
@@ -141,6 +145,7 @@ public abstract class BaseBuilding : WorkableObject
             _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
         }
 
+        isSelected = true;
     }
 
     protected virtual void SetInstalled()
@@ -176,4 +181,9 @@ public abstract class BaseBuilding : WorkableObject
     }
 
     protected abstract void Running();
+
+    public virtual void StopInstall()
+    {
+        isSelected = false;
+    }
 }
