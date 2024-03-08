@@ -6,6 +6,10 @@ using UnityEngine;
 
 public abstract class DefenseBuilding : BaseBuilding
 {
+    [SerializeField]
+    [Range(0.0f, 100.0f)]
+    private float groundCheckRange;
+
     FieldOfView _fov;
     protected FieldOfView FOV => _fov;
 
@@ -29,18 +33,13 @@ public abstract class DefenseBuilding : BaseBuilding
         _fov = GetComponent<FieldOfView>();
     }
 
-    protected override void Running()
-    {
-        
-    }
-
     protected override void Update()
     {
         base.Update();
 
         if (IsSelected)
         {
-            Collider[] newColls = Physics.OverlapSphere(transform.position, _fov.ViewRadius, _groundLayer);
+            Collider[] newColls = Physics.OverlapSphere(transform.position, groundCheckRange, _groundLayer);
             currentGrounds.Clear();
 
             foreach (Collider coll in newColls)
@@ -84,6 +83,13 @@ public abstract class DefenseBuilding : BaseBuilding
         {
             g.UpdateOutlineColor(GroundOutlineColorType.None);
         }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, groundCheckRange);
     }
 
 }

@@ -11,12 +11,16 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
     public override void Enter()
     {
         base.Enter();
+
         _triggerCalled = true;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (_penguin.IsInnerMeleeRange)
+            _stateMachine.ChangeState(ArcherTowerPenguinStateEnum.Attack);
     }
 
     public override void Exit()

@@ -7,13 +7,14 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Outline))]
 public class DefaultBuilding : BaseBuilding
 {
+    [SerializeField] private LayerMask _defaultBuildingLayer;
+
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
     [SerializeField] private RectTransform _penguinSpawnUI;
     [SerializeField] private RectTransform _constructionStationUI;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
-    [SerializeField] private LayerMask _buildingLayer;
 
     private bool isSpawnUIOn;
 
@@ -50,7 +51,7 @@ public class DefaultBuilding : BaseBuilding
         if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsBattlePhase && !IsPointerOverUIObject())
         {
             if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity, _buildingLayer))
+                                                out var hit, Mathf.Infinity, _defaultBuildingLayer))
             {
                 SpawnButton();
             }

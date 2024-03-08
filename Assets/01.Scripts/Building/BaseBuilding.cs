@@ -23,6 +23,9 @@ public struct BuildingInfo
 public abstract class BaseBuilding : WorkableObject
 {
     [SerializeField]
+    private InputReader _inputReader;
+
+    [SerializeField]
     private BuildingDatabaseSO _buildingDatabaseSO;
 
     [SerializeField]
@@ -72,7 +75,6 @@ public abstract class BaseBuilding : WorkableObject
 
         }
         SetUpCompo();
-
     }
 
     private void SetUpCompo()

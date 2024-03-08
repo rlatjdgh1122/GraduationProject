@@ -13,6 +13,7 @@ public class ArcherTowerBuilding : DefenseBuilding
 
         _archerPenguins = transform.GetComponentsInChildren<ArcherTowerPenguin>();
         SetUpPenguinsCompo(FOV.ViewRadius, true);
+
     }
 
     private void SetUpPenguinsCompo(float attackDistance, bool isFirst = false)
@@ -36,5 +37,10 @@ public class ArcherTowerBuilding : DefenseBuilding
         {
             _archerPenguins[i].gameObject.SetActive(true);
         }
+    }
+
+    protected override void Running()
+    {
+
     }
 }

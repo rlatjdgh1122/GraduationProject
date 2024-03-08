@@ -80,7 +80,7 @@ public abstract class Entity : PoolableMono
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
         HealthCompo = transform?.GetComponent<Health>();
-        NavAgent = GetComponent<NavMeshAgent>();
+        NavAgent = transform?.GetComponent<NavMeshAgent>();
         OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
 
@@ -149,8 +149,11 @@ public abstract class Entity : PoolableMono
 
     public void StopImmediately()
     {
-        if (NavAgent.isActiveAndEnabled)
-            NavAgent.isStopped = true;
+        if (NavAgent != null)
+        {
+            if (NavAgent.isActiveAndEnabled)
+                NavAgent.isStopped = true;
+        }
     }
     #endregion
 }
