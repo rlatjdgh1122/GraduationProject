@@ -23,13 +23,11 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
     public override void CleanUpSlot() //슬롯 초기화
     {
+        ArrangementTest.Instance.RemoveArrangementInfoByLegionAndSlotIdx(_legionNumber, _slotNumber - 1);
+
         _data = null;
         _unitImage.enabled = false;
         _unitImage.sprite = null;
-
-        var info = _data.penguinData;
-
-        ArrangementTest.Instance.RemoveArrangementInfoByLegionAndSlotIdx(_legionNumber, _slotNumber - 1);
     }
 
     public override void UpdateSlot(LegionInventoryData data)
@@ -40,7 +38,8 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
         var info = new ArrangementInfo
         {
-            legion = _legionNumber,
+            Nullable = 1000,
+            Legion = _legionNumber,
             SlotIdx = _slotNumber - 1, //배열은 0부터 시작하는거 까먹엇당 ㅎ
             JobType = data.penguinData.JobType,
             PenguinType = data.penguinData.PenguinType

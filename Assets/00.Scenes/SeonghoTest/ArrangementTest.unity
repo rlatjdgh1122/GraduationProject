@@ -640,7 +640,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1422658230}
   m_Lens:
-    FieldOfView: 30
+    FieldOfView: 40
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -10603,7 +10603,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 30
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -13193,7 +13193,7 @@ PrefabInstance:
     - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
@@ -13213,7 +13213,7 @@ PrefabInstance:
     - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnModifyInfo_Btn
+      value: OnJoinArmyByInfo
       objectReference: {fileID: 0}
     - target: {fileID: 327133472307207334, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
@@ -16952,7 +16952,9 @@ MonoBehaviour:
   distance: 1
   width: 5
   length: 7
-  InfoList: []
+  CurInfoList: []
+  PrevInfoList: []
+  NewInfoList: []
 --- !u!114 &1861243457
 MonoBehaviour:
   m_ObjectHideFlags: 0

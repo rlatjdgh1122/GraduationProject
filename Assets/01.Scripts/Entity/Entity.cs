@@ -157,6 +157,7 @@ public abstract class Entity : PoolableMono
             Mathf.Pow(AB, 2) + Mathf.Pow(AC, 2) - (2 * AC * AB) * Mathf.Cos(Angle);
         //마우스 위치부터 나의 위치와 움직일 위치에 거리
         float result = Mathf.Sqrt(BC); //이게 클수록 수는 쭐어야함
+
         totalTime = result / balancingValue;
         Debug.Log("처음 :" + totalTime);
 
