@@ -45,6 +45,8 @@ public class EnemyBasicWolf : Enemy
     {
         StateMachine.CurrentState.UpdateState();
 
+
+
         if (IsDead)
             StateMachine.ChangeState(EnemyWolfStateEnum.Dead);
     }

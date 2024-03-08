@@ -23,7 +23,7 @@ public class SpawnBuildingButton : MonoBehaviour
         transform.Find("InstaleedTime_Text").GetComponent<TextMeshProUGUI>().SetText($"{buildinginfo.InstalledTime} ≈œ");
 
         transform.Find("Resource/NecessaryResource_Text").GetComponent<TextMeshProUGUI>().SetText($"{buildinginfo.NecessaryWokerCount}");
-        transform.Find("Resource/NecessaryResource_IMG").GetComponent<Image>().sprite = buildinginfo.NecessaryResourceSprite;
+        transform.Find("Resource/NecessaryResource_IMG").GetComponent<Image>().sprite = buildinginfo.NecessaryResource.resourceData.resourceIcon;
         // HavingCount_Text «ÿæﬂµ 
 
 
@@ -52,7 +52,7 @@ public class SpawnBuildingButton : MonoBehaviour
         try
         {
             Resource resource = ResourceManager.Instance.resourceStack.Find
-            (icon => icon.resourceData.resourceIcon == buildinginfo.NecessaryResourceSprite);
+            (icon => icon.resourceData.resourceIcon == buildinginfo.NecessaryResource.resourceData.resourceIcon);
 
             if (resource.stackSize >= buildinginfo.NecessaryResourceCount)
             {

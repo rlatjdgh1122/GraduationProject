@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class EnemyWolfAttackState : EnemyWolfBaseState
 {
-    [SerializeField] private int _attackStartEventValue;
-
+    private int _attackValue = 0;
     public EnemyWolfAttackState(Enemy enemyBase, EnemyStateMachine<EnemyWolfStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
@@ -13,8 +12,17 @@ public class EnemyWolfAttackState : EnemyWolfBaseState
     {
         base.Enter();
         _enemy.StopImmediately();
-        _attackStartEventValue++;
-        Debug.Log(_attackStartEventValue);
+
+        if(_attackValue >= _bleed.AttackEventValue)
+        {
+            _bleed.Bleed = true;
+            _attackValue = 0;
+        }
+        else
+        {
+            _attackValue++;
+        }
+
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
@@ -36,7 +44,6 @@ public class EnemyWolfAttackState : EnemyWolfBaseState
 
     public override void Exit()
     {
-        _attackStartEventValue = 0;
         _enemy.AnimatorCompo.speed = 1;
         base.Exit();
     }

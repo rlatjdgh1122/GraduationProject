@@ -12,6 +12,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     [SerializeField] private UnityEvent OnSpecialAttackTriggerEvent = null;
     [SerializeField] private UnityEvent OnAttackTriggerEvent = null;
     [SerializeField] private UnityEvent OnAoEAttackTriggerEvent = null;
+    [SerializeField] private UnityEvent OnStunTriggerEvent = null;
     [SerializeField] private UnityEvent OnRangeAttackTriggerEvent = null;
 
     [SerializeField] private UnityEvent OnDeadCompleteTriggerEvent = null;
@@ -56,6 +57,12 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.AttackCompo.MeleeAttack();
         OnAttackTriggerEvent?.Invoke();
 
+    }
+
+    public void StunTigger()
+    {
+        _penguin.AttackCompo.StunAttack();
+        OnAoEAttackTriggerEvent?.Invoke();
     }
 
     private void RangeAttackTrigger()

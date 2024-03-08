@@ -9,6 +9,7 @@ public enum ShieldPenguinStateEnum
     Chase,
     Block,
     Impact,
+    Stun,
     Dead
 }
 
@@ -41,6 +42,11 @@ public class ShieldPenguin : Penguin
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
+    }
+
+    public override void OnPassiveStunEvent()
+    {
+        StateMachine.ChangeState(ShieldPenguinStateEnum.Stun);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

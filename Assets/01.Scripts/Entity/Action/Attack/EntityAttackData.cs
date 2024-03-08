@@ -37,6 +37,11 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
+    public virtual void StunAttack()
+    {
+
+    }
+
     public virtual void SpecialAttack(float aFewTimes)
     {
 
