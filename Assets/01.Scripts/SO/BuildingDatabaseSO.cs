@@ -5,9 +5,9 @@ using UnityEngine;
 
 public enum BuildingType
 {
-    DefenseBuilding,
-    BuffBuilding,
-    ResourceBuilding
+    Defense,
+    Buff,
+    Resource
 }
 
 public enum DefaultBuildingType
@@ -36,6 +36,18 @@ public class BuildingItemInfo
     public int ID { get { return id; } }
 
     [SerializeField]
+    private int _level = 1;
+    public int Level => _level;
+
+    [SerializeField]
+    private int _price;
+    public int Price => _price;
+
+    [SerializeField]
+    private string _description;
+    public string Description => _description;
+
+    [SerializeField]
     private Vector2Int _size;
     public Vector2Int Size { get { return _size; } }
 
@@ -50,6 +62,10 @@ public class BuildingItemInfo
     [SerializeField]
     private float installedTime;
     public float InstalledTime { get { return installedTime; } }
+
+    [SerializeField]
+    private int _currentInstallCount;
+    public int CurrentInstallCount => _currentInstallCount;
 
     [SerializeField]
     private int _maxInstallableCount;

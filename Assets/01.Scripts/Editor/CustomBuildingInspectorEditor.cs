@@ -22,12 +22,12 @@ public class CustomBuildingInspectorEditor : Editor
         BuildingType selectedEnum = (BuildingType)BuildingTypeEnum_Property.enumValueIndex;
         switch (selectedEnum)
         {
-            case BuildingType.BuffBuilding:
+            case BuildingType.Buff:
                 EditorGUILayout.PropertyField(BuffItemInfoST_Property);
                 break;
-            case BuildingType.DefenseBuilding:
+            case BuildingType.Defense:
                 break;
-            case BuildingType.ResourceBuilding:
+            case BuildingType.Resource:
                 break;
         }
         EditorUtility.SetDirty(target);
@@ -48,12 +48,12 @@ public class CustomBuildingInspectorEditor : Editor
         BuildingType selectedEnum = (BuildingType)BuildingTypeEnum_Property.enumValueIndex;
         switch (selectedEnum)
         {
-            case BuildingType.BuffBuilding:
+            case BuildingType.Buff:
                 EditorGUILayout.PropertyField(BuffItemInfoST_Property);
                 break;
-            case BuildingType.DefenseBuilding:
+            case BuildingType.Defense:
                 break;
-            case BuildingType.ResourceBuilding:
+            case BuildingType.Resource:
                 break;
         }
         EditorUtility.SetDirty(target);

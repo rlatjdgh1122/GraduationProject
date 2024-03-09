@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 public abstract class DefenseBuilding : BaseBuilding
 {
     [SerializeField]
@@ -22,15 +23,18 @@ public abstract class DefenseBuilding : BaseBuilding
     private HashSet<Ground> _removedGrounds = new();
     private HashSet<Ground> currentGrounds = new();
 
-
     [SerializeField]
     private LayerMask _groundLayer;
+
+    private Health _health;
 
     protected override void Awake()
     {
         base.Awake();
 
         _fov = GetComponent<FieldOfView>();
+        _health = GetComponent<Health>();
+        _health.enabled = false; // 설치 완료 되기 전까지는 공격 대상 X
     }
 
     protected override void Update()
@@ -92,4 +96,25 @@ public abstract class DefenseBuilding : BaseBuilding
         Gizmos.DrawWireSphere(transform.position, groundCheckRange);
     }
 
+    private void OnMouseEnter()
+    {
+        if (IsInstalled)
+        {
+            _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (IsInstalled)
+        {
+            _health.OffUIUpdate?.Invoke();
+        }
+    }
+
+    protected override void SetInstalled()
+    {
+        base.SetInstalled();
+        _health.enabled = true; // 설치 완료 되면 공격 대상 O
+    }
 }

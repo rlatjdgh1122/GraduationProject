@@ -28,6 +28,7 @@ public class DefaultBuilding : BaseBuilding
     private ConstructionStation _constructionStation;
     private PenguinSpawner _penguinSpawner;
 
+
     protected virtual void Start()
     {
         Installed();
@@ -46,15 +47,11 @@ public class DefaultBuilding : BaseBuilding
         WaveManager.Instance.OnBattlePhaseStartEvent += DisableAllUI;
     }
 
-    protected override void Running()
+    private void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsBattlePhase && !IsPointerOverUIObject())
+        if (!WaveManager.Instance.IsBattlePhase && !InputReaderCompo.IsPointerOverUI() && IsInstalled)
         {
-            if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity, _defaultBuildingLayer))
-            {
-                SpawnButton();
-            }
+            SpawnButton();
         }
     }
 
@@ -108,20 +105,7 @@ public class DefaultBuilding : BaseBuilding
         
     }
 
-    protected bool IsPointerOverUIObject()
+    protected override void Running()
     {
-        // 마우스 포인터가 UI 위에 있는지 확인
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        var results = new List<RaycastResult>();
-
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-
-        /*Debug.Log(results.Count);
-        foreach (var a in results)
-        {
-            Debug.Log(a.gameObject.transform.parent.name);
-        }*/
-        return results.Count > 0;
     }
 }

@@ -125,18 +125,6 @@ public class GameManager : Singleton<GameManager>
         return null;
     }
 
-    public Ray RayPosition()
-    {
-        Ray ray = Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
-        
-        return ray;
-    }
-
-    public bool TryRaycast(Ray ray, out RaycastHit hit,float distance, LayerMask? layerMask = null) // PenguinSpawner Update에 사용하는거 나와있음
-    {
-        return Physics.Raycast(ray, out hit, distance, layerMask ?? Physics.DefaultRaycastLayers);
-    }
-
     private void MakePool()
     {
         PoolManager.Instance = new PoolManager(transform);

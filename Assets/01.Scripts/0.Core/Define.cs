@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Define
 {
@@ -9,6 +10,15 @@ namespace Define
         public static class Cam
         {
             public static Camera MainCam => Camera.main;
+        }
+    }
+
+    namespace RayCast
+    {
+        public static class RayCasts
+        {
+            public static Ray MousePointRay => CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
         }
     }
 

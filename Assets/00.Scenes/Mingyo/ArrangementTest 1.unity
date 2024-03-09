@@ -2944,13 +2944,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df66db9ea875b4949a7290cb7c34d1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIType: 3
-  _nexusStat: {fileID: 11400000, guid: 390a69cde83dbd04ea1fe35b49bb15fb, type: 2}
-  _currentLevel: {fileID: 107132116}
-  _upgradedLevel: {fileID: 253844641}
-  _currentHp: {fileID: 25242867}
-  _upgradedHp: {fileID: 1657218689}
-  _upgradePrice: {fileID: 19635178}
+  _panelFadeTime: 0
+  currentLevel: {fileID: 0}
+  nextLevel: {fileID: 0}
+  currentHp: {fileID: 0}
+  nextHp: {fileID: 0}
+  upgradePrice: {fileID: 0}
 --- !u!225 &245494528
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8294,6 +8293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f62f7d1ccf7d14a82e9946be691c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasTrm: {fileID: 0}
   ScreenCenterVec: {x: 232.5, y: 231.5}
   offVec: {x: 232.5, y: -100}
 --- !u!1 &825191951
@@ -21759,6 +21759,12 @@ PrefabInstance:
       propertyPath: outlineWidth
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7169351026082720835, guid: 81c3cb3066cfa6d47bcc0bc93b2e50bf,
+        type: 3}
+      propertyPath: _input
+      value: 
+      objectReference: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708,
+        type: 2}
     - target: {fileID: 8136673656162775568, guid: 81c3cb3066cfa6d47bcc0bc93b2e50bf,
         type: 3}
       propertyPath: m_Name
