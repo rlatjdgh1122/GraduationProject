@@ -24,6 +24,7 @@ public abstract class BaseBuilding : WorkableObject
 {
     [SerializeField]
     private InputReader _inputReader;
+    protected InputReader InputReaderCompo => _inputReader;
 
     [SerializeField]
     private BuildingDatabaseSO _buildingDatabaseSO;
