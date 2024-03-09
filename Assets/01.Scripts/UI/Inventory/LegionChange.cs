@@ -119,7 +119,7 @@ public class LegionChange : MonoBehaviour
         }
 
         _currentCostText.text    = $"{_curCost}";
-        _priceText.text          = $"{_price}";
+        _priceText.text          = $"-{_price}";
         _finalCostText.text      = $"{_finalCost}";
     }
 

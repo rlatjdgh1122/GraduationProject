@@ -230,6 +230,7 @@ public class PenguinStoreUI : MonoBehaviour
 
 
         ResetBuyPanel();
+        OnDisableBuyPanel();
     }
 
 
