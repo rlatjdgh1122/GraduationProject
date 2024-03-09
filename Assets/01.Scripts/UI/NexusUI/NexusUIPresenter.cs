@@ -65,6 +65,7 @@ public class NexusUIPresenter : NexusPopupUI
             {
                 view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
                 CostManager.Instance.Cost -= view.building.Price;
+                view.building.CurrentInstallCount++;
             }
         }
         else

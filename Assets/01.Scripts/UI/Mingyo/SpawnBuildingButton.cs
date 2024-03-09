@@ -80,6 +80,12 @@ public class SpawnBuildingButton : MonoBehaviour
 
         #endregion
 
+        if (buildinginfo.MaxInstallableCount >= buildinginfo.CurrentInstallCount)
+        {
+            _buildingFactory.SetSpawnFailHudText("최대 설치 개수에 도달했습니다");
+            cantSpawnBuilding = true;
+        }
+
 
         if (cantSpawnBuilding)
         {
@@ -94,7 +100,6 @@ public class SpawnBuildingButton : MonoBehaviour
 
     private void ButtonCooldown(BaseBuilding spawnBuilding) // 버튼 누르면 실행될 함수
     {
-        Debug.Log("ㅇ");
         UIManager.Instance.HidePanel("NexusUI");
         UIManager.Instance.InitializHudTextSequence();
         UIManager.Instance.SpawnHudText(_buildingFactory.SuccesHudText);
