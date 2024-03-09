@@ -65,7 +65,11 @@ public class BuildingItemInfo
 
     [SerializeField]
     private int _currentInstallCount;
-    public int CurrentInstallCount => _currentInstallCount;
+    public int CurrentInstallCount
+    {
+        get { return _currentInstallCount; }
+        set { _currentInstallCount = value; }
+    }
 
     [SerializeField]
     private int _maxInstallableCount;
