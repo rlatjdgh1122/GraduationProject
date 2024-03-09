@@ -49,10 +49,10 @@ public class DefaultBuilding : BaseBuilding
 
     private void OnMouseDown()
     {
-        //if (!WaveManager.Instance.IsBattlePhase && !InputReaderCompo.IsPointerOverUI() && IsInstalled)
-        //{
-        //    SpawnButton();
-        //}
+        if (!WaveManager.Instance.IsBattlePhase && !InputReaderCompo.IsPointerOverUI() && IsInstalled)
+        {
+            SpawnButton();
+        }
     }
 
     public void SpawnButton()
