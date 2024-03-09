@@ -31,7 +31,7 @@ public class ArmyMovement : MonoBehaviour
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
+            if (Physics.Raycast(Define.RayCast.RayCasts.MousePointRay, out hit))
             {
                 SetArmyMovePostiton(hit.point);
                 ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);

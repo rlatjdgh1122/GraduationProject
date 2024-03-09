@@ -28,6 +28,7 @@ public class DefaultBuilding : BaseBuilding
     private ConstructionStation _constructionStation;
     private PenguinSpawner _penguinSpawner;
 
+
     protected virtual void Start()
     {
         Installed();

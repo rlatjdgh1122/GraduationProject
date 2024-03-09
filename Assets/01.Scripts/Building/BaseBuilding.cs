@@ -56,6 +56,18 @@ public abstract class BaseBuilding : WorkableObject
     private bool isSelected;
     public bool IsSelected => isSelected;
 
+    private LayerMask _groundLayer = 1 << 19;
+
+    protected Ground InstalledGround()
+    {
+        if (Physics.Raycast(Define.RayCast.RayCasts.MousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        {
+            return hit.collider.GetComponent<Ground>();
+        }
+        return null;
+    }
+
+
     protected override void Awake()
     {
         try
@@ -117,6 +129,7 @@ public abstract class BaseBuilding : WorkableObject
 
         isInstalling = true;
         StopInstall();
+        InstalledGround()?.InstallBuilding();
     }
 
     private void PlusInstalledTime()

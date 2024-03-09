@@ -27,7 +27,7 @@ public class SpawnBuildingButton : MonoBehaviour
         // HavingCount_Text 해야됨
 
 
-        installedTime = buildinginfo.InstalledTime; //일단 쿨타임 받아오는데 건물 누르면 앞으로 몇 페이즈가 지나야 완성되는지 뜨게 할듯
+        installedTime = buildinginfo.InstalledTime;
 
         _btn.onClick.AddListener(() => SpawnBuildingEventHandler(buildinginfo.Prefab.GetComponent<BaseBuilding>(), buildinginfo));
         _btn.onClick.AddListener(() => spawnUI.OffUnitPanel());
