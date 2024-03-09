@@ -221,9 +221,15 @@ public class PenguinStoreUI : MonoBehaviour
         if (!_canBuy) return;
 
         CostManager.Instance.SubtractFromCurrentCost(_amountPrice);
-        _penguinFactory.SpawnPenguinHandler(_spawnPenguin);
+
+        for(int i = 0; i < _cnt; i++)
+        {
+            LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
+            _penguinFactory.SpawnPenguinHandler(_spawnPenguin);
+        }
+
+
         ResetBuyPanel();
-        LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
     }
 
 
