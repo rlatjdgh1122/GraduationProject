@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Define.RayCast;
 public class ArmyMovement : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
@@ -60,7 +61,7 @@ public class ArmyMovement : MonoBehaviour
     public void SetClickMovement()
     {
         RaycastHit hit;
-        if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
+        if (Physics.Raycast(RayCasts.MousePointRay, out hit))
         {
             if (WaitForAllTrueCoutine != null)
                 StopCoroutine(WaitForAllTrueCoutine);

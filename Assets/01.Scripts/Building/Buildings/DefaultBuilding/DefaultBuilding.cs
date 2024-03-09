@@ -51,6 +51,7 @@ public class DefaultBuilding : BaseBuilding
     {
         if (!WaveManager.Instance.IsBattlePhase && !InputReaderCompo.IsPointerOverUI() && IsInstalled)
         {
+            Debug.Log("@#!4");
             SpawnButton();
         }
     }
