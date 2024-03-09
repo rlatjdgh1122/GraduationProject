@@ -40,7 +40,11 @@ public class Penguin : Entity
     protected override void Awake()
     {
         base.Awake();
-        NavAgent.speed = moveSpeed;
+
+        if(NavAgent != null)
+        {
+            NavAgent.speed = moveSpeed;
+        }
 
         AttackCompo = GetComponent<EntityAttackData>();
     }
@@ -94,7 +98,7 @@ public class Penguin : Entity
     }
 
 
-    public void LookTarget()
+    public virtual void LookTarget()
     {
         if (CurrentTarget != null)
         {

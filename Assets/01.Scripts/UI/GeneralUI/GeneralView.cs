@@ -30,10 +30,10 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
         if (generalStat.GeneralData.IsAvailable)
             SetUpgradeUI(generalStat);
         else
-            SetDefaultUI(generalStat);
+            UpdateDefaultUI(generalStat);
     }
 
-    public void SetDefaultUI(GeneralStat generalStat)
+    public void UpdateDefaultUI(GeneralStat generalStat)
     {
         nameText.text = generalStat.PenguinName;
         stateText.text = "¿·±›µ ";

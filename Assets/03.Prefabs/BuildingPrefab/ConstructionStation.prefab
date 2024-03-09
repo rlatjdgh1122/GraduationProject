@@ -480,6 +480,7 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 1, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
+  IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
 --- !u!156049354 &1328993726329179685
@@ -507,6 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 0}
+  _inputReader: {fileID: 0}
   _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
     type: 2}
   _installedFinText: {fileID: 0}
@@ -515,13 +517,13 @@ MonoBehaviour:
     GridCompo: {fileID: 0}
     <TransparencyMat>k__BackingField: {fileID: 2100000, guid: 79dc316bddf0f9a46a2a2f4213747b5f,
       type: 2}
+  _defaultBuildingLayer:
+    serializedVersion: 2
+    m_Bits: 32768
   _defaultBuildingType: 0
   _penguinSpawnUI: {fileID: 0}
   _constructionStationUI: {fileID: 0}
   onSpawnUIYPosValue: 320
-  _buildingLayer:
-    serializedVersion: 2
-    m_Bits: 32768
   _btnTrm: {fileID: 0}
 --- !u!65 &2447944083134204368
 BoxCollider:

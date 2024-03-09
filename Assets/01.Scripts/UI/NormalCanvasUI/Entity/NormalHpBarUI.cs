@@ -13,7 +13,7 @@ public class NormalHpBarUI : MonoBehaviour
     private void Awake()
     {
         _hpbar = GetComponent<Image>(); 
-        _container = transform.parent.GetComponent<CanvasGroup>();
+        _container = transform.parent.parent.GetComponent<CanvasGroup>();
     }
 
     public void UpdateHpbarUI(float current, float max)

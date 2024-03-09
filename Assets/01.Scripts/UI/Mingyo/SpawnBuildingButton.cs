@@ -23,11 +23,11 @@ public class SpawnBuildingButton : MonoBehaviour
         transform.Find("InstaleedTime_Text").GetComponent<TextMeshProUGUI>().SetText($"{buildinginfo.InstalledTime} 턴");
 
         transform.Find("Resource/NecessaryResource_Text").GetComponent<TextMeshProUGUI>().SetText($"{buildinginfo.NecessaryWokerCount}");
-        transform.Find("Resource/NecessaryResource_IMG").GetComponent<Image>().sprite = buildinginfo.NecessaryResourceSprite;
+        transform.Find("Resource/NecessaryResource_IMG").GetComponent<Image>().sprite = buildinginfo.NecessaryResource.resourceData.resourceIcon;
         // HavingCount_Text 해야됨
 
 
-        installedTime = buildinginfo.InstalledTime; //일단 쿨타임 받아오는데 건물 누르면 앞으로 몇 페이즈가 지나야 완성되는지 뜨게 할듯
+        installedTime = buildinginfo.InstalledTime;
 
         _btn.onClick.AddListener(() => SpawnBuildingEventHandler(buildinginfo.Prefab.GetComponent<BaseBuilding>(), buildinginfo));
         _btn.onClick.AddListener(() => spawnUI.OffUnitPanel());
@@ -52,7 +52,7 @@ public class SpawnBuildingButton : MonoBehaviour
         try
         {
             Resource resource = ResourceManager.Instance.resourceStack.Find
-            (icon => icon.resourceData.resourceIcon == buildinginfo.NecessaryResourceSprite);
+            (icon => icon.resourceData.resourceIcon == buildinginfo.NecessaryResource.resourceData.resourceIcon);
 
             if (resource.stackSize >= buildinginfo.NecessaryResourceCount)
             {

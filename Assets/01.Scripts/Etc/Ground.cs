@@ -36,6 +36,8 @@ public class Ground : MonoBehaviour
     public void UpdateOutlineColor(GroundOutlineColorType type)
     {
         _outline.enabled = true;
+        _outline.OutlineWidth = 2.0f;
+        _outline.OutlineMode = Outline.Mode.OutlineAll;
 
         switch (type)
         {

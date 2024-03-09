@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneralPresenter : PopupUI
+public class GeneralUIPresenter : PopupUI
 {
+    #region events
+    public Action OnUpdateUpgradeUI;
+    #endregion
+
     [HideInInspector]
     public GeneralView _currentView;
     [HideInInspector]
@@ -11,10 +15,6 @@ public class GeneralPresenter : PopupUI
 
     [HideInInspector]
     public Ability selectedAbility;
-
-    #region events
-    public Action OnUpdateUpgradeUI;
-    #endregion
 
     private int currentCost
     {

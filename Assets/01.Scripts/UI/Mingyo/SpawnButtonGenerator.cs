@@ -51,7 +51,7 @@ public class SpawnButtonGenerator : MonoBehaviour
             }
 
             //button.transform.localScale = new Vector3(1.0f, 2.385f, 1.0f);
-            button.AddComponent<SpawnBuildingButton>().SetUpButtonInfo(button, _buildingFactory, building, _spawnUI, _constructionStation);
+            //button.AddComponent<SpawnBuildingButton>().SetUpButtonInfo(button, _buildingFactory, building, _spawnUI, _constructionStation);
         }
     }
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GeneralPopupUI : PopupUI
 {
-    protected GeneralPresenter presenter;
+    protected GeneralUIPresenter presenter;
 
     public override void Awake()
     {
         base.Awake();
 
-        presenter = UIManager.Instance.canvasTrm.Find("GeneralStore").GetComponent<GeneralPresenter>();
+        presenter = UIManager.Instance.canvasTrm.Find("GeneralUI").GetComponent<GeneralUIPresenter>();
     }
 }
