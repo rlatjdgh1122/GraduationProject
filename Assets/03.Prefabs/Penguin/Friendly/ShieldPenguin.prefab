@@ -1040,6 +1040,7 @@ GameObject:
   - component: {fileID: 7537666919579573879}
   - component: {fileID: 6565461361065889471}
   - component: {fileID: 2713781819061574539}
+  - component: {fileID: 3813698743995947974}
   m_Layer: 11
   m_Name: ShieldPenguin
   m_TagString: Untagged
@@ -1262,6 +1263,18 @@ MonoBehaviour:
   IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
+--- !u!114 &3813698743995947974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169427133079595497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f0b49ab804d8e4ab7bb886c7dd5143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4562683283069987933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,10 +1984,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectRange: 1
-  _hitType: 0
+  _hitType: 1
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
 --- !u!1 &8904037540473744570
 GameObject:
   m_ObjectHideFlags: 0

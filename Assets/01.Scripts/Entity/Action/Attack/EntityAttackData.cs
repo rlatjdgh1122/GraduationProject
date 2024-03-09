@@ -22,6 +22,11 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
+    public virtual void StunAttack(bool Stun, float value)
+    {
+
+    }
+
     public virtual void MeleeAttack()
     {
 
@@ -33,11 +38,6 @@ public class EntityAttackData : MonoBehaviour
     }
 
     public virtual void RangeAttack(Vector3 targetPos)
-    {
-
-    }
-
-    public virtual void StunAttack()
     {
 
     }
