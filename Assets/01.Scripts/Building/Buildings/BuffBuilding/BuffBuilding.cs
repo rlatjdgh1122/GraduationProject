@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+[RequireComponent(typeof(Health))]
 public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
 {
     [SerializeField]
@@ -48,11 +50,16 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         }
     }
 
+    Health _health;
+
     protected override void Awake()
     {
         base.Awake();
         SetBuffValue(DefaultBuffValue);
         SetOutoffRangeBuffDuration(DefaultOutoffRangeBuffDuration);
+
+        _health = GetComponent<Health>(); 
+        _health.enabled = false; // 설치 완료 되기 전까지는 공격 대상 X
     }
 
     public Collider[] BuffRunning(FeedbackPlayer feedbackPlayer, Collider[] _curcolls, Collider[] previousColls)
@@ -123,6 +130,21 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         return true;
     }
 
+    private void OnMouseEnter()
+    {
+        if (IsInstalled)
+        {
+            _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (IsInstalled)
+        {
+            _health.OffUIUpdate?.Invoke();
+        }
+    }
 
     private void OnDrawGizmos()
     {
@@ -136,4 +158,11 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     protected abstract int GetBuffValue();
     protected abstract void SetOutoffRangeBuffDuration(float value);
     protected abstract float GetOutoffRangeBuffDuration();
+
+    protected override void SetInstalled()
+    {
+        base.SetInstalled();
+
+        _health.enabled = true; // 설치 완료 되면 공격 대상 O
+    }
 }

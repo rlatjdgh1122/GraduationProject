@@ -36,7 +36,7 @@ public class EnemyAnimationTrigger : MonoBehaviour
 
     private void RangeAttackTrigger()
     {
-        _enemy.AttackCompo.RangeAttack();
+        _enemy.AttackCompo.RangeAttack(transform.forward);
     }
 
     public void DeadCompleteTrigger()

@@ -13,7 +13,7 @@ public class ArmyMovement : MonoBehaviour
     private bool successfulSeatMyPos = false;
     private bool BattleMode => ArmyManager.Instance.BattleMode;
 
-    //¿òÁ÷ÀÌÁö ¾Ê°í ¸ðµÎ°¡ À§Ä¡¿¡ ÀÌµ¿Çß´Ù¸é
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½Î°ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ß´Ù¸ï¿½
     private bool result => successfulSeatMyPos && isCanMove;
 
     private Coroutine WaitForAllTrueCoutine = null;
@@ -60,7 +60,6 @@ public class ArmyMovement : MonoBehaviour
     public void SetClickMovement()
     {
         RaycastHit hit;
-
         if (Physics.Raycast(GameManager.Instance.RayPosition(), out hit))
         {
             if (WaitForAllTrueCoutine != null)
@@ -86,7 +85,7 @@ public class ArmyMovement : MonoBehaviour
             item.BattleMode = BattleMode;
         }
 
-        //¸ðµÎ°¡ ¿òÁ÷ÀÏ ¼ö ÀÖ´Â »óÅÂÀÎÁö È®ÀÎÇÏ±â À§ÇØ ÄÚ·çÆ¾ µ¹·ÁÁÜ
+        //ï¿½ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (AllTrueToCanMoveCoutine != null)
             StopCoroutine(AllTrueToCanMoveCoutine);
 
@@ -94,7 +93,7 @@ public class ArmyMovement : MonoBehaviour
 
         yield return new WaitUntil(() => result == true);
 
-        // ¼º°øÀûÀ¸·Î ÇØ°áµÇ¾ú´Ù¸é
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½Ç¾ï¿½ï¿½Ù¸ï¿½
         curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
     }
     private IEnumerator AllTrueToCanMove_Corou(Vector3 mousePos)
@@ -104,17 +103,17 @@ public class ArmyMovement : MonoBehaviour
 
         if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
-            Debug.Log("¹®Á¦°¡ ÀÖ´Ù1");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½1");
         }
         while (!check)
         {
             foreach (var item in armySoldierList)
             {
-                //°ø°Ý ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ³¡³µ´Ù¸é ¿òÁ÷ÀÏ ¼ö ÀÖÀ½
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (item.WaitTrueAnimEndTrigger)
                 {
                     check = true;
-                    //¿òÁ÷¿©ÁÖ±â
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
                     SetSoldierMovePosition(mousePos, item);
                 }
                 else
@@ -123,12 +122,12 @@ public class ArmyMovement : MonoBehaviour
                 }
             }
 
-            //¸ðµÎ°¡ À§Ä¡·Î ¿òÁ÷ÀÏ ¼ö ÀÖÀ»¶§±îÁö ´ë±â
+            //ï¿½ï¿½Î°ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             yield return waitingByheartbeat;
         }
 
-        //¸ðµÎ°¡ ¿òÁ÷ÀÏ ¼ö ÀÖ´Ù¸é
-        // ¸ðµÎ°¡ ÀÚ¸®¿¡ À§Ä¡ÇØ ÀÖ´ÂÁö È®ÀÎÇÏ±â À§ÇØ ÄÚ·çÆ¾À» µ¹·ÁÁÜ 
+        //ï¿½ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
+        // ï¿½ï¿½Î°ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 
         isCanMove = true;
 
@@ -144,7 +143,7 @@ public class ArmyMovement : MonoBehaviour
 
         if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
-            Debug.Log("¹®Á¦°¡ ÀÖ´Ù2");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½2");
         }
         while (!armySoldierList.TrueForAll(p => p.SuccessfulToSeatMyPostion))
         {
@@ -159,9 +158,9 @@ public class ArmyMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹èÄ¡´ë·Î ÀÌµ¿
+    /// ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
     /// </summary>
-    /// <param name="mousePos"> ¸¶¿ì½º À§Ä¡</param>
+    /// <param name="mousePos"> ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡</param>
     private void SetArmyMovePostiton(Vector3 mousePos)
     {
         var soldiers = curArmy.Soldiers;

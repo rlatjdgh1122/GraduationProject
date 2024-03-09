@@ -23,6 +23,10 @@ public struct BuildingInfo
 public abstract class BaseBuilding : WorkableObject
 {
     [SerializeField]
+    private InputReader _inputReader;
+    protected InputReader InputReaderCompo => _inputReader;
+
+    [SerializeField]
     private BuildingDatabaseSO _buildingDatabaseSO;
 
     [SerializeField]
@@ -49,6 +53,21 @@ public abstract class BaseBuilding : WorkableObject
     private TimeRemain _remainTimeUI;
     public TimeRemain RemainTimeUI => _remainTimeUI;
 
+    private bool isSelected;
+    public bool IsSelected => isSelected;
+
+    private LayerMask _groundLayer = 1 << 19;
+
+    protected Ground InstalledGround()
+    {
+        if (Physics.Raycast(Define.RayCast.RayCasts.MousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        {
+            return hit.collider.GetComponent<Ground>();
+        }
+        return null;
+    }
+
+
     protected override void Awake()
     {
         try
@@ -69,7 +88,6 @@ public abstract class BaseBuilding : WorkableObject
 
         }
         SetUpCompo();
-
     }
 
     private void SetUpCompo()
@@ -95,8 +113,10 @@ public abstract class BaseBuilding : WorkableObject
 
     public void Installed()
     {
-        if (_buildingItemInfo != null)
+        if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
         {
+            WorkerManager.Instance.SendWorkers(_buildingItemInfo.NecessaryResourceCount, this);
+
             WaveManager.Instance.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnWorkers(this);
             WaveManager.Instance.OnBattlePhaseEndEvent += PlusInstalledTime;
             RemainTimeUI.OnRemainUI();
@@ -108,6 +128,8 @@ public abstract class BaseBuilding : WorkableObject
         }
 
         isInstalling = true;
+        StopInstall();
+        InstalledGround()?.InstallBuilding();
     }
 
     private void PlusInstalledTime()
@@ -127,7 +149,7 @@ public abstract class BaseBuilding : WorkableObject
         }
     }
 
-    public void SetSelect()
+    public virtual void SetSelect()
     {
         for (int i = 0; i < _meshRenderers.Length; i++)
         {
@@ -139,9 +161,10 @@ public abstract class BaseBuilding : WorkableObject
             _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
         }
 
+        isSelected = true;
     }
 
-    public void SetInstalled()
+    protected virtual void SetInstalled()
     {
         for (int i = 0; i < _meshRenderers.Length; i++)
         {
@@ -174,4 +197,9 @@ public abstract class BaseBuilding : WorkableObject
     }
 
     protected abstract void Running();
+
+    public virtual void StopInstall()
+    {
+        isSelected = false;
+    }
 }

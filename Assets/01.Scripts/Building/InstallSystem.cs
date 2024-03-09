@@ -80,7 +80,8 @@ public class InstallSystem : MonoBehaviour
     {
         selectedBuildingIDX = -1;
 
-        _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
+        _curBuilding?.StopInstall();
+        //_previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
 
         if (_curBuilding != null && !_curBuilding.IsInstalling)
         {
@@ -113,7 +114,6 @@ public class InstallSystem : MonoBehaviour
                 return;
             }
 
-            WorkerManager.Instance.SendWorkers(_curBuilding.BuildingItemInfoCompo.NecessaryResourceCount, _curBuilding);
             _curBuilding?.Installed();
             _curBuilding?.transform.SetParent(_previousGround.transform);
             _previousGround?.InstallBuilding();

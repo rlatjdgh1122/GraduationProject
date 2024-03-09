@@ -5,6 +5,8 @@ public class ShieldBlockState : ShieldBaseState
     {
     }
 
+    int StunAtk = 1;
+
     public override void Enter()
     {
         base.Enter();
@@ -32,9 +34,10 @@ public class ShieldBlockState : ShieldBaseState
         if (_penguin.CurrentTarget == null)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
 
-        if(_penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth,_penguin.HealthCompo.currentHealth))
+        if(StunAtk > 0 && _penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth,_penguin.HealthCompo.currentHealth))
         {
             _penguin?.OnPassiveStunEvent();
+            StunAtk--;
         }
     }
 

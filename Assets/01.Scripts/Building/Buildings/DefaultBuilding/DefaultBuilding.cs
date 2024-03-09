@@ -7,13 +7,14 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Outline))]
 public class DefaultBuilding : BaseBuilding
 {
+    [SerializeField] private LayerMask _defaultBuildingLayer;
+
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
-    [SerializeField] private RectTransform _penguinSpawnUI;
+    [SerializeField] private PenguinStoreUI _penguinSpawnUI;
     [SerializeField] private RectTransform _constructionStationUI;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
-    [SerializeField] private LayerMask _buildingLayer;
 
     private bool isSpawnUIOn;
 
@@ -27,10 +28,11 @@ public class DefaultBuilding : BaseBuilding
     private ConstructionStation _constructionStation;
     private PenguinSpawner _penguinSpawner;
 
+
     protected virtual void Start()
     {
         Installed();
-        _offSpawnUIVec = _penguinSpawnUI.position;
+
         _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, onSpawnUIYPosValue, 0);
     }
 
@@ -45,15 +47,11 @@ public class DefaultBuilding : BaseBuilding
         WaveManager.Instance.OnBattlePhaseStartEvent += DisableAllUI;
     }
 
-    protected override void Running()
+    private void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0) && !WaveManager.Instance.IsBattlePhase && !IsPointerOverUIObject())
+        if (!WaveManager.Instance.IsBattlePhase && !InputReaderCompo.IsPointerOverUI() && IsInstalled)
         {
-            if (GameManager.Instance.TryRaycast(GameManager.Instance.RayPosition(),
-                                                out var hit, Mathf.Infinity, _buildingLayer))
-            {
-                SpawnButton();
-            }
+            SpawnButton();
         }
     }
 
@@ -65,7 +63,7 @@ public class DefaultBuilding : BaseBuilding
         if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
         {
             StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic));
-            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+            _penguinSpawnUI.OnDisableStorePanel();
 
             if (_penguinSpawner.isSpawnUIOn)
             {
@@ -74,7 +72,7 @@ public class DefaultBuilding : BaseBuilding
         }
         else
         {
-            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, targetVec, 0.7f, Ease.OutCubic));
+            _penguinSpawnUI.OnEnableStorePanel();
             StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
 
             if (_constructionStation.isSpawnUIOn)
@@ -100,27 +98,14 @@ public class DefaultBuilding : BaseBuilding
             }
             else
             {
-                StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+                _penguinSpawnUI.OnEnableStorePanel();
                 _outline.enabled = false;
             }
         }
         
     }
 
-    protected bool IsPointerOverUIObject()
+    protected override void Running()
     {
-        // 마우스 포인터가 UI 위에 있는지 확인
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        var results = new List<RaycastResult>();
-
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-
-        /*Debug.Log(results.Count);
-        foreach (var a in results)
-        {
-            Debug.Log(a.gameObject.transform.parent.name);
-        }*/
-        return results.Count > 0;
     }
 }

@@ -88,12 +88,12 @@ public abstract class Entity : PoolableMono
     {
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
-        HealthCompo = GetComponent<Health>();
-        NavAgent = GetComponent<NavMeshAgent>();
+        HealthCompo = transform?.GetComponent<Health>();
+        NavAgent = transform?.GetComponent<NavMeshAgent>();
         OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
 
-        HealthCompo.SetHealth(_characterStat);
+        HealthCompo?.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
 
 
@@ -106,8 +106,11 @@ public abstract class Entity : PoolableMono
 
     private void OnDestroy()
     {
-        HealthCompo.OnHit -= HandleHit;
-        HealthCompo.OnDied -= HandleDie;
+        if (HealthCompo != null)
+        {
+            HealthCompo.OnHit -= HandleHit;
+            HealthCompo.OnDied -= HandleDie;
+        }
     }
 
     protected virtual void HandleHit()
@@ -202,10 +205,13 @@ public abstract class Entity : PoolableMono
 
     public void StopImmediately()
     {
-        if (NavAgent.isActiveAndEnabled)
+        if (NavAgent != null)
         {
-            NavAgent.isStopped = true;
-            NavAgent.velocity = Vector3.zero; //미끄러짐 방지
+            if (NavAgent.isActiveAndEnabled){
+                    NavAgent.isStopped = true;
+                    NavAgent.velocity = Vector3.zero; 
+            }
+                
         }
     }
     #endregion

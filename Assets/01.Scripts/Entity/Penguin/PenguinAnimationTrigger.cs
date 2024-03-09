@@ -59,15 +59,22 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
-    public void StunTigger()
+    public void StunTigger(int isStun)
     {
-        _penguin.AttackCompo.StunAttack();
-        OnAoEAttackTriggerEvent?.Invoke();
+        _penguin.AttackCompo.StunAttack(isStun == 0 ? false : true, 3f);
+        OnStunTriggerEvent?.Invoke();
     }
 
     private void RangeAttackTrigger()
     {
-        _penguin.AttackCompo.RangeAttack();
+        if (_penguin.CurrentTarget != null)
+        {
+            _penguin.AttackCompo.RangeAttack(_penguin.CurrentTarget.transform.position);
+        }
+        else
+        {
+            _penguin.AttackCompo.RangeAttack(_penguin.transform.forward);
+        }
         OnRangeAttackTriggerEvent?.Invoke();
 
     }
