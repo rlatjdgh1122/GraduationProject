@@ -15,6 +15,7 @@ public class Health : MonoBehaviour, IDamageable
     public Action OnDied;
     public UnityEvent OnHealedEvent;
     public UnityEvent OnHitEvent;
+    public UnityEvent OnStunEvent;
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
@@ -51,7 +52,8 @@ public class Health : MonoBehaviour, IDamageable
     {
         GameObject enemy = ray.collider.gameObject;
         Debug.Log(enemy.name + "이(가) 스턴 상태가 되었습니다.");
-        
+        OnStunEvent?.Invoke();
+
         StartCoroutine(StunCoroutine(enemy, duration));
         
         Debug.Log(enemy.name + "이(가) 스턴 상태에서 벗어났습니다.");
@@ -70,7 +72,7 @@ public class Health : MonoBehaviour, IDamageable
         CharacterController controller = enemy.GetComponent<CharacterController>();
         if (controller != null)
         {
-            controller.enabled = false; // Disable movement
+            controller.enabled = false; 
         }
 
         yield return new WaitForSeconds(duration);
