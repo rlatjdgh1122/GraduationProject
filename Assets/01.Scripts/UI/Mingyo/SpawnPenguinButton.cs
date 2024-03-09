@@ -9,36 +9,42 @@ using UnityEngine.UI;
 
 public class SpawnPenguinButton : MonoBehaviour
 {
-    private Button _btn;
-    private Sprite _face;
-    private TextMeshProUGUI _name;
+    private int _price;
 
-    [SerializeField] private int _price;
-    [Tooltip("무엇을 생성할 것인지. Prefab을 넣어주면 된다.")]
-    [SerializeField] private PenguinStat _penguinStat;
-    [SerializeField] private Penguin spawnPenguin;
-    
-    //private PenguinFactory _penguinFactory; // 팩토리
+    private PenguinStat _penguinStat;
+    private Penguin _spawnPenguin;
     private PenguinStoreUI _penguinStore;
+    
+    private Image _icon;
+    private TextMeshProUGUI _nameText;
+    private TextMeshProUGUI _priceText;
 
     protected virtual void Awake()
     {
         _penguinStore = transform.parent.parent.parent.GetComponent<PenguinStoreUI>();
-        _face = transform.Find("PenguinImg").GetComponent<Sprite>();
-        _name = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
-        //_penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
-        //_btn = GetComponent<Button>();
+        _icon = transform.Find("PenguinImg/PenguinFace").GetComponent<Image>();
+        _nameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
+        _priceText = transform.Find("Cost/CostText").GetComponent<TextMeshProUGUI>();
+    }
+
+    public void InstantiateSelf(PenguinStat stat, Penguin spawnPenguin, int price)
+    {
+        _penguinStat = stat;
+        _spawnPenguin = spawnPenguin;
+
+        _price = price;
     }
 
     public void SlotUpdate()
     {
-        _face = _penguinStat.PenguinIcon;
-        _name.text = _penguinStat.PenguinName;
+        _icon.sprite = _penguinStat.PenguinIcon;
+        _nameText.text = _penguinStat.PenguinName;
+        _priceText.text = _price.ToString();
     }
 
     public void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
-        _penguinStore.PenguinInformataion(_penguinStat, _price);
+        _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
         _penguinStore.OnEnableBuyPanel();
 
 
@@ -70,7 +76,7 @@ public class SpawnPenguinButton : MonoBehaviour
         //DOTween.To(() => _coolingimg.fillAmount, f => _coolingimg.fillAmount = f, 0f, cooltime).OnComplete(() => // 생성시간이 다 되었다면
         //{
         //    _btn.interactable = true;
-        //    _penguinFactory.SpawnPenguinHandler(spawnPenguin); // 팩토리에서 생성하는 함수 실행
+        //_penguinFactory.SpawnPenguinHandler(_spawnPenguin); // 팩토리에서 생성하는 함수 실행
         //});
     }
 

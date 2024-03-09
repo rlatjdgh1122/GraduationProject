@@ -13,37 +13,78 @@ public class PenguinStorePanel
     public float panelAlphaFadeTime;
 }
 
+[Serializable]
+public class PenguinUnitSlot
+{
+    public int price;
+    public PenguinStat stat;
+    public Penguin spawnPenguinPrefab;
+}
+
 public class PenguinStoreUI : MonoBehaviour
 {
     public List<PenguinStorePanel> _panelList;
+    public List<PenguinUnitSlot> _slotList;
+    [Header("SpawnPenguin")]
+    [SerializeField] private Transform UnitInventoryParent;
+    [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
 
     [Header("PenguinStore")]
     [SerializeField] private Transform _spawnPenguinButtonParent;
 
     [Header("BuyPanel")]
-    [SerializeField] private TextMeshProUGUI _buyCntText;
-    [SerializeField] private TextMeshProUGUI _priceText;
-    [SerializeField] private TextMeshProUGUI _currentCostText;
-    [SerializeField] private TextMeshProUGUI _amountCostText;
-    [SerializeField] private TextMeshProUGUI _buyToPenguinNameText;
+    private TextMeshProUGUI _buyCntText;
+    private TextMeshProUGUI _priceText;
+    private TextMeshProUGUI _currentCostText;
+    private TextMeshProUGUI _amountCostText;
+    private TextMeshProUGUI _buyToPenguinNameText;
+    private Image _buyButtonImg;
+    private TextMeshProUGUI _buyButtonText;
     [SerializeField] private int _maxCount;
     private int _cnt = 1;
     private int _price = 0;
+    private bool _canBuy;
 
     [Header("PenguinInfoPanel")]
-    [SerializeField] private TextMeshProUGUI _infoPenguinNameText;
-    [SerializeField] private Image _penguinFace;
-    [SerializeField] private Slider _rangeSlider;
-    [SerializeField] private Slider _hpSlider;
-    [SerializeField] private Slider _atkSlider;
+    private TextMeshProUGUI _infoPenguinNameText;
+    private Image _penguinFace;
+    private Slider _rangeSlider;
+    private Slider _hpSlider;
+    private Slider _atkSlider;
 
     private PenguinStat _stat;
-
-    private SpawnPenguinButton[] _spawnPenguins;
+    private Penguin _spawnPenguin;
+    private PenguinFactory _penguinFactory;
 
     private void Awake()
     {
-        _spawnPenguins = _spawnPenguinButtonParent.GetComponentsInChildren<SpawnPenguinButton>();
+        _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
+
+        #region BuyPanelComponent
+
+        _buyToPenguinNameText = _panelList[1].panel.transform.Find("Buy/PenguinName").GetComponent<TextMeshProUGUI>();
+        _amountCostText       = _panelList[1].panel.transform.Find("Buy/AmountCost").GetComponent<TextMeshProUGUI>();
+        _buyCntText           = _panelList[1].panel.transform.Find("Buy/BuyCount/Count").GetComponent<TextMeshProUGUI>();
+        _currentCostText      = _panelList[1].panel.transform.Find("Buy/CurrentCost").GetComponent<TextMeshProUGUI>();
+        _priceText            = _panelList[1].panel.transform.Find("Buy/Price").GetComponent<TextMeshProUGUI>();
+        _buyButtonImg         = _panelList[1].panel.transform.Find("Buttons/BuyBtn").GetComponent<Image>();
+        _buyButtonText        = _panelList[1].panel.transform.Find("Buttons/BuyBtn/Text").GetComponent<TextMeshProUGUI>();
+
+        #endregion
+        #region PenguinInfoPanel Component
+        _infoPenguinNameText = _panelList[2].panel.transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
+        _penguinFace         = _panelList[2].panel.transform.Find("PenguinImg").GetComponent<Image>();
+        _rangeSlider         = _panelList[2].panel.transform.Find("Rng").GetComponent<Slider>();
+        _hpSlider            = _panelList[2].panel.transform.Find("Hp").GetComponent<Slider>();
+        _atkSlider           = _panelList[2].panel.transform.Find("Atk").GetComponent<Slider>();
+        #endregion
+
+        foreach(var slot in _slotList)
+        {
+            SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, UnitInventoryParent);
+            btn.InstantiateSelf(slot.stat, slot.spawnPenguinPrefab, slot.price);
+            btn.SlotUpdate();
+        }
     }
 
     #region OnOffPanel
@@ -51,12 +92,7 @@ public class PenguinStoreUI : MonoBehaviour
     public void OnEnableStorePanel() //스토어 패널 활성화
     {
         _panelList[0].panel.DOFade(1, _panelList[0].panelAlphaFadeTime);
-        _panelList[0].panel.blocksRaycasts = true;
-
-        foreach(var btn in _spawnPenguins)
-        {
-            btn.SlotUpdate();
-        }
+        DisableRayExceptSelf(_panelList[0].panel);
     }
 
     public void OnDisableStorePanel()//스토어 패널 비활성화
@@ -67,7 +103,7 @@ public class PenguinStoreUI : MonoBehaviour
     public void OnEnableBuyPanel() //구매 패널 활성화
     {
         _panelList[1].panel.DOFade(1, _panelList[1].panelAlphaFadeTime);
-        _panelList[1].panel.blocksRaycasts = true;
+        DisableRayExceptSelf(_panelList[1].panel);
 
         CurrentCostUpdate();
         AmountCostUpdate();
@@ -76,7 +112,7 @@ public class PenguinStoreUI : MonoBehaviour
     public void OnDisableBuyPanel()//구매 패널 비활성화
     {
         _panelList[1].panel.DOFade(0, _panelList[1].panelAlphaFadeTime);
-        _panelList[1].panel.blocksRaycasts = false;
+        DisableRayExceptSelf(_panelList[0].panel);
 
         ResetBuyPanel();
     }
@@ -84,7 +120,7 @@ public class PenguinStoreUI : MonoBehaviour
     public void OnEnablePenguinInfo() //펭귄 정보 활성화
     {
         _panelList[2].panel.DOFade(1, _panelList[2].panelAlphaFadeTime);
-        _panelList[2].panel.blocksRaycasts = true;
+        DisableRayExceptSelf(_panelList[2].panel);
 
         UpdatePenguinInfo(_panelList[2].panelAlphaFadeTime);
     }
@@ -92,7 +128,7 @@ public class PenguinStoreUI : MonoBehaviour
     public void OnDisablePenguinInfo() //펭귄 정보 비활성화
     {
         _panelList[2].panel.DOFade(0, _panelList[2].panelAlphaFadeTime);
-        _panelList[2].panel.blocksRaycasts = false;
+        DisableRayExceptSelf(_panelList[1].panel);
     }
 
     #endregion
@@ -141,22 +177,55 @@ public class PenguinStoreUI : MonoBehaviour
         {
             _amountCostText.color = Color.red;
             amount = -Mathf.Abs(amount);
+            _canBuy = false;
         }
         else
         {
             _amountCostText.color = Color.green;
             amount = Mathf.Abs(amount);
+            _canBuy = true;
         }
 
+        BuyButtonUpdate();
 
         TextUpdate(_amountCostText, amount.ToString());    
     }
+
+    private void BuyButtonUpdate()
+    {
+        string str;
+        if (!_canBuy)
+        {
+            _buyButtonImg.color = Color.red;
+            str = "재화 부족";
+        }
+        else
+        {
+            _buyButtonImg.color = Color.white;
+            str = "구매";
+        }
+        TextUpdate(_buyButtonText, str);
+    }
+
     public void ResetBuyPanel()
     {
         _cnt = 1;
-        _price = 0;
-        _amountPrice = 0;
+        PriceUpdate();
+        CurrentCostUpdate();
+        AmountCostUpdate();
+        TextUpdate(_buyCntText, _cnt.ToString());
     }
+
+    public void BuyButton()
+    {
+        if (!_canBuy) return;
+
+        CostManager.Instance.SubtractFromCurrentCost(_amountPrice);
+        _penguinFactory.SpawnPenguinHandler(_spawnPenguin);
+        ResetBuyPanel();
+        LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
+    }
+
 
     #endregion
 
@@ -175,9 +244,25 @@ public class PenguinStoreUI : MonoBehaviour
 
     #endregion
 
-    public void PenguinInformataion(PenguinStat stat, int price) //슬롯에서 펭귄 정보 받기
+    private void DisableRayExceptSelf(CanvasGroup self)
+    {
+        for(int i = 0; i < _panelList.Count; i++)
+        {
+            if(self != _panelList[i].panel)
+            {
+                _panelList[i].panel.blocksRaycasts = false;
+            }
+            else
+            {
+                _panelList[i].panel.blocksRaycasts = true;
+            }
+        }
+    }
+
+    public void PenguinInformataion(Penguin spawnPenguin, PenguinStat stat, int price) //슬롯에서 펭귄 정보 받기
     {
         _price = -price; //가격
+        _spawnPenguin = spawnPenguin;
         _stat = stat;
 
 
