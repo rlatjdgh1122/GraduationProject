@@ -2,43 +2,65 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class SpawnPenguinButton : MonoBehaviour
 {
-    private Button _btn;
+    private int _price;
 
-    [Tooltip("무엇을 생성할 것인지. Prefab을 넣어주면 된다.")]
-    [SerializeField] private PenguinStat _penguinStat;
-    [SerializeField] private Penguin spawnPenguin;
+    private PenguinStat _penguinStat;
+    private Penguin _spawnPenguin;
+    private PenguinStoreUI _penguinStore;
     
-    private PenguinFactory _penguinFactory; // 팩토리
+    private Image _icon;
+    private TextMeshProUGUI _nameText;
+    private TextMeshProUGUI _priceText;
 
     protected virtual void Awake()
     {
-        _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
-        _btn = GetComponent<Button>();
+        _penguinStore = transform.parent.parent.parent.GetComponent<PenguinStoreUI>();
+        _icon = transform.Find("PenguinImg/PenguinFace").GetComponent<Image>();
+        _nameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
+        _priceText = transform.Find("Cost/CostText").GetComponent<TextMeshProUGUI>();
+    }
+
+    public void InstantiateSelf(PenguinStat stat, Penguin spawnPenguin, int price)
+    {
+        _penguinStat = stat;
+        _spawnPenguin = spawnPenguin;
+
+        _price = price;
+    }
+
+    public void SlotUpdate()
+    {
+        _icon.sprite = _penguinStat.PenguinIcon;
+        _nameText.text = _penguinStat.PenguinName;
+        _priceText.text = _price.ToString();
     }
 
     public void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
-        if(WaveManager.Instance.IsBattlePhase)
-        {
-            UIManager.Instance.InitializHudTextSequence();
-            _penguinFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
+        _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
+        _penguinStore.OnEnableBuyPanel();
 
-            UIManager.Instance.SpawnHudText(_penguinFactory.FailHudText);
-            return;
-        }
 
-        if (!WaveManager.Instance.IsBattlePhase) // 남은 준비시간안에 생성할 수 있다면 생성한다.
-        {
-            //TestLegion.Instance.LegionUIList[0].HeroCnt++;
+        //if(WaveManager.Instance.IsBattlePhase)
+        //{
+        //    UIManager.Instance.InitializHudTextSequence();
+        //    _penguinFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
 
-            ButtonCooldown();
-        }
+        //    UIManager.Instance.SpawnHudText(_penguinFactory.FailHudText);
+        //    return;
+        //}
+
+        //if (!WaveManager.Instance.IsBattlePhase) // 남은 준비시간안에 생성할 수 있다면 생성한다.
+        //{
+
+        //}
     }
 
     private void ButtonCooldown() // 버튼 누르면 실행될 함수
@@ -54,7 +76,7 @@ public class SpawnPenguinButton : MonoBehaviour
         //DOTween.To(() => _coolingimg.fillAmount, f => _coolingimg.fillAmount = f, 0f, cooltime).OnComplete(() => // 생성시간이 다 되었다면
         //{
         //    _btn.interactable = true;
-        //    _penguinFactory.SpawnPenguinHandler(spawnPenguin); // 팩토리에서 생성하는 함수 실행
+        //_penguinFactory.SpawnPenguinHandler(_spawnPenguin); // 팩토리에서 생성하는 함수 실행
         //});
     }
 

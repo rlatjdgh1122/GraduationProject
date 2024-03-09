@@ -11,7 +11,7 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
-    [SerializeField] private RectTransform _penguinSpawnUI;
+    [SerializeField] private PenguinStoreUI _penguinSpawnUI;
     [SerializeField] private RectTransform _constructionStationUI;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
@@ -32,7 +32,7 @@ public class DefaultBuilding : BaseBuilding
     protected virtual void Start()
     {
         Installed();
-        _offSpawnUIVec = _penguinSpawnUI.position;
+
         _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, onSpawnUIYPosValue, 0);
     }
 
@@ -63,7 +63,7 @@ public class DefaultBuilding : BaseBuilding
         if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
         {
             StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic));
-            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+            _penguinSpawnUI.OnDisableStorePanel();
 
             if (_penguinSpawner.isSpawnUIOn)
             {
@@ -72,7 +72,7 @@ public class DefaultBuilding : BaseBuilding
         }
         else
         {
-            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, targetVec, 0.7f, Ease.OutCubic));
+            _penguinSpawnUI.OnEnableStorePanel();
             StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
 
             if (_constructionStation.isSpawnUIOn)
@@ -98,7 +98,7 @@ public class DefaultBuilding : BaseBuilding
             }
             else
             {
-                StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_penguinSpawnUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+                _penguinSpawnUI.OnEnableStorePanel();
                 _outline.enabled = false;
             }
         }
