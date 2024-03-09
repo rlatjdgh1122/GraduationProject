@@ -43,6 +43,7 @@ public class BuildingView : NexusPopupUI
     {
         if (!building.IsUnlocked)
         {
+            UpdateUI();
             return;
         }
         else

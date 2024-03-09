@@ -59,10 +59,13 @@ public class NexusUIPresenter : NexusPopupUI
     #region buildingUI
     public void PurchaseBuilding(BuildingView view)
     {
-        if (CostManager.Instance.Cost >= view.building.Price && view.building.IsUnlocked)
+        if (CostManager.Instance.Cost >= view.building.Price)
         {
-            view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
-            CostManager.Instance.Cost -= view.building.Price;
+            if (view.building.IsUnlocked)
+            {
+                view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
+                CostManager.Instance.Cost -= view.building.Price;
+            }
         }
         else
         {

@@ -72,11 +72,11 @@ public class SpawnBuildingButton : MonoBehaviour
 
         #region 일꾼 수 비교
 
-        if (!(WorkerManager.Instance.WorkerCount >= buildinginfo.NecessaryResourceCount))
-        {
-            _buildingFactory.SetSpawnFailHudText("일꾼이 부족합니다");
-            cantSpawnBuilding = true;
-        }
+        //if (!(WorkerManager.Instance.WorkerCount >= buildinginfo.NecessaryResourceCount))
+        //{
+        //    _buildingFactory.SetSpawnFailHudText("일꾼이 부족합니다");
+        //    cantSpawnBuilding = true;
+        //}
 
         #endregion
 

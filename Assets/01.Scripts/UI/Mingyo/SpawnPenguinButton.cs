@@ -21,10 +21,10 @@ public class SpawnPenguinButton : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _penguinStore = transform.parent.parent.parent.GetComponent<PenguinStoreUI>();
-        _icon = transform.Find("PenguinImg/PenguinFace").GetComponent<Image>();
-        _nameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
-        _priceText = transform.Find("Cost/CostText").GetComponent<TextMeshProUGUI>();
+        //_penguinStore = transform.parent.parent.parent.GetComponent<PenguinStoreUI>();
+        //_icon = transform.Find("PenguinImg/PenguinFace").GetComponent<Image>();
+        //_nameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
+        //_priceText = transform.Find("Cost/CostText").GetComponent<TextMeshProUGUI>();
     }
 
     public void InstantiateSelf(PenguinStat stat, Penguin spawnPenguin, int price)
