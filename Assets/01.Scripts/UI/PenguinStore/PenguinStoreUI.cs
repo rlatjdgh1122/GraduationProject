@@ -81,6 +81,7 @@ public class PenguinStoreUI : MonoBehaviour
 
         foreach(var slot in _slotList)
         {
+            Debug.Log(slot);
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, UnitInventoryParent);
             btn.InstantiateSelf(slot.stat, slot.spawnPenguinPrefab, slot.price);
             btn.SlotUpdate();
