@@ -1,12 +1,5 @@
-using JetBrains.Annotations;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using Unity.Jobs.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.InputManagerEntry;
 
 public class ArrangementTest : Singleton<ArrangementTest>
 {
@@ -17,8 +10,6 @@ public class ArrangementTest : Singleton<ArrangementTest>
     [SerializeField] private int length = 7;
 
     [SerializeField] private List<ArrangementInfo> CurInfoList = new();
-    [SerializeField] private List<ArrangementInfo> PrevInfoList = new();
-    [SerializeField] private List<ArrangementInfo> NewInfoList = new();
     private List<Vector3> seatPosList = new();
 
     //private List<Penguin> _spawnPenguins = new();
@@ -27,7 +18,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
     {
         Setting();
 
-        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
+        //WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
     }
 
     private void Setting()
@@ -90,7 +81,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
             penguinSpawnDictionary[info.Legion].Remove(info.SlotIdx);
         }
     }
-    public void OnJoinArmyByInfo(ArrangementInfo info)
+    private void OnJoinArmyByInfo(ArrangementInfo info)
     {
         if (info.JobType == PenguinJobType.Solider)
         {
@@ -109,56 +100,5 @@ public class ArrangementTest : Singleton<ArrangementTest>
             ArmyManager.Instance.JoinArmyToGeneral(info.Legion, obj);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
         }
-
-        /* if (NewInfoList.Count > 0)
-             NewInfoList.Clear();
-
-         if (CurInfoList.Count > 0)
-             PrevInfoList.AddRange(CurInfoList);
-
-         if (CurInfoList.Count > PrevInfoList.Count)
-         {
-             foreach (var p in CurInfoList)
-             {
-                 if (!PrevInfoList.Contains(p))
-                 {
-                     if (!NewInfoList.Contains(p))
-                         NewInfoList.Add(p);
-                 }
-             }
-         }
-         else if (CurInfoList.Count < PrevInfoList.Count)
-         {
-             foreach (var p in PrevInfoList)
-             {
-                 if (!CurInfoList.Contains(p))
-                 {
-                     if (!NewInfoList.Contains(p))
-                         NewInfoList.Add(p);
-                 }
-             }
-         }
-         else { }
-
-         NewInfoList.ForEach(p =>
-         {
-             if (p.JobType == PenguinJobType.Solider)
-             {
-                 Penguin obj = null;
-                 obj = ArmyManager.Instance.CreateSoldier(p.PenguinType, SpawnPoint.position, seatPosList[p.SlotIdx]);
-
-                 ArmyManager.Instance.JoinArmyToSoldier(p.Legion, obj as Penguin);
-                 _spawnPenguins.Add(obj);
-             }
-
-             if (p.JobType == PenguinJobType.General)
-             {
-                 General obj = null;
-                 obj = ArmyManager.Instance.CreateSoldier(p.PenguinType, SpawnPoint.position, seatPosList[p.SlotIdx]) as General;
-
-                 ArmyManager.Instance.JoinArmyToGeneral(p.Legion, obj);
-                 _spawnPenguins.Add(obj);
-             }
-         });*/
     }
 }

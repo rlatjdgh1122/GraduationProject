@@ -10,6 +10,8 @@ public class BasicMoveState : BasicBaseState
         base.Enter();
         _triggerCalled = true;
         _penguin.SuccessfulToSeatMyPostion = false;
+        if (!_penguin.WaitTrueAnimEndTrigger)
+            _penguin.MoveToTarget(_penguin.GetSeatPosition());
     }
 
     public override void UpdateState()

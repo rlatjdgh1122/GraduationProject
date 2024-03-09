@@ -51,6 +51,11 @@ public class ArmyMovement : MonoBehaviour
             armySoldierList.Add(curArmy.General);
         }
     }
+    public void SetArmy_Btn()
+    {
+        curArmy = ArmyManager.Instance.GetCurArmy();
+        SetArmyNumber();
+    }
 
     public void SetClickMovement()
     {

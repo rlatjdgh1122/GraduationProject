@@ -29,10 +29,16 @@ public class BasicAttackState : BasicBaseState
 
         if (_penguin.ArmyTriggerCalled)
         {
+            if (_penguin.CurrentTarget == null
+                && _penguin.BattleMode == true)
+            {
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+            }
+
             float animTime =
                 _penguin.AnimatorCompo.GetCurrentAnimatorStateInfo(0).normalizedTime;
             if (animTime >= 1f) //애니메이션 끝나느 부분이죠~
-            {
+            { 
                 _penguin.WaitTrueAnimEndTrigger = true;
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
             }
@@ -44,7 +50,9 @@ public class BasicAttackState : BasicBaseState
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
                 if (_penguin.CurrentTarget == null)
+                {
                     _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+                }
             }
         }
     }

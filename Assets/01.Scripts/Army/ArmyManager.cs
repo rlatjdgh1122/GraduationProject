@@ -9,9 +9,9 @@ public class ArmyManager : Singleton<ArmyManager>
     [SerializeField] private SoldierListSO soldierTypeListSO = null;
     private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
 
-    [SerializeField] private List<Army> armies = new();
+    [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
-    private Dictionary<KeyCode, Action> keyDictionary;
+    private Dictionary<KeyCode, Action> keyDictionary = new();
 
     private bool battleMode = false;
     public bool BattleMode => battleMode;
@@ -30,7 +30,8 @@ public class ArmyManager : Singleton<ArmyManager>
         }
 
         CreateArmy();
-        SignalHub.OnArmyChanged.Invoke(armies[0], armies[0]);
+        //SignalHub.OnArmyChanged.Invoke(armies[0], armies[0]);
+        ChangeArmy(1);
         KeySetting();
     }
     private void KeySetting()
@@ -47,7 +48,7 @@ public class ArmyManager : Singleton<ArmyManager>
              {KeyCode.Alpha8, ()=> ChangeArmy(8) },
              {KeyCode.Alpha9, ()=> ChangeArmy(9) },
              {KeyCode.A,      ()=> {battleMode = !battleMode;
-             SignalHub.OnBattleModeChanged.Invoke(battleMode); } },
+             SignalHub.OnBattleModeChanged?.Invoke(battleMode); } },
         };
     }
 
@@ -225,7 +226,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var prefab = soldierTypeDictionary[type];
 
         obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
-        obj.gameObject.SetActive(false);
+        //obj.gameObject.SetActive(false);
         obj.transform.position = SpawnPoint;
         obj.SeatPos = seatPos;
         return obj;
