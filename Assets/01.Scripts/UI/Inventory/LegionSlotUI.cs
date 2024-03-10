@@ -15,7 +15,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
     private Legion CurrentLegion;
 
-    private void Awake()
+    protected override void Awake()
     {
         _data = null; //데이터 초기화
         CurrentLegion = LegionInventory.Instance.LegionList[_legionNumber - 1];

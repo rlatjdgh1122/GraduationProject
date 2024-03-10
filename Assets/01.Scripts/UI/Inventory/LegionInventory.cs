@@ -11,7 +11,7 @@ public class Legion
     public bool Locked;                             //군단이 잠겨있는가
     public Transform LegionPanels;                  //군단 UI 부모
     public int MaxCount;                           //최대 군단 병사 수
-    public int CurrentCount = 0;      //현재 군단 병사 수
+    public int CurrentCount = 0;                    //현재 군단 병사 수
     public bool MaxGereral { get; set; }           //군단에 장군이 꽉차있는가
 
     [HideInInspector] public List<LegionInventoryData> LegionInven;

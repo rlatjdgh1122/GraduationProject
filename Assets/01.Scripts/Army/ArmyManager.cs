@@ -30,6 +30,7 @@ public class ArmyManager : Singleton<ArmyManager>
         }
 
         CreateArmy();
+
         //SignalHub.OnArmyChanged.Invoke(armies[0], armies[0]);
         ChangeArmy(1);
         KeySetting();
@@ -262,7 +263,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
         newArmy.AsrmyParentObj = armyObj;
 
-
+        Debug.Log(newArmy);
         armies.Add(newArmy);
     }
 
