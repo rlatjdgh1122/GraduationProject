@@ -623,6 +623,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f41c3fa95d8d5a44ac80358b7ca68ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPrevAttackEffectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndAttackEffectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpecialAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAoEAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRangeAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeadCompleteTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2660982613146323686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,11 +1665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e2e756f3315dd438e007f4610468ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterStat: {fileID: 11400000, guid: 7162521df94a26641899ec1d6b1d38bf, type: 2}
   innerDistance: 10
   attackDistance: 1.5
-  passiveData: {fileID: 11400000, guid: 6e46276f3dfa51f4f863a55dc8911a85, type: 2}
-  _characterStat: {fileID: 11400000, guid: 7162521df94a26641899ec1d6b1d38bf, type: 2}
-  type: 3
   moveSpeed: 4.5
   attackSpeed: 1
   maxDetectedCount: 0
@@ -1665,6 +1687,15 @@ MonoBehaviour:
       basicTimes: 0
       archerTimes: 0
       shieldTimes: 0
+  passiveData: {fileID: 11400000, guid: 6e46276f3dfa51f4f863a55dc8911a85, type: 2}
+  ligeonStat:
+    IncStat:
+    - type: 1024
+      value: 50
+    DecStat:
+    - type: 128
+      value: 50
+  healValue: 10
 --- !u!114 &5359918780269923923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1833,6 +1864,7 @@ MonoBehaviour:
   outlineColor: {r: 1, g: 1, b: 1, a: 0}
   outlineWidth: 0
   precomputeOutline: 0
+  IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
 --- !u!1 &7868602062511878558

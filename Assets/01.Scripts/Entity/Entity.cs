@@ -1,8 +1,10 @@
 using DG.Tweening.Core.Easing;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public abstract class Entity : PoolableMono
 {
@@ -24,8 +26,14 @@ public abstract class Entity : PoolableMono
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
-    #region 군단 포지션
+    #region 군단 포지션 관련
 
+    public bool ArmyTriggerCalled = false;
+    public bool WaitTrueAnimEndTrigger = true;
+    public bool SuccessfulToSeatMyPostion = false;
+    public bool BattleMode = false;
+
+    private Coroutine movingCoroutine = null;
     private Vector3 curMousePos = Vector3.zero;
     private Vector3 prevMousePos = Vector3.zero;
     public Vector3 MousePos
@@ -46,21 +54,22 @@ public abstract class Entity : PoolableMono
             {
                 Vector3 vec = (curMousePos - prevMousePos);
 
-                float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
-                //float result = Mathf.Floor(value);
-                return value; //0 ~ 360
+                float value = Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
+                //float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
+                //float value = Quaternion.LookRotation(vec).eulerAngles.y;
+                //value = (value > 180f) ? value - 360f : value; // 변환
+                return value; // -180 ~ 180
             }
             else
                 return 0;
         }
     }
-
     public Vector3 SeatPos
     {
         get
         {
-            Vector3 direction = Quaternion.Euler(0, Angle, 0) * (_seatPos);
-            return direction;
+            //Vector3 direction = Quaternion.Euler(0, Angle, 0) * (_seatPos);
+            return _seatPos;
         }
         set { _seatPos = value; }
     }
@@ -128,9 +137,53 @@ public abstract class Entity : PoolableMono
         MousePos = mousePos;
         if (NavAgent.isActiveAndEnabled)
         {
+            if (prevMousePos != Vector3.zero)
+            {
+                if (movingCoroutine != null)
+                    StopCoroutine(movingCoroutine);
 
-            MoveToTarget(mousePos + SeatPos);
+                movingCoroutine = StartCoroutine(Moving());
+            }
+            else
+                MoveToTarget(mousePos + SeatPos);
         }
+    }
+    float totalTime = 1f; // 총 시간 (1초로 가정)
+    float rotateTime = .3f;
+    float balancingValue = 10f;
+    float currentTime = 0f; // 현재 시간
+
+    private IEnumerator Moving()
+    {
+        currentTime = 0f;
+        float t = 0f;
+
+        float AC = Vector3.Distance(MousePos, SeatPos);
+        Vector3 movePos = Quaternion.Euler(0, Angle, 0) * SeatPos;
+        float AB = Vector3.Distance(MousePos, movePos);
+
+        float BC =
+            Mathf.Pow(AB, 2) + Mathf.Pow(AC, 2) - (2 * AC * AB) * Mathf.Cos(Angle);
+        //마우스 위치부터 나의 위치와 움직일 위치에 거리
+        float result = Mathf.Sqrt(BC); //이게 클수록 수는 작게
+
+        totalTime = result / balancingValue;
+
+        while (currentTime <= totalTime)
+        {
+            t = currentTime / totalTime;
+
+            Vector3 frameMousePos = Vector3.Lerp(prevMousePos, curMousePos, t);
+
+            Vector3 finalPos = frameMousePos + movePos;
+
+            MoveToTarget(finalPos);
+
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
+        MoveToTarget(pos);
     }
 
     public void SetTarget(Vector3 mousePos)
@@ -140,6 +193,9 @@ public abstract class Entity : PoolableMono
             MoveToTarget(mousePos);
         }
     }
+
+    public Vector3 GetSeatPosition() => MousePos + SeatPos;
+
 
     public void MoveToTarget(Vector3 pos)
     {
@@ -151,8 +207,11 @@ public abstract class Entity : PoolableMono
     {
         if (NavAgent != null)
         {
-            if (NavAgent.isActiveAndEnabled)
-                NavAgent.isStopped = true;
+            if (NavAgent.isActiveAndEnabled){
+                    NavAgent.isStopped = true;
+                    NavAgent.velocity = Vector3.zero; 
+            }
+                
         }
     }
     #endregion

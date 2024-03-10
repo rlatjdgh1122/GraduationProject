@@ -25,7 +25,7 @@ public class Penguin : Entity
 
     public Army owner;
 
-    public Army Owner => owner;
+    public Army Owner => owner; 
 
     private void OnEnable()
     {
@@ -49,7 +49,7 @@ public class Penguin : Entity
         AttackCompo = GetComponent<EntityAttackData>();
     }
 
-    #region 일반 병사들 페시브
+    #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
     public bool CheckAttackEventPassive(int curAttackCount)
 => passiveData.CheckAttackEventPassive(curAttackCount);
@@ -129,6 +129,11 @@ public class Penguin : Entity
     {
         yield return new WaitForSeconds(time);
         Stat.AddStat(value, type, mode);
+    }
+    public IEnumerator RemoveStatCorou(float time, int value, StatType type, StatMode mode)
+    {
+        yield return new WaitForSeconds(time);
+        Stat.RemoveStat(value, type, mode);
     }
 
     public override void Init()

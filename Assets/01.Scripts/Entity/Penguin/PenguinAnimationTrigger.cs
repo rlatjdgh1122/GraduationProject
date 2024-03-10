@@ -59,10 +59,10 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
-    public void StunTigger()
+    public void StunTigger(int isStun)
     {
-        _penguin.AttackCompo.StunAttack();
-        OnAoEAttackTriggerEvent?.Invoke();
+        _penguin.AttackCompo.StunAttack(isStun == 0 ? false : true, 3f);
+        OnStunTriggerEvent?.Invoke();
     }
 
     private void RangeAttackTrigger()

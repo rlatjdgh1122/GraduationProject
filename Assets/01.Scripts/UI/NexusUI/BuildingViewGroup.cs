@@ -1,18 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class BuildingViewGroup : MonoBehaviour
+public class BuildingViewGroup : PopupUI
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public BuildingType Category;
+    public bool IsArrived;
 
-    // Update is called once per frame
-    void Update()
+    public override void MovePanel(float x, float y, float fadeTime)
     {
-        
+        base.MovePanel(x, y, fadeTime);
     }
 }

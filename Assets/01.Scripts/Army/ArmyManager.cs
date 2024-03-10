@@ -1,17 +1,25 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
     [SerializeField] private SoldierListSO soldierTypeListSO = null;
     private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
 
-    [SerializeField] private List<Army> armies = new();
+    [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
+    private Dictionary<KeyCode, Action> keyDictionary = new();
 
-    private int curLegion = 0;
-    public int CurLegion => curLegion;
-    public int ArmyCount => armies.Count;
+    private bool battleMode = false;
+    public bool BattleMode => battleMode;
+
+    private int curArmyIdx = -1;
+    public int CurLegion => curArmyIdx + 1;
+
+    public int ArmiesCount => armies.Count;
 
     private void Start()
     {
@@ -21,23 +29,41 @@ public class ArmyManager : Singleton<ArmyManager>
             soldierTypeDictionary.Add(type, solider);
         }
 
-        foreach (var army in armies)
-        {
-            army.Soldiers.ForEach(s => s.SetOwner(army));
-            army.IsMoving = true;
-        }
-
+        CreateArmy();
+        //SignalHub.OnArmyChanged.Invoke(armies[0], armies[0]);
         ChangeArmy(1);
+        KeySetting();
+    }
+    private void KeySetting()
+    {
+        keyDictionary = new Dictionary<KeyCode, Action>()
+        {
+             {KeyCode.Alpha1, ()=> ChangeArmy(1) },
+             {KeyCode.Alpha2, ()=> ChangeArmy(2) },
+             {KeyCode.Alpha3, ()=> ChangeArmy(3) },
+             {KeyCode.Alpha4, ()=> ChangeArmy(4) },
+             {KeyCode.Alpha5, ()=> ChangeArmy(5) },
+             {KeyCode.Alpha6, ()=> ChangeArmy(6) },
+             {KeyCode.Alpha7, ()=> ChangeArmy(7) },
+             {KeyCode.Alpha8, ()=> ChangeArmy(8) },
+             {KeyCode.Alpha9, ()=> ChangeArmy(9) },
+             {KeyCode.A,      ()=> {battleMode = !battleMode;
+             SignalHub.OnBattleModeChanged?.Invoke(battleMode); } },
+        };
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeArmy(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeArmy(2);
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeArmy(3);
+        if (Input.anyKeyDown)
+        {
+            foreach (var dic in keyDictionary)
+            {
+                if (Input.GetKeyDown(dic.Key))
+                {
+                    dic.Value();
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -46,21 +72,31 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <returns> Army를 리던</returns>
     public Army GetCurArmy() //현재 army 리턴
     {
-        return armies[curLegion];
+        return armies[curArmyIdx];
+    }
+
+    public Army GetArmy(int legion) //현재 army 리턴
+    {
+        return armies[legion - 1];
     }
 
     /// <summary>
     /// 군단 변경
     /// </summary>
-    /// <param name="index"> 몇번째 군단</param>
-    private void ChangeArmy(int index)
+    /// <param name="legion"> 몇번째 군단</param>
+    private void ChangeArmy(int legion)
     {
-        if (curLegion == index) return;
+        int Idx = legion - 1;
+        if (curArmyIdx == Idx) return;
+        if (armies.Count < legion) return;
 
-        curLegion = index;
+        var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
+        SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
+
+        curArmyIdx = Idx;
 
         armies.IdxExcept(
-            index,
+            Idx,
             p =>
             p.Soldiers.ForEach(s =>
             {
@@ -85,7 +121,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curLegion].AddStat(value, type, mode);
+        armies[curArmyIdx].AddStat(armies[curArmyIdx], value, type, mode);
     }
 
     /// <summary>
@@ -96,7 +132,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curLegion].RemoveStat(value, type, mode);
+        armies[curArmyIdx].RemoveStat(armies[curArmyIdx], value, type, mode);
     }
 
     /// <summary>
@@ -108,7 +144,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion].RemoveStat(value, type, mode);
+        armies[legion - 1].RemoveStat(armies[legion], value, type, mode);
     }
     /// <summary>
     /// 군단의 스탯을 삭제
@@ -119,7 +155,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion].AddStat(value, type, mode);
+        armies[legion - 1].AddStat(armies[legion], value, type, mode);
     }
 
     #endregion
@@ -139,7 +175,7 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        var Army = armies[legion];
+        var Army = armies[legion - 1];
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
@@ -152,15 +188,13 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="obj"> Penguin 타입만 가능</param>
     public void JoinArmyToGeneral(int legion, General obj) //들어가고 싶은 군단, 장군펭귄
     {
-
-
         if (armies.Find(p => p.Legion == legion) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
 
-        var Army = armies[legion];
+        var Army = armies[legion - 1];
         var LegionStat = obj.ligeonStat;
 
         if (Army.General != null)
@@ -172,7 +206,7 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.General = obj;
 
-        Army.AddStat(LegionStat);
+        Army.AddStat(Army, LegionStat);
 
     }
     #endregion
@@ -192,7 +226,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var prefab = soldierTypeDictionary[type];
 
         obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
-        obj.gameObject.SetActive(false);
+        //obj.gameObject.SetActive(false);
         obj.transform.position = SpawnPoint;
         obj.SeatPos = seatPos;
         return obj;
@@ -206,7 +240,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public void Remove(int legion, Penguin obj)
     {
-        var soldiers = armies[legion].Soldiers;
+        var soldiers = armies[legion - 1].Soldiers;
         soldiers.Remove(obj); //리스트에서 제외
 
         // 여기서 죽은 펭귄을 다시 push하는 코드가 필요
@@ -219,8 +253,16 @@ public class ArmyManager : Singleton<ArmyManager>
     public void CreateArmy()
     {
         Army newArmy = new Army();
-        newArmy.Legion = ArmyCount + 1;
-        newArmy.IsMoving = true;
+
+        newArmy.Legion = ArmiesCount + 1;
+        newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+
+        GameObject armyObj = new GameObject($"{newArmy.Legion}Legion_ArmyParentObject");
+        armyObj.transform.AddComponent<NavMeshAgent>();
+
+        newArmy.AsrmyParentObj = armyObj;
+
+
         armies.Add(newArmy);
     }
 

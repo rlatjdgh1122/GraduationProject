@@ -1,55 +1,173 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Define.RayCast;
 public class ArmyMovement : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     private ParticleSystem ClickParticle;
-    private Army curArmy => ArmyManager.Instance.GetCurArmy();
+    private Army curArmy = null;
+
+    public List<Entity> armySoldierList = new List<Entity>();
+
+    private bool isCanMove = false;
+    private bool successfulSeatMyPos = false;
+    private bool BattleMode => ArmyManager.Instance.BattleMode;
+
+    //�������� �ʰ� ��ΰ� ��ġ�� �̵��ߴٸ�
+    private bool result => successfulSeatMyPos && isCanMove;
+
+    private Coroutine WaitForAllTrueCoutine = null;
+    private Coroutine AllTrueToCanMoveCoutine = null;
+    private Coroutine AllTrueToSeatMyPostionCoutine = null;
+
+    private static float heartbeat = 0.1f;
+    private static WaitForSecondsRealtime waitingByheartbeat = new WaitForSecondsRealtime(heartbeat);
+
     private void Awake()
     {
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
         _inputReader.RightClickEvent += SetClickMovement;
+        SignalHub.OnArmyChanged += OnArmyChangedHandler;
     }
-    public void Update()
+
+    private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        curArmy = newArmy;
+        SetArmyNumber();
+    }
+
+    private void SetArmyNumber()
+    {
+        if (armySoldierList.Count > 0)
+            armySoldierList.Clear();
+
+        for (int i = 0; i < curArmy.Soldiers.Count; ++i)
         {
-            curArmy.AddStat(10,StatType.Damage,StatMode.Increase);
+            armySoldierList.Add(curArmy.Soldiers[i]);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+
+        if (curArmy.General != null)
         {
-            curArmy.RemoveStat(10, StatType.Damage, StatMode.Increase);
+            armySoldierList.Add(curArmy.General);
         }
+    }
+    public void SetArmy_Btn()
+    {
+        curArmy = ArmyManager.Instance.GetCurArmy();
+        SetArmyNumber();
     }
 
     public void SetClickMovement()
     {
-        if (/*curArmy.IsMoving
-            && */curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
+        RaycastHit hit;
+        if (Physics.Raycast(RayCasts.MousePointRay, out hit))
         {
-            RaycastHit hit;
+            if (WaitForAllTrueCoutine != null)
+                StopCoroutine(WaitForAllTrueCoutine);
 
-            if (Physics.Raycast(Define.RayCast.RayCasts.MousePointRay, out hit))
-            {
-                SetArmyMovePostiton(hit.point);
-                ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
-                ClickParticle.Play();
-            }
+            WaitForAllTrueCoutine = StartCoroutine(WaitForAllTrue_Corou(hit.point));
+
+            ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
+            ClickParticle.Play();
         }
     }
 
+    private IEnumerator WaitForAllTrue_Corou(Vector3 mousePos)
+    {
+        isCanMove = false;
+        successfulSeatMyPos = false;
+
+        curArmy.IsCanReadyAttackInCurArmySoldiersList = false;
+
+        foreach (var item in armySoldierList)
+        {
+            item.ArmyTriggerCalled = true;
+            item.BattleMode = BattleMode;
+        }
+
+        //��ΰ� ������ �� �ִ� �������� Ȯ���ϱ� ���� �ڷ�ƾ ������
+        if (AllTrueToCanMoveCoutine != null)
+            StopCoroutine(AllTrueToCanMoveCoutine);
+
+        AllTrueToCanMoveCoutine = StartCoroutine(AllTrueToCanMove_Corou(mousePos));
+
+        yield return new WaitUntil(() => result == true);
+
+        // ���������� �ذ�Ǿ��ٸ�
+        curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+    }
+    private IEnumerator AllTrueToCanMove_Corou(Vector3 mousePos)
+    {
+        var check = false;
+        isCanMove = false;
+
+        if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
+        {
+            Debug.Log("������ �ִ�1");
+        }
+        while (!check)
+        {
+            foreach (var item in armySoldierList)
+            {
+                //���� �ִϸ��̼��� �����ٸ� ������ �� ����
+                if (item.WaitTrueAnimEndTrigger)
+                {
+                    check = true;
+                    //�������ֱ�
+                    SetSoldierMovePosition(mousePos, item);
+                }
+                else
+                {
+                    check = false;
+                }
+            }
+
+            //��ΰ� ��ġ�� ������ �� ���������� ���
+            yield return waitingByheartbeat;
+        }
+
+        //��ΰ� ������ �� �ִٸ�
+        // ��ΰ� �ڸ��� ��ġ�� �ִ��� Ȯ���ϱ� ���� �ڷ�ƾ�� ������ 
+
+        isCanMove = true;
+
+        if (AllTrueToSeatMyPostionCoutine != null)
+            StopCoroutine(AllTrueToSeatMyPostionCoutine);
+
+        AllTrueToSeatMyPostionCoutine = StartCoroutine(AllTrueToSeatMyPostion_Corou());
+    }
+
+    private IEnumerator AllTrueToSeatMyPostion_Corou()
+    {
+        successfulSeatMyPos = false;
+
+        if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
+        {
+            Debug.Log("������ �ִ�2");
+        }
+        while (!armySoldierList.TrueForAll(p => p.SuccessfulToSeatMyPostion))
+        {
+            yield return waitingByheartbeat;
+        }
+        successfulSeatMyPos = true;
+    }
+
+    private void SetSoldierMovePosition(Vector3 mousePos, Entity entity)
+    {
+        entity.MoveToMySeat(mousePos);
+    }
+
     /// <summary>
-    /// ��ġ��� �̵�
+    /// ��ġ��� �̵�
     /// </summary>
-    /// <param name="mousePos"> ���콺 ��ġ</param>
+    /// <param name="mousePos"> ���콺 ��ġ</param>
     private void SetArmyMovePostiton(Vector3 mousePos)
     {
         var soldiers = curArmy.Soldiers;
         var general = curArmy.General;
 
-        if(general != null)
+        if (general != null)
             general.MoveToMySeat(mousePos);
 
         foreach (var soldier in soldiers)
@@ -58,8 +176,10 @@ public class ArmyMovement : MonoBehaviour
         }
     }
 
+
     private void OnDestroy()
     {
         _inputReader.RightClickEvent -= SetClickMovement;
+        SignalHub.OnArmyChanged -= OnArmyChangedHandler;
     }
 }

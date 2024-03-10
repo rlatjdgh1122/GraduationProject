@@ -12,21 +12,34 @@ public class BasicChaseState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
+
         _penguin.FindFirstNearestEnemy();
     }
 
-    public override void UpdateState()  
+    public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.CurrentTarget != null)
-            _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
+        // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
+        if (_penguin.ArmyTriggerCalled
+            && _penguin.BattleMode == false)
+        {
+            _penguin.SetTarget(_penguin.GetSeatPosition());
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+        }
+        else
+        {
+            if (_penguin.CurrentTarget != null)
+                _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
 
-        if (_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
+            if (_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
 
-        if (_penguin.CurrentTarget == null)
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            if (_penguin.CurrentTarget == null)
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+        }
+
     }
 
     public override void Exit()

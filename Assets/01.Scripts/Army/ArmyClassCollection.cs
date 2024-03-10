@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using System.Diagnostics;
+using Unity.VisualScripting;
+using UnityEngine;
 
 [System.Serializable]
 public struct ArmyInfo //UI부분, 기획이 더 필요
@@ -20,43 +21,41 @@ public struct ArmyInfo //UI부분, 기획이 더 필요
 public class Army
 {
     public int Legion; //몇번째 군단
-    public bool IsMoving; //움직이는 중인가
+    public bool IsCanReadyAttackInCurArmySoldiersList = true; //군단 전체가 움직일 준비가 되었는가
     public List<Penguin> Soldiers = new(); //군인 펭귄들
     public General General; //장군
 
-    public ArmyInfo info;
+    public GameObject AsrmyParentObj; //군단 오브젝트
+    public ArmyInfo Info; //정보
 
-    public void AddStat(LigeonStatAdjustment ligeonStat)
+    public void AddStat(Army army, LigeonStatAdjustment ligeonStat)
     {
         var IncStatList = ligeonStat.IncStat;
         var DecStatList = ligeonStat.DecStat;
 
         foreach (var incStat in IncStatList)
         {
-            AddStat(incStat.value, incStat.type, StatMode.Increase);
+            AddStat(army, incStat.value, incStat.type, StatMode.Increase);
         }
 
         foreach (var DecStat in DecStatList)
         {
-            AddStat(DecStat.value, DecStat.type, StatMode.Decrease);
+            AddStat(army, DecStat.value, DecStat.type, StatMode.Decrease);
         }
     }
-    public void AddStat(int value, StatType type, StatMode mode)
+    public void AddStat(Army army, int value, StatType type, StatMode mode)
     {
-        Debug.WriteLine(type);
-
-        General?.AddStat(value, type, mode);
-
-        foreach (var solider in Soldiers)
+        army.General?.AddStat(value, type, mode);
+        foreach (var solider in army.Soldiers)
         {
             solider.AddStat(value, type, mode);
         }
     }
-    public void RemoveStat(int value, StatType type, StatMode mode)
+    public void RemoveStat(Army army,int value, StatType type, StatMode mode)
     {
-        General?.RemoveStat(value, type, mode);
+        army.General?.RemoveStat(value, type, mode);
 
-        foreach (var solider in Soldiers)
+        foreach (var solider in army.Soldiers)
         {
             solider.RemoveStat(value, type, mode);
         }

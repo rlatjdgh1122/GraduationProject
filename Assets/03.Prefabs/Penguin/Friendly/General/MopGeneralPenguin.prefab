@@ -607,7 +607,7 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
   innerDistance: 10
   attackDistance: 1.5
-  moveSpeed: 3
+  moveSpeed: 5
   attackSpeed: 1
   maxDetectedCount: 0
   provokeRange: 25
@@ -628,7 +628,9 @@ MonoBehaviour:
       shieldTimes: 0
   passiveData: {fileID: 11400000, guid: 9c1f015e560393d4fa8b3c03ade4ad4f, type: 2}
   ligeonStat:
-    IncStat: []
+    IncStat:
+    - type: 1024
+      value: 25
     DecStat: []
 --- !u!114 &4884695249029055275
 MonoBehaviour:
@@ -798,6 +800,7 @@ MonoBehaviour:
   outlineColor: {r: 1, g: 1, b: 1, a: 0}
   outlineWidth: 0
   precomputeOutline: 0
+  IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
 --- !u!1 &1369110721977288900

@@ -983,6 +983,10 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 653e880614eb72b4eaea6216831949d7, type: 2}
   innerDistance: 4
   attackDistance: 1.5
+  ArmyTriggerCalled: 0
+  WaitTrueAnimEndTrigger: 1
+  SuccessfulToSeatMyPostion: 0
+  BattleMode: 0
   Target: {fileID: 0}
   WorkerHomeTrm: {fileID: 0}
   CanWork: 0
@@ -1070,7 +1074,7 @@ NavMeshAgent:
   m_AngularSpeed: 2500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.33
   m_BaseOffset: -0

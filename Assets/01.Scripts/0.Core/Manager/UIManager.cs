@@ -19,7 +19,7 @@ public class UIManager : Singleton<UIManager>
     public Transform canvasTrm;
 
     public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
-    public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>(); //조만간 이걸로 갈꺼
+    public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>(); 
 
     public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);

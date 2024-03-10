@@ -9,6 +9,9 @@ public class BasicIdleState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
+        _penguin.SuccessfulToSeatMyPostion = true;
+        _penguin.WaitTrueAnimEndTrigger = true;
     }
 
     public override void UpdateState()
@@ -18,7 +21,9 @@ public class BasicIdleState : BasicBaseState
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
 
-        if (_penguin.IsInnerTargetRange)
+        //적사거리가 들어오고 군사들이 위치로 이동했다면
+        if (_penguin.IsInnerTargetRange
+            && _penguin.Owner.IsCanReadyAttackInCurArmySoldiersList)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
     }
 

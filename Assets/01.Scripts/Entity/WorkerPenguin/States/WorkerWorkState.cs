@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 {
-    public WorkerWorkState(Worker worker, WorkerStateMachine<WorkerPenguinStateEnum> stateMachine, string animationBoolName) 
+    public WorkerWorkState(Worker worker, WorkerStateMachine<WorkerPenguinStateEnum> stateMachine, string animationBoolName)
         : base(worker, stateMachine, animationBoolName)
     {
     }
@@ -25,7 +25,12 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
         if (_triggerCalled)
         {
             if (_worker.EndWork || WaveManager.Instance.IsBattlePhase)
+            {
+                _worker.CanWork = false;
+                _worker.EndWork = true;
                 _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
+            }
+              
 
             _triggerCalled = false;
         }

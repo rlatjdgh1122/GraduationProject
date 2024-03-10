@@ -14,7 +14,6 @@ public class ArcherTowerAttackState : ArcherTowerBaseState
 
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
-        _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
         //_penguin.AnimatorCompo.speed = _penguin.attackSpeed;
         _penguin.AnimatorCompo.speed = 0.5f;
@@ -37,7 +36,6 @@ public class ArcherTowerAttackState : ArcherTowerBaseState
     public override void Exit()
     {
         _penguin.AnimatorCompo.speed = 1;
-        _penguin.Owner.IsMoving = true;
         base.Exit();
     }
 }

@@ -37,6 +37,7 @@ public class SpawnPenguinButton : MonoBehaviour
 
     public void SlotUpdate()
     {
+        Debug.Log(_penguinStat);
         _icon.sprite = _penguinStat.PenguinIcon;
         _nameText.text = _penguinStat.PenguinName;
         _priceText.text = _price.ToString();

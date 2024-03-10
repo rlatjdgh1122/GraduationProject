@@ -119,7 +119,7 @@ public class LegionChange : MonoBehaviour
         }
 
         _currentCostText.text    = $"{_curCost}";
-        _priceText.text          = $"{_price}";
+        _priceText.text          = $"-{_price}";
         _finalCostText.text      = $"{_finalCost}";
     }
 
@@ -136,7 +136,7 @@ public class LegionChange : MonoBehaviour
             ChangeCurrentLegionNumber(_curLegion);
 
             LegionInventory.Instance.ShowMessage($"{_curLegion}군단 구매 성공!");
-
+            ArmyManager.Instance.CreateArmy();
             CostManager.Instance.SubtractFromCurrentCost(_price);
             LegionInventory.Instance.LegionList[_curLegion - 1].Locked = false;
 

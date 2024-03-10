@@ -81,6 +81,7 @@ public class PenguinStoreUI : MonoBehaviour
 
         foreach(var slot in _slotList)
         {
+            Debug.Log(slot);
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, UnitInventoryParent);
             btn.InstantiateSelf(slot.stat, slot.spawnPenguinPrefab, slot.price);
             btn.SlotUpdate();
@@ -221,9 +222,16 @@ public class PenguinStoreUI : MonoBehaviour
         if (!_canBuy) return;
 
         CostManager.Instance.SubtractFromCurrentCost(_amountPrice);
-        _penguinFactory.SpawnPenguinHandler(_spawnPenguin);
+
+        for(int i = 0; i < _cnt; i++)
+        {
+            LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
+            _penguinFactory.SpawnPenguinHandler(_spawnPenguin);
+        }
+
+
         ResetBuyPanel();
-        LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
+        OnDisableBuyPanel();
     }
 
 

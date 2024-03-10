@@ -5,12 +5,13 @@ public class ShieldBlockState : ShieldBaseState
     {
     }
 
+    int StunAtk = 1;
+
     public override void Enter()
     {
         base.Enter();
         _triggerCalled = true;
         _penguin.FindFirstNearestEnemy();
-        _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
 
         /*foreach (var enemy in _penguin.FindNearestEnemy(5)) //일단 임시로 5마리도발 이것도 SO로 뺄거임
@@ -33,9 +34,10 @@ public class ShieldBlockState : ShieldBaseState
         if (_penguin.CurrentTarget == null)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
 
-        if(_penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth,_penguin.HealthCompo.currentHealth))
+        if(StunAtk > 0 && _penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth,_penguin.HealthCompo.currentHealth))
         {
             _penguin?.OnPassiveStunEvent();
+            StunAtk--;
         }
     }
 

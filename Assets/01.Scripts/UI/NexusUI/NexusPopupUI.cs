@@ -10,6 +10,6 @@ public class NexusPopupUI : PopupUI
     {
         base.Awake();
 
-        presenter = UIManager.Instance.canvasTrm.Find("NexusUI").GetComponent<NexusUIPresenter>();
+        presenter = UIManager.Instance.canvasTrm.Find("NexusUI").GetComponent<NexusUIPresenter>(); 
     }
 }

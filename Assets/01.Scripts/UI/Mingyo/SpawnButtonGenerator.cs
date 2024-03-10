@@ -39,13 +39,13 @@ public class SpawnButtonGenerator : MonoBehaviour
             var button = Instantiate(_buildingButtonPrefab, Vector3.zero, Quaternion.identity).GetComponent<Button>();
             switch (building.BuildingTypeEnum)
             {
-                case BuildingType.ResourceBuilding:
+                case BuildingType.Resource:
                     button.transform.SetParent(ResourceBuildingBtns);
                     break;
-                case BuildingType.DefenseBuilding:
+                case BuildingType.Defense:
                     button.transform.SetParent(DefenseBuildingBtns);
                     break;
-                case BuildingType.BuffBuilding:
+                case BuildingType.Buff:
                     button.transform.SetParent(BuffBuildingBtns);
                     break;
             }

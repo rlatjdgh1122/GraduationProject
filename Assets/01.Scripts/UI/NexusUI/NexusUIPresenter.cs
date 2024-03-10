@@ -15,11 +15,16 @@ public class NexusUIPresenter : NexusPopupUI
     private List<BuildingView> _buildingViews;
 
     [HideInInspector]
+    public BuildingType buildingType;
     public NexusBase nexusBase;
+
+    private BuildingFactory _buildingFactory;
 
     public override void Awake()
     {
         base.Awake();
+
+        _buildingFactory = FindAnyObjectByType<BuildingFactory>();
 
         _buildingViews = GetComponentsInChildren<BuildingView>().ToList();
         _buildingViews.ForEach(item => item.building = 
@@ -51,7 +56,22 @@ public class NexusUIPresenter : NexusPopupUI
     #endregion
 
     #region buildingUI
-
+    public void PurchaseBuilding(BuildingView view)
+    {
+        if (CostManager.Instance.Cost >= view.building.Price)
+        {
+            if (view.building.IsUnlocked)
+            {
+                view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
+                CostManager.Instance.Cost -= view.building.Price;
+                view.building.CurrentInstallCount++;
+            }
+        }
+        else
+        {
+            Debug.Log("재화가 부족합니다.");
+        }
+    }
     #endregion
 
     public override void ShowPanel()
