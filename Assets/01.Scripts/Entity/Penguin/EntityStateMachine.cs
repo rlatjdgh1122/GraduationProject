@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 public class EntityStateMachine<T, G> where T : Enum where G : Entity
 {
@@ -22,6 +23,8 @@ public class EntityStateMachine<T, G> where T : Enum where G : Entity
         CurrentState.Exit();
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
+
+        UnityEngine.Debug.Log($"이전 : {PrevState}, 이후 : {CurrentState}");
     }
 
     public void AddState(T state, EntityState<T, G> playerState)

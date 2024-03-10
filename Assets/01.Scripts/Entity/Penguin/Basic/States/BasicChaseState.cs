@@ -6,6 +6,7 @@ public class BasicChaseState : BasicBaseState
 {
     public BasicChaseState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
+
     }
 
     public override void Enter()
@@ -25,7 +26,7 @@ public class BasicChaseState : BasicBaseState
         if (_penguin.ArmyTriggerCalled
             && _penguin.BattleMode == false)
         {
-            _penguin.SetTarget(_penguin.GetSeatPosition());
+            //_penguin.SetTarget(_penguin.GetSeatPosition());
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         }
         else
