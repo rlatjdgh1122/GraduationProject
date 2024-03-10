@@ -16596,6 +16596,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7641091776783993754, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641091776783993754, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -18236,6 +18241,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6945976166011312825, guid: 50166159f1aa1184ebd77b008e024909,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 4.882324
+      objectReference: {fileID: 0}
+    - target: {fileID: 6945976166011312825, guid: 50166159f1aa1184ebd77b008e024909,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15.714355
+      objectReference: {fileID: 0}
     - target: {fileID: 7158011600815456594, guid: 50166159f1aa1184ebd77b008e024909,
         type: 3}
       propertyPath: m_Name
@@ -18855,10 +18870,11 @@ MonoBehaviour:
   soldierTypeListSO: {fileID: 11400000, guid: 538e6cee0073b7749a1d37f6b1648073, type: 2}
   armies:
   - Legion: 1
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -18867,10 +18883,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 2
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -18879,10 +18896,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 3
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -18891,10 +18909,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 4
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -18903,10 +18922,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 4
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -18915,10 +18935,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 5
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -18954,6 +18975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
+  armySoldierList: []
 --- !u!114 &1861243456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18970,7 +18992,7 @@ MonoBehaviour:
   distance: 1
   width: 5
   length: 7
-  InfoList: []
+  CurInfoList: []
 --- !u!114 &1861243457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19001,12 +19023,6 @@ PrefabInstance:
       propertyPath: _btnTrm
       value: 
       objectReference: {fileID: 1699811972}
-    - target: {fileID: 2106412092684875463, guid: 02ea4ea2941f25240bb390a3d8f587d8,
-        type: 3}
-      propertyPath: _inputReader
-      value: 
-      objectReference: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708,
-        type: 2}
     - target: {fileID: 2106412092684875463, guid: 02ea4ea2941f25240bb390a3d8f587d8,
         type: 3}
       propertyPath: _penguinSpawnUI
