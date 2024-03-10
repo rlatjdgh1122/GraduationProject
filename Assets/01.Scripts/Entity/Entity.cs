@@ -54,9 +54,9 @@ public abstract class Entity : PoolableMono
             {
                 Vector3 vec = (curMousePos - prevMousePos);
 
-                float value = Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
+                //float value = Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
                 //float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
-                //float value = Quaternion.LookRotation(vec).eulerAngles.y;
+                float value = Quaternion.LookRotation(vec).eulerAngles.y;
                 //value = (value > 180f) ? value - 360f : value; // 변환
                 return value; // -180 ~ 180
             }
@@ -199,7 +199,7 @@ public abstract class Entity : PoolableMono
 
     public void MoveToTarget(Vector3 pos)
     {
-        NavAgent.ResetPath();
+        //NavAgent.ResetPath(); 이걸하면 광클햇을때 끊킴
         NavAgent.SetDestination(pos);
     }
 
@@ -207,11 +207,11 @@ public abstract class Entity : PoolableMono
     {
         if (NavAgent != null)
         {
-            if (NavAgent.isActiveAndEnabled){
-                    NavAgent.isStopped = true;
-                    NavAgent.velocity = Vector3.zero; 
+            if (NavAgent.isActiveAndEnabled)
+            {
+                NavAgent.isStopped = true;
             }
-                
+
         }
     }
     #endregion
