@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -10,30 +11,26 @@ public class PenguinFactory : EntityFactory<Penguin>
     protected int spawnZIdx = 0;
     protected int spawnXIdx = 0;
 
-    private Vector3 _firstSpawnPos;
-
     protected List<Penguin> _curPTspawnPenguins = new List<Penguin>(); // 현재 준비시간에 생성한 펭귄 리스트
-
-    private void Awake()
-    {
-        // 생성 위치들을 씬에서 받아와 설정해준다.
-
-        _firstSpawnPos = transform.Find("FirstSpawnPos").transform.position;
-    }
 
     public void SpawnPenguinHandler(Penguin penguin)
     {
-        spawnZIdx++; // 생성 위치를 위한 idx
-        Debug.Log(spawnZIdx);
-        if (spawnZIdx >= 5)
+        if (spawnXIdx >= 5)
         { 
-            spawnZIdx = 0;
-            spawnXIdx++;
+            spawnXIdx = 0;
+            spawnZIdx++;
         }
-        Vector3 spawnVec = new Vector3(_firstSpawnPos.x + (spawnXIdx * 1.5f),
-                                       _firstSpawnPos.y,
-                                       _firstSpawnPos.z + (spawnZIdx * 1.5f));
+
+        Vector3 spawnVec = new Vector3(6 + (spawnXIdx * 1.5f),
+                                       0.0f,
+                                       - 1.5f - (spawnZIdx * 1.5f));
+
+        spawnXIdx++; // 생성 위치를 위한 idx
+
         Penguin spawnPenguin =  SpawnObject(penguin, spawnVec) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
+
+        Debug.Log(spawnVec);
+
         _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
     }
 
