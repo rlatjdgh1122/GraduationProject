@@ -240,7 +240,7 @@ MonoBehaviour:
   _hitType: 1
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 10240
 --- !u!1 &1715070842730340132
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,18 +817,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9bfaf18cb9f3b409c99c54222c50ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterStat: {fileID: 11400000, guid: ee1ec43b8b4d82d4c927d68871bb5d47, type: 2}
   innerDistance: 5.9
   attackDistance: 5.9
-  IsAttackEvent: 0
-  AttackCount: 3
-  IsSecondEvent: 0
-  EverySecond: 10
-  IsBackAttack: 0
-  IsAroundEnemyCountEventEvent: 0
-  AroundRadius: 3
-  AroundEnemyCount: 3
-  passiveData: {fileID: 0}
-  _characterStat: {fileID: 11400000, guid: ee1ec43b8b4d82d4c927d68871bb5d47, type: 2}
+  ArmyTriggerCalled: 0
+  WaitTrueAnimEndTrigger: 1
+  SuccessfulToSeatMyPostion: 0
+  BattleMode: 0
   moveSpeed: 3
   attackSpeed: 0.6
   rotationSpeed: 4.5
@@ -884,6 +879,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []

@@ -80,26 +80,6 @@ public class WaveManager : Singleton<WaveManager>
 
     #endregion
 
-    #region UIManager UI
-    NormalUI victoryUI
-    {
-        get
-        {
-            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Victory, out NormalUI victoryUI);
-            return victoryUI;
-        }
-    }
-
-    NormalUI defeatUI
-    {
-        get
-        {
-            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Defeat, out NormalUI defeatUI);
-            return defeatUI;
-        }
-    }
-    #endregion
-
     #region SingleTon
     //private static WaveManager _instance;
     //public static WaveManager Instance
@@ -161,11 +141,11 @@ public class WaveManager : Singleton<WaveManager>
             if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
                 GetReward();
 
-            if (IsArrived)
-            {
-                if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
-                    ShowDefeatUI();
-            }
+            //if (IsArrived)
+            //{
+            //    if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
+            //        ShowDefeatUI();
+            //}
         }
 
         if (Input.GetKeyDown(KeyCode.U)) //디버그
@@ -228,22 +208,22 @@ public class WaveManager : Singleton<WaveManager>
         });
     }
 
-    private void ShowDefeatUI()
+    public void ShowDefeatUI()
     {
-        defeatUI.EnableUI(1, null);
+        UIManager.Instance.ShowPanel("DefeatUI");
     }
 
     private void GetReward() // 보상 획득 함수
     {
         ShowEffect();
-        victoryUI.EnableUI(1f, null);
+        UIManager.Instance.ShowPanel("VictoryUI");
     }
 
     public void CloseWinPanel()
     {
         IsBattlePhase = false;
 
-        victoryUI.DisableUI(1, OnBattlePhaseEndEvent);
+        UIManager.Instance.HidePanel("VictoryUI");
     }
 
     private void ShowEffect() // 이펙트

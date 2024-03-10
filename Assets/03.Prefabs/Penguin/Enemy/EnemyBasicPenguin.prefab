@@ -709,10 +709,14 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: e006e03c371bc9a4c8ce9daef2890afa, type: 2}
   innerDistance: 4.5
   attackDistance: 1.1
+  ArmyTriggerCalled: 0
+  WaitTrueAnimEndTrigger: 1
+  SuccessfulToSeatMyPostion: 0
+  BattleMode: 0
   moveSpeed: 3.8
   attackSpeed: 1
   rotationSpeed: 2
-  nexusDistance: 3.75
+  nexusDistance: 2.75
   OnProvokedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1787,11 +1791,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 1
+  _detectRange: 1.25
   _hitType: 1
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 10240
 --- !u!1 &6061172975572715252
 GameObject:
   m_ObjectHideFlags: 0
