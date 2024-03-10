@@ -57,29 +57,43 @@ public class DefaultBuilding : BaseBuilding
 
     public void SpawnButton()
     {
-        Vector3 targetVec = isSpawnUIOn ? _offSpawnUIVec : _onSpawnUIVec;
-        UpdateSpawnUIBool();
-
-        if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
+        if (isSpawnUIOn)
         {
-            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic));
             _penguinSpawnUI.OnDisableStorePanel();
-
-            if (_penguinSpawner.isSpawnUIOn)
-            {
-                _penguinSpawner.UpdateSpawnUIBool();
-            }
         }
         else
         {
             _penguinSpawnUI.OnEnableStorePanel();
-            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
-
-            if (_constructionStation.isSpawnUIOn)
-            {
-                _constructionStation.UpdateSpawnUIBool();
-            }
         }
+
+        UpdateSpawnUIBool();
+
+        StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+
+        if (_constructionStation.isSpawnUIOn)
+        {
+            _constructionStation.UpdateSpawnUIBool();
+        }
+
+        //if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
+        //{
+        //    StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic));
+
+        //    if (_penguinSpawner.isSpawnUIOn)
+        //    {
+        //        _penguinSpawner.UpdateSpawnUIBool();
+        //    }
+        //}
+        //else
+        //{
+
+        //    StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+
+        //    if (_constructionStation.isSpawnUIOn)
+        //    {
+        //        _constructionStation.UpdateSpawnUIBool();
+        //    }
+        //}
     }
 
     public virtual void UpdateSpawnUIBool()
@@ -98,7 +112,7 @@ public class DefaultBuilding : BaseBuilding
             }
             else
             {
-                _penguinSpawnUI.OnEnableStorePanel();
+                _penguinSpawnUI.OnDisableStorePanel();
                 _outline.enabled = false;
             }
         }

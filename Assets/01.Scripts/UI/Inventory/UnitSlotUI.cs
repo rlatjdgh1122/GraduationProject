@@ -19,6 +19,7 @@ public class UnitSlotUI : SlotUI, IPointerDownHandler
 
         _unitImage.sprite = _emptyImage;
         _text.text = string.Empty;
+
         _info.CleanUpSlot();
     }
 
@@ -48,8 +49,8 @@ public class UnitSlotUI : SlotUI, IPointerDownHandler
         if(!_locked)
         {
             _info.UpdateSlot(_data);
+            
+            _legionInventoryUI.ShowSelectImage(_selectImg);
         }
-
-        _legionInventoryUI.ShowSelectImage(_selectImg);
     }
 }

@@ -226,6 +226,7 @@ public class PenguinStoreUI : MonoBehaviour
         for(int i = 0; i < _cnt; i++)
         {
             LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
+
             _penguinFactory.SpawnPenguinHandler(_spawnPenguin);
         }
 
