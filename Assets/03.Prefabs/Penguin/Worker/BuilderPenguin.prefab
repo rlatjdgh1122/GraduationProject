@@ -357,10 +357,15 @@ MonoBehaviour:
   _characterStat: {fileID: 0}
   innerDistance: 4
   attackDistance: 1.5
+  ArmyTriggerCalled: 0
+  WaitTrueAnimEndTrigger: 1
+  SuccessfulToSeatMyPostion: 0
+  BattleMode: 0
   Target: {fileID: 0}
-  Nexus: {fileID: 0}
+  WorkerHomeTrm: {fileID: 0}
   CanWork: 0
   EndWork: 0
+  WorkerStateCheck: 0
 --- !u!143 &5843084263822824079
 CharacterController:
   m_ObjectHideFlags: 0
@@ -397,7 +402,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.35
-  m_Speed: 3.5
+  m_Speed: 3.534132
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 2500

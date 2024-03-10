@@ -12,7 +12,6 @@ public class ShieldBlockState : ShieldBaseState
         base.Enter();
         _triggerCalled = true;
         _penguin.FindFirstNearestEnemy();
-        _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
 
         /*foreach (var enemy in _penguin.FindNearestEnemy(5)) //일단 임시로 5마리도발 이것도 SO로 뺄거임

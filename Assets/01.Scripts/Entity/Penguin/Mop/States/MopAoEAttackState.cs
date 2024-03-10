@@ -10,7 +10,6 @@ public class MopAoEAttackState : MopBaseState
         base.Enter();
         _triggerCalled = true;
         _penguin.FindFirstNearestEnemy();
-        _penguin.Owner.IsMoving = false;
         _penguin.StopImmediately();
     }
 

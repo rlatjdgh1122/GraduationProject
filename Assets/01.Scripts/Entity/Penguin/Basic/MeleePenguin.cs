@@ -4,6 +4,7 @@ public enum BasicPenguinStateEnum
 {
     Idle,
     Move,
+    MustMove,
     Chase,
     Attack,
     Dead

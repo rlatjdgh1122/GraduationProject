@@ -73,7 +73,6 @@ public class NexusHeal : MonoBehaviour
     }
     private void OnPenguinInsideRangeEnter()
     {
-        Debug.Log("안에들어왔다");
         curTime = 0f;
         isHealing = true;
     }
@@ -111,7 +110,6 @@ public class NexusHeal : MonoBehaviour
     {
         curTime = 0f;
         isHealing = false;
-        Debug.Log("안에나갔다");
     }
 
     private void OnDrawGizmos()

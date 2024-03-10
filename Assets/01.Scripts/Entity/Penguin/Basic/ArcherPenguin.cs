@@ -5,6 +5,7 @@ public enum ArcherPenguinStateEnum
 {
     Idle,
     Move,
+    MustMove,
     Chase,
     Attack,
     Dead

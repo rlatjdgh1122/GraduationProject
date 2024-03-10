@@ -16,7 +16,6 @@ public class NexusUIPresenter : NexusPopupUI
 
     [HideInInspector]
     public BuildingType buildingType;
-    [HideInInspector]
     public NexusBase nexusBase;
 
     private BuildingFactory _buildingFactory;

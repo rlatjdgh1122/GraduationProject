@@ -76,7 +76,6 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         var results = new System.Collections.Generic.List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        Debug.Log(results.Count);
         return results.Count > 0;
     }
 }

@@ -59,7 +59,8 @@ public class StrengthBuffBuilding : BuffBuilding
                 _inRangePenguins.Add(instanceID, _colls[i].GetComponent<Penguin>());
             }
 
-            _inRangePenguins[instanceID].AddStat(GetBuffValue(), StatType.Strength, StatMode.Increase);
+            //임시수정
+            _inRangePenguins[instanceID].AddStat(GetBuffValue(), StatType.Damage, StatMode.Increase); 
 
             
 
@@ -85,7 +86,8 @@ public class StrengthBuffBuilding : BuffBuilding
 
             if (!found)
             {
-                StartCoroutine(_inRangePenguins[key].AddStatCorou(OutoffRangeBuffDuration, GetBuffValue(), StatType.Strength, StatMode.Decrease));
+                //임시수정
+                StartCoroutine(_inRangePenguins[key].RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), StatType.Damage, StatMode.Increase));
 
                 EffectPlayer buffEffect = PoolManager.Instance.Pop(_feedbackEffect.Effect.name) as EffectPlayer;
                 buffEffect.transform.SetParent(_inRangePenguins[key].gameObject.transform);
