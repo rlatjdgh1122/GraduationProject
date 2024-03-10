@@ -49,7 +49,7 @@ public class Penguin : Entity
         AttackCompo = GetComponent<EntityAttackData>();
     }
 
-    #region 일반 병사들 페시브
+    #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
     public bool CheckAttackEventPassive(int curAttackCount)
 => passiveData.CheckAttackEventPassive(curAttackCount);
