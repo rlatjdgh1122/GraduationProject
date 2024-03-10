@@ -30,7 +30,7 @@ public class ArmyManager : Singleton<ArmyManager>
         }
 
         CreateArmy();
-        //SignalHub.OnArmyChanged.Invoke(armies[0], armies[0]);
+        SignalHub.OnBattleModeChanged.Invoke(false);
         ChangeArmy(1);
         KeySetting();
     }

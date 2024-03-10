@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+using static UnityEditor.PlayerSettings;
 
 public abstract class Entity : PoolableMono
 {
@@ -50,9 +51,10 @@ public abstract class Entity : PoolableMono
     {
         get
         {
-            if (prevMousePos != Vector3.zero)
+            Vector3 vec = (curMousePos - prevMousePos);
+            if (prevMousePos != Vector3.zero
+                && vec != Vector3.zero)
             {
-                Vector3 vec = (curMousePos - prevMousePos);
 
                 //float value = Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
                 //float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
@@ -145,7 +147,7 @@ public abstract class Entity : PoolableMono
                 movingCoroutine = StartCoroutine(Moving());
             }
             else
-                MoveToTarget(mousePos + SeatPos);
+                MoveToMouseClick(mousePos + SeatPos);
         }
     }
     float totalTime = 1f; // 총 시간 (1초로 가정)
@@ -177,13 +179,13 @@ public abstract class Entity : PoolableMono
 
             Vector3 finalPos = frameMousePos + movePos;
 
-            MoveToTarget(finalPos);
+            MoveToMouseClick(finalPos);
 
             currentTime += Time.deltaTime;
             yield return null;
         }
         Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
-        MoveToTarget(pos);
+        MoveToMouseClick(pos);
     }
 
     public void SetTarget(Vector3 mousePos)
@@ -196,10 +198,14 @@ public abstract class Entity : PoolableMono
 
     public Vector3 GetSeatPosition() => MousePos + SeatPos;
 
+    private void MoveToMouseClick(Vector3 pos)
+    {
+        NavAgent.SetDestination(pos);
+    }
 
     public void MoveToTarget(Vector3 pos)
     {
-        //NavAgent.ResetPath(); 이걸하면 광클햇을때 끊킴
+        NavAgent.ResetPath();
         NavAgent.SetDestination(pos);
     }
 

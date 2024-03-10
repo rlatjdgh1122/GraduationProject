@@ -15,6 +15,7 @@ public class BasicAttackState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = false;
+        _penguin.ArmyTriggerCalled = false;
         _penguin.WaitTrueAnimEndTrigger = false;
 
         _penguin.FindFirstNearestEnemy();
@@ -29,19 +30,23 @@ public class BasicAttackState : BasicBaseState
 
         if (_penguin.ArmyTriggerCalled)
         {
-            if (_penguin.CurrentTarget == null
-                && _penguin.BattleMode == true)
+            //적이 도중에 죽을때
+            if (_penguin.CurrentTarget == null)
             {
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
             }
 
-            float animTime =
-                _penguin.AnimatorCompo.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            if (animTime >= 1f) //애니메이션 끝나느 부분이죠~
-            { 
-                _penguin.WaitTrueAnimEndTrigger = true;
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+            if (_penguin.AnimatorCompo.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            {
+                //애니메이션 끝나느 부분이죠~
+                if (_penguin.AnimatorCompo.GetCurrentAnimatorStateInfo(0).normalizedTime >= .8f)
+                {
+                    _penguin.WaitTrueAnimEndTrigger = true;
+                    _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+                }
             }
+
+
         }
         else
         {
