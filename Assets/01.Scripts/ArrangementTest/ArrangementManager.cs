@@ -20,9 +20,8 @@ public class ArrangementManager : Singleton<ArrangementManager>
     private void Start()
     {
         Setting();
-
         SignalHub.OnUILegionChanged += OnUILegionHandler;
-        //WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
+        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
     }
 
     private void OnUILegionHandler(int prevLegion, int newLegion)
@@ -86,7 +85,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
         if (penguinSpawnDictionary.TryGetValue(info.Legion, out var value))
         {
-            Debug.Log($"[»èÁ¦] {info.Legion}±º´Ü {info.SlotIdx}¹ø");
+            Debug.Log($"[ï¿½ï¿½ï¿½ï¿½] {info.Legion}ï¿½ï¿½ï¿½ï¿½ {info.SlotIdx}ï¿½ï¿½");
 
             ArmyManager.Instance.Remove(info.Legion, value[info.SlotIdx]);
             penguinSpawnDictionary[info.Legion].Remove(info.SlotIdx);
@@ -99,7 +98,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
             Penguin obj = null;
             obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
 
-            Debug.Log($"[Ãß°¡] {info.Legion}±º´Ü {info.SlotIdx}¹ø ({obj})");
+            Debug.Log($"[ï¿½ß°ï¿½] {info.Legion}ï¿½ï¿½ï¿½ï¿½ {info.SlotIdx}ï¿½ï¿½ ({obj})");
 
             ArmyManager.Instance.JoinArmyToSoldier(info.Legion, obj as Penguin);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);

@@ -49,7 +49,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// </summary>
     public void AoEAttackTrigger(int isKnb)
     {
-        _penguin.AttackCompo.AoEAttack(isKnb  == 0 ? false : true, 1.2f);
+        _penguin.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 1.5f);
         OnAoEAttackTriggerEvent?.Invoke();
     }
     public void AttackTrigger()

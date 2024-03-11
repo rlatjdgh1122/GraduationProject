@@ -37,6 +37,7 @@ public class PhaseChangeButton : MonoBehaviour
 
     private void OnOffButton()
     {
+        Debug.Log("ÄÑÁö°Å³ª²¨Áü");
         gameObject.DOAnchorPos(gameObject.rectTransform().anchoredPosition + new Vector2(moveXValue, 0f), 0.5f).SetEase(Ease.InOutBack);
     }
 }
