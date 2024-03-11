@@ -18,7 +18,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
     {
         Setting();
 
-        //WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
+        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
     }
 
     private void Setting()
@@ -87,7 +87,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
         {
             Penguin obj = null;
             obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
-
+            Debug.Log(obj as Penguin);
             ArmyManager.Instance.JoinArmyToSoldier(info.Legion, obj as Penguin);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
         }

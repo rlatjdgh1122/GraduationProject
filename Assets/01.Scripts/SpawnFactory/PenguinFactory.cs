@@ -1,47 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Windows;
 
 public class PenguinFactory : EntityFactory<Penguin>
 {
-    protected int campFireidx = 0;
-
-    private Transform[] _campFireSpawnPoints; // 펭귄을 생성했을 때 놓을 위치
-    private Transform[] _legionSpawnPoints; // 군단을 생성해 놓을 초기 위치
+    protected int spawnZIdx = 0;
+    protected int spawnXIdx = 0;
 
     protected List<Penguin> _curPTspawnPenguins = new List<Penguin>(); // 현재 준비시간에 생성한 펭귄 리스트
 
-    private void Awake()
+    public void SpawnPenguinHandler(Penguin penguin)
     {
-        // 생성 위치들을 씬에서 받아와 설정해준다.
-
-        GameObject campFireSpawnObj = GameObject.FindGameObjectWithTag("CampFireSpawnPos");
-        GameObject legionSpawnObj = GameObject.FindGameObjectWithTag("LegionSpawnPos");
-
-        Transform[] campFireSpawnPos = campFireSpawnObj.GetComponentsInChildren<Transform>();
-        Transform[] legionSpawnPos = legionSpawnObj.GetComponentsInChildren<Transform>();
-
-        _campFireSpawnPoints = new Transform[campFireSpawnPos.Length];
-        _legionSpawnPoints = new Transform[legionSpawnPos.Length];
-
-        for (int i = 0; i < _legionSpawnPoints.Length; i++)
-        {
-            _legionSpawnPoints[i] = legionSpawnPos[i];
+        if (spawnXIdx >= 5)
+        { 
+            spawnXIdx = 0;
+            spawnZIdx++;
         }
 
-        for (int i = 0; i < _campFireSpawnPoints.Length; i++)
-        {
-            _campFireSpawnPoints[i] = campFireSpawnPos[i];
-        }
-    }
+        Vector3 spawnVec = new Vector3(6 + (spawnXIdx * 1.5f),
+                                       0.0f,
+                                       - 1.5f - (spawnZIdx * 1.5f));
 
-    public void SpawnPenguinHandler(Penguin penguin) 
-    {
-        campFireidx++; // 생성 위치를 위한 idx
-        Penguin spawnPenguin =  SpawnObject(penguin, _campFireSpawnPoints[campFireidx].position) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
+        spawnXIdx++; // 생성 위치를 위한 idx
+
+        Penguin spawnPenguin =  SpawnObject(penguin, spawnVec) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
+
+        spawnPenguin.SetFreelyMoveAble(true);
+
         _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
     }
 
@@ -59,7 +49,8 @@ public class PenguinFactory : EntityFactory<Penguin>
 
     private void ResetPTInfo()
     {
-        campFireidx = 0;
+        spawnZIdx = 0;
+        spawnXIdx = 0;
         _curPTspawnPenguins.Clear();
     }
 

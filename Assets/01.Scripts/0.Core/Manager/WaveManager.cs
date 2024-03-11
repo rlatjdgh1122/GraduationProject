@@ -152,11 +152,6 @@ public class WaveManager : Singleton<WaveManager>
         {
             BattlePhaseStartEventHandler();
         }
-
-        if (Input.GetKeyDown(KeyCode.S)) // 테스트Dragon
-        {
-            currentWaveCount++;
-        }
     }
 
     private void OnIceArrivedHandle()
@@ -221,7 +216,7 @@ public class WaveManager : Singleton<WaveManager>
 
     public void CloseWinPanel()
     {
-        IsBattlePhase = false;
+        BattlePhaseEndEventHandler(true);
 
         UIManager.Instance.HidePanel("VictoryUI");
     }
@@ -279,6 +274,7 @@ public class WaveManager : Singleton<WaveManager>
     {
         for (int i = 0; i < _curPTspawnPenguins.Count; i++)
         {
+            Debug.Log($"아니 {_curPTspawnPenguins[i]}는 가고 싶어요");
             _curPTspawnPenguins[i].SetCanInitTent(true);
             _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
         }

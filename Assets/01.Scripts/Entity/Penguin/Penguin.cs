@@ -25,7 +25,10 @@ public class Penguin : Entity
 
     public Army owner;
 
-    public Army Owner => owner; 
+    public Army Owner => owner;
+
+    private bool isFreelyMove = false;
+    public bool IsFreelyMove => isFreelyMove;
 
     private void OnEnable()
     {
@@ -140,4 +143,10 @@ public class Penguin : Entity
     {
         owner = null;
     }
+
+    public void SetFreelyMoveAble(bool b)
+    {
+        isFreelyMove = b;
+    }
+
 }

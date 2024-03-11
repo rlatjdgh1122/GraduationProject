@@ -13,8 +13,8 @@ public class ArmyManager : Singleton<ArmyManager>
     public List<Army> Armies { get { return armies; } }
     private Dictionary<KeyCode, Action> keyDictionary = new();
 
-    private bool battleMode = false;
-    public bool BattleMode => battleMode;
+    private MovefocusMode curFocusMode = MovefocusMode.Command;
+    public MovefocusMode CurFocusMode => curFocusMode;
 
     private int curArmyIdx = -1;
     public int CurLegion => curArmyIdx + 1;
@@ -30,7 +30,7 @@ public class ArmyManager : Singleton<ArmyManager>
         }
 
         CreateArmy();
-        //SignalHub.OnArmyChanged.Invoke(armies[0], armies[0]);
+        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
         ChangeArmy(1);
         KeySetting();
     }
@@ -47,8 +47,12 @@ public class ArmyManager : Singleton<ArmyManager>
              {KeyCode.Alpha7, ()=> ChangeArmy(7) },
              {KeyCode.Alpha8, ()=> ChangeArmy(8) },
              {KeyCode.Alpha9, ()=> ChangeArmy(9) },
-             {KeyCode.A,      ()=> {battleMode = !battleMode;
-             SignalHub.OnBattleModeChanged?.Invoke(battleMode); } },
+             {KeyCode.A,      ()=>
+             {
+                 curFocusMode = curFocusMode == MovefocusMode.Command ? 
+                 MovefocusMode.Battle :  MovefocusMode.Command;
+             SignalHub.OnBattleModeChanged?.Invoke(curFocusMode); }
+            },
         };
     }
 

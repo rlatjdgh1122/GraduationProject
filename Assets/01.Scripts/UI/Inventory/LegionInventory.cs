@@ -11,7 +11,7 @@ public class Legion
     public bool Locked;                             //군단이 잠겨있는가
     public Transform LegionPanels;                  //군단 UI 부모
     public int MaxCount;                           //최대 군단 병사 수
-    public int CurrentCount = 0;      //현재 군단 병사 수
+    public int CurrentCount = 0;                    //현재 군단 병사 수
     public bool MaxGereral { get; set; }           //군단에 장군이 꽉차있는가
 
     [HideInInspector] public List<LegionInventoryData> LegionInven;
@@ -124,6 +124,30 @@ public class LegionInventory : Singleton<LegionInventory>
         UpdateSlotUI();
     }
 
+    private void OnlyCleanUpUI()
+    {
+        for (int i = 0; i < _soliderSlots.Length; i++)
+        {
+            _soliderSlots[i].CleanUpSlot();
+        }
+        for (int i = 0; i < _generalSlots.Length; i++)
+        {
+            _generalSlots[i].CleanUpSlot();
+        }
+    }
+
+    private void OnlyUpdateUI()
+    {
+        for (int i = 0; i < generalInven.Count; ++i)
+        {
+            _generalSlots[i].UpdateSlot(generalInven[i]);
+        }
+        for (int i = 0; i < soliderInven.Count; ++i)
+        {
+            _soliderSlots[i].UpdateSlot(soliderInven[i]);
+        }
+    }
+
     private void UpdateSlotUI()
     {
         for (int i = 0; i < _soliderSlots.Length; i++)
@@ -188,13 +212,20 @@ public class LegionInventory : Singleton<LegionInventory>
         {
             warloadPenguin.penguinData = penguin;
             warloadPenguin.RemoveStack(count);
+
+            if (warloadPenguin.stackSize <= 0)
+                OnlyCleanUpUI();
         }
         else if (soliderDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData soliderPenguin))
         {
             soliderPenguin.penguinData = penguin;
             soliderPenguin.RemoveStack(count);
+
+            if (soliderPenguin.stackSize <= 0)
+                OnlyCleanUpUI();
         }
-        UpdateSlotUI();
+
+        OnlyUpdateUI();
     }
 
     public void AddToLegion(PenguinStat penguin, int legionNumber)

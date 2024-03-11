@@ -6,6 +6,7 @@ public class BasicChaseState : BasicBaseState
 {
     public BasicChaseState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
+
     }
 
     public override void Enter()
@@ -23,9 +24,9 @@ public class BasicChaseState : BasicBaseState
 
         // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
         if (_penguin.ArmyTriggerCalled
-            && _penguin.BattleMode == false)
+            && _penguin.CurFocusMode == MovefocusMode.Command)
         {
-            _penguin.SetTarget(_penguin.GetSeatPosition());
+            //_penguin.SetTarget(_penguin.GetSeatPosition());
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         }
         else

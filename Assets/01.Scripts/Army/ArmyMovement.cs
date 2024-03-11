@@ -12,7 +12,7 @@ public class ArmyMovement : MonoBehaviour
 
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
-    private bool BattleMode => ArmyManager.Instance.BattleMode;
+    private MovefocusMode CurFocusMode => ArmyManager.Instance.CurFocusMode;
 
     //�������� �ʰ� ��ΰ� ��ġ�� �̵��ߴٸ�
     private bool result => successfulSeatMyPos && isCanMove;
@@ -83,7 +83,7 @@ public class ArmyMovement : MonoBehaviour
         foreach (var item in armySoldierList)
         {
             item.ArmyTriggerCalled = true;
-            item.BattleMode = BattleMode;
+            item.CurFocusMode = CurFocusMode;
         }
 
         //��ΰ� ������ �� �ִ� �������� Ȯ���ϱ� ���� �ڷ�ƾ ������
