@@ -14,9 +14,9 @@ public class MoveModeTextUI : MonoBehaviour
         SignalHub.OnBattleModeChanged += OnBattleModeChangedHandler;
     }
 
-    private void OnBattleModeChangedHandler(bool isBattleMode)
+    private void OnBattleModeChangedHandler(MovefocusMode mode)
     {
-        if (isBattleMode)
+        if (mode == MovefocusMode.Battle)
         {
             _text.text = $"움직임 : 전투 중점모드";
         }
