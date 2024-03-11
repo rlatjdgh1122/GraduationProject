@@ -93,6 +93,7 @@ public class PenguinStoreUI : MonoBehaviour
     public void OnEnableStorePanel() //스토어 패널 활성화
     {
         _panelList[0].panel.DOFade(1, _panelList[0].panelAlphaFadeTime);
+        Debug.Log(_panelList[0]);
         DisableRayExceptSelf(_panelList[0].panel);
     }
 
