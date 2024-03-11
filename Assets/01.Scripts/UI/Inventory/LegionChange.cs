@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class LegionChange : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class LegionChange : MonoBehaviour
     [SerializeField] private float _changeTime = 0.2f;
 
     [SerializeField] private TextMeshProUGUI _curLegionNumberTex;
-        
+
     [SerializeField] private Image _backPanel;
     [SerializeField] private Transform _legionNumberTrm;
 
@@ -26,8 +27,22 @@ public class LegionChange : MonoBehaviour
 
     [SerializeField] private float _waitFadeOffTime;
 
-    private int _curLegion;
+    private int legion = 0;
 
+    private int prevLegion = 0;
+
+    public int Legion
+    {
+        get
+        {
+            return legion;
+        }
+        set
+        {
+            prevLegion = legion;
+            legion = value;
+        }
+    }
     private int _curCost;
     private int _price;
     private int _finalCost;
@@ -44,11 +59,13 @@ public class LegionChange : MonoBehaviour
 
         LegionInventory.Instance.ChangeLegion(text - 1);
         LegionInventory.Instance.LegionCountInformation(text - 1);
+
+        SignalHub.OnUILegionChanged?.Invoke(prevLegion, Legion);
     }
 
     public void SelectLegionNumber(int number) //군단 지정 UI를 클릭했을 때
     {
-        _curLegion = number;
+        Legion = number;
 
         if (LegionInventory.Instance.LegionList[number - 1].Locked) //만약 클릭한 군단이 잠겨있으면
         {
@@ -100,14 +117,14 @@ public class LegionChange : MonoBehaviour
 
     private void BuyLegion(int number)
     {
-        _buyPanel.alpha          = 1;
+        _buyPanel.alpha = 1;
         _buyPanel.blocksRaycasts = true;
 
-        _curCost                  = CostManager.Instance.Cost;
-        _price                    = LegionInventory.Instance.LegionList[number].price;
-        _finalCost               = _curCost - _price;
+        _curCost = CostManager.Instance.Cost;
+        _price = LegionInventory.Instance.LegionList[number].price;
+        _finalCost = _curCost - _price;
 
-        if(_finalCost < 0)
+        if (_finalCost < 0)
         {
             _finalCostText.color = Color.red;
             _cantBuy = true;
@@ -118,9 +135,9 @@ public class LegionChange : MonoBehaviour
             _cantBuy = false;
         }
 
-        _currentCostText.text    = $"{_curCost}";
-        _priceText.text          = $"-{_price}";
-        _finalCostText.text      = $"{_finalCost}";
+        _currentCostText.text = $"{_curCost}";
+        _priceText.text = $"-{_price}";
+        _finalCostText.text = $"{_finalCost}";
     }
 
     public void BuyBtn()
@@ -133,12 +150,12 @@ public class LegionChange : MonoBehaviour
         }
         else
         {
-            ChangeCurrentLegionNumber(_curLegion);
+            ChangeCurrentLegionNumber(Legion);
 
-            LegionInventory.Instance.ShowMessage($"{_curLegion}군단 구매 성공!");
+            LegionInventory.Instance.ShowMessage($"{Legion}군단 구매 성공!");
             ArmyManager.Instance.CreateArmy();
             CostManager.Instance.SubtractFromCurrentCost(_price);
-            LegionInventory.Instance.LegionList[_curLegion - 1].Locked = false;
+            LegionInventory.Instance.LegionList[Legion - 1].Locked = false;
 
             CloseBuyPanel();
         }

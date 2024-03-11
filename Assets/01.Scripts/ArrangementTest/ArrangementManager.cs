@@ -1,24 +1,33 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrangementTest : Singleton<ArrangementTest>
+public class ArrangementManager : Singleton<ArrangementManager>
 {
     [SerializeField] private Transform SpawnPoint;
 
-    [SerializeField] private float distance = 3;
-    [SerializeField] private int width = 5;
-    [SerializeField] private int length = 7;
+    private float distance = 1;
+    private int width = 5;
+    private int length = 7;
 
-    [SerializeField] private List<ArrangementInfo> CurInfoList = new();
+    private List<ArrangementInfo> CurInfoList = new();
     private List<Vector3> seatPosList = new();
 
-    //private List<Penguin> _spawnPenguins = new();
     private MultiKeyDictionary<int, int, Penguin> penguinSpawnDictionary = new();
+
+    private int prevUILegion = 0;
+    private int curUILegion = 0;
     private void Start()
     {
         Setting();
-
+        SignalHub.OnUILegionChanged += OnUILegionHandler;
         WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
+    }
+
+    private void OnUILegionHandler(int prevLegion, int newLegion)
+    {
+        prevUILegion = prevLegion;
+        curUILegion = newLegion;
     }
 
     private void Setting()
@@ -76,7 +85,8 @@ public class ArrangementTest : Singleton<ArrangementTest>
 
         if (penguinSpawnDictionary.TryGetValue(info.Legion, out var value))
         {
-            Debug.Log("WEqr");
+            Debug.Log($"[����] {info.Legion}���� {info.SlotIdx}��");
+
             ArmyManager.Instance.Remove(info.Legion, value[info.SlotIdx]);
             penguinSpawnDictionary[info.Legion].Remove(info.SlotIdx);
         }
@@ -87,7 +97,9 @@ public class ArrangementTest : Singleton<ArrangementTest>
         {
             Penguin obj = null;
             obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
-            Debug.Log(obj as Penguin);
+
+            Debug.Log($"[�߰�] {info.Legion}���� {info.SlotIdx}�� ({obj})");
+
             ArmyManager.Instance.JoinArmyToSoldier(info.Legion, obj as Penguin);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
         }
@@ -100,5 +112,10 @@ public class ArrangementTest : Singleton<ArrangementTest>
             ArmyManager.Instance.JoinArmyToGeneral(info.Legion, obj);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
         }
+    }
+
+    public void OnModify_Btn()
+    {
+
     }
 }

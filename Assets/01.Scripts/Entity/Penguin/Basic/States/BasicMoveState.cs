@@ -9,9 +9,12 @@ public class BasicMoveState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _penguin.SuccessfulToSeatMyPostion = false;
-        if (!_penguin.WaitTrueAnimEndTrigger)
-            _penguin.MoveToTarget(_penguin.GetSeatPosition());
+        _penguin.SuccessfulToArmyCalled = false;
+
+        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+        {
+            _penguin.AfterAttackToMoving();
+        }
     }
 
     public override void UpdateState()
@@ -24,8 +27,9 @@ public class BasicMoveState : BasicBaseState
         }
 
         // 전투 모드 : 위치로 가던중 범위에 적이 있다면 죽이고 위치로
+     
         if (_penguin.IsInnerTargetRange
-             && _penguin.CurFocusMode == MovefocusMode.Battle)
+             && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
