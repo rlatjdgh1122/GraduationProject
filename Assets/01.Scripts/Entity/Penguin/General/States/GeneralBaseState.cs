@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GeneralBaseState : EntityState<GeneralPenguinStateEnum, General>
@@ -19,6 +20,11 @@ public class GeneralBaseState : EntityState<GeneralPenguinStateEnum, General>
 
         if (_penguin.IsDead)
             _stateMachine.ChangeState(GeneralPenguinStateEnum.Dead);
+    }
+
+    protected void HoldShield()
+    {
+        _stateMachine.ChangeState(GeneralPenguinStateEnum.Block);
     }
 
     public override void Exit()
