@@ -44,9 +44,7 @@ public class BasicAttackState : BasicBaseState
             {
                 if (_penguin.WaitForCommandToArmyCalled)
                 {
-                    Debug.Log("이동해라");
                     _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
-                    Debug.Log("이동해라2");
                 }
             }
 
