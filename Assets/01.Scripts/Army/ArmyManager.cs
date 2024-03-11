@@ -232,7 +232,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var prefab = soldierTypeDictionary[type];
 
         obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
-        //obj.gameObject.SetActive(false);
+        obj.gameObject.SetActive(false);
         obj.transform.position = SpawnPoint;
         obj.SeatPos = seatPos;
         return obj;

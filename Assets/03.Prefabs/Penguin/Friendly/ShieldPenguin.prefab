@@ -1084,6 +1084,10 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 02f0f4bf281ab6d408968c5a17a61d56, type: 2}
   innerDistance: 7
   attackDistance: 1.2
+  ArmyTriggerCalled: 0
+  WaitForCommandToArmyCalled: 1
+  SuccessfulToArmyCalled: 0
+  MoveFocusMode: 0
   moveSpeed: 4
   attackSpeed: 1
   maxDetectedCount: 3
@@ -1093,10 +1097,11 @@ MonoBehaviour:
   IsDead: 0
   owner:
     Legion: 0
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -1148,6 +1153,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []

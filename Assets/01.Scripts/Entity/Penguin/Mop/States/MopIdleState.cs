@@ -9,6 +9,8 @@ public class MopIdleState : MopBaseState
     {
         base.Enter();
         _triggerCalled = true;
+        _penguin.SuccessfulToArmyCalled = true;
+        _penguin.WaitForCommandToArmyCalled = true;
     }
 
     public override void UpdateState()
