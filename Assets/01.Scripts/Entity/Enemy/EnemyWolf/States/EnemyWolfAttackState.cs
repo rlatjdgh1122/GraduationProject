@@ -30,6 +30,12 @@ public class EnemyWolfAttackState : EnemyWolfBaseState
     {
         base.UpdateState();
 
+        if(_enemy.CurrentTarget.IsDead)
+        {
+            _enemy.CurrentTarget = null;
+            _stateMachine.ChangeState(EnemyWolfStateEnum.Chase);
+        }
+
         _enemy.LookTarget();
         if (_triggerCalled) //°ø°ÝÀÌ ÇÑ Â÷·Ê ³¡³µÀ» ¶§,
         {
