@@ -10,6 +10,7 @@ public class BleedAttackableEntity : EntityAttackData
 
     [SerializeField] private int _repeat;
     [SerializeField] private float _duration;
+    private Canvas _healthCanvas;
 
     public int AttackEventValue
     {  
@@ -24,6 +25,8 @@ public class BleedAttackableEntity : EntityAttackData
     protected override void Awake()
     {
         base.Awake();
+
+        _healthCanvas = transform.Find("HealthUICanvas").GetComponent<Canvas>();
     }
 
     public override void MeleeSphereAttack()
@@ -35,10 +38,8 @@ public class BleedAttackableEntity : EntityAttackData
             Bleed = false;
             DamageCasterCompo.BleedCast(_bleedDmg, _repeat, _duration, HitType.BleedHit);
         }
-        else
-        {
-            DamageCasterCompo.CaseAoEDamage(false, 0);
-        }
+
+        DamageCasterCompo.CaseAoEDamage(false, 0);
     }
 
     private IEnumerator BleedAnimation()
