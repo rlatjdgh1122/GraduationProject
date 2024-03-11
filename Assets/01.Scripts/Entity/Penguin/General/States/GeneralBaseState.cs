@@ -24,7 +24,8 @@ public class GeneralBaseState : EntityState<GeneralPenguinStateEnum, General>
 
     protected void HoldShield()
     {
-        _stateMachine.ChangeState(GeneralPenguinStateEnum.Block);
+        if (_penguin.skill.IsAvaliable)
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Block);
     }
 
     public override void Exit()

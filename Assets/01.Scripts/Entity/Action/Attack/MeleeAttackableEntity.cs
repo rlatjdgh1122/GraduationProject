@@ -28,6 +28,11 @@ public class MeleeAttackableEntity : EntityAttackData
         DamageCasterCompo.CastStunDamage(Stun, value);
     }
 
+    public override void AoEStunAttack(bool Stun, float value)
+    {
+        DamageCasterCompo.CastAoEStunDamage(Stun, value);
+    }
+
     public override void MeleeAttack()
     {
         DamageCasterCompo.CastDamage();

@@ -18,8 +18,14 @@ public class GeneralSpinAttackState : GeneralBaseState
     {
         base.UpdateState();
 
-        if (!_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
+        if (_triggerCalled)
+        {
+            if (!_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
+
+            if (_penguin.CurrentTarget == null)
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
+        }
     }
 
     public override void Exit()

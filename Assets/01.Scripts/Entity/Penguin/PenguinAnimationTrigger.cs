@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -52,6 +53,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 1.5f);
         OnAoEAttackTriggerEvent?.Invoke();
     }
+
     public void AttackTrigger()
     {
         _penguin.AttackCompo.MeleeAttack();
@@ -59,10 +61,16 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
-    public void StunTigger(int isStun)
+    public void StunTrigger(int isStun)
     {
         _penguin.AttackCompo.StunAttack(isStun == 0 ? false : true, 3f);
         OnStunTriggerEvent?.Invoke();
+    }
+
+    public void AoEStunTrigger(int isStun)
+    {
+        _penguin.AttackCompo.AoEStunAttack(isStun == 0 ? false : true, 3f);
+        //OnStunTriggerEvent?.Invoke();
     }
 
     private void RangeAttackTrigger()
