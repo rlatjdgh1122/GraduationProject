@@ -216,7 +216,7 @@ public class WaveManager : Singleton<WaveManager>
 
     public void CloseWinPanel()
     {
-        IsBattlePhase = false;
+        BattlePhaseEndEventHandler(true);
 
         UIManager.Instance.HidePanel("VictoryUI");
     }
