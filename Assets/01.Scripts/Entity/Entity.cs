@@ -1,11 +1,6 @@
-using DG.Tweening.Core.Easing;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
-using static UnityEditor.PlayerSettings;
 
 public abstract class Entity : PoolableMono
 {
@@ -32,7 +27,7 @@ public abstract class Entity : PoolableMono
     public bool ArmyTriggerCalled = false;
     public bool WaitTrueAnimEndTrigger = true;
     public bool SuccessfulToSeatMyPostion = false;
-    public bool BattleMode = false;
+    public MovefocusMode CurFocusMode = MovefocusMode.Command;
 
     private Coroutine movingCoroutine = null;
     private Vector3 curMousePos = Vector3.zero;

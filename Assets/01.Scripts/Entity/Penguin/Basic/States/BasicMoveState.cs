@@ -23,9 +23,9 @@ public class BasicMoveState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
         }
 
-        // A 클릭 : 위치로 가던중 범위에 적이 있다면 죽이고 위치로
+        // 전투 모드 : 위치로 가던중 범위에 적이 있다면 죽이고 위치로
         if (_penguin.IsInnerTargetRange
-             && _penguin.BattleMode == true)
+             && _penguin.CurFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
