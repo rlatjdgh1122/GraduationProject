@@ -13,6 +13,8 @@ public class GeneralChaseState : GeneralBaseState
         base.Enter();
         _triggerCalled = true;
         _penguin.FindFirstNearestEnemy();
+
+        _penguin.skill.OnSkillCompleted += HoldShield;
     }
 
     public override void UpdateState()
@@ -30,8 +32,8 @@ public class GeneralChaseState : GeneralBaseState
 
     public override void Exit()
     {
+        _penguin.skill.OnSkillCompleted -= HoldShield;
+
         base.Exit();
     }
-
-
 }

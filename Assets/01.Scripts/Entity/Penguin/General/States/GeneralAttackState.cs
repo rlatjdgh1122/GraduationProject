@@ -14,15 +14,16 @@ public class GeneralAttackState : GeneralBaseState
     public override void Enter()
     {
         base.Enter();
+        _penguin.skill.OnSkillCompleted += HoldShield;
         _triggerCalled = false;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
 
-        if (_penguin.CheckAttackEventPassive(++curAttackCount))
-        {
-            _penguin?.OnPassiveAttackEvent();
-        }
+        //if (_penguin.CheckAttackEventPassive(++curAttackCount))
+        //{
+        //    _penguin?.OnPassiveAttackEvent();
+        //}
     }
     public override void UpdateState()
     {
@@ -41,6 +42,7 @@ public class GeneralAttackState : GeneralBaseState
     public override void Exit()
     {
         _penguin.AnimatorCompo.speed = 1;
+        _penguin.skill.OnSkillCompleted -= HoldShield;
         base.Exit();
     }
 
