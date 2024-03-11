@@ -8,7 +8,9 @@ public class BasicIdleState : BasicBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
+
+        if (_penguin.IsFreelyMove) { return; }
+
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToSeatMyPostion = true;
         _penguin.WaitTrueAnimEndTrigger = true;
@@ -26,6 +28,11 @@ public class BasicIdleState : BasicBaseState
         if (_penguin.IsInnerTargetRange
           /*  && _penguin.Owner.IsCanReadyAttackInCurArmySoldiersList*/)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+
+        if (_penguin.IsFreelyMove)
+        {
+            _stateMachine.ChangeState(BasicPenguinStateEnum.FreelyMove);
+        }
     }
 
     public override void Exit()

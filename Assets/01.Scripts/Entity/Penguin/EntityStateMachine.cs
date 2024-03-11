@@ -18,7 +18,6 @@ public class EntityStateMachine<T, G> where T : Enum where G : Entity
 
     public void ChangeState(T newState)
     {
-        if (PrevState == CurrentState) { CurrentState.Enter(); }
         PrevState = CurrentState;
         CurrentState.Exit();
         CurrentState = StateDictionary[newState];
