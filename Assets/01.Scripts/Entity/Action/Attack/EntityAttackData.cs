@@ -27,6 +27,11 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
+    public virtual void AoEStunAttack(bool Stun, float value)
+    {
+
+    }
+
     public virtual void MeleeAttack()
     {
 

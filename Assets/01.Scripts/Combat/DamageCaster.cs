@@ -107,6 +107,33 @@ public class DamageCaster : MonoBehaviour
 
     }
 
+    public void CastAoEStunDamage(bool Stun, float duration)
+    {
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+
+        foreach (var col in Colls)
+        {
+            RaycastHit raycastHit;
+
+            var dir = (col.transform.position - transform.position).normalized;
+            dir.y = 0;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+
+            if (raycastSuccess
+                && raycastHit.collider.TryGetComponent<Health>(out Health health))
+            {
+                int damage = _owner.damage.GetValue();
+
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+
+                if (Stun == true)
+                    health.Stun(raycastHit, duration);
+
+            }
+        }
+    }
+
     /// <summary>
     /// 단일 데미지
     /// </summary>

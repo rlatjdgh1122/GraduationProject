@@ -28,6 +28,7 @@ public class GaugeSkill : Skill
         if (_currentValue >= 20)
         {
             OnSkillFailed?.Invoke();
+            IsAvaliable = false;
         }
     }
 }
