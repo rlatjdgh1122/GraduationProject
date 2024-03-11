@@ -11,7 +11,6 @@ public class LigeonStat
     public int value = 10;
 }
 
-
 [Serializable]
 public class LigeonStatAdjustment
 {
@@ -20,16 +19,16 @@ public class LigeonStatAdjustment
 }
 public class General : Penguin
 {
-    #region ÆÐ½Ãºê
     //public PassiveDataSO passiveData = null;
-    #endregion
     public LigeonStatAdjustment ligeonStat = null;
-
-
+    public Skill skill;
+    
     protected override void Awake()
     {
         base.Awake();
 
+        skill = transform.Find("SkillManager").GetComponent<Skill>();
+        skill?.SetOwner(this);
         passiveData?.SetOwner(this);
     }
 
@@ -84,7 +83,7 @@ public class General : Penguin
         => passiveData.CheckAroundEnemyCountEventPassive();
 #endregion
 
-    public virtual void OnPassiveAttackEvent()
+    public override void OnPassiveAttackEvent()
     {
 
     }
