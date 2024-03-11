@@ -33,7 +33,6 @@ public class DummyPenguin : PoolableMono
         transform.DOMove(targetVec, _moveDuration)
             .OnComplete(() =>
             {
-                Debug.Log("Push");
                 _animator.SetBool("Move", false);
                 PoolManager.Instance.Push(this);
             });

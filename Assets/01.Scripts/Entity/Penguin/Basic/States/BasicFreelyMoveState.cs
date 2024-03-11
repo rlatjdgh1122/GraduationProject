@@ -9,6 +9,7 @@ public class BasicFreelyMoveState : BasicBaseState
 {
     private float time = 0.0f;
     private float randomMoveTime;
+    private float normalNavSpeed;
 
     public BasicFreelyMoveState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
@@ -20,10 +21,9 @@ public class BasicFreelyMoveState : BasicBaseState
         _triggerCalled = true;
         time = 0.0f;
 
-        if (_penguin.NavAgent.speed > 1.0f)
-        {
-            _penguin.NavAgent.speed = 1.0f;
-        }
+        normalNavSpeed = _penguin.NavAgent.speed;
+        _penguin.NavAgent.speed = 1.0f;
+
         randomMoveTime = Random.Range(1.0f, 3.0f);
         _penguin.MoveToTarget(GetRandomPoint());
     }
@@ -31,6 +31,11 @@ public class BasicFreelyMoveState : BasicBaseState
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (WaveManager.Instance.IsBattlePhase)
+        {
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+        }
 
         time += Time.deltaTime;
         if(time >= randomMoveTime ||
@@ -43,6 +48,8 @@ public class BasicFreelyMoveState : BasicBaseState
     public override void Exit()
     {
         base.Exit();
+
+        _penguin.NavAgent.speed = normalNavSpeed;
     }
 
     private Vector3 GetRandomPoint()

@@ -7,7 +7,9 @@ public class BasicIdleState : BasicBaseState
 
     public override void Enter()
     {
-        base.Enter(); 
+        base.Enter();
+
+        if (_penguin.IsFreelyMove) { return; }
 
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToSeatMyPostion = true;
