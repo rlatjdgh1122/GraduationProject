@@ -34,7 +34,9 @@ public class BasicFreelyMoveState : BasicBaseState
 
         if (WaveManager.Instance.IsBattlePhase)
         {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            _penguin.NavAgent.speed = normalNavSpeed;
+            _penguin.SetFreelyMoveAble(false);
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         }
 
         time += Time.deltaTime;
