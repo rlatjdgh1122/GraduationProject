@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Windows;
 
@@ -29,7 +30,7 @@ public class PenguinFactory : EntityFactory<Penguin>
 
         Penguin spawnPenguin =  SpawnObject(penguin, spawnVec) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
 
-        Debug.Log(spawnVec);
+        spawnPenguin.SetFreelyMoveAble(true);
 
         _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
     }

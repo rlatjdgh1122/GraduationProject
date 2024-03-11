@@ -152,11 +152,6 @@ public class WaveManager : Singleton<WaveManager>
         {
             BattlePhaseStartEventHandler();
         }
-
-        if (Input.GetKeyDown(KeyCode.S)) // 테스트Dragon
-        {
-            currentWaveCount++;
-        }
     }
 
     private void OnIceArrivedHandle()

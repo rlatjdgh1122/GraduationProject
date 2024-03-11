@@ -26,6 +26,11 @@ public class BasicIdleState : BasicBaseState
         if (_penguin.IsInnerTargetRange
           /*  && _penguin.Owner.IsCanReadyAttackInCurArmySoldiersList*/)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+
+        if (_penguin.IsFreelyMove)
+        {
+            _stateMachine.ChangeState(BasicPenguinStateEnum.FreelyMove);
+        }
     }
 
     public override void Exit()
