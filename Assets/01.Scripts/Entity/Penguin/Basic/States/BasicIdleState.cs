@@ -29,7 +29,7 @@ public class BasicIdleState : BasicBaseState
 
         if (_penguin.IsFreelyMove)
         {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+            _stateMachine.ChangeState(BasicPenguinStateEnum.FreelyMove);
         }
     }
 

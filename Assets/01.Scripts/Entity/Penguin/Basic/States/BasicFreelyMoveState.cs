@@ -18,6 +18,7 @@ public class BasicFreelyMoveState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
+        time = 0.0f;
 
         if (_penguin.NavAgent.speed > 1.0f)
         {
@@ -42,7 +43,6 @@ public class BasicFreelyMoveState : BasicBaseState
     public override void Exit()
     {
         base.Exit();
-        time = 0.0f;
     }
 
     private Vector3 GetRandomPoint()
