@@ -18,7 +18,7 @@ public class ArrangementTest : Singleton<ArrangementTest>
     {
         Setting();
 
-        //WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
+        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
     }
 
     private void Setting()
