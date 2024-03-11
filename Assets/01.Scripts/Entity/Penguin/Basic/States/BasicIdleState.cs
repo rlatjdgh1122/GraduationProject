@@ -10,15 +10,17 @@ public class BasicIdleState : BasicBaseState
         base.Enter();
         _triggerCalled = true;
         _penguin.ArmyTriggerCalled = false;
-        _penguin.SuccessfulToSeatMyPostion = true;
-        _penguin.WaitTrueAnimEndTrigger = true;
-        _penguin.NavAgent.ResetPath();
+        _penguin.SuccessfulToArmyCalled = true;
+        _penguin.WaitForCommandToArmyCalled = true;
+
+        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+            _penguin.NavAgent.ResetPath();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
+        
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
 

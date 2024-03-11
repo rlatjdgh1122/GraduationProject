@@ -75,6 +75,8 @@ public class ArmyMovement : MonoBehaviour
 
     private IEnumerator WaitForAllTrue_Corou(Vector3 mousePos)
     {
+        if (armySoldierList.Count <= 0)
+            yield break;
         isCanMove = false;
         successfulSeatMyPos = false;
 
@@ -83,7 +85,9 @@ public class ArmyMovement : MonoBehaviour
         foreach (var item in armySoldierList)
         {
             item.ArmyTriggerCalled = true;
-            item.CurFocusMode = CurFocusMode;
+            item.MoveFocusMode = CurFocusMode;
+            item.MousePos = mousePos;
+
         }
 
         //��ΰ� ������ �� �ִ� �������� Ȯ���ϱ� ���� �ڷ�ƾ ������
@@ -111,7 +115,7 @@ public class ArmyMovement : MonoBehaviour
             foreach (var item in armySoldierList)
             {
                 //���� �ִϸ��̼��� �����ٸ� ������ �� ����
-                if (item.WaitTrueAnimEndTrigger)
+                if (item.WaitForCommandToArmyCalled)
                 {
                     check = true;
                     //�������ֱ�
@@ -146,7 +150,7 @@ public class ArmyMovement : MonoBehaviour
         {
             Debug.Log("������ �ִ�2");
         }
-        while (!armySoldierList.TrueForAll(p => p.SuccessfulToSeatMyPostion))
+        while (!armySoldierList.TrueForAll(p => p.SuccessfulToArmyCalled))
         {
             yield return waitingByheartbeat;
         }

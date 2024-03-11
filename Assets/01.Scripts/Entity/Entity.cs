@@ -25,9 +25,9 @@ public abstract class Entity : PoolableMono
     #region 군단 포지션 관련
 
     public bool ArmyTriggerCalled = false;
-    public bool WaitTrueAnimEndTrigger = true;
-    public bool SuccessfulToSeatMyPostion = false;
-    public MovefocusMode CurFocusMode = MovefocusMode.Command;
+    public bool WaitForCommandToArmyCalled = true; //군단의 명령을 들을 수 있을때까지 대기
+    public bool SuccessfulToArmyCalled = false; //군단의 명령을 성공적으로 해결했는가
+    public MovefocusMode MoveFocusMode = MovefocusMode.Command;
 
     private Coroutine movingCoroutine = null;
     private Vector3 curMousePos = Vector3.zero;
@@ -129,9 +129,18 @@ public abstract class Entity : PoolableMono
 
 
     #region 움직임 관리
+
+    //배틀모드일때 다죽이고 마지막 마우스 위치로 이동 코드
+    public void AfterAttackToMoving()
+    {
+        if (WaitForCommandToArmyCalled)
+            MoveToTarget(GetSeatPosition());
+    }
+
+
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
     {
-        MousePos = mousePos;
+        //MousePos = mousePos;
         if (NavAgent.isActiveAndEnabled)
         {
             if (prevMousePos != Vector3.zero)

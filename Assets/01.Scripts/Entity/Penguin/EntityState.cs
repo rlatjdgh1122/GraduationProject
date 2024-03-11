@@ -37,5 +37,6 @@ public class EntityState<T,G> where T : Enum where G : Entity
     public void AnimationFinishTrigger()
     {
         _triggerCalled = true;
+        _penguin.WaitForCommandToArmyCalled = true;
     }
 }
