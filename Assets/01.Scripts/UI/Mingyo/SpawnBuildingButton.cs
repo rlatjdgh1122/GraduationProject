@@ -80,11 +80,11 @@ public class SpawnBuildingButton : MonoBehaviour
 
         #endregion
 
-        if (buildinginfo.MaxInstallableCount >= buildinginfo.CurrentInstallCount)
-        {
-            _buildingFactory.SetSpawnFailHudText("최대 설치 개수에 도달했습니다");
-            cantSpawnBuilding = true;
-        }
+        //if (buildinginfo.MaxInstallableCount >= buildinginfo.CurrentInstallCount)
+        //{
+        //    _buildingFactory.SetSpawnFailHudText("최대 설치 개수에 도달했습니다");
+        //    cantSpawnBuilding = true;
+        //}
 
 
         if (cantSpawnBuilding)
