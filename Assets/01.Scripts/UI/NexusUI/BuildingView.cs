@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class BuildingView : NexusPopupUI
 {
-    [HideInInspector]
     public BuildingItemInfo building;
     [HideInInspector]
     public SpawnBuildingButton spawn;
@@ -19,7 +18,10 @@ public class BuildingView : NexusPopupUI
     public override void Awake()
     {
         base.Awake();
+    }
 
+    private void Start()
+    {
         spawn = GetComponent<SpawnBuildingButton>();
         SetDefaultUI();
     }
