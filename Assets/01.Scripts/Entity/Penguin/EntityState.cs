@@ -27,6 +27,7 @@ public class EntityState<T,G> where T : Enum where G : Entity
 
     public virtual void UpdateState()
     {
+
     }
 
     public virtual void Exit()
