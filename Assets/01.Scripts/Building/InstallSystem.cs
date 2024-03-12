@@ -142,23 +142,25 @@ public class InstallSystem : MonoBehaviour
             if (_previousGround == null
              || _curGround != _previousGround)
             {
-                _previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
+                _previousGround?.UpdateOutlineColor(OutlineColorType.None);
+
+                Vector3 buildingPos = new Vector3(_curGround.transform.position.x, 0f, _curGround.transform.position.z);
+                Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
+                //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
+                _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
+                                                              2f,
+                                                              _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
 
                 if (_curGround.IsInstalledBuilding)
                 {
-                    _curBuilding.transform.position = new Vector3(-10f, -10f, -10f);
-                    _curGround.UpdateOutlineColor(GroundOutlineColorType.Red);
+                    _curGround.UpdateOutlineColor(OutlineColorType.Red);
+                    _curBuilding.MatChangeToTransparency(OutlineColorType.Red);
                 }
                 else
                 {
-                    _curGround.UpdateOutlineColor(GroundOutlineColorType.Green);
+                    _curGround.UpdateOutlineColor(OutlineColorType.Green);
+                    _curBuilding.MatChangeToTransparency(OutlineColorType.Green);
 
-                    Vector3 buildingPos = new Vector3(_curGround.transform.position.x, 0f, _curGround.transform.position.z);
-                    Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
-                    //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
-                    _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
-                                                                  2f,
-                                                                  _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
                 }
             }
 

@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-public enum GroundOutlineColorType
+public enum OutlineColorType
 {
     Green,
     Red,
@@ -30,10 +30,11 @@ public class Ground : MonoBehaviour
     public void InstallBuilding() //땅에 설치되었다고 처리
     {
         isInstalledBuilding = true;
-        UpdateOutlineColor(GroundOutlineColorType.None);
+        Debug.Log($"{this.gameObject}에 설치했다고요");
+        UpdateOutlineColor(OutlineColorType.None);
     }
 
-    public void UpdateOutlineColor(GroundOutlineColorType type)
+    public void UpdateOutlineColor(OutlineColorType type)
     {
         _outline.enabled = true;
         _outline.OutlineWidth = 2.0f;
@@ -41,13 +42,13 @@ public class Ground : MonoBehaviour
 
         switch (type)
         {
-            case GroundOutlineColorType.Green:
+            case OutlineColorType.Green:
                 _outline.OutlineColor = Color.green;
                 break;
-            case GroundOutlineColorType.Red:
+            case OutlineColorType.Red:
                 _outline.OutlineColor = Color.red;
                 break;
-            case GroundOutlineColorType.None:
+            case OutlineColorType.None:
                 _outline.enabled = false;
                 break;
         }
