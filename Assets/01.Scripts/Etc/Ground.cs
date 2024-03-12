@@ -25,12 +25,12 @@ public class Ground : MonoBehaviour
     {
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
+
     }
 
     public void InstallBuilding() //땅에 설치되었다고 처리
     {
         isInstalledBuilding = true;
-        Debug.Log($"{this.gameObject}에 설치했다고요");
         UpdateOutlineColor(OutlineColorType.None);
     }
 

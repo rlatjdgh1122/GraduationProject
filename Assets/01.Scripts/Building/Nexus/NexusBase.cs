@@ -19,11 +19,21 @@ public class NexusBase : MonoBehaviour
     [SerializeField]
     private InputReader _input;
 
+    private LayerMask _groundLayer = 1 << 3;
+
     private void Awake()
     {
         _health = GetComponent<Health>();
 
         _health.SetHealth(_nexusStat);
+    }
+
+    private void Start()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        {
+            hit.collider.GetComponent<Ground>().InstallBuilding();
+        }
     }
 
     private void OnMouseDown()
