@@ -98,7 +98,6 @@ public class ArrangementManager : Singleton<ArrangementManager>
             Penguin obj = null;
             obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
 
-            Debug.Log($"[�߰�] {info.Legion}���� {info.SlotIdx}�� ({obj})");
 
             ArmyManager.Instance.JoinArmyToSoldier(info.Legion, obj as Penguin);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);

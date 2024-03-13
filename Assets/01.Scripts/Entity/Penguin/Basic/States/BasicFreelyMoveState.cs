@@ -25,7 +25,7 @@ public class BasicFreelyMoveState : BasicBaseState
         _penguin.NavAgent.speed = 1.0f;
 
         randomMoveTime = Random.Range(1.0f, 3.0f);
-        _penguin.MoveToTarget(GetRandomPoint());
+        _penguin.MoveToPosition(GetRandomPoint());
     }
 
     public override void UpdateState()

@@ -36,25 +36,23 @@ public class BasicChaseState : BasicBaseState
             else
             {
                 if (_penguin.CurrentTarget != null)
-                    _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
+                    _penguin.MoveToCurrentTarget();
 
                 if (_penguin.IsInnerMeleeRange)
                     _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
 
-                if (_penguin.CurrentTarget == null)
-                    _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+                IsTargetNull(BasicPenguinStateEnum.Idle);
             }
         }
         else
         {
             if (_penguin.CurrentTarget != null)
-                _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
+                _penguin.MoveToCurrentTarget();
 
             if (_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
 
-            if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            IsTargetNull(BasicPenguinStateEnum.Idle);
         }
 
     }

@@ -17,7 +17,7 @@ public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
         base.UpdateState();
 
         if (_enemy.CurrentTarget != null)
-            _enemy.SetTarget(_enemy.CurrentTarget.transform.position);
+            _enemy.MoveToCurrentTarget();
 
         if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);

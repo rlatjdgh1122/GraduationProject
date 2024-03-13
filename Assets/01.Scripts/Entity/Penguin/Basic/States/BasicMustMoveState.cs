@@ -12,21 +12,16 @@ public class BasicMustMoveState : BasicBaseState
     public override void Enter()
     {
         base.Enter();
-
-        Debug.Log(_penguin.transform.position + " : " + _penguin.GetSeatPosition());
-
+        _penguin.MoveToPosition(_penguin.GetSeatPosition());
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _penguin.MoveToTarget(_penguin.GetSeatPosition());
-
         if (_penguin.WaitForCommandToArmyCalled)
         {
             if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             {
-                Debug.Log("MustMove : " + _penguin.NavAgent.velocity.magnitude);
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
             }
         }

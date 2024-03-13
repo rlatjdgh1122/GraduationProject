@@ -19,7 +19,7 @@ public class EnemyWolfChaseState : EnemyWolfBaseState
         base.UpdateState();
 
         if (_enemy.CurrentTarget != null)
-            _enemy.SetTarget(_enemy.CurrentTarget.transform.position);
+            _enemy.MoveToCurrentTarget();
 
         if (_enemy.CanAttack)
             _stateMachine.ChangeState(EnemyWolfStateEnum.Attack); //공격 사거리 내에 들어왔다 -> Attack

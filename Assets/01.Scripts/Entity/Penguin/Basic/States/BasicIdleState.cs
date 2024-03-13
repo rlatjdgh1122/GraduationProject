@@ -29,11 +29,9 @@ public class BasicIdleState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
 
         //적사거리가 들어오고 /*-군사들이 위치로 이동했다면-*/ 주석
-        UnityEngine.Debug.Log(_penguin.IsInnerTargetRange);
         if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
-        UnityEngine.Debug.Log(_penguin.IsFreelyMove);
         if (_penguin.IsFreelyMove)
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.FreelyMove);

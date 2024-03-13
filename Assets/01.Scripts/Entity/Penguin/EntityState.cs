@@ -2,15 +2,15 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EntityState<T,G> where T : Enum where G : Entity
+public class EntityState<T, G> where T : Enum where G : Entity
 {
-    protected EntityStateMachine<T,G> _stateMachine;   
+    protected EntityStateMachine<T, G> _stateMachine;
     protected G _penguin;
     protected NavMeshAgent _navAgent; //편의를 위해서 여기에도 NavAgent 선언
 
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
-    
+
 
     public EntityState(G penguin, EntityStateMachine<T, G> stateMachine, string animationBoolName)
     {
@@ -35,9 +35,14 @@ public class EntityState<T,G> where T : Enum where G : Entity
         _penguin.AnimatorCompo.SetBool(_animBoolHash, false); //나갈땐 꺼줌
     }
 
-    public void AnimationFinishTrigger()
+    public virtual void AnimationFinishTrigger()
     {
         _triggerCalled = true;
-        _penguin.WaitForCommandToArmyCalled = true;
+
+        if (_penguin is Penguin)
+        {
+            var penguin = _penguin as Penguin;
+            penguin.WaitForCommandToArmyCalled = true;
+        }
     }
 }
