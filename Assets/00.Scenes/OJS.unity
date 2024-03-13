@@ -8170,7 +8170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1975f070bbd8c54786fc03a25d0750e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIType: 1
+  _panelFadeTime: 0
 --- !u!1 &957378618
 GameObject:
   m_ObjectHideFlags: 0
@@ -8332,11 +8332,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bdd202b1fbd1f4449dc6ade682cf54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIType: 0
-  _texts:
-  - {fileID: 222046345}
-  - {fileID: 1735762320}
-  - {fileID: 1684798032}
+  _panelFadeTime: 0
+  _eliminatedEnemy: {fileID: 0}
+  _deadPenguin: {fileID: 0}
+  _reward: {fileID: 0}
   _cost: 30
   _btn: {fileID: 595308794}
 --- !u!114 &1012960481
@@ -14221,6 +14220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7641091776783993754, guid: c6152c76d85c68d468df20964304ae72,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7641091776783993754, guid: c6152c76d85c68d468df20964304ae72,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -14504,12 +14508,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6152c76d85c68d468df20964304ae72, type: 3}
---- !u!95 &1699808370 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3535947895681273410, guid: 81c3cb3066cfa6d47bcc0bc93b2e50bf,
-    type: 3}
-  m_PrefabInstance: {fileID: 7709916953096270471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1699811967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16480,10 +16478,11 @@ MonoBehaviour:
   soldierTypeListSO: {fileID: 11400000, guid: 538e6cee0073b7749a1d37f6b1648073, type: 2}
   armies:
   - Legion: 1
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -16492,10 +16491,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 2
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -16504,10 +16504,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 3
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -16516,10 +16517,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 4
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -16528,10 +16530,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 4
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -16540,10 +16543,11 @@ MonoBehaviour:
       archerTimes: 0
       shieldTimes: 0
   - Legion: 5
-    IsMoving: 0
+    IsCanReadyAttackInCurArmySoldiersList: 1
     Soldiers: []
     General: {fileID: 0}
-    info:
+    AsrmyParentObj: {fileID: 0}
+    Info:
       totalCount: 0
       basicCount: 0
       archerCount: 0
@@ -16579,6 +16583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
+  armySoldierList: []
 --- !u!114 &1861243456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16592,10 +16597,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnPoint: {fileID: 2068902560}
-  distance: 1
-  width: 5
-  length: 7
-  InfoList: []
 --- !u!114 &1861243457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18468,8 +18469,10 @@ PlayableDirector:
   - key: {fileID: -6101064502652363629, guid: 7c4a0218df04c134cb61e13bc9301173, type: 2}
     value: {fileID: 1469832881}
   - key: {fileID: -3617494437576425730, guid: 7c4a0218df04c134cb61e13bc9301173, type: 2}
-    value: {fileID: 1699808370}
+    value: {fileID: 0}
   - key: {fileID: 3934667363468235554, guid: 7c4a0218df04c134cb61e13bc9301173, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5543306238438045753, guid: 7c4a0218df04c134cb61e13bc9301173, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References:
