@@ -191,11 +191,6 @@ public class Penguin : Entity
 
     #region 움직임 관련
     //배틀모드일때 다죽이고 마지막 마우스 위치로 이동 코드
-    public void AfterAttackToMoving()
-    {
-        if (WaitForCommandToArmyCalled)
-            MoveToPosition(GetSeatPosition());
-    }
 
 
     public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로

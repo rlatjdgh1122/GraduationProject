@@ -12,10 +12,7 @@ public class BasicMoveState : BasicBaseState
         _triggerCalled = true;
         _penguin.SuccessfulToArmyCalled = false;
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-        {
-            _penguin.AfterAttackToMoving();
-        }
+        AfterAttackToMoving();
     }
 
     public override void UpdateState()
@@ -28,7 +25,7 @@ public class BasicMoveState : BasicBaseState
         }
 
         // 전투 모드 : 위치로 가던중 범위에 적이 있다면 죽이고 위치로
-     
+
         if (_penguin.IsInnerTargetRange
              && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {

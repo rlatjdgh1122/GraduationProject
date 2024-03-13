@@ -15,8 +15,6 @@ public class BasicIdleState : BasicBaseState
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
 
-        //_penguin.StopImmediately();
-        //_penguin.NavAgent.velocity = UnityEngine.Vector3.one * .5f;
         if (_penguin.MoveFocusMode == MovefocusMode.Battle)
             _penguin.NavAgent.ResetPath();
     }

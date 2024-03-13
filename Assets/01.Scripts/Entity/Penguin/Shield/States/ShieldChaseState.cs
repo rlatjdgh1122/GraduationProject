@@ -12,6 +12,9 @@ public class ShieldChaseState : ShieldBaseState
     {
         base.Enter();
         _triggerCalled = true;
+
+        ChaseEnter();
+
         _penguin.FindFirstNearestEnemy();
     }
 
@@ -19,17 +22,18 @@ public class ShieldChaseState : ShieldBaseState
     {
         base.UpdateState();
 
+        if (IsArmyCalledIn_CommandMode())
+        {
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
+        }
+
         if (_penguin.CurrentTarget != null)
             _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
 
         if (_penguin.IsInnerMeleeRange)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
 
-        if (_penguin.CurrentTarget == null)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Dead);
+        IsTargetNull(ShieldPenguinStateEnum.Idle);
     }
 
     public override void Exit()
