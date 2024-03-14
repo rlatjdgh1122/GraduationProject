@@ -12,7 +12,10 @@ public class AttackEffectFeedback : Feedback
     }
     public override void CreateFeedback()
     {
-        effectObj.gameObject.SetActive(true);
+        if(!effectObj.activeInHierarchy)
+        {
+            effectObj.gameObject.SetActive(true);
+        }
     }
 
     public override void FinishFeedback()

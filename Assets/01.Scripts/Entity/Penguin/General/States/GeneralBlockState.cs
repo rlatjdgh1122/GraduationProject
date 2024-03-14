@@ -18,7 +18,7 @@ public class GeneralBlockState : GeneralBaseState
         _penguin.StopImmediately();
 
         _penguin.HealthCompo.OnHit += ImpactShield;
-        _penguin.skill.OnSkillFailed += SpinAttack;
+        //_penguin.skill.OnSkillFailed += SpinAttack;
     }
 
     public override void UpdateState()
@@ -47,7 +47,7 @@ public class GeneralBlockState : GeneralBaseState
     public override void Exit()
     {
         _penguin.HealthCompo.OnHit -= ImpactShield;
-        _penguin.skill.OnSkillFailed -= SpinAttack;
+        //_penguin.skill.OnSkillFailed -= SpinAttack;
         base.Exit();
     }
 }

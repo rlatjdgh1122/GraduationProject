@@ -13,7 +13,7 @@ public class GeneralImpactState : GeneralBaseState
         base.Enter();
         _triggerCalled = false;
 
-        _penguin.skill.OnSkillFailed += SpinAttack;
+        //_penguin.skill.OnSkillFailed += SpinAttack;
     }
 
     public override void UpdateState()
@@ -35,7 +35,7 @@ public class GeneralImpactState : GeneralBaseState
 
     public override void Exit()
     {
-        _penguin.skill.OnSkillFailed -= SpinAttack;
+        //_penguin.skill.OnSkillFailed -= SpinAttack;
         base.Exit();
         _triggerCalled = true;
     }
