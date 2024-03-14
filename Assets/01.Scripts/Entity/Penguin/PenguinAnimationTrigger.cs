@@ -45,7 +45,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// <param name="AfewTimes"> Ω∫≈»¿« ∏Ó πË</param>
     public void SpecialAttackTrigger(float AfewTimes)
     {
-        _penguin.AttackCompo.SpecialAttack(AfewTimes);
+        _penguin.AttackCompo?.SpecialAttack(AfewTimes);
         OnSpecialAttackTriggerEvent?.Invoke();
     }
 
@@ -106,13 +106,11 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     public void EffectStartTrigger()
     {
-        Debug.Log("On");
         OnEffectOnTriggerEvent?.Invoke();
     }
 
     public void EffectEndTrigger()
     {
-        Debug.Log("Off");
         OnEffectOffTriggerEvent?.Invoke();
     }
 }
