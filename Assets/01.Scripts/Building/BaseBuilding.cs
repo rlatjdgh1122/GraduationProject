@@ -80,7 +80,7 @@ public abstract class BaseBuilding : WorkableObject
         }
         catch
         {
-            Debug.LogError($"Not Founded id: {gameObject}"); //빌딩이랑 Container는 이 오류가 뜨는게 맞다
+            Debug.LogError($"Not Founded id: {gameObject}"); 
         }
 
         try

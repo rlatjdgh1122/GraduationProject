@@ -117,7 +117,6 @@ public class LegionInventory : Singleton<LegionInventory>
         }
         else //¿œ≤€¿Ã∂Û∏È
         {
-            Debug.Log("¿œ≤€¿”");
             return;
         }
 
