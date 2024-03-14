@@ -12,7 +12,7 @@ public class BasicMoveState : BasicBaseState
         _triggerCalled = true;
         _penguin.SuccessfulToArmyCalled = false;
 
-        AfterAttackToMoving();
+        MoveEnter();
     }
 
     public override void UpdateState()

@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+
 public class ShieldBlockState : ShieldBaseState
 {
     public ShieldBlockState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName)
@@ -60,7 +62,7 @@ public class ShieldBlockState : ShieldBaseState
 
     private void ImpactShield()
     {
-        if (!_penguin.ArmyTriggerCalled)
+        if (!_penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Command)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Impact);
     }
 

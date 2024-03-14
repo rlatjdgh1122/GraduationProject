@@ -23,7 +23,7 @@ public class ShieldMustMoveState : ShieldBaseState
             {
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
             }
-        }   
+        }
 
         if (_penguin.IsInnerTargetRange
              && _penguin.MoveFocusMode == MovefocusMode.Battle)

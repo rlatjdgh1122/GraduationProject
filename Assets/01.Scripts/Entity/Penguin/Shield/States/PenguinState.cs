@@ -16,14 +16,13 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         }
     }
     /// <summary>
-    /// 배틀모드일 때 사용
-    /// 유저가 마우스 클릭을 했다면
+    /// 배틀모드일 때 유저가 마우스 클릭을 했다면
     /// </summary>
     protected bool IsArmyCalledIn_BattleMode()
        => _penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Battle;
 
     /// <summary>
-    /// 명령모드일 때 사용
+    /// 명령모드일 때 유저가 마우스 클릭을 했다면
     /// </summary>
     protected bool IsArmyCalledIn_CommandMode()
         => _penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Command;
@@ -53,7 +52,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     /// <summary>
     /// 배틀모드일 때 다 죽이면 위치로 이동하는 함수
     /// </summary>
-    protected void AfterAttackToMoving()
+    protected void MoveEnter()
     {
         if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
 

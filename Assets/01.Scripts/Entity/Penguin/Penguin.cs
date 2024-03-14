@@ -260,7 +260,9 @@ public class Penguin : Entity
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)
+        {
             NavAgent.SetDestination(pos);
+        }
     }
     #endregion
 

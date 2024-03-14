@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public class ShieldIdleState : ShieldBaseState
 {
-    public ShieldIdleState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
+    public ShieldIdleState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
     }

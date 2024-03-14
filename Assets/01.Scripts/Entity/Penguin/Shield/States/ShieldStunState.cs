@@ -13,6 +13,7 @@ public class ShieldStunState : ShieldBaseState
     {
         base.Enter();
         _triggerCalled = false;
+        _penguin.WaitForCommandToArmyCalled = false;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
