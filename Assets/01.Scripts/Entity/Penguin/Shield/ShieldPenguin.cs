@@ -6,6 +6,7 @@ public enum ShieldPenguinStateEnum
 {
     Idle,
     Move,
+    MustMove,
     Chase,
     Block,
     Impact,

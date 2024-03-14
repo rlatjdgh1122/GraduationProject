@@ -8,7 +8,7 @@ public class ArmyMovement : MonoBehaviour
     private ParticleSystem ClickParticle;
     private Army curArmy = null;
 
-    public List<Entity> armySoldierList = new List<Entity>();
+    public List<Penguin> armySoldierList = new List<Penguin>();
 
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
@@ -85,7 +85,7 @@ public class ArmyMovement : MonoBehaviour
         foreach (var item in armySoldierList)
         {
             item.ArmyTriggerCalled = true;
-            item.MoveFocusMode = CurFocusMode;
+            //item.MoveFocusMode = CurFocusMode;
             item.MousePos = mousePos;
 
         }
@@ -157,9 +157,9 @@ public class ArmyMovement : MonoBehaviour
         successfulSeatMyPos = true;
     }
 
-    private void SetSoldierMovePosition(Vector3 mousePos, Entity entity)
+    private void SetSoldierMovePosition(Vector3 mousePos, Penguin penguin)
     {
-        entity.MoveToMySeat(mousePos);
+        penguin.MoveToMySeat(mousePos);
     }
 
     /// <summary>

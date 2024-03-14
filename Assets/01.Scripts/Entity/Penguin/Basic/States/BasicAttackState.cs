@@ -26,28 +26,22 @@ public class BasicAttackState : BasicBaseState
         base.UpdateState();
         _penguin.LookTarget();
 
-        if (_penguin.ArmyTriggerCalled)
+        if (IsArmyCalledIn_BattleMode())
         {
-            if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+            if (_triggerCalled)
             {
-                if (_triggerCalled)
-                {
-                    _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
-                    //다죽였다면 이동
-                    if (_penguin.CurrentTarget == null)
-                    {
-                        _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
-                    }
-                }
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
+                //다죽였다면 이동
+                IsTargetNull(BasicPenguinStateEnum.MustMove);
             }
-            else if (_penguin.MoveFocusMode == MovefocusMode.Command)
-            {
-                if (_penguin.WaitForCommandToArmyCalled)
-                {
-                    _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
-                }
-            }
+        }
 
+        if (IsArmyCalledIn_CommandMode())
+        {
+            if (_penguin.WaitForCommandToArmyCalled)
+            {
+                _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
+            }
         }
         else
         {
@@ -55,18 +49,13 @@ public class BasicAttackState : BasicBaseState
             {
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
-                if (_penguin.CurrentTarget == null)
-                {
-                    _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
-                }
-
+                IsTargetNull(BasicPenguinStateEnum.Idle);
             }
         }
     }
 
     public override void Exit()
     {
-        _penguin.NavAgent.velocity = Vector3.one * .5f;
         _penguin.AnimatorCompo.speed = 1;
         base.Exit();
     }
