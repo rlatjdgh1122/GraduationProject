@@ -10,7 +10,7 @@ public class ShieldIdleState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
+        //_triggerCalled = true;
 
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;

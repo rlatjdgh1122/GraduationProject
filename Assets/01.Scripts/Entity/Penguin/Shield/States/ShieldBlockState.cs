@@ -13,6 +13,7 @@ public class ShieldBlockState : ShieldBaseState
     {
         base.Enter();
         _triggerCalled = true;
+        _penguin.WaitForCommandToArmyCalled = true;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
 
@@ -32,12 +33,11 @@ public class ShieldBlockState : ShieldBaseState
 
         if (IsArmyCalledIn_BattleMode())
         {
-            if (_triggerCalled)
-            {
+            if (!_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
-                //다죽였다면 이동
-                IsTargetNull(ShieldPenguinStateEnum.MustMove);
-            }
+
+            //다죽였다면 이동
+            IsTargetNull(ShieldPenguinStateEnum.MustMove);
         }
 
         if (IsArmyCalledIn_CommandMode())
@@ -62,8 +62,7 @@ public class ShieldBlockState : ShieldBaseState
 
     private void ImpactShield()
     {
-        if (!_penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Command)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Impact);
+        _stateMachine.ChangeState(ShieldPenguinStateEnum.Impact);
     }
 
     public override void Exit()
