@@ -247,10 +247,7 @@ public class Penguin : Entity
 
     public void SetTarget(Vector3 mousePos)
     {
-        if (NavAgent.isActiveAndEnabled)
-        {
-            MoveToPosition(mousePos);
-        }
+        MoveToPosition(mousePos);
     }
 
     public Vector3 GetSeatPosition() => MousePos + SeatPos;

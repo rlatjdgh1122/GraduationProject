@@ -20,6 +20,10 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     [SerializeField] private UnityEvent OnAnimationEndTriggerEvent = null;
 
+
+    [SerializeField] private UnityEvent OnEffectOnTriggerEvent = null;
+    [SerializeField] private UnityEvent OnEffectOffTriggerEvent = null;
+
     private void Awake()
     {
         _penguin = transform.parent.GetComponent<Penguin>();
@@ -98,6 +102,17 @@ public class PenguinAnimationTrigger : MonoBehaviour
     {
         _penguin.AnimationTrigger();
         OnAttackTriggerEvent?.Invoke();
+    }
 
+    public void EffectStartTrigger()
+    {
+        Debug.Log("On");
+        OnEffectOnTriggerEvent?.Invoke();
+    }
+
+    public void EffectEndTrigger()
+    {
+        Debug.Log("Off");
+        OnEffectOffTriggerEvent?.Invoke();
     }
 }
