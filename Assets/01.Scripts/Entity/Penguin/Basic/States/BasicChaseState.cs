@@ -14,11 +14,7 @@ public class BasicChaseState : BasicBaseState
         base.Enter();
         _triggerCalled = true;
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-        {
-            _penguin.ArmyTriggerCalled = false;
-            _penguin.WaitForCommandToArmyCalled = false;
-        }
+        ChaseEnter();
         _penguin.FindFirstNearestEnemy();
     }
 
@@ -27,34 +23,21 @@ public class BasicChaseState : BasicBaseState
         base.UpdateState();
 
         // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
-        if (_penguin.MoveFocusMode == MovefocusMode.Command)
+
+        if (IsArmyCalledIn_CommandMode())
         {
-            if (_penguin.ArmyTriggerCalled)
-            {
-                _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
-            }
-            else
-            {
-                if (_penguin.CurrentTarget != null)
-                    _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
-
-                if (_penguin.IsInnerMeleeRange)
-                    _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
-
-                if (_penguin.CurrentTarget == null)
-                    _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
-            }
+            _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
         }
-        else
+
+        //else
         {
             if (_penguin.CurrentTarget != null)
-                _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
+                _penguin.MoveToCurrentTarget();
 
             if (_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
 
-            if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            IsTargetNull(BasicPenguinStateEnum.Idle);
         }
 
     }

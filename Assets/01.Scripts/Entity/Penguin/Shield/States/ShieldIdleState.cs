@@ -9,8 +9,13 @@ public class ShieldIdleState : ShieldBaseState
     {
         base.Enter();
         _triggerCalled = true;
+
+        _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
+
+        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+            _penguin.NavAgent.ResetPath();
     }
 
     public override void UpdateState()

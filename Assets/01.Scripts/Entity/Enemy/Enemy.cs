@@ -21,18 +21,18 @@ public class Enemy : Entity
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
 
-    public Penguin CurrentTarget;
+    //public Penguin CurrentTarget;
     public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
     public bool IsMove = false;
-    public bool IsDead = false;
+    //public bool IsDead = false;
     public bool IsProvoked = false;
 
     public bool IsTargetPlayerInside => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.transform.position) <= innerDistance;
-    public bool CanAttack => CurrentTarget != null && 
+    public bool CanAttack => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
-    public bool IsReachedNexus => 
+    public bool IsReachedNexus =>
                             Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
 
     protected override void Awake()
@@ -53,7 +53,7 @@ public class Enemy : Entity
         WaveManager.Instance.OnIceArrivedEvent -= SetTarget;
     }
 
-    private void SetTarget()
+    public void SetTarget()
     {
         CurrentTarget = FindNearestPenguin<Penguin>();
     }
@@ -65,7 +65,7 @@ public class Enemy : Entity
 
     public virtual void AnimationTrigger()
     {
-        
+
     }
 
     public T FindNearestPenguin<T>() where T : Penguin //OnProvoked bool�� ����
@@ -81,6 +81,7 @@ public class Enemy : Entity
 
         return default;
     }
+
 
     public void MoveToNexus()
     {

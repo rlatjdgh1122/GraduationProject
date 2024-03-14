@@ -19,7 +19,7 @@ public class EnemyWolfProvokedState : EnemyWolfBaseState
         _enemy.OnProvokedEvent?.Invoke();
 
         if (_enemy.CurrentTarget != null)
-            _enemy.SetTarget(_enemy.CurrentTarget.transform.position);
+            _enemy.MoveToCurrentTarget();
         else
             _stateMachine.ChangeState(EnemyWolfStateEnum.Chase);
 
