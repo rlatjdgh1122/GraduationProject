@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 public class ShieldStunState : ShieldBaseState
 {
 
-    public ShieldStunState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum,Penguin> stateMachine, string animationBoolName)
+    public ShieldStunState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -22,6 +22,23 @@ public class ShieldStunState : ShieldBaseState
     {
         base.UpdateState();
         _penguin.LookTarget();
+
+        if (IsArmyCalledIn_BattleMode())
+        {
+            if (_triggerCalled)
+            {
+                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+                //다죽였다면 이동
+                IsTargetNull(ShieldPenguinStateEnum.MustMove);
+            }
+        }
+        if (IsArmyCalledIn_CommandMode())
+        {
+            if (_penguin.WaitForCommandToArmyCalled)
+            {
+                _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
+            }
+        }
 
         if (_triggerCalled)
         {

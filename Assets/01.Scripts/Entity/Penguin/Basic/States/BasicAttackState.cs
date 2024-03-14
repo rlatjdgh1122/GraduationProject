@@ -56,7 +56,6 @@ public class BasicAttackState : BasicBaseState
 
     public override void Exit()
     {
-        _penguin.StartImmediately();
         _penguin.AnimatorCompo.speed = 1;
         base.Exit();
     }
