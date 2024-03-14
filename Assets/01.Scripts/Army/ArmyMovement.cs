@@ -118,7 +118,6 @@ public class ArmyMovement : MonoBehaviour
                 if (item.WaitForCommandToArmyCalled)
                 {
                     check = true;
-                    Debug.Log($"{item} : {item.WaitForCommandToArmyCalled}");
                     SetSoldierMovePosition(mousePos, item);
                 }
                 else

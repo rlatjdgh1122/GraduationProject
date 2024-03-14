@@ -16,7 +16,7 @@ public class ShieldMoveState : ShieldBaseState
         _triggerCalled = true;
         _penguin.SuccessfulToArmyCalled = false;
 
-        AfterAttackToMoving();
+        MoveEnter();
     }
 
     public override void UpdateState()
@@ -28,7 +28,6 @@ public class ShieldMoveState : ShieldBaseState
 
         if (_penguin.IsInnerTargetRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
-
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
     }
 

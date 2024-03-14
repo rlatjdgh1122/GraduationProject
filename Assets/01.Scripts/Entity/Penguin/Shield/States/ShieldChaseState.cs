@@ -28,7 +28,7 @@ public class ShieldChaseState : ShieldBaseState
         }
 
         if (_penguin.CurrentTarget != null)
-            _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
+            _penguin.MoveToCurrentTarget();
 
         if (_penguin.IsInnerMeleeRange)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
