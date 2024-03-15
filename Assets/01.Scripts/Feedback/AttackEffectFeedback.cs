@@ -8,15 +8,18 @@ public class AttackEffectFeedback : Feedback
 
     protected override void Start()
     {
-        effectObj?.SetActive(false);
+        effectObj.gameObject.SetActive(false);
     }
     public override void CreateFeedback()
     {
-        effectObj?.SetActive(true);
+        if(!effectObj.activeInHierarchy)
+        {
+            effectObj.gameObject.SetActive(true);
+        }
     }
 
     public override void FinishFeedback()
     {
-        effectObj?.SetActive(false);
+        effectObj.gameObject.SetActive(false);
     }
 }

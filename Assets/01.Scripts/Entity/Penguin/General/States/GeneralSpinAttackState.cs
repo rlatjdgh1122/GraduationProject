@@ -12,6 +12,7 @@ public class GeneralSpinAttackState : GeneralBaseState
     {
         base.Enter();
         _triggerCalled = true;
+
     }
 
     public override void UpdateState()

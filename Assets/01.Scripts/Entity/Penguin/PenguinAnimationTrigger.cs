@@ -20,6 +20,10 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     [SerializeField] private UnityEvent OnAnimationEndTriggerEvent = null;
 
+
+    [SerializeField] private UnityEvent OnEffectOnTriggerEvent = null;
+    [SerializeField] private UnityEvent OnEffectOffTriggerEvent = null;
+
     private void Awake()
     {
         _penguin = transform.parent.GetComponent<Penguin>();
@@ -41,7 +45,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// <param name="AfewTimes"> Ω∫≈»¿« ∏Ó πË</param>
     public void SpecialAttackTrigger(float AfewTimes)
     {
-        _penguin.AttackCompo.SpecialAttack(AfewTimes);
+        _penguin.AttackCompo?.SpecialAttack(AfewTimes);
         OnSpecialAttackTriggerEvent?.Invoke();
     }
 
@@ -98,6 +102,15 @@ public class PenguinAnimationTrigger : MonoBehaviour
     {
         _penguin.AnimationTrigger();
         OnAttackTriggerEvent?.Invoke();
+    }
 
+    public void EffectStartTrigger()
+    {
+        OnEffectOnTriggerEvent?.Invoke();
+    }
+
+    public void EffectEndTrigger()
+    {
+        OnEffectOffTriggerEvent?.Invoke();
     }
 }
