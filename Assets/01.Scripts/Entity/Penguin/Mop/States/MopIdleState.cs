@@ -1,6 +1,6 @@
 public class MopIdleState : MopBaseState
 {
-    public MopIdleState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
+    public MopIdleState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
     }
@@ -8,9 +8,15 @@ public class MopIdleState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
+
+        //_triggerCalled = true;
+
+        _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
+
+        //if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+        _penguin.NavAgent.ResetPath();
     }
 
     public override void UpdateState()

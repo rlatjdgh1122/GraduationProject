@@ -13,7 +13,11 @@ public class MopMoveState : MopBaseState
     public override void Enter()
     {
         base.Enter();
+
         _triggerCalled = true;
+        _penguin.SuccessfulToArmyCalled = false;
+
+        MoveEnter();
     }
 
     public override void UpdateState()
@@ -23,7 +27,8 @@ public class MopMoveState : MopBaseState
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
 
-        if (_penguin.IsInnerTargetRange)
+        if (_penguin.IsInnerTargetRange
+             && _penguin.MoveFocusMode == MovefocusMode.Battle)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
     }
 
