@@ -30,7 +30,7 @@ public class PhaseChangeButton : MonoBehaviour
         _button.onClick.AddListener(() => ChangePhase());
     }
 
-    private void ChangePhase()
+    public void ChangePhase()
     {
         WaveManager.Instance.BattlePhaseStartEventHandler();
         OnOffButton();
