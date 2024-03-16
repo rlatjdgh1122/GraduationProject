@@ -11,7 +11,7 @@ public enum ArcherTowerPenguinStateEnum
 }
 
 
-public class ArcherTowerPenguin : Penguin
+public class ArcherTowerPenguin : Penguin  
 {
     public EntityStateMachine <ArcherTowerPenguinStateEnum, Penguin> StateMachine { get; private set; }
 

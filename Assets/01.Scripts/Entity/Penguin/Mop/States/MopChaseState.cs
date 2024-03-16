@@ -12,6 +12,8 @@ public class MopChaseState : MopBaseState
     {
         base.Enter();
         _triggerCalled = true;
+
+        ChaseEnter();
         _penguin.FindFirstNearestEnemy();
     }
 
@@ -19,14 +21,23 @@ public class MopChaseState : MopBaseState
     {
         base.UpdateState();
 
-        if (_penguin.CurrentTarget != null)
-            _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
+        // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
 
-        if (_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(MopPenguinStateEnum.Attack);
+        if (IsArmyCalledIn_CommandMode())
+        {
+            _stateMachine.ChangeState(MopPenguinStateEnum.MustMove);
+        }
 
-        if (_penguin.CurrentTarget == null)
-            _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
+        //else
+        {
+            if (_penguin.CurrentTarget != null)
+                _penguin.MoveToCurrentTarget();
+
+            if (_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(MopPenguinStateEnum.Attack);
+
+            IsTargetNull(MopPenguinStateEnum.Idle);
+        }
     }
 
     public override void Exit()

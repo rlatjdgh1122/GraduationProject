@@ -1082,33 +1082,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 02f0f4bf281ab6d408968c5a17a61d56, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
   innerDistance: 7
   attackDistance: 1.2
-  ArmyTriggerCalled: 0
-  WaitForCommandToArmyCalled: 1
-  SuccessfulToArmyCalled: 0
-  MoveFocusMode: 0
   moveSpeed: 4
   attackSpeed: 1
   maxDetectedCount: 3
   provokeRange: 25
   passiveData: {fileID: 11400000, guid: 12baf0d3bce42c3439b2983478774eaf, type: 2}
-  CurrentTarget: {fileID: 0}
-  IsDead: 0
-  owner:
-    Legion: 0
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    AsrmyParentObj: {fileID: 0}
-    Info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
+  ArmyTriggerCalled: 0
+  WaitForCommandToArmyCalled: 1
+  SuccessfulToArmyCalled: 0
 --- !u!114 &6242188954284128527
 MonoBehaviour:
   m_ObjectHideFlags: 0

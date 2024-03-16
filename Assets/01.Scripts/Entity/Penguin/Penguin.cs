@@ -11,6 +11,8 @@ public class Penguin : Entity
     public int maxDetectedCount;
     public float provokeRange = 25f;
 
+    public bool isBot = false; //봇으로 만들거임
+
     public PassiveDataSO passiveData = null;
 
     #region 군단 포지션 관련
@@ -81,12 +83,14 @@ public class Penguin : Entity
 
     private void OnEnable()
     {
-        WaveManager.Instance.OnIceArrivedEvent += FindFirstNearestEnemy;
+        if (!isBot)
+            WaveManager.Instance.OnIceArrivedEvent += FindFirstNearestEnemy;
     }
 
     private void OnDisable()
     {
-        WaveManager.Instance.OnIceArrivedEvent -= FindFirstNearestEnemy;
+        if (!isBot)
+            WaveManager.Instance.OnIceArrivedEvent -= FindFirstNearestEnemy;
     }
 
     protected override void Awake()
@@ -257,7 +261,9 @@ public class Penguin : Entity
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)
+        {
             NavAgent.SetDestination(pos);
+        }
     }
     #endregion
 
