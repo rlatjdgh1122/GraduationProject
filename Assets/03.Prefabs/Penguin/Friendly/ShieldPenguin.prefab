@@ -623,6 +623,12 @@ MonoBehaviour:
   OnAnimationEndTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnEffectOnTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOffTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2052089806965032453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,6 +1096,7 @@ MonoBehaviour:
   attackSpeed: 1
   maxDetectedCount: 3
   provokeRange: 25
+  isBot: 0
   passiveData: {fileID: 11400000, guid: 12baf0d3bce42c3439b2983478774eaf, type: 2}
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
@@ -1231,7 +1238,7 @@ NavMeshAgent:
   m_AngularSpeed: 2500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.33
   m_BaseOffset: -0

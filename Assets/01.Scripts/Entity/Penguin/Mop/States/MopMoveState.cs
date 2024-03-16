@@ -24,8 +24,12 @@ public class MopMoveState : MopBaseState
     {
         base.UpdateState();
 
+        Debug.Log("Move Update: " + _penguin.NavAgent.velocity.magnitude);
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
+        {
+            Debug.Log("Move : º¯°æ");
             _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
+        }
 
         if (_penguin.IsInnerTargetRange
              && _penguin.MoveFocusMode == MovefocusMode.Battle)

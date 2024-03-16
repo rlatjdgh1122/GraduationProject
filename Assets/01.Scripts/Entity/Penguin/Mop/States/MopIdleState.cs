@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class MopIdleState : MopBaseState
 {
     public MopIdleState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animBoolName)
@@ -15,16 +17,20 @@ public class MopIdleState : MopBaseState
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
 
-        //if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-        _penguin.NavAgent.ResetPath();
+        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+            _penguin.NavAgent.ResetPath();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
+        Debug.Log("Idle : " + _penguin.NavAgent.velocity.magnitude);
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
+        {
+            Debug.Log("Idle : º¯°æ");
             _stateMachine.ChangeState(MopPenguinStateEnum.Move);
+        }
 
         if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);

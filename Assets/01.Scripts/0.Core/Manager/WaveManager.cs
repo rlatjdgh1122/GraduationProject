@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-public class WaveManager : Singleton<WaveManager>
+public class WaveManager : Singleton<WaveManager>  
 {
     #region 타이머 변수
     [Header("Timer Settings")]
