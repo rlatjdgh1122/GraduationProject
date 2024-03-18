@@ -981,16 +981,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 653e880614eb72b4eaea6216831949d7, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
   innerDistance: 4
   attackDistance: 1.5
-  ArmyTriggerCalled: 0
-  WaitTrueAnimEndTrigger: 1
-  SuccessfulToSeatMyPostion: 0
-  BattleMode: 0
   Target: {fileID: 0}
   WorkerHomeTrm: {fileID: 0}
   CanWork: 0
   EndWork: 0
+  WorkerStateCheck: 0
 --- !u!114 &5446503461122516532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,6 +1020,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStunEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:

@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 {
     public GeneralStat generalStat;
+    public Penguin generalObj;
 
     [SerializeField] private Color _outlineColor;
 
