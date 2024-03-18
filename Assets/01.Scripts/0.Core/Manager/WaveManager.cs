@@ -138,7 +138,7 @@ public class WaveManager : Singleton<WaveManager>
 
         if (IsBattlePhase)
         {
-            if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
+            if (maxEnemyCnt <= 0)
                 GetReward();
 
             //if (IsArrived)
@@ -163,9 +163,9 @@ public class WaveManager : Singleton<WaveManager>
     {
         StartTimer(); //타이머를 시작
 
-        IsBattlePhase = true;
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
         _waveCntText.SetText($"{CurrentWaveCount} 웨이브");
+        IsBattlePhase = true;
     }
 
     private void OnBattlePhaseEndHandle() // 전투페이즈 종료
