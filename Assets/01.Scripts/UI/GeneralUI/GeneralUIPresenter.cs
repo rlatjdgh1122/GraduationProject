@@ -47,6 +47,8 @@ public class GeneralUIPresenter : PopupUI
         {
             PurchaseGeneral();
 
+            LegionInventory.Instance.AddPenguin(general);
+
             currentCost -= currentGeneralStat.PenguinData.price;
             _currentView.SetUpgradeUI(currentGeneralStat);
         }
