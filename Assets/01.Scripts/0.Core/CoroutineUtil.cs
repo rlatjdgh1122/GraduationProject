@@ -13,12 +13,12 @@ public static class CoroutineUtil
         _coroutineExecutor = _coroutineObj.AddComponent<CoroutineExecutor>();
     }
 
-    public static void CallWaitForOneFrame(Action action)
+    public static void CallWaitForOneFrame(Action action) //1프레임 뒤에 실행
     {
         _coroutineExecutor.StartCoroutine(DoCallWaitForOneFrame(action));
     }
 
-    public static void CallWaitForSeconds(float seconds, Action beforeAction = null, Action afterAction = null)
+    public static void CallWaitForSeconds(float seconds, Action beforeAction = null, Action afterAction = null) //n초 뒤에 실행
     {
         _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, beforeAction, afterAction));
     }
