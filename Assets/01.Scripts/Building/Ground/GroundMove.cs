@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -54,6 +55,8 @@ public class GroundMove : MonoBehaviour
                 enemy.enabled = true;
             }
 
+            //ºùÇÏ ¿Ã ¶§ ÀÌÆåÆ®
+
             transform.DOMove(new Vector3(_moveDir.x, transform.position.y, _moveDir.z), _moveDuration).
                 OnComplete(() =>
                 {
@@ -61,9 +64,14 @@ public class GroundMove : MonoBehaviour
                     _surface.transform.SetParent(_parentSurface.transform);
                     _parentSurface.BuildNavMesh();
 
+                    // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
+                    CoroutineUtil.CallWaitForSeconds(0.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
+                                                         () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+
                     DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
                     {
                         WaveManager.Instance.OnIceArrivedEventHanlder();
+
                         foreach (Enemy enemy in _enemies)
                         {
                             enemy.IsMove = true;
@@ -83,4 +91,5 @@ public class GroundMove : MonoBehaviour
             WaveManager.Instance.OnBattlePhaseEndEvent -= GroundMoveHandle;
         });
     }
+
 }

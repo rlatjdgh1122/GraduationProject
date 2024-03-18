@@ -1,3 +1,6 @@
+using Cinemachine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +12,31 @@ namespace Define
     {
         public static class Cam
         {
-            public static Camera MainCam => Camera.main;
+            public static Camera _mainCam;
+            public static Camera MainCam
+            {
+                get
+                {
+                    if (_mainCam == null)
+                    {
+                        _mainCam = Camera.main;
+                    }
+                    return _mainCam;
+                }
+            }
+
+            private static CinemachineVirtualCamera _shakeCam;
+            public static CinemachineVirtualCamera ShakeCam
+            {
+                get
+                {
+                    if (_shakeCam == null)
+                    {
+                        _shakeCam = MainCam.transform.Find("ShakeCam").GetComponent<CinemachineVirtualCamera>();
+                    }
+                    return _shakeCam;
+                }
+            }
         }
     }
 
