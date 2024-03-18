@@ -1,17 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BasicFreelyMoveState : BasicBaseState
+public class ShieldFreelyMoveState : ShieldBaseState
 {
-    private float time = 0.0f;
+    private float time;
     private float randomMoveTime;
     private float normalNavSpeed;
 
-    public BasicFreelyMoveState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public ShieldFreelyMoveState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 
@@ -36,14 +34,14 @@ public class BasicFreelyMoveState : BasicBaseState
         {
             _penguin.NavAgent.speed = normalNavSpeed;
             _penguin.SetFreelyMoveAble(false);
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Move);
         }
 
         time += Time.deltaTime;
-        if(time >= randomMoveTime ||
+        if (time >= randomMoveTime ||
            _penguin.NavAgent.velocity.magnitude < 0.05f)
         {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
         }
     }
 

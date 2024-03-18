@@ -12,6 +12,8 @@ public class ShieldIdleState : ShieldBaseState
         base.Enter();
         //_triggerCalled = true;
 
+        if(_penguin.IsFreelyMove) { return; }
+
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
@@ -29,6 +31,11 @@ public class ShieldIdleState : ShieldBaseState
 
         if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+
+        if (_penguin.IsFreelyMove)
+        {
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.FreelyMove);
+        }
     }
 
     public override void Exit()
