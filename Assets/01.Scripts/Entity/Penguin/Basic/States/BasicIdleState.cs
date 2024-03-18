@@ -12,9 +12,11 @@ public class BasicIdleState : BasicBaseState
         if (_penguin.IsFreelyMove) { return; }
 
         _penguin.ArmyTriggerCalled = false;
-        _penguin.SuccessfulToSeatMyPostion = true;
-        _penguin.WaitTrueAnimEndTrigger = true;
-        _penguin.NavAgent.ResetPath();
+        _penguin.SuccessfulToArmyCalled = true;
+        _penguin.WaitForCommandToArmyCalled = true;
+
+        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+            _penguin.NavAgent.ResetPath();
     }
 
     public override void UpdateState()
@@ -25,8 +27,7 @@ public class BasicIdleState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
 
         //적사거리가 들어오고 /*-군사들이 위치로 이동했다면-*/ 주석
-        if (_penguin.IsInnerTargetRange
-          /*  && _penguin.Owner.IsCanReadyAttackInCurArmySoldiersList*/)
+        if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
         if (_penguin.IsFreelyMove)

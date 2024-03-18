@@ -16,7 +16,7 @@ public class ArmyManager : Singleton<ArmyManager>
     private MovefocusMode curFocusMode = MovefocusMode.Command;
     public MovefocusMode CurFocusMode => curFocusMode;
 
-    private int curArmyIdx = -1;
+    private int curArmyIdx = 0;
     public int CurLegion => curArmyIdx + 1;
 
     public int ArmiesCount => armies.Count;
@@ -31,7 +31,8 @@ public class ArmyManager : Singleton<ArmyManager>
 
         CreateArmy();
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
-        ChangeArmy(1);
+        //SignalHub.OnArmyChanged?.Invoke(armies[0], armies[0]);
+        //ChangeArmy(1);
         KeySetting();
     }
     private void KeySetting()
@@ -49,7 +50,7 @@ public class ArmyManager : Singleton<ArmyManager>
              {KeyCode.Alpha9, ()=> ChangeArmy(9) },
              {KeyCode.A,      ()=>
              {
-                 curFocusMode = curFocusMode == MovefocusMode.Command ? 
+                 curFocusMode = curFocusMode == MovefocusMode.Command ?
                  MovefocusMode.Battle :  MovefocusMode.Command;
              SignalHub.OnBattleModeChanged?.Invoke(curFocusMode); }
             },
@@ -76,10 +77,11 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <returns> Army를 리던</returns>
     public Army GetCurArmy() //현재 army 리턴
     {
-        return armies[curArmyIdx];
+        var idx = curArmyIdx < 0 ? 0 : curArmyIdx;
+        return armies[idx];
     }
 
-    public Army GetArmy(int legion) //현재 army 리턴
+    public Army GetArmy(int legion)
     {
         return armies[legion - 1];
     }
@@ -230,7 +232,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var prefab = soldierTypeDictionary[type];
 
         obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
-        //obj.gameObject.SetActive(false);
+        obj.gameObject.SetActive(false);
         obj.transform.position = SpawnPoint;
         obj.SeatPos = seatPos;
         return obj;

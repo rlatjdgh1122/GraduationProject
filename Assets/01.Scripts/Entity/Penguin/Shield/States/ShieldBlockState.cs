@@ -1,6 +1,8 @@
+using Unity.VisualScripting;
+
 public class ShieldBlockState : ShieldBaseState
 {
-    public ShieldBlockState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
+    public ShieldBlockState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
     }
@@ -11,6 +13,7 @@ public class ShieldBlockState : ShieldBaseState
     {
         base.Enter();
         _triggerCalled = true;
+        _penguin.WaitForCommandToArmyCalled = true;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
 
@@ -28,13 +31,29 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.LookTarget();
 
+        if (IsArmyCalledIn_BattleMode())
+        {
+            if (!_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+
+            //다죽였다면 이동
+            IsTargetNull(ShieldPenguinStateEnum.MustMove);
+        }
+
+        if (IsArmyCalledIn_CommandMode())
+        {
+            if (_penguin.WaitForCommandToArmyCalled)
+            {
+                _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
+            }
+        }
+
         if (!_penguin.IsInnerMeleeRange)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
 
-        if (_penguin.CurrentTarget == null)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
+        IsTargetNull(ShieldPenguinStateEnum.Idle);
 
-        if(StunAtk > 0 && _penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth,_penguin.HealthCompo.currentHealth))
+        if (StunAtk > 0 && _penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
         {
             _penguin?.OnPassiveStunEvent();
             StunAtk--;

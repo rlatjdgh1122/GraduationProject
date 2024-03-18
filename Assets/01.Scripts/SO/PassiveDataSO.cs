@@ -89,8 +89,6 @@ public class PassiveDataSO : ScriptableObject
     /// <returns> °á°ú</returns>
     public bool CheckAttackEventPassive(int curAttackCount)
     {
-
-        Debug.Log(IsAttackEvent);
         if (IsAttackEvent == false)
             return false;
 

@@ -26,8 +26,6 @@ public class DefaultBuilding : BaseBuilding
     protected Outline _outline;
 
     private ConstructionStation _constructionStation;
-    private PenguinSpawner _penguinSpawner;
-
 
     protected virtual void Start()
     {
@@ -41,7 +39,6 @@ public class DefaultBuilding : BaseBuilding
         base.Awake();
         _outline = GetComponent<Outline>();
 
-        _penguinSpawner = FindAnyObjectByType<PenguinSpawner>().GetComponent<PenguinSpawner>();
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
 
         WaveManager.Instance.OnBattlePhaseStartEvent += DisableAllUI;

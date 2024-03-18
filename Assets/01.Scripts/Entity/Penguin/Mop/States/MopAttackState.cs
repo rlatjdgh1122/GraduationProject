@@ -2,7 +2,7 @@ public class MopAttackState : MopBaseState
 {
 
     private int curAttackCount = 0;
-    public MopAttackState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
+    public MopAttackState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
     }
@@ -11,6 +11,7 @@ public class MopAttackState : MopBaseState
     {
         base.Enter();
         _triggerCalled = false;
+        _penguin.WaitForCommandToArmyCalled = false;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
@@ -26,12 +27,31 @@ public class MopAttackState : MopBaseState
         base.UpdateState();
         _penguin.LookTarget();
 
-        if (_triggerCalled)
+        if (IsArmyCalledIn_BattleMode())
         {
-            _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+            if (_triggerCalled)
+            {
+                _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+                //다죽였다면 이동
+                IsTargetNull(MopPenguinStateEnum.MustMove);
+            }
+        }
 
-            if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
+        if (IsArmyCalledIn_CommandMode())
+        {
+            if (_penguin.WaitForCommandToArmyCalled)
+            {
+                _stateMachine.ChangeState(MopPenguinStateEnum.MustMove);
+            }
+        }
+        else
+        {
+            if (_triggerCalled) //공격
+            {
+                _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+
+                IsTargetNull(MopPenguinStateEnum.Idle);
+            }
         }
     }
 

@@ -13,8 +13,8 @@ public class BasicChaseState : BasicBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _penguin.ArmyTriggerCalled = false;
 
+        ChaseEnter();
         _penguin.FindFirstNearestEnemy();
     }
 
@@ -23,22 +23,21 @@ public class BasicChaseState : BasicBaseState
         base.UpdateState();
 
         // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
-        if (_penguin.ArmyTriggerCalled
-            && _penguin.CurFocusMode == MovefocusMode.Command)
+
+        if (IsArmyCalledIn_CommandMode())
         {
-            //_penguin.SetTarget(_penguin.GetSeatPosition());
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
+            _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
         }
-        else
+
+        //else
         {
             if (_penguin.CurrentTarget != null)
-                _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
+                _penguin.MoveToCurrentTarget();
 
             if (_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
 
-            if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            IsTargetNull(BasicPenguinStateEnum.Idle);
         }
 
     }

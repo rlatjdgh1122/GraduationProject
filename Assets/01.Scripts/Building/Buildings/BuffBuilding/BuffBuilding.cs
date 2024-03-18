@@ -91,7 +91,6 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     {
         // 범위 안에 들어오면 각각 버프이벤트 구독
         BuffEvent();
-        Debug.Log("안에들어왔다");
     }
 
     protected virtual void OnPenguinInsideRangeStay()
@@ -102,8 +101,6 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     protected virtual void OnPenguinInsideRangeExit()
     {
         CommenceBuffDecay();
-
-        Debug.Log("나갔다");
     }
 
     protected bool IsSameColliders(Collider[] colliders1, Collider[] colliders2)

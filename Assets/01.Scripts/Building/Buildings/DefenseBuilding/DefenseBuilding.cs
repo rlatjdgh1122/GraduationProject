@@ -62,7 +62,7 @@ public abstract class DefenseBuilding : BaseBuilding
                 {
                     ground.enabled = true;
                     ground.OutlineCompo.OutlineMode = Outline.Mode.OutlineVisible;
-                    ground.UpdateOutlineColor(GroundOutlineColorType.Red);
+                    ground.UpdateOutlineColor(OutlineColorType.Red);
                     ground.OutlineCompo.OutlineWidth = 10.0f;
                 }
             }
@@ -72,7 +72,7 @@ public abstract class DefenseBuilding : BaseBuilding
             _removedGrounds.ExceptWith(currentGrounds); //removedGrounds애서 currentGrounds에 있는 요소들을 제외 Linq의 Except보다 메모리소모가 적고 빠름.
             foreach (var ground in _removedGrounds)
             {
-                ground.UpdateOutlineColor(GroundOutlineColorType.None);
+                ground.UpdateOutlineColor(OutlineColorType.None);
             }
 
             _previousGrounds.UnionWith(currentGrounds);
@@ -85,7 +85,7 @@ public abstract class DefenseBuilding : BaseBuilding
 
         foreach (var g in _groundOutlines.Values)
         {
-            g.UpdateOutlineColor(GroundOutlineColorType.None);
+            g.UpdateOutlineColor(OutlineColorType.None);
         }
     }
 

@@ -5,6 +5,7 @@ public enum MopPenguinStateEnum
 {
     Idle,
     Move,
+    MustMove,
     Chase,
     Attack,
     AoEAttack,

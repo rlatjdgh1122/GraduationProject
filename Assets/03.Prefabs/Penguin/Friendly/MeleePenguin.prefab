@@ -787,32 +787,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
   innerDistance: 7
   attackDistance: 1.1
-  ArmyTriggerCalled: 0
-  WaitTrueAnimEndTrigger: 1
-  SuccessfulToSeatMyPostion: 0
-  BattleMode: 0
   moveSpeed: 4
   attackSpeed: 1.2
   maxDetectedCount: 1
   provokeRange: 25
-  CurrentTarget: {fileID: 0}
-  IsDead: 0
-  owner:
-    Legion: 0
-    IsCanReadyAttackInCurArmySoldiersList: 1
-    Soldiers: []
-    General: {fileID: 0}
-    AsrmyParentObj: {fileID: 0}
-    Info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
+  passiveData: {fileID: 0}
+  ArmyTriggerCalled: 0
+  WaitForCommandToArmyCalled: 1
+  SuccessfulToArmyCalled: 0
 --- !u!114 &6964161571943707159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,6 +843,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -954,7 +943,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.35
   m_Speed: 1
-  m_Acceleration: 15
+  m_Acceleration: 60
   avoidancePriority: 50
   m_AngularSpeed: 2500
   m_StoppingDistance: 0
@@ -1194,6 +1183,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAoEAttackTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStunTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
   OnRangeAttackTriggerEvent:

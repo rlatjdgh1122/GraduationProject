@@ -8,12 +8,13 @@ public class PhaseChangeButton : MonoBehaviour
 {
     private Button _button;
 
+    private bool isOn = false;
+
     private float moveXValue
     {
         get
         {
-            if (gameObject.rectTransform().anchoredPosition.x == 1.0) { return -1.0f; }
-            else if (gameObject.rectTransform().anchoredPosition.x < 300.0) { return 300.0f; }
+            if (isOn) { return 300.0f; }
             return -300.0f;
         }
     }
@@ -29,7 +30,7 @@ public class PhaseChangeButton : MonoBehaviour
         _button.onClick.AddListener(() => ChangePhase());
     }
 
-    private void ChangePhase()
+    public void ChangePhase()
     {
         WaveManager.Instance.BattlePhaseStartEventHandler();
         OnOffButton();
@@ -37,7 +38,7 @@ public class PhaseChangeButton : MonoBehaviour
 
     private void OnOffButton()
     {
-        Debug.Log("ÄÑÁö°Å³ª²¨Áü");
+        isOn = !isOn;
         gameObject.DOAnchorPos(gameObject.rectTransform().anchoredPosition + new Vector2(moveXValue, 0f), 0.5f).SetEase(Ease.InOutBack);
     }
 }

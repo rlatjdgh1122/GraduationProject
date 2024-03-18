@@ -8,7 +8,7 @@ public class ArmyMovement : MonoBehaviour
     private ParticleSystem ClickParticle;
     private Army curArmy = null;
 
-    public List<Entity> armySoldierList = new List<Entity>();
+    public List<Penguin> armySoldierList = new List<Penguin>();
 
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
@@ -75,6 +75,8 @@ public class ArmyMovement : MonoBehaviour
 
     private IEnumerator WaitForAllTrue_Corou(Vector3 mousePos)
     {
+        if (armySoldierList.Count <= 0)
+            yield break;
         isCanMove = false;
         successfulSeatMyPos = false;
 
@@ -83,7 +85,9 @@ public class ArmyMovement : MonoBehaviour
         foreach (var item in armySoldierList)
         {
             item.ArmyTriggerCalled = true;
-            item.CurFocusMode = CurFocusMode;
+            //item.MoveFocusMode = CurFocusMode;
+            item.MousePos = mousePos;
+
         }
 
         //��ΰ� ������ �� �ִ� �������� Ȯ���ϱ� ���� �ڷ�ƾ ������
@@ -111,10 +115,9 @@ public class ArmyMovement : MonoBehaviour
             foreach (var item in armySoldierList)
             {
                 //���� �ִϸ��̼��� �����ٸ� ������ �� ����
-                if (item.WaitTrueAnimEndTrigger)
+                if (item.WaitForCommandToArmyCalled)
                 {
                     check = true;
-                    //�������ֱ�
                     SetSoldierMovePosition(mousePos, item);
                 }
                 else
@@ -146,16 +149,16 @@ public class ArmyMovement : MonoBehaviour
         {
             Debug.Log("������ �ִ�2");
         }
-        while (!armySoldierList.TrueForAll(p => p.SuccessfulToSeatMyPostion))
+        while (!armySoldierList.TrueForAll(p => p.SuccessfulToArmyCalled))
         {
             yield return waitingByheartbeat;
         }
         successfulSeatMyPos = true;
     }
 
-    private void SetSoldierMovePosition(Vector3 mousePos, Entity entity)
+    private void SetSoldierMovePosition(Vector3 mousePos, Penguin penguin)
     {
-        entity.MoveToMySeat(mousePos);
+        penguin.MoveToMySeat(mousePos);
     }
 
     /// <summary>

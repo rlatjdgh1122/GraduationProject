@@ -16,6 +16,10 @@ public struct BuildingInfo
     public Grid GridCompo;
     [field: SerializeField]
     public Material TransparencyMat { get; private set; }
+    [field: SerializeField]
+    public Material GreenTransparencyMat { get; private set; }
+    [field: SerializeField]
+    public Material RedTransparencyMat { get; private set; }
 }
 
 //[RequireComponent(typeof(Health))]
@@ -56,11 +60,11 @@ public abstract class BaseBuilding : WorkableObject
     private bool isSelected;
     public bool IsSelected => isSelected;
 
-    private LayerMask _groundLayer = 1 << 19;
+    private LayerMask _groundLayer = 1 << 3;
 
     protected Ground InstalledGround()
     {
-        if (Physics.Raycast(Define.RayCast.RayCasts.MousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
             return hit.collider.GetComponent<Ground>();
         }
@@ -76,7 +80,7 @@ public abstract class BaseBuilding : WorkableObject
         }
         catch
         {
-            Debug.LogError($"Not Founded id: {gameObject}"); //빌딩이랑 Container는 이 오류가 뜨는게 맞다
+            Debug.LogError($"Not Founded id: {gameObject}"); 
         }
 
         try
@@ -115,6 +119,7 @@ public abstract class BaseBuilding : WorkableObject
     {
         if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
         {
+            MatChangeToTransparency(OutlineColorType.None);
             WorkerManager.Instance.SendWorkers(_buildingItemInfo.NecessaryResourceCount, this);
 
             WaveManager.Instance.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnWorkers(this);
@@ -151,30 +156,14 @@ public abstract class BaseBuilding : WorkableObject
 
     public virtual void SetSelect()
     {
-        for (int i = 0; i < _meshRenderers.Length; i++)
-        {
-            _meshRenderers[i].material = BuildingInfoCompo.TransparencyMat;
-        }
-
-        for (int i = 0; i < _skinRenderers.Length; i++)
-        {
-            _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
-        }
 
         isSelected = true;
     }
 
     protected virtual void SetInstalled()
     {
-        for (int i = 0; i < _meshRenderers.Length; i++)
-        {
-            _meshRenderers[i].material = _meshNormalMats[i];
-        }
+        MatChangeToNormal();
 
-        for (int i = 0; i < _skinRenderers.Length; i++)
-        {
-            _skinRenderers[i].material = _skinNormalMats[i];
-        }
         isInstalled = true;
         isInstalling = false;
 
@@ -201,5 +190,59 @@ public abstract class BaseBuilding : WorkableObject
     public virtual void StopInstall()
     {
         isSelected = false;
+    }
+
+    public void MatChangeToTransparency(OutlineColorType colorType)
+    {
+        if (colorType == OutlineColorType.Green)
+        {
+            for (int i = 0; i < _meshRenderers.Length; i++)
+            {
+                _meshRenderers[i].material = BuildingInfoCompo.GreenTransparencyMat;
+            }
+
+            for (int i = 0; i < _skinRenderers.Length; i++)
+            {
+                _skinRenderers[i].material = BuildingInfoCompo.GreenTransparencyMat;
+            }
+        }
+        else if (colorType == OutlineColorType.Red)
+        {
+            for (int i = 0; i < _meshRenderers.Length; i++)
+            {
+                _meshRenderers[i].material = BuildingInfoCompo.RedTransparencyMat;
+            }
+
+            for (int i = 0; i < _skinRenderers.Length; i++)
+            {
+                _skinRenderers[i].material = BuildingInfoCompo.RedTransparencyMat;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _meshRenderers.Length; i++)
+            {
+                _meshRenderers[i].material = BuildingInfoCompo.TransparencyMat;
+            }
+
+            for (int i = 0; i < _skinRenderers.Length; i++)
+            {
+                _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
+            }
+        }
+        
+    }
+
+    public void MatChangeToNormal()
+    {
+        for (int i = 0; i < _meshRenderers.Length; i++)
+        {
+            _meshRenderers[i].material = _meshNormalMats[i];
+        }
+
+        for (int i = 0; i < _skinRenderers.Length; i++)
+        {
+            _skinRenderers[i].material = _skinNormalMats[i];
+        }
     }
 }

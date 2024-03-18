@@ -12,15 +12,25 @@ public class BasicMustMoveState : BasicBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.MoveToTarget(_penguin.GetSeatPosition());
+        _penguin.StartImmediately();
+        _penguin.MoveToPosition(_penguin.GetSeatPosition());
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_penguin.NavAgent.velocity.magnitude < 0.05f)
+        if (_penguin.WaitForCommandToArmyCalled)
         {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            if (_penguin.NavAgent.velocity.magnitude < 0.05f)
+            {
+                _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
+            }
+        }
+
+        if (_penguin.IsInnerTargetRange
+             && _penguin.MoveFocusMode == MovefocusMode.Battle)
+        {
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
     }
 

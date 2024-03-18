@@ -920,11 +920,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7124704069954103808}
+  - component: {fileID: 7947959086102699607}
   - component: {fileID: 7922328068077974963}
   - component: {fileID: 3642781213715931106}
   - component: {fileID: 3496813715336790843}
   - component: {fileID: 2030206095074393266}
-  - component: {fileID: 7703168732025126060}
+  - component: {fileID: 8721236801684161815}
+  - component: {fileID: 6097800464092270967}
   m_Layer: 11
   m_Name: ArcherTowerPenguin
   m_TagString: Player
@@ -951,6 +953,32 @@ Transform:
   - {fileID: 3637569459674925838}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &7947959086102699607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671e8504ea113a246aaf5d2b3a376e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterStat: {fileID: 11400000, guid: 8df715c0c4adac647872ce3d5ae7c4aa, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
+  innerDistance: 4
+  attackDistance: 1.5
+  moveSpeed: 4.5
+  attackSpeed: 1
+  maxDetectedCount: 0
+  provokeRange: 25
+  isBot: 0
+  passiveData: {fileID: 0}
+  ArmyTriggerCalled: 0
+  WaitForCommandToArmyCalled: 1
+  SuccessfulToArmyCalled: 0
 --- !u!114 &7922328068077974963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1026,7 +1054,7 @@ MonoBehaviour:
   IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
---- !u!114 &7703168732025126060
+--- !u!114 &8721236801684161815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1035,31 +1063,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 4862602252113058120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671e8504ea113a246aaf5d2b3a376e25, type: 3}
+  m_Script: {fileID: 11500000, guid: a5d59ff96f7e14443b783782b3cde1a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterStat: {fileID: 11400000, guid: 8df715c0c4adac647872ce3d5ae7c4aa, type: 2}
-  innerDistance: 4
-  attackDistance: 1.5
-  moveSpeed: 4.5
-  attackSpeed: 1
-  maxDetectedCount: 0
-  provokeRange: 25
-  CurrentTarget: {fileID: 0}
-  IsDead: 0
-  owner:
-    Legion: 0
-    IsMoving: 0
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
+  maxHealth: 0
+  currentHealth: 0
+  OnHealedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OffUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!156049354 &6097800464092270967
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
 --- !u!1 &5002279329585421089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,6 +1310,9 @@ MonoBehaviour:
   OnAoEAttackTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnStunTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnRangeAttackTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1279,6 +1320,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOnTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOffTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &6585853243621938182

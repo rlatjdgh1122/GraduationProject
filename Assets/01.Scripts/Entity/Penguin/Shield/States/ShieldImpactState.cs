@@ -15,7 +15,7 @@ public class ShieldImpactState : ShieldBaseState
     {
         base.UpdateState();
 
-        if (_triggerCalled && !_penguin.IsDead)
+        if (_triggerCalled)
         {
             if (_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);

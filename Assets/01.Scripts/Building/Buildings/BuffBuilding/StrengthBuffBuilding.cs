@@ -61,10 +61,6 @@ public class StrengthBuffBuilding : BuffBuilding
 
             //임시수정
             _inRangePenguins[instanceID].AddStat(GetBuffValue(), StatType.Damage, StatMode.Increase); 
-
-            
-
-            Debug.Log($"{_inRangePenguins[instanceID].name}: increase");
         }
     }
 
@@ -99,7 +95,6 @@ public class StrengthBuffBuilding : BuffBuilding
 
                 buffEffect.StartPlay(OutoffRangeBuffDuration);
 
-                Debug.Log($"{_inRangePenguins[key].name}: decrease");
                 _inRangePenguins.Remove(key);
                 break;
             }
