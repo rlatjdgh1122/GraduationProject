@@ -44,21 +44,26 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler
         _priceText.text = _price.ToString();
     }
 
-    private void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
+    private void SpawnPenguinLeftEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
         _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
         _penguinStore.OnEnableBuyPanel();
+    }
+    private void SpawnPenguinRightEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
+    {
+        _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
+        _penguinStore.OneClickBuyPenguin();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if(Input.GetMouseButtonDown(0)) //마우스 왼쪽 버튼
         {
-            SpawnPenguinEventHandler();
+            SpawnPenguinLeftEventHandler();
         }
         if(Input.GetMouseButtonDown(1)) //마우스 오른쪽 버튼
         {
-            _penguinStore.OneClickBuyPenguin();
+            SpawnPenguinRightEventHandler();
         }
     }
 }
