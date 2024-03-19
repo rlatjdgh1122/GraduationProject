@@ -302,6 +302,6 @@ public class WaveManager : Singleton<WaveManager>
     public void CheckIsEndBattlePhase()
     {
         if (GameManager.Instance.GetCurrentEnemyCount() <= 0) { GetReward(); }
-        Debug.Log($"{ GameManager.Instance.GetCurrentEnemyCount()}!!!!!!!!!!!!!!!!!");
+        Debug.Log($"{ GameManager.Instance.GetCurrentEnemyCount()}");
     }
 }
