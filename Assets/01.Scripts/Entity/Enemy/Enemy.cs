@@ -116,7 +116,6 @@ public class Enemy : Entity
     private void FriendlyPenguinDeadHandler()
     {
         WaveManager.Instance.CheckIsEndBattlePhase();
-        Debug.Log("!!!!!!!!");
         SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
     }
 
