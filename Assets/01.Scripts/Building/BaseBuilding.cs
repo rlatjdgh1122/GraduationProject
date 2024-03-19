@@ -60,7 +60,7 @@ public abstract class BaseBuilding : WorkableObject
     private bool isSelected;
     public bool IsSelected => isSelected;
 
-    private LayerMask _groundLayer = 1 << 3;
+    protected LayerMask _groundLayer = 1 << 3;
 
     protected Ground InstalledGround()
     {
@@ -122,8 +122,8 @@ public abstract class BaseBuilding : WorkableObject
             MatChangeToTransparency(OutlineColorType.None);
             WorkerManager.Instance.SendWorkers(_buildingItemInfo.NecessaryResourceCount, this);
 
-            WaveManager.Instance.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnWorkers(this);
-            WaveManager.Instance.OnBattlePhaseEndEvent += PlusInstalledTime;
+            SignalHub.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnWorkers(this);
+            SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
             RemainTimeUI.OnRemainUI();
             RemainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
         }
@@ -144,7 +144,7 @@ public abstract class BaseBuilding : WorkableObject
 
         if (installedTime >= _buildingItemInfo.InstalledTime)
         {
-            WaveManager.Instance.OnBattlePhaseEndEvent -= PlusInstalledTime;
+            SignalHub.OnBattlePhaseEndEvent -= PlusInstalledTime;
             SetInstalled();
             RemainTimeUI.OffRemainUI();
         }
@@ -172,8 +172,8 @@ public abstract class BaseBuilding : WorkableObject
             UIManager.Instance.InitializHudTextSequence();
             _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
             UIManager.Instance.SpawnHudText(_installedFinText);
-            
-            WaveManager.Instance.OnBattlePhaseStartEvent -= () => WorkerManager.Instance.ReturnWorkers(this);
+
+            SignalHub.OnBattlePhaseStartEvent -= () => WorkerManager.Instance.ReturnWorkers(this);
         }
     }
 

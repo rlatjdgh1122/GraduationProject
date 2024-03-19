@@ -84,13 +84,13 @@ public class Penguin : Entity
     private void OnEnable()
     {
         if (!isBot)
-            WaveManager.Instance.OnIceArrivedEvent += FindFirstNearestEnemy;
+            SignalHub.OnIceArrivedEvent += FindFirstNearestEnemy;
     }
 
     private void OnDisable()
     {
         if (!isBot)
-            WaveManager.Instance.OnIceArrivedEvent -= FindFirstNearestEnemy;
+            SignalHub.OnIceArrivedEvent -= FindFirstNearestEnemy;
     }
 
     protected override void Awake()

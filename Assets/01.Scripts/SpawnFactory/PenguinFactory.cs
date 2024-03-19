@@ -37,14 +37,14 @@ public class PenguinFactory : EntityFactory<Penguin>
 
     private void OnEnable()
     {
-        WaveManager.Instance.OnIceArrivedEvent += ResetPTInfo;
-        WaveManager.Instance.OnBattlePhaseStartEvent += SetCurPTspawnPenguins;
+        SignalHub.OnIceArrivedEvent += ResetPTInfo;
+        SignalHub.OnBattlePhaseStartEvent += SetCurPTspawnPenguins;
     }
 
     public void OnDisable()
     {
-        WaveManager.Instance.OnIceArrivedEvent -= ResetPTInfo;
-        WaveManager.Instance.OnBattlePhaseStartEvent -= SetCurPTspawnPenguins;
+        SignalHub.OnIceArrivedEvent -= ResetPTInfo;
+        SignalHub.OnBattlePhaseStartEvent -= SetCurPTspawnPenguins;
     }
 
     private void ResetPTInfo()

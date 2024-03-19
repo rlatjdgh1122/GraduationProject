@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 public class WaveManager : Singleton<WaveManager>  
 {
@@ -44,7 +45,6 @@ public class WaveManager : Singleton<WaveManager>
     #region 사용 변수들
 
     [Header("Wave Settings")]
-    [SerializeField]
     private Transform _tentTrm;
 
 
@@ -65,11 +65,6 @@ public class WaveManager : Singleton<WaveManager>
     public bool IsBattlePhase = false;
     public bool IsArrived = false;
     public bool CanTimer = true;
-
-    public event Action OnBattlePhaseStartEvent = null;
-    public event Action OnBattlePhaseEndEvent = null;
-    public event Action OnIceArrivedEvent = null;
-
 
     public event Action OnDummyPenguinInitTentFinEvent = null;
 
@@ -111,6 +106,8 @@ public class WaveManager : Singleton<WaveManager>
         //}
         base.Awake();
 
+        _tentTrm = GameObject.Find("PenguinSpawner/Building").transform;
+
         BattlePhaseSubscribe();
     }
 
@@ -118,11 +115,11 @@ public class WaveManager : Singleton<WaveManager>
 
     public void BattlePhaseSubscribe()
     {
-        OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
-        OnBattlePhaseEndEvent += OnBattlePhaseEndHandle;     // 전투페이즈 종료 이벤트 
-        OnIceArrivedEvent += OnIceArrivedHandle;
-        OnBattlePhaseStartEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, 90.0f), 1f, Ease.InOutBack);
-        OnBattlePhaseEndEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, -90.0f), 1f, Ease.InOutBack);
+        SignalHub.OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
+        SignalHub.OnBattlePhaseEndEvent += OnBattlePhaseEndHandle;     // 전투페이즈 종료 이벤트 
+        SignalHub.OnIceArrivedEvent += OnIceArrivedHandle;
+        SignalHub.OnBattlePhaseStartEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, 90.0f), 1f, Ease.InOutBack);
+        SignalHub.OnBattlePhaseEndEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, -90.0f), 1f, Ease.InOutBack);
     }
 
     private void Start()
@@ -136,17 +133,16 @@ public class WaveManager : Singleton<WaveManager>
     {
         UpdateTimer(); // 타이머 업데이트
 
-        if (IsBattlePhase)
-        {
-            if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
-                GetReward();
+        //if (IsBattlePhase)
+        //{
+            
 
-            //if (IsArrived)
-            //{
-            //    if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
-            //        ShowDefeatUI();
-            //}
-        }
+        //    //if (IsArrived)
+        //    //{
+        //    //    if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
+        //    //        ShowDefeatUI();
+        //    //}
+        //}
 
         if (Input.GetKeyDown(KeyCode.U)) //디버그
         {
@@ -244,18 +240,18 @@ public class WaveManager : Singleton<WaveManager>
 
     public void BattlePhaseStartEventHandler() // 전투페이즈 시작 이벤트 실행용 함수
     {
-        OnBattlePhaseStartEvent?.Invoke();
+        SignalHub.OnBattlePhaseStartEvent?.Invoke();
     }
 
     public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
     {
         isWin = _isWin;
-        OnBattlePhaseEndEvent?.Invoke();
+        SignalHub.OnBattlePhaseEndEvent?.Invoke();
     }
 
     public void OnIceArrivedEventHanlder()
     {
-        OnIceArrivedEvent?.Invoke();
+        SignalHub.OnIceArrivedEvent?.Invoke();
     }
 
     public void SetCurPTSpawnPenguins(List<Penguin> penguins)
@@ -289,11 +285,23 @@ public class WaveManager : Singleton<WaveManager>
         OnDummyPenguinInitTentFinEvent?.Invoke();
     }
 
-    private void OnDestroy()
+    //private void OnDestroy()
+    //{
+    //    OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
+    //    OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
+    //    OnIceArrivedEvent -= OnIceArrivedEventHanlder;
+    //}
+
+    private void OnDisable()
     {
-        OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
-        OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
-        OnIceArrivedEvent -= OnIceArrivedEventHanlder;
+        SignalHub.OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
+        SignalHub.OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
+        SignalHub.OnIceArrivedEvent -= OnIceArrivedEventHanlder;
     }
 
+    public void CheckIsEndBattlePhase()
+    {
+        if (GameManager.Instance.GetCurrentEnemyCount() <= 0) { GetReward(); }
+        Debug.Log($"{ GameManager.Instance.GetCurrentEnemyCount()}!!!!!!!!!!!!!!!!!");
+    }
 }

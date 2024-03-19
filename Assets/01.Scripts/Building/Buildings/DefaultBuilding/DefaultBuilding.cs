@@ -41,7 +41,7 @@ public class DefaultBuilding : BaseBuilding
 
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
 
-        WaveManager.Instance.OnBattlePhaseStartEvent += DisableAllUI;
+        SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
     }
 
     private void OnMouseDown()

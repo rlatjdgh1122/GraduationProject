@@ -28,6 +28,11 @@ public class MoveModeTextUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        //SignalHub.OnBattleModeChanged -= OnBattleModeChangedHandler;
+    }
+
+    private void OnDisable()
+    {
         SignalHub.OnBattleModeChanged -= OnBattleModeChangedHandler;
     }
 }

@@ -183,6 +183,11 @@ public class ArmyMovement : MonoBehaviour
     private void OnDestroy()
     {
         _inputReader.RightClickEvent -= SetClickMovement;
+        //SignalHub.OnArmyChanged -= OnArmyChangedHandler;
+    }
+
+    private void OnDisable()
+    {
         SignalHub.OnArmyChanged -= OnArmyChangedHandler;
     }
 }

@@ -15,6 +15,7 @@ public class EnemyWolfDeadState : EnemyWolfBaseState
         _triggerCalled = true;
         _enemy.enabled = false;
         _enemy.NavAgent.enabled = false;
+        _enemy.DieEventHandler();
     }
 
     public override void UpdateState()

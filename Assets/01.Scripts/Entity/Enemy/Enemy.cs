@@ -41,16 +41,17 @@ public class Enemy : Entity
         NavAgent.speed = moveSpeed;
 
         AttackCompo = GetComponent<EntityAttackData>();
+        SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
     }
 
     private void OnEnable()
     {
-        WaveManager.Instance.OnIceArrivedEvent += SetTarget;
+        SignalHub.OnIceArrivedEvent += SetTarget;
     }
 
     private void OnDisable()
     {
-        WaveManager.Instance.OnIceArrivedEvent -= SetTarget;
+        SignalHub.OnIceArrivedEvent -= SetTarget;
     }
 
     public void SetTarget()
@@ -111,5 +112,17 @@ public class Enemy : Entity
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
+    }
+
+    private void FriendlyPenguinDeadHandler()
+    {
+        WaveManager.Instance.CheckIsEndBattlePhase();
+        Debug.Log("!!!!!!!!");
+        SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
+    }
+
+    public void DieEventHandler()
+    {
+        SignalHub.OnEnemyPenguinDead?.Invoke();
     }
 }
