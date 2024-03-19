@@ -25,10 +25,8 @@ public class MopIdleState : MopBaseState
     {
         base.UpdateState();
 
-        Debug.Log("Idle : " + _penguin.NavAgent.velocity.magnitude);
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
         {
-            Debug.Log("Idle : º¯°æ");
             _stateMachine.ChangeState(MopPenguinStateEnum.Move);
         }
 

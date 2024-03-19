@@ -9,13 +9,12 @@ public class MopMustMoveState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.StartImmediately();
+        //_penguin.StartImmediately();
         _penguin.MoveToPosition(_penguin.GetSeatPosition());
     }
-    public override void UpdateState()
+    public override void FixedUpdateState()
     {
-        base.UpdateState();
-
+        base.FixedUpdateState();
         if (_penguin.WaitForCommandToArmyCalled)
         {
             if (_penguin.NavAgent.velocity.magnitude < 0.05f)
@@ -23,6 +22,10 @@ public class MopMustMoveState : MopBaseState
                 _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
             }
         }
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
 
         if (_penguin.IsInnerTargetRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)

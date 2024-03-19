@@ -37,7 +37,11 @@ public class MeleePenguin : Penguin
     {
         StateMachine.Init(BasicPenguinStateEnum.Idle);
     }
+    private void FixedUpdate()
+    {
+        StateMachine.CurrentState.FixedUpdateState();
 
+    }
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();

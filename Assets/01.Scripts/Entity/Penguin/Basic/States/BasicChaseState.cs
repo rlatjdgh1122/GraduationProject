@@ -18,28 +18,30 @@ public class BasicChaseState : BasicBaseState
         _penguin.FindFirstNearestEnemy();
     }
 
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+        if (IsArmyCalledIn_CommandMode())
+        {
+            _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
+        }
+
+        if (_penguin.CurrentTarget != null)
+            _penguin.MoveToCurrentTarget();
+
+        if (_penguin.IsInnerMeleeRange)
+            _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
+
+        IsTargetNull(BasicPenguinStateEnum.Idle);
+    }
+
     public override void UpdateState()
     {
         base.UpdateState();
 
         // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
 
-        if (IsArmyCalledIn_CommandMode())
-        {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
-        }
-
-        //else
-        {
-            if (_penguin.CurrentTarget != null)
-                _penguin.MoveToCurrentTarget();
-
-            if (_penguin.IsInnerMeleeRange)
-                _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
-
-            IsTargetNull(BasicPenguinStateEnum.Idle);
-        }
-
+        
     }
 
     public override void Exit()
