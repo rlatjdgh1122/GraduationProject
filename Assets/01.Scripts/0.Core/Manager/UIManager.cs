@@ -38,7 +38,7 @@ public class UIManager : Singleton<UIManager>
         canvasTrm = GameObject.Find("Canvas").transform;
 
         PopupUI[] popupUIs = canvasTrm.GetComponentsInChildren<PopupUI>();
-        WorldUI[] worldUIs = FindObjectsOfType<WorldUI>();
+        //WorldUI[] worldUIs = FindObjectsOfType<WorldUI>();
         NormalUI[] overlayUIArray = canvasTrm.GetComponentsInChildren<NormalUI>();
 
         foreach (PopupUI popupUI in popupUIs)
@@ -52,17 +52,17 @@ public class UIManager : Singleton<UIManager>
                 Debug.LogWarning($"중복 키 : {popupUI.name}");
             }
         }
-        foreach (WorldUI worldUI in worldUIs)
-        {
-            if(!worldUIDictionary.ContainsKey(worldUI.name))
-            {
-                worldUIDictionary.Add(worldUI.name, worldUI);
-            }
-            else
-            {
-                Debug.LogWarning("중복 키");
-            }
-        }
+        //foreach (WorldUI worldUI in worldUIs)
+        //{
+        //    if(!worldUIDictionary.ContainsKey(worldUI.name))
+        //    {
+        //        worldUIDictionary.Add(worldUI.name, worldUI);
+        //    }
+        //    else
+        //    {
+        //        Debug.LogWarning("중복 키");
+        //    }
+        //}
 
         foreach (NormalUI overlayUI in overlayUIArray)
         {
@@ -94,12 +94,6 @@ public class UIManager : Singleton<UIManager>
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         popupUI.MovePanel(x, y, fadeTime);
-    }
-
-    public void ShowWorldUI(string uiName, Vector3 pos)
-    {
-        worldUIDictionary.TryGetValue(uiName, out WorldUI worldUI);
-        worldUI.ShowUI(pos);
     }
 
     public IEnumerator UIMoveDotCoroutine(RectTransform transform, Vector3 targetVec, float duration,
