@@ -1421,7 +1421,7 @@ MonoBehaviour:
   OnUIUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1913875916000202157}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
         m_MethodName: UpdateHpbarUI
         m_Mode: 0
@@ -1436,7 +1436,7 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1913875916000202157}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
         m_MethodName: FadeOutImmediately
         m_Mode: 1
@@ -1523,7 +1523,6 @@ GameObject:
   - component: {fileID: 5970366997797651552}
   - component: {fileID: 3720633752520197955}
   - component: {fileID: 7823712001472721835}
-  - component: {fileID: 3601672657368538832}
   m_Layer: 11
   m_Name: background
   m_TagString: Untagged
@@ -1589,18 +1588,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &3601672657368538832
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895801326860996093}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &5935705385895529696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,9 +1945,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7978798748837824812}
+  - component: {fileID: 6701146852101859117}
   - component: {fileID: 4249156914523111077}
   - component: {fileID: 6347035152684648144}
   - component: {fileID: 2224987566050907464}
+  - component: {fileID: 4414262823505284686}
   m_Layer: 11
   m_Name: HealthUICanvas
   m_TagString: Untagged
@@ -1988,6 +1977,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 1.9093337}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6701146852101859117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435571152864703637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d8df26212f61f4392b784abcc88cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waitToDisappear: 0
 --- !u!223 &4249156914523111077
 Canvas:
   m_ObjectHideFlags: 0
@@ -2051,6 +2053,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &4414262823505284686
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435571152864703637}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8973171712531221431
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2105,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8064249687813029294}
-  - component: {fileID: 1913875916000202157}
   - component: {fileID: 5031992254874248274}
   - component: {fileID: 8144097085485215182}
   m_Layer: 11
@@ -2120,20 +2133,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 349.29, y: 25.55}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1913875916000202157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8975683656656854057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29d8df26212f61f4392b784abcc88cb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _waitToDisappear: 0
-  _canvas: {fileID: 4249156914523111077}
 --- !u!222 &5031992254874248274
 CanvasRenderer:
   m_ObjectHideFlags: 0
