@@ -9,9 +9,6 @@ public class BasicMoveState : BasicBaseState
     {
         base.Enter();
 
-        _triggerCalled = true;
-        _penguin.SuccessfulToArmyCalled = false;
-
         MoveEnter();
     }
     public override void FixedUpdateState()
@@ -23,8 +20,7 @@ public class BasicMoveState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
         }
         // 전투 모드 : 위치로 가던중 범위에 적이 있다면 죽이고 위치로
-        if (_penguin.IsInnerTargetRange
-            && _penguin.MoveFocusMode == MovefocusMode.Battle)
+        if (_penguin.IsInnerTargetRange)
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
@@ -32,7 +28,7 @@ public class BasicMoveState : BasicBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-        
+
     }
 
     public override void Exit()

@@ -29,6 +29,10 @@ public class ShieldGeneralPenguin : General
         StateMachine.Init(GeneralPenguinStateEnum.Idle);
     }
 
+    private void FixedUpdate()
+    {
+        StateMachine.CurrentState.FixedUpdateState();
+    }
     protected override void Update()
     {
         base.Update();

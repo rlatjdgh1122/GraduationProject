@@ -21,6 +21,15 @@ public class BasicChaseState : BasicBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
+
+
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
         if (IsArmyCalledIn_CommandMode())
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
@@ -33,15 +42,7 @@ public class BasicChaseState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Attack);
 
         IsTargetNull(BasicPenguinStateEnum.Idle);
-    }
 
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-        // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
-
-        
     }
 
     public override void Exit()

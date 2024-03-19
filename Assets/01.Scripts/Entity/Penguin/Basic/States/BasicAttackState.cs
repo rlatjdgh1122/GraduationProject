@@ -58,8 +58,6 @@ public class BasicAttackState : BasicBaseState
     {
         base.UpdateState();
         _penguin.LookTarget();
-
-
     }
 
     public override void Exit()

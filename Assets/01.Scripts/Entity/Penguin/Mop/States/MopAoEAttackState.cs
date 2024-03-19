@@ -11,16 +11,12 @@ public class MopAoEAttackState : MopBaseState
         _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.FindFirstNearestEnemy();
-
         _penguin.StopImmediately();
     }
 
-    public override void UpdateState()
+    public override void FixedUpdateState()
     {
-        base.UpdateState();
-
-        _penguin.LookTarget();
-
+        base.FixedUpdateState();
         if (IsArmyCalledIn_BattleMode())
         {
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
@@ -35,12 +31,22 @@ public class MopAoEAttackState : MopBaseState
                 _stateMachine.ChangeState(MopPenguinStateEnum.MustMove);
             }
         }
-        if (_triggerCalled) //공격
+        else
         {
-            _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+            if (_triggerCalled) //공격
+            {
+                _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
 
-            IsTargetNull(MopPenguinStateEnum.Idle);
+                IsTargetNull(MopPenguinStateEnum.Idle);
+            }
         }
+
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _penguin.LookTarget();
     }
 
     public override void Exit()

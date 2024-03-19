@@ -12,7 +12,7 @@ public class BasicMustMoveState : BasicBaseState
     public override void Enter()
     {
         base.Enter();
-        //_penguin.StartImmediately();
+        _penguin.StopImmediately();
         _penguin.MoveToPosition(_penguin.GetSeatPosition());
     }
 
@@ -22,7 +22,7 @@ public class BasicMustMoveState : BasicBaseState
 
         if (_penguin.WaitForCommandToArmyCalled)
         {
-            Debug.Log("eqwer");
+            
             if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             {
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);

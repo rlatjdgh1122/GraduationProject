@@ -10,20 +10,13 @@ public class MopIdleState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-
-        //_triggerCalled = true;
-
-        _penguin.ArmyTriggerCalled = false;
-        _penguin.SuccessfulToArmyCalled = true;
-        _penguin.WaitForCommandToArmyCalled = true;
-
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-            _penguin.NavAgent.ResetPath();
+        IdleEnter();
     }
-
-    public override void UpdateState()
+    public override void FixedUpdateState()
     {
-        base.UpdateState();
+        base.FixedUpdateState();
+
+        Debug.Log(_penguin.NavAgent.velocity.magnitude);
 
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
         {
@@ -32,6 +25,10 @@ public class MopIdleState : MopBaseState
 
         if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
     }
 
     public override void Exit()

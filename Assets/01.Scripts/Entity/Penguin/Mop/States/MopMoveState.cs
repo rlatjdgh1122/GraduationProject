@@ -14,9 +14,6 @@ public class MopMoveState : MopBaseState
     {
         base.Enter();
 
-        _triggerCalled = true;
-        _penguin.SuccessfulToArmyCalled = false;
-
         MoveEnter();
     }
 
@@ -29,8 +26,7 @@ public class MopMoveState : MopBaseState
             _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
         }
 
-        if (_penguin.IsInnerTargetRange
-             && _penguin.MoveFocusMode == MovefocusMode.Battle)
+        if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
     }
 

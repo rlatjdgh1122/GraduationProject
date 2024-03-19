@@ -17,10 +17,9 @@ public class MopChaseState : MopBaseState
         _penguin.FindFirstNearestEnemy();
     }
 
-    public override void UpdateState()
+    public override void FixedUpdateState()
     {
-        base.UpdateState();
-
+        base.FixedUpdateState();
         // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
 
         if (IsArmyCalledIn_CommandMode())
@@ -38,6 +37,10 @@ public class MopChaseState : MopBaseState
 
             IsTargetNull(MopPenguinStateEnum.Idle);
         }
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState(); 
     }
 
     public override void Exit()

@@ -2,17 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Define.RayCast;
+
+public class PenguinMovementInfo
+{
+    public PenguinMovementInfo(bool isCheck, Penguin obj)
+    {
+        IsCheck = isCheck;
+        Obj = obj;
+    }
+
+    public bool IsCheck;
+    public Penguin Obj;
+}
 public class ArmyMovement : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     private ParticleSystem ClickParticle;
     private Army curArmy = null;
 
-    public List<Penguin> armySoldierList = new List<Penguin>();
+    public List<PenguinMovementInfo> armySoldierList = new();
 
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
-    private MovefocusMode CurFocusMode => ArmyManager.Instance.CurFocusMode;
 
     //�������� �ʰ� ��ΰ� ��ġ�� �̵��ߴٸ�
     private bool result => successfulSeatMyPos && isCanMove;
@@ -44,12 +55,16 @@ public class ArmyMovement : MonoBehaviour
 
         for (int i = 0; i < curArmy.Soldiers.Count; ++i)
         {
-            armySoldierList.Add(curArmy.Soldiers[i]);
+            PenguinMovementInfo armySoldier =
+                new(false, curArmy.Soldiers[i]);
+            armySoldierList.Add(armySoldier);
         }
 
         if (curArmy.General != null)
         {
-            armySoldierList.Add(curArmy.General);
+            PenguinMovementInfo armySoldier =
+                new(false, curArmy.General);
+            armySoldierList.Add(armySoldier);
         }
     }
     public void SetArmy_Btn()
@@ -77,6 +92,7 @@ public class ArmyMovement : MonoBehaviour
     {
         if (armySoldierList.Count <= 0)
             yield break;
+
         isCanMove = false;
         successfulSeatMyPos = false;
 
@@ -84,9 +100,12 @@ public class ArmyMovement : MonoBehaviour
 
         foreach (var item in armySoldierList)
         {
-            item.ArmyTriggerCalled = true;
-            //item.MoveFocusMode = CurFocusMode;
-            item.MousePos = mousePos;
+            item.IsCheck = false;
+            var obj = item.Obj;
+
+            obj.ArmyTriggerCalled = true;
+            //obj.SuccessfulToArmyCalled = false;
+            obj.MousePos = mousePos;
 
         }
 
@@ -114,11 +133,15 @@ public class ArmyMovement : MonoBehaviour
         {
             foreach (var item in armySoldierList)
             {
-                //���� �ִϸ��̼��� �����ٸ� ������ �� ����
-                if (item.WaitForCommandToArmyCalled)
+
+                if (item.Obj.WaitForCommandToArmyCalled)
                 {
                     check = true;
-                    SetSoldierMovePosition(mousePos, item);
+
+                    if (!item.IsCheck)
+                        SetSoldierMovePosition(mousePos, item.Obj);
+
+                    item.IsCheck = true;
                 }
                 else
                 {
@@ -149,7 +172,8 @@ public class ArmyMovement : MonoBehaviour
         {
             Debug.Log("������ �ִ�2");
         }
-        while (!armySoldierList.TrueForAll(p => p.SuccessfulToArmyCalled))
+        while (!armySoldierList.TrueForAll(p
+            => p.Obj.SuccessfulToArmyCalled))
         {
             yield return waitingByheartbeat;
         }
