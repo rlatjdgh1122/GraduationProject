@@ -1,34 +1,29 @@
-using UnityEngine;
-using UnityEngine.UI;
-using Define.CamDefine;
 using DG.Tweening;
 using System.Collections;
-using UnityEngine.EventSystems;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class HpBarUI : MonoBehaviour
+public class HpBarUI : WorldUI
 {
     [SerializeField] private float _waitToDisappear;
 
-    [SerializeField] private Canvas _canvas;
-    private CanvasGroup _container;
     private Image _hpbar;
-    private Camera _cam;
     private Coroutine _fadeOutCoroutine;
     private Sequence _fadeSequence;
 
-    private void Awake()
+    public override void Awake()
     {
-        _cam = Cam.MainCam;
-        _hpbar = GetComponent<Image>();
-        _container = transform.parent.GetComponent<CanvasGroup>();
-        _canvas.worldCamera = _cam;
+        base.Awake();
+
+        _hpbar = transform.GetChild(0).Find("fillAmount").GetComponent<Image>();
 
         _fadeSequence = DOTween.Sequence();
     }
 
-    private void Update()
+    public override void Update()
     {
-        _container.transform.rotation = Quaternion.LookRotation(_container.transform.position - _cam.transform.position);
+        base.Update();
+        //_container.transform.rotation = Quaternion.LookRotation(_container.transform.position - _cam.transform.position);
 
         if (_hpbar.fillAmount <= 0)
         {
@@ -39,7 +34,7 @@ public class HpBarUI : MonoBehaviour
 
     public void UpdateHpbarUI(float current, float max)
     {
-        _fadeSequence.Append(_container.DOFade(1, 0.5f));
+        _fadeSequence.Append(canvas.DOFade(1, 0.5f));
         _fadeSequence.Append(_hpbar.DOFillAmount(current / max, 0.5f));
 
         if (_fadeOutCoroutine != null)
@@ -52,7 +47,7 @@ public class HpBarUI : MonoBehaviour
     public void FadeOutImmediately()
     {
         _fadeSequence.Kill();
-        _fadeSequence.Append(_container.DOFade(0, 0.3f));
+        _fadeSequence.Append(canvas.DOFade(0, 0.3f));
     }
 
     private IEnumerator FadeOutTime()

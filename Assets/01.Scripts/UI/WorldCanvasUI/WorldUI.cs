@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Define.CamDefine;
+using UnityEngine;
 
 public abstract class WorldUI : MonoBehaviour
 {
-    protected Canvas canvas;
+    protected CanvasGroup canvas;
+    protected Camera cam;
 
     public virtual void Awake()
     {
-        canvas = transform.Find("Canvas").GetComponent<Canvas>();
-        canvas.worldCamera = Cam.MainCam;
+        cam = Cam.MainCam;
+        canvas = GetComponent<CanvasGroup>();
     }
 
     public virtual void Update()
