@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
@@ -36,19 +37,6 @@ public class DamageCaster : MonoBehaviour
             int damage = (int)(_owner.damage.GetValue() * AfewTimes);
             raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             return true;
-            //float critical = _controller.CharData.BaseCritical; <- 크리티컬 데미지 관련 로직입니다.
-            //float criticalDamage = _controller.CharData.BaseCriticalDamage; 
-
-            //float dice = Random.value; 
-            //int fontSize = 10;
-            //Color fontColor = Color.white;
-
-            //if (dice < critical)
-            //{
-            //    damage = Mathf.CeilToInt(damage * criticalDamage);
-            //    fontSize = 15;
-            //    fontColor = Color.red;
-            //}
         }
 
         return false;
@@ -147,21 +135,23 @@ public class DamageCaster : MonoBehaviour
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
             int damage = _owner.damage.GetValue();
+
+            float critical = _owner.criticalChance.GetValue() * 0.01f;
+            int criticalValue = _owner.criticalValue.GetValue();
+            float adjustedDamage;
+            float dice = UnityEngine.Random.value;
+
+            if (dice < critical)
+            {
+                adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
+                damage = (int)adjustedDamage;
+                Debug.Log("크리티컬!");
+            }
+
             raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+
+
             return true;
-            //float critical = _controller.CharData.BaseCritical; <- 크리티컬 데미지 관련 로직입니다.
-            //float criticalDamage = _controller.CharData.BaseCriticalDamage; 
-
-            //float dice = Random.value; 
-            //int fontSize = 10;
-            //Color fontColor = Color.white;
-
-            //if (dice < critical)
-            //{
-            //    damage = Mathf.CeilToInt(damage * criticalDamage);
-            //    fontSize = 15;
-            //    fontColor = Color.red;
-            //}
         }
 
         return false;

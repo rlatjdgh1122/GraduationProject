@@ -24,7 +24,7 @@ public abstract class BaseStat : ScriptableObject
     [Header("Offensive stats")]
     public Stat damage;
     public Stat criticalChance;
-    public Stat criticalDamage;
+    public Stat criticalValue;
 
     public virtual int GetMaxHealthValue()
     {
@@ -146,11 +146,11 @@ public abstract class BaseStat : ScriptableObject
             case StatType.CriticalDamage:
                 if (mode == StatMode.Increase)
                 {
-                    criticalDamage.StatIncReset();
+                    criticalValue.StatIncReset();
                 }
                 else if (mode == StatMode.Decrease)
                 {
-                    criticalDamage.StatDecReset();
+                    criticalValue.StatDecReset();
                 }
                 break;
         }
@@ -174,7 +174,7 @@ public abstract class BaseStat : ScriptableObject
             vitality.StatIncReset();
             damage.StatIncReset();
             criticalChance.StatIncReset();
-            criticalDamage.StatIncReset();
+            criticalValue.StatIncReset();
         }
         else
         {
@@ -188,7 +188,7 @@ public abstract class BaseStat : ScriptableObject
             vitality.StatDecReset();
             damage.StatDecReset();
             criticalChance.StatDecReset();
-            criticalDamage.StatDecReset();
+            criticalValue.StatDecReset();
         }
     }
 
@@ -207,7 +207,7 @@ public abstract class BaseStat : ScriptableObject
         vitality.StatAllReset();
         damage.StatAllReset();
         criticalChance.StatAllReset();
-        criticalDamage.StatAllReset();
+        criticalValue.StatAllReset();
     }
 
     public void AddStat(int value, StatType type, StatMode mode)
@@ -338,11 +338,11 @@ public abstract class BaseStat : ScriptableObject
             case StatType.CriticalDamage:
                 if (mode == StatMode.Increase)
                 {
-                    criticalDamage.AddIncrease(value);
+                    criticalValue.AddIncrease(value);
                 }
                 else if (mode == StatMode.Decrease)
                 {
-                    criticalDamage.AddDecrease(value);
+                    criticalValue.AddDecrease(value);
                 }
                 break;
         }
@@ -475,11 +475,11 @@ public abstract class BaseStat : ScriptableObject
             case StatType.CriticalDamage:
                 if (mode == StatMode.Increase)
                 {
-                    criticalDamage.RemoveIncrease(value);
+                    criticalValue.RemoveIncrease(value);
                 }
                 else if (mode == StatMode.Decrease)
                 {
-                    criticalDamage.RemoveDecrease(value);
+                    criticalValue.RemoveDecrease(value);
                 }
                 break;
         }
