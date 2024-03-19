@@ -106,7 +106,7 @@ public class WaveManager : Singleton<WaveManager>
         //}
         base.Awake();
 
-        _tentTrm = GameObject.Find("PenguinSpawner/Building").transform;
+        _tentTrm = GameObject.Find("PenguinSpawner/Building/TentInitPos").transform;
 
         BattlePhaseSubscribe();
     }

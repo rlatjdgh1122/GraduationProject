@@ -65,7 +65,7 @@ public class UIManager : Singleton<UIManager>
 
         foreach (PopupUI popup in popupUIDictionary.Values)
         {
-            Debug.Log(popup.name);
+            //Debug.Log(popup.name);
         }
     }
 
