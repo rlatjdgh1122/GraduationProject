@@ -1,5 +1,6 @@
 using Define.CamDefine;
 using UnityEngine;
+using DG.Tweening;
 
 public abstract class WorldUI : MonoBehaviour
 {
@@ -18,5 +19,11 @@ public abstract class WorldUI : MonoBehaviour
         Vector3 posTarget = transform.position + cameraRotation;
         //Vector3 orientationTarget = _cam.transform.rotation * Vector3.forward;
         transform.LookAt(posTarget);
+    }
+
+    public virtual void ShowUI(Vector3 pos)
+    {
+        transform.position = pos;
+        canvas.DOFade(1, 0.2f);
     }
 }

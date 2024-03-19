@@ -20,6 +20,7 @@ public class UIManager : Singleton<UIManager>
 
     public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
     public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>(); 
+    public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
 
     public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
@@ -37,6 +38,7 @@ public class UIManager : Singleton<UIManager>
         canvasTrm = GameObject.Find("Canvas").transform;
 
         PopupUI[] popupUIs = canvasTrm.GetComponentsInChildren<PopupUI>();
+        WorldUI[] worldUIs = FindObjectsOfType<WorldUI>();
         NormalUI[] overlayUIArray = canvasTrm.GetComponentsInChildren<NormalUI>();
 
         foreach (PopupUI popupUI in popupUIs)
@@ -47,7 +49,18 @@ public class UIManager : Singleton<UIManager>
             }
             else
             {
-                Debug.Log($"중복 키 : {popupUI.name}");
+                Debug.LogWarning($"중복 키 : {popupUI.name}");
+            }
+        }
+        foreach (WorldUI worldUI in worldUIs)
+        {
+            if(!worldUIDictionary.ContainsKey(worldUI.name))
+            {
+                worldUIDictionary.Add(worldUI.name, worldUI);
+            }
+            else
+            {
+                Debug.LogWarning("중복 키");
             }
         }
 
@@ -61,11 +74,6 @@ public class UIManager : Singleton<UIManager>
             {
                 Debug.LogWarning("키 중복 : " + overlayUI.name);
             }
-        }
-
-        foreach (PopupUI popup in popupUIDictionary.Values)
-        {
-            Debug.Log(popup.name);
         }
     }
 
@@ -86,6 +94,12 @@ public class UIManager : Singleton<UIManager>
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         popupUI.MovePanel(x, y, fadeTime);
+    }
+
+    public void ShowWorldUI(string uiName, Vector3 pos)
+    {
+        worldUIDictionary.TryGetValue(uiName, out WorldUI worldUI);
+        worldUI.ShowUI(pos);
     }
 
     public IEnumerator UIMoveDotCoroutine(RectTransform transform, Vector3 targetVec, float duration,

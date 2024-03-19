@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class HpBarUI : WorldUI
 {
     [SerializeField] private float _waitToDisappear;
-
-    private Image _hpbar;
+    [SerializeField] private Image _hpbar;
     private Coroutine _fadeOutCoroutine;
     private Sequence _fadeSequence;
 
@@ -15,7 +14,7 @@ public class HpBarUI : WorldUI
     {
         base.Awake();
 
-        _hpbar = transform.GetChild(0).Find("fillAmount").GetComponent<Image>();
+        //_hpbar = transform.GetChild(0).Find("fillAmount").GetComponent<Image>();
 
         _fadeSequence = DOTween.Sequence();
     }
