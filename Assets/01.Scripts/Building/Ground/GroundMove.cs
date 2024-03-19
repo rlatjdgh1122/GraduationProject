@@ -21,6 +21,8 @@ public class GroundMove : MonoBehaviour
 
     public Enemy[] _enemies;
 
+    private GameObject _waveEffect;
+
     private void Awake()
     {
         _parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
@@ -28,6 +30,8 @@ public class GroundMove : MonoBehaviour
         _outline = GetComponent<Outline>();
 
         _enemies = GetComponentsInChildren<Enemy>();
+
+        _waveEffect = transform.Find("WaterWave").gameObject;
     }
 
     private void Start()
@@ -56,6 +60,7 @@ public class GroundMove : MonoBehaviour
             }
 
             //ºùÇÏ ¿Ã ¶§ ÀÌÆåÆ®
+            _waveEffect.gameObject.SetActive(true);
 
             transform.DOMove(new Vector3(_moveDir.x, transform.position.y, _moveDir.z), _moveDuration).
                 OnComplete(() =>
@@ -67,6 +72,8 @@ public class GroundMove : MonoBehaviour
                     // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
                     CoroutineUtil.CallWaitForSeconds(0.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
                                                          () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+
+                    _waveEffect.gameObject.SetActive(false);
 
                     DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
                     {
