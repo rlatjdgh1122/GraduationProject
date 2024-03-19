@@ -22,6 +22,7 @@ public class BasicMustMoveState : BasicBaseState
 
         if (_penguin.WaitForCommandToArmyCalled)
         {
+            Debug.Log("eqwer");
             if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             {
                 _stateMachine.ChangeState(BasicPenguinStateEnum.Idle);
