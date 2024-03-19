@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,8 @@ public class Health : MonoBehaviour, IDamageable
 {
     public int maxHealth;
     public int currentHealth;
+    private int _armor;
+    private int _evasion;
 
     #region ActionEvent
     public Action OnHit;
@@ -35,6 +38,8 @@ public class Health : MonoBehaviour, IDamageable
     public void SetHealth(BaseStat owner)
     {
         currentHealth = maxHealth = owner.GetMaxHealthValue();
+        _armor = owner.armor.GetValue();
+        _evasion = owner.evasion.GetValue();
     }
 
     public bool KnockBack(float value = 1, Vector3 normal = default)
@@ -99,8 +104,18 @@ public class Health : MonoBehaviour, IDamageable
         OnHitEvent?.Invoke();
         OnHit?.Invoke();
 
-        //나중에 아머값에 따른 데미지 감소도 해야함
-        currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
+        float dice = UnityEngine.Random.value; // 0부터 1 사이의 임의의 값
+        float adjustedEvasion = _evasion * 0.01f;
+
+        if (dice < adjustedEvasion)
+        {
+            Debug.Log("응 회피");
+            return;
+        }
+
+        float adjustedDamage = damage * (1.0f - (_armor * 0.01f));
+
+        currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
