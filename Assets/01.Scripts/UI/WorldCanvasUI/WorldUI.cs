@@ -21,9 +21,8 @@ public abstract class WorldUI : MonoBehaviour
         transform.LookAt(posTarget);
     }
 
-    public virtual void ShowUI(Vector3 pos)
+    public virtual void ShowUI()
     {
-        transform.position = pos;
-        canvas.DOFade(1, 0.2f);
+        canvas.DOFade(1, 0.1f);
     }
 }

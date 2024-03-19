@@ -8,7 +8,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] private float _bulletPower;
 
     private Rigidbody _rigid;
-    private BaseStat _owner;
+    private Entity _owner;
     private DamageCaster _damageCaster;
 
     private void OnEnable()
@@ -18,7 +18,7 @@ public class Arrow : MonoBehaviour
         StartCoroutine(WaitForDestroy());
     }
 
-    public void Setting(BaseStat owner, LayerMask layer)
+    public void Setting(Entity owner, LayerMask layer)
     {  
         _owner = owner;
         _damageCaster.SetOwner(owner);
