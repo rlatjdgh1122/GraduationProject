@@ -16,6 +16,8 @@ public class GeneralUIPresenter : PopupUI
     [HideInInspector]
     public Ability selectedAbility;
 
+    private PenguinFactory _penguinFactory;
+
     private int currentCost
     {
         get
@@ -31,6 +33,8 @@ public class GeneralUIPresenter : PopupUI
     public override void Awake()
     {
         base.Awake();
+
+        _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
     }
 
     public void SetCurrentView(GeneralView generalView)
@@ -46,6 +50,9 @@ public class GeneralUIPresenter : PopupUI
         if (currentCost >= currentGeneralStat.PenguinData.price)
         {
             PurchaseGeneral();
+
+            _penguinFactory.SpawnPenguinHandler(_currentView.generalObj);
+            LegionInventory.Instance.AddPenguin(general);
 
             currentCost -= currentGeneralStat.PenguinData.price;
             _currentView.SetUpgradeUI(currentGeneralStat);

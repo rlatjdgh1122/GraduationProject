@@ -17,7 +17,6 @@ public class PenguinStorePanel
 public class PenguinUnitSlot
 {
     public int price;
-    public PenguinStat stat;
     public Penguin spawnPenguinPrefab;
 }
 
@@ -56,6 +55,9 @@ public class PenguinStoreUI : MonoBehaviour
     private Penguin _spawnPenguin;
     private PenguinFactory _penguinFactory;
 
+    private CanvasGroup _statuCanvas;
+    private TextMeshProUGUI _statuesMessageText;
+
     private void Awake()
     {
         _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
@@ -77,13 +79,14 @@ public class PenguinStoreUI : MonoBehaviour
         _rangeSlider         = _panelList[2].panel.transform.Find("Rng").GetComponent<Slider>();
         _hpSlider            = _panelList[2].panel.transform.Find("Hp").GetComponent<Slider>();
         _atkSlider           = _panelList[2].panel.transform.Find("Atk").GetComponent<Slider>();
+        _statuCanvas         = transform.Find("StatusMessage").GetComponent<CanvasGroup>();
+        _statuesMessageText  = _statuCanvas.transform.Find("WhenBuyPenguin").GetComponent<TextMeshProUGUI>();
         #endregion
 
-        foreach(var slot in _slotList)
+        foreach (var slot in _slotList)
         {
-            Debug.Log(slot);
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, UnitInventoryParent);
-            btn.InstantiateSelf(slot.stat, slot.spawnPenguinPrefab, slot.price);
+            btn.InstantiateSelf(slot.spawnPenguinPrefab.Stat as PenguinStat, slot.spawnPenguinPrefab, slot.price);
             btn.SlotUpdate();
         }
     }
@@ -131,6 +134,19 @@ public class PenguinStoreUI : MonoBehaviour
     {
         _panelList[2].panel.DOFade(0, _panelList[2].panelAlphaFadeTime);
         DisableRayExceptSelf(_panelList[1].panel);
+    }
+
+    public void OneClickBuyPenguin()
+    {
+        if(!_canBuy)
+        {
+            ShowMessage("재화가 부족합니다!");
+            return;
+        }
+
+        AmountCostUpdate();
+        BuyButton();
+        ShowMessage("구매 성공!");
     }
 
     #endregion
@@ -234,6 +250,17 @@ public class PenguinStoreUI : MonoBehaviour
 
         ResetBuyPanel();
         OnDisableBuyPanel();
+    }
+
+    private void ShowMessage(string message) //값들 임시로 박아둔것
+    {
+        UIManager.Instance.InitializHudTextSequence();
+
+        _statuesMessageText.text = message;
+
+        UIManager.Instance.HudTextSequence.Append(_statuCanvas.DOFade(1, 0.04f))
+                .AppendInterval(0.8f)
+                .Append(_statuCanvas.DOFade(0, 0.04f));
     }
 
 
