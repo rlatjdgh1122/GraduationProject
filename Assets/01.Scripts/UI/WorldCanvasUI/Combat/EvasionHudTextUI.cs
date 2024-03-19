@@ -18,5 +18,15 @@ public class EvasionHudTextUI : WorldUI
     public override void ShowUI()
     {
         base.ShowUI();
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(canvas.transform.DOMoveY(transform.position.y + 0.8f, 0.35f));
+        seq.AppendInterval(0.02f);
+        seq.Append(canvas.DOFade(0, 0.3f));
+    }
+
+    public void HideUI()
+    {
+        canvas.DOFade(0, 0.15f);
     }
 }
