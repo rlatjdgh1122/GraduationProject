@@ -145,6 +145,7 @@ public class DamageCaster : MonoBehaviour
             {
                 adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
                 damage = (int)adjustedDamage;
+                //UIManager.Instance.ShowWorldUI("CriticalUI", transform.position);
                 Debug.Log("크리티컬!");
             }
 
@@ -156,6 +157,12 @@ public class DamageCaster : MonoBehaviour
 
         return false;
     }
+
+    public void ShowCritical(EntityActionData actionData)
+    {
+        //actionData.HitPoint
+    }
+
     public void BleedCast(int damage, int repeat, float duration, HitType hitType)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
