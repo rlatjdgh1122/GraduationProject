@@ -29,6 +29,17 @@ public class CameraSystem : MonoBehaviour
     private Vector3 lastMousePosition;
 
 
+    [Header("카메라 이동 범위")]
+    [Range(-100f, 100f)]
+    [SerializeField] private float minXValue = -50f;
+    [Range(-100f, 100f)]
+    [SerializeField] private float maxXValue = 50f;
+    [Range(-100f, 100f)]
+    [SerializeField] private float minYValue = -50f;
+    [Range(-100f, 100f)]
+    [SerializeField] private float maxYValue = 50f;
+
+
     private bool isMoving = false;
     private void LateUpdate()
     {
@@ -67,20 +78,32 @@ public class CameraSystem : MonoBehaviour
             Vector3 mousePosition = Input.mousePosition;
             if (mousePosition.x <= _edgeScrollSize)
             {
-                moveDir -= transform.right;
+                if (transform.position.x > -50)
+                {
+                    moveDir -= transform.right;
+                }
             }
             else if (mousePosition.x >= Screen.width - _edgeScrollSize)
             {
-                moveDir += transform.right;
+                if (transform.position.x < 50)
+                {
+                    moveDir += transform.right;
+                }
             }
 
             if (mousePosition.y <= _edgeScrollSize)
             {
-                moveDir -= transform.forward;
+                if (transform.position.z > -50)
+                {
+                    moveDir -= transform.forward;
+                }
             }
             else if (mousePosition.y >= Screen.height - _edgeScrollSize)
             {
-                moveDir += transform.forward;
+                if (transform.position.z < 50)
+                {
+                    moveDir += transform.forward;
+                }
             }
 
             transform.position += moveDir * _moveSpeed * Time.deltaTime;
