@@ -23,9 +23,6 @@ public abstract class DefenseBuilding : BaseBuilding
     private HashSet<Ground> _removedGrounds = new();
     private HashSet<Ground> currentGrounds = new();
 
-    [SerializeField]
-    private LayerMask _groundLayer;
-
     private Health _health;
 
     protected override void Awake()

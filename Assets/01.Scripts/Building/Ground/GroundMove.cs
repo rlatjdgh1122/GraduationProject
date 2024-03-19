@@ -42,8 +42,8 @@ public class GroundMove : MonoBehaviour
             enemy.enabled = false;
         }
 
-        WaveManager.Instance.OnBattlePhaseStartEvent += GroundMoveHandle;
-        WaveManager.Instance.OnBattlePhaseEndEvent += SetOutline;
+        SignalHub.OnBattlePhaseStartEvent += GroundMoveHandle;
+        SignalHub.OnBattlePhaseEndEvent += SetOutline;
     }
 
     private void GroundMoveHandle()
@@ -77,7 +77,7 @@ public class GroundMove : MonoBehaviour
                             enemy.IsMove = true;
                             enemy.NavAgent.enabled = true;
                         }
-                        WaveManager.Instance.OnBattlePhaseStartEvent -= GroundMoveHandle;
+                        SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
                     });
                 });
         }
@@ -88,7 +88,7 @@ public class GroundMove : MonoBehaviour
         DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, endColor, 0.7f).OnComplete(() =>
         {
             _outline.enabled = false;
-            WaveManager.Instance.OnBattlePhaseEndEvent -= GroundMoveHandle;
+            SignalHub.OnBattlePhaseEndEvent -= GroundMoveHandle;
         });
     }
 

@@ -13,6 +13,7 @@ public class BasicDeadState : BasicBaseState
         _penguin.enabled = false;
         //_penguin.CharController.enabled = false;
         _penguin.NavAgent.enabled = false;
+        SignalHub.OnEnemyPenguinDead?.Invoke();
     }
 
     public override void UpdateState()

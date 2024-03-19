@@ -24,6 +24,13 @@ public delegate void ChangedArmy(Army prevArmy, Army newArmy);
 public delegate void ChagnedUILegion(int prevLegion, int newLegion);
 public delegate void PenguinArrangementSetting(ArrangementInfo info);
 public delegate void ChangedBattleMode(MovefocusMode mode);
+
+public delegate void EnemyPenguinDead();
+
+public delegate void BattlePhaseStartEvent();
+public delegate void BattlePhaseEndEvent();
+public delegate void IceArrivedEvent();
+
 public static class SignalHub
 {
     public static ChangedArmy OnArmyChanged;
@@ -31,4 +38,9 @@ public static class SignalHub
     public static ChangedBattleMode OnBattleModeChanged;
     public static ChagnedUILegion OnUILegionChanged;
 
+    public static EnemyPenguinDead OnEnemyPenguinDead;
+
+    public static BattlePhaseStartEvent OnBattlePhaseStartEvent;
+    public static BattlePhaseEndEvent OnBattlePhaseEndEvent;
+    public static IceArrivedEvent OnIceArrivedEvent;
 }

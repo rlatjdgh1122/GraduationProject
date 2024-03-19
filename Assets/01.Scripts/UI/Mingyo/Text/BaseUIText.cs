@@ -16,8 +16,8 @@ public abstract class BaseUIText: MonoBehaviour
         Debug.Log(battlePhaseText);
         Debug.Log(remainingPhaseText);
 
-        WaveManager.Instance.OnBattlePhaseStartEvent += () => UpdateText(battlePhaseText);
-        WaveManager.Instance.OnBattlePhaseEndEvent += () => UpdateText(remainingPhaseText);
+        SignalHub.OnBattlePhaseStartEvent += () => UpdateText(battlePhaseText);
+        SignalHub.OnBattlePhaseEndEvent += () => UpdateText(remainingPhaseText);
     }
 
     protected void UpdateText(string text)

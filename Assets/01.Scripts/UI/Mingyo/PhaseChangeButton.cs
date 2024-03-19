@@ -21,7 +21,7 @@ public class PhaseChangeButton : MonoBehaviour
 
     private void Start()
     {
-        WaveManager.Instance.OnBattlePhaseEndEvent += () => OnOffButton();
+        SignalHub.OnBattlePhaseEndEvent += () => OnOffButton();
     }
 
     private void Awake()
