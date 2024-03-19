@@ -4,10 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
-public class SpawnPenguinButton : MonoBehaviour
+public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler
 {
     private int _price;
 
@@ -37,48 +39,31 @@ public class SpawnPenguinButton : MonoBehaviour
 
     public void SlotUpdate()
     {
-        Debug.Log(_penguinStat);
         _icon.sprite = _penguinStat.PenguinIcon;
         _nameText.text = _penguinStat.PenguinName;
         _priceText.text = _price.ToString();
     }
 
-    public void SpawnPenguinEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
+    private void SpawnPenguinLeftEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
         _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
         _penguinStore.OnEnableBuyPanel();
-
-
-        //if(WaveManager.Instance.IsBattlePhase)
-        //{
-        //    UIManager.Instance.InitializHudTextSequence();
-        //    _penguinFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
-
-        //    UIManager.Instance.SpawnHudText(_penguinFactory.FailHudText);
-        //    return;
-        //}
-
-        //if (!WaveManager.Instance.IsBattlePhase) // 남은 준비시간안에 생성할 수 있다면 생성한다.
-        //{
-
-        //}
     }
-
-    private void ButtonCooldown() // 버튼 누르면 실행될 함수
+    private void SpawnPenguinRightEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
-        //_btn.interactable = false;
-        //_coolingimg.fillAmount = 1f;
-
-        //UIManager.Instance.InitializHudTextSequence();
-        //UIManager.Instance.SpawnHudText(_penguinFactory.SuccesHudText);
-
-        //LegionInventory.Instance.AddPenguin(spawnPenguin.ReturnGenericStat<PenguinStat>());
-
-        //DOTween.To(() => _coolingimg.fillAmount, f => _coolingimg.fillAmount = f, 0f, cooltime).OnComplete(() => // 생성시간이 다 되었다면
-        //{
-        //    _btn.interactable = true;
-        //_penguinFactory.SpawnPenguinHandler(_spawnPenguin); // 팩토리에서 생성하는 함수 실행
-        //});
+        _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
+        _penguinStore.OneClickBuyPenguin();
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(Input.GetMouseButtonDown(0)) //마우스 왼쪽 버튼
+        {
+            SpawnPenguinLeftEventHandler();
+        }
+        if(Input.GetMouseButtonDown(1)) //마우스 오른쪽 버튼
+        {
+            SpawnPenguinRightEventHandler();
+        }
+    }
 }

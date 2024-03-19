@@ -61,6 +61,6 @@ public class BasicFreelyMoveState : BasicBaseState
         NavMeshHit hit;
 
         NavMesh.SamplePosition(randomPos, out hit, 10.0f, NavMesh.AllAreas);
-        return hit.position; // NavMesh 위의 랜덤 위치를 반환합니다.
+        return hit.position; // NavMesh 위의 랜덤 위치를 반환
     }
 }
