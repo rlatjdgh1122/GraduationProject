@@ -1,4 +1,5 @@
 using Cinemachine;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,8 +28,9 @@ public class CameraSystem : MonoBehaviour
     private bool isRotating = false;
     private Vector3 lastMousePosition;
 
+
     private bool isMoving = false;
-    private void Update()
+    private void LateUpdate()
     {
         CameraControl();
         CameraMove();
@@ -163,5 +165,11 @@ public class CameraSystem : MonoBehaviour
             // 마우스 위치 업데이트
             lastMousePosition = Input.mousePosition;
         }
+    }
+
+    public void SetCameraTartget(Vector3 target)
+    {
+        Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
+        transform.DOMove(vec, 0.5f);
     }
 }
