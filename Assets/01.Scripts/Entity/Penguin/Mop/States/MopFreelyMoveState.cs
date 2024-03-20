@@ -23,6 +23,7 @@ public class MopFreelyMoveState : MopBaseState
         _penguin.NavAgent.speed = 1.0f;
 
         randomMoveTime = Random.Range(1.0f, 3.0f);
+
         _penguin.MoveToPosition(GetRandomPoint());
     }
 
