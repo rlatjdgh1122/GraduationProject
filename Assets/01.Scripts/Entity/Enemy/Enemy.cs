@@ -107,9 +107,12 @@ public class Enemy : Entity
         {
             Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
 
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            if (directionToTarget != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            }
         }
     }
 

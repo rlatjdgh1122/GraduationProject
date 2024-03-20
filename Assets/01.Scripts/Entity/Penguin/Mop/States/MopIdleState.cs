@@ -10,6 +10,7 @@ public class MopIdleState : MopBaseState
     public override void Enter()
     {
         base.Enter();
+
         IdleEnter();
     }
     public override void FixedUpdateState()

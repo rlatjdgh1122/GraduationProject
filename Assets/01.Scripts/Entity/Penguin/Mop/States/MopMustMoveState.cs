@@ -9,7 +9,7 @@ public class MopMustMoveState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-        _navAgent.ResetPath();
+        //_navAgent.ResetPath();
         _penguin.MoveToPosition(_penguin.GetSeatPosition());
     }
     public override void FixedUpdateState()
@@ -20,8 +20,6 @@ public class MopMustMoveState : MopBaseState
         {
             if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             {
-                Debug.Log(_penguin.NavAgent.velocity.magnitude);
-                Debug.Log("³»°¡ ¹®Á¨°¡..");
                 _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
             }
         }
