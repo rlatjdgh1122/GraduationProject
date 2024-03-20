@@ -25,6 +25,11 @@ public class EntityState<T, G> where T : Enum where G : Entity
         _navAgent = _penguin.NavAgent;
     }
 
+    public virtual void FixedUpdateState()
+    {
+
+    }
+
     public virtual void UpdateState()
     {
 

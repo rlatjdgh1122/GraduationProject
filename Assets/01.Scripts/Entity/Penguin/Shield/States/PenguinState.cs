@@ -6,7 +6,26 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
 
     }
+    protected void IdleEnter()
+    {
+        _penguin.NavAgent.ResetPath();
 
+        _navAgent.isStopped = false;
+        _penguin.ArmyTriggerCalled = false;
+        _penguin.SuccessfulToArmyCalled = true;
+        _penguin.WaitForCommandToArmyCalled = true;
+
+    }
+    protected void MoveEnter()
+    {
+        if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
+
+        _triggerCalled = true;
+        _penguin.SuccessfulToArmyCalled = false;
+
+        if (_penguin.WaitForCommandToArmyCalled)
+            _penguin.MoveToPosition(_penguin.GetSeatPosition());
+    }
     protected void ChaseEnter()
     {
         if (_penguin.MoveFocusMode == MovefocusMode.Battle)
@@ -52,13 +71,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     /// <summary>
     /// 배틀모드일 때 다 죽이면 위치로 이동하는 함수
     /// </summary>
-    protected void MoveEnter()
-    {
-        if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
 
-        if (_penguin.WaitForCommandToArmyCalled)
-            _penguin.MoveToPosition(_penguin.GetSeatPosition());
-    }
 
 
     public override void AnimationFinishTrigger()

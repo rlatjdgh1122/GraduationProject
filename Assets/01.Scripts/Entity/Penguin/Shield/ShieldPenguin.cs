@@ -41,6 +41,10 @@ public class ShieldPenguin : Penguin
         StateMachine.Init(ShieldPenguinStateEnum.Idle);
     }
 
+    private void FixedUpdate()
+    {
+        StateMachine.CurrentState.FixedUpdateState();
+    }
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();

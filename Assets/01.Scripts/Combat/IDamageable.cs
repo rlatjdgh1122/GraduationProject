@@ -6,7 +6,9 @@ public enum HitType
 {
     None,
     MeleeHit,
+    EnemyMeleeHit,
     ArrowHit,
+    CriticalHit,
     RockHit,
     WoodHit,
     BleedHit,

@@ -1,3 +1,6 @@
+
+using UnityEngine;
+
 public class BasicDeadState : BasicBaseState
 {
     public BasicDeadState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
@@ -10,9 +13,9 @@ public class BasicDeadState : BasicBaseState
         base.Enter();
         _triggerCalled = true;
         _penguin.CurrentTarget = null;
-        _penguin.enabled = false;
-        //_penguin.CharController.enabled = false;
+        _penguin.StopImmediately();
         _penguin.NavAgent.enabled = false;
+        _penguin.enabled = false;
         SignalHub.OnEnemyPenguinDead?.Invoke();
     }
 
