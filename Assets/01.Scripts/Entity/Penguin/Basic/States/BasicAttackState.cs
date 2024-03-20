@@ -21,10 +21,9 @@ public class BasicAttackState : BasicBaseState
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
 
-    public override void UpdateState()
+    public override void FixedUpdateState()
     {
-        base.UpdateState();
-        _penguin.LookTarget();
+        base.FixedUpdateState();
 
         if (IsArmyCalledIn_BattleMode())
         {
@@ -36,13 +35,14 @@ public class BasicAttackState : BasicBaseState
             }
         }
 
-        if (IsArmyCalledIn_CommandMode())
+        else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {
                 _stateMachine.ChangeState(BasicPenguinStateEnum.MustMove);
             }
         }
+
         else
         {
             if (_triggerCalled) //АјАн
@@ -52,6 +52,12 @@ public class BasicAttackState : BasicBaseState
                 IsTargetNull(BasicPenguinStateEnum.Idle);
             }
         }
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+        _penguin.LookTarget();
     }
 
     public override void Exit()

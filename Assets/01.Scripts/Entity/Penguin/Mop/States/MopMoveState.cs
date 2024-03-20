@@ -14,22 +14,24 @@ public class MopMoveState : MopBaseState
     {
         base.Enter();
 
-        _triggerCalled = true;
-        _penguin.SuccessfulToArmyCalled = false;
-
         MoveEnter();
     }
 
+    public override void FixedUpdateState()
+    {
+        base.FixedUpdateState();
+
+        if (_penguin.NavAgent.velocity.magnitude < 0.05f)
+        {
+            _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
+        }
+
+        if (_penguin.IsInnerTargetRange)
+            _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+    }
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.NavAgent.velocity.magnitude < 0.05f)
-            _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
-
-        if (_penguin.IsInnerTargetRange
-             && _penguin.MoveFocusMode == MovefocusMode.Battle)
-            _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
     }
 
     public override void Exit()

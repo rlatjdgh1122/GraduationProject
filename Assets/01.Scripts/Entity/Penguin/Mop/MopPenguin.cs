@@ -38,6 +38,10 @@ public class MopPenguin : Penguin
         StateMachine.Init(MopPenguinStateEnum.Idle);
     }
 
+    private void FixedUpdate()
+    {
+        StateMachine.CurrentState.FixedUpdateState();
+    }
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();

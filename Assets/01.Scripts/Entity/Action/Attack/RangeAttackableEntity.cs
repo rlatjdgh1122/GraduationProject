@@ -16,7 +16,7 @@ public class RangeAttackableEntity : EntityAttackData
     public override void RangeAttack(Vector3 targetPos)
     {
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        arrow.Setting(owner.Stat, DamageCasterCompo.TargetLayer);
+        arrow.Setting(owner, DamageCasterCompo.TargetLayer);
         arrow.Fire(_firePos.forward);
     }
 }

@@ -10,16 +10,10 @@ public class ShieldIdleState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        //_triggerCalled = true;
 
         if(_penguin.IsFreelyMove) { return; }
 
-        _penguin.ArmyTriggerCalled = false;
-        _penguin.SuccessfulToArmyCalled = true;
-        _penguin.WaitForCommandToArmyCalled = true;
-
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-            _penguin.NavAgent.ResetPath();
+        IdleEnter();
     }
 
     public override void UpdateState()

@@ -1,6 +1,6 @@
 public class ShieldImpactState : ShieldBaseState
 {
-    public ShieldImpactState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName) 
+    public ShieldImpactState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
     }
@@ -19,8 +19,8 @@ public class ShieldImpactState : ShieldBaseState
         {
             if (_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
-            else
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+           /* else
+                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);*/
         }
     }
 

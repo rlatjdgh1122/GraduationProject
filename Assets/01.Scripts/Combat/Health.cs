@@ -19,6 +19,7 @@ public class Health : MonoBehaviour, IDamageable
     public UnityEvent OnHealedEvent;
     public UnityEvent OnHitEvent;
     public UnityEvent OnStunEvent;
+    public UnityEvent OnEvasionEvent;
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
@@ -109,7 +110,7 @@ public class Health : MonoBehaviour, IDamageable
 
         if (dice < adjustedEvasion)
         {
-            Debug.Log("응 회피");
+            OnEvasionEvent?.Invoke();
             return;
         }
 

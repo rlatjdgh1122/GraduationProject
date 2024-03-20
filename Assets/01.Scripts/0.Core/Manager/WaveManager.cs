@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 
-public class WaveManager : Singleton<WaveManager>
+public class WaveManager : Singleton<WaveManager>  
 {
     #region 타이머 변수
     [Header("Timer Settings")]
@@ -302,5 +302,6 @@ public class WaveManager : Singleton<WaveManager>
     public void CheckIsEndBattlePhase()
     {
         if (GameManager.Instance.GetCurrentEnemyCount() <= 0) { GetReward(); }
+        //Debug.Log($"{ GameManager.Instance.GetCurrentEnemyCount()}!!!!!!!!!!!!!!!!!");
     }
 }

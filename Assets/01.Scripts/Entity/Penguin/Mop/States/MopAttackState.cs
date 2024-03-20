@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+
 public class MopAttackState : MopBaseState
 {
 
@@ -22,10 +24,9 @@ public class MopAttackState : MopBaseState
         }
     }
 
-    public override void UpdateState()
+    public override void FixedUpdateState()
     {
-        base.UpdateState();
-        _penguin.LookTarget();
+        base.FixedUpdateState();
 
         if (IsArmyCalledIn_BattleMode())
         {
@@ -53,6 +54,12 @@ public class MopAttackState : MopBaseState
                 IsTargetNull(MopPenguinStateEnum.Idle);
             }
         }
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _penguin.LookTarget();
     }
 
     public override void Exit()

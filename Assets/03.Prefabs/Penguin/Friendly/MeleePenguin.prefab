@@ -191,6 +191,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 453708541712573569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1505658070197423370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8080809484158115017}
+  - component: {fileID: 5576287291850808836}
+  - component: {fileID: 780001662647363238}
+  m_Layer: 12
+  m_Name: EvasionFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8080809484158115017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505658070197423370}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 5.42, y: 2, z: 9.19}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1241305011308058854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5576287291850808836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505658070197423370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada02887f1b371b448dabef21b4fab2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &780001662647363238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505658070197423370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406f63ca42e504d9d60b28a470a979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hudTextEndTime: 0.8
 --- !u!1 &2133014983104356500
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +308,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.00950164, y: 0.013242544, z: -0.81238276, w: 0.5828968}
   m_LocalPosition: {x: -3.7999964, y: 1.600003, z: 6.2000055}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 60, y: 60, z: 60}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1848658165540880125}
@@ -591,6 +649,7 @@ Transform:
   - {fileID: 7362004413546297761}
   - {fileID: 8763376338853670714}
   - {fileID: 7370588182385438139}
+  - {fileID: 8080809484158115017}
   - {fileID: 5839183178024413648}
   - {fileID: 2758380086826238937}
   m_Father: {fileID: 0}
@@ -668,6 +727,21 @@ MonoBehaviour:
   OnStunEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnEvasionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5576287291850808836}
+        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
