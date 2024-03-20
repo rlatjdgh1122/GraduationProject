@@ -23,9 +23,4 @@ public class EvasionHudTextUI : WorldUI
         seq.Append(canvas.transform.DOMoveY(transform.position.y + 0.8f, 0.35f));
         seq.Insert(0.2f, canvas.DOFade(0, 0.3f));
     }
-
-    public void HideUI()
-    {
-        canvas.DOFade(0, 0.15f);
-    }
 }
