@@ -73,6 +73,7 @@ public class GroundMove : MonoBehaviour
                     CoroutineUtil.CallWaitForSeconds(0.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
                                                          () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
+
                     _waveEffect.gameObject.SetActive(false);
 
                     DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
