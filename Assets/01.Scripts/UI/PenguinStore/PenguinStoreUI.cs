@@ -20,7 +20,7 @@ public class PenguinUnitSlot
     public Penguin spawnPenguinPrefab;
 }
 
-public class PenguinStoreUI : MonoBehaviour
+public class PenguinStoreUI : PopupUI
 {
     public List<PenguinStorePanel> _panelList;
     public List<PenguinUnitSlot> _slotList;
@@ -58,8 +58,10 @@ public class PenguinStoreUI : MonoBehaviour
     private CanvasGroup _statuCanvas;
     private TextMeshProUGUI _statuesMessageText;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
 
         #region BuyPanelComponent
@@ -95,19 +97,20 @@ public class PenguinStoreUI : MonoBehaviour
 
     public void OnEnableStorePanel() //스토어 패널 활성화
     {
-        _panelList[0].panel.DOFade(1, _panelList[0].panelAlphaFadeTime);
-        Debug.Log(_panelList[0]);
+        ShowChildPanel(_panelList[0].panel, _panelList[0].panelAlphaFadeTime);
+        //_panelList[0].panel.DOFade(1, _panelList[0].panelAlphaFadeTime);
         DisableRayExceptSelf(_panelList[0].panel);
     }
 
     public void OnDisableStorePanel()//스토어 패널 비활성화
     {
-        _panelList[0].panel.DOFade(0, _panelList[0].panelAlphaFadeTime);
+        HideChildPanel(_panelList[0].panel, _panelList[0].panelAlphaFadeTime);
+        //_panelList[0].panel.DOFade(0, _panelList[0].panelAlphaFadeTime);
         _panelList[0].panel.blocksRaycasts = false;
     }
     public void OnEnableBuyPanel() //구매 패널 활성화
     {
-        _panelList[1].panel.DOFade(1, _panelList[1].panelAlphaFadeTime);
+        ShowChildPanel(_panelList[1].panel, _panelList[1].panelAlphaFadeTime);
         DisableRayExceptSelf(_panelList[1].panel);
 
         CurrentCostUpdate();
@@ -116,7 +119,7 @@ public class PenguinStoreUI : MonoBehaviour
 
     public void OnDisableBuyPanel()//구매 패널 비활성화
     {
-        _panelList[1].panel.DOFade(0, _panelList[1].panelAlphaFadeTime);
+        HideChildPanel(_panelList[1].panel, _panelList[1].panelAlphaFadeTime);
         DisableRayExceptSelf(_panelList[0].panel);
 
         ResetBuyPanel();
@@ -124,7 +127,7 @@ public class PenguinStoreUI : MonoBehaviour
 
     public void OnEnablePenguinInfo() //펭귄 정보 활성화
     {
-        _panelList[2].panel.DOFade(1, _panelList[2].panelAlphaFadeTime);
+        ShowChildPanel(_panelList[2].panel, _panelList[2].panelAlphaFadeTime);
         DisableRayExceptSelf(_panelList[2].panel);
 
         UpdatePenguinInfo(_panelList[2].panelAlphaFadeTime);
@@ -132,7 +135,7 @@ public class PenguinStoreUI : MonoBehaviour
 
     public void OnDisablePenguinInfo() //펭귄 정보 비활성화
     {
-        _panelList[2].panel.DOFade(0, _panelList[2].panelAlphaFadeTime);
+        HideChildPanel(_panelList[2].panel, _panelList[2].panelAlphaFadeTime);
         DisableRayExceptSelf(_panelList[1].panel);
     }
 
