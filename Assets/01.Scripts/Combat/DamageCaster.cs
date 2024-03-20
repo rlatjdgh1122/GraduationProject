@@ -15,9 +15,9 @@ public class DamageCaster : MonoBehaviour
 
     public LayerMask TargetLayer;
 
-    private BaseStat _owner;
+    private Entity _owner;
 
-    public void SetOwner(BaseStat owner)
+    public void SetOwner(Entity owner)
     {
         _owner = owner;
     }
@@ -34,7 +34,7 @@ public class DamageCaster : MonoBehaviour
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
-            int damage = (int)(_owner.damage.GetValue() * AfewTimes);
+            int damage = (int)(_owner.Stat.damage.GetValue() * AfewTimes);
             raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             return true;
         }
@@ -62,7 +62,7 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
-                int damage = _owner.damage.GetValue();
+                int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
 
@@ -85,7 +85,7 @@ public class DamageCaster : MonoBehaviour
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<Health>(out Health health))
         {
-            int damage = _owner.damage.GetValue();
+            int damage = _owner.Stat.damage.GetValue();
 
             health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
 
@@ -111,7 +111,7 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
-                int damage = _owner.damage.GetValue();
+                int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
 
@@ -134,28 +134,36 @@ public class DamageCaster : MonoBehaviour
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
-            int damage = _owner.damage.GetValue();
+            int damage = _owner.Stat.damage.GetValue();
 
-            float critical = _owner.criticalChance.GetValue() * 0.01f;
-            int criticalValue = _owner.criticalValue.GetValue();
+            float critical = _owner.Stat.criticalChance.GetValue() * 0.01f;
+            int criticalValue = _owner.Stat.criticalValue.GetValue();
             float adjustedDamage;
             float dice = UnityEngine.Random.value;
+            HitType originType = _hitType;
 
             if (dice < critical)
             {
+                _hitType = HitType.CriticalHit;
                 adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
                 damage = (int)adjustedDamage;
                 Debug.Log("크리티컬!");
             }
-
+            
             raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-
+            _hitType = originType;
 
             return true;
         }
 
         return false;
     }
+
+    public void ShowCritical(EntityActionData actionData)
+    {
+        //actionData.HitPoint
+    }
+
     public void BleedCast(int damage, int repeat, float duration, HitType hitType)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);

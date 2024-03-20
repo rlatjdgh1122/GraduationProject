@@ -41,7 +41,6 @@ public class Enemy : Entity
         NavAgent.speed = moveSpeed;
 
         AttackCompo = GetComponent<EntityAttackData>();
-        SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
     }
 
     private void OnEnable()
@@ -118,11 +117,12 @@ public class Enemy : Entity
     {
         WaveManager.Instance.CheckIsEndBattlePhase();
         //Debug.Log("!!!!!!!!");
-        //SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
+        SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
     }
 
     public void DieEventHandler()
     {
+        SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
         SignalHub.OnEnemyPenguinDead?.Invoke();
     }
 }

@@ -14,7 +14,7 @@ public class EntityAttackData : MonoBehaviour
         
         DamageCasterCompo = transform.GetComponentInChildren<DamageCaster>();
         owner = GetComponent<Entity>();
-        DamageCasterCompo.SetOwner(owner.Stat);
+        DamageCasterCompo.SetOwner(owner);
     }
 
     public virtual void AoEAttack(bool Knb,float value)
