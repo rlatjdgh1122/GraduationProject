@@ -24,17 +24,10 @@ public class HpBarUI : WorldUI
         base.Update();
         //_container.transform.rotation = Quaternion.LookRotation(_container.transform.position - _cam.transform.position);
 
-        try
+        if (_hpbar.fillAmount <= 0)
         {
-            if (_hpbar.fillAmount <= 0)
-            {
-                FadeOutImmediately();
-                return;
-            }
-        }
-        catch
-        {
-            Debug.Log(this.gameObject);
+            FadeOutImmediately();
+            return;
         }
     }
 
