@@ -31,8 +31,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
         CreateArmy();
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
-        //SignalHub.OnArmyChanged?.Invoke(armies[0], armies[0]);
-        //ChangeArmy(1);
+
         KeySetting();
     }
     private void KeySetting()
@@ -202,6 +201,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
         var Army = armies[legion - 1];
         var LegionStat = obj.ligeonStat;
+        var followCam = Army.FollowCam;
 
         if (Army.General != null)
         {
@@ -211,6 +211,9 @@ public class ArmyManager : Singleton<ArmyManager>
 
         obj.SetOwner(Army);
         Army.General = obj;
+
+        followCam.Obj.transform.parent = obj.transform;
+        followCam.isInGeneral = true;
 
         Army.AddStat(Army, LegionStat);
 
@@ -263,11 +266,14 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.Legion = ArmiesCount + 1;
         newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
 
-        GameObject armyObj = new GameObject($"{newArmy.Legion}Legion_ArmyParentObject");
-        armyObj.transform.AddComponent<NavMeshAgent>();
+        GameObject followCam = new GameObject($"{newArmy.Legion}Legion_FollowCam");
+        ArmyFollowCam armyFollowCam = new ArmyFollowCam();
 
-        newArmy.AsrmyParentObj = armyObj;
+        //위치 초기화
+        followCam.transform.position = new Vector3(4.18f, 20f, 1.8f);
 
+        armyFollowCam.Obj = followCam;
+        newArmy.FollowCam = armyFollowCam;
 
         armies.Add(newArmy);
     }

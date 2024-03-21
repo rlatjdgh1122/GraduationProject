@@ -52,7 +52,7 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler
     private void SpawnPenguinRightEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
         _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
-        _penguinStore.OneClickBuyPenguin();
+        _penguinStore.BuyPanel.OneClickBuyPenguin();
     }
 
     public void OnPointerDown(PointerEventData eventData)

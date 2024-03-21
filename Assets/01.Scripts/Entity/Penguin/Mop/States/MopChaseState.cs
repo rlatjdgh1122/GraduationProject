@@ -11,10 +11,8 @@ public class MopChaseState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
 
         ChaseEnter();
-        _penguin.FindFirstNearestEnemy();
     }
 
     public override void FixedUpdateState()

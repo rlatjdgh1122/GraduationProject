@@ -41,6 +41,12 @@ public class CameraSystem : MonoBehaviour
 
 
     private bool isMoving = false;
+    public bool IsMoving
+    {
+        get => isMoving;
+        set => isMoving = value;
+    }
+    public CinemachineVirtualCamera CinemachineCam => _cinemachineCam;
     private void LateUpdate()
     {
         CameraControl();
@@ -52,13 +58,13 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraControl()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             isMoving = !isMoving;
 
             transform.position = new Vector3(0, transform.position.y, 0);
             //transform.Rotate(0f, 0f, 0f);
-            //_cinemachineCam.transform.Rotate(50f, 0f, 0f);
+            //_cinemachineCam.transform.Rotate(50f, 0f, 0f);    
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50, 0, 0));
         }

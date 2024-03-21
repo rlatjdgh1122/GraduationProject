@@ -12,8 +12,8 @@ public class BasicMustMoveState : BasicBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.StopImmediately();
-        _penguin.MoveToPosition(_penguin.GetSeatPosition());
+
+       MustMoveEnter();
     }
 
     public override void FixedUpdateState()

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LegionInventoryUI : MonoBehaviour
+public class LegionInventoryUI : PopupUI
 {
     #region Public
     [Header("Public Property")]
@@ -79,22 +79,23 @@ public class LegionInventoryUI : MonoBehaviour
     #region OnOffLegionInventoryUI
     private CanvasGroup _legionInventory;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         _legionInventory = GetComponent<CanvasGroup>();
     }
 
     public void OnEnableLegionInventory()
     {
-        _legionInventory.DOFade(1, 0.5f);
-        _legionInventory.blocksRaycasts = true;
+        ShowPanel();
     }
 
     public void OnDisableLegionInventory()
     {
-        _legionInventory.DOFade(0, 0.5f);
-        DisableSelectImage();
-        _legionInventory.blocksRaycasts = false;
+        HidePanel();
+
+        SignalHub.OnModifyArmyInfo?.Invoke();
     }
     #endregion
 

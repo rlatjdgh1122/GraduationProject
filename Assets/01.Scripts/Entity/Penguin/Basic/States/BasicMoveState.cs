@@ -28,7 +28,6 @@ public class BasicMoveState : BasicBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-
     }
 
     public override void Exit()

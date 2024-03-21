@@ -23,6 +23,7 @@ public class PopupUI : MonoBehaviour
 
     public virtual void ShowPanel()
     {
+        UIManager.Instance.currentPopupUI.Push(this);
         _panel.blocksRaycasts = true;
         _panel.DOFade(1, _panelFadeTime);
     }

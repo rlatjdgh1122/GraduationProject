@@ -23,9 +23,9 @@ public class Army
     public int Legion; //몇번째 군단
     public bool IsCanReadyAttackInCurArmySoldiersList = true; //군단 전체가 움직일 준비가 되었는가
     public List<Penguin> Soldiers = new(); //군인 펭귄들
-    public General General; //장군
+    public General General = null; //장군
 
-    public GameObject AsrmyParentObj; //군단 오브젝트
+    public ArmyFollowCam FollowCam = null; //군단 오브젝트
     public ArmyInfo Info; //정보
 
     public void AddStat(Army army, LigeonStatAdjustment ligeonStat)
@@ -51,7 +51,7 @@ public class Army
             solider.AddStat(value, type, mode);
         }
     }
-    public void RemoveStat(Army army,int value, StatType type, StatMode mode)
+    public void RemoveStat(Army army, int value, StatType type, StatMode mode)
     {
         army.General?.RemoveStat(value, type, mode);
 
@@ -60,6 +60,13 @@ public class Army
             solider.RemoveStat(value, type, mode);
         }
     }
+}
+public class ArmyFollowCam
+{
+    public GameObject Obj = null;
+    public Vector3 mousePos = Vector3.zero;
+    public float moveSpeed = 5f;
+    public bool isInGeneral = false;
 }
 
 

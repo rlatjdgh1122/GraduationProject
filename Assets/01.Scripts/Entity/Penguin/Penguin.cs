@@ -166,8 +166,14 @@ public class Penguin : Entity
 
     protected override void HandleDie()
     {
-        //ArmyManager.Instance.Remove(Owner.Legion, this);
         IsDead = true;
+
+        //사실 이런 경우가 생기면 안되는데 더미펭귄이 실제 펭귄이라서 같이 싸울때가 있기에 예외처리
+        if (Owner != null)
+        {
+            ArmyManager.Instance.Remove(Owner.Legion, this);
+        }
+        SignalHub.OnModifyArmyInfo?.Invoke();
     }
 
     #region 스탯 관련
@@ -257,7 +263,8 @@ public class Penguin : Entity
     public Vector3 GetSeatPosition() => MousePos + SeatPos;
 
 
-
+    public void MoveToMouseClickPositon()
+        => NavAgent?.SetDestination(GetSeatPosition());
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)

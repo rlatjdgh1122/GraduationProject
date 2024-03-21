@@ -22,6 +22,7 @@ public class EntityStateMachine<T, G> where T : Enum where G : Entity
         CurrentState.Exit();
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
+
         UnityEngine.Debug.Log($"이전 : {PrevState}, 이후 : {CurrentState}");
     }
 

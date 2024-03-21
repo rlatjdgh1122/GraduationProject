@@ -8,17 +8,14 @@ public class BasicAttackState : BasicBaseState
     public BasicAttackState(Penguin penguin, EntityStateMachine<BasicPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
         : base(penguin, stateMachine, animationBoolName)
     {
-
+            
     }
 
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = false;
-        _penguin.WaitForCommandToArmyCalled = false;
-        _penguin.FindFirstNearestEnemy();
-        _penguin.StopImmediately();
-        _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
+
+        AttackEnter();
     }
 
     public override void FixedUpdateState()
@@ -35,7 +32,7 @@ public class BasicAttackState : BasicBaseState
             }
         }
 
-        else if (IsArmyCalledIn_CommandMode())
+        if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {
@@ -57,6 +54,7 @@ public class BasicAttackState : BasicBaseState
     public override void UpdateState()
     {
         base.UpdateState();
+
         _penguin.LookTarget();
     }
 

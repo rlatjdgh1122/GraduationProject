@@ -98,21 +98,20 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (_isDead) return;
 
+        float dice = UnityEngine.Random.value;
+        float adjustedEvasion = _evasion * 0.01f;
+        if (dice < adjustedEvasion)
+        {
+            OnEvasionEvent?.Invoke();
+            return;
+        }
+
         _actionData.HitPoint = point;
         _actionData.HitNormal = normal;
         _actionData.HitType = hitType;
 
         OnHitEvent?.Invoke();
         OnHit?.Invoke();
-
-        float dice = UnityEngine.Random.value; // 0부터 1 사이의 임의의 값
-        float adjustedEvasion = _evasion * 0.01f;
-
-        if (dice < adjustedEvasion)
-        {
-            OnEvasionEvent?.Invoke();
-            return;
-        }
 
         float adjustedDamage = damage * (1.0f - (_armor * 0.01f));
 
