@@ -21,8 +21,8 @@ public class UIManager : Singleton<UIManager>
     public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
     public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>(); 
     public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
-
-    public PopupUI currentPopupUI = null;
+    
+    public Stack<PopupUI> currentPopupUI = new Stack<PopupUI>();
 
     public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
@@ -85,7 +85,6 @@ public class UIManager : Singleton<UIManager>
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         if (popupUI != null)
         {
-            currentPopupUI = popupUI;
             popupUI.ShowPanel();
         }    
     }
@@ -110,8 +109,8 @@ public class UIManager : Singleton<UIManager>
         {
             if (currentPopupUI != null)
             {
-                currentPopupUI.HidePanel();
-                currentPopupUI = null;
+                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI")
+                    currentPopupUI.Pop().HidePanel();
             }
         }
     }
