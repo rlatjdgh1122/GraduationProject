@@ -90,16 +90,16 @@ public class QuestManager : Singleton<QuestManager>
         SignalHub.OnEndQuestEvent?.Invoke();
     }
 
-    private void Update()
+    private void Update() //Å×½ºÆ®
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartQuest(_questDataSO.QuestDatas[0]);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            ProgressQuest(_questDataSO.QuestDatas[0]);
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    StartQuest(_questDataSO.QuestDatas[0]);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    ProgressQuest(_questDataSO.QuestDatas[0]);
+        //}
     }
 
 }
