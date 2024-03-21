@@ -85,7 +85,6 @@ public class UIManager : Singleton<UIManager>
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         if (popupUI != null)
         {
-            currentPopupUI = popupUI;
             popupUI.ShowPanel();
         }    
     }
@@ -111,7 +110,6 @@ public class UIManager : Singleton<UIManager>
             if (currentPopupUI != null)
             {
                 currentPopupUI.HidePanel();
-                currentPopupUI = null;
             }
         }
     }

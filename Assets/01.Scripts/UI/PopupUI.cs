@@ -23,12 +23,14 @@ public class PopupUI : MonoBehaviour
 
     public virtual void ShowPanel()
     {
+        UIManager.Instance.currentPopupUI = this;
         _panel.blocksRaycasts = true;
         _panel.DOFade(1, _panelFadeTime);
     }
 
     public virtual void HidePanel()
     {
+        UIManager.Instance.currentPopupUI = null;
         _panel.blocksRaycasts = false;
         _panel.DOFade(0, _panelFadeTime);
     }

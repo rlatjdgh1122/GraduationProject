@@ -20,7 +20,7 @@ public class PenguinUnitSlot
     public Penguin spawnPenguinPrefab;
 }
 
-public class PenguinStoreUI : MonoBehaviour
+public class PenguinStoreUI : PopupUI
 {
     public List<PenguinStorePanel> _panelList;
     public List<PenguinUnitSlot> _slotList;
@@ -58,8 +58,10 @@ public class PenguinStoreUI : MonoBehaviour
     private CanvasGroup _statuCanvas;
     private TextMeshProUGUI _statuesMessageText;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
 
         #region BuyPanelComponent
