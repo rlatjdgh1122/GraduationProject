@@ -267,11 +267,13 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
 
         GameObject followCam = new GameObject($"{newArmy.Legion}Legion_FollowCam");
+        ArmyFollowCam armyFollowCam = new ArmyFollowCam();
 
         //위치 초기화
         followCam.transform.position = new Vector3(4.18f, 20f, 1.8f);
 
-        newArmy.FollowCam.Obj = followCam;
+        armyFollowCam.Obj = followCam;
+        newArmy.FollowCam = armyFollowCam;
 
         armies.Add(newArmy);
     }
