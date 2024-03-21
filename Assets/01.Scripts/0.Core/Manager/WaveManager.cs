@@ -272,7 +272,6 @@ public class WaveManager : Singleton<WaveManager>
         {
             _curPTspawnPenguins[i].SetCanInitTent(true);
             _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
-            Debug.Log(_curPTspawnPenguins[i]);
         }
     }
 
