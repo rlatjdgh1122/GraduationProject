@@ -2,168 +2,104 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : Singleton<QuestManager>
 {
-    public static QuestManager Instance;
+    [SerializeField]
+    private QuestDataSO _questDataSO;
 
-    public QuestEvents QuestEventsCompo;
+    private Dictionary<QuestData, Quest> _allQuests = new Dictionary<QuestData, Quest>();
 
-    private Dictionary<string, Quest> _questDic = new();
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(Instance);
-        }
-        Instance = this;
-
-        _questDic = CreateQuestDic();
-
-    }
-
-    private void OnEnable()
-    {
-        QuestEventsCompo = new();
-        QuestEventsCompo.OnStartQuest += StartQuest;
-        QuestEventsCompo.OnAdvanceQuest += AdvanceQuest;
-        QuestEventsCompo.OnFinishQuest += FinishQuest;
-
-        QuestEventsCompo.OnQuestStepStateChange += QuestStepStateChange;
-
-    }
-
-    private void OnDisable()
-    {
-        QuestEventsCompo.OnStartQuest -= StartQuest;
-        QuestEventsCompo.OnAdvanceQuest -= AdvanceQuest;
-        QuestEventsCompo.OnFinishQuest -= FinishQuest;
-
-
-        QuestEventsCompo.OnQuestStepStateChange -= QuestStepStateChange;
-    }
+    private List<QuestData> _curInprogressQuests = new List<QuestData>();
 
     private void Start()
     {
-        foreach (Quest quest in _questDic.Values)
-        {
-            // initialize any loaded quest steps
-            if (quest.State == QuestState.ING)
-            {
-                quest.InstantiateCurrentQuestStep(this.transform);
-            }
+        _allQuests.Clear();
 
-            // broadcast the initial state of all quests on startup
-            //QuestEventsCompo.QuestStateChange(quest);
+        for (int i = 0; i < _questDataSO.QuestDatas.Count; i++)
+        {
+            _allQuests.Add(_questDataSO.QuestDatas[i],
+                           _questDataSO.Quess[i]);
         }
     }
 
-    private void ChangeQuestState(string id, QuestState state)
+    public void StartQuest(QuestData questData)
     {
-        Quest quest = GetQuestById(id);
-        quest.State = state;
-        QuestEventsCompo.QuestStateChange(quest);
+        if (questData.isStartedQuest)
+        {
+            Debug.Log($"{questData.Id}는 이미 진행중인 퀘스트임 리턴함;;");
+            return;
+        }
+        else if(questData.isFinQuest)
+        {
+            Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
+            return;
+        }
+        
+        Debug.Log($"{questData.Id} 퀘스트 시이작");
+
+        Quest quest = _allQuests[questData];
+        _curInprogressQuests.Add(questData); //현재 퀘스트 리스트에 추가
+        InstantiateQuest(questData);
+
+        _curInprogressQuests[questData.TutorialQuestIdx].isStartedQuest = true;
+
+        SignalHub.OnStartQuestEvent?.Invoke();
     }
 
-    private bool CheckRequirementsMet(Quest quest)
+    private void InstantiateQuest(QuestData questData)
     {
-        // start true and prove to be false
-        bool meetsRequirements = true;
-
-        foreach (QuestInfoSO prerequisiteQuestInfo in quest.QuestInfo.questPrerequisites)
+        for (int i = 0; i < questData.RepetCount; i++)
         {
-            if (GetQuestById(prerequisiteQuestInfo.id).State != QuestState.FINISHED)
-            {
-                meetsRequirements = false;
-            }
+            GameObject questObj = Object.Instantiate<GameObject>(questData.QuestObj, transform);
+            questObj.name = questData.Id;
+        }
+    }
+
+    public void ProgressQuest(QuestData questData)
+    {
+        if (questData.isFinQuest)
+        {
+            Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
+            return;
         }
 
-        return meetsRequirements;
+        Transform[] foundChildren = transform.GetComponentsInChildren<Transform>(true);
+        Transform[] questObj = Array.FindAll(foundChildren, t => t.name == questData.Id && t != transform);
+
+        try
+        {
+            Destroy(questObj[0].gameObject);
+            Debug.Log($"오우 이제 {questData.Id}퀘스트 {questObj.Length}번만 더 해");
+        }
+        catch
+        {
+            EndQuest(questData);
+        }
+    }
+
+    public void EndQuest(QuestData questData)
+    {
+        Debug.Log($"{questData.Id} 퀘스트 끄읕");
+
+        _curInprogressQuests[questData.TutorialQuestIdx].isFinQuest = true;
+        _curInprogressQuests[questData.TutorialQuestIdx].isStartedQuest = true;
+
+        _curInprogressQuests.Remove(questData);
+        SignalHub.OnEndQuestEvent?.Invoke();
     }
 
     private void Update()
     {
-        foreach (Quest quest in _questDic.Values)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            if (quest.State == QuestState.REQUIREMENTSNOTMET && CheckRequirementsMet(quest))
-            {
-                ChangeQuestState(quest.QuestInfo.id, QuestState.CANSTART);
-            }
+            StartQuest(_questDataSO.QuestDatas[0]);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            ProgressQuest(_questDataSO.QuestDatas[0]);
         }
     }
 
-    private void StartQuest(string id)
-    {
-        Debug.Log($"Start {id}");
-        Quest quest = GetQuestById(id);
-        quest.InstantiateCurrentQuestStep(this.transform);
-        ChangeQuestState(quest.QuestInfo.id, QuestState.ING);
-    }
-
-    private void AdvanceQuest(string id)
-    {
-        Quest quest = GetQuestById(id);
-
-        // move on to the next step
-        quest.MoveToNextStep();
-
-        // if there are more steps, instantiate the next one
-        if (quest.CurrentStepFinished())
-        {
-            quest.InstantiateCurrentQuestStep(this.transform);
-        }
-        // if there are no more steps, then we've finished all of them for this quest
-        else
-        {
-            ChangeQuestState(quest.QuestInfo.id, QuestState.CANFINISH);
-        }
-    }
-
-    private void FinishQuest(string id)
-    {
-        Quest quest = GetQuestById(id);
-        //ClaimRewards(quest);
-        ChangeQuestState(quest.QuestInfo.id, QuestState.FINISHED);
-    }
-
-    private void ClaimRewards(Quest quest) //나중에 퀘스트 보상 할꺼면 여기에
-    {
-
-    }
-
-    private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
-    {
-        Quest quest = GetQuestById(id);
-        quest.StoreQuestStepState(questStepState, stepIndex);
-        ChangeQuestState(id, quest.State);
-    }
-
-    private Dictionary<string, Quest> CreateQuestDic()
-    {
-        QuestInfoSO[] allQuests = Resources.LoadAll<QuestInfoSO>("Quests");
-        Dictionary<string, Quest> questDic2 = new();
-
-        foreach (var quests in allQuests)
-        {
-            if (questDic2.ContainsKey(quests.id))
-            {
-                Debug.LogWarning("Duplicate Quest Id" +  quests.id);
-            }
-            questDic2.Add(quests.id, new Quest(quests));
-        }
-        return questDic2;
-    }
-
-    public Quest GetQuestById(string id)
-    {
-        Quest quest = _questDic[id];
-
-        if (quest == null)
-        {
-            Debug.LogError($"Id Not Found: {id}");
-        }
-
-        return quest;
-    }
 }

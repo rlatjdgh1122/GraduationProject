@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct QuestData
+public class QuestData
 {
-    public QuestState state;
-    public int questStepIdx;
-    public QuestStepState[] questStepStates;
+    public bool IsTutorialQuest;
+    public bool isFinQuest = false;
+    public bool isStartedQuest = false;
 
-    public QuestData(QuestState state, int questStepIdx, QuestStepState[] questStepStates)
-    {
-        this.state = state;
-        this.questStepIdx = questStepIdx;
-        this.questStepStates = questStepStates;
-    }
+    public int TutorialQuestIdx;
+    public int RepetCount;
+
+    public string Id;
+
+    public string[] QuestTexts;
+    public GameObject QuestObj;
 }
