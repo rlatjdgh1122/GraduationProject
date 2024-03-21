@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using static UnityEngine.Rendering.DebugUI;
 
 [System.Serializable]
@@ -12,16 +13,27 @@ public class ParameterKnockbackEvent
 
 public class EnemyAnimationTrigger : MonoBehaviour
 {
+    [SerializeField] private UnityEvent OnPrevAttackEffectEvent = null;
+    [SerializeField] private UnityEvent OnEndAttackEffectEvent = null;
     private Enemy _enemy;
 
     private void Awake()
     {
         _enemy = transform.parent.GetComponent<Enemy>();
     }
-
-    public void AoEAttackTrigger(bool Knb, float value)
+    public void PrevAttackEffectTrigger()
     {
-        _enemy.AttackCompo.AoEAttack(Knb, value);
+        OnPrevAttackEffectEvent?.Invoke();
+    }
+
+    public void EndAttackEffectEventTrigger()
+    {
+        OnEndAttackEffectEvent?.Invoke();
+    }
+
+    public void AoEAttackTrigger(int isKnb)
+    {
+        _enemy.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 1.5f);
     }
 
     public void SphereAttackTrigger()
