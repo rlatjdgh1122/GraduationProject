@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Define.RayCast;
 using UnityEngine.Rendering;
+using System;
 
 public class PenguinMovementInfo
 {
@@ -39,13 +40,21 @@ public class ArmyMovement : MonoBehaviour
     private void Awake()
     {
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
+
         _inputReader.RightClickEvent += SetClickMovement;
         SignalHub.OnArmyChanged += OnArmyChangedHandler;
+        SignalHub.OnModifyArmyInfo += OnModifyArmyInfoHnadler;
     }
-
+   
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
         curArmy = newArmy;
+        Debug.Log(newArmy.Legion + " : " + ArmyManager.Instance.GetCurArmy().Legion);
+        SetArmyNumber();
+    }
+    private void OnModifyArmyInfoHnadler()
+    {
+        curArmy = ArmyManager.Instance.GetCurArmy();
         SetArmyNumber();
     }
 
@@ -68,12 +77,6 @@ public class ArmyMovement : MonoBehaviour
             armySoldierList.Add(armySoldier);
         }
     }
-    public void SetArmy_Btn()
-    {
-        curArmy = ArmyManager.Instance.GetCurArmy();
-        SetArmyNumber();
-    }
-
     public void SetClickMovement()
     {
         RaycastHit hit;

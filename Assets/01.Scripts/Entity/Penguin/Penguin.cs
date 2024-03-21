@@ -166,8 +166,10 @@ public class Penguin : Entity
 
     protected override void HandleDie()
     {
-        //ArmyManager.Instance.Remove(Owner.Legion, this);
         IsDead = true;
+
+        ArmyManager.Instance.Remove(Owner.Legion, this);
+        SignalHub.OnModifyArmyInfo?.Invoke();
     }
 
     #region ½ºÅÈ °ü·Ã
@@ -257,7 +259,8 @@ public class Penguin : Entity
     public Vector3 GetSeatPosition() => MousePos + SeatPos;
 
 
-
+    public void MoveToMouseClickPositon()
+        => NavAgent?.SetDestination(GetSeatPosition());
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)

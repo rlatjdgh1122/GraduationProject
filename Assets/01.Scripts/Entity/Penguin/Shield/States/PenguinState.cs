@@ -24,7 +24,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.SuccessfulToArmyCalled = false;
 
         if (_penguin.WaitForCommandToArmyCalled)
-            _penguin.MoveToPosition(_penguin.GetSeatPosition());
+            _penguin.MoveToMouseClickPositon();
     }
     protected void ChaseEnter()
     {

@@ -95,6 +95,8 @@ public class LegionInventoryUI : MonoBehaviour
         _legionInventory.DOFade(0, 0.5f);
         DisableSelectImage();
         _legionInventory.blocksRaycasts = false;
+
+        SignalHub.OnModifyArmyInfo?.Invoke();
     }
     #endregion
 
