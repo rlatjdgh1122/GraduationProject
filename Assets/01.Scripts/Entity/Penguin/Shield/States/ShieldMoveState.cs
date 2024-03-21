@@ -13,8 +13,6 @@ public class ShieldMoveState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
-        _penguin.SuccessfulToArmyCalled = false;
 
         MoveEnter();
     }

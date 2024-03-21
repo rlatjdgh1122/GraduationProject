@@ -17,7 +17,13 @@ public class MopIdleState : MopBaseState
     {
         base.FixedUpdateState();
 
-        if (_penguin.NavAgent.velocity.magnitude > 0.05f)   
+       
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        if (_penguin.NavAgent.velocity.magnitude > 0.05f)
         {
             _stateMachine.ChangeState(MopPenguinStateEnum.Move);
         }
@@ -29,10 +35,6 @@ public class MopIdleState : MopBaseState
         {
             _stateMachine.ChangeState(MopPenguinStateEnum.FreelyMove);
         }
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState();
     }
 
     public override void Exit()

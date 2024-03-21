@@ -22,6 +22,15 @@ public class BasicAttackState : BasicBaseState
     {
         base.FixedUpdateState();
 
+       
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _penguin.LookTarget();
+
         if (IsArmyCalledIn_BattleMode())
         {
             if (_triggerCalled)
@@ -49,13 +58,6 @@ public class BasicAttackState : BasicBaseState
                 IsTargetNull(BasicPenguinStateEnum.Idle);
             }
         }
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-        _penguin.LookTarget();
     }
 
     public override void Exit()
