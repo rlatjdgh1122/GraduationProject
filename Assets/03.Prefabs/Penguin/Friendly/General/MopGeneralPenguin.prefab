@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitToDisappear: 3.8
-  _canvas: {fileID: 176487962437810002}
+  _hpbar: {fileID: 0}
 --- !u!222 &9134590046702581328
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -605,33 +605,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
   innerDistance: 10
   attackDistance: 1.5
   moveSpeed: 5
   attackSpeed: 1
   maxDetectedCount: 0
   provokeRange: 25
-  CurrentTarget: {fileID: 0}
-  IsDead: 0
-  owner:
-    Legion: 0
-    IsMoving: 0
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
+  isBot: 0
   passiveData: {fileID: 11400000, guid: 9c1f015e560393d4fa8b3c03ade4ad4f, type: 2}
+  ArmyTriggerCalled: 0
+  WaitForCommandToArmyCalled: 1
+  SuccessfulToArmyCalled: 0
   ligeonStat:
     IncStat:
     - type: 1024
       value: 25
     DecStat: []
+  skill: {fileID: 0}
 --- !u!114 &4884695249029055275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,6 +668,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEvasionEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1493,6 +1491,9 @@ MonoBehaviour:
   OnAoEAttackTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnStunTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnRangeAttackTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1500,6 +1501,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOnTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOffTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3376862886110985243
@@ -2267,7 +2274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7104139308744045105
 Transform:
   m_ObjectHideFlags: 0
