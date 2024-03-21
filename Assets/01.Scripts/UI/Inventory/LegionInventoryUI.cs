@@ -94,6 +94,8 @@ public class LegionInventoryUI : PopupUI
     public void OnDisableLegionInventory()
     {
         HidePanel();
+
+        SignalHub.OnModifyArmyInfo?.Invoke();
     }
     #endregion
 
