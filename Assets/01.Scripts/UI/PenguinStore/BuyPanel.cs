@@ -5,26 +5,24 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
-public class PenguinUnitSlot
-{
-    public int price;
-    public Penguin spawnPenguinPrefab;
-}
-
 public class BuyPanel : PopupUI
 {
     private PenguinStoreUI _presenter;
 
     [Header("BuyPanel")]
+    [SerializeField] private int _maxCount;
+
+    private PenguinStat _stat;
+    private Penguin _spawnPenguin;
+
     private TextMeshProUGUI _buyCntText;
     private TextMeshProUGUI _priceText;
     private TextMeshProUGUI _currentCostText;
     private TextMeshProUGUI _amountCostText;
     private TextMeshProUGUI _buyToPenguinNameText;
-    private Image _buyButtonImg;
     private TextMeshProUGUI _buyButtonText;
-    [SerializeField] private int _maxCount;
+    private Image _buyButtonImg;
+
     private int _cnt = 1;
     private int _price = 0;
     private bool _canBuy;
@@ -33,18 +31,22 @@ public class BuyPanel : PopupUI
     {
         base.Awake();
 
-        _presenter = transform.parent.GetComponent<PenguinStoreUI>();
-
+        _presenter            = transform.parent.GetComponent<PenguinStoreUI>();
         _buyToPenguinNameText = transform.Find("Buy/PenguinName").GetComponent<TextMeshProUGUI>();
-        _amountCostText = transform.Find("Buy/AmountCost").GetComponent<TextMeshProUGUI>();
-        _buyCntText = transform.Find("Buy/BuyCount/Count").GetComponent<TextMeshProUGUI>();
-        _currentCostText = transform.Find("Buy/CurrentCost").GetComponent<TextMeshProUGUI>();
-        _priceText = transform.Find("Buy/Price").GetComponent<TextMeshProUGUI>();
-        _buyButtonImg = transform.Find("Buttons/BuyBtn").GetComponent<Image>();
-        _buyButtonText = transform.Find("Buttons/BuyBtn/Text").GetComponent<TextMeshProUGUI>();
+        _amountCostText       = transform.Find("Buy/AmountCost").GetComponent<TextMeshProUGUI>();
+        _buyCntText           = transform.Find("Buy/BuyCount/Count").GetComponent<TextMeshProUGUI>();
+        _currentCostText      = transform.Find("Buy/CurrentCost").GetComponent<TextMeshProUGUI>();
+        _priceText            = transform.Find("Buy/Price").GetComponent<TextMeshProUGUI>();
+        _buyButtonImg         = transform.Find("Buttons/BuyBtn").GetComponent<Image>();
+        _buyButtonText        = transform.Find("Buttons/BuyBtn/Text").GetComponent<TextMeshProUGUI>();
     }
 
-    #region BuyPanel
+    public void PenguinInformataion(Penguin spawnPenguin, PenguinStat penguinStat, int price)
+    {
+        _spawnPenguin = spawnPenguin;
+        _stat = penguinStat;
+        _price = price;
+    }
 
     private int _amountPrice;
     private void PriceUpdate() //Æë±ÏÀÇ ÃÑ °¡°ÝÀ» °è»êÇØ¼­ ¾÷µ«
@@ -58,7 +60,7 @@ public class BuyPanel : PopupUI
 
     private void CurrentCostUpdate() //ÇöÀç º¸À¯ ÀçÈ­ ¾÷µ«
     {
-        _buyToPenguinNameText.text = _presenter._stat.PenguinName;
+        _buyToPenguinNameText.text = _stat.PenguinName;
         _presenter.TextUpdate(_currentCostText, CostManager.Instance.Cost.ToString());
     }
 
@@ -135,9 +137,9 @@ public class BuyPanel : PopupUI
 
         for (int i = 0; i < _cnt; i++)
         {
-            LegionInventory.Instance.AddPenguin(_presenter._spawnPenguin.ReturnGenericStat<PenguinStat>());
+            LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
 
-            _presenter._penguinFactory.SpawnPenguinHandler(_presenter._spawnPenguin);
+            _presenter._penguinFactory.SpawnPenguinHandler(_spawnPenguin);
         }
 
 
@@ -168,7 +170,6 @@ public class BuyPanel : PopupUI
         BuyButton();
         ShowMessage("±¸¸Å ¼º°ø!");
     }
-    #endregion
 
     public override void HidePanel()
     {
@@ -178,5 +179,7 @@ public class BuyPanel : PopupUI
     public override void ShowPanel()
     {
         base.ShowPanel();
+
+        ResetBuyPanel();
     }
 }
