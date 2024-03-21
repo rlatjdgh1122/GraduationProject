@@ -36,7 +36,6 @@ public class BasicFreelyMoveState : BasicBaseState
         {
             _penguin.NavAgent.speed = normalNavSpeed;
             _penguin.SetFreelyMoveAble(false);
-            Debug.Log("ExitFreelyMoveState");
             //_stateMachine .ChangeState(BasicPenguinStateEnum.Move);
         }
 

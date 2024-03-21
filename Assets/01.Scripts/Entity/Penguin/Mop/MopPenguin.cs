@@ -9,6 +9,7 @@ public enum MopPenguinStateEnum
     Chase,
     Attack,
     AoEAttack,
+    FreelyMove,
     Dead
 }
 

@@ -21,6 +21,8 @@ public class UIManager : Singleton<UIManager>
     public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
     public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>(); 
     public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
+    
+    public Stack<PopupUI> currentPopupUI = new Stack<PopupUI>();
 
     public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
@@ -77,11 +79,14 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    #region popUI Logics
     public void ShowPanel(string uiName)
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         if (popupUI != null)
+        {
             popupUI.ShowPanel();
+        }    
     }
 
     public void HidePanel(string uiName)
@@ -95,6 +100,22 @@ public class UIManager : Singleton<UIManager>
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         popupUI.MovePanel(x, y, fadeTime);
     }
+    #endregion
+
+    #region UI Function
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (currentPopupUI != null)
+            {
+                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI")
+                    currentPopupUI.Pop().HidePanel();
+            }
+        }
+    }
+    #endregion
+
 
     public IEnumerator UIMoveDotCoroutine(RectTransform transform, Vector3 targetVec, float duration,
                                       Ease ease = Ease.Linear, params Action[] actions)
