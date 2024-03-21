@@ -16,6 +16,26 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.WaitForCommandToArmyCalled = true;
 
     }
+    protected void AttackEnter()
+    {
+        _triggerCalled = false;
+        _penguin.WaitForCommandToArmyCalled = false;
+        _penguin.FindFirstNearestEnemy();
+        _penguin.StopImmediately();
+        _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
+    }
+    protected void ChaseEnter()
+    {
+        _triggerCalled = true;
+
+        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
+        {
+            _penguin.ArmyTriggerCalled = false;
+            _penguin.WaitForCommandToArmyCalled = false;
+        }
+
+        _penguin.FindFirstNearestEnemy();
+    }
     protected void MoveEnter()
     {
         if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
@@ -26,14 +46,21 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         if (_penguin.WaitForCommandToArmyCalled)
             _penguin.MoveToMouseClickPositon();
     }
-    protected void ChaseEnter()
+    protected void MustMoveEnter()
     {
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-        {
-            _penguin.ArmyTriggerCalled = false;
-            _penguin.WaitForCommandToArmyCalled = false;
-        }
+        //_navAgent.ResetPath();
+        _navAgent.isStopped = false;
+        _penguin.MoveToMouseClickPositon();
     }
+    protected void DeadEnter()
+    {
+        _triggerCalled = true;
+        _penguin.CurrentTarget = null;
+        _penguin.enabled = false;
+        _penguin.NavAgent.enabled = false;
+        //_penguin.CharController.enabled = false;
+    }
+
     /// <summary>
     /// 배틀모드일 때 유저가 마우스 클릭을 했다면
     /// </summary>

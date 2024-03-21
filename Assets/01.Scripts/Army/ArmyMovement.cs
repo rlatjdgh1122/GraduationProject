@@ -1,9 +1,9 @@
+using Define.RayCast;
+using Newtonsoft.Json.Schema;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Define.RayCast;
-using UnityEngine.Rendering;
-using System;
+using UnityEngine.AI;
 
 public class PenguinMovementInfo
 {
@@ -37,6 +37,9 @@ public class ArmyMovement : MonoBehaviour
     private static float heartbeat = 0.1f;
     private static WaitForSecondsRealtime waitingByheartbeat = new WaitForSecondsRealtime(heartbeat);
 
+    private NavMeshAgent followNav = null;
+    private bool isInGeneral = false;
+
     private void Awake()
     {
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
@@ -45,11 +48,10 @@ public class ArmyMovement : MonoBehaviour
         SignalHub.OnArmyChanged += OnArmyChangedHandler;
         SignalHub.OnModifyArmyInfo += OnModifyArmyInfoHnadler;
     }
-   
+
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
         curArmy = newArmy;
-        Debug.Log(newArmy.Legion + " : " + ArmyManager.Instance.GetCurArmy().Legion);
         SetArmyNumber();
     }
     private void OnModifyArmyInfoHnadler()
@@ -60,6 +62,11 @@ public class ArmyMovement : MonoBehaviour
 
     private void SetArmyNumber()
     {
+        if (armySoldierList.Count < 0) return;
+
+        isInGeneral = false;
+        followNav = null;
+
         if (armySoldierList.Count > 0)
             armySoldierList.Clear();
 
@@ -72,8 +79,11 @@ public class ArmyMovement : MonoBehaviour
 
         if (curArmy.General != null)
         {
+            //장군이 있다면 장군 기준으로
+            isInGeneral = true;
+
             PenguinMovementInfo armySoldier =
-                new(false, curArmy.General);
+                       new(false, curArmy.General);
             armySoldierList.Add(armySoldier);
         }
     }
@@ -108,10 +118,10 @@ public class ArmyMovement : MonoBehaviour
             var obj = item.Obj;
 
             obj.ArmyTriggerCalled = true;
-            //obj.SuccessfulToArmyCalled = false;
             obj.MousePos = mousePos;
-
         }
+
+        //카메라 이동
 
         //��ΰ� ������ �� �ִ� �������� Ȯ���ϱ� ���� �ڷ�ƾ ������
         if (AllTrueToCanMoveCoutine != null)

@@ -10,8 +10,7 @@ public class MopMustMoveState : MopBaseState
     {
         base.Enter();
 
-        // _navAgent.ResetPath();
-        _penguin.MoveToMouseClickPositon();
+        MustMoveEnter();
     }
     public override void FixedUpdateState()
     {
