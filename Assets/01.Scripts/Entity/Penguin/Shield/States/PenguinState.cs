@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using UnityEngine;
 
 public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Penguin
 {
@@ -48,8 +50,9 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void MustMoveEnter()
     {
+        //_navAgent.ResetPath();
         _navAgent.isStopped = false;
-        _navAgent.ResetPath();
+        //_navAgent.velocity = Vector3.one * .2f;
         _penguin.MoveToMouseClickPositon();
     }
     protected void DeadEnter()

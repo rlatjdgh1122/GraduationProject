@@ -18,8 +18,15 @@ public class MopChaseState : MopBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
-        // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
+      
 
+       
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        // 그냥 클릭 : 따라가던 도중 마우스 클릭되면 이동
         if (IsArmyCalledIn_CommandMode())
         {
             _stateMachine.ChangeState(MopPenguinStateEnum.MustMove);
@@ -35,10 +42,6 @@ public class MopChaseState : MopBaseState
 
             IsTargetNull(MopPenguinStateEnum.Idle);
         }
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState(); 
     }
 
     public override void Exit()

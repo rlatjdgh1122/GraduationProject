@@ -15,6 +15,10 @@ public class MopMustMoveState : MopBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
 
         if (_penguin.WaitForCommandToArmyCalled)
         {
@@ -30,11 +34,6 @@ public class MopMustMoveState : MopBaseState
             Debug.Log(_penguin.IsInnerTargetRange + " : " + _penguin.MoveFocusMode);
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
         }
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
     }
 
     public override void Exit()

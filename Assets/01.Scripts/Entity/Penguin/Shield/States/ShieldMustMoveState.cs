@@ -10,8 +10,8 @@ public class ShieldMustMoveState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        //_penguin.StartImmediately();
-        _penguin.MoveToPosition(_penguin.GetSeatPosition());
+
+        MustMoveEnter();
     }
     public override void UpdateState()
     {
