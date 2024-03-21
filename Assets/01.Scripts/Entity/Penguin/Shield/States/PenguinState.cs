@@ -48,8 +48,8 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void MustMoveEnter()
     {
-        //_navAgent.ResetPath();
         _navAgent.isStopped = false;
+        _navAgent.ResetPath();
         _penguin.MoveToMouseClickPositon();
     }
     protected void DeadEnter()
