@@ -7,28 +7,57 @@ using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
+[Serializable]
+public class PenguinUnitSlot
+{
+    public int price;
+    public Penguin spawnPenguinPrefab;
+}
+
 public class PenguinStoreUI : PopupUI
 {
-    [Header("PenguinStore")]
+    [Header("Make Penguin Slot")]
     [SerializeField] private Transform _spawnPenguinButtonParent;
+    [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
+    public List<PenguinUnitSlot> _slotList;
 
-    public PenguinStat _stat;
-    public Penguin _spawnPenguin;
-    public PenguinFactory _penguinFactory;
+    #region Component
+    public PenguinFactory _penguinFactory { get; private set; }
 
-    public CanvasGroup _statuCanvas;
-    public TextMeshProUGUI _statuesMessageText;
+    public CanvasGroup _statuCanvas {get; private set;}
+    public TextMeshProUGUI _statuesMessageText { get; private set; }
+
+    public BuyPanel BuyPanel { get; private set; }
+    private InfoPanel _infoPanel;
+    #endregion
 
     public override void Awake()
     {
         base.Awake();
 
-        _penguinFactory = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
-        _statuCanvas = transform.Find("StatusMessage").GetComponent<CanvasGroup>();
+        #region Componenet
+
+        _penguinFactory     = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
+        _statuCanvas        = transform.Find("StatusMessage").GetComponent<CanvasGroup>();
         _statuesMessageText = _statuCanvas.transform.Find("WhenBuyPenguin").GetComponent<TextMeshProUGUI>();
+        BuyPanel            = transform.Find("BuyPanel").GetComponent<BuyPanel>();
+        _infoPanel          = transform.Find("DetailInfoPanel").GetComponent<InfoPanel>();
+
+        #endregion
+
+        foreach (var slot in _slotList) //Make Penguin Slot
+        {
+            SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
+            btn.InstantiateSelf(slot.spawnPenguinPrefab.Stat as PenguinStat, slot.spawnPenguinPrefab, slot.price);
+            btn.SlotUpdate();
+        }
     }
 
-    #region OnOffPanel
+    public void PenguinInformataion(Penguin spawnPenguin, PenguinStat penguinStat, int price)
+    {
+        BuyPanel.PenguinInformataion(spawnPenguin, penguinStat, price);
+        _infoPanel.PenguinInformataion(spawnPenguin, penguinStat);
+    }
 
     public void OnEnableStorePanel() //Ω∫≈‰æÓ ∆–≥Œ »∞º∫»≠
     {
@@ -53,40 +82,14 @@ public class PenguinStoreUI : PopupUI
 
     public void OnEnablePenguinInfo() //∆Î±œ ¡§∫∏ »∞º∫»≠
     {
-        UIManager.Instance.ShowPanel("InfoPanel");
+        UIManager.Instance.ShowPanel("DetailInfoPanel");
     }
 
     public void OnDisablePenguinInfo() //∆Î±œ ¡§∫∏ ∫Ò»∞º∫»≠
     {
-        UIManager.Instance.HidePanel("InfoPanel");
+        UIManager.Instance.HidePanel("DetailInfoPanel");
     }
 
-    #endregion
-
-    //private void DisableRayExceptSelf(CanvasGroup self)
-    //{
-    //    for(int i = 0; i < _panelList.Count; i++)
-    //    {
-    //        if(self != _panelList[i].panel)
-    //        {
-    //            _panelList[i].panel.blocksRaycasts = false;
-    //        }
-    //        else
-    //        {
-    //            _panelList[i].panel.blocksRaycasts = true;
-    //        }
-    //    }
-    //}
-
-    //public void PenguinInformataion(Penguin spawnPenguin, PenguinStat stat, int price) //ΩΩ∑‘ø°º≠ ∆Î±œ ¡§∫∏ πﬁ±‚
-    //{
-    //    _price = -price; //∞°∞›
-    //    _spawnPenguin = spawnPenguin;
-    //    _stat = stat;
-
-
-    //    PriceUpdate();
-    //}
 
     public void TextUpdate(TextMeshProUGUI text, string str)
     {
