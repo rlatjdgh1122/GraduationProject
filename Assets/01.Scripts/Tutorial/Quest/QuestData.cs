@@ -6,9 +6,23 @@ using UnityEngine;
 [Serializable]
 public class QuestData
 {
+    public QuestData(QuestData questData)
+    {
+        IsTutorialQuest = questData.IsTutorialQuest;
+        isFinQuest = questData.isFinQuest;
+        isStartedQuest = questData.isStartedQuest;
+        TutorialQuestIdx = questData.TutorialQuestIdx;
+        RepetCount = questData.RepetCount;
+
+        Id = questData.Id;
+
+        QuestTexts = questData.QuestTexts;
+        QuestObj = questData.QuestObj;
+    }
+
     public bool IsTutorialQuest;
-    public bool isFinQuest = false;
-    public bool isStartedQuest = false;
+    public bool isFinQuest;
+    public bool isStartedQuest;
 
     public int TutorialQuestIdx;
     public int RepetCount;

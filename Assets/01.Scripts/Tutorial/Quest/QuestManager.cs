@@ -16,12 +16,17 @@ public class QuestManager : Singleton<QuestManager>
 
     private void Start()
     {
+        LoadQuestData();
+    }
+
+    private void LoadQuestData()
+    {
         _allQuests.Clear();
 
         for (int i = 0; i < _questDataSO.QuestDatas.Count; i++) //So에 있는 걸 딕셔너리에 추가함.
         {
             _allQuests.Add(_questDataSO.QuestDatas[i].Id,
-                           _questDataSO.QuestDatas[i]);
+                           new QuestData(_questDataSO.QuestDatas[i])); //So니까 실행 끝나고 데이터가 저장되면 안 돼서 생성자를 통해 걍 새로 생성
         }
     }
 
