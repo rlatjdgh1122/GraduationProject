@@ -6,5 +6,4 @@ using UnityEngine;
 public class QuestDataSO : ScriptableObject
 {
     public List<QuestData> QuestDatas = new List<QuestData>();
-    public List<Quest> Quess = new List<Quest>();
 }
