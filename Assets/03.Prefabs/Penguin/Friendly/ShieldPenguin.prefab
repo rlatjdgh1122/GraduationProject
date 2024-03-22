@@ -1055,8 +1055,8 @@ MonoBehaviour:
   OnUIUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PenguinHpbarUI, Assembly-CSharp
+      - m_Target: {fileID: 747102402161739884}
+        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
         m_MethodName: UpdateHpbarUI
         m_Mode: 0
         m_Arguments:
@@ -1070,8 +1070,8 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PenguinHpbarUI, Assembly-CSharp
+      - m_Target: {fileID: 747102402161739884}
+        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
         m_MethodName: FadeOutImmediately
         m_Mode: 1
         m_Arguments:
@@ -1873,6 +1873,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4276996580944431299}
     m_Modifications:
+    - target: {fileID: 2006703638478009823, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 95bc210a90850f746aa9b2faa48630e3,
+        type: 3}
+    - target: {fileID: 2076320284573400394, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 95bc210a90850f746aa9b2faa48630e3,
+        type: 3}
     - target: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
       propertyPath: m_Name
@@ -1988,6 +2000,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0af4319c2e1e9084793fde56a613effc, type: 3}
+--- !u!114 &747102402161739884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 345225413289612845, guid: 0af4319c2e1e9084793fde56a613effc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1050536090015997505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d8df26212f61f4392b784abcc88cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9085308546283311551 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,

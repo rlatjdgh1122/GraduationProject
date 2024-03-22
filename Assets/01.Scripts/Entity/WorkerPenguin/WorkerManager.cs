@@ -6,6 +6,7 @@ public class WorkerManager : Singleton<WorkerManager>
 {
     [SerializeField]
     private Worker _workerPrefab;
+    private int _maxWorkerCount;
 
     [SerializeField] private List<Worker> _workerList = new List<Worker>();
 
@@ -15,6 +16,11 @@ public class WorkerManager : Singleton<WorkerManager>
 
     #region property
     public int WorkerCount => _workerList.Count;
+    public int MaxWorkerCount
+    {
+        get { return _maxWorkerCount; }
+        set {  _maxWorkerCount = value; }
+    }
     public int SpawnedPenguinCount => _spawnedPenguinList.Count;
     public List<Worker> WorkerList => _workerList;
     public List<Worker> SpawnedPenguinList => _spawnedPenguinList;
@@ -34,7 +40,6 @@ public class WorkerManager : Singleton<WorkerManager>
     {
         _workerList.Add(_workerPrefab);
     }
-
 
     public void SendWorkers(int count, WorkableObject workableObject)
     {
@@ -60,7 +65,7 @@ public class WorkerManager : Singleton<WorkerManager>
             {
                 var penguin = _workerFactory.SpawnPenguinHandler(worker);
                 penguin.StartWork(workableObject); //활성화해주고
-                OnSpawnMinerrPenguin(penguin);
+                OnSpawnMinerPenguin(penguin);
 
                 calledPenguinCount++; //값을 1 늘림
 
@@ -81,18 +86,18 @@ public class WorkerManager : Singleton<WorkerManager>
             if (worker.CanWork && worker.Target == workableObject)
             {
                 worker.FinishWork();
-                OnDeSpawnMinerrPenguin(worker);
+                OnDeSpawnMinerPenguin(worker);
             }
         }
     }
 
 
-    public void OnSpawnMinerrPenguin(Worker miner)
+    public void OnSpawnMinerPenguin(Worker miner)
     {
         _workerList.RemoveAt(_workerList.Count - 1);
         _spawnedPenguinList.Add(miner);
     }
-    public void OnDeSpawnMinerrPenguin(Worker miner)
+    public void OnDeSpawnMinerPenguin(Worker miner)
     {
         _spawnedPenguinList.Remove(miner);
         _workerList.Add(miner);
