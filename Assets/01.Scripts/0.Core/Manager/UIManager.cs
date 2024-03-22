@@ -110,7 +110,7 @@ public class UIManager : Singleton<UIManager>
             if (currentPopupUI != null)
             {
                 if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI")
-                    currentPopupUI.Pop().HidePanel();
+                    currentPopupUI.Peek().HidePanel();
             }
         }
     }

@@ -25,15 +25,6 @@ public class ResourceObject : WorkableObject
     public int ReceiveCountWhenCompleted => _receiveCountWhenCompleted;
     #endregion
 
-    NormalUI resourceUI
-    {
-        get
-        {
-            UIManager.Instance.overlayUIDictionary.TryGetValue(UIType.Resource, out NormalUI resourceUI);
-            return resourceUI;
-        }
-    }
-
     protected override void Awake()
     {
         base.Awake();
@@ -72,7 +63,8 @@ public class ResourceObject : WorkableObject
     {
         if (!WaveManager.Instance.IsBattlePhase)
         {
-            resourceUI.EnableUI(1f, this);
+            ResourceManager.Instance.SelectedResource = this;
+            UIManager.Instance.ShowPanel("ResourceUI");
         }
     }
 

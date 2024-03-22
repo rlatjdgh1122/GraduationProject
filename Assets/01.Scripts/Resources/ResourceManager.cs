@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +5,8 @@ public class ResourceManager : Singleton<ResourceManager>
 {
     public List<Resource> resourceStack;
     public Dictionary<ResourceDataSO, Resource> resourceDictionary;
+
+    public ResourceObject SelectedResource;
 
     public override void Awake()
     {

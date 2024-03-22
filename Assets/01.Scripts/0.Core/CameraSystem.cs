@@ -67,20 +67,14 @@ public class CameraSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             transform.position = new Vector3(0, transform.position.y, 0);
-            //transform.Rotate(0f, 0f, 0f);
-            //_cinemachineCam.transform.Rotate(50f, 0f, 0f);    
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-            _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50, 0, 0));
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
             isMoving = false;
             transform.position = new Vector3(0, transform.position.y, 0);
-            //transform.Rotate(0f, 0f, 0f);
-            //_cinemachineCam.transform.Rotate(50f, 0f, 0f);    
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-            _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50, 0, 0));
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
