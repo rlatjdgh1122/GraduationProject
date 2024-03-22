@@ -20,7 +20,7 @@ public class QuestTrigger : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            QuestManager.Instance.StartQuest(QuestId);
+            QuestManager.Instance.ProgressQuest(QuestId);
         }
     }
 }
