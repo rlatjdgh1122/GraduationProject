@@ -22,7 +22,7 @@ public class MopMustMoveState : MopBaseState
 
         if (_penguin.WaitForCommandToArmyCalled)
         {
-            if (_penguin.NavAgent.velocity.magnitude < 0.05f)
+            if (_penguin.NavAgent.desiredVelocity.magnitude < 0.05f)
             {
                 _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
             }
