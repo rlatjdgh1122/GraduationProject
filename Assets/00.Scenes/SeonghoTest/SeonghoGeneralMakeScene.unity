@@ -769,6 +769,10 @@ MonoBehaviour:
   _fieldOfViewMax: 70
   fieldOfViewMin: 10
   _rotateSpeed: 5
+  minXValue: -50
+  maxXValue: 50
+  minYValue: -50
+  maxYValue: 50
 --- !u!4 &1336610859
 Transform:
   m_ObjectHideFlags: 0
@@ -1435,7 +1439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitToDisappear: 3.8
-  _canvas: {fileID: 5219727808790769786}
+  _hpbar: {fileID: 0}
 --- !u!23 &1553228816943124324
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1682,6 +1686,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOnTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOffTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &2383460336764702796
@@ -2633,6 +2643,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEvasionEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
