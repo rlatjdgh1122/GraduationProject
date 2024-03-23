@@ -1,12 +1,9 @@
 ﻿using DG.Tweening;
 using System;
-using System.Collections;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+using TMPro;
+using UnityEngine;
 
 public class WaveManager : Singleton<WaveManager>  
 {

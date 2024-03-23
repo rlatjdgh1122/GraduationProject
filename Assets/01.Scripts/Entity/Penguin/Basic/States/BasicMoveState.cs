@@ -14,6 +14,10 @@ public class BasicMoveState : BasicBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
 
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
         {
@@ -24,10 +28,6 @@ public class BasicMoveState : BasicBaseState
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
         }
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState();
     }
 
     public override void Exit()

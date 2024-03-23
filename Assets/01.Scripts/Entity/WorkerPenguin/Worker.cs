@@ -8,6 +8,7 @@ public class Worker : Entity
     #region components
     public WorkableObject Target;
     public EntityAttackData AttackCompo { get; private set; }
+    public DamageCaster DamageCasterCompo { get; private set; }
     public Transform WorkerHomeTrm;
     #endregion
 
@@ -21,7 +22,10 @@ public class Worker : Entity
         base.Awake();
 
         AttackCompo = GetComponent<EntityAttackData>();
+        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
         WorkerHomeTrm = GameManager.Instance.WorkerSpawnPoint;
+
+        DamageCasterCompo.SetOwner(this);
 
         Init();
     }

@@ -25,6 +25,13 @@ public class MopAttackState : MopBaseState
     {
         base.FixedUpdateState();
 
+       
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _penguin.LookTarget();
         if (IsArmyCalledIn_BattleMode())
         {
             if (_triggerCalled)
@@ -35,7 +42,7 @@ public class MopAttackState : MopBaseState
             }
         }
 
-        if (IsArmyCalledIn_CommandMode())
+        else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {
@@ -51,12 +58,6 @@ public class MopAttackState : MopBaseState
                 IsTargetNull(MopPenguinStateEnum.Idle);
             }
         }
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-        _penguin.LookTarget();
     }
 
     public override void Exit()

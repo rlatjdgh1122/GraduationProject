@@ -19,6 +19,13 @@ public class BasicIdleState : BasicBaseState
     {
         base.FixedUpdateState();
 
+       
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        //적사거리가 들어오고 /*-군사들이 위치로 이동했다면-*/ 주석
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         if (_penguin.IsInnerTargetRange)
@@ -28,13 +35,6 @@ public class BasicIdleState : BasicBaseState
         {
             _stateMachine.ChangeState(BasicPenguinStateEnum.FreelyMove);
         }
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-        //적사거리가 들어오고 /*-군사들이 위치로 이동했다면-*/ 주석
-
     }
 
     public override void Exit()

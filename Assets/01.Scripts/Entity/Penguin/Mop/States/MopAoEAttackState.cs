@@ -17,6 +17,13 @@ public class MopAoEAttackState : MopBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
+        
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        _penguin.LookTarget();
         if (IsArmyCalledIn_BattleMode())
         {
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
@@ -24,7 +31,7 @@ public class MopAoEAttackState : MopBaseState
             IsTargetNull(MopPenguinStateEnum.MustMove);
         }
 
-        if (IsArmyCalledIn_CommandMode())
+        else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {
@@ -41,12 +48,6 @@ public class MopAoEAttackState : MopBaseState
             }
         }
 
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-        _penguin.LookTarget();
     }
 
     public override void Exit()

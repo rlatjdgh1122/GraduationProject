@@ -20,18 +20,18 @@ public class MopMoveState : MopBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
 
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
         {
             _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
         }
 
-        if (_penguin.IsInnerTargetRange)
+        else if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
-    }
-    public override void UpdateState()
-    {
-        base.UpdateState();
     }
 
     public override void Exit()
