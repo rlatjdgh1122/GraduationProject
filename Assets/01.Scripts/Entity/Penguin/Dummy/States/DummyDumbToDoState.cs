@@ -19,9 +19,6 @@ public class DummyDumbToDoState : DummyBaseState
         //여기서는 정상작동 하지만
         _penguin.AnimatorCompo.SetFloat(AnimID, _penguin.RandomValue);
 
-        //Int타입인 여기서는 정상작동 하지않는다.
-        _penguin.AnimatorCompo.SetInteger(AnimID, _penguin.RandomValue);
-
         _triggerCalled = false;
     }
     public override void UpdateState()

@@ -67,7 +67,7 @@ public class DummyPenguin : Penguin
 
     public void GoToHouse()
     {
-        Destroy(this);
+        Destroy(gameObject);
     }
     protected override void HandleDie()
     {

@@ -12,6 +12,9 @@ public class DummyGoToHouseState : DummyBaseState
     public override void Enter()
     {
         base.Enter();
+
+        _navAgent.speed = 5f;
+        _navAgent.isStopped = false;
         _navAgent.SetDestination(_penguin.HouseTrm.position);
     }
     public override void UpdateState()
