@@ -25,8 +25,8 @@ public abstract class Entity : PoolableMono
     public float attackDistance = 1.5f;
     #region Components
     public Health HealthCompo { get; private set; }
-    public Animator AnimatorCompo { get; private set; }
-    public NavMeshAgent NavAgent { get; private set; }
+    public Animator AnimatorCompo { get; protected set; }
+    public NavMeshAgent NavAgent { get; protected set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
 
