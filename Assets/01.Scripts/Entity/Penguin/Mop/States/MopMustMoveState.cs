@@ -24,7 +24,7 @@ public class MopMustMoveState : MopBaseState
         Debug.Log(_navAgent.velocity.magnitude);
         if (_penguin.WaitForCommandToArmyCalled)
         {
-            if (_penguin.NavAgent.velocity.magnitude < 0.05f)
+            if (_penguin.NavAgent.desiredVelocity.magnitude < 0.05f)
             {
                 Debug.Log("머스트 아이들 : " + _navAgent.velocity.magnitude);
                 _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
