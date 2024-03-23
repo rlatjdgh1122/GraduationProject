@@ -21,14 +21,14 @@ public class DialogSystem : MonoBehaviour
 
     Queue<string> sentences = new Queue<string>();
 
-    public void Begin(Dialog info)
+    public void Begin(string[] texts)
     {
         dialog.SetActive(true);
         FadeIn(2f);
 
         if (dialCount == 1)
         {
-            foreach (var sentence in info.sentences)
+            foreach (var sentence in texts)
             {
                 sentences.Enqueue(sentence);
             }
@@ -44,22 +44,15 @@ public class DialogSystem : MonoBehaviour
             if (isTyping)
                 return;
 
-            if (dialCount == 1 && sentences.Count == 3)
+            if(sentences.Count <= 0)
             {
-                End();
                 dialCount++;
-            }
-
-            if (dialCount == 2 && sentences.Count == 0)
-            {
                 End();
+                return;
             }
 
-            if (sentences.Count > 0)
-            {
-                string sentence = sentences.Dequeue();
-                StartCoroutine(TypeSentence(sentence));
-            }
+            string sentence = sentences.Dequeue();
+            StartCoroutine(TypeSentence(sentence));
         }
     }
 

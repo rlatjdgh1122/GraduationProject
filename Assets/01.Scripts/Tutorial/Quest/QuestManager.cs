@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using Object = UnityEngine.Object;
 
 public class QuestManager : Singleton<QuestManager>
@@ -13,6 +14,15 @@ public class QuestManager : Singleton<QuestManager>
     private Dictionary<string, QuestData> _allQuests = new Dictionary<string, QuestData>();
 
     private List<QuestData> _curInprogressQuests = new List<QuestData>();
+
+    private DialogSystem _dialogSystem;
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        _dialogSystem = Object.FindAnyObjectByType<DialogSystem>();
+    }
 
     private void Start()
     {
@@ -53,6 +63,8 @@ public class QuestManager : Singleton<QuestManager>
                     $"{questData.TutorialQuestIdx}번째 퀘스트인 {questData.Id}를 하려고 하잖아;; 리턴함");
                 return;
             }
+
+            _dialogSystem.Begin(questData.QuestTexts); //튜토리얼 텍스트 뜨게
         }
 
         Debug.Log($"{questData.Id} 퀘스트 시이작");
@@ -69,8 +81,8 @@ public class QuestManager : Singleton<QuestManager>
     {
         for (int i = 0; i < questData.RepetCount; i++)
         {
-            GameObject questObj = Object.Instantiate<GameObject>(questData.QuestObj, transform);
-            questObj.name = questData.Id;
+            GameObject questObj = new GameObject(questData.Id);
+            questObj.transform.SetParent(transform);
         }
     }
 

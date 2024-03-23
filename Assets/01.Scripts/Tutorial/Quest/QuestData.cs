@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [Serializable]
@@ -17,18 +18,16 @@ public class QuestData
         Id = questData.Id;
 
         QuestTexts = questData.QuestTexts;
-        QuestObj = questData.QuestObj;
     }
 
-    public bool IsTutorialQuest;
     public bool isFinQuest;
     public bool isStartedQuest;
 
-    public int TutorialQuestIdx;
     public int RepetCount;
 
     public string Id;
 
+    public bool IsTutorialQuest;
+    public int TutorialQuestIdx;
     public string[] QuestTexts;
-    public GameObject QuestObj;
 }

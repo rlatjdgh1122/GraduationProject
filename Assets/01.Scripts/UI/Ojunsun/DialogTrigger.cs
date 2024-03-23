@@ -5,11 +5,8 @@ using UnityEngine.UI;
 
 public class DialogTrigger : MonoBehaviour
 {
-    public Dialog info;
-
-    public void Trigger()
+    public void Trigger(DialogSystem system, string[] strings)
     {
-        var system = FindObjectOfType<DialogSystem>();
-        system.Begin(info);
+        system.Begin(strings);
     }
 }
