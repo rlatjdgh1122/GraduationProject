@@ -11,7 +11,6 @@ public class WorkerState<T> where T : Enum
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
 
-
     public WorkerState(Worker worker, WorkerStateMachine<T> stateMachine, string animationBoolName)
     {
         _worker = worker;
