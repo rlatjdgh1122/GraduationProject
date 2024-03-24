@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class GeneralBaseState : EntityState<GeneralPenguinStateEnum, General>
+public class GeneralBaseState : GeneralState<GeneralPenguinStateEnum, General>
 {
     public GeneralBaseState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
@@ -21,7 +21,6 @@ public class GeneralBaseState : EntityState<GeneralPenguinStateEnum, General>
         if (_penguin.IsDead)
             _stateMachine.ChangeState(GeneralPenguinStateEnum.Dead);
     }
-
     protected void HoldShield()
     {
         if (_penguin.skill.IsAvaliable)
