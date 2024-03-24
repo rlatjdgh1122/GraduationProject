@@ -31,7 +31,7 @@ public class MopAoEAttackState : MopBaseState
             IsTargetNull(MopPenguinStateEnum.MustMove);
         }
 
-        if (IsArmyCalledIn_CommandMode())
+        else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {

@@ -9,11 +9,13 @@ public class NexusBase : MonoBehaviour
     #region components
     [SerializeField] private NexusStat _nexusStat;
     private Health _health;
+    private int _currentWorkerCount;
     #endregion
 
     #region property
     public NexusStat NexusStat => _nexusStat;
     public Health HealthCompo => _health;
+    public int WorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }
     #endregion
 
     [SerializeField]

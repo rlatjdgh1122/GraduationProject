@@ -5,15 +5,36 @@ using UnityEngine;
 
 public class GeneralShip : MonoBehaviour
 {
-    private void OnMouseDown()
+    [SerializeField] private Transform innerTrm;
+    [SerializeField] private Transform outTrm;
+
+    bool isArrived = false;
+
+    private void Awake()
     {
-        Debug.Log("d");
-        UIManager.Instance.ShowPanel("GeneralUI");
+        SignalHub.OnBattlePhaseStartEvent += MoveShip;
+        SignalHub.OnBattlePhaseEndEvent += ReturnShip;
     }
 
     private void Start()
     {
-        transform.DOMoveY(-0.1f, 3.2f).SetLoops(-2, LoopType.Yoyo);
-        transform.DORotate(new Vector3(-1.2f, -60, 0f), 3.2f).SetLoops(-2, LoopType.Yoyo);
+        ReturnShip();
+    }
+
+    private void MoveShip()
+    {
+        transform.DOMove(outTrm.position, 12f);
+        transform.DOLookAt(outTrm.transform.position, 2f);
+    }
+
+    private void ReturnShip()
+    {
+        transform.DOMove(innerTrm.position, 10f);
+        transform.DOLookAt(innerTrm.transform.position, 2f);
+    }
+
+    private void OnMouseDown()
+    {
+        UIManager.Instance.ShowPanel("GeneralUI");
     }
 }
