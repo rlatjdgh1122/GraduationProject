@@ -42,7 +42,7 @@ public class MopAttackState : MopBaseState
             }
         }
 
-        if (IsArmyCalledIn_CommandMode())
+        else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {

@@ -18,9 +18,9 @@ public class MopChaseState : MopBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
-      
 
-       
+
+
     }
     public override void UpdateState()
     {
@@ -32,7 +32,7 @@ public class MopChaseState : MopBaseState
             _stateMachine.ChangeState(MopPenguinStateEnum.MustMove);
         }
 
-        //else
+        else
         {
             if (_penguin.CurrentTarget != null)
                 _penguin.MoveToCurrentTarget();

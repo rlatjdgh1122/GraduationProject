@@ -259,12 +259,12 @@ public class Penguin : Entity
     {
         MoveToPosition(mousePos);
     }
-
-    public Vector3 GetSeatPosition() => MousePos + SeatPos;
-
-
     public void MoveToMouseClickPositon()
-        => NavAgent?.SetDestination(GetSeatPosition());
+    {
+        //StartImmediately();
+        NavAgent.isStopped = false;
+        NavAgent?.SetDestination(MousePos + SeatPos);
+    }
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)
