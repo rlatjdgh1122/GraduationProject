@@ -48,6 +48,7 @@ public class GroundMove : MonoBehaviour
 
         SignalHub.OnBattlePhaseStartEvent += GroundMoveHandle;
         SignalHub.OnBattlePhaseEndEvent += SetOutline;
+
     }
 
     private void GroundMoveHandle()
@@ -73,12 +74,14 @@ public class GroundMove : MonoBehaviour
                     CoroutineUtil.CallWaitForSeconds(0.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
                                                          () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
+                    SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;
 
                     _waveEffect.gameObject.SetActive(false);
 
                     DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
                     {
                         WaveManager.Instance.OnIceArrivedEventHanlder();
+
 
                         foreach (Enemy enemy in _enemies)
                         {
@@ -100,4 +103,14 @@ public class GroundMove : MonoBehaviour
         });
     }
 
+    private void DisableDeadBodys()
+    {
+        foreach (var enemy in _enemies)
+        {
+            //PoolManager.Instance.Push(enemy); // 아니 이거 풀매니저 SO에 넣으면 오류 150개뜸
+            enemy.gameObject.SetActive(false); // 그래서 임시로 이렇게 함
+        }
+
+        SignalHub.OnBattlePhaseEndEvent -= DisableDeadBodys;
+    }
 }
