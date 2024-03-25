@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,18 +66,25 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
     private void SpawnPenguins()
     {
+        StartCoroutine(SpawnPenguinCorou());
+    }
+
+    private IEnumerator SpawnPenguinCorou()
+    {
         foreach (var p in penguinSpawnDictionary)
         {
             foreach (var q in p.Value)
             {
                 var key = q.Key;
-                var value = p.Value[key];
 
+                var value = p.Value[key];
                 value.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.25f);
             }
         }
 
         penguinSpawnDictionary.Clear();
+        yield return null;
     }
 
     private void OnRemoveArmyByInfo(ArrangementInfo info)

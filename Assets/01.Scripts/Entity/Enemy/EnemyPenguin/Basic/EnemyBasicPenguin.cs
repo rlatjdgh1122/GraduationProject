@@ -39,8 +39,6 @@ public class EnemyBasicPenguin : Enemy
         StateMachine.Init(EnemyPenguinStateEnum.Idle);
     }
 
-    
-
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
