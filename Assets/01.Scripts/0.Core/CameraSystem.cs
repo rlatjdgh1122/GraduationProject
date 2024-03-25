@@ -84,6 +84,8 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraMove()
     {
+        if (isRotating) { return; }
+        Debug.Log("dnp");
         if (isMoving)
         {
             float xInput = 0;
@@ -147,7 +149,7 @@ public class CameraSystem : MonoBehaviour
         {
             Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
 
-            Debug.Log(mouseMovementDelta);
+            //Debug.Log(mouseMovementDelta);
 
             inputDir.x = mouseMovementDelta.x * _dragSpeed;
             inputDir.z = mouseMovementDelta.y * _dragSpeed;
