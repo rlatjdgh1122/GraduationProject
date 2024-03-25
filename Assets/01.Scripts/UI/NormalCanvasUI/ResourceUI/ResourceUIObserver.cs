@@ -12,7 +12,7 @@ public class ResourceUIObserver : PopupUI
     {
         base.Awake();
 
-        _subject.RegisterReceiver(transform.Find("MainUI").GetComponent<IReceiver>());
+        _subject.RegisterReceiver(transform.Find("MainUl").GetComponent<IReceiver>());
     }
 
     public override void ShowPanel()
