@@ -51,10 +51,10 @@ public class ShipandNexusPositionUI : MonoBehaviour
         get
         {
             // 선박의 위치를 화면 좌표로 변환
-            Vector3 pos = Define.CamDefine.Cam.MainCam.WorldToScreenPoint(_nexusPos);
+            Vector3 pos = Define.CamDefine.Cam.MainCam.WorldToScreenPoint(_nexusPos) + new Vector3(-10f, 175f, 0);
 
-            Vector3 screenPos = new Vector2(Mathf.Clamp(pos.x - 10, 50f, Screen.width - 50f),
-                                            Mathf.Clamp(pos.y + 175f, 50f, Screen.height - 50f));
+            Vector3 screenPos = new Vector2(Mathf.Clamp(pos.x, 50f, Screen.width - 50f),
+                                            Mathf.Clamp(pos.y, 50f, Screen.height - 50f));
 
             // 화면 내에서 선박 위치를 유지시키기 위해 제한을 둠
             return screenPos;
@@ -64,6 +64,9 @@ public class ShipandNexusPositionUI : MonoBehaviour
     private void LateUpdate()
     {
         _shipbutton.gameObject.rectTransform().position = _shipScreenPos; //배UI위치를 배 위치로
+
+        Debug.Log($"Btn: {_shipbutton.gameObject.rectTransform().position}");
+        Debug.Log($"ScreenPos: {_shipScreenPos}");
 
         _nexusbutton.gameObject.rectTransform().position = _nexusScreenPos; //넥서스UI위치를 배 위치로
     }

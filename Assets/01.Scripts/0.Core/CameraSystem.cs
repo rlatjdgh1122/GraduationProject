@@ -21,7 +21,7 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float fieldOfViewMin = 10;
 
     [Header("카메라 회전")]
-    [Range(0.1f, 9f)]
+    [Range(0.1f, 10.0f)]
     [SerializeField] private float _rotateSpeed;
 
     private float targetFieldOfView = 50f;
@@ -66,6 +66,8 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50f, 0, 0));
+
             transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
@@ -73,8 +75,11 @@ public class CameraSystem : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             isMoving = false;
+            isRotating = false;
             transform.position = new Vector3(0, transform.position.y, 0);
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+
+            _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50f, 0, 0));
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -85,7 +90,7 @@ public class CameraSystem : MonoBehaviour
     private void CameraMove()
     {
         if (isRotating) { return; }
-        Debug.Log("dnp");
+
         if (isMoving)
         {
             float xInput = 0;
