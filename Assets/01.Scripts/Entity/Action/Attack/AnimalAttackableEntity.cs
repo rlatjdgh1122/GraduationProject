@@ -23,7 +23,11 @@ public class AnimalAttackableEntity : EntityAttackData
 
     public override void AoEAttack(bool Knb, float value)
     {
-        DamageCasterCompo.SelectTypeAOECast(animalAttack[ComboCounter].Damage, animalAttack[ComboCounter].hitType);
+        DamageCasterCompo.SelectTypeAOECast(
+            animalAttack[ComboCounter].Damage, 
+            animalAttack[ComboCounter].hitType,
+            animalAttack[ComboCounter].Knback,
+            animalAttack[ComboCounter].KnbackValue);
     }
 
     public override void MeleeAttack()
