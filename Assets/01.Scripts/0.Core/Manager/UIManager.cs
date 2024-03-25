@@ -18,14 +18,15 @@ public class UIManager : Singleton<UIManager>
 {
     public Transform canvasTrm;
 
-    public Dictionary<UIType, NormalUI> overlayUIDictionary = new Dictionary<UIType, NormalUI>();
+    private WarningUI _warningUI;
+
     public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>(); 
     public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
     
     public Stack<PopupUI> currentPopupUI = new Stack<PopupUI>();
 
-    public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-    public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
+    //public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+    //public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
 
     public Sequence HudTextSequence;
 
@@ -38,10 +39,10 @@ public class UIManager : Singleton<UIManager>
     public override void Awake()
     {
         canvasTrm = GameObject.Find("Canvas").transform;
+        _warningUI = FindObjectOfType<WarningUI>();
 
         PopupUI[] popupUIs = canvasTrm.GetComponentsInChildren<PopupUI>();
         //WorldUI[] worldUIs = FindObjectsOfType<WorldUI>();
-        NormalUI[] overlayUIArray = canvasTrm.GetComponentsInChildren<NormalUI>();
 
         foreach (PopupUI popupUI in popupUIs)
         {
@@ -65,18 +66,6 @@ public class UIManager : Singleton<UIManager>
         //        Debug.LogWarning("중복 키");
         //    }
         //}
-
-        foreach (NormalUI overlayUI in overlayUIArray)
-        {
-            if (!overlayUIDictionary.ContainsKey(overlayUI.UIType))
-            {
-                overlayUIDictionary.Add(overlayUI.UIType, overlayUI);
-            }
-            else
-            {
-                Debug.LogWarning("키 중복 : " + overlayUI.name);
-            }
-        }
     }
 
     #region popUI Logics
@@ -100,6 +89,12 @@ public class UIManager : Singleton<UIManager>
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
         popupUI.MovePanel(x, y, fadeTime);
     }
+
+    public void ShowWarningUI(Vector3 pos, string text)
+    {
+        _warningUI.SetValue(pos, text);
+        _warningUI.ShowAndHidePanel(_warningUI.IntervalTime);
+    }
     #endregion
 
     #region UI Function
@@ -107,9 +102,9 @@ public class UIManager : Singleton<UIManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (currentPopupUI != null)
+            if (currentPopupUI.Count > 0)
             {
-                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI")
+                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                     currentPopupUI.Peek().HidePanel();
             }
         }
@@ -167,9 +162,9 @@ public class UIManager : Singleton<UIManager>
     public void SpawnHudText(TextMeshProUGUI text)
     {
         InitializHudTextSequence();
-        HudTextSequence.Prepend(text.DOFade(1f, 0.5f))
-        .Join(text.rectTransform.DOMoveY(ScreenCenterVec.y, 0.5f))
-        .Append(text.DOFade(0f, 0.5f))
-        .Join(text.rectTransform.DOMoveY(ScreenCenterVec.y - 50f, 0.5f));
+        HudTextSequence.Prepend(text.DOFade(1f, 0.5f));
+        //.Join(text.rectTransform.DOMoveY(ScreenCenterVec.y, 0.5f))
+        //.Append(text.DOFade(0f, 0.5f))
+        //.Join(text.rectTransform.DOMoveY(ScreenCenterVec.y - 50f, 0.5f));
     }
 }
