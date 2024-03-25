@@ -164,7 +164,7 @@ public class DamageCaster : MonoBehaviour
         //actionData.HitPoint
     }
 
-    public void BleedCast(int damage, int repeat, float duration, HitType hitType)
+    public void SelectTypeAOECast(int damage, HitType hitType, bool Knb = false, float value = 0)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -180,20 +180,24 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
-                StartCoroutine(BleedStart(damage, repeat, duration, health, raycastHit, hitType));
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
+
+                if (Knb == true)
+                    health.KnockBack(value, raycastHit.normal);
+
             }
         }
     }
 
-    private IEnumerator BleedStart(int damage, int repeat, float duration, Health raycastHealth, RaycastHit ray, HitType hitType)
-    {
-        for (int i = 0; i < repeat; i++)
-        {
-            yield return new WaitForSeconds(duration);
-            raycastHealth.ApplyDamage(damage, ray.point, ray.normal, hitType);
-            Debug.Log(damage);
-        }
-    }
+    //private IEnumerator BleedStart(int damage, int repeat, float duration, Health raycastHealth, RaycastHit ray, HitType hitType)
+    //{
+    //    for (int i = 0; i < repeat; i++)
+    //    {
+    //        yield return new WaitForSeconds(duration);
+    //        raycastHealth.ApplyDamage(damage, ray.point, ray.normal, hitType);
+    //        Debug.Log(damage);
+    //    }
+    //}
 
 
 

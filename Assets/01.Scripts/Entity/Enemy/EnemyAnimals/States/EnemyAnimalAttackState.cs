@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class EnemyAnimalAttackState : EnemyAnimalBaseState
 {
-    private int _comboCounter; //현재 콤보 수치
-    private float _lastAttackTime; //마지막으로 공격했던 시간
-    private float _comboWindow = 0.3f; //초기화 쿨타임
+    private AnimalAttackableEntity _animalAttack;
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
     public EnemyAnimalAttackState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
+        _animalAttack = enemyBase.GetComponent<AnimalAttackableEntity>();
     }
 
     public override void Enter()
     {
         base.Enter();
-        if (_comboCounter > 3 || Time.time >= _lastAttackTime + _comboWindow)
+        if (_animalAttack.ComboCounter > _animalAttack.animalAttack.Count - 1
+            || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
         {
-            _comboCounter = 0; //콤보 초기화 조건에 따라 콤보 초기화
+            _animalAttack.ComboCounter = 0; //콤보 초기화 조건에 따라 콤보 초기화
         }
-        _enemy.AnimatorCompo.SetInteger(_comboCounterHash, _comboCounter);
+        _enemy.AnimatorCompo.SetInteger(_comboCounterHash, _animalAttack.ComboCounter);
 
         _enemy.StopImmediately();
 
@@ -48,8 +48,8 @@ public class EnemyAnimalAttackState : EnemyAnimalBaseState
 
     public override void Exit()
     {
-        ++_comboCounter;
-        _lastAttackTime = Time.time;
+        ++_animalAttack.ComboCounter;
+        _animalAttack.LastAttackTime = Time.time;
 
         _enemy.AnimatorCompo.speed = 1;
         base.Exit();

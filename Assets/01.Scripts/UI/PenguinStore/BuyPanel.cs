@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BuyPanel : PopupUI
@@ -160,7 +161,7 @@ public class BuyPanel : PopupUI
 
     public void OneClickBuyPenguin()
     {
-        if (!_canBuy)
+        if (_price > CostManager.Instance.Cost)
         {
             ShowMessage("재화가 부족합니다!");
             return;
