@@ -14,6 +14,6 @@ public class WorkerPenguinAnimationTrigger : MonoBehaviour
     private void WorkTrigger()
     {
         _worker.AnimationTrigger();
-        Debug.Log(_worker.DamageCasterCompo.CastDamage());
+        _worker.DamageCasterCompo.CastDamage();
     }
 }

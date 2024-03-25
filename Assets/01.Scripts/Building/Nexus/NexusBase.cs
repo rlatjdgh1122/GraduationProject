@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class NexusBase : MonoBehaviour
 {
@@ -15,7 +11,6 @@ public class NexusBase : MonoBehaviour
     #region property
     public NexusStat NexusStat => _nexusStat;
     public Health HealthCompo => _health;
-    public int WorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }
     #endregion
 
     [SerializeField]

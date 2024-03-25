@@ -34,7 +34,6 @@ public class Worker : Entity
     public void MoveToTarget()
     {
         NavAgent.SetDestination(Target.transform.position);
-        Debug.Log("이동 중");
     }
 
     public float CheckDistance()
@@ -61,7 +60,6 @@ public class Worker : Entity
     {
         CanWork = false;
         PoolManager.Instance.Push(this);
-        Debug.Log("3");
         //gameObject.SetActive(false);
     }
     #endregion
@@ -69,8 +67,6 @@ public class Worker : Entity
     #region 작업 관련
     public void StartWork(WorkableObject target)
     {
-        Debug.Log("2");
-
         Target = target;
         CanWork = true;
     }
