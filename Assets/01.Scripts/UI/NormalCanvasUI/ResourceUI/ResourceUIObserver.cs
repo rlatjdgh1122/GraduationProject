@@ -31,8 +31,7 @@ public class ResourceUIObserver : PopupUI
     {
         if (WorkerManager.Instance.WorkerCount < resource.RequiredWorkerCount)
         {
-            UIManager.Instance.ShowWarningUI(new Vector3
-                (_rectTransform.position.x + 275f, _rectTransform.position.y, _rectTransform.position.z), "최소 필요 일꾼이 부족합니다");
+            ShowAndSettingWarningUI("최소 필요 일꾼이 부족합니다");
         }
         else if (resource.CurrentWorkerCount < WorkerManager.Instance.WorkerCount)
         {
@@ -41,8 +40,7 @@ public class ResourceUIObserver : PopupUI
         }
         else
         {
-            UIManager.Instance.ShowWarningUI(new Vector3
-                (_rectTransform.position.x + 275f, _rectTransform.position.y, _rectTransform.position.z), "보유중인 일꾼이 부족합니다");
+            ShowAndSettingWarningUI("보유중인 일꾼이 부족합니다");
         }
     }
 
@@ -57,6 +55,19 @@ public class ResourceUIObserver : PopupUI
 
     public void SendWorkers()
     {
+        if (resource.resourceType == ResourceType.Stone && 
+            WorkerManager.Instance.AvailiableMinerCount < resource.CurrentWorkerCount)
+        {
+            ShowAndSettingWarningUI("일꾼이 부족하여 보낼 수 없습니다.");
+            return;
+        }
+        else if (resource.resourceType == ResourceType.Wood &&
+            WorkerManager.Instance.AvailiableWoodCutterCount < resource.CurrentWorkerCount)
+        {
+            ShowAndSettingWarningUI("일꾼이 부족하여 보낼 수 없습니다.");
+            return;
+        }
+
         if (resource.CurrentWorkerCount >= resource.RequiredWorkerCount)
         {
             WorkerManager.Instance.SendWorkers(resource.CurrentWorkerCount, resource);
@@ -64,8 +75,13 @@ public class ResourceUIObserver : PopupUI
         }
         else
         {
-            UIManager.Instance.ShowWarningUI(new Vector3
-                (_rectTransform.position.x + 275f, _rectTransform.position.y, _rectTransform.position.z), "일꾼이 부족하여 보낼 수 없습니다.");
+            ShowAndSettingWarningUI("일꾼이 부족하여 보낼 수 없습니다.");
         }
+    }
+
+    private void ShowAndSettingWarningUI(string text)
+    {
+        UIManager.Instance.ShowWarningUI(new Vector3
+                (_rectTransform.position.x + 275f, _rectTransform.position.y, _rectTransform.position.z), text);
     }
 }

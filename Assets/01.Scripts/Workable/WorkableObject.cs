@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+
+public enum ResourceType
+{
+    Stone,
+    Wood,
+}
 
 public class WorkableObject : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;
+
+    public ResourceType resourceType;
 
     public Health HealthCompo { get; private set; }
     public EntityActionData ActionData { get; private set; }
