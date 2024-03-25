@@ -107,7 +107,7 @@ public class GroundMove : MonoBehaviour
     {
         foreach (var enemy in _enemies)
         {
-            //PoolManager.Instance.Push(enemy); // 아니 이거 풀매니저 SO에 넣으면 오류 150개뜸
+            //PoolManager.Instance.Push(enemy); // 아니 이거 풀매니저 SO에 넣으면 오류 150개뜸 내가 보았을 때 이거는 씬에는 이미 있는데 풀매니저로 개지랄 하려고 해서 그러는듯. 나중에 빙판 자동 생성할때 같이 수정
             enemy.gameObject.SetActive(false); // 그래서 임시로 이렇게 함
         }
 
