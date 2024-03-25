@@ -13,7 +13,7 @@ public class QuestData
         isFinQuest = questData.isFinQuest;
         isStartedQuest = questData.isStartedQuest;
         TutorialQuestIdx = questData.TutorialQuestIdx;
-        RepetCount = questData.RepetCount;
+        RepeatCount = questData.RepeatCount;
 
         Id = questData.Id;
 
@@ -23,7 +23,7 @@ public class QuestData
     public bool isFinQuest;
     public bool isStartedQuest;
 
-    public int RepetCount;
+    public int RepeatCount;
 
     public string Id;
 

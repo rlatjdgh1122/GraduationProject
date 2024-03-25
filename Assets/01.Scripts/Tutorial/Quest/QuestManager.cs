@@ -79,7 +79,7 @@ public class QuestManager : Singleton<QuestManager>
 
     private void InstantiateQuest(QuestData questData) //퀘스트를 오브젝트로 생성하는 식임. ex: 보석 3개 먹는 퀘스트면 그 아이디의 퀘스트 오브젝트 3개를 생성
     {
-        for (int i = 0; i < questData.RepetCount; i++)
+        for (int i = 0; i < questData.RepeatCount; i++)
         {
             GameObject questObj = new GameObject(questData.Id);
             questObj.transform.SetParent(transform);
