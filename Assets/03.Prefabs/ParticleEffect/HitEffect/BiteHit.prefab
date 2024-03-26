@@ -24526,8 +24526,9 @@ GameObject:
   - component: {fileID: 5438117834459897882}
   - component: {fileID: 2810847700851475318}
   - component: {fileID: 7859034483651799473}
+  - component: {fileID: 411077392445851744}
   m_Layer: 0
-  m_Name: Bite
+  m_Name: BiteHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29348,3 +29349,17 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &411077392445851744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583200114081576527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8a17f72eff0f84d8ca0a49dedbd8f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particles:
+  - {fileID: 2810847700851475318}
