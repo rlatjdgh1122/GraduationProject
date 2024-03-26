@@ -22,6 +22,7 @@ public class DummyPenguin : Penguin
 
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
+
         Setting();
     }
 
@@ -38,6 +39,12 @@ public class DummyPenguin : Penguin
 
             DummyStateMachine.AddState(state, newState);
         }
+
+        DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
+    }
+    protected override void Update()
+    {
+        DummyStateMachine.CurrentState.UpdateState();
     }
 
     protected override void HandleDie()

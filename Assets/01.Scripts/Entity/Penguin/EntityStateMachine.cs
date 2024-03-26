@@ -13,7 +13,7 @@ public class EntityStateMachine<T, G> where T : Enum where G : Entity
     {
         CurrentState = StateDictionary[state];
         PrevState = CurrentState;
-        //CurrentState.Enter();
+        CurrentState.Enter();
     }
     public void ChangeState(T newState)
     {
