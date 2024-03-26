@@ -18,13 +18,19 @@ public class DummyPenguin : Penguin
     { get; private set; }
     protected override void Awake()
     {
+        base.Awake();
+
         Transform visualTrm = transform.Find("Visual");
+        HouseTrm = FindObjectOfType<TentInitPos>().transform;
 
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
 
         Setting();
+
+        
     }
+ 
 
     private void Setting()
     {
@@ -43,6 +49,14 @@ public class DummyPenguin : Penguin
     protected override void Start()
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
+
+        SignalHub.OnBattlePhaseStartEvent += A;
+    }
+    private void A()
+    {
+        Debug.Log("전투시작한다고");
+        IsGoToHouse = true;
+        //DummyStateMachine.ChangeState(DummyPenguinStateEnum.GoToHouse);
     }
     protected override void Update()
     {

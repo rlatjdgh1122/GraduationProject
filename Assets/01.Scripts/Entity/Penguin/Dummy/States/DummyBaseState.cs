@@ -5,8 +5,10 @@ using UnityEngine.AI;
 
 public class DummyBaseState : PenguinState<DummyPenguinStateEnum, Penguin>
 {
+
     public DummyBaseState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
+
     }
 
     public override void Enter()
@@ -18,8 +20,12 @@ public class DummyBaseState : PenguinState<DummyPenguinStateEnum, Penguin>
     public override void UpdateState()
     {
         base.UpdateState();
+
         if (_penguin.IsGoToHouse)
+        {
             _stateMachine.ChangeState(DummyPenguinStateEnum.GoToHouse);
+            //return;
+        }
     }
     public override void Exit()
     {

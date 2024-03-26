@@ -82,8 +82,11 @@ public abstract class Entity : PoolableMono
     #region 움직임 관리
     public void MoveToPosition(Vector3 pos)
     {
-        NavAgent?.ResetPath();
-        NavAgent?.SetDestination(pos);
+        if (NavAgent.isActiveAndEnabled)
+        {
+            NavAgent?.ResetPath();
+            NavAgent?.SetDestination(pos);
+        }
     }
     public void MoveToCurrentTarget()
     {

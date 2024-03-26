@@ -93,8 +93,9 @@ public class Penguin : Entity
     #region 더미 펭귄 관련
     //애니메이션이 늘어날때마다 추가
     private int MaxNumberOfDumbAnim = 3;
-    public bool IsGoToHouse = false;
-    public Transform HouseTrm { get; private set; }
+    public bool IsGoToHouse { get; protected set; } = false;
+
+    public Transform HouseTrm = null;
 
     public int RandomValue
     {
@@ -106,7 +107,8 @@ public class Penguin : Entity
     }
     public void GoToHouse()
     {
-        Destroy(gameObject);
+        PoolManager.Instance.Push(this);
+        //Destroy(gameObject);
     }
     #endregion
 
@@ -130,8 +132,6 @@ public class Penguin : Entity
         {
             NavAgent.speed = moveSpeed;
         }
-
-        HouseTrm = GameObject.FindObjectOfType<TentInitPos>().transform;
         AttackCompo = GetComponent<EntityAttackData>();
     }
 
