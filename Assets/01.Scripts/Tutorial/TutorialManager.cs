@@ -20,6 +20,11 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             UIManager.Instance.ShowPanel("QuestUI");
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            QuestManager.Instance.ProgressQuest("TutoTest");
+        }
     }
 
     private void Start()

@@ -125,7 +125,9 @@ public class QuestManager : Singleton<QuestManager>
         _curInprogressQuests.Remove(questData); //현재 진행중 퀘스트 리스트에서 삭제
 
         if (questData.IsTutorialQuest) { TutorialManager.Instance.IncreaseQuestIdx(); } // 튜토리얼 퀘스트는 순서대로 해야 하니까 idx 증가
-        
+
+        _questUI.RemoveQuestContentUI(questData.Id);
+
         SignalHub.OnEndQuestEvent?.Invoke(); //퀘스트 성공 이벤트
     }
 

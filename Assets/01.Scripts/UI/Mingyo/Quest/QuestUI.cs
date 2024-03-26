@@ -12,6 +12,8 @@ public class QuestUI : PopupUI
     [SerializeField]
     private GameObject _questUIPrefabs;
 
+    private Dictionary<string, GameObject> _scrollViewQuestUIsDic = new Dictionary<string, GameObject>();
+
     public override void Awake()
     {
         base.Awake();
@@ -23,23 +25,23 @@ public class QuestUI : PopupUI
 
     public void CreateScrollViewUI(QuestData questData)
     {
-        ScrollViewQuestUI newQuest = Instantiate(_questUIPrefabs, _questPopupContentsParentTrm).GetComponent< ScrollViewQuestUI>();
+        GameObject newQuestObj = Instantiate(_questUIPrefabs, _questPopupContentsParentTrm);
+        ScrollViewQuestUI newQuest = newQuestObj.GetComponent< ScrollViewQuestUI>();
         newQuest.SetUpScrollViewUI(questData.Id,
             () => UpdatePopUpQuestUI(questData));
+
+        _scrollViewQuestUIsDic.Add(questData.Id, newQuestObj);
 
     }
 
     public void UpdatePopUpQuestUI(QuestData questData)
     {
-        _questInfoUI.UpdatePopUpQuestUI(questData.QuestStateEnum,
-                                                  questData.Id,
-                                                  questData.QuestUIDataInfo.QuestContentsInfo,
-                                                  questData.QuestRewardInfo.RewardTypeImg,
-                                                  questData.QuestRewardInfo.RewardCount);
+        _questInfoUI.UpdatePopUpQuestUI(questData);
     }
 
-    private void RemoveQuestContentUI(GameObject removeUI)
+    public void RemoveQuestContentUI(string id)
     {
-        Destroy(removeUI);
+        Destroy(_scrollViewQuestUIsDic[id]);
+        _scrollViewQuestUIsDic.Remove(id);
     }
 }

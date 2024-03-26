@@ -43,9 +43,14 @@ public class QuestInfoUI : MonoBehaviour
         SignalHub.OnOffPopUiEvent += () => _contentsCanvasGroup.alpha = 0;
     }
 
-    public void UpdatePopUpQuestUI(QuestState questState, string questName, string questContent,
-                                   Sprite questRewardTypeImg, int questRewardCount)
+    public void UpdatePopUpQuestUI(QuestData questData)
     {
+        QuestState questState = questData.QuestStateEnum;
+        string questName = questData.Id;
+        string questContent = questData.QuestUIDataInfo.QuestContentsInfo;
+        Sprite questRewardTypeImg = questData.QuestRewardInfo.RewardTypeImg;
+        int questRewardCount = questData.QuestRewardInfo.RewardCount;
+
         _contentsCanvasGroup.alpha = 1;
         string questStateText = null;
         switch (questState)
