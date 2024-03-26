@@ -38,6 +38,8 @@ public delegate void StartQuestEvent();
 public delegate void EndQuestEvent();
 public delegate void ProgressQuestEvent();
 
+public delegate void OffPopUiEvent();
+
 public static class SignalHub
 {
     public static EnemyPenguinDead OnEnemyPenguinDead;
@@ -70,5 +72,10 @@ public static class SignalHub
     public static EndQuestEvent OnEndQuestEvent;
     public static ProgressQuestEvent OnProgressQuestEvent;
 
+
+    public static OffPopUiEvent OnOffPopUiEvent;
+
     #endregion
+
+
 }

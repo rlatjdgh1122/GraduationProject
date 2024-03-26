@@ -14,14 +14,17 @@ public class QuestManager : Singleton<QuestManager>
     private Dictionary<string, QuestData> _allQuests = new Dictionary<string, QuestData>();
 
     private List<QuestData> _curInprogressQuests = new List<QuestData>();
+    public List<QuestData> CurInprogressQuests => _curInprogressQuests; //지금 진행중인 퀘스트
 
     private DialogSystem _dialogSystem;
+    private QuestUI _questUI;
 
     public override void Awake()
     {
         base.Awake();
 
         _dialogSystem = Object.FindAnyObjectByType<DialogSystem>();
+        _questUI = Object.FindAnyObjectByType<QuestUI>();
     }
 
     private void Start()
@@ -44,15 +47,14 @@ public class QuestManager : Singleton<QuestManager>
     {
         QuestData questData = _allQuests[questId];
 
-        if (questData.isStartedQuest)
+        switch (questData.QuestStateEnum)
         {
-            Debug.Log($"{questData.Id}는 이미 진행중인 퀘스트임 리턴함;;");
-            return;
-        }
-        else if(questData.isFinQuest)
-        {
-            Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
-            return;
+            case QuestState.Running:
+                Debug.Log($"{questData.Id}는 이미 진행중인 퀘스트임 리턴함;;");
+                return;
+            case QuestState.Finish:
+                Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
+                return;
         }
 
         if (questData.IsTutorialQuest)
@@ -64,7 +66,7 @@ public class QuestManager : Singleton<QuestManager>
                 return;
             }
 
-            _dialogSystem.Begin(questData.QuestTexts); //튜토리얼 텍스트 뜨게
+            _dialogSystem.Begin(questData.TutorialTexts); //튜토리얼 텍스트 뜨게
         }
 
         Debug.Log($"{questData.Id} 퀘스트 시이작");
@@ -72,8 +74,9 @@ public class QuestManager : Singleton<QuestManager>
         _curInprogressQuests.Add(questData); //현재 진행중 퀘스트 리스트에 추가
         InstantiateQuest(questData);
 
-        _curInprogressQuests[questData.TutorialQuestIdx].isStartedQuest = true;
+        _curInprogressQuests[questData.TutorialQuestIdx].QuestStateEnum = QuestState.Running;
 
+        _questUI.CreateScrollViewUI(questData); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
         SignalHub.OnStartQuestEvent?.Invoke(); //퀘스트 시작 이벤트
     }
 
@@ -90,11 +93,13 @@ public class QuestManager : Singleton<QuestManager>
     {
         QuestData questData = _allQuests[questId];
 
-        if (questData.isFinQuest)
+        switch (questData.QuestStateEnum)
         {
-            Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
-            return;
+            case QuestState.Finish:
+                Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
+                return;
         }
+
 
         Transform[] foundChildren = transform.GetComponentsInChildren<Transform>(true);
         Transform[] questObj = Array.FindAll(foundChildren, t => t.name == questData.Id && t != transform);
@@ -115,8 +120,7 @@ public class QuestManager : Singleton<QuestManager>
     {
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
-        _curInprogressQuests[questData.TutorialQuestIdx].isFinQuest = true;     //퀘스트에 완료처리 해주고
-        _curInprogressQuests[questData.TutorialQuestIdx].isStartedQuest = true; //퀘스트에 완료처리 해주고
+        _curInprogressQuests[questData.TutorialQuestIdx].QuestStateEnum = QuestState.Finish; // 퀘스트에 완료처리 해주고
 
         _curInprogressQuests.Remove(questData); //현재 진행중 퀘스트 리스트에서 삭제
 

@@ -65,8 +65,8 @@ public class ShipandNexusPositionUI : MonoBehaviour
     {
         _shipbutton.gameObject.rectTransform().position = _shipScreenPos; //배UI위치를 배 위치로
 
-        Debug.Log($"Btn: {_shipbutton.gameObject.rectTransform().position}");
-        Debug.Log($"ScreenPos: {_shipScreenPos}");
+        //Debug.Log($"Btn: {_shipbutton.gameObject.rectTransform().position}");
+        //Debug.Log($"ScreenPos: {_shipScreenPos}");
 
         _nexusbutton.gameObject.rectTransform().position = _nexusScreenPos; //넥서스UI위치를 배 위치로
     }

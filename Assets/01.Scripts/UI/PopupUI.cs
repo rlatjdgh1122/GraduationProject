@@ -33,6 +33,7 @@ public class PopupUI : MonoBehaviour
 
     public virtual void HidePanel()
     {
+        SignalHub.OnOffPopUiEvent?.Invoke();
         UIManager.Instance.currentPopupUI.Pop();
         _panel.blocksRaycasts = false;
         _panel.DOFade(0, _panelFadeTime);

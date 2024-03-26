@@ -4,24 +4,32 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+public enum QuestState
+{
+    BeforeStart,
+    Running,
+    Finish
+}
+
 [Serializable]
 public class QuestData
 {
     public QuestData(QuestData questData)
     {
         IsTutorialQuest = questData.IsTutorialQuest;
-        isFinQuest = questData.isFinQuest;
-        isStartedQuest = questData.isStartedQuest;
+        QuestStateEnum = questData.QuestStateEnum;
         TutorialQuestIdx = questData.TutorialQuestIdx;
         RepeatCount = questData.RepeatCount;
 
         Id = questData.Id;
 
-        QuestTexts = questData.QuestTexts;
+        TutorialTexts = questData.TutorialTexts;
+
+        QuestUIDataInfo = questData.QuestUIDataInfo;
+        QuestRewardInfo = questData.QuestRewardInfo;
     }
 
-    public bool isFinQuest;
-    public bool isStartedQuest;
+    public QuestState QuestStateEnum;
 
     public int RepeatCount;
 
@@ -29,5 +37,9 @@ public class QuestData
 
     public bool IsTutorialQuest;
     public int TutorialQuestIdx;
-    public string[] QuestTexts;
+    public string[] TutorialTexts;
+
+
+    public QuestUIData QuestUIDataInfo;
+    public QuestRewardData QuestRewardInfo;
 }
