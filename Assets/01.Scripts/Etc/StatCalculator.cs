@@ -7,8 +7,6 @@ namespace StatOperator
 {
     public static class StatCalculator
     {
-        public static float ReturnPercent(int maxValue, int curValue) //300 105 => 35%
-            => curValue / maxValue * 100;
         public static float Percent(int value, int per) // 10 10 => 1, // 100 10 => 10
             => value * (per / 100f);
         public static float OperTimes(float result, int value)

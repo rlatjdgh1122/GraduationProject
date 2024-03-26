@@ -5,51 +5,50 @@ using UnityEngine;
 
 public class BearAttackableEntity : AnimalAttackableEntity
 {
-    private List<float> _savedKncbackValue;
+    private float _initialHealth;
 
-    [Header("Percentage")]
-    [Range(0,10)]   
-    [SerializeField] private int _knockbackIncreaseToHPPercent;
     [Header("Slash Effect")]
     [SerializeField] private ParticleSystem _leftHandEffectTransform;
     [SerializeField] private ParticleSystem _rightHandEffectTransform;
+
+    private float _currentKnockback = 0;
 
     protected override void Awake()
     {
         base.Awake();
 
-        foreach(var i in animalAttack)
-        {
-            _savedKncbackValue.Add(i.KnbackValue);
-        }
+        _initialHealth = owner.HealthCompo.maxHealth;
     }
 
     public void StartEffect()
     {
-        if(ComboCounter == 0)
+        if (ComboCounter == 0)
         {
             _rightHandEffectTransform.Play();
         }
-        if (ComboCounter == 1)
+        else if (ComboCounter == 1)
         {
             _leftHandEffectTransform.Play();
         }
     }
 
-    public override void AoEAttack(bool Knb, float value)
+    public override void AoEAttack(bool knockback, float value)
     {
-        float damageReceivedPercent = StatCalculator.ReturnPercent(owner.HealthCompo.maxHealth, owner.HealthCompo.currentHealth);
+        // 현재 체력을 비율로 계산
+        //체력 정규화
+        //체력이 
+        //1 - 정규화값
+        // 넉백힘 * (1 - 정규화값)
 
-        if(damageReceivedPercent >= 50)
+        float currentHealthPercentage = 1 - ((float)owner.HealthCompo.currentHealth / (float)owner.HealthCompo.maxHealth);
+
+        float kncbackIncrease = animalAttackList[ComboCounter].KnbackValue * currentHealthPercentage;
+
+        if(owner.HealthCompo.maxHealth / 2 >= owner.HealthCompo.currentHealth)
         {
-            animalAttack[ComboCounter].KnbackValue = _savedKncbackValue[ComboCounter];
-        }
-        else
-        {
-            animalAttack[ComboCounter].KnbackValue *= damageReceivedPercent / 100;
+            kncbackIncrease = animalAttackList[ComboCounter].KnbackValue;
         }
         
-
-        base.AoEAttack(Knb, value);
+        base.AoEAttack(animalAttackList[ComboCounter].KnbackValue > 0, kncbackIncrease);
     }
 }

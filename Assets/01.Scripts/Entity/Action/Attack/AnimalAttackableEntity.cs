@@ -14,7 +14,7 @@ public class AnimalAttack
 
 public class AnimalAttackableEntity : EntityAttackData
 {
-    public List<AnimalAttack> animalAttack = new();
+    public List<AnimalAttack> animalAttackList = new();
 
     public int ComboCounter { get; set; } //현재 콤보 수치
     public float LastAttackTime { get; set; } //마지막으로 공격했던 시간
@@ -23,10 +23,10 @@ public class AnimalAttackableEntity : EntityAttackData
     public override void AoEAttack(bool Knb, float value)
     {
         DamageCasterCompo.SelectTypeAOECast(
-            animalAttack[ComboCounter].Damage, 
-            animalAttack[ComboCounter].hitType,
-            animalAttack[ComboCounter].KnbackValue > 0,
-            animalAttack[ComboCounter].KnbackValue);
+            animalAttackList[ComboCounter].Damage, 
+            animalAttackList[ComboCounter].hitType,
+            Knb,
+            value);
     }
 
     public override void MeleeAttack()
