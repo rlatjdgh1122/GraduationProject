@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DummyRunningState : DummyBaseState
 {
-    public DummyRunningState(DummyPenguin penguin, EntityStateMachine<DummyPenguinStateEnum, DummyPenguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyRunningState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
-
     }
+
     public override void Enter()
     {
         base.Enter();

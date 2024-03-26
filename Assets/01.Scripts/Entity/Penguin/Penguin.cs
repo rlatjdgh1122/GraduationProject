@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Penguin : Entity
 {
@@ -11,9 +12,30 @@ public class Penguin : Entity
     public int maxDetectedCount;
     public float provokeRange = 25f;
 
-    public bool isBot = false; //봇으로 만들거임
-
     public PassiveDataSO passiveData = null;
+
+    public bool isDummyPenguinMode = false;
+    public bool IsDummyPenguinMode
+    {
+        get => isDummyPenguinMode;
+        set
+        {
+            if (value == isDummyPenguinMode) return;
+            isDummyPenguinMode = value;
+            if (isDummyPenguinMode)
+            {
+                OnFreelyMode();
+            }
+            else
+            {
+                UnFreelyMode();
+            }
+        }
+    }
+
+
+    protected virtual void OnFreelyMode() { }
+    public virtual void UnFreelyMode() { }
 
     #region 군단 포지션 관련
 
@@ -68,6 +90,26 @@ public class Penguin : Entity
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
 
+    #region 더미 펭귄 관련
+    //애니메이션이 늘어날때마다 추가
+    private int MaxNumberOfDumbAnim = 3;
+    public bool IsGoToHouse = false;
+    public Transform HouseTrm { get; private set; }
+
+    public int RandomValue
+    {
+        get
+        {
+            int value = Random.Range(0, MaxNumberOfDumbAnim);
+            return value;
+        }
+    }
+    public void GoToHouse()
+    {
+        Destroy(gameObject);
+    }
+    #endregion
+
     //public Enemy CurrentTarget;
 
     //public bool IsDead = false;
@@ -80,19 +122,6 @@ public class Penguin : Entity
 
     private bool isFreelyMove = false;
     public bool IsFreelyMove => isFreelyMove;
-
-    private void OnEnable()
-    {
-        if (!isBot)
-            SignalHub.OnIceArrivedEvent += FindFirstNearestEnemy;
-    }
-
-    private void OnDisable()
-    {
-        if (!isBot)
-            SignalHub.OnIceArrivedEvent -= FindFirstNearestEnemy;
-    }
-
     protected override void Awake()
     {
         base.Awake();
@@ -102,6 +131,7 @@ public class Penguin : Entity
             NavAgent.speed = moveSpeed;
         }
 
+        HouseTrm = GameObject.FindObjectOfType<TentInitPos>().transform;
         AttackCompo = GetComponent<EntityAttackData>();
     }
 

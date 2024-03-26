@@ -1,13 +1,12 @@
-﻿
-using System;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Penguin
 {
     public PenguinState(G penguin, EntityStateMachine<T, G> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
-
     }
+
     protected void IdleEnter()
     {
         _penguin.NavAgent.ResetPath();
@@ -100,8 +99,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     /// <summary>
     /// 배틀모드일 때 다 죽이면 위치로 이동하는 함수
     /// </summary>
-
-
 
     public override void AnimationFinishTrigger()
     {

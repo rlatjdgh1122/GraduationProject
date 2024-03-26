@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DummyBaseState : EntityState<DummyPenguinStateEnum, DummyPenguin>
+public class DummyBaseState : PenguinState<DummyPenguinStateEnum, Penguin>
 {
-    public DummyBaseState(DummyPenguin penguin, EntityStateMachine<DummyPenguinStateEnum, DummyPenguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyBaseState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
+
+        _triggerCalled = false;
     }
     public override void UpdateState()
     {
@@ -30,11 +32,11 @@ public class DummyBaseState : EntityState<DummyPenguinStateEnum, DummyPenguin>
 
         switch (RandomValue)
         {
-            case 0: return DummyPenguinStateEnum.Idle;
+            case 0: return DummyPenguinStateEnum.FreelyIdle;
             case 1: return DummyPenguinStateEnum.Walk;
             case 2: return DummyPenguinStateEnum.Running;
             case 3: return DummyPenguinStateEnum.DumbToDo;
-            default: return DummyPenguinStateEnum.Idle;
+            default: return DummyPenguinStateEnum.FreelyIdle;
         }
 
     }

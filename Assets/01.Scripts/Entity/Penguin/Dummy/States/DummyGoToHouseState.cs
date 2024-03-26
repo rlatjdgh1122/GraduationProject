@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class DummyGoToHouseState : DummyBaseState
 {
-    public DummyGoToHouseState(DummyPenguin penguin, EntityStateMachine<DummyPenguinStateEnum, DummyPenguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyGoToHouseState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin,  stateMachine, animationBoolName)
     {
-
     }
 
     public override void Enter()

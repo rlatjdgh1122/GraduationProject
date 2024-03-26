@@ -17,20 +17,21 @@ public class PenguinFactory : EntityFactory<Penguin>
     public void SpawnPenguinHandler(Penguin penguin)
     {
         if (spawnXIdx >= 5)
-        { 
+        {
             spawnXIdx = 0;
             spawnZIdx++;
         }
 
         Vector3 spawnVec = new Vector3(6 + (spawnXIdx * 1.5f),
                                        0.0f,
-                                       - 1.5f - (spawnZIdx * 1.5f));
+                                       -1.5f - (spawnZIdx * 1.5f));
 
         spawnXIdx++; // 생성 위치를 위한 idx
 
-        Penguin spawnPenguin =  SpawnObject(penguin, spawnVec) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
+        Penguin spawnPenguin = SpawnObject(penguin, spawnVec) as Penguin;  //매개변수로 받아온 Penguin을 생성한다
 
-        spawnPenguin.SetFreelyMoveAble(true);
+        //spawnPenguin.SetFreelyMoveAble(true);
+        spawnPenguin.isDummyPenguinMode = true;
 
         _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
     }
@@ -63,7 +64,7 @@ public class PenguinFactory : EntityFactory<Penguin>
     {
         string originalString = type.ToString();
         // 프리펩에 있는 스크립트의 이름을 가져오므로 필요한 부분만 가져온다. (ex: MeleePenguin (MeleePenguin) 에서 (MeleePenguin)제거.)
-        string resultString = originalString.Substring(0, originalString.LastIndexOf(" ")); 
+        string resultString = originalString.Substring(0, originalString.LastIndexOf(" "));
 
         Penguin spawnPenguin = PoolManager.Instance.Pop(resultString) as Penguin;
         spawnPenguin.SetCanInitTent(false);

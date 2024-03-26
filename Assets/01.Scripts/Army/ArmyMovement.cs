@@ -1,10 +1,10 @@
 using Define.RayCast;
-using Newtonsoft.Json.Schema;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
 public class PenguinMovementInfo
 {
     public PenguinMovementInfo(bool isCheck, Penguin obj)
