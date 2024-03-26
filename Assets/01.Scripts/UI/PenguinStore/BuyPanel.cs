@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BuyPanel : PopupUI
@@ -18,7 +19,7 @@ public class BuyPanel : PopupUI
     private TextMeshProUGUI _buyCntText;
     private TextMeshProUGUI _priceText;
     private TextMeshProUGUI _currentCostText;
-    private TextMeshProUGUI _amountCostText;
+    //private TextMeshProUGUI _amountCostText;
     private TextMeshProUGUI _buyToPenguinNameText;
     private TextMeshProUGUI _buyButtonText;
     private Image _buyButtonImg;
@@ -32,8 +33,8 @@ public class BuyPanel : PopupUI
         base.Awake();
 
         _presenter            = transform.parent.GetComponent<PenguinStoreUI>();
-        _buyToPenguinNameText = transform.Find("Buy/PenguinName").GetComponent<TextMeshProUGUI>();
-        _amountCostText       = transform.Find("Buy/AmountCost").GetComponent<TextMeshProUGUI>();
+        _buyToPenguinNameText = transform.Find("Title/PenguinBuyText").GetComponent<TextMeshProUGUI>();
+        //_amountCostText       = transform.Find("Buy/AmountCost").GetComponent<TextMeshProUGUI>();
         _buyCntText           = transform.Find("Buy/BuyCount/Count").GetComponent<TextMeshProUGUI>();
         _currentCostText      = transform.Find("Buy/CurrentCost").GetComponent<TextMeshProUGUI>();
         _priceText            = transform.Find("Buy/Price").GetComponent<TextMeshProUGUI>();
@@ -60,7 +61,7 @@ public class BuyPanel : PopupUI
 
     private void CurrentCostUpdate() //현재 보유 재화 업뎃
     {
-        _buyToPenguinNameText.text = _stat.PenguinName;
+        _buyToPenguinNameText.text = $"{_stat.PenguinName} 구매하기";
         _presenter.TextUpdate(_currentCostText, CostManager.Instance.Cost.ToString());
     }
 
@@ -81,6 +82,7 @@ public class BuyPanel : PopupUI
         AmountCostUpdate();
     }
 
+    private int _amount;
     private void AmountCostUpdate() //현재 보유 재화에서 총 가격을 뺀 남은 재화 업뎃
     {
         PriceUpdate();
@@ -88,20 +90,21 @@ public class BuyPanel : PopupUI
 
         if (_amountPrice > CostManager.Instance.Cost) //만약 총가격이 현재 재화보다 크다면
         {
-            _amountCostText.color = Color.red;
+            //_amountCostText.color = Color.red;
             amount = -Mathf.Abs(amount);
             _canBuy = false;
         }
         else
         {
-            _amountCostText.color = Color.green;
+           //_amountCostText.color = Color.green;
             amount = Mathf.Abs(amount);
             _canBuy = true;
         }
 
+        _amount = amount;
         BuyButtonUpdate();
 
-        _presenter.TextUpdate(_amountCostText, amount.ToString());
+        //_presenter.TextUpdate(_amountCostText, amount.ToString());
     }
 
     private void BuyButtonUpdate()
@@ -115,7 +118,7 @@ public class BuyPanel : PopupUI
         else
         {
             _buyButtonImg.color = Color.white;
-            str = "구매";
+            str = $"구매하기 (남는 재화 : {_amount})";
         }
         _presenter.TextUpdate(_buyButtonText, str);
     }
@@ -160,7 +163,7 @@ public class BuyPanel : PopupUI
 
     public void OneClickBuyPenguin()
     {
-        if (!_canBuy)
+        if (_price > CostManager.Instance.Cost)
         {
             ShowMessage("재화가 부족합니다!");
             return;

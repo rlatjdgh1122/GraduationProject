@@ -1,51 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[Serializable]
+public class AnimalAttack
+{
+    public HitType hitType;
+    public int Damage;
+    public float KnbackValue;
+}
+
 public class AnimalAttackableEntity : EntityAttackData
 {
-    [SerializeField] private CanvasLookToCamera _canvasCamera;
-    [SerializeField] private int _attackEventValue;
-    [SerializeField] private int _bleedDmg;
+    public List<AnimalAttack> animalAttackList = new();
 
-    [SerializeField] private int _repeat;
-    [SerializeField] private float _duration;
-    private Canvas _healthCanvas;
+    public int ComboCounter { get; set; } //현재 콤보 수치
+    public float LastAttackTime { get; set; } //마지막으로 공격했던 시간
+    [field: SerializeField] public float ComboWindow { get; private set; } //초기화 쿨타임
 
-    public int AttackEventValue
-    {  
-        get
-        {
-            return _attackEventValue;
-        }
+    public override void AoEAttack(bool Knb, float value)
+    {
+        DamageCasterCompo.SelectTypeAOECast(
+            animalAttackList[ComboCounter].Damage, 
+            animalAttackList[ComboCounter].hitType,
+            Knb,
+            value);
     }
 
-    public bool Bleed;
-
-    protected override void Awake()
+    public override void MeleeAttack()
     {
-        base.Awake();
-
-        _healthCanvas = transform.Find("HealthUICanvas").GetComponent<Canvas>();
-    }
-
-    public override void MeleeSphereAttack()
-    {
-        if(Bleed)
-        {
-            StartCoroutine(BleedAnimation());
-
-            Bleed = false;
-            DamageCasterCompo.BleedCast(_bleedDmg, _repeat, _duration, HitType.BleedHit);
-        }
-
-        DamageCasterCompo.CaseAoEDamage(false, 0);
-    }
-
-    private IEnumerator BleedAnimation()
-    {
-        _canvasCamera.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        _canvasCamera.gameObject.SetActive(false);
+        DamageCasterCompo.CastDamage();
     }
 }

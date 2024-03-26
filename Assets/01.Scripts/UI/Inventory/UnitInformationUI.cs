@@ -28,7 +28,7 @@ public class UnitInformationUI : SlotUI
     {
         _infoData = null;
         _data = null;
-        _unitImage.sprite = _emptyImage;
+        _unitImage.DOFade(0, 0);
 
         _atk.DOValue(0, 0.2f);
         _def.DOValue(0, 0.2f);
@@ -63,6 +63,7 @@ public class UnitInformationUI : SlotUI
             _privateData = data;
 
             _unitImage.sprite = data.penguinData.PenguinIcon;
+            _unitImage.DOFade(1, 0);
             _name.text = data.penguinData.PenguinName;
             _className.text = data.penguinData.PenguinJobTypeName();
 

@@ -12,6 +12,11 @@ public enum HitType
     RockHit,
     WoodHit,
     BleedHit,
+    GroundStrikeHit,
+    BearSlashHit,
+    BiteHit,
+    IceHit,
+
 }
 
 public interface IDamageable
