@@ -14,7 +14,7 @@ public class EnemyAnimalAttackState : EnemyAnimalBaseState
     public override void Enter()
     {
         base.Enter();
-        if (_animalAttack.ComboCounter > _animalAttack.animalAttack.Count - 1
+        if (_animalAttack.ComboCounter > _animalAttack.animalAttackList.Count - 1
             || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
         {
             _animalAttack.ComboCounter = 0; //콤보 초기화 조건에 따라 콤보 초기화
