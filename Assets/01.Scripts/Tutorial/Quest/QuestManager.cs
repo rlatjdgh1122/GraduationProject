@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 using Object = UnityEngine.Object;
 
 public class QuestManager : Singleton<QuestManager>
@@ -78,6 +77,8 @@ public class QuestManager : Singleton<QuestManager>
 
         _questUI.CreateScrollViewUI(questData); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
         SignalHub.OnStartQuestEvent?.Invoke(); //퀘스트 시작 이벤트
+
+        SignalHub.OnProgressQuestEvent += () => _questUI.UpdateProgressText(_allQuests[questData.Id]);
     }
 
     private void InstantiateQuest(QuestData questData) //퀘스트를 오브젝트로 생성하는 식임. ex: 보석 3개 먹는 퀘스트면 그 아이디의 퀘스트 오브젝트 3개를 생성
@@ -91,7 +92,11 @@ public class QuestManager : Singleton<QuestManager>
 
     public void ProgressQuest(string questId) //퀘스트가 진행되었을때. ex: 보석을 먹었을때.
     {
+
         QuestData questData = _allQuests[questId];
+
+        _allQuests[questData.Id].CurProgressCount++;
+
 
         switch (questData.QuestStateEnum)
         {
@@ -100,17 +105,16 @@ public class QuestManager : Singleton<QuestManager>
                 return;
         }
 
-
         Transform[] foundChildren = transform.GetComponentsInChildren<Transform>(true);
         Transform[] questObj = Array.FindAll(foundChildren, t => t.name == questData.Id && t != transform);
 
-        try
+        if (questObj.Length > 1)
         {
             Destroy(questObj[0].gameObject);
             Debug.Log($"오우 이제 {questData.Id}퀘스트 {questObj.Length}번만 더 해");
             SignalHub.OnProgressQuestEvent?.Invoke(); //퀘스트 진행 이벤트
         }
-        catch
+        else
         {
             EndQuest(questData); //지울 수 없는 오브젝트가 없으면 퀘스트 완료
         }
@@ -118,6 +122,8 @@ public class QuestManager : Singleton<QuestManager>
 
     public void EndQuest(QuestData questData)
     {
+        SignalHub.OnProgressQuestEvent -= () => _questUI.UpdateProgressText(_allQuests[questData.Id]);
+
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
         _curInprogressQuests[questData.TutorialQuestIdx].QuestStateEnum = QuestState.Finish; // 퀘스트에 완료처리 해주고
@@ -129,6 +135,7 @@ public class QuestManager : Singleton<QuestManager>
         _questUI.RemoveQuestContentUI(questData.Id);
 
         SignalHub.OnEndQuestEvent?.Invoke(); //퀘스트 성공 이벤트
+        SignalHub.OnOffPopUiEvent?.Invoke();
     }
 
 }

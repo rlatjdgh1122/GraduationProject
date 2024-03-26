@@ -39,6 +39,8 @@ public class QuestData
     public int TutorialQuestIdx;
     public string[] TutorialTexts;
 
+    public int CurProgressCount = 0;
+
 
     public QuestUIData QuestUIDataInfo;
     public QuestRewardData QuestRewardInfo;

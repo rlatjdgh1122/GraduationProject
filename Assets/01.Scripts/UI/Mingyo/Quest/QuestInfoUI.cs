@@ -11,6 +11,7 @@ public class QuestInfoUI : MonoBehaviour
     private TextMeshProUGUI _questNameText; // 퀘스트 이름
 
     private TextMeshProUGUI _questContentText; // 어떤 퀘스트인지
+    private TextMeshProUGUI _curProgressText; // 어떤 퀘스트인지
 
     private TextMeshProUGUI _questRewardCountText; // 보상 갯수
 
@@ -31,7 +32,7 @@ public class QuestInfoUI : MonoBehaviour
         _questNameText = popUpBox.Find("QuestName").GetComponent<TextMeshProUGUI>();
 
         _questContentText = popUpBox.Find("Description01").GetComponent<TextMeshProUGUI>();
-
+        _curProgressText = popUpBox.Find("Description02").GetComponent<TextMeshProUGUI>();
 
 
         Transform rewardBox = contents.Find("BoxReward").transform;
@@ -50,6 +51,7 @@ public class QuestInfoUI : MonoBehaviour
         string questContent = questData.QuestUIDataInfo.QuestContentsInfo;
         Sprite questRewardTypeImg = questData.QuestRewardInfo.RewardTypeImg;
         int questRewardCount = questData.QuestRewardInfo.RewardCount;
+
 
         _contentsCanvasGroup.alpha = 1;
         string questStateText = null;
@@ -72,8 +74,13 @@ public class QuestInfoUI : MonoBehaviour
         _questContentText.SetText(questContent);
         _questRewardTypeImg.sprite = questRewardTypeImg;
         _questRewardCountText.SetText(questRewardCount.ToString());
+        UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
     }
 
+    public void UpdateProgressText(string content)
+    {
+        _curProgressText.SetText($"현재 진행 상황: {content}");
+    }
 
     public void QuestStartBtn(string questId)
     {

@@ -31,7 +31,6 @@ public class QuestUI : PopupUI
             () => UpdatePopUpQuestUI(questData));
 
         _scrollViewQuestUIsDic.Add(questData.Id, newQuestObj);
-
     }
 
     public void UpdatePopUpQuestUI(QuestData questData)
@@ -43,5 +42,10 @@ public class QuestUI : PopupUI
     {
         Destroy(_scrollViewQuestUIsDic[id]);
         _scrollViewQuestUIsDic.Remove(id);
+    }
+
+    public void UpdateProgressText(QuestData questData)
+    {
+        _questInfoUI.UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
     }
 }
