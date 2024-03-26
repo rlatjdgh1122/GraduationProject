@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GeneralBlockState : GeneralBaseState
 {
     public GeneralBlockState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
@@ -12,13 +8,12 @@ public class GeneralBlockState : GeneralBaseState
     {
         base.Enter();
 
-        base.Enter();
         _triggerCalled = true;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
 
+        _penguin.skill.OnSkillCompleted += SpinAttack;
         _penguin.HealthCompo.OnHit += ImpactShield;
-        _penguin.skill.OnSkillFailed += SpinAttack;
     }
 
     public override void UpdateState()
@@ -41,13 +36,14 @@ public class GeneralBlockState : GeneralBaseState
 
     private void ImpactShield()
     {
-        _stateMachine.ChangeState(GeneralPenguinStateEnum.Impact);
+        if(!_penguin.canSpinAttack)
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Impact);
     }
 
     public override void Exit()
     {
-        _penguin.HealthCompo.OnHit -= ImpactShield;
-        _penguin.skill.OnSkillFailed -= SpinAttack;
+        _penguin.skill.OnSkillCompleted -= SpinAttack;
+        //_penguin.HealthCompo.OnHit -= ImpactShield;
         base.Exit();
     }
 }

@@ -9,8 +9,6 @@ public class ResourceUIReceiver : MonoBehaviour, IReceiver
     [SerializeField] private TextMeshProUGUI _needWorkerCountText;
     [SerializeField] private TextMeshProUGUI _currentWorkerCountText;
     [SerializeField] private Image _resourceIcon;
-    [SerializeField] private TextMeshProUGUI _warningText;
-    [SerializeField] private CanvasGroup _warningPanel;
 
     public void OnNotify<T>(T info)
     {

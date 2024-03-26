@@ -1,34 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GaugeSkill : Skill
 {
     [SerializeField] private float _targetValue;
-    public float _currentValue = 0;
+    public float _hitValue = 0;
+
+    bool IsUsed = false;
+
+    private General owner => _owner as General;
 
     public override void SetOwner(Entity owner)
     {
         base.SetOwner(owner);
+
+        IsUsed = false;
         _owner.HealthCompo.OnHit += PlusGauge;
     }
 
     public void PlusGauge()
     {
-        //if (!IsAvaliable) return;
+        if (!IsAvaliable) return;
 
-        _currentValue++;
-
-        if (_currentValue >= _targetValue)
+        if (_owner.HealthCompo.currentHealth <= _owner.HealthCompo.maxHealth * 0.5f)
         {
-            OnSkillCompleted?.Invoke();
-        }
+            if (!IsUsed)
+            {
+                OnSkillStart?.Invoke();
+                IsUsed = true;
+            }
 
-        if (_currentValue >= 20)
-        {
-            OnSkillFailed?.Invoke();
-            IsAvaliable = false;
+            _hitValue++;
+
+            if (_hitValue >= _targetValue)
+            {
+                owner.canSpinAttack = true;
+                OnSkillCompleted?.Invoke();
+                IsAvaliable = false;
+            }
         }
     }
 }

@@ -22,7 +22,9 @@ public class General : Penguin
     //public PassiveDataSO passiveData = null;
     public LigeonStatAdjustment ligeonStat = null;
     public Skill skill;
-    
+
+    public bool canSpinAttack = false;
+
     protected override void Awake()
     {
         base.Awake();

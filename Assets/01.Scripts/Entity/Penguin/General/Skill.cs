@@ -8,8 +8,8 @@ public abstract class Skill : MonoBehaviour
     protected Entity _owner;
 
     #region events
-    public Action OnSkillCompleted;
-    public Action OnSkillFailed;
+    public Action OnSkillStart = null;
+    public Action OnSkillCompleted = null;
     #endregion
 
     public bool IsAvaliable = true;

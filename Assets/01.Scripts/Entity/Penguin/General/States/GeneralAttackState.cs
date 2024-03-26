@@ -15,7 +15,7 @@ public class GeneralAttackState : GeneralBaseState
     {
         base.Enter();
 
-        _penguin.skill.OnSkillCompleted += HoldShield;
+        _penguin.skill.OnSkillStart += HoldShield;
 
         AttackEnter();
     }
@@ -37,7 +37,7 @@ public class GeneralAttackState : GeneralBaseState
     public override void Exit()
     {
         _penguin.AnimatorCompo.speed = 1;
-        _penguin.skill.OnSkillCompleted -= HoldShield;
+        _penguin.skill.OnSkillStart -= HoldShield;
         base.Exit();
     }
 
