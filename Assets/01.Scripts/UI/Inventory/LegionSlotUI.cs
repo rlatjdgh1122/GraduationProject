@@ -117,12 +117,12 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _slotImage.color = new Color(255, 255, 255, 0.3f);
+        _slotImage.DOFade(0.8f, 0f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _slotImage.color = new Color(255, 255, 255, 0);
+        _slotImage.DOFade(0f, 0f);
     }
 
     #endregion

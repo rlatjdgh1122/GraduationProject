@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
-public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler
+public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private int _price;
 
@@ -21,12 +21,15 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler
     private TextMeshProUGUI _nameText;
     private TextMeshProUGUI _priceText;
 
+    private Image _selectImg;
+
     protected virtual void Awake()
     {
         _penguinStore = transform.parent.parent.parent.GetComponent<PenguinStoreUI>();
         _icon         = transform.Find("PenguinImg/PenguinFace").GetComponent<Image>();
-        _nameText     = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
-        _priceText    = transform.Find("Cost/CostText").GetComponent<TextMeshProUGUI>();
+        _nameText     = transform.Find("PenguinImg/PenguinName").GetComponent<TextMeshProUGUI>();
+        _priceText    = transform.Find("PenguinImg/Cost/CostText").GetComponent<TextMeshProUGUI>();
+        _selectImg    = transform.Find("SelectImg").GetComponent<Image>();
     }
 
     public void InstantiateSelf(PenguinStat stat, Penguin spawnPenguin, int price)
@@ -65,5 +68,15 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler
         {
             SpawnPenguinRightEventHandler();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _selectImg.DOFade(0.6f, 0);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _selectImg.DOFade(0, 0);
     }
 }
