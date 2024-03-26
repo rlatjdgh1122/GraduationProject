@@ -14,7 +14,7 @@ public enum DummyPenguinStateEnum
 [RequireComponent(typeof(NavMeshAgent))]
 public class DummyPenguin : Penguin
 {
-    public EntityStateMachine<DummyPenguinStateEnum, Penguin> DummyStateMachine 
+    public EntityStateMachine<DummyPenguinStateEnum, Penguin> DummyStateMachine
     { get; private set; }
     protected override void Awake()
     {
@@ -39,7 +39,9 @@ public class DummyPenguin : Penguin
 
             DummyStateMachine.AddState(state, newState);
         }
-
+    }
+    protected override void Start()
+    {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
     }
     protected override void Update()
