@@ -103,12 +103,6 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.AnimationTrigger();
         OnAttackTriggerEvent?.Invoke();
     }
-
-    private void Ddong()
-    {
-        _penguin.UnFreelyMode();
-    }
-
     public void EffectStartTrigger()
     {
         OnEffectOnTriggerEvent?.Invoke();

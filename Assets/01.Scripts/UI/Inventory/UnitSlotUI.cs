@@ -28,7 +28,7 @@ public class UnitSlotUI : SlotUI, IPointerDownHandler
     {
         _data = data;
 
-        _unitImage.sprite = _data.penguinData.PenguinIcon;
+        _unitImage.sprite = _data.infoData.PenguinIcon;
 
         if (_data.stackSize > 0)
         {

@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Penguin : Entity
 {
@@ -13,29 +11,6 @@ public class Penguin : Entity
     public float provokeRange = 25f;
 
     public PassiveDataSO passiveData = null;
-
-    public bool isDummyPenguinMode = false;
-    public bool IsDummyPenguinMode
-    {
-        get => isDummyPenguinMode;
-        set
-        {
-            if (value == isDummyPenguinMode) return;
-            isDummyPenguinMode = value;
-            if (isDummyPenguinMode)
-            {
-                OnFreelyMode();
-            }
-            else
-            {
-                UnFreelyMode();
-            }
-        }
-    }
-
-
-    protected virtual void OnFreelyMode() { }
-    public virtual void UnFreelyMode() { }
 
     #region 군단 포지션 관련
 
@@ -89,20 +64,10 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
-
-    #region 더미 펭귄 관련
-    //애니메이션이 늘어날때마다 추가
-   
-    #endregion
-
-    //public Enemy CurrentTarget;
-
-    //public bool IsDead = false;
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     private Army owner;
-
     public Army Owner => owner;
 
     private bool isFreelyMove = false;
@@ -300,5 +265,4 @@ public class Penguin : Entity
     {
         isFreelyMove = b;
     }
-
 }

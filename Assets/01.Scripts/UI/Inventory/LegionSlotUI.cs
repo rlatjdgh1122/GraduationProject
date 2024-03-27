@@ -32,7 +32,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
     public override void UpdateSlot(LegionInventoryData data)
     {
-        _unitImage.sprite = data.penguinData.PenguinIcon;
+        _unitImage.sprite = data.infoData.PenguinIcon;
 
         //내가 추가한거 - 성호
 
@@ -40,8 +40,8 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
         {
             Legion = _legionNumber,
             SlotIdx = _slotNumber - 1, //배열은 0부터 시작하는거 까먹엇당 ㅎ
-            JobType = data.penguinData.JobType,
-            PenguinType = data.penguinData.PenguinType
+            JobType = data.infoData.JobType,
+            PenguinType = data.infoData.PenguinType
         };
 
         ArrangementManager.Instance.AddArrangementInfo(info);
@@ -56,12 +56,12 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
         if (_data != null && Input.GetKey(KeyCode.LeftControl)) //이 슬롯의 데이터를 군단 인벤에서 제거
         {
-            if (_data.penguinData.JobType == PenguinJobType.General)
+            if (_data.infoData.JobType == PenguinJobType.General)
             {
                 CurrentLegion.MaxGereral = false;
             }
 
-            LegionInventory.Instance.RemoveLegion(_data.penguinData, _legionNumber - 1);
+            LegionInventory.Instance.RemoveLegion(_data.infoData, _legionNumber - 1);
 
             CleanUpSlot(); //슬롯 초기화
 
@@ -75,7 +75,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
         if (_data == null && _info._data != null && CurrentLegion.CurrentCount < CurrentLegion.MaxCount)
         {
             if (CurrentLegion.MaxGereral
-                && _info._data.penguinData.JobType == PenguinJobType.General)
+                && _info._data.infoData.JobType == PenguinJobType.General)
             {
 
                 LegionInventory.Instance.ShowMessage("장군이 군단에 포함되어 있습니다!");
@@ -86,7 +86,7 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
 
             _data = _info._data; //이 슬롯의 데이터는 UnitInformationUI의 데이터
 
-            if (_data.penguinData.JobType == PenguinJobType.General)
+            if (_data.infoData.JobType == PenguinJobType.General)
             {
                 CurrentLegion.MaxGereral = true;
             }
@@ -98,8 +98,8 @@ public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, I
             _unitImage.enabled = true;
 
 
-            LegionInventory.Instance.RemovePenguin(_info._data.penguinData); //UnitInformationUI의 데이터를 지우고
-            LegionInventory.Instance.AddToLegion(_data.penguinData, _legionNumber - 1); //이 슬롯의 데이터와 이 슬롯의 군단번호를 군단 인벤에 넘겨줌
+            LegionInventory.Instance.RemovePenguin(_info._data.infoData); //UnitInformationUI의 데이터를 지우고
+            LegionInventory.Instance.AddToLegion(_data.infoData, _legionNumber - 1); //이 슬롯의 데이터와 이 슬롯의 군단번호를 군단 인벤에 넘겨줌
 
             UpdateSlot(_data);
         }

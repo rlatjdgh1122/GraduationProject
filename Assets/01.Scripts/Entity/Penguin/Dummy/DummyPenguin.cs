@@ -19,6 +19,7 @@ public class DummyPenguin : PoolableMono
     { get; private set; }
 
     public Penguin Owner = null;
+    public PenguinInfoDataSO PenguinUIInfo = null;
 
     private int MaxNumberOfDumbAnim = 3;
     public bool IsGoToHouse { get; protected set; } = false;

@@ -1,17 +1,13 @@
-using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.UI;
 
 [Serializable]
 public class PenguinUnitSlot
 {
     public int price;
-    public Penguin spawnPenguinPrefab;
+    public DummyPenguin spawnPenguinPrefab;
 }
 
 public class PenguinStoreUI : PopupUI
@@ -48,15 +44,15 @@ public class PenguinStoreUI : PopupUI
         foreach (var slot in _slotList) //Make Penguin Slot
         {
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
-            btn.InstantiateSelf(slot.spawnPenguinPrefab.Stat as PenguinStat, slot.spawnPenguinPrefab, slot.price);
+            btn.InstantiateSelf(slot.spawnPenguinPrefab.PenguinUIInfo, slot.spawnPenguinPrefab, slot.price);
             btn.SlotUpdate();
         }
     }
 
-    public void PenguinInformataion(Penguin spawnPenguin, PenguinStat penguinStat, int price)
+    public void PenguinInformataion(DummyPenguin dummyPenguin, EntityInfoDataSO infoData, int price)
     {
-        BuyPanel.PenguinInformataion(spawnPenguin, penguinStat, price);
-        _infoPanel.PenguinInformataion(spawnPenguin, penguinStat);
+        BuyPanel.PenguinInformataion(dummyPenguin, infoData, price);
+        _infoPanel.PenguinInformataion(dummyPenguin, infoData);
     }
 
     public void OnEnableStorePanel() //스토어 패널 활성화

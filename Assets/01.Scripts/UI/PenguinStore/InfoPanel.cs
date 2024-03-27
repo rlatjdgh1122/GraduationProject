@@ -16,8 +16,8 @@ public class InfoPanel : PopupUI
     private Slider _hpSlider;
     private Slider _atkSlider;
 
-    private PenguinStat _stat;
-    private Penguin _spawnPenguin;
+    private EntityInfoDataSO _infoData;
+    private DummyPenguin _dummyPenguin;
 
     public override void Awake()
     {
@@ -33,20 +33,20 @@ public class InfoPanel : PopupUI
         _infoPenguinNameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
     }
 
-    public void PenguinInformataion(Penguin spawnPenguin, PenguinStat penguinStat)
+    public void PenguinInformataion(DummyPenguin dummyPenguin, EntityInfoDataSO infoData)
     {
-        _stat = penguinStat;
-        _spawnPenguin = spawnPenguin;
+        _infoData = infoData;   
+        _dummyPenguin = dummyPenguin;
     }
 
     private void UpdatePenguinInfo(float time)
     {
-        _penguinFace.sprite = _stat.PenguinIcon;
-        _infoPenguinNameText.text = _stat.PenguinName;
+        _penguinFace.sprite = _infoData.PenguinIcon;
+        _infoPenguinNameText.text = _infoData.PenguinName;
 
-        _atkSlider.DOValue(_stat.PenguinData.atk, time);
-        _hpSlider.DOValue(_stat.PenguinData.hp, time);
-        _rangeSlider.DOValue(_stat.PenguinData.range, time);
+        _atkSlider.DOValue(_infoData.atk, time);
+        _hpSlider.DOValue(_infoData.hp, time);
+        _rangeSlider.DOValue(_infoData.range, time);
     }
 
 

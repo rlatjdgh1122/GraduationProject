@@ -26,12 +26,12 @@ public class GeneralUpgrade : GeneralPopupUI
 
     private void UpdateUI()
     {
-        nameText.text = generalStat.PenguinName;
-        levelText.text = $"Lv {generalStat.GeneralData.level}";
-        hp.value = generalStat.PenguinData.hp;
-        atk.value = generalStat.PenguinData.atk;
-        range.value = generalStat.PenguinData.range;
-        synergyText.text = generalStat.GeneralData.synergy.synergyName;
+        nameText.text = generalStat.InfoData.PenguinName;
+        levelText.text = $"Lv {generalStat.GeneralPassvieData.level}";
+        hp.value = generalStat.InfoData.hp;
+        atk.value = generalStat.InfoData.atk;
+        range.value = generalStat.InfoData.range;
+        synergyText.text = generalStat.GeneralPassvieData.synergy.synergyName;
     }
 
     public override void ShowPanel()

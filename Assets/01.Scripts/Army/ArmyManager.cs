@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class ArmyManager : Singleton<ArmyManager>
 {
     [SerializeField] private SoldierListSO soldierTypeListSO = null;
-    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
+    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new(); //이것도 스폰매니저에서 관리
 
     [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
@@ -23,9 +23,10 @@ public class ArmyManager : Singleton<ArmyManager>
 
     private void Start()
     {
+        //이코드 스폰 매니저에서 해줄 거임
         foreach (var solider in soldierTypeListSO.soldierTypes)
         {
-            var type = (solider.Stat as PenguinStat).PenguinType;
+            var type = solider.InfoData.PenguinType;
             soldierTypeDictionary.Add(type, solider);
         }
 
