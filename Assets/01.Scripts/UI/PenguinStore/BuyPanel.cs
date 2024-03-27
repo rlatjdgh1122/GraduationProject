@@ -147,7 +147,6 @@ public class BuyPanel : PopupUI
 
 
         ResetBuyPanel();
-        _presenter.OnDisableBuyPanel();
     }
 
     private void ShowMessage(string message) //값들 임시로 박아둔것
@@ -159,6 +158,7 @@ public class BuyPanel : PopupUI
         UIManager.Instance.HudTextSequence.Append(_presenter._statuCanvas.DOFade(1, 0.04f))
                 .AppendInterval(0.8f)
                 .Append(_presenter._statuCanvas.DOFade(0, 0.04f));
+
     }
 
     public void OneClickBuyPenguin()
