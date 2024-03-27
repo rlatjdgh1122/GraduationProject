@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[Serializable]
-public class PenguinUnitSlot
-{
-    public int price;
-    public DummyPenguin spawnPenguinPrefab;
-}
-
 public class PenguinStoreUI : PopupUI
 {
     [Header("Make Penguin Slot")]
     [SerializeField] private Transform _spawnPenguinButtonParent;
     [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
-    public List<PenguinUnitSlot> _slotList;
+    public List<DummyPenguin> _slotList; 
 
     #region Component
     public PenguinFactory _penguinFactory { get; private set; }
@@ -41,10 +34,13 @@ public class PenguinStoreUI : PopupUI
 
         #endregion
 
-        foreach (var slot in _slotList) //Make Penguin Slot
+        foreach (var spwanObj in _slotList) //Make Penguin Slot
         {
+            var dummyPenguin = spwanObj;
+            var UIinfo = spwanObj.PenguinUIInfo;
+
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
-            btn.InstantiateSelf(slot.spawnPenguinPrefab.PenguinUIInfo, slot.spawnPenguinPrefab, slot.price);
+            btn.InstantiateSelf(UIinfo, dummyPenguin, UIinfo.Price);
             btn.SlotUpdate();
         }
     }

@@ -716,21 +716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2137acd602a2af34fa12ecf992a8bf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterStat: {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
-  CurrentTarget: {fileID: 0}
-  IsDead: 0
-  innerDistance: 4
-  attackDistance: 1.5
-  moveSpeed: 4.5
-  attackSpeed: 1
-  maxDetectedCount: 0
-  provokeRange: 25
-  passiveData: {fileID: 0}
-  isDummyPenguinMode: 0
-  ArmyTriggerCalled: 0
-  WaitForCommandToArmyCalled: 1
-  SuccessfulToArmyCalled: 0
-  IsGoToHouse: 0
+  Owner: {fileID: 0}
+  _penguinUIInfo: {fileID: 11400000, guid: 8ca706b8392d1ad4bb005c9c78e0d4fd, type: 2}
 --- !u!1 &3472095403505376915
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1588869382802778666}
   - component: {fileID: 7949811658060923926}
-  - component: {fileID: 3883763573003239304}
+  - component: {fileID: 654536587421233333}
   m_Layer: 11
   m_Name: Visual
   m_TagString: Untagged
@@ -1011,7 +998,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3883763573003239304
+--- !u!114 &654536587421233333
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1020,42 +1007,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4506003864128511284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f41c3fa95d8d5a44ac80358b7ca68ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 98ec2b2e26d76a240968b879551e995d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPrevAttackEffectEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEndAttackEffectEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpecialAttackTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAttackTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAoEAttackTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStunTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnRangeAttackTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeadCompleteTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAnimationEndTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEffectOnTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEffectOffTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4537493100938437306
 GameObject:
   m_ObjectHideFlags: 0

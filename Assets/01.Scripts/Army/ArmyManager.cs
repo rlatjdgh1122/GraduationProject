@@ -6,8 +6,7 @@ using UnityEngine.AI;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
-    [SerializeField] private SoldierListSO soldierTypeListSO = null;
-    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new(); //이것도 스폰매니저에서 관리
+
 
     [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
@@ -23,13 +22,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
     private void Start()
     {
-        //이코드 스폰 매니저에서 해줄 거임
-        foreach (var solider in soldierTypeListSO.soldierTypes)
-        {
-            var type = solider.InfoData.PenguinType;
-            soldierTypeDictionary.Add(type, solider);
-        }
-
         CreateArmy();
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
 
@@ -233,7 +225,7 @@ public class ArmyManager : Singleton<ArmyManager>
     public Penguin CreateSoldier(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default)
     {
         Penguin obj;
-        var prefab = soldierTypeDictionary[type];
+        var prefab = SpawnManager.Instance.ReturnPenguinByType(type);
 
         obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
         obj.gameObject.SetActive(false);

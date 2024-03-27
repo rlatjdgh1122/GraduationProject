@@ -15,16 +15,15 @@ public enum DummyPenguinStateEnum
 [RequireComponent(typeof(NavMeshAgent))]
 public class DummyPenguin : PoolableMono
 {
-    public DummyStateMachine DummyStateMachine
-    { get; private set; }
-
     public Penguin Owner = null;
-    public PenguinInfoDataSO PenguinUIInfo = null;
+
+    [SerializeField]
+    private PenguinInfoDataSO _penguinUIInfo = null;
+    public PenguinInfoDataSO PenguinUIInfo => _penguinUIInfo;
 
     private int MaxNumberOfDumbAnim = 3;
     public bool IsGoToHouse { get; protected set; } = false;
-
-    public Transform HouseTrm = null;
+    public Transform HouseTrm { get; private set; }
     public int RandomValue
     {
         get
@@ -39,6 +38,7 @@ public class DummyPenguin : PoolableMono
     public Outline OutlineCompo { get; private set; }
 
     #endregion
+    public DummyStateMachine DummyStateMachine { get; private set; }
     private void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
@@ -81,7 +81,7 @@ public class DummyPenguin : PoolableMono
         DummyStateMachine.CurrentState.UpdateState();
     }
 
-    public void EndAnimationTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
+    public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 
     public void GoToHouse()
     {
