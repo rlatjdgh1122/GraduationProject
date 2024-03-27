@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour, IDamageable
@@ -51,7 +52,20 @@ public class Health : MonoBehaviour, IDamageable
 
         transform.DOMove(knockbackPosition, 0.5f);
 
-        return true;
+        if (!IsPositionValid(knockbackPosition))
+        {
+            transform.DOMoveY(transform.position.y - 2f, 1.2f);
+            Dead();
+            return false;
+        }
+        else
+            return true;
+    }
+
+    bool IsPositionValid(Vector3 position)
+    {
+        NavMeshHit hit;
+        return NavMesh.SamplePosition(position, out hit, 0.1f, NavMesh.AllAreas);
     }
 
     public bool Stun(RaycastHit ray, float duration)
@@ -120,9 +134,7 @@ public class Health : MonoBehaviour, IDamageable
 
         if (currentHealth <= 0)
         {
-            _isDead = true;
-            OnDeathEvent?.Invoke();
-            OnDied?.Invoke();
+            Dead();
         }
     }
 
@@ -131,5 +143,12 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
         OnHealedEvent?.Invoke();
+    }
+
+    private void Dead()
+    {
+        _isDead = true;
+        OnDeathEvent?.Invoke();
+        OnDied?.Invoke();
     }
 }
