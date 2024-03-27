@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 
 public enum SoundType
 {
@@ -10,19 +13,31 @@ public enum SoundType
     BGM
 }
 
+public enum SoundName
+{
+    MeleeAttack,
+}
+
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance;
 
-    private Dictionary<string, AudioSource> bgmContainer = new();
+    private Dictionary<SoundName, AudioSource> bgmContainer = new();
     private AudioMixerGroup bgmMixer;
     private AudioMixerGroup sfxMixer;
     private AudioMixer mainMixer;
 
+    private Camera mainCamera;
+    private float initialVolume;
+
+    private void Awake()
+    {
+        mainCamera = Camera.main;
+    }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
     {
-
         GameObject obj = new GameObject("SoundManager");
         instance = obj.AddComponent<SoundManager>();
         instance.InitInstance();
@@ -40,12 +55,12 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public static void Play2DSound(string clipName, SoundType type = SoundType.SFX)
+    public static void Play2DSound(SoundName name, SoundType type = SoundType.SFX)
     {
 
         if (instance == null) return;
 
-        instance.Play2D(clipName, type);
+        instance.Play2D(name, type);
 
     }
 
@@ -58,25 +73,25 @@ public class SoundManager : MonoBehaviour
     /// <param name="maxDistance">오디오 들리는 최대 거리</param>
     /// <param name="type">SFX이니? BGM이니?</param>
     /// <param name="rolloffMode">이건 그냥 건들지 마셈</param>
-    public static void Play3DSound(string clipName, Vector3 position,
-    float minDistance = 1, float maxDistance = 500,
+    public static void Play3DSound(SoundName clipName, Vector3 position,
+    float minFOV = 20, float maxFOV = 55, float maxDistance = 50,
     SoundType type = SoundType.SFX,
     AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic)
     {
 
         if (instance == null) return;
 
-        instance.Play3D(clipName, position, minDistance, maxDistance, type, rolloffMode);
+        instance.Play3D(clipName, position, minFOV, maxFOV, maxDistance, type, rolloffMode);
 
     }
 
-    private void Play2D(string clipName, SoundType type)
+    private void Play2D(SoundName clipName, SoundType type)
     {
 
         GameObject obj = new GameObject();
         var source = obj.AddComponent<AudioSource>();
 
-        AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName}");
+        AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName.ToString()}");
 
         source.clip = clip;
         source.spatialBlend = 0;
@@ -116,8 +131,8 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    private void Play3D(string clipName, Vector3 position,
-        float minDistance = 1, float maxDistance = 500,
+    private void Play3D(SoundName clipName, Vector3 position,
+        float minFOV = 20, float maxFOV = 55, float maxDistance = 50,
         SoundType type = SoundType.SFX,
         AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic)
     {
@@ -126,13 +141,23 @@ public class SoundManager : MonoBehaviour
         obj.transform.position = position;
         var source = obj.AddComponent<AudioSource>();
 
-        AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName}");
+        AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName.ToString()}");
 
         source.clip = clip;
         source.spatialBlend = 1;
-        source.minDistance = minDistance;
-        source.maxDistance = maxDistance;
+        //source.minDistance = minDistance;
+        //source.maxDistance = maxDistance;
         source.rolloffMode = rolloffMode;
+
+        initialVolume = source.volume;
+
+        float distance = Vector3.Distance(source.transform.position, mainCamera.transform.position);
+
+        if (distance > maxDistance) return;
+
+        float fovNormalization = 1 - (float)(mainCamera.fieldOfView - minFOV) / (maxFOV - minFOV);
+
+        source.volume = fovNormalization;
 
         source.outputAudioMixerGroup = type switch
         {
@@ -168,7 +193,7 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public static void StopBGM(string clipName)
+    public static void StopBGM(SoundName clipName)
     {
 
         if (instance == null) return;
@@ -176,7 +201,7 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    private void StopBGMSound(string clipName)
+    private void StopBGMSound(SoundName clipName)
     {
 
         if(bgmContainer.TryGetValue(clipName, out var so))
