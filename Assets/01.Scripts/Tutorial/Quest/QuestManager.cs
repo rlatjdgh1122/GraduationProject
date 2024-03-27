@@ -17,6 +17,7 @@ public class QuestManager : Singleton<QuestManager>
 
     private DialogSystem _dialogSystem;
     private QuestUI _questUI;
+    private CostUI _costUI;
 
     public override void Awake()
     {
@@ -24,6 +25,7 @@ public class QuestManager : Singleton<QuestManager>
 
         _dialogSystem = Object.FindAnyObjectByType<DialogSystem>();
         _questUI = Object.FindAnyObjectByType<QuestUI>();
+        _costUI = Object.FindAnyObjectByType<CostUI>();
     }
 
     private void Start()
@@ -132,10 +134,12 @@ public class QuestManager : Singleton<QuestManager>
 
         if (questData.IsTutorialQuest) { TutorialManager.Instance.IncreaseQuestIdx(); } // 튜토리얼 퀘스트는 순서대로 해야 하니까 idx 증가
 
-        _questUI.RemoveQuestContentUI(questData.Id);
+        _questUI.RemoveQuestContentUI(questData.Id); // 퀘스트 UI에서 삭제
 
         SignalHub.OnEndQuestEvent?.Invoke(); //퀘스트 성공 이벤트
         SignalHub.OnOffPopUiEvent?.Invoke();
+
+        _costUI.CostTween(questData.QuestRewardInfo.RewardCount, true, _questUI.QuestInfoUICompo.RewardPos.position);
     }
 
 }

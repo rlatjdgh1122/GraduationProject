@@ -14,6 +14,7 @@ public class QuestInfoUI : MonoBehaviour
     private TextMeshProUGUI _curProgressText; // 어떤 퀘스트인지
 
     private TextMeshProUGUI _questRewardCountText; // 보상 갯수
+    public RectTransform RewardPos => _questRewardCountText.rectTransform; // 보상 갯수
 
     private Image _questRewardTypeImg; //어떤 보상인지
 
