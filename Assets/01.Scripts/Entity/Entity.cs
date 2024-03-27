@@ -29,7 +29,6 @@ public abstract class Entity : PoolableMono
     public NavMeshAgent NavAgent { get; protected set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
-
     #endregion
 
     protected virtual void Awake()
@@ -43,7 +42,6 @@ public abstract class Entity : PoolableMono
 
         HealthCompo?.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
-
 
         if (HealthCompo != null)
         {
@@ -77,6 +75,7 @@ public abstract class Entity : PoolableMono
     }
 
     protected abstract void HandleDie();
+
 
 
     #region 움직임 관리
