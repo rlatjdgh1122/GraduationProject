@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DummyRunningState : DummyBaseState
 {
-    public DummyRunningState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyRunningState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 
@@ -14,7 +14,7 @@ public class DummyRunningState : DummyBaseState
 
         //스피드는 좀 빠르게
         _navAgent.speed = 3f;
-        _penguin.MoveToPosition(GetRandomPoint());
+        MoveToPosition(GetRandomPoint());
     }
     public override void UpdateState()
     {

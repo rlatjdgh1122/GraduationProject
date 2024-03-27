@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public enum DummyPenguinStateEnum
 {
@@ -12,14 +13,33 @@ public enum DummyPenguinStateEnum
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class DummyPenguin : Penguin
+public class DummyPenguin : PoolableMono
 {
-    public EntityStateMachine<DummyPenguinStateEnum, Penguin> DummyStateMachine
+    public DummyStateMachine DummyStateMachine
     { get; private set; }
-    protected override void Awake()
-    {
-        base.Awake();
 
+    public Penguin Owner = null;
+
+    private int MaxNumberOfDumbAnim = 3;
+    public bool IsGoToHouse { get; protected set; } = false;
+
+    public Transform HouseTrm = null;
+    public int RandomValue
+    {
+        get
+        {
+            int value = Random.Range(0, MaxNumberOfDumbAnim);
+            return value;
+        }
+    }
+    #region Components
+    public Animator AnimatorCompo { get; protected set; }
+    public NavMeshAgent NavAgent { get; protected set; }
+    public Outline OutlineCompo { get; private set; }
+
+    #endregion
+    private void Awake()
+    {
         Transform visualTrm = transform.Find("Visual");
         HouseTrm = FindObjectOfType<TentInitPos>().transform;
 
@@ -27,26 +47,24 @@ public class DummyPenguin : Penguin
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
 
         Setting();
-
-        
     }
- 
+
 
     private void Setting()
     {
-        DummyStateMachine = new EntityStateMachine<DummyPenguinStateEnum, Penguin>();
+        DummyStateMachine = new DummyStateMachine();
 
         foreach (DummyPenguinStateEnum state in Enum.GetValues(typeof(DummyPenguinStateEnum)))
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Dummy{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, DummyStateMachine, typeName) as EntityState<DummyPenguinStateEnum, Penguin>;
+            var newState = Activator.CreateInstance(t, this, DummyStateMachine, typeName) as DummyState;
 
             DummyStateMachine.AddState(state, newState);
         }
     }
-    protected override void Start()
+    private void Start()
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
 
@@ -56,15 +74,17 @@ public class DummyPenguin : Penguin
     {
         Debug.Log("전투시작한다고");
         IsGoToHouse = true;
-        //DummyStateMachine.ChangeState(DummyPenguinStateEnum.GoToHouse);
     }
-    protected override void Update()
+    private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
     }
 
-    protected override void HandleDie()
-    {
+    public void EndAnimationTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 
+    public void GoToHouse()
+    {
+        PoolManager.Instance.Push(this);
+        //Destroy(gameObject);
     }
 }

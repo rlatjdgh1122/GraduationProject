@@ -6,7 +6,7 @@ public class DummyDumbToDoState : DummyBaseState
 {
     public readonly int AnimID = Animator.StringToHash("RandomValue");
 
-    public DummyDumbToDoState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyDumbToDoState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 
@@ -14,7 +14,7 @@ public class DummyDumbToDoState : DummyBaseState
     {
         base.Enter();
 
-        _penguin.StopImmediately();
+        StopImmediately();
 
         _penguin.AnimatorCompo.SetFloat(AnimID, _penguin.RandomValue);
     }

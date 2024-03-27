@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DummyGoToHouseState : DummyBaseState
 {
-    public DummyGoToHouseState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyGoToHouseState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
 

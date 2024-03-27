@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DummyBaseState : PenguinState<DummyPenguinStateEnum, Penguin>
+public class DummyBaseState : DummyState
 {
-
-    public DummyBaseState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyBaseState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
-
     public override void Enter()
     {
         base.Enter();
@@ -30,6 +28,24 @@ public class DummyBaseState : PenguinState<DummyPenguinStateEnum, Penguin>
     public override void Exit()
     {
         base.Exit();
+    }
+    protected void StopImmediately()
+    {
+        if (_navAgent != null)
+        {
+            if (_navAgent.isActiveAndEnabled)
+            {
+                _navAgent.isStopped = true;
+            }
+        }
+    }
+    protected void MoveToPosition(Vector3 pos)
+    {
+        if (_navAgent.isActiveAndEnabled)
+        {
+            _navAgent?.ResetPath();
+            _navAgent?.SetDestination(pos);
+        }
     }
 
     protected DummyPenguinStateEnum RandomState()

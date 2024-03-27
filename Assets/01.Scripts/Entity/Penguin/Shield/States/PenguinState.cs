@@ -5,6 +5,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 {
     public PenguinState(G penguin, EntityStateMachine<T, G> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
+
     }
 
     protected void IdleEnter()

@@ -7,7 +7,7 @@ public class DummyFreelyIdleState : DummyBaseState
     private float timer = 0f;
     private float randomTime = 5f;
 
-    public DummyFreelyIdleState(Penguin penguin, EntityStateMachine<DummyPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyFreelyIdleState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
@@ -19,7 +19,7 @@ public class DummyFreelyIdleState : DummyBaseState
         timer = 0f;
         randomTime = Random.Range(1.0f, 5.0f);
 
-        _penguin.StopImmediately();
+        StopImmediately();
     }
     public override void UpdateState()
     {
