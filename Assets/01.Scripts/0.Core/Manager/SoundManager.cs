@@ -144,9 +144,7 @@ public class SoundManager : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName.ToString()}");
 
         source.clip = clip;
-        source.spatialBlend = 1;
-        //source.minDistance = minDistance;
-        //source.maxDistance = maxDistance;
+        source.spatialBlend = 0.8f;
         source.rolloffMode = rolloffMode;
 
         initialVolume = source.volume;
