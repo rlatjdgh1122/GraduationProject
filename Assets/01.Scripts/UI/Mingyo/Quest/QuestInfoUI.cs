@@ -130,6 +130,7 @@ public class QuestInfoUI : MonoBehaviour
     {
         QuestManager.Instance.StartQuest(questId);
 
+
         SignalHub.OnStartQuestEvent?.Invoke();
     }
 

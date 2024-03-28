@@ -1,4 +1,5 @@
 using AssetKits.ParticleImage.Editor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager.Requests;
@@ -41,27 +42,33 @@ public class QuestUI : PopupUI
         _questStateIcon = questButton.Find("CautionBox").GetChild(0).GetComponent<Image>();
         _questStateBox = questButton.Find("CautionBox").GetComponent<Image>();
 
+        _uncompletedQuestScrollViewUIs.Clear();
+
         SetCautionBoxImage(false, true);
     }
 
     public void CreateScrollViewUI(QuestData questData)
     {
-        GameObject newQuestObj = Instantiate(_questUIPrefabs, _questPopupContentsParentTrm);
-        ScrollViewQuestUI newQuest = newQuestObj.GetComponent<ScrollViewQuestUI>();
-        newQuest.SetUpScrollViewUI(questData.Id, QuestState.CanStart,
-            () => UpdatePopUpQuestUI(questData));
+        if (!_uncompletedQuestScrollViewUIs.ContainsKey(questData.Id))
+        {
+            GameObject newQuestObj = Instantiate(_questUIPrefabs, _questPopupContentsParentTrm);
+            ScrollViewQuestUI newQuest = newQuestObj.GetComponent<ScrollViewQuestUI>();
+            newQuest.SetUpScrollViewUI(questData.Id, QuestState.CanStart,
+                () => UpdatePopUpQuestUI(questData));
 
-        _uncompletedQuestScrollViewUIs.Add(questData.Id, newQuest);
-        _unStartedQuestsLength++;
+            _uncompletedQuestScrollViewUIs.Add(questData.Id, newQuest);
+            _unStartedQuestsLength++;
 
-        SignalHub.OnStartQuestEvent += () => SetQuestUIToRunning(newQuest);
 
-        SetCautionBoxImage(false);
+            SetCautionBoxImage(false);
+        }
     }
 
     public void SetCautionBoxImage(bool isEnd, bool isNull = false)
     {
-        if(isNull)
+        _questStateIcon.enabled = true;
+
+        if (isNull)
         {
             _questStateIcon.enabled = false;
             _questStateBox.color = new Color(0, 0, 0, 0);
@@ -70,13 +77,11 @@ public class QuestUI : PopupUI
 
         if (isEnd)
         {
-            _questStateIcon.enabled = true;
             _questStateIcon.sprite = _checkMarkSprite;
             _questStateBox.color = _checkMarkBoxColor;
         }
         else
         {
-            _questStateIcon.enabled = true;
             _questStateIcon.sprite = _exclamationMarkSprite;
             _questStateBox.color = _exclamationBoxColor;
         }
@@ -85,8 +90,17 @@ public class QuestUI : PopupUI
     public void UpdatePopUpQuestUI(QuestData questData)
     {
         _questInfoUI.UpdatePopUpQuestUI(questData, () => SetCautionBoxImage(false, true));
-        _uncompletedQuestScrollViewUIs[questData.Id].UpdateQuestType(questData.QuestStateEnum);
 
+
+        if (_uncompletedQuestScrollViewUIs.ContainsKey(questData.Id))
+        {
+            _uncompletedQuestScrollViewUIs[questData.Id].UpdateQuestType(questData.QuestStateEnum);
+            SignalHub.OnStartQuestEvent += () => SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[questData.Id]);
+        }
+        else
+        {
+            Debug.Log(questData.Id);
+        }
     }
 
     public void RemoveQuestContentUI(string id)

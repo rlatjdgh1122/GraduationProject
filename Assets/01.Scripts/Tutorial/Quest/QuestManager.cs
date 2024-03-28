@@ -12,8 +12,8 @@ public class QuestManager : Singleton<QuestManager>
 
     private Dictionary<string, QuestData> _allQuests = new Dictionary<string, QuestData>();
 
-    private List<QuestData> _curInprogressQuests = new List<QuestData>();
-    public List<QuestData> CurInprogressQuests => _curInprogressQuests; //지금 진행중인 퀘스트
+    private Dictionary<string, QuestData> _curInprogressQuests = new Dictionary<string, QuestData>();
+    public Dictionary<string, QuestData> CurInprogressQuests => _curInprogressQuests; //지금 진행중인 퀘스트
 
     private DialogSystem _dialogSystem;
     private QuestUI _questUI;
@@ -94,10 +94,10 @@ public class QuestManager : Singleton<QuestManager>
 
         Debug.Log($"{questData.Id} 퀘스트 시이작");
 
-        _curInprogressQuests.Add(questData); //현재 진행중 퀘스트 리스트에 추가
+        _curInprogressQuests.Add(questData.Id, questData); //현재 진행중 퀘스트 리스트에 추가
         InstantiateQuest(questData);
 
-        _curInprogressQuests[questData.TutorialQuestIdx].QuestStateEnum = QuestState.Running;
+        _curInprogressQuests[questData.Id].QuestStateEnum = QuestState.Running;
 
         _questUI.UpdatePopUpQuestUI(questData); // 퀘스트 상태 업데이트
         SignalHub.OnStartQuestEvent?.Invoke(); //퀘스트 시작 이벤트
@@ -131,7 +131,7 @@ public class QuestManager : Singleton<QuestManager>
                 }
                 if (questData.QuestStateEnum != QuestState.Running)
                 {
-                    Debug.Log("이거 아직 시작 안 했는데용");
+                    Debug.Log($"이거 아직 시작 안 했는데용 너 지금 {questData.QuestStateEnum}임"); 
                     return;
                 }
                 break;
@@ -164,18 +164,20 @@ public class QuestManager : Singleton<QuestManager>
 
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
-        _curInprogressQuests[questData.TutorialQuestIdx].QuestStateEnum = QuestState.Finish; // 퀘스트에 완료처리 해주고
+        _curInprogressQuests[questData.Id].QuestStateEnum = QuestState.Finish; // 퀘스트에 완료처리 해주고
 
-        _curInprogressQuests.Remove(questData); //현재 진행중 퀘스트 리스트에서 삭제
-
-        if (questData.IsTutorialQuest) { TutorialManager.Instance.IncreaseQuestIdx(); } // 튜토리얼 퀘스트는 순서대로 해야 하니까 idx 증가
-
-        _questUI.RemoveQuestContentUI(questData.Id); // 퀘스트 UI에서 삭제
+        _curInprogressQuests.Remove(questData.Id); //현재 진행중 퀘스트 리스트에서 삭제
 
         SignalHub.OnEndQuestEvent?.Invoke(); //퀘스트 성공 이벤트
 
         _costUI.CostTween(questData.QuestRewardInfo.RewardCount, true, _questUI.QuestInfoUICompo.RewardPos.position);
         _questUI.QuestInfoUICompo.OffCanvasGroups();
+
+        if (questData.IsTutorialQuest)
+        {
+            TutorialManager.Instance.IncreaseQuestIdx(); // 튜토리얼 퀘스트는 순서대로 해야 하니까 idx 증가
+        }
+        _questUI.RemoveQuestContentUI(questData.Id); // 퀘스트 UI에서 삭제
     }
 
 

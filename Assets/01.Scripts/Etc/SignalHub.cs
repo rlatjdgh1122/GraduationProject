@@ -72,7 +72,6 @@ public static class SignalHub
     public static EndQuestEvent OnEndQuestEvent;
     public static ProgressQuestEvent OnProgressQuestEvent;
 
-
     public static OffPopUiEvent OnOffPopUiEvent;
 
     #endregion

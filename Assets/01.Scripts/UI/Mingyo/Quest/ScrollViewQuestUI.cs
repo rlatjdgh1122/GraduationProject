@@ -54,9 +54,4 @@ public class ScrollViewQuestUI : MonoBehaviour
                 default: break;
         }
     }
-
-    private void OnEnable()
-    {
-        SignalHub.OnStartQuestEvent -= () => UpdateQuestType(QuestState.Running);
-    }
 }
