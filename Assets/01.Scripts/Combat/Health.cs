@@ -124,12 +124,12 @@ public class Health : MonoBehaviour, IDamageable
         _actionData.HitNormal = normal;
         _actionData.HitType = hitType;
 
-        OnHitEvent?.Invoke();
-        OnHit?.Invoke();
-
         float adjustedDamage = damage * (1.0f - (_armor * 0.01f));
 
         currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
+
+        OnHitEvent?.Invoke();
+        OnHit?.Invoke();
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
@@ -150,5 +150,6 @@ public class Health : MonoBehaviour, IDamageable
         _isDead = true;
         OnDeathEvent?.Invoke();
         OnDied?.Invoke();
+        OffUIUpdate?.Invoke();
     }
 }
