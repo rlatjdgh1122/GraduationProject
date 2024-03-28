@@ -21,7 +21,11 @@ public enum SoundName
     StartFight,
     NormalBGM,
     NormalBattleBGM,
-    Hit
+    Dead,
+    BiteAttack,
+    Explosion,
+    SlashAttack,
+    Cash
 }
 
 public class SoundManager : MonoBehaviour

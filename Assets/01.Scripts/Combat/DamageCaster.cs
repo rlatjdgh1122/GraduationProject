@@ -173,11 +173,11 @@ public class DamageCaster : MonoBehaviour
         //actionData.HitPoint
     }
 
-    public void SelectTypeAOECast(int damage, HitType hitType, bool Knb = false, float value = 0)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, bool Knb = false, float value = 0)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
-        SoundManager.Play3DSound(_soundName, transform.position);
+        SoundManager.Play3DSound(sound, transform.position);
 
         foreach (var col in Colls)
         {

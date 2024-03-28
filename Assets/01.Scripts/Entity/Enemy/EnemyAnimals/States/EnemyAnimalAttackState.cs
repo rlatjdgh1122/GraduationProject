@@ -14,6 +14,7 @@ public class EnemyAnimalAttackState : EnemyAnimalBaseState
     public override void Enter()
     {
         base.Enter();
+
         if (_animalAttack.ComboCounter > _animalAttack.animalAttackList.Count - 1
             || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
         {
@@ -30,9 +31,13 @@ public class EnemyAnimalAttackState : EnemyAnimalBaseState
     {
         base.UpdateState();
 
-        if(_enemy.CurrentTarget.IsDead)
+        _enemy.LookTarget();
+
+        if (_enemy.CurrentTarget.IsDead)
         {
             _enemy.CurrentTarget = null;
+
+            _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
         }
 
         if (_triggerCalled) //°ø°ÝÀÌ ÇÑ Â÷·Ê ³¡³µÀ» ¶§,

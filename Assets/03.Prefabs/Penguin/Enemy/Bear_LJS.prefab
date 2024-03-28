@@ -1205,8 +1205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 1.5
+  _detectRange: 2
   _hitType: 1
+  _soundName: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -1663,11 +1664,11 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   IsDead: 0
   innerDistance: 5
-  attackDistance: 2.4
+  attackDistance: 2
   moveSpeed: 3
   attackSpeed: 1
   rotationSpeed: 2
-  nexusDistance: 4.37
+  nexusDistance: 4
   OnProvokedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1721,6 +1722,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1812,7 +1816,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0
+  m_Height: 2.03
   m_Radius: 0.66
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -1833,15 +1837,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalAttackList:
   - hitType: 4
+    SFXSound: 8
     Damage: 10
     KnbackValue: 1
   - hitType: 4
+    SFXSound: 8
     Damage: 10
     KnbackValue: 1
   - hitType: 10
+    SFXSound: 6
     Damage: 5
     KnbackValue: 0
   - hitType: 8
+    SFXSound: 7
     Damage: 20
     KnbackValue: 2.5
   <ComboWindow>k__BackingField: 0.6
