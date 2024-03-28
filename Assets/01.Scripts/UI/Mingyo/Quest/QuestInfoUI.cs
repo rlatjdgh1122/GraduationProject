@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -54,7 +55,7 @@ public class QuestInfoUI : MonoBehaviour
         SignalHub.OnOffPopUiEvent += OffCanvasGroups;
     }
 
-    public void UpdatePopUpQuestUI(QuestData questData)
+    public void UpdatePopUpQuestUI(QuestData questData, Action action = null)
     {
         QuestState questState = questData.QuestStateEnum;
         string questName = questData.Id;
@@ -86,11 +87,12 @@ public class QuestInfoUI : MonoBehaviour
                 _questStartButton.interactable = false;
                 break;
             case QuestState.CanFinish:
+                _questStartButton.interactable = true;
+                _questStartButton.onClick.AddListener(() => EndQuest(questName, action));
+
+
                 questStateText = "완료 가능";
                 buttonText = "퀘스트 완료";
-
-                _questStartButton.interactable = true;
-                _questStartButton.onClick.AddListener(() => EndQuest(questName));
                 break;
             case QuestState.Finish:
                 questStateText = "완료";
@@ -113,8 +115,9 @@ public class QuestInfoUI : MonoBehaviour
         QuestManager.Instance.StartQuest(questId);
     }
 
-    private void EndQuest(string questId)
+    private void EndQuest(string questId, Action action)
     {
+        action?.Invoke();
         QuestManager.Instance.EndQuest(questId);
     }
 

@@ -152,6 +152,7 @@ public class QuestManager : Singleton<QuestManager>
         {
             questData.QuestStateEnum = QuestState.CanFinish; // 지울 수 없는 오브젝트가 없으면 퀘스트 완료가능하게
             _questUI.UpdatePopUpQuestUI(questData);
+            _questUI.SetCautionBoxImage(true);
         }
     }
 

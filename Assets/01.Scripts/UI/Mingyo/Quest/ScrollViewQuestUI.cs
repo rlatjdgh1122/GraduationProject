@@ -16,10 +16,10 @@ public class ScrollViewQuestUI : MonoBehaviour
     private TextMeshProUGUI _questNameText; // 퀘스트 이름. so에서 id로 지정한 거로 하면 됨
 
     [SerializeField]
-    private Sprite _exclamationMarkSprite, _questionMarkSprite;
+    private Sprite _exclamationMarkSprite, _questionMarkSprite, _checkMarkSprite;
 
     [SerializeField]
-    private Color _questionBoxColor, _exclamationBoxColor;
+    private Color _questionBoxColor, _exclamationBoxColor, _checkMarkBoxColor;
 
     [SerializeField]
     private Image _questStateImgBox;
@@ -45,6 +45,11 @@ public class ScrollViewQuestUI : MonoBehaviour
                 questTypeImg.sprite = _questionMarkSprite;
                 questTypeImg.color = Color.red;
                 _questStateImgBox.color = _questionBoxColor;
+                break;
+            case QuestState.CanFinish:
+                questTypeImg.sprite = _checkMarkSprite;
+                questTypeImg.color = Color.white;
+                _questStateImgBox.color = _checkMarkBoxColor;
                 break;
                 default: break;
         }
