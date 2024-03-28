@@ -97,7 +97,10 @@ public class ArmyManager : Singleton<ArmyManager>
             p =>
             p.Soldiers.ForEach(s =>
             {
-                s.OutlineCompo.enabled = true;
+                CoroutineUtil.CallWaitForSeconds(.7f,
+                    () => s.OutlineCompo.enabled = true,
+                    () => s.OutlineCompo.enabled = false);
+
                 s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
             })
 
@@ -225,8 +228,6 @@ public class ArmyManager : Singleton<ArmyManager>
         var soldiers = armies[legion - 1].Soldiers;
         soldiers.Remove(obj); //리스트에서 제외
 
-        // 여기서 죽은 펭귄을 다시 push하는 코드가 필요
-        PoolManager.Instance.Push(obj);
     }
 
     /// <summary>
