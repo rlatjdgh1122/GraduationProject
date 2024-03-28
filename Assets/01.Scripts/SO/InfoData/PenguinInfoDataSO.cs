@@ -8,6 +8,6 @@ public class PenguinInfoDataSO : EntityInfoDataSO
 {
     public int Price;
 
-    public new Penguin Owner { get; private set; }
+    public Penguin _owner { get; private set; }
 
 }

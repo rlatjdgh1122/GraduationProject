@@ -9,8 +9,9 @@ public class GeneralInfoDataSO : PenguinInfoDataSO
     public string _type;
     [TextArea()] public string _characteristic;
 
-    public new General Owner { get; private set; }
+    public General _owner;
+
     public void SetOwner(General owner)
-        => Owner = owner;
+        => _owner = owner;
 
 }

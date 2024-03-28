@@ -62,9 +62,9 @@ MonoBehaviour:
     decreases: 
   damage:
     _baseValue: 5
-    _fewTimes: 1
-    _finalValue: 5
-    increases: 0500000005000000
+    _fewTimes: 1.2
+    _finalValue: 6
+    increases: 0500000005000000050000000500000005000000
     decreases: 
   criticalChance:
     _baseValue: 0
@@ -78,21 +78,30 @@ MonoBehaviour:
     _finalValue: 0
     increases: 
     decreases: 
-  GeneralPassvieData:
+  GeneralDetailData:
     IsAvailable: 0
-    level: 0
+    level: 1
     levelUpPrice:
-      _baseValue: 0
-      _fewTimes: 0
-      _finalValue: 0
+      _baseValue: 1000
+      _fewTimes: 1
+      _finalValue: 1000
       increases: 
       decreases: 
     passive: 
     synergy:
-      synergyName: 
+      synergyName: "\uC758\uC9C0"
       type: 0
-      _level: 1
+      _level: 2
       baseValue: 0
       increaseValue: 0
-    abilities: []
+    abilities:
+    - abilityName: "\uACF5\uACA9\uB825"
+      statType: 1024
+      increaseValue: 5
+    - abilityName: "\uCD5C\uB300\uCCB4\uB825"
+      statType: 128
+      increaseValue: 5
+    - abilityName: "\uACF5\uACA9\uC18D\uB3C4"
+      statType: 4
+      increaseValue: 5
   InfoData: {fileID: 11400000, guid: 676df572a3241db4487ec8d8d15a8357, type: 2}

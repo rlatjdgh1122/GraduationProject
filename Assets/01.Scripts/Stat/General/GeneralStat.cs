@@ -18,32 +18,24 @@ public class GeneralDetailData
 [CreateAssetMenu(menuName = "SO/Stat/Penguin/General")]
 public class GeneralStat : PenguinStat
 {
-    public GeneralDetailData GeneralPassvieData;
+    public GeneralDetailData GeneralDetailData;
     public GeneralInfoDataSO InfoData;
 
     public int Level
     {
         get
         {
-            return GeneralPassvieData.level;
+            return GeneralDetailData.level;
         }
         set
         {
-            GeneralPassvieData.level = value;
+            GeneralDetailData.level = value;
             LevelUp();
         }
     }
 
     public void LevelUp()
     {
-        GeneralPassvieData.levelUpPrice.AddIncrease(10); //일단 임시 UI먼저함
+        GeneralDetailData.levelUpPrice.AddIncrease(10); //일단 임시 UI먼저함
     }
-
-    //public void UpdateAblitiyUI(TextMeshProUGUI name, Slider atk, Slider def, Slider rng)
-    //{
-    //    name.text = PenguinName;
-    //    def.value = PenguinData.hp;
-    //    atk.value = PenguinData.atk;
-    //    rng.value = PenguinData.range;
-    //}
 }
