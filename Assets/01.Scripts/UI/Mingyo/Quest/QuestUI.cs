@@ -36,11 +36,13 @@ public class QuestUI : PopupUI
     public void CreateScrollViewUI(QuestData questData)
     {
         GameObject newQuestObj = Instantiate(_questUIPrefabs, _questPopupContentsParentTrm);
-        ScrollViewQuestUI newQuest = newQuestObj.GetComponent< ScrollViewQuestUI>();
-        newQuest.SetUpScrollViewUI(questData.Id,
+        ScrollViewQuestUI newQuest = newQuestObj.GetComponent<ScrollViewQuestUI>();
+        newQuest.SetUpScrollViewUI(questData.Id, QuestState.CanStart,
             () => UpdatePopUpQuestUI(questData));
 
         _scrollViewQuestUIsDic.Add(questData.Id, newQuestObj);
+
+        SignalHub.OnStartQuestEvent += () => newQuest.UpdateQuestType(QuestState.Running);
 
         if (!_startableQuestIcon.activeInHierarchy)
         {
@@ -63,7 +65,7 @@ public class QuestUI : PopupUI
         _scrollViewQuestUIsDic.Remove(id);
     }
 
-    public void UpdateProgressText(QuestData questData)
+    public void UpdateQuestUIToProgress(QuestData questData)
     {
         _questInfoUI.UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
     }

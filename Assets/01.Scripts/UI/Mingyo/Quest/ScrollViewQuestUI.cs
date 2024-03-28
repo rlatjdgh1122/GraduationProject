@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,15 +15,43 @@ public class ScrollViewQuestUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _questNameText; // 퀘스트 이름. so에서 id로 지정한 거로 하면 됨
 
-    public void SetUpScrollViewUI(/*Image questTypeImg*/ string questNameText, Action action)
+    [SerializeField]
+    private Sprite _exclamationMarkSprite, _questionMarkSprite;
+
+    [SerializeField]
+    private Color _questionBoxColor, _exclamationBoxColor;
+
+    [SerializeField]
+    private Image _questStateImgBox;
+
+    public void SetUpScrollViewUI(string questNameText, QuestState questState, Action action)
     {
+        UpdateQuestType(questState);
         _questNameText.SetText(questNameText);
 
         _button.onClick.AddListener(() => action());
     }
 
-    public void UpdateQuestType(Sprite sprite)
+    public void UpdateQuestType(QuestState questState)
     {
-        questTypeImg.sprite = sprite; 
+        switch (questState)
+        {
+            case QuestState.CanStart:
+                questTypeImg.sprite = _exclamationMarkSprite;
+                questTypeImg.color = Color.yellow;
+                _questStateImgBox.color = _exclamationBoxColor;
+                break;
+            case QuestState.Running:
+                questTypeImg.sprite = _questionMarkSprite;
+                questTypeImg.color = Color.red;
+                _questStateImgBox.color = _questionBoxColor;
+                break;
+                default: break;
+        }
+    }
+
+    private void OnEnable()
+    {
+        SignalHub.OnStartQuestEvent -= () => UpdateQuestType(QuestState.Running);
     }
 }

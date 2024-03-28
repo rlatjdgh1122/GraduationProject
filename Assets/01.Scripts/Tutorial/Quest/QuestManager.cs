@@ -99,7 +99,7 @@ public class QuestManager : Singleton<QuestManager>
         _questUI.UpdatePopUpQuestUI(questData); // 퀘스트 상태 업데이트
         SignalHub.OnStartQuestEvent?.Invoke(); //퀘스트 시작 이벤트
 
-        SignalHub.OnProgressQuestEvent += () => _questUI.UpdateProgressText(_allQuests[questData.Id]);
+        SignalHub.OnProgressQuestEvent += () => _questUI.UpdateQuestUIToProgress(_allQuests[questData.Id]);
     }
 
     private void InstantiateQuest(QuestData questData) //퀘스트를 오브젝트로 생성하는 식임. ex: 보석 3개 먹는 퀘스트면 그 아이디의 퀘스트 오브젝트 3개를 생성
@@ -148,7 +148,7 @@ public class QuestManager : Singleton<QuestManager>
 
     public void EndQuest(QuestData questData)
     {
-        SignalHub.OnProgressQuestEvent -= () => _questUI.UpdateProgressText(_allQuests[questData.Id]);
+        SignalHub.OnProgressQuestEvent -= () => _questUI.UpdateQuestUIToProgress(_allQuests[questData.Id]);
 
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
