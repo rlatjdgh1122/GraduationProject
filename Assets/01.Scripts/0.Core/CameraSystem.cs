@@ -49,11 +49,13 @@ public class CameraSystem : MonoBehaviour
     public CinemachineVirtualCamera CinemachineCam => _cinemachineCam;
 
     private Vector3 _startPosition;
+    private Quaternion _vCamstartRotation;
 
     private void Awake()
     {
         isMoving = true;
         _startPosition = transform.position;
+        _vCamstartRotation = _cinemachineCam.transform.rotation;
     }
 
     private void LateUpdate()
@@ -88,14 +90,17 @@ public class CameraSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             transform.position = _startPosition;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            transform.rotation = Quaternion.identity;
+            _cinemachineCam.transform.rotation = _vCamstartRotation;
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
             isMoving = false;
+            isRotating = false;
             transform.position = _startPosition;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            transform.rotation = Quaternion.identity;
+            _cinemachineCam.transform.rotation = _vCamstartRotation;
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -168,8 +173,6 @@ public class CameraSystem : MonoBehaviour
         if (_dragPanMoveActive)
         {
             Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
-
-            Debug.Log(mouseMovementDelta);
 
             inputDir.x = mouseMovementDelta.x * _dragSpeed;
             inputDir.z = mouseMovementDelta.y * _dragSpeed;
