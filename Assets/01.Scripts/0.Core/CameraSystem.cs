@@ -21,7 +21,7 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float fieldOfViewMin = 10;
 
     [Header("카메라 회전")]
-    [Range(0.1f, 10.0f)]
+    [Range(0.1f, 9f)]
     [SerializeField] private float _rotateSpeed;
 
     private float targetFieldOfView = 50f;
@@ -48,9 +48,12 @@ public class CameraSystem : MonoBehaviour
     }
     public CinemachineVirtualCamera CinemachineCam => _cinemachineCam;
 
+    private Vector3 _startPosition;
+
     private void Awake()
     {
         isMoving = true;
+        _startPosition = transform.position;
     }
 
     private void LateUpdate()
@@ -66,20 +69,15 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50f, 0, 0));
-
-            transform.position = new Vector3(0, transform.position.y, 0);
+            transform.position = _startPosition;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
             isMoving = false;
-            isRotating = false;
-            transform.position = new Vector3(0, transform.position.y, 0);
+            transform.position = _startPosition;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-
-            _cinemachineCam.transform.rotation = Quaternion.Euler(new Vector3(50f, 0, 0));
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -89,8 +87,6 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraMove()
     {
-        if (isRotating) { return; }
-
         if (isMoving)
         {
             float xInput = 0;
@@ -154,7 +150,7 @@ public class CameraSystem : MonoBehaviour
         {
             Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
 
-            //Debug.Log(mouseMovementDelta);
+            Debug.Log(mouseMovementDelta);
 
             inputDir.x = mouseMovementDelta.x * _dragSpeed;
             inputDir.z = mouseMovementDelta.y * _dragSpeed;

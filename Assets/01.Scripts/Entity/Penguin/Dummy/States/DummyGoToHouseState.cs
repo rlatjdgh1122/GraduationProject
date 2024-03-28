@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class DummyGoToHouseState : DummyBaseState
 {
-    public DummyGoToHouseState(DummyPenguin penguin, EntityStateMachine<DummyPenguinStateEnum, DummyPenguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyGoToHouseState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
-
     }
 
     public override void Enter()
@@ -15,13 +14,15 @@ public class DummyGoToHouseState : DummyBaseState
 
         _navAgent.speed = 5f;
         _navAgent.isStopped = false;
+
         _navAgent.SetDestination(_penguin.HouseTrm.position);
+
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if(_navAgent.remainingDistance < 0.05f)
+        if (_navAgent.remainingDistance < 0.05f)
         {
             _penguin.GoToHouse();
         }
@@ -32,5 +33,5 @@ public class DummyGoToHouseState : DummyBaseState
         base.Exit();
     }
 
-   
+
 }

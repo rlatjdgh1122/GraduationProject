@@ -63,12 +63,9 @@ public class WaveManager : Singleton<WaveManager>
     public bool IsArrived = false;
     public bool CanTimer = true;
 
-    public event Action OnDummyPenguinInitTentFinEvent = null;
+    //public event Action OnDummyPenguinInitTentFinEvent = null;
 
     private int maxEnemyCnt;
-
-    private List<Penguin> _curPTspawnPenguins = new();
-    public int CurPTspawnPenguinCount => _curPTspawnPenguins.Count;
 
     #endregion
 
@@ -251,36 +248,15 @@ public class WaveManager : Singleton<WaveManager>
         SignalHub.OnIceArrivedEvent?.Invoke();
     }
 
-    public void SetCurPTSpawnPenguins(List<Penguin> penguins)
-    {
-        _curPTspawnPenguins.Clear();
-
-        for (int i = 0; i < penguins.Count; i++) //넘겨 받은 리스트를 저장하고
-        {
-            _curPTspawnPenguins.Add(penguins[i]);
-        }
-
-        SetPosCurPTSpawnPenguin(); // 생성한 펭귄의 상태에 맞게 위치를 설정한다.
-    }
-
-    private void SetPosCurPTSpawnPenguin()
-    {
-        for (int i = 0; i < _curPTspawnPenguins.Count; i++)
-        {
-            _curPTspawnPenguins[i].SetCanInitTent(true);
-            _curPTspawnPenguins[i].SetTarget(_tentTrm.position);
-        }
-    }
-
     public bool IsCurrentWaveCountEqualTo(int value)
     {
         return currentWaveCount == value; //TimeLineHolder에서 웨이브 수를 알기 위해서
     }
 
-    public void DummyPenguinInitTentFinHandle()
+    /*public void DummyPenguinInitTentFinHandle()
     {
         OnDummyPenguinInitTentFinEvent?.Invoke();
-    }
+    }*/
 
     //private void OnDestroy()
     //{

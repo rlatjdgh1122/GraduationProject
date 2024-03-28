@@ -10,7 +10,6 @@ public enum BasicPenguinStateEnum
     Attack,
     Dead,
     FreelyMove,
-
 }
 
 public class MeleePenguin : Penguin
@@ -33,15 +32,13 @@ public class MeleePenguin : Penguin
             StateMachine.AddState(state, newState);
         }
     }
-
     protected override void Start()
     {
-        StateMachine.Init(BasicPenguinStateEnum.Idle);
+        StateInit();
     }
-    private void FixedUpdate()
+    public override void StateInit()
     {
-        StateMachine.CurrentState.FixedUpdateState();
-
+        StateMachine.Init(BasicPenguinStateEnum.Idle);
     }
     protected override void Update()
     {

@@ -545,7 +545,7 @@ namespace Polyperfect.Common
 
             if (navMeshAgent)
             {
-                navMeshAgent.destination = targetPosition;
+                navMeshAgent.destination = targetPosition;  
                 navMeshAgent.speed = moveSpeed;
                 navMeshAgent.angularSpeed = turnSpeed;
             }

@@ -15,7 +15,7 @@ public class Legion
     public bool MaxGereral { get; set; }           //군단에 장군이 꽉차있는가
 
     [HideInInspector] public List<LegionInventoryData> LegionInven;
-    public Dictionary<PenguinStat, LegionInventoryData> legionDictionary { get; private set; } = new();
+    public Dictionary<PenguinInfoDataSO, LegionInventoryData> legionDictionary { get; private set; } = new();
 }
 
 public class LegionInventory : Singleton<LegionInventory>
@@ -47,9 +47,9 @@ public class LegionInventory : Singleton<LegionInventory>
     private UnitSlotUI[] _soliderSlots;
 
     [Header("!!Register PenguinSO!!")]
-    [SerializeField] private PenguinStat[] _legionSO;
-    private List<PenguinStat> _generalSO = new();
-    private List<PenguinStat> _soliderSO = new();
+    [SerializeField] private PenguinInfoDataSO[] _legionSO;
+    private List<PenguinInfoDataSO> _generalSO = new();
+    private List<PenguinInfoDataSO> _soliderSO = new();
     #endregion
 
     public override void Awake()
@@ -59,7 +59,7 @@ public class LegionInventory : Singleton<LegionInventory>
         _generalSlots = _generalParent.GetComponentsInChildren<UnitSlotUI>();
         _soliderSlots = _soliderParent.GetComponentsInChildren<UnitSlotUI>();
 
-        foreach (PenguinStat soliderSO in _legionSO)
+        foreach (var soliderSO in _legionSO)
         {
             if (soliderSO.UniqueType == PenguinUniqueType.Fight)
             {
@@ -85,7 +85,7 @@ public class LegionInventory : Singleton<LegionInventory>
         OffSlotByStartScene(_soliderSlots, _soliderSO);
     }
 
-    public void OffSlotByStartScene(UnitSlotUI[] slot, List<PenguinStat> so)
+    public void OffSlotByStartScene(UnitSlotUI[] slot, List<PenguinInfoDataSO> so)
     {
         for (int i = 0; i < slot.Length; i++)
         {
@@ -102,7 +102,7 @@ public class LegionInventory : Singleton<LegionInventory>
         }
     }
 
-    public void AddPenguin(PenguinStat type) //펭귄 추가하는 함수(펭귄 타입으로 분류)
+    public void AddPenguin(PenguinInfoDataSO type) //펭귄 추가하는 함수(펭귄 타입으로 분류)
     {
         if (type.UniqueType == PenguinUniqueType.Fight)
         {
@@ -171,12 +171,12 @@ public class LegionInventory : Singleton<LegionInventory>
 
     #region 펭귄 인벤에 펭귄 추가
 
-    public void AddToWarLoad(PenguinStat penguin) //추가를 해야되는데 타입이 같다 그러면?
+    public void AddToWarLoad(PenguinInfoDataSO penguin) //추가를 해야되는데 타입이 같다 그러면?
                                                   //++해주고 펭귄 key도 들어온걸로 교체
     {
         if (generalDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData legionInven))//만약 펭귄 인벤에 있으면
         {
-            legionInven.penguinData = penguin;
+            legionInven.infoData = penguin;
             legionInven.AddStack();//값 증가
         }
         else//없으면
@@ -187,12 +187,12 @@ public class LegionInventory : Singleton<LegionInventory>
         }
     }
 
-    public void AddToSolider(PenguinStat penguin)
+    public void AddToSolider(PenguinInfoDataSO penguin)
     {
 
         if (soliderDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData legionInven))//만약 펭귄 인벤에 있으면
         {
-            legionInven.penguinData = penguin;
+            legionInven.infoData = penguin;
             legionInven.AddStack();//값 증가
         }
         else//없으면
@@ -205,11 +205,11 @@ public class LegionInventory : Singleton<LegionInventory>
 
     #endregion
 
-    public void RemovePenguin(PenguinStat penguin, int count = 1)
+    public void RemovePenguin(PenguinInfoDataSO penguin, int count = 1)
     {
         if (generalDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData warloadPenguin))
         {
-            warloadPenguin.penguinData = penguin;
+            warloadPenguin.infoData = penguin;
             warloadPenguin.RemoveStack(count);
 
             if (warloadPenguin.stackSize <= 0)
@@ -217,7 +217,7 @@ public class LegionInventory : Singleton<LegionInventory>
         }
         else if (soliderDictionary.TryGetValue(penguin.PenguinType, out LegionInventoryData soliderPenguin))
         {
-            soliderPenguin.penguinData = penguin;
+            soliderPenguin.infoData = penguin;
             soliderPenguin.RemoveStack(count);
 
             if (soliderPenguin.stackSize <= 0)
@@ -227,12 +227,12 @@ public class LegionInventory : Singleton<LegionInventory>
         OnlyUpdateUI();
     }
 
-    public void AddToLegion(PenguinStat penguin, int legionNumber)
+    public void AddToLegion(PenguinInfoDataSO penguin, int legionNumber)
     {
         if (LegionList[legionNumber].legionDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))
         {//만약 군단에 이 데이터가 있다면
 
-            legionInven.penguinData = penguin;
+            legionInven.infoData = penguin;
             legionInven.AddStack(); //증가
         }
         else//없다면
@@ -244,7 +244,7 @@ public class LegionInventory : Singleton<LegionInventory>
     }
 
 
-    public void RemoveLegion(PenguinStat penguin, int i, int count = 1)
+    public void RemoveLegion(PenguinInfoDataSO penguin, int i, int count = 1)
     {
         LegionList[i].legionDictionary.TryGetValue(penguin, out LegionInventoryData legion);
 

@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 
 public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 {
-    public GeneralStat generalStat;
-    public Penguin generalObj;
+    public GeneralStat GeneralInfoData;
+    public DummyPenguin dummyGeneralPenguin;
 
     [SerializeField] private Color _outlineColor;
 
@@ -28,17 +28,18 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
     {
         base.Awake();
 
-        if (generalStat.GeneralData.IsAvailable)
-            SetUpgradeUI(generalStat);
+        if (GeneralInfoData.GeneralDetailData.IsAvailable)
+            SetUpgradeUI(GeneralInfoData);
         else
-            UpdateDefaultUI(generalStat);
+            UpdateDefaultUI(GeneralInfoData);
     }
 
     public void UpdateDefaultUI(GeneralStat generalStat)
     {
-        nameText.text = generalStat.PenguinName;
+        nameText.text = generalStat.InfoData.PenguinName;
+        icon.sprite = generalStat.InfoData.PenguinIcon;
         stateText.text = "잠금됨";
-        purchaseText.text = $"{generalStat.PenguinData.price:N0} 영입하기";
+        purchaseText.text = $"{generalStat.InfoData.Price:N0} 영입하기";
     }
 
     public void SetUpgradeUI(GeneralStat generalStat)
@@ -49,19 +50,19 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
         outline.DOColor(_outlineColor, 0.6f);
         levelText.gameObject.SetActive(true);
         stateText.text = "보유중";
-        upgradeText.text = $"{generalStat.GeneralData.levelUpPrice.GetValue():N0} 업그레이드";
-        levelText.text = $"Lv {generalStat.GeneralData.level}";
+        upgradeText.text = $"{generalStat.GeneralDetailData.levelUpPrice.GetValue():N0} 업그레이드";
+        levelText.text = $"Lv {generalStat.GeneralDetailData.level}";
     }
 
     public void UpdateUpgradeUI(GeneralStat generalStat)
     {
-        upgradeText.text = $"{generalStat.GeneralData.levelUpPrice.GetValue():N0} 업그레이드";
-        levelText.text = $"Lv {generalStat.GeneralData.level}";
+        upgradeText.text = $"{generalStat.GeneralDetailData.levelUpPrice.GetValue():N0} 업그레이드";
+        levelText.text = $"Lv {generalStat.GeneralDetailData.level}";
     }
 
     public void OnPurchase()
     {
-        presenter.Purchase(generalStat);
+        presenter.Purchase(GeneralInfoData);
     }
 
     public void OnUpgrade()

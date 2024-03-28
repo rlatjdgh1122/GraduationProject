@@ -126,7 +126,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7015f6389a7d76243abae63d850c0eee, type: 2}
+  - {fileID: 2100000, guid: e134861261e1f204ea95fae0275a545b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -554,6 +554,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1205,7 +1208,7 @@ GameObject:
   - component: {fileID: 1748880442914486472}
   - component: {fileID: 181546142837131527}
   - component: {fileID: 8717442213536610734}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: HitFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1295,7 +1298,7 @@ GameObject:
   - component: {fileID: 5513271751020188377}
   - component: {fileID: 5513271751023612665}
   - component: {fileID: 5513271751022481465}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: fish-bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1378,7 +1381,7 @@ GameObject:
   - component: {fileID: 5535810921478928172}
   - component: {fileID: 5535810921476060940}
   - component: {fileID: 5535810921477158348}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: container-take-empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1508,7 +1511,7 @@ Transform:
   m_GameObject: {fileID: 5983622136624118609}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.116, y: 0.533, z: 0.333}
+  m_LocalPosition: {x: 0.116, y: 0.533, z: 0.165}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1527,7 +1530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 1.25
+  _detectRange: 2
   _hitType: 11
   TargetLayer:
     serializedVersion: 2
@@ -1718,7 +1721,7 @@ GameObject:
   - component: {fileID: 4746372051346826736}
   - component: {fileID: 184298179576216303}
   - component: {fileID: 8092306353702271069}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: ProvokeFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2099,10 +2102,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 199698635274495194}
     m_Modifications:
+    - target: {fileID: 2726557347904242214, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
       propertyPath: m_Name
       value: HealthUICanvas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026883480836637388, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7337969989680261050, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}

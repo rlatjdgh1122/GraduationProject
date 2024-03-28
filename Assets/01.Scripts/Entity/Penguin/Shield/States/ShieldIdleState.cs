@@ -9,9 +9,7 @@ public class ShieldIdleState : ShieldBaseState
 
     public override void Enter()
     {
-        base.Enter();
-
-        if(_penguin.IsFreelyMove) { return; }
+        base.Enter();   
 
         IdleEnter();
     }
@@ -25,15 +23,12 @@ public class ShieldIdleState : ShieldBaseState
 
         if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
-
-        if (_penguin.IsFreelyMove)
-        {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.FreelyMove);
-        }
     }
 
     public override void Exit()
     {
+        IdleExit();
+
         base.Exit();
     }
 }

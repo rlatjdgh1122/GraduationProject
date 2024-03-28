@@ -667,6 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
+  _infoData: {fileID: 11400000, guid: 7af39911ad28aaa4b9c79a1c6c38da1c, type: 2}
   CurrentTarget: {fileID: 0}
   IsDead: 0
   innerDistance: 7
@@ -675,7 +676,6 @@ MonoBehaviour:
   attackSpeed: 1.2
   maxDetectedCount: 1
   provokeRange: 25
-  isBot: 0
   passiveData: {fileID: 0}
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
@@ -694,6 +694,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1337,7 +1340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectRange: 1
-  _hitType: 1
+  _hitType: 11
   TargetLayer:
     serializedVersion: 2
     m_Bits: 4096

@@ -7,6 +7,7 @@ public class GeneralUpgrade : GeneralPopupUI
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI levelText;
+    public Image icon;
     public Slider hp;
     public Slider atk;
     public Slider range;
@@ -26,12 +27,13 @@ public class GeneralUpgrade : GeneralPopupUI
 
     private void UpdateUI()
     {
-        nameText.text = generalStat.PenguinName;
-        levelText.text = $"Lv {generalStat.GeneralData.level}";
-        hp.value = generalStat.PenguinData.hp;
-        atk.value = generalStat.PenguinData.atk;
-        range.value = generalStat.PenguinData.range;
-        synergyText.text = generalStat.GeneralData.synergy.synergyName;
+        nameText.text = generalStat.InfoData.PenguinName;
+        levelText.text = $"Lv {generalStat.GeneralDetailData.level}";
+        icon.sprite = generalStat.InfoData.PenguinIcon;
+        hp.value = generalStat.InfoData.hp;
+        atk.value = generalStat.InfoData.atk;
+        range.value = generalStat.InfoData.range;
+        synergyText.text = generalStat.GeneralDetailData.synergy.synergyName;
     }
 
     public override void ShowPanel()

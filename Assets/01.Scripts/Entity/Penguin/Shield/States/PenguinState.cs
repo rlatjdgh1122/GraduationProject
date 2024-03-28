@@ -1,6 +1,5 @@
-﻿
-using System;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Penguin
 {
@@ -8,6 +7,8 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
 
     }
+
+    #region Enter
     protected void IdleEnter()
     {
         _penguin.NavAgent.ResetPath();
@@ -17,6 +18,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
 
+        SignalHub.OnIceArrivedEvent += FindTarget;
     }
     protected void AttackEnter()
     {
@@ -62,6 +64,14 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.NavAgent.enabled = false;
         //_penguin.CharController.enabled = false;
     }
+    #endregion
+
+    #region Exit
+    protected void IdleExit()
+    {
+        _penguin.FindFirstNearestEnemy();
+    }
+    #endregion
 
     /// <summary>
     /// 배틀모드일 때 유저가 마우스 클릭을 했다면
@@ -101,7 +111,10 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     /// 배틀모드일 때 다 죽이면 위치로 이동하는 함수
     /// </summary>
 
-
+    private void FindTarget()
+    {
+        _penguin.FindFirstNearestEnemy();
+    }
 
     public override void AnimationFinishTrigger()
     {
