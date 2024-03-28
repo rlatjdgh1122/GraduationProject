@@ -142,7 +142,7 @@ public class BuyPanel : PopupUI
         {
             LegionInventory.Instance.AddPenguin(_dummyPenguin.PenguinUIInfo);
 
-            _presenter._penguinFactory.SpawnPenguinHandler(_dummyPenguin);
+            _presenter._penguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
         }
 
 

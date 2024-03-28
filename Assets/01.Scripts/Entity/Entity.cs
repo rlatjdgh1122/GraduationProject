@@ -2,13 +2,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Entity : PoolableMono
+public abstract class Entity : PoolableMono  
 {
 
     [SerializeField] protected BaseStat _characterStat;
-    [SerializeField] protected EntityInfoDataSO _infoData;
     public BaseStat Stat => _characterStat;
     public Entity CurrentTarget;
+
     public bool IsDead = false;
 
     public float innerDistance = 4f;

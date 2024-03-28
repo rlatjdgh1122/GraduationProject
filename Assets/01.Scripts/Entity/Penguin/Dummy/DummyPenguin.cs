@@ -69,12 +69,21 @@ public class DummyPenguin : PoolableMono
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
 
-        SignalHub.OnBattlePhaseStartEvent += A;
+        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
     }
-    private void A()
+    private void OnBattleStartHandler()
     {
         Debug.Log("전투시작한다고");
-        IsGoToHouse = true;
+
+        if (Owner)
+        {
+            Owner.SetPosition(transform.position);
+
+            Owner.gameObject.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
+        else
+            IsGoToHouse = true;
     }
     private void Update()
     {
@@ -87,5 +96,10 @@ public class DummyPenguin : PoolableMono
     {
         PoolManager.Instance.Push(this);
         //Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
     }
 }

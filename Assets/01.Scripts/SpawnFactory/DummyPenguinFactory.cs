@@ -1,20 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.Windows;
 
-public class PenguinFactory : EntityFactory<DummyPenguin>
+public class DummyPenguinFactory : EntityFactory<DummyPenguin>
 {
     protected int spawnZIdx = 0;
     protected int spawnXIdx = 0;
 
-    protected List<DummyPenguin> _curPTspawnPenguins = new List<DummyPenguin>(); // 현재 준비시간에 생성한 펭귄 리스트
+    protected List<DummyPenguin> _dummyPenguins = new List<DummyPenguin>(); // 현재 준비시간에 생성한 펭귄 리스트
 
-    public void SpawnPenguinHandler(DummyPenguin dummyPenguin)
+
+    private void OnEnable()
+    {
+        SignalHub.OnIceArrivedEvent += ResetPTInfo;
+        SignalHub.OnBattlePhaseStartEvent += SetupComplete;
+    }
+
+    public void OnDisable()
+    {
+        SignalHub.OnIceArrivedEvent -= ResetPTInfo;
+        SignalHub.OnBattlePhaseStartEvent -= SetupComplete;
+    }
+
+    /// <summary>
+    /// 더미 펭귄 생성
+    /// </summary>
+    /// <param name="dummyPenguin"> 더미 펭귄</param>   
+    public void SpawnDummyPenguinHandler(DummyPenguin dummyPenguin)
     {
         if (spawnXIdx >= 5)
         {
@@ -28,35 +39,25 @@ public class PenguinFactory : EntityFactory<DummyPenguin>
 
         spawnXIdx++; // 생성 위치를 위한 idx
 
-        DummyPenguin spawnPenguin = SpawnObject(dummyPenguin, spawnVec) as DummyPenguin;  //매개변수로 받아온 Penguin을 생성한다
+        DummyPenguin spawnPenguin = SpawnObject(dummyPenguin, spawnVec) as DummyPenguin;
 
-        _curPTspawnPenguins.Add(spawnPenguin); // 리스트에 추가
+        _dummyPenguins.Add(spawnPenguin); // 리스트에 추가
     }
 
-    private void OnEnable()
+    /// <summary>
+    /// 생성된 더미 펭귄을 배틀 라운드가 되면 스폰매니저로 배송
+    /// </summary>
+    private void SetupComplete()
     {
-        SignalHub.OnIceArrivedEvent += ResetPTInfo;
-        SignalHub.OnBattlePhaseStartEvent += SetCurPTspawnPenguins;
-    }
-
-    public void OnDisable()
-    {
-        SignalHub.OnIceArrivedEvent -= ResetPTInfo;
-        SignalHub.OnBattlePhaseStartEvent -= SetCurPTspawnPenguins;
+        SpawnManager.Instance.GetDummyPenguinList(_dummyPenguins);
     }
 
     private void ResetPTInfo()
     {
         spawnZIdx = 0;
         spawnXIdx = 0;
-        _curPTspawnPenguins.Clear();
+        _dummyPenguins.Clear();
     }
-
-    private void SetCurPTspawnPenguins() // 이번 준비시간에 생성한 펭귄들을 WaveManager로 넘겨준다.
-    {
-        //WaveManager.Instance.SetCurPTSpawnPenguins(_curPTspawnPenguins);
-    }
-
     protected override PoolableMono Create(DummyPenguin _type)
     {
         string originalString = _type.ToString();
@@ -64,7 +65,6 @@ public class PenguinFactory : EntityFactory<DummyPenguin>
         string resultString = originalString.Substring(0, originalString.LastIndexOf(" "));
 
         DummyPenguin spawnPenguin = PoolManager.Instance.Pop(resultString) as DummyPenguin;
-        //spawnPenguin.SetCanInitTent(false);
         return spawnPenguin;
     }
 

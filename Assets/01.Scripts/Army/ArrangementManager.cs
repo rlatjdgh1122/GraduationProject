@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,11 +16,12 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
     private int prevUILegion = 0;
     private int curUILegion = 0;
-    private void Start()
+    public override void Awake()
     {
         Setting();
+
         SignalHub.OnUILegionChanged += OnUILegionHandler;
-        WaveManager.Instance.OnDummyPenguinInitTentFinEvent += SpawnPenguins;
+        SignalHub.OnCompletedGoToHouseEvent += SpawnPenguins;
     }
 
     private void OnUILegionHandler(int prevLegion, int newLegion)
@@ -65,6 +65,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
     private void SpawnPenguins()
     {
+        Debug.Log("이거 외 안되지");
         foreach (var p in penguinSpawnDictionary)
         {
             foreach (var q in p.Value)
@@ -79,6 +80,10 @@ public class ArrangementManager : Singleton<ArrangementManager>
         penguinSpawnDictionary.Clear();
     }
 
+    /// <summary>
+    /// 군단UI에서 펭귄을 지울때
+    /// </summary>
+    /// <param name="info"></param>
     private void OnRemoveArmyByInfo(ArrangementInfo info)
     {
         CurInfoList.Remove(info);
@@ -96,25 +101,24 @@ public class ArrangementManager : Singleton<ArrangementManager>
         if (info.JobType == PenguinJobType.Solider)
         {
             Penguin obj = null;
-            obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
+            obj = SpawnManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
 
 
-            ArmyManager.Instance.JoinArmyToSoldier(info.Legion, obj as Penguin);
+            ArmyManager.Instance.JoinArmyToSoldier(info.Legion, obj);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
         }
 
         if (info.JobType == PenguinJobType.General)
         {
             General obj = null;
-            obj = ArmyManager.Instance.CreateSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
+            obj = SpawnManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
 
             ArmyManager.Instance.JoinArmyToGeneral(info.Legion, obj);
             penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
         }
     }
-
-    public void OnModify_Btn()
+    private void OnDestroy()
     {
-
+        SignalHub.OnCompletedGoToHouseEvent -= SpawnPenguins;
     }
 }

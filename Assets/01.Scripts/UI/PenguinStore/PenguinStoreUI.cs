@@ -11,7 +11,7 @@ public class PenguinStoreUI : PopupUI
     public List<DummyPenguin> _slotList; 
 
     #region Component
-    public PenguinFactory _penguinFactory { get; private set; }
+    public DummyPenguinFactory _penguinFactory { get; private set; }
 
     public CanvasGroup _statuCanvas {get; private set;}
     public TextMeshProUGUI _statuesMessageText { get; private set; }
@@ -26,7 +26,7 @@ public class PenguinStoreUI : PopupUI
 
         #region Componenet
 
-        _penguinFactory     = GameObject.Find("PenguinSpawner/PenguinFactory").GetComponent<PenguinFactory>();
+        _penguinFactory     = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
         _statuCanvas        = transform.Find("StatusMessage").GetComponent<CanvasGroup>();
         _statuesMessageText = _statuCanvas.transform.Find("WhenBuyPenguin").GetComponent<TextMeshProUGUI>();
         BuyPanel            = transform.Find("BuyPanel").GetComponent<BuyPanel>();

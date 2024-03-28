@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TentInitPos : MonoBehaviour
 {
-    int remainCnt => WaveManager.Instance.CurPTspawnPenguinCount;
+    int remainCnt => SpawnManager.Instance.DummyPenguinCount;
     int initCount = 0;
 
     private void OnTriggerEnter(Collider other)
@@ -15,7 +15,9 @@ public class TentInitPos : MonoBehaviour
                 initCount++;
                 if (initCount == remainCnt)
                 {
-                    WaveManager.Instance.DummyPenguinInitTentFinHandle();
+                    //WaveManager.Instance.DummyPenguinInitTentFinHandle();
+                    SignalHub.OnCompletedGoToHouseEvent?.Invoke();
+                    Debug.Log("다 들어갔어 친구야");
                     initCount = 0;
                 }
             }
