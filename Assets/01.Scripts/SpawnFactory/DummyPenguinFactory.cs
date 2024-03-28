@@ -6,19 +6,19 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
     protected int spawnZIdx = 0;
     protected int spawnXIdx = 0;
 
-    protected List<DummyPenguin> _dummyPenguins = new List<DummyPenguin>(); // 현재 준비시간에 생성한 펭귄 리스트
+    //protected List<DummyPenguin> _dummyPenguins = new List<DummyPenguin>(); // 현재 준비시간에 생성한 펭귄 리스트
 
 
     private void OnEnable()
     {
         SignalHub.OnIceArrivedEvent += ResetPTInfo;
-        SignalHub.OnBattlePhaseStartEvent += SetupComplete;
+       // SignalHub.OnBattlePhaseStartEvent += SetupComplete;
     }
 
     public void OnDisable()
     {
         SignalHub.OnIceArrivedEvent -= ResetPTInfo;
-        SignalHub.OnBattlePhaseStartEvent -= SetupComplete;
+        //SignalHub.OnBattlePhaseStartEvent -= SetupComplete;
     }
 
     /// <summary>
@@ -41,22 +41,22 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
 
         DummyPenguin spawnPenguin = SpawnObject(dummyPenguin, spawnVec) as DummyPenguin;
 
-        _dummyPenguins.Add(spawnPenguin); // 리스트에 추가
+        SpawnManager.Instance.AddDummyPenguin(spawnPenguin); // 리스트에 추가
     }
 
-    /// <summary>
+/*    /// <summary>
     /// 생성된 더미 펭귄을 배틀 라운드가 되면 스폰매니저로 배송
     /// </summary>
     private void SetupComplete()
     {
         SpawnManager.Instance.GetDummyPenguinList(_dummyPenguins);
-    }
+    }*/
 
     private void ResetPTInfo()
     {
         spawnZIdx = 0;
         spawnXIdx = 0;
-        _dummyPenguins.Clear();
+        //_dummyPenguins.Clear();
     }
     protected override PoolableMono Create(DummyPenguin _type)
     {

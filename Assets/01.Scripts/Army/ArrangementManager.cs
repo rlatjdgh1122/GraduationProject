@@ -98,24 +98,22 @@ public class ArrangementManager : Singleton<ArrangementManager>
     }
     private void OnJoinArmyByInfo(ArrangementInfo info)
     {
+        Debug.Log("추가");
+
+        Penguin obj = SpawnManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
+
         if (info.JobType == PenguinJobType.Solider)
         {
-            Penguin obj = null;
-            obj = SpawnManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
-
-
             ArmyManager.Instance.JoinArmyToSoldier(info.Legion, obj);
-            penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
         }
 
         if (info.JobType == PenguinJobType.General)
         {
-            General obj = null;
-            obj = SpawnManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]) as General;
-
-            ArmyManager.Instance.JoinArmyToGeneral(info.Legion, obj);
-            penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
+            ArmyManager.Instance.JoinArmyToGeneral(info.Legion, obj as General);
         }
+
+        SpawnManager.Instance.SetOwnerDummyPenguin(info.PenguinType, obj);
+        penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
     }
     private void OnDestroy()
     {

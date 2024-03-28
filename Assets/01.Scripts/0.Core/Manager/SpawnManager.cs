@@ -1,13 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class DummyPenguinListItem
+{
+    public bool IsHaveOwner = false;
+    public DummyPenguin dummyPenguin;
+}
+
 public class SpawnManager : Singleton<SpawnManager>
 {
     [SerializeField] private SoldierListSO soldierTypeListSO = null;
 
     #region 더미 펭귄 관련
-    private List<DummyPenguin> _dummyPenguins = new();
-    public int DummyPenguinCount => _dummyPenguins.Count;
+    private List<DummyPenguinListItem> _dummyPenguinList = new();
+    public int DummyPenguinCount => _dummyPenguinList.Count;
     #endregion
 
     private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
@@ -45,9 +52,42 @@ public class SpawnManager : Singleton<SpawnManager>
         Debug.Log("해당하는 타입의 오브젝트는 없습니다. SoldierListSO를 확인해주세요.");
         return null;
     }
-    public void GetDummyPenguinList(List<DummyPenguin> dummyPenguinList)
+
+    public void SetOwnerDummyPenguin(PenguinTypeEnum type, Penguin obj)
     {
-        _dummyPenguins.AddRange(dummyPenguinList);
+        Debug.Log("0");
+        foreach (var info in _dummyPenguinList)
+        {
+            var PenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
+            var dummyPenguin = info.dummyPenguin;
+
+            Debug.Log("1");
+            //오너를 가지고 있지 않다면
+            if (!info.IsHaveOwner)
+            {
+                Debug.Log("2");
+                //펭귄 타입이 같다면
+                if (PenguinType == type)
+                {
+                    Debug.Log("3");
+                    dummyPenguin.SetOwner(obj);
+                    info.IsHaveOwner = true;
+                    break;
+                }
+            }
+
+        }
+
     }
 
+    public void AddDummyPenguin(DummyPenguin obj)
+    {
+        _dummyPenguinList.Add(new DummyPenguinListItem
+            {
+                IsHaveOwner = false,
+                dummyPenguin = obj
+        });
+    }
 }
+
+

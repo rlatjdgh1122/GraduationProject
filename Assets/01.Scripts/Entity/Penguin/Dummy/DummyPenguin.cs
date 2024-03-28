@@ -92,6 +92,10 @@ public class DummyPenguin : PoolableMono
 
     public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 
+    public void SetOwner(Penguin owner)
+    {
+        Owner = owner;
+    }
     public void GoToHouse()
     {
         PoolManager.Instance.Push(this);
