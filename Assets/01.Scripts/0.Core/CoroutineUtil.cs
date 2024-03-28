@@ -20,7 +20,7 @@ public static class CoroutineUtil
 
     public static void CallWaitForSeconds(float seconds, Action beforeAction = null, Action afterAction = null) //n초 뒤에 실행
     {
-        _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, afterAction, beforeAction));
+        _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, beforeAction, afterAction));
     }
 
     private static IEnumerator DoCallWaitForOneFrame(Action action)
@@ -31,9 +31,11 @@ public static class CoroutineUtil
 
     private static IEnumerator DoCallWaitForSeconds(float seconds, Action beforeAction, Action afterAction)
     {
+        Debug.Log("Before");
         beforeAction?.Invoke();
         yield return new WaitForSeconds(seconds);
         afterAction?.Invoke();
+        Debug.Log("After");
     }
 
     private class CoroutineExecutor : MonoBehaviour { }

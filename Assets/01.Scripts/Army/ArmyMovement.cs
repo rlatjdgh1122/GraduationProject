@@ -191,7 +191,6 @@ public class ArmyMovement : MonoBehaviour
 
     private void SetSoldierMovePosition(Vector3 mousePos, Penguin penguin)
     {
-        Debug.Log(penguin.name);
         penguin.MoveToMySeat(mousePos);
     }
 
