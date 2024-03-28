@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +17,10 @@ public enum SoundType
 public enum SoundName
 {
     MeleeAttack,
-    ArrowAttack
+    ArrowAttack,
+    StartFight,
+    NormalBGM,
+    NormalBattleBGM
 }
 
 public class SoundManager : MonoBehaviour
@@ -29,7 +33,6 @@ public class SoundManager : MonoBehaviour
     private AudioMixer mainMixer;
 
     private Camera mainCamera;
-    private float initialVolume;
 
     private void Awake()
     {
@@ -119,7 +122,6 @@ public class SoundManager : MonoBehaviour
 
             }
 
-
         }
         else
         {
@@ -138,6 +140,10 @@ public class SoundManager : MonoBehaviour
         AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic)
     {
 
+        float distance = Vector3.Distance(position, mainCamera.transform.position);
+
+        if (distance > maxDistance) return;
+
         GameObject obj = new GameObject();
         obj.transform.position = position;
         var source = obj.AddComponent<AudioSource>();
@@ -145,17 +151,10 @@ public class SoundManager : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName.ToString()}");
 
         source.clip = clip;
-        source.spatialBlend = 0.8f;
+        source.spatialBlend = .8f;
         source.rolloffMode = rolloffMode;
 
-        initialVolume = source.volume;
-
-        float distance = Vector3.Distance(source.transform.position, mainCamera.transform.position);
-
-        if (distance > maxDistance) return;
-
         float fovNormalization = 1 - (float)(mainCamera.fieldOfView - minFOV) / (maxFOV - minFOV);
-
         source.volume = fovNormalization;
 
         source.outputAudioMixerGroup = type switch
@@ -179,7 +178,6 @@ public class SoundManager : MonoBehaviour
 
             }
 
-
         }
         else
         {
@@ -194,7 +192,6 @@ public class SoundManager : MonoBehaviour
 
     public static void StopBGM(SoundName clipName)
     {
-
         if (instance == null) return;
         instance.StopBGMSound(clipName);
 
@@ -203,13 +200,10 @@ public class SoundManager : MonoBehaviour
     private void StopBGMSound(SoundName clipName)
     {
 
-        if(bgmContainer.TryGetValue(clipName, out var so))
+        if(bgmContainer.TryGetValue(clipName, out AudioSource so))
         {
-
-            so.Stop();
-            Destroy(so.gameObject);
+            StartCoroutine(FadeInVolume(so, 0, 0.7f));
             bgmContainer.Remove(clipName);
-
         }
 
     }
@@ -227,6 +221,22 @@ public class SoundManager : MonoBehaviour
         instance.mainMixer.SetFloat("SFX", value);
     }
 
+    private IEnumerator FadeInVolume(AudioSource audioSource, float targetVolume, float duration)
+    {
+        float currentTime = 0;
+        float startVolume = audioSource.volume;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / duration);
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+        Destroy(audioSource.gameObject);
+    }
+
     private static IEnumerator SFXDestroyCo(float lenght, GameObject obj)
     {
 
@@ -234,7 +244,7 @@ public class SoundManager : MonoBehaviour
 
         if (obj != null)
         {
-
+            Debug.Log(obj);
             Destroy(obj);
 
         }
