@@ -87,20 +87,25 @@ public class QuestUI : PopupUI
         }
     }
 
+    private QuestData _currentQuestData;
     public void UpdatePopUpQuestUI(QuestData questData)
     {
+        _currentQuestData = questData;
         _questInfoUI.UpdatePopUpQuestUI(questData, () => SetCautionBoxImage(false, true));
+        _uncompletedQuestScrollViewUIs[questData.Id].UpdateQuestType(questData.QuestStateEnum);
 
 
-        if (_uncompletedQuestScrollViewUIs.ContainsKey(questData.Id))
-        {
-            _uncompletedQuestScrollViewUIs[questData.Id].UpdateQuestType(questData.QuestStateEnum);
-            SignalHub.OnStartQuestEvent += () => SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[questData.Id]);
-        }
-        else
-        {
-            Debug.Log(questData.Id);
-        }
+        // 기존에 등록된 이벤트 핸들러 제거
+        SignalHub.OnStartQuestEvent -= OnStartQuestEventHandler;
+
+        // 새로운 이벤트 핸들러 등록
+        SignalHub.OnStartQuestEvent += OnStartQuestEventHandler;
+    }
+
+
+    private void OnStartQuestEventHandler()
+    {
+        SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[_currentQuestData.Id]);
     }
 
     public void RemoveQuestContentUI(string id)
