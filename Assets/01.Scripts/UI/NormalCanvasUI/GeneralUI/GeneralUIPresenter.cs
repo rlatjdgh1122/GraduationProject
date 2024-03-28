@@ -13,7 +13,6 @@ public class GeneralUIPresenter : PopupUI
     [HideInInspector]
     public GeneralStat currentGeneralStat;
 
-    [HideInInspector]
     public Ability selectedAbility;
 
     private DummyPenguinFactory _penguinFactory;
@@ -41,12 +40,16 @@ public class GeneralUIPresenter : PopupUI
     {
         _currentView = generalView;
         currentGeneralStat = _currentView.GeneralInfoData;
+
+        if (selectedAbility.increaseValue == 0) //아직 업그레이드 선택지가 정해져있지 않은 상황에서
+            SetRandom(); //업그레이드 선택지 초기값 설정해주는 거
     }
 
     #region 첫 구매 관련
     public void Purchase(GeneralStat general)
     {
         currentGeneralStat = general;
+
         if (currentCost >= currentGeneralStat.InfoData.Price)
         {
             PurchaseGeneral();
@@ -65,7 +68,7 @@ public class GeneralUIPresenter : PopupUI
 
     private void PurchaseGeneral()
     {
-        currentGeneralStat.GeneralPassvieData.IsAvailable = true;
+        currentGeneralStat.GeneralDetailData.IsAvailable = true;
     }
     #endregion
 
@@ -77,7 +80,7 @@ public class GeneralUIPresenter : PopupUI
 
     public void Upgrade()
     {
-        if (currentCost >= currentGeneralStat.GeneralPassvieData.levelUpPrice.GetValue())
+        if (currentCost >= currentGeneralStat.GeneralDetailData.levelUpPrice.GetValue())
         {
             ShowBoxes();
         }
@@ -90,7 +93,7 @@ public class GeneralUIPresenter : PopupUI
     private void UpgradeGeneral()
     {
         currentGeneralStat.Level++;
-        currentCost -= currentGeneralStat.GeneralPassvieData.levelUpPrice.GetValue();
+        currentCost -= currentGeneralStat.GeneralDetailData.levelUpPrice.GetValue();
         _currentView.UpdateUpgradeUI(currentGeneralStat);
     }
     #endregion
@@ -100,24 +103,26 @@ public class GeneralUIPresenter : PopupUI
     {
         UpgradeGeneral();
         AddAbilityStat();
+        SetRandom();
         HideBoxes();
     }
 
     public void SelectSynergyBox()
     {
-        currentGeneralStat.GeneralPassvieData.synergy.level++;
+        currentGeneralStat.GeneralDetailData.synergy.level++;
+        SetRandom();
         HideBoxes();
     }
 
     public void SetRandom()
     {
-        List<Ability> statTypes = currentGeneralStat.GeneralPassvieData.abilities;
+        List<Ability> statTypes = currentGeneralStat.GeneralDetailData.abilities;
 
         Ability chosenStat = statTypes[UnityEngine.Random.Range(0, statTypes.Count)];
         selectedAbility = chosenStat;
     }
 
-    public void AddAbilityStat()
+    public void AddAbilityStat()    
     {
         //selectedAbility.baseIncreaseValue += selectedAbility.increaseValue;
         currentGeneralStat.AddStat(selectedAbility.increaseValue, selectedAbility.statType, StatMode.Increase);
@@ -131,6 +136,7 @@ public class GeneralUIPresenter : PopupUI
     public void HideBoxes()
     {
         UIManager.Instance.HidePanel("GeneralChoiceBox");
+        UIManager.Instance.HidePanel("GeneralUpgrade");
     }
     #endregion
 
