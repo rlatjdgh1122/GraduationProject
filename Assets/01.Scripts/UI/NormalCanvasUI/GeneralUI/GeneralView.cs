@@ -28,7 +28,7 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
     {
         base.Awake();
 
-        if (GeneralInfoData.GeneralPassvieData.IsAvailable)
+        if (GeneralInfoData.GeneralDetailData.IsAvailable)
             SetUpgradeUI(GeneralInfoData);
         else
             UpdateDefaultUI(GeneralInfoData);
@@ -37,6 +37,7 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
     public void UpdateDefaultUI(GeneralStat generalStat)
     {
         nameText.text = generalStat.InfoData.PenguinName;
+        icon.sprite = generalStat.InfoData.PenguinIcon;
         stateText.text = "잠금됨";
         purchaseText.text = $"{generalStat.InfoData.Price:N0} 영입하기";
     }
@@ -49,14 +50,14 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
         outline.DOColor(_outlineColor, 0.6f);
         levelText.gameObject.SetActive(true);
         stateText.text = "보유중";
-        upgradeText.text = $"{generalStat.GeneralPassvieData.levelUpPrice.GetValue():N0} 업그레이드";
-        levelText.text = $"Lv {generalStat.GeneralPassvieData.level}";
+        upgradeText.text = $"{generalStat.GeneralDetailData.levelUpPrice.GetValue():N0} 업그레이드";
+        levelText.text = $"Lv {generalStat.GeneralDetailData.level}";
     }
 
     public void UpdateUpgradeUI(GeneralStat generalStat)
     {
-        upgradeText.text = $"{generalStat.GeneralPassvieData.levelUpPrice.GetValue():N0} 업그레이드";
-        levelText.text = $"Lv {generalStat.GeneralPassvieData.level}";
+        upgradeText.text = $"{generalStat.GeneralDetailData.levelUpPrice.GetValue():N0} 업그레이드";
+        levelText.text = $"Lv {generalStat.GeneralDetailData.level}";
     }
 
     public void OnPurchase()
