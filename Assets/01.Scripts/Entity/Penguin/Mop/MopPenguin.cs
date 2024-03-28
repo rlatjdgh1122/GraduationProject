@@ -36,16 +36,15 @@ public class MopPenguin : Penguin
 
     protected override void Start()
     {
-        StateMachine.Init(MopPenguinStateEnum.Idle);
-    }
-
-    private void FixedUpdate()
-    {
-        StateMachine.CurrentState.FixedUpdateState();
+        StateInit();
     }
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
+    }
+    public override void StateInit()
+    {
+        StateMachine.Init(MopPenguinStateEnum.Idle);
     }
 
     public override void OnPassiveAttackEvent()

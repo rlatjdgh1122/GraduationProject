@@ -70,8 +70,6 @@ public class Penguin : Entity
     private Army owner;
     public Army Owner => owner;
 
-   /* private bool isFreelyMove = false;
-    public bool IsFreelyMove => isFreelyMove;*/
     protected override void Awake()
     {
         base.Awake();
@@ -81,8 +79,8 @@ public class Penguin : Entity
             NavAgent.speed = moveSpeed;
         }
         AttackCompo = GetComponent<EntityAttackData>();
+        SignalHub.OnBattlePhaseEndEvent += ChangedToDummyPenguinHandler;
     }
-
     #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
     public bool CheckAttackEventPassive(int curAttackCount)
@@ -106,11 +104,11 @@ public class Penguin : Entity
         owner = army;
     }
 
+    #region AI 관련
     public virtual void AnimationTrigger()
     {
 
     }
-
     public void FindFirstNearestEnemy()
     {
         CurrentTarget = FindNearestEnemy().FirstOrDefault();
@@ -141,6 +139,7 @@ public class Penguin : Entity
         }
     }
 
+    #endregion
     protected override void HandleDie()
     {
         IsDead = true;
@@ -257,18 +256,25 @@ public class Penguin : Entity
 
     #endregion
 
+    #region 더미 펭귄 스왑 관련
+    private void ChangedToDummyPenguinHandler()
+    {
+        SpawnManager.Instance.ChangedToDummyPenguin(this);
+    }
     public void SetPosition(Vector3 pos)
     {
         transform.position = pos;
     }
 
+    public virtual void StateInit() { }
+
+    #endregion
     public override void Init()
     {
         owner = null;
     }
-
-    /*public void SetFreelyMoveAble(bool b)
+    private void OnDestroy()
     {
-        isFreelyMove = b;
-    }*/
+        SignalHub.OnBattlePhaseEndEvent -= ChangedToDummyPenguinHandler;
+    }
 }
