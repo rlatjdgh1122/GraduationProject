@@ -129,7 +129,8 @@ public class DamageCaster : MonoBehaviour
     public bool CastDamage()
     {
         RaycastHit raycastHit;
-        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
+        bool raycastSuccess = Physics.BoxCast
+            (transform.position, transform.lossyScale / 2f, transform.forward, out raycastHit, transform.rotation, _detectRange, TargetLayer);
 
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
@@ -158,6 +159,15 @@ public class DamageCaster : MonoBehaviour
 
         return false;
     }
+
+    #if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward);
+        Gizmos.DrawWireCube(transform.position, transform.lossyScale);
+    }
+    #endif
 
     public void ShowCritical(EntityActionData actionData)
     {
@@ -198,18 +208,4 @@ public class DamageCaster : MonoBehaviour
     //        Debug.Log(damage);
     //    }
     //}
-
-
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        if (UnityEditor.Selection.activeObject == gameObject)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _detectRange);
-            Gizmos.color = Color.white;
-        }
-    }
-#endif
 }

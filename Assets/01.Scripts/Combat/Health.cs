@@ -14,6 +14,8 @@ public class Health : MonoBehaviour, IDamageable
     private int _armor;
     private int _evasion;
 
+    public LayerMask groundLayer;
+
     #region ActionEvent
     public Action OnHit;
     public Action OnDied;
@@ -64,8 +66,7 @@ public class Health : MonoBehaviour, IDamageable
 
     bool IsPositionValid(Vector3 position)
     {
-        NavMeshHit hit;
-        return NavMesh.SamplePosition(position, out hit, 0.1f, NavMesh.AllAreas);
+        return Physics.Raycast(position, new Vector3(0, -1, 0), 5f, groundLayer);
     }
 
     public bool Stun(RaycastHit ray, float duration)
@@ -147,9 +148,9 @@ public class Health : MonoBehaviour, IDamageable
 
     private void Dead()
     {
+        OffUIUpdate?.Invoke();
         _isDead = true;
         OnDeathEvent?.Invoke();
         OnDied?.Invoke();
-        OffUIUpdate?.Invoke();
     }
 }

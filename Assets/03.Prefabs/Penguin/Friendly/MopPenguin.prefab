@@ -381,6 +381,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -402,18 +405,6 @@ MonoBehaviour:
       - m_Target: {fileID: 3735822330012500627}
         m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
         m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7867254452844015206}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
