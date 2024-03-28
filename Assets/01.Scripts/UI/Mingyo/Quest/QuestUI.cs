@@ -1,6 +1,7 @@
 using AssetKits.ParticleImage.Editor;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,8 @@ public class QuestUI : PopupUI
     [SerializeField]
     private GameObject _questUIPrefabs;
 
-    private Dictionary<string, GameObject> _scrollViewQuestUIsDic = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> _uncompletedQuests = new Dictionary<string, GameObject>();
+    private int _unStartedQuestsLength;
 
     private GameObject _startableQuestIcon;
 
@@ -40,9 +42,10 @@ public class QuestUI : PopupUI
         newQuest.SetUpScrollViewUI(questData.Id, QuestState.CanStart,
             () => UpdatePopUpQuestUI(questData));
 
-        _scrollViewQuestUIsDic.Add(questData.Id, newQuestObj);
+        _uncompletedQuests.Add(questData.Id, newQuestObj);
+        _unStartedQuestsLength++;
 
-        SignalHub.OnStartQuestEvent += () => newQuest.UpdateQuestType(QuestState.Running);
+        SignalHub.OnStartQuestEvent += () => SetQuestUIToRunning(newQuest);
 
         if (!_startableQuestIcon.activeInHierarchy)
         {
@@ -52,21 +55,28 @@ public class QuestUI : PopupUI
 
     public void UpdatePopUpQuestUI(QuestData questData)
     {
-        if (_scrollViewQuestUIsDic.Count == 0)
-        {
-            _startableQuestIcon.SetActive(false);
-        }
         _questInfoUI.UpdatePopUpQuestUI(questData);
     }
 
     public void RemoveQuestContentUI(string id)
     {
-        Destroy(_scrollViewQuestUIsDic[id]);
-        _scrollViewQuestUIsDic.Remove(id);
+        Destroy(_uncompletedQuests[id]);
+        _uncompletedQuests.Remove(id);
     }
 
     public void UpdateQuestUIToProgress(QuestData questData)
     {
         _questInfoUI.UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
+    }
+
+    private void SetQuestUIToRunning(ScrollViewQuestUI quest)
+    {
+        quest.UpdateQuestType(QuestState.Running);
+        _unStartedQuestsLength--;
+
+        if (_unStartedQuestsLength == 0)
+        {
+            _startableQuestIcon.SetActive(false);
+        }
     }
 }
