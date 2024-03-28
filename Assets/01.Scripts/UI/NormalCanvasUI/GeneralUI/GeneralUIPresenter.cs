@@ -12,7 +12,7 @@ public class GeneralUIPresenter : PopupUI
     public GeneralView _currentView;
     [HideInInspector]
     public GeneralStat currentGeneralStat;
-
+    [HideInInspector]
     public Ability selectedAbility;
 
     private DummyPenguinFactory _penguinFactory;
