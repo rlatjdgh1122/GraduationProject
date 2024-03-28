@@ -118,8 +118,6 @@ public class QuestManager : Singleton<QuestManager>
     {
         QuestData questData = GetQuestData(questId);
 
-        _allQuests[questData.Id].CurProgressCount++;
-
         switch (questData.QuestStateEnum)
         {
             case QuestState.Finish:
@@ -138,6 +136,8 @@ public class QuestManager : Singleton<QuestManager>
                 }
                 break;
         }
+
+        _allQuests[questData.Id].CurProgressCount++;
 
         Transform[] foundChildren = transform.GetComponentsInChildren<Transform>(true);
         Transform[] questObj = Array.FindAll(foundChildren, t => t.name == questData.Id && t != transform);
