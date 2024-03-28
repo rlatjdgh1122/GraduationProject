@@ -22,8 +22,6 @@ public class PenguinStoreUI : PopupUI
 
     public override void Awake()
     {
-        base.Awake();
-
         #region Componenet
 
         _penguinFactory     = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
@@ -53,7 +51,6 @@ public class PenguinStoreUI : PopupUI
 
     public void OnEnableStorePanel() //스토어 패널 활성화
     {
-        ShowPanel();
         UIManager.Instance.ShowPanel("StorePanel");
     }
 

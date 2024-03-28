@@ -678,7 +678,6 @@ GameObject:
   - component: {fileID: 1598124227567866696}
   - component: {fileID: 4534826737116297947}
   - component: {fileID: 2295223863668456905}
-  - component: {fileID: 4162266362641205096}
   - component: {fileID: 294678438657808925}
   - component: {fileID: 8392588929912488062}
   - component: {fileID: 3490279142008653527}
@@ -762,6 +761,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -820,21 +822,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2295223863668456905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4389804514022249589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1c4cfc40efd3d344b81e8839ff9d88f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
-    type: 3}
-  _firePos: {fileID: 8096066805892693343}
---- !u!114 &4162266362641205096
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

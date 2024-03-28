@@ -84,7 +84,6 @@ public class ResourceUIObserver : PopupUI
 
     private void ShowAndSettingWarningUI(string text)
     {
-        UIManager.Instance.ShowWarningUI(new Vector3
-                (_rectTransform.position.x + 275f, _rectTransform.position.y, _rectTransform.position.z), text);
+        UIManager.Instance.ShowWarningUI(text);
     }
 }

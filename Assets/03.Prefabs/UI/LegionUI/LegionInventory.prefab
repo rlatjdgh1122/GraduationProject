@@ -3473,7 +3473,7 @@ MonoBehaviour:
   _unitImage: {fileID: 6020885631309445269}
   _emptyImage: {fileID: 21300000, guid: 4f9470802b7490548936170e31e6640c, type: 3}
   _data:
-    penguinData: {fileID: 0}
+    infoData: {fileID: 0}
     stackSize: 0
   _name: {fileID: 8325856746688256041}
   _className: {fileID: 6110733266672720498}
@@ -3485,7 +3485,7 @@ MonoBehaviour:
   _passive: {fileID: 8961553720922888719}
   _Synergy: {fileID: 1283124279909430910}
   _infoData:
-    penguinData: {fileID: 0}
+    infoData: {fileID: 0}
     stackSize: 0
 --- !u!1 &2702282999483074259
 GameObject:
@@ -5514,12 +5514,10 @@ MonoBehaviour:
   _soliderParent: {fileID: 1908096561496676777}
   _legionUI: {fileID: 7809252178271119264}
   _legionSO:
-  - {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
-  - {fileID: 11400000, guid: bd48b06e6b29be842bd0acfac20fd396, type: 2}
-  - {fileID: 11400000, guid: 02f0f4bf281ab6d408968c5a17a61d56, type: 2}
-  - {fileID: 11400000, guid: 653e880614eb72b4eaea6216831949d7, type: 2}
-  - {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
-  - {fileID: 11400000, guid: 64e0587224e8a5a41abef5e27cabfcc4, type: 2}
+  - {fileID: 11400000, guid: d4f7e5829d55d7a41988559a69047d60, type: 2}
+  - {fileID: 11400000, guid: 7af39911ad28aaa4b9c79a1c6c38da1c, type: 2}
+  - {fileID: 11400000, guid: 8ca706b8392d1ad4bb005c9c78e0d4fd, type: 2}
+  - {fileID: 11400000, guid: 5b56615f33db28343a4be7bf09a326af, type: 2}
 --- !u!114 &7809252178271119264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9317,19 +9315,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7809252178271119264}
         m_TargetAssemblyTypeName: LegionInventoryUI, Assembly-CSharp
-        m_MethodName: OnDisableLegionInventory
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ArrangementTest, Assembly-CSharp
-        m_MethodName: OnModifyInfo_Btn
+        m_MethodName: HidePanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
