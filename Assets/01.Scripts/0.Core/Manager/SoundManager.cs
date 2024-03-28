@@ -16,6 +16,7 @@ public enum SoundType
 public enum SoundName
 {
     MeleeAttack,
+    ArrowAttack
 }
 
 public class SoundManager : MonoBehaviour

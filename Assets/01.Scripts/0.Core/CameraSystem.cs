@@ -48,9 +48,12 @@ public class CameraSystem : MonoBehaviour
     }
     public CinemachineVirtualCamera CinemachineCam => _cinemachineCam;
 
+    private Vector3 _startPosition;
+
     private void Awake()
     {
         isMoving = true;
+        _startPosition = transform.position;
     }
 
     private void LateUpdate()
@@ -66,14 +69,14 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = new Vector3(0, transform.position.y, 0);
+            transform.position = _startPosition;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
             isMoving = false;
-            transform.position = new Vector3(0, transform.position.y, 0);
+            transform.position = _startPosition;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
         else if (Input.GetKeyUp(KeyCode.Space))
