@@ -2,6 +2,7 @@ using AssetKits.ParticleImage.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestUI : PopupUI
 {
@@ -15,13 +16,21 @@ public class QuestUI : PopupUI
 
     private Dictionary<string, GameObject> _scrollViewQuestUIsDic = new Dictionary<string, GameObject>();
 
+    private GameObject _startableQuestIcon;
+
     public override void Awake()
     {
         base.Awake();
 
         _questPopupContentsParentTrm = transform.Find("QuestList/PopUp/ScrollView/Viewport/Content").gameObject.transform;
 
-        _questInfoUI = transform.Find("QuestList/QuestName/PopUp").GetComponent<QuestInfoUI>();
+        _questInfoUI = transform.Find("QuestList/ContentPopUp").GetComponent<QuestInfoUI>();
+
+        Transform questButton = transform.parent.Find("CostUI/QuestButton");
+        questButton.GetComponent<Button>().onClick.AddListener(() => UIManager.Instance.ShowPanel("QuestUI"));
+
+        _startableQuestIcon = questButton.Find("CautionBox").gameObject;
+        _startableQuestIcon.SetActive(false);
     }
 
     public void CreateScrollViewUI(QuestData questData)
@@ -32,10 +41,19 @@ public class QuestUI : PopupUI
             () => UpdatePopUpQuestUI(questData));
 
         _scrollViewQuestUIsDic.Add(questData.Id, newQuestObj);
+
+        if (!_startableQuestIcon.activeInHierarchy)
+        {
+            _startableQuestIcon.SetActive(true);
+        }
     }
 
     public void UpdatePopUpQuestUI(QuestData questData)
     {
+        if (_scrollViewQuestUIsDic.Count == 0)
+        {
+            _startableQuestIcon.SetActive(false);
+        }
         _questInfoUI.UpdatePopUpQuestUI(questData);
     }
 

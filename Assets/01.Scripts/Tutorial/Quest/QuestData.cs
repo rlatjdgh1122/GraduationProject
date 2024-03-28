@@ -6,7 +6,8 @@ using UnityEngine;
 
 public enum QuestState
 {
-    BeforeStart,
+    Locked,
+    CanStart,
     Running,
     Finish
 }

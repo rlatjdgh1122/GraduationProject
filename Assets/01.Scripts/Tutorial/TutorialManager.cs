@@ -13,12 +13,7 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         if(Input.GetKeyDown(KeyCode.S))
         {
-            QuestManager.Instance.StartQuest("TutoTest");
-        }
-
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            UIManager.Instance.ShowPanel("QuestUI");
+            QuestManager.Instance.SetCanStartQuest("TutoTest");
         }
 
         if (Input.GetKeyDown(KeyCode.K))

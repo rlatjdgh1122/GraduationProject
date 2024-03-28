@@ -44,6 +44,34 @@ public class QuestManager : Singleton<QuestManager>
         }
     }
 
+    public void SetCanStartQuest(string questId)
+    {
+        QuestData questData = _allQuests[questId];
+
+        questData.QuestStateEnum = QuestState.CanStart;
+
+        _questUI.CreateScrollViewUI(questData); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
+
+        if (questData.IsTutorialQuest)
+        {
+            StartTutorial(questId);
+        }
+    }
+
+    public void StartTutorial(string questId)
+    {
+        QuestData questData = _allQuests[questId];
+
+        if (TutorialManager.Instance.CurQuestIdx != questData.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
+        {
+            Debug.Log($"하... 너는 지금 {TutorialManager.Instance.CurQuestIdx}번째 튜토리얼 퀘스트를 해야하는데" +
+                $"{questData.TutorialQuestIdx}번째 퀘스트인 {questData.Id}를 하려고 하잖아;; 리턴함");
+            return;
+        }
+
+        _dialogSystem.Begin(questData.TutorialTexts); //튜토리얼 텍스트 뜨게
+    }
+
     public void StartQuest(string questId) //퀘스트 시작
     {
         QuestData questData = _allQuests[questId];
@@ -56,18 +84,9 @@ public class QuestManager : Singleton<QuestManager>
             case QuestState.Finish:
                 Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
                 return;
-        }
-
-        if (questData.IsTutorialQuest)
-        {
-            if (TutorialManager.Instance.CurQuestIdx != questData.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
-            {
-                Debug.Log($"하... 너는 지금 {TutorialManager.Instance.CurQuestIdx}번째 튜토리얼 퀘스트를 해야하는데" +
-                    $"{questData.TutorialQuestIdx}번째 퀘스트인 {questData.Id}를 하려고 하잖아;; 리턴함");
+            case QuestState.Locked:
+                Debug.Log($"{questData.Id}는 아직 못하는 퀘스트임 리턴함;;");
                 return;
-            }
-
-            _dialogSystem.Begin(questData.TutorialTexts); //튜토리얼 텍스트 뜨게
         }
 
         Debug.Log($"{questData.Id} 퀘스트 시이작");
@@ -77,7 +96,7 @@ public class QuestManager : Singleton<QuestManager>
 
         _curInprogressQuests[questData.TutorialQuestIdx].QuestStateEnum = QuestState.Running;
 
-        _questUI.CreateScrollViewUI(questData); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
+        _questUI.UpdatePopUpQuestUI(questData); // 퀘스트 상태 업데이트
         SignalHub.OnStartQuestEvent?.Invoke(); //퀘스트 시작 이벤트
 
         SignalHub.OnProgressQuestEvent += () => _questUI.UpdateProgressText(_allQuests[questData.Id]);
@@ -94,17 +113,22 @@ public class QuestManager : Singleton<QuestManager>
 
     public void ProgressQuest(string questId) //퀘스트가 진행되었을때. ex: 보석을 먹었을때.
     {
-
         QuestData questData = _allQuests[questId];
 
         _allQuests[questData.Id].CurProgressCount++;
-
 
         switch (questData.QuestStateEnum)
         {
             case QuestState.Finish:
                 Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
                 return;
+            default:
+                if (questData.QuestStateEnum != QuestState.Running)
+                {
+                    Debug.Log("이거 아직 시작 안 했는데용");
+                    return;
+                }
+                break;
         }
 
         Transform[] foundChildren = transform.GetComponentsInChildren<Transform>(true);
@@ -137,9 +161,9 @@ public class QuestManager : Singleton<QuestManager>
         _questUI.RemoveQuestContentUI(questData.Id); // 퀘스트 UI에서 삭제
 
         SignalHub.OnEndQuestEvent?.Invoke(); //퀘스트 성공 이벤트
-        SignalHub.OnOffPopUiEvent?.Invoke();
 
         _costUI.CostTween(questData.QuestRewardInfo.RewardCount, true, _questUI.QuestInfoUICompo.RewardPos.position);
+        _questUI.QuestInfoUICompo.OffCanvasGroups();
     }
 
 }

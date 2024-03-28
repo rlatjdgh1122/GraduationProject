@@ -19,6 +19,9 @@ public class QuestInfoUI : MonoBehaviour
     private Image _questRewardTypeImg; //어떤 보상인지
 
     private CanvasGroup _contentsCanvasGroup;
+    private CanvasGroup _startButtonCanvasGroup;
+
+    private Button _questStartButton;
 
     private void Awake()
     {
@@ -42,7 +45,11 @@ public class QuestInfoUI : MonoBehaviour
 
         _questRewardCountText = rewardBox.Find("key/rewardCount").GetComponent<TextMeshProUGUI>();
 
-        SignalHub.OnOffPopUiEvent += () => _contentsCanvasGroup.alpha = 0;
+        Transform buttonTrm = transform.root.Find("QuestUI/StartButton").transform;
+        _questStartButton = buttonTrm.GetComponent<Button>();
+        _startButtonCanvasGroup = buttonTrm.GetComponent<CanvasGroup>();
+
+        SignalHub.OnOffPopUiEvent += OffCanvasGroups;
     }
 
     public void UpdatePopUpQuestUI(QuestData questData)
@@ -53,12 +60,18 @@ public class QuestInfoUI : MonoBehaviour
         Sprite questRewardTypeImg = questData.QuestRewardInfo.RewardTypeImg;
         int questRewardCount = questData.QuestRewardInfo.RewardCount;
 
+        _questStartButton.onClick.RemoveAllListeners();
 
         _contentsCanvasGroup.alpha = 1;
+        _startButtonCanvasGroup.alpha = 1;
+
         string questStateText = null;
         switch (questState)
         {
-            case QuestState.BeforeStart:
+            case QuestState.Locked:
+                questStateText = "시작 불가능";
+                break;
+            case QuestState.CanStart:
                 questStateText = "시작 가능";
                 break;
             case QuestState.Running:
@@ -76,6 +89,13 @@ public class QuestInfoUI : MonoBehaviour
         _questRewardTypeImg.sprite = questRewardTypeImg;
         _questRewardCountText.SetText(questRewardCount.ToString());
         UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
+
+        _questStartButton.onClick.AddListener(() => StartQuest(questName));
+    }
+
+    public void StartQuest(string questName)
+    {
+        QuestManager.Instance.StartQuest(questName);
     }
 
     public void UpdateProgressText(string content)
@@ -90,8 +110,14 @@ public class QuestInfoUI : MonoBehaviour
         SignalHub.OnStartQuestEvent?.Invoke();
     }
 
+    public void OffCanvasGroups()
+    {
+        _contentsCanvasGroup.alpha = 0;
+        _startButtonCanvasGroup.alpha = 0;
+    }
+
     private void OnEnable()
     {
-        SignalHub.OnOffPopUiEvent -= () => _contentsCanvasGroup.alpha = 0;
+        SignalHub.OnOffPopUiEvent -= OffCanvasGroups;
     }
 }
