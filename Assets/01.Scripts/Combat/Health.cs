@@ -113,6 +113,8 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (_isDead) return;
 
+        SoundManager.Play3DSound(SoundName.Hit, transform.position);
+
         float dice = UnityEngine.Random.value;
         float adjustedEvasion = _evasion * 0.01f;
         if (dice < adjustedEvasion)
