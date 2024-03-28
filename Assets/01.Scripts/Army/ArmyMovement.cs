@@ -2,7 +2,6 @@ using Define.RayCast;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 [System.Serializable]
 public class PenguinMovementInfo
@@ -36,10 +35,6 @@ public class ArmyMovement : MonoBehaviour
 
     private static float heartbeat = 0.1f;
     private static WaitForSecondsRealtime waitingByheartbeat = new WaitForSecondsRealtime(heartbeat);
-
-    private NavMeshAgent followNav = null;
-    private bool isInGeneral = false;
-
     private void Awake()
     {
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
@@ -64,9 +59,6 @@ public class ArmyMovement : MonoBehaviour
     {
         if (armySoldierList.Count < 0) return;
 
-        isInGeneral = false;
-        followNav = null;
-
         if (armySoldierList.Count > 0)
             armySoldierList.Clear();
 
@@ -74,16 +66,6 @@ public class ArmyMovement : MonoBehaviour
         {
             PenguinMovementInfo armySoldier =
                 new(false, curArmy.Soldiers[i]);
-            armySoldierList.Add(armySoldier);
-        }
-
-        if (curArmy.General != null)
-        {
-            //장군이 있다면 장군 기준으로
-            isInGeneral = true;
-
-            PenguinMovementInfo armySoldier =
-                       new(false, curArmy.General);
             armySoldierList.Add(armySoldier);
         }
     }
@@ -102,6 +84,11 @@ public class ArmyMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 군단 모두가 자리에 도착할때까지 대기
+    /// </summary>
+    /// <param name="mousePos"></param>
+    /// <returns></returns>
     private IEnumerator WaitForAllTrue_Corou(Vector3 mousePos)
     {
         if (armySoldierList.Count <= 0)
@@ -121,9 +108,6 @@ public class ArmyMovement : MonoBehaviour
             obj.MousePos = mousePos;
         }
 
-        //카메라 이동
-
-        //��ΰ� ������ �� �ִ� �������� Ȯ���ϱ� ���� �ڷ�ƾ ������
         if (AllTrueToCanMoveCoutine != null)
             StopCoroutine(AllTrueToCanMoveCoutine);
 
@@ -131,9 +115,14 @@ public class ArmyMovement : MonoBehaviour
 
         yield return new WaitUntil(() => result == true);
 
-        // ���������� �ذ�Ǿ��ٸ�
         curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
     }
+
+    /// <summary>
+    /// 군단 모두가 움직 일 수 있을 때 까지 대기
+    /// </summary>
+    /// <param name="mousePos"></param>
+    /// <returns></returns>
     private IEnumerator AllTrueToCanMove_Corou(Vector3 mousePos)
     {
         var check = false;
@@ -178,6 +167,10 @@ public class ArmyMovement : MonoBehaviour
         AllTrueToSeatMyPostionCoutine = StartCoroutine(AllTrueToSeatMyPostion_Corou());
     }
 
+    /// <summary>
+    /// 군단이 모두 움직일 때 까지 대기
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator AllTrueToSeatMyPostion_Corou()
     {
         successfulSeatMyPos = false;
@@ -186,6 +179,8 @@ public class ArmyMovement : MonoBehaviour
         {
             Debug.Log("������ �ִ�2");
         }
+
+        //성공적으로 위치에 도달할때까지 무한 반복
         while (!armySoldierList.TrueForAll(p
             => p.Obj.SuccessfulToArmyCalled))
         {
@@ -196,27 +191,9 @@ public class ArmyMovement : MonoBehaviour
 
     private void SetSoldierMovePosition(Vector3 mousePos, Penguin penguin)
     {
+        Debug.Log(penguin.name);
         penguin.MoveToMySeat(mousePos);
     }
-
-    /// <summary>
-    /// ��ġ��� �̵�
-    /// </summary>
-    /// <param name="mousePos"> ���콺 ��ġ</param>
-    private void SetArmyMovePostiton(Vector3 mousePos)
-    {
-        var soldiers = curArmy.Soldiers;
-        var general = curArmy.General;
-
-        if (general != null)
-            general.MoveToMySeat(mousePos);
-
-        foreach (var soldier in soldiers)
-        {
-            soldier.MoveToMySeat(mousePos);
-        }
-    }
-
 
     private void OnDestroy()
     {

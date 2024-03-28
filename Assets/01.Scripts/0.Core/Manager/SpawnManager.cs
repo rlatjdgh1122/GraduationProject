@@ -55,21 +55,17 @@ public class SpawnManager : Singleton<SpawnManager>
 
     public void SetOwnerDummyPenguin(PenguinTypeEnum type, Penguin obj)
     {
-        Debug.Log("0");
         foreach (var info in _dummyPenguinList)
         {
             var PenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
-            Debug.Log("1");
             //오너를 가지고 있지 않다면
             if (!info.IsHaveOwner)
             {
-                Debug.Log("2");
                 //펭귄 타입이 같다면
                 if (PenguinType == type)
                 {
-                    Debug.Log("3");
                     dummyPenguin.SetOwner(obj);
                     info.IsHaveOwner = true;
                     break;
@@ -83,9 +79,9 @@ public class SpawnManager : Singleton<SpawnManager>
     public void AddDummyPenguin(DummyPenguin obj)
     {
         _dummyPenguinList.Add(new DummyPenguinListItem
-            {
-                IsHaveOwner = false,
-                dummyPenguin = obj
+        {
+            IsHaveOwner = false,
+            dummyPenguin = obj
         });
     }
 }

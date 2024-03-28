@@ -70,8 +70,8 @@ public class Penguin : Entity
     private Army owner;
     public Army Owner => owner;
 
-    private bool isFreelyMove = false;
-    public bool IsFreelyMove => isFreelyMove;
+   /* private bool isFreelyMove = false;
+    public bool IsFreelyMove => isFreelyMove;*/
     protected override void Awake()
     {
         base.Awake();
@@ -121,7 +121,6 @@ public class Penguin : Entity
         Enemy[] objects = FindObjectsOfType<Enemy>().Where(e => e.enabled).ToArray();
 
         var nearbyEnemies = objects
-            .Where(obj => Vector3.Distance(transform.position, obj.transform.position) <= provokeRange)
             .OrderBy(obj => Vector3.Distance(transform.position, obj.transform.position))
             .Take(count)
             .ToList();
@@ -185,6 +184,8 @@ public class Penguin : Entity
     {
         if (NavAgent.isActiveAndEnabled)
         {
+            NavAgent.isStopped = false;
+
             if (prevMousePos != Vector3.zero)
             {
                 if (movingCoroutine != null)
@@ -266,8 +267,8 @@ public class Penguin : Entity
         owner = null;
     }
 
-    public void SetFreelyMoveAble(bool b)
+    /*public void SetFreelyMoveAble(bool b)
     {
         isFreelyMove = b;
-    }
+    }*/
 }

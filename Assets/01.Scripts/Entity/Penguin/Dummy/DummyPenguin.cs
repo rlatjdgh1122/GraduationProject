@@ -73,8 +73,6 @@ public class DummyPenguin : PoolableMono
     }
     private void OnBattleStartHandler()
     {
-        Debug.Log("전투시작한다고");
-
         if (Owner)
         {
             Owner.SetPosition(transform.position);
