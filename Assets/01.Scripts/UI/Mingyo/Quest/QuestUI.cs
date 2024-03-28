@@ -95,7 +95,7 @@ public class QuestUI : PopupUI
         if (_uncompletedQuestScrollViewUIs.ContainsKey(questData.Id))
         {
             _uncompletedQuestScrollViewUIs[questData.Id].UpdateQuestType(questData.QuestStateEnum);
-            SignalHub.OnStartQuestEvent += () => SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[questData.Id]);
+            //SignalHub.OnStartQuestEvent += () => SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[questData.Id]);
         }
         else
         {
