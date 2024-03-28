@@ -90,9 +90,9 @@ public class UIManager : Singleton<UIManager>
         popupUI.MovePanel(x, y, fadeTime);
     }
 
-    public void ShowWarningUI(Vector3 pos, string text)
+    public void ShowWarningUI(string text)
     {
-        _warningUI.SetValue(pos, text);
+        _warningUI.SetValue(text);
         _warningUI.ShowAndHidePanel(_warningUI.IntervalTime);
     }
     #endregion

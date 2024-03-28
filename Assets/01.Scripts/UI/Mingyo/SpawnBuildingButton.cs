@@ -41,7 +41,7 @@ public class SpawnBuildingButton : MonoBehaviour
         if (WaveManager.Instance.IsBattlePhase)
         {
             cantSpawnBuilding = true;
-            _buildingFactory.SetSpawnFailHudText("전투 페이즈에는 생성할 수 없습니다");
+            UIManager.Instance.ShowWarningUI("전투 페이즈에는 생성할 수 없습니다");
         }
         #endregion
 
@@ -49,7 +49,7 @@ public class SpawnBuildingButton : MonoBehaviour
 
         //try
         //{
-        //    Resource resource = ResourceManager.Instance.resourceStack.Find
+        //    Resource resource = ResourceManager.Instance.resourceStack.Find //이것도나중에
         //    (icon => icon.resourceData.resourceIcon == buildinginfo.NecessaryResource.resourceData.resourceIcon);
 
         //    if (resource.stackSize >= buildinginfo.NecessaryResourceCount)
@@ -72,7 +72,7 @@ public class SpawnBuildingButton : MonoBehaviour
 
         #region 일꾼 수 비교
 
-        //if (!(WorkerManager.Instance.WorkerCount >= buildinginfo.NecessaryResourceCount))
+        //if (!(WorkerManager.Instance.WorkerCount >= buildinginfo.NecessaryResourceCount)) 이건 나중에 ㄱ
         //{
         //    _buildingFactory.SetSpawnFailHudText("일꾼이 부족합니다");
         //    cantSpawnBuilding = true;
@@ -80,30 +80,26 @@ public class SpawnBuildingButton : MonoBehaviour
 
         #endregion
 
-        //if (buildinginfo.MaxInstallableCount >= buildinginfo.CurrentInstallCount)
-        //{
-        //    _buildingFactory.SetSpawnFailHudText("최대 설치 개수에 도달했습니다");
-        //    cantSpawnBuilding = true;
-        //}
+        if (buildinginfo.MaxInstallableCount <= buildinginfo.CurrentInstallCount)
+        {
+            UIManager.Instance.ShowWarningUI("최대 설치 개수에 도달했습니다");
+            return;
+        }
 
 
         if (cantSpawnBuilding)
         {
-            UIManager.Instance.InitializHudTextSequence();
-            UIManager.Instance.SpawnHudText(_buildingFactory.FailHudText);
-
+            UIManager.Instance.ShowWarningUI("전투 페이즈에는 생성 할 수 없습니다");
             return;
         }
 
-        ButtonCooldown(spawnBuilding);
+        ButtonCooldown(spawnBuilding, buildinginfo);
     }
 
-    private void ButtonCooldown(BaseBuilding spawnBuilding) // 버튼 누르면 실행될 함수
+    private void ButtonCooldown(BaseBuilding spawnBuilding, BuildingItemInfo info) // 버튼 누르면 실행될 함수
     {
         UIManager.Instance.HidePanel("NexusUI");
-        UIManager.Instance.InitializHudTextSequence();
-        UIManager.Instance.SpawnHudText(_buildingFactory.SuccesHudText);
 
-        _buildingFactory.SpawnBuildingHandler(spawnBuilding);
+        _buildingFactory.SpawnBuildingHandler(spawnBuilding, info);
     }
 }
