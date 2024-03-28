@@ -212,11 +212,12 @@ public class Penguin : Entity
         float BC =
             Mathf.Pow(AB, 2) + Mathf.Pow(AC, 2) - (2 * AC * AB) * Mathf.Cos(Angle);
         //마우스 위치부터 나의 위치와 움직일 위치에 거리
+
         float result = Mathf.Sqrt(BC); //이게 클수록 수는 작게
 
         totalTime = result / balancingValue;
 
-        while (currentTime <= totalTime)
+        /*while (currentTime <= totalTime)
         {
             t = currentTime / totalTime;
 
@@ -229,8 +230,11 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
+*/
         Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
         MoveToMouseClick(pos);
+
+        yield return null;
     }
 
     public void SetTarget(Vector3 mousePos)
@@ -240,8 +244,11 @@ public class Penguin : Entity
     public void MoveToMouseClickPositon()
     {
         //StartImmediately();
-        NavAgent.isStopped = false;
-        NavAgent?.SetDestination(MousePos + SeatPos);
+        if (NavAgent != null)
+        {
+            NavAgent.isStopped = false;
+            NavAgent?.SetDestination(MousePos + SeatPos);
+        }
     }
     private void MoveToMouseClick(Vector3 pos)
     {

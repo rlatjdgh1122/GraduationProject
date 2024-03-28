@@ -13,20 +13,20 @@ public enum ArcherPenguinStateEnum
 
 public class ArcherPenguin : Penguin
 {
-    public EntityStateMachine<BasicPenguinStateEnum, Penguin> StateMachine { get; private set; }
+    public EntityStateMachine<ArcherPenguinStateEnum, Penguin> StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new EntityStateMachine<BasicPenguinStateEnum, Penguin>();
+        StateMachine = new EntityStateMachine<ArcherPenguinStateEnum, Penguin>();
 
-        foreach (BasicPenguinStateEnum state in Enum.GetValues(typeof(BasicPenguinStateEnum)))
+        foreach (ArcherPenguinStateEnum state in Enum.GetValues(typeof(ArcherPenguinStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"Basic{typeName}State");
+            Type t = Type.GetType($"Archer{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<BasicPenguinStateEnum, Penguin>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<ArcherPenguinStateEnum, Penguin>;
 
             StateMachine.AddState(state, newState);
         }
@@ -38,7 +38,7 @@ public class ArcherPenguin : Penguin
     }
     public override void StateInit()
     {
-        StateMachine.Init(BasicPenguinStateEnum.Idle);
+        StateMachine.Init(ArcherPenguinStateEnum.Idle);
     }
     protected override void Update()
     {

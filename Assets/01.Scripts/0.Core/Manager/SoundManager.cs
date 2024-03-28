@@ -245,7 +245,7 @@ public class SoundManager : MonoBehaviour
 
         if (obj != null)
         {
-            Debug.Log(obj);
+            //Debug.Log(obj);
             Destroy(obj);
 
         }

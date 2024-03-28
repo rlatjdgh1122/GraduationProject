@@ -31,11 +31,9 @@ public static class CoroutineUtil
 
     private static IEnumerator DoCallWaitForSeconds(float seconds, Action beforeAction, Action afterAction)
     {
-        Debug.Log("Before");
         beforeAction?.Invoke();
         yield return new WaitForSeconds(seconds);
         afterAction?.Invoke();
-        Debug.Log("After");
     }
 
     private class CoroutineExecutor : MonoBehaviour { }
