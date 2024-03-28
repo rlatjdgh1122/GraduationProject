@@ -98,8 +98,6 @@ public class ArrangementManager : Singleton<ArrangementManager>
     }
     private void OnJoinArmyByInfo(ArrangementInfo info)
     {
-        Debug.Log("추가");
-
         Penguin obj = SpawnManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
 
         if (info.JobType == PenguinJobType.Solider)

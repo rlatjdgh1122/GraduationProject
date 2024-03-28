@@ -34,12 +34,11 @@ public class ArcherPenguin : Penguin
 
     protected override void Start()
     {
-        StateMachine.Init(BasicPenguinStateEnum.Idle);
+        StateInit();
     }
-
-    private void FixedUpdate()
+    public override void StateInit()
     {
-        StateMachine.CurrentState.FixedUpdateState();
+        StateMachine.Init(BasicPenguinStateEnum.Idle);
     }
     protected override void Update()
     {

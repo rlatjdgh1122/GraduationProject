@@ -48,6 +48,8 @@ public class DummyPenguin : PoolableMono
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
 
         Setting();
+
+        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
     }
 
 
@@ -67,9 +69,11 @@ public class DummyPenguin : PoolableMono
     }
     private void Start()
     {
+        StateInit();
+    }
+    public void StateInit()
+    {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
-
-        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
     }
     private void OnBattleStartHandler()
     {
@@ -78,6 +82,8 @@ public class DummyPenguin : PoolableMono
             Owner.SetPosition(transform.position);
 
             Owner.gameObject.SetActive(true);
+            Owner.StateInit();
+
             this.gameObject.SetActive(false);
         }
         else
@@ -88,17 +94,21 @@ public class DummyPenguin : PoolableMono
         DummyStateMachine.CurrentState.UpdateState();
     }
 
-    public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 
     public void SetOwner(Penguin owner)
     {
         Owner = owner;
     }
+    public void SetPostion(Vector3 pos)
+    {
+        transform.position = pos;
+    }
     public void GoToHouse()
     {
+        //여기서 풀 넣는게 맞나 싶음
         PoolManager.Instance.Push(this);
-        //Destroy(gameObject);
     }
+    public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 
     private void OnDestroy()
     {

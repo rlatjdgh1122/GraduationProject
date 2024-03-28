@@ -14,13 +14,13 @@ public class QuestTrigger : MonoBehaviour
 
     private void Update() //Å×½ºÆ®
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            QuestManager.Instance.StartQuest(QuestId);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            QuestManager.Instance.ProgressQuest(QuestId);
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    QuestManager.Instance.StartQuest(QuestId);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    QuestManager.Instance.ProgressQuest(QuestId);
+        //}
     }
 }

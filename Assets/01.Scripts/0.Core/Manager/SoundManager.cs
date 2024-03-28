@@ -20,7 +20,8 @@ public enum SoundName
     ArrowAttack,
     StartFight,
     NormalBGM,
-    NormalBattleBGM
+    NormalBattleBGM,
+    Hit
 }
 
 public class SoundManager : MonoBehaviour
@@ -80,7 +81,7 @@ public class SoundManager : MonoBehaviour
     public static void Play3DSound(SoundName clipName, Vector3 position,
     float minFOV = 20, float maxFOV = 55, float maxDistance = 50,
     SoundType type = SoundType.SFX,
-    AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic)
+    AudioRolloffMode rolloffMode = AudioRolloffMode.Linear)
     {
 
         if (instance == null) return;
@@ -137,7 +138,7 @@ public class SoundManager : MonoBehaviour
     private void Play3D(SoundName clipName, Vector3 position,
         float minFOV = 20, float maxFOV = 55, float maxDistance = 50,
         SoundType type = SoundType.SFX,
-        AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic)
+        AudioRolloffMode rolloffMode = AudioRolloffMode.Linear)
     {
 
         float distance = Vector3.Distance(position, mainCamera.transform.position);

@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class DummyPenguinListItem
 {
+    //½ÇÁ¦ Æë±ÏÀ» °¡Áö°í ÀÖ´Â°¡?
     public bool IsHaveOwner = false;
     public DummyPenguin dummyPenguin;
 }
@@ -14,6 +15,7 @@ public class SpawnManager : Singleton<SpawnManager>
 
     #region ´õ¹Ì Æë±Ï °ü·Ã
     private List<DummyPenguinListItem> _dummyPenguinList = new();
+    private Dictionary<Penguin, DummyPenguin> penguinToDummyDictionary = new();
     public int DummyPenguinCount => _dummyPenguinList.Count;
     #endregion
 
@@ -25,6 +27,14 @@ public class SpawnManager : Singleton<SpawnManager>
             var type = solider.type;
             soldierTypeDictionary.Add(type, solider.obj);
         }
+    }
+    public void AddDummyPenguin(DummyPenguin obj)
+    {
+        _dummyPenguinList.Add(new DummyPenguinListItem
+        {
+            IsHaveOwner = false,
+            dummyPenguin = obj
+        });
     }
 
     /// <summary>
@@ -68,6 +78,9 @@ public class SpawnManager : Singleton<SpawnManager>
                 {
                     dummyPenguin.SetOwner(obj);
                     info.IsHaveOwner = true;
+
+                    //Æë±ÏÀÌ¶û ´õ¹ÌÆë±ÏÀÌ¶û ¿¬°á
+                    penguinToDummyDictionary.Add(obj, dummyPenguin);
                     break;
                 }
             }
@@ -76,14 +89,42 @@ public class SpawnManager : Singleton<SpawnManager>
 
     }
 
-    public void AddDummyPenguin(DummyPenguin obj)
+    #region ´õ¹Ì Æë±Ï°ú ½ÇÁ¦ Æë±Ï ½º¿Ò °ü·Ã
+    /// <summary>
+    /// ÀüÅõ°¡ ³¡³ª¸é ´õ¹ÌÆë±ÏÀ¸·Î ¹Ù²ñ
+    /// </summary>
+    /// <param name="obj"></param>
+    public void ChangedToDummyPenguin(Penguin obj)
     {
-        _dummyPenguinList.Add(new DummyPenguinListItem
+        if (penguinToDummyDictionary.TryGetValue(obj, out var value))
         {
-            IsHaveOwner = false,
-            dummyPenguin = obj
-        });
+            var pos = obj.transform.position;
+            //½ÇÁ¦ Æë±ÏÀ» ²¨ÁÖ°í
+            obj.gameObject.SetActive(false);
+
+            //°¡Â¥ Æë±ÏÀº À§Ä¡¸¦ ¼³Á¤ÇØÁÖ°í ÄÑÁÜ
+            value.gameObject.SetActive(true);
+            value.StateInit();
+            value.SetPostion(pos);
+        }
     }
+
+    /// <summary>
+    /// ³ªÀÇ ´õ¹Ì Æë±ÏÀ» °¡Á®¿È
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public DummyPenguin GetDummyPenguin(Penguin obj)
+    {
+        if (penguinToDummyDictionary.TryGetValue(obj, out var value))
+            return value;
+
+        Debug.Log($"{obj.name}Àº ´õ¹Ì Æë±ÏÀ» °¡Áö°í ÀÖÁö ¾Ê½À´Ï´Ù.");
+        return null;
+    }
+
+
+    #endregion
 }
 
 

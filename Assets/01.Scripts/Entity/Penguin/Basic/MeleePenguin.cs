@@ -34,6 +34,10 @@ public class MeleePenguin : Penguin
     }
     protected override void Start()
     {
+        StateInit();
+    }
+    public override void StateInit()
+    {
         StateMachine.Init(BasicPenguinStateEnum.Idle);
     }
     protected override void Update()

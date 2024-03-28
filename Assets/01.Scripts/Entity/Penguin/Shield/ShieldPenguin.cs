@@ -38,16 +38,16 @@ public class ShieldPenguin : Penguin
 
     protected override void Start()
     {
-        StateMachine.Init(ShieldPenguinStateEnum.Idle);
-    }
-
-    private void FixedUpdate()
-    {
-        StateMachine.CurrentState.FixedUpdateState();
+        StateInit();
     }
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
+    }
+
+    public override void StateInit()
+    {
+        StateMachine.Init(ShieldPenguinStateEnum.Idle);
     }
 
     public override void OnPassiveStunEvent()

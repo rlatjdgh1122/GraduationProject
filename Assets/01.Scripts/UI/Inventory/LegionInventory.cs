@@ -229,7 +229,6 @@ public class LegionInventory : Singleton<LegionInventory>
 
     public void AddToLegion(PenguinInfoDataSO penguin, int legionNumber)
     {
-
         if (LegionList[legionNumber].legionDictionary.TryGetValue(penguin, out LegionInventoryData legionInven))
         {//만약 군단에 이 데이터가 있다면
 

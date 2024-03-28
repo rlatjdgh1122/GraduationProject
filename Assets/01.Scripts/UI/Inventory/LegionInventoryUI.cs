@@ -85,18 +85,14 @@ public class LegionInventoryUI : PopupUI
 
         _legionInventory = GetComponent<CanvasGroup>();
     }
-
-    public void OnEnableLegionInventory()
+    public override void ShowPanel()
     {
-        ShowPanel();
-    }
-    public void OnDisableLegionInventory()
-    {
-        HidePanel();
+        base.ShowPanel();
     }
     public override void HidePanel()
     {
         base.HidePanel();
+
         SignalHub.OnModifyArmyInfo?.Invoke();
     }
 

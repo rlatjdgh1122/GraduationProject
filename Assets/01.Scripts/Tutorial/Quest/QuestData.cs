@@ -4,30 +4,46 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+public enum QuestState
+{
+    Locked,
+    CanStart,
+    Running,
+    CanFinish,
+    Finish
+}
+
 [Serializable]
 public class QuestData
 {
     public QuestData(QuestData questData)
     {
         IsTutorialQuest = questData.IsTutorialQuest;
-        isFinQuest = questData.isFinQuest;
-        isStartedQuest = questData.isStartedQuest;
+        QuestStateEnum = questData.QuestStateEnum;
         TutorialQuestIdx = questData.TutorialQuestIdx;
-        RepetCount = questData.RepetCount;
+        RepeatCount = questData.RepeatCount;
 
         Id = questData.Id;
 
-        QuestTexts = questData.QuestTexts;
+        TutorialTexts = questData.TutorialTexts;
+
+        QuestUIDataInfo = questData.QuestUIDataInfo;
+        QuestRewardInfo = questData.QuestRewardInfo;
     }
 
-    public bool isFinQuest;
-    public bool isStartedQuest;
+    public QuestState QuestStateEnum;
 
-    public int RepetCount;
+    public int RepeatCount;
 
     public string Id;
 
     public bool IsTutorialQuest;
     public int TutorialQuestIdx;
-    public string[] QuestTexts;
+    public string[] TutorialTexts;
+
+    public int CurProgressCount = 0;
+
+
+    public QuestUIData QuestUIDataInfo;
+    public QuestRewardData QuestRewardInfo;
 }
