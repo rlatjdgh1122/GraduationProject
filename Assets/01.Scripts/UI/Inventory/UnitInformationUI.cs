@@ -62,12 +62,12 @@ public class UnitInformationUI : SlotUI
         {
             _privateData = data;
 
-            _unitImage.sprite = data.penguinData.PenguinIcon;
+            _unitImage.sprite = data.infoData.PenguinIcon;
             _unitImage.DOFade(1, 0);
-            _name.text = data.penguinData.PenguinName;
-            _className.text = data.penguinData.PenguinJobTypeName();
+            _name.text = data.infoData.PenguinName;
+            _className.text = data.infoData.PenguinType.ToString();
 
-            if(data.penguinData.JobType == PenguinJobType.General)
+            if(data.infoData.JobType == PenguinJobType.General)
             {
                 _generalInfoCanvasGroup.DOFade(1, 0.1f);
             }
@@ -76,9 +76,9 @@ public class UnitInformationUI : SlotUI
                 _generalInfoCanvasGroup.DOFade(0, 0.1f);
             }
 
-            _atk.DOValue(_privateData.penguinData.PenguinData.atk, 0.2f);
-            _def.DOValue(_privateData.penguinData.PenguinData.hp, 0.2f);
-            _range.DOValue(_privateData.penguinData.PenguinData.range, 0.2f);
+            _atk.DOValue(_privateData.infoData.atk, 0.2f);
+            _def.DOValue(_privateData.infoData.hp, 0.2f);
+            _range.DOValue(_privateData.infoData.range, 0.2f);
 
             //data.penguinData.PenguinInformationTextUpdate(_weapon, _passive, _Synergy);
         }

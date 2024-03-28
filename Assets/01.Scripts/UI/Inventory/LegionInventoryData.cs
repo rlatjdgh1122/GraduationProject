@@ -3,12 +3,12 @@ using System;
 [Serializable]
 public class LegionInventoryData
 {
-    public PenguinStat penguinData;
+    public PenguinInfoDataSO infoData;
     public int stackSize;
 
-    public LegionInventoryData(PenguinStat penguinData)
+    public LegionInventoryData(PenguinInfoDataSO InfoData)
     {
-        this.penguinData = penguinData;
+        this.infoData = InfoData;
         AddStack();
     }
 

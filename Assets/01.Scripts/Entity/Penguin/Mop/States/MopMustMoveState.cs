@@ -11,7 +11,6 @@ public class MopMustMoveState : MopBaseState
         base.Enter();
 
         MustMoveEnter();
-        Debug.Log(_navAgent.velocity.magnitude);
     }
     public override void FixedUpdateState()
     {
@@ -21,12 +20,10 @@ public class MopMustMoveState : MopBaseState
     {
         base.UpdateState();
 
-        Debug.Log(_navAgent.velocity.magnitude);
         if (_penguin.WaitForCommandToArmyCalled)
         {
             if (_penguin.NavAgent.remainingDistance < 0.05f)
             {
-                Debug.Log("머스트 아이들 : " + _navAgent.velocity.magnitude);
                 _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
             }
         }
@@ -34,7 +31,6 @@ public class MopMustMoveState : MopBaseState
         else if (_penguin.IsInnerTargetRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
-            // Debug.Log(_penguin.IsInnerTargetRange + " : " + _penguin.MoveFocusMode);
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
         }
     }

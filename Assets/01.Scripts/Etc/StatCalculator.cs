@@ -1,18 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 namespace StatOperator
 {
     public static class StatCalculator
     {
-        public static float Percent(int value, int per) // 10 10 => 1, // 100 10 => 10
+        // 10 10 => 1, // 100 10 => 10
+        public static float Percent(int value, int per)
             => value * (per / 100f);
         public static float OperTimes(float result, int value)
             => result / value;
         public static int GetValue(int plusValue, int minusValue)
             => plusValue - minusValue;
+
         /// <summary>
         /// 합연산. 최종 결과 값
         /// </summary>

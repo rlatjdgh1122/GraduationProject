@@ -15,12 +15,6 @@ public class BasicIdleState : BasicBaseState
 
         IdleEnter();
     }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
-       
-    }
     public override void UpdateState()
     {
         base.UpdateState();

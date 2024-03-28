@@ -13,8 +13,8 @@ public class BuyPanel : PopupUI
     [Header("BuyPanel")]
     [SerializeField] private int _maxCount;
 
-    private PenguinStat _stat;
-    private Penguin _spawnPenguin;
+    private EntityInfoDataSO _infoData;
+    private DummyPenguin _dummyPenguin;
 
     private TextMeshProUGUI _buyCntText;
     private TextMeshProUGUI _priceText;
@@ -42,10 +42,10 @@ public class BuyPanel : PopupUI
         _buyButtonText        = transform.Find("Buttons/BuyBtn/Text").GetComponent<TextMeshProUGUI>();
     }
 
-    public void PenguinInformataion(Penguin spawnPenguin, PenguinStat penguinStat, int price)
+    public void PenguinInformataion(DummyPenguin dummyPenguin, EntityInfoDataSO infoData, int price)
     {
-        _spawnPenguin = spawnPenguin;
-        _stat = penguinStat;
+        _dummyPenguin = dummyPenguin;
+        _infoData = infoData;
         _price = price;
     }
 
@@ -61,7 +61,7 @@ public class BuyPanel : PopupUI
 
     private void CurrentCostUpdate() //현재 보유 재화 업뎃
     {
-        _buyToPenguinNameText.text = $"{_stat.PenguinName} 구매하기";
+        _buyToPenguinNameText.text = $"{_infoData.PenguinName} 구매하기";
         _presenter.TextUpdate(_currentCostText, CostManager.Instance.Cost.ToString());
     }
 
@@ -140,9 +140,9 @@ public class BuyPanel : PopupUI
 
         for (int i = 0; i < _cnt; i++)
         {
-            LegionInventory.Instance.AddPenguin(_spawnPenguin.ReturnGenericStat<PenguinStat>());
+            LegionInventory.Instance.AddPenguin(_dummyPenguin.PenguinUIInfo);
 
-            _presenter._penguinFactory.SpawnPenguinHandler(_spawnPenguin);
+            _presenter._penguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
         }
 
 

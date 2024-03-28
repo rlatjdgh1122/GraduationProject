@@ -6,9 +6,6 @@ using UnityEngine.AI;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
-    [SerializeField] private SoldierListSO soldierTypeListSO = null;
-    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
-
     [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
     private Dictionary<KeyCode, Action> keyDictionary = new();
@@ -23,12 +20,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
     private void Start()
     {
-        foreach (var solider in soldierTypeListSO.soldierTypes)
-        {
-            var type = (solider.Stat as PenguinStat).PenguinType;
-            soldierTypeDictionary.Add(type, solider);
-        }
-
         CreateArmy();
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
 
@@ -221,25 +212,6 @@ public class ArmyManager : Singleton<ArmyManager>
     #endregion
 
     #region 펭귄 및 군단 생성 부분
-    /// <summary>
-    /// 팽귄 생성하는 함수
-    /// </summary>
-    /// <typeparam name="T"> Penguin 상속받은 애들</typeparam>
-    /// <param name="SpawnPoint"> 스폰 위치</param>
-    /// <param name="seatPos"> 배치 위치 *되도록이면 사용하지 말것*</param>
-    /// <returns> 니가 만든 펭귄</returns>
-
-    public Penguin CreateSoldier(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default)
-    {
-        Penguin obj;
-        var prefab = soldierTypeDictionary[type];
-
-        obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
-        obj.gameObject.SetActive(false);
-        obj.transform.position = SpawnPoint;
-        obj.SeatPos = seatPos;
-        return obj;
-    }
 
     /// <summary>
     /// 펭귄 지우기

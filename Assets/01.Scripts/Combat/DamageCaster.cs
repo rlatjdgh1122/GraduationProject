@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -11,6 +8,10 @@ public class DamageCaster : MonoBehaviour
     private float _detectRange = 1f;
     [SerializeField]
     private HitType _hitType;
+
+    [Header("Sound")]
+    [SerializeField]
+    private SoundName _soundName;
 
 
     public LayerMask TargetLayer;
@@ -31,6 +32,8 @@ public class DamageCaster : MonoBehaviour
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
 
+        SoundManager.Play3DSound(_soundName, transform.position);
+
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
@@ -49,6 +52,8 @@ public class DamageCaster : MonoBehaviour
     public void CaseAoEDamage(bool Knb, float value)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+
+        SoundManager.Play3DSound(_soundName, transform.position);
 
         foreach (var col in Colls)
         {
@@ -99,6 +104,8 @@ public class DamageCaster : MonoBehaviour
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
+        SoundManager.Play3DSound(_soundName, transform.position);
+
         foreach (var col in Colls)
         {
             RaycastHit raycastHit;
@@ -129,8 +136,9 @@ public class DamageCaster : MonoBehaviour
     public bool CastDamage()
     {
         RaycastHit raycastHit;
-        bool raycastSuccess = Physics.BoxCast
-            (transform.position, transform.lossyScale / 2f, transform.forward, out raycastHit, transform.rotation, _detectRange, TargetLayer);
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
+
+        SoundManager.Play3DSound(_soundName, transform.position);
 
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
@@ -160,15 +168,6 @@ public class DamageCaster : MonoBehaviour
         return false;
     }
 
-    #if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward);
-        Gizmos.DrawWireCube(transform.position, transform.lossyScale);
-    }
-    #endif
-
     public void ShowCritical(EntityActionData actionData)
     {
         //actionData.HitPoint
@@ -177,6 +176,8 @@ public class DamageCaster : MonoBehaviour
     public void SelectTypeAOECast(int damage, HitType hitType, bool Knb = false, float value = 0)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+
+        SoundManager.Play3DSound(_soundName, transform.position);
 
         foreach (var col in Colls)
         {
@@ -199,13 +200,16 @@ public class DamageCaster : MonoBehaviour
         }
     }
 
-    //private IEnumerator BleedStart(int damage, int repeat, float duration, Health raycastHealth, RaycastHit ray, HitType hitType)
-    //{
-    //    for (int i = 0; i < repeat; i++)
-    //    {
-    //        yield return new WaitForSeconds(duration);
-    //        raycastHealth.ApplyDamage(damage, ray.point, ray.normal, hitType);
-    //        Debug.Log(damage);
-    //    }
-    //}
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (UnityEditor.Selection.activeObject == gameObject)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _detectRange);
+            Gizmos.color = Color.white;
+        }
+    }
+#endif
 }

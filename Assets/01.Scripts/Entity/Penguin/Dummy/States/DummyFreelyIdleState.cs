@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DummyIdleState : DummyBaseState
+public class DummyFreelyIdleState : DummyBaseState
 {
     private float timer = 0f;
     private float randomTime = 5f;
-    public DummyIdleState(DummyPenguin penguin, EntityStateMachine<DummyPenguinStateEnum, DummyPenguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+
+    public DummyFreelyIdleState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
@@ -18,7 +19,7 @@ public class DummyIdleState : DummyBaseState
         timer = 0f;
         randomTime = Random.Range(1.0f, 5.0f);
 
-        _penguin.StopImmediately();
+        StopImmediately();
     }
     public override void UpdateState()
     {
@@ -26,10 +27,11 @@ public class DummyIdleState : DummyBaseState
 
         //일정 시간 지나면 랜덤으로 상태변환
         timer += Time.deltaTime;
-        if(timer > randomTime)
+        if (timer > randomTime)
         {
             _stateMachine.ChangeState(RandomState());
         }
+
 
     }
     public override void Exit()
@@ -37,5 +39,5 @@ public class DummyIdleState : DummyBaseState
         base.Exit();
     }
 
- 
+
 }

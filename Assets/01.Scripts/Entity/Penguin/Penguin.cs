@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +9,6 @@ public class Penguin : Entity
     public float attackSpeed = 1f;
     public int maxDetectedCount;
     public float provokeRange = 25f;
-
-    public bool isBot = false; //봇으로 만들거임
 
     public PassiveDataSO passiveData = null;
 
@@ -67,32 +64,14 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
-
-    //public Enemy CurrentTarget;
-
-    //public bool IsDead = false;
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     private Army owner;
-
     public Army Owner => owner;
 
     private bool isFreelyMove = false;
     public bool IsFreelyMove => isFreelyMove;
-
-    private void OnEnable()
-    {
-        if (!isBot)
-            SignalHub.OnIceArrivedEvent += FindFirstNearestEnemy;
-    }
-
-    private void OnDisable()
-    {
-        if (!isBot)
-            SignalHub.OnIceArrivedEvent -= FindFirstNearestEnemy;
-    }
-
     protected override void Awake()
     {
         base.Awake();
@@ -101,7 +80,6 @@ public class Penguin : Entity
         {
             NavAgent.speed = moveSpeed;
         }
-
         AttackCompo = GetComponent<EntityAttackData>();
     }
 
@@ -278,6 +256,11 @@ public class Penguin : Entity
 
     #endregion
 
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
     public override void Init()
     {
         owner = null;
@@ -287,5 +270,4 @@ public class Penguin : Entity
     {
         isFreelyMove = b;
     }
-
 }

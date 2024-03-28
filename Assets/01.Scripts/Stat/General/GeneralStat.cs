@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class GeneralDetailData
 {
+    [Header("장군 패시브 관련")]
     public bool IsAvailable;
     public int level;
     public Stat levelUpPrice;
@@ -17,24 +18,25 @@ public class GeneralDetailData
 [CreateAssetMenu(menuName = "SO/Stat/Penguin/General")]
 public class GeneralStat : PenguinStat
 {
-    public GeneralDetailData GeneralData;
+    public GeneralDetailData GeneralPassvieData;
+    public GeneralInfoDataSO InfoData;
 
     public int Level
     {
         get
         {
-            return GeneralData.level;
+            return GeneralPassvieData.level;
         }
         set
         {
-            GeneralData.level = value;
+            GeneralPassvieData.level = value;
             LevelUp();
         }
     }
 
     public void LevelUp()
     {
-        GeneralData.levelUpPrice.AddIncrease(10); //일단 임시 UI먼저함
+        GeneralPassvieData.levelUpPrice.AddIncrease(10); //일단 임시 UI먼저함
     }
 
     //public void UpdateAblitiyUI(TextMeshProUGUI name, Slider atk, Slider def, Slider rng)
