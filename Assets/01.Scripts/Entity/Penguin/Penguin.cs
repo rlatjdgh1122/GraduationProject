@@ -256,6 +256,11 @@ public class Penguin : Entity
 
     #endregion
 
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
     public override void Init()
     {
         owner = null;
