@@ -11,7 +11,7 @@ public class ArmyManager : Singleton<ArmyManager>
     public List<Army> Armies { get { return armies; } }
     private Dictionary<KeyCode, Action> keyDictionary = new();
 
-    private MovefocusMode curFocusMode = MovefocusMode.Command;
+    public MovefocusMode curFocusMode = MovefocusMode.Battle;
     public MovefocusMode CurFocusMode => curFocusMode;
 
     private int curArmyIdx = 0;
