@@ -13,7 +13,6 @@ public class ArcherTowerAttackState : ArcherTowerBaseState
         base.Enter();
 
         _triggerCalled = false;
-        _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
         //_penguin.AnimatorCompo.speed = _penguin.attackSpeed;
         _penguin.AnimatorCompo.speed = 0.5f;
@@ -24,11 +23,11 @@ public class ArcherTowerAttackState : ArcherTowerBaseState
         base.UpdateState();
         _penguin.LookTarget();
 
-        if (_penguin.CurrentTarget != null)
-        {
-            _stateMachine.ChangeState(ArcherTowerPenguinStateEnum.Attack);
-            return;
-        }
+        //if (_penguin.CurrentTarget != null)
+        //{
+        //    _stateMachine.ChangeState(ArcherTowerPenguinStateEnum.Attack);
+        //    return;
+        //}
 
         _stateMachine.ChangeState(ArcherTowerPenguinStateEnum.Idle);
     }
