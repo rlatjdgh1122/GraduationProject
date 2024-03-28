@@ -33,7 +33,6 @@ public class ShieldFreelyMoveState : ShieldBaseState
         if (WaveManager.Instance.IsBattlePhase)
         {
             _penguin.NavAgent.speed = normalNavSpeed;
-            _penguin.SetFreelyMoveAble(false);
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Move);
         }
 

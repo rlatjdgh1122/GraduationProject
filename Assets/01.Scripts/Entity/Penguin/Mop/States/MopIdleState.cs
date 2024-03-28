@@ -10,7 +10,7 @@ public class MopIdleState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-        if (_penguin.IsFreelyMove) { return; }
+        //if (_penguin.IsFreelyMove) { return; }
         IdleEnter();
     }
     public override void FixedUpdateState()
@@ -30,15 +30,12 @@ public class MopIdleState : MopBaseState
 
         else if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
-
-        else if (_penguin.IsFreelyMove)
-        {
-            _stateMachine.ChangeState(MopPenguinStateEnum.FreelyMove);
-        }
     }
 
     public override void Exit()
     {
+        IdleExit();
+
         base.Exit();
     }
 }

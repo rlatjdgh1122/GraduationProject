@@ -55,23 +55,23 @@ public class LegionInventoryUI : PopupUI
     {
         UIManager.Instance.ChangeTextColorBoolean(_curLegionMaxCountTex,
             LegionInventory.Instance.LegionList[i].CurrentCount < LegionInventory.Instance.LegionList[i].MaxCount
-            , _normalColor, 
+            , _normalColor,
             Color.red,
             0);
 
-        UIManager.Instance.ChangeTextColorBoolean(_curGernalCountInLegionTex, 
-            !LegionInventory.Instance.LegionList[i].MaxGereral, 
-            _normalColor, 
+        UIManager.Instance.ChangeTextColorBoolean(_curGernalCountInLegionTex,
+            !LegionInventory.Instance.LegionList[i].MaxGereral,
+            _normalColor,
             Color.red,
             0);
 
-        int maxCount             = LegionInventory.Instance.LegionList[i].MaxCount;
-        int curSoliderCount      = LegionInventory.Instance.LegionList[i].CurrentCount;
-        int curGeneralCount      = LegionInventory.Instance.LegionList[i].MaxGereral ? 1 : 0;
+        int maxCount = LegionInventory.Instance.LegionList[i].MaxCount;
+        int curSoliderCount = LegionInventory.Instance.LegionList[i].CurrentCount;
+        int curGeneralCount = LegionInventory.Instance.LegionList[i].MaxGereral ? 1 : 0;
 
 
-        _curGernalCountInLegionTex.text     =   $"{curGeneralCount} / 1";
-        _curLegionMaxCountTex.text          =   $"{curSoliderCount} / {maxCount}";
+        _curGernalCountInLegionTex.text = $"{curGeneralCount} / 1";
+        _curLegionMaxCountTex.text = $"{curSoliderCount} / {maxCount}";
     }
 
     #endregion
@@ -90,13 +90,16 @@ public class LegionInventoryUI : PopupUI
     {
         ShowPanel();
     }
-
     public void OnDisableLegionInventory()
     {
         HidePanel();
-
+    }
+    public override void HidePanel()
+    {
+        base.HidePanel();
         SignalHub.OnModifyArmyInfo?.Invoke();
     }
+
     #endregion
 
     public void ShowMessage(string message) //값들 임시로 박아둔것
