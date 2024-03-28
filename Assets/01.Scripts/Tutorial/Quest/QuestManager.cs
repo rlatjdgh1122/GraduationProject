@@ -46,7 +46,7 @@ public class QuestManager : Singleton<QuestManager>
 
     public void SetCanStartQuest(string questId)
     {
-        QuestData questData = _allQuests[questId];
+        QuestData questData = GetQuestData(questId);
 
         questData.QuestStateEnum = QuestState.CanStart;
 
@@ -60,7 +60,7 @@ public class QuestManager : Singleton<QuestManager>
 
     public void StartTutorial(string questId)
     {
-        QuestData questData = _allQuests[questId];
+        QuestData questData = GetQuestData(questId);
 
         if (TutorialManager.Instance.CurQuestIdx != questData.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
         {
@@ -74,7 +74,7 @@ public class QuestManager : Singleton<QuestManager>
 
     public void StartQuest(string questId) //퀘스트 시작
     {
-        QuestData questData = _allQuests[questId];
+        QuestData questData = GetQuestData(questId);
 
         switch (questData.QuestStateEnum)
         {
@@ -87,6 +87,9 @@ public class QuestManager : Singleton<QuestManager>
             case QuestState.Locked:
                 Debug.Log($"{questData.Id}는 아직 못하는 퀘스트임 리턴함;;");
                 return;
+            case QuestState.CanFinish:
+                Debug.Log($"{questData.Id}는 이미 진행중인 퀘스트임 리턴함;;");
+                break;
         }
 
         Debug.Log($"{questData.Id} 퀘스트 시이작");
@@ -113,7 +116,7 @@ public class QuestManager : Singleton<QuestManager>
 
     public void ProgressQuest(string questId) //퀘스트가 진행되었을때. ex: 보석을 먹었을때.
     {
-        QuestData questData = _allQuests[questId];
+        QuestData questData = GetQuestData(questId);
 
         _allQuests[questData.Id].CurProgressCount++;
 
@@ -123,6 +126,11 @@ public class QuestManager : Singleton<QuestManager>
                 Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
                 return;
             default:
+                if(questData.QuestStateEnum == QuestState.CanFinish)
+                {
+                    Debug.Log("오우 이거 완료 가능함");
+                    return;
+                }
                 if (questData.QuestStateEnum != QuestState.Running)
                 {
                     Debug.Log("이거 아직 시작 안 했는데용");
@@ -142,12 +150,15 @@ public class QuestManager : Singleton<QuestManager>
         }
         else
         {
-            EndQuest(questData); //지울 수 없는 오브젝트가 없으면 퀘스트 완료
+            questData.QuestStateEnum = QuestState.CanFinish; // 지울 수 없는 오브젝트가 없으면 퀘스트 완료가능하게
+            _questUI.UpdatePopUpQuestUI(questData);
         }
     }
 
-    public void EndQuest(QuestData questData)
+    public void EndQuest(string questId)
     {
+        QuestData questData = _allQuests[questId];
+
         SignalHub.OnProgressQuestEvent -= () => _questUI.UpdateQuestUIToProgress(_allQuests[questData.Id]);
 
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
@@ -166,4 +177,6 @@ public class QuestManager : Singleton<QuestManager>
         _questUI.QuestInfoUICompo.OffCanvasGroups();
     }
 
+
+    public QuestData GetQuestData(string questId) => _allQuests[questId];
 }

@@ -9,6 +9,7 @@ public enum QuestState
     Locked,
     CanStart,
     Running,
+    CanFinish,
     Finish
 }
 

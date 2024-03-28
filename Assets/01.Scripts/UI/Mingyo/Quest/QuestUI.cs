@@ -15,7 +15,7 @@ public class QuestUI : PopupUI
     [SerializeField]
     private GameObject _questUIPrefabs;
 
-    private Dictionary<string, GameObject> _uncompletedQuests = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> _uncompletedQuestScrollViewUIs = new Dictionary<string, GameObject>();
     private int _unStartedQuestsLength;
 
     private GameObject _startableQuestIcon;
@@ -42,7 +42,7 @@ public class QuestUI : PopupUI
         newQuest.SetUpScrollViewUI(questData.Id, QuestState.CanStart,
             () => UpdatePopUpQuestUI(questData));
 
-        _uncompletedQuests.Add(questData.Id, newQuestObj);
+        _uncompletedQuestScrollViewUIs.Add(questData.Id, newQuestObj);
         _unStartedQuestsLength++;
 
         SignalHub.OnStartQuestEvent += () => SetQuestUIToRunning(newQuest);
@@ -60,8 +60,8 @@ public class QuestUI : PopupUI
 
     public void RemoveQuestContentUI(string id)
     {
-        Destroy(_uncompletedQuests[id]);
-        _uncompletedQuests.Remove(id);
+        Destroy(_uncompletedQuestScrollViewUIs[id]);
+        _uncompletedQuestScrollViewUIs.Remove(id);
     }
 
     public void UpdateQuestUIToProgress(QuestData questData)

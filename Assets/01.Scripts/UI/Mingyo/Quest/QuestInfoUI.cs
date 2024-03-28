@@ -22,6 +22,7 @@ public class QuestInfoUI : MonoBehaviour
     private CanvasGroup _startButtonCanvasGroup;
 
     private Button _questStartButton;
+    private TextMeshProUGUI _questStartButtonText;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class QuestInfoUI : MonoBehaviour
         Transform buttonTrm = transform.root.Find("QuestUI/StartButton").transform;
         _questStartButton = buttonTrm.GetComponent<Button>();
         _startButtonCanvasGroup = buttonTrm.GetComponent<CanvasGroup>();
+        _questStartButtonText = buttonTrm.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         SignalHub.OnOffPopUiEvent += OffCanvasGroups;
     }
@@ -66,6 +68,7 @@ public class QuestInfoUI : MonoBehaviour
         _startButtonCanvasGroup.alpha = 1;
 
         string questStateText = null;
+        string buttonText = null;
         switch (questState)
         {
             case QuestState.Locked:
@@ -73,9 +76,21 @@ public class QuestInfoUI : MonoBehaviour
                 break;
             case QuestState.CanStart:
                 questStateText = "시작 가능";
+                buttonText = "퀘스트 시작하기";
+                _questStartButton.onClick.AddListener(() => StartQuest(questName));
                 break;
             case QuestState.Running:
                 questStateText = "진행 중";
+                buttonText = "퀘스트 완료";
+
+                _questStartButton.interactable = false;
+                break;
+            case QuestState.CanFinish:
+                questStateText = "완료 가능";
+                buttonText = "퀘스트 완료";
+
+                _questStartButton.interactable = true;
+                _questStartButton.onClick.AddListener(() => EndQuest(questName));
                 break;
             case QuestState.Finish:
                 questStateText = "완료";
@@ -90,12 +105,17 @@ public class QuestInfoUI : MonoBehaviour
         _questRewardCountText.SetText(questRewardCount.ToString());
         UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
 
-        _questStartButton.onClick.AddListener(() => StartQuest(questName));
+        _questStartButtonText.SetText(buttonText);
     }
 
-    public void StartQuest(string questName)
+    private void StartQuest(string questId)
     {
-        QuestManager.Instance.StartQuest(questName);
+        QuestManager.Instance.StartQuest(questId);
+    }
+
+    private void EndQuest(string questId)
+    {
+        QuestManager.Instance.EndQuest(questId);
     }
 
     public void UpdateProgressText(string content)
