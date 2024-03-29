@@ -39,5 +39,7 @@ public class VictoryUI : PopupUI
     public void CostViewer()
     {
         CostManager.Instance.AddFromCurrentCost(_cost, true, true, _btn.rectTransform.position);
+
+        WaveManager.Instance.CloseWinPanel();
     }
 }

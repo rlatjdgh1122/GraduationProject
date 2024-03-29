@@ -27,6 +27,7 @@ public enum SoundName
     Explosion,
     SlashAttack,
     Cash,
+    PenguinHit
 }
 
 public class SoundManager : MonoBehaviour

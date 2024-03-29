@@ -18,12 +18,29 @@ public class TimeLineHolder : MonoBehaviour
         waveManager = WaveManager.Instance;
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if(waveManager.IsCurrentWaveCountEqualTo(4) && isFirst)
-        {
-            pd.Play(ta[0]);
-            isFirst = false;
-        }
+        SignalHub.OnBattlePhaseEndEvent += BeforeBattleWave;
+        SignalHub.OnBattlePhaseStartEvent += AfterBattleWave;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= BeforeBattleWave;
+        SignalHub.OnBattlePhaseStartEvent -= AfterBattleWave;
+    }
+
+    private void BeforeBattleWave()
+    {
+        //if(waveManager.IsCurrentWaveCountEqualTo(4) && isFirst)
+        //{
+        //    pd.Play(ta[0]);
+        //    isFirst = false;
+        //}
+    }
+
+    private void AfterBattleWave()
+    {
+
     }
 }
