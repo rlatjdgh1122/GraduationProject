@@ -18,10 +18,16 @@ public enum SoundName
 {
     MeleeAttack,
     ArrowAttack,
+    ArrowReload,
     StartFight,
     NormalBGM,
     NormalBattleBGM,
-    Hit
+    Dead,
+    BiteAttack,
+    Explosion,
+    SlashAttack,
+    Cash,
+    PenguinHit
 }
 
 public class SoundManager : MonoBehaviour

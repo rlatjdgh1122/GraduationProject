@@ -8,6 +8,7 @@ using UnityEngine;
 public class AnimalAttack
 {
     public HitType hitType;
+    public SoundName SFXSound;
     public int Damage;
     public float KnbackValue;
 }
@@ -25,6 +26,7 @@ public class AnimalAttackableEntity : EntityAttackData
         DamageCasterCompo.SelectTypeAOECast(
             animalAttackList[ComboCounter].Damage, 
             animalAttackList[ComboCounter].hitType,
+            animalAttackList[ComboCounter].SFXSound,
             Knb,
             value);
     }

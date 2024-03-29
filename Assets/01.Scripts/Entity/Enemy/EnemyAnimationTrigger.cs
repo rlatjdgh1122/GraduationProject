@@ -15,6 +15,7 @@ public class EnemyAnimationTrigger : MonoBehaviour
 {
     [SerializeField] private UnityEvent OnPrevAttackEffectEvent = null;
     [SerializeField] private UnityEvent OnEndAttackEffectEvent = null;
+    [SerializeField] private UnityEvent OnAttackSoundEvent = null;
     private Enemy _enemy;
 
     private void Awake()
@@ -33,21 +34,25 @@ public class EnemyAnimationTrigger : MonoBehaviour
 
     public void AoEAttackTrigger(int isKnb)
     {
+        OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 1.5f);
     }
 
     public void SphereAttackTrigger()
     {
+        OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.MeleeSphereAttack();
     }
 
     public void AttackTrigger()
     {
+        OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.MeleeAttack();
     }
 
     private void RangeAttackTrigger()
     {
+        OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.RangeAttack(transform.forward);
     }
 
