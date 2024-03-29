@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Penguin : Entity
 {
@@ -37,13 +38,12 @@ public class Penguin : Entity
         get
         {
             Vector3 vec = (curMousePos - prevMousePos);
-            if (prevMousePos != Vector3.zero
-                && vec != Vector3.zero)
+            if (prevMousePos != Vector3.zero && vec != Vector3.zero)
             {
                 //float value = Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
-                //float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
-                float value = Quaternion.LookRotation(vec).eulerAngles.y;
-                //value = (value > 180f) ? value - 360f : value; // 변환
+                float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
+                //float value = Quaternion.LookRotation(vec).eulerAngles.y;
+                value = (value > 180f) ? value - 360f : value; // 변환
                 return value; // -180 ~ 180
             }
             else
@@ -200,6 +200,8 @@ public class Penguin : Entity
     float balancingValue = 10f;
     float currentTime = 0f; // 현재 시간
 
+    private Vector3 Cur = Vector3.zero;
+    private Vector3 Prev = Vector3.zero;
     private IEnumerator Moving()
     {
         currentTime = 0f;
@@ -217,7 +219,7 @@ public class Penguin : Entity
 
         totalTime = result / balancingValue;
 
-        /*while (currentTime <= totalTime)
+        while (currentTime <= totalTime)
         {
             t = currentTime / totalTime;
 
@@ -230,12 +232,10 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-*/
         Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
         MoveToMouseClick(pos);
-
-        yield return null;
     }
+
 
     public void SetTarget(Vector3 mousePos)
     {
