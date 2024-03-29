@@ -13,6 +13,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
         _penguin.NavAgent.ResetPath();
 
+        _penguin.CurrentTarget = null;
         _navAgent.isStopped = false;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;

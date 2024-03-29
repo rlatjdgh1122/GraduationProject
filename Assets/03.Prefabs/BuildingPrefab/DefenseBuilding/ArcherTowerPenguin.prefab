@@ -974,7 +974,6 @@ MonoBehaviour:
   attackSpeed: 1
   maxDetectedCount: 0
   provokeRange: 25
-  isBot: 0
   passiveData: {fileID: 0}
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
@@ -1068,6 +1067,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1075,6 +1077,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEvasionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
@@ -1255,7 +1263,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.008, y: 0.008, z: 0.008}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4351877586749648099}

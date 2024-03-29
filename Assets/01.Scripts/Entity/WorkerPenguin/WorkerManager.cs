@@ -98,7 +98,7 @@ public class WorkerManager : Singleton<WorkerManager>
         }
     }
 
-    public void ReturnMiners(WorkableObject workableObject)
+    public void ReturnWorker(WorkableObject workableObject)
     {
         if (workableObject.resourceType == ResourceType.Stone)
         {
