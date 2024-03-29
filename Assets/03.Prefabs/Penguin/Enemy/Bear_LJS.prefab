@@ -1207,7 +1207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _detectRange: 2
   _hitType: 1
-  _soundName: 0
   TargetLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -1604,6 +1603,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnEndAttackEffectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttackSoundEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &6186144316036918896

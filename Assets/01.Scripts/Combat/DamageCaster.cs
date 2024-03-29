@@ -9,11 +9,6 @@ public class DamageCaster : MonoBehaviour
     [SerializeField]
     private HitType _hitType;
 
-    [Header("Sound")]
-    [SerializeField]
-    private SoundName _soundName;
-
-
     public LayerMask TargetLayer;
 
     private Entity _owner;
@@ -31,8 +26,6 @@ public class DamageCaster : MonoBehaviour
     {
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
-        SoundManager.Play3DSound(_soundName, transform.position);
 
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
@@ -52,8 +45,6 @@ public class DamageCaster : MonoBehaviour
     public void CaseAoEDamage(bool Knb, float value)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
-
-        SoundManager.Play3DSound(_soundName, transform.position);
 
         foreach (var col in Colls)
         {
@@ -104,8 +95,6 @@ public class DamageCaster : MonoBehaviour
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
-        SoundManager.Play3DSound(_soundName, transform.position);
-
         foreach (var col in Colls)
         {
             RaycastHit raycastHit;
@@ -137,8 +126,6 @@ public class DamageCaster : MonoBehaviour
     {
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
-        SoundManager.Play3DSound(_soundName, transform.position);
 
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
