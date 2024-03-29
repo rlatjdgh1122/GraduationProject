@@ -18,9 +18,6 @@ public class MopChaseState : MopBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
-
-
-
     }
     public override void UpdateState()
     {
@@ -40,7 +37,7 @@ public class MopChaseState : MopBaseState
             if (_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(MopPenguinStateEnum.Attack);
 
-            IsTargetNull(MopPenguinStateEnum.Idle);
+            else IsTargetNull(MopPenguinStateEnum.Idle);
         }
     }
 

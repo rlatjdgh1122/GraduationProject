@@ -13,7 +13,7 @@ public class Worker : Entity
     #endregion
 
     public bool CanWork = false;
-    public bool EndWork = false;
+    public bool EndWork;
 
     public bool WorkerStateCheck = false;
 
@@ -22,7 +22,9 @@ public class Worker : Entity
         base.Awake();
 
         AttackCompo = GetComponent<EntityAttackData>();
+
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
+
         WorkerHomeTrm = GameManager.Instance.WorkerSpawnPoint;
 
         DamageCasterCompo.SetOwner(this);

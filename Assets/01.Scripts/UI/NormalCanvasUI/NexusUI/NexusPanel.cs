@@ -6,6 +6,9 @@ public class NexusPanel : NexusPopupUI
     public TextMeshProUGUI nextLevel;
     public TextMeshProUGUI currentHp;
     public TextMeshProUGUI nextHp;
+    public TextMeshProUGUI currentWorkerCount;
+    public TextMeshProUGUI nextWorkerCount;
+
     public TextMeshProUGUI upgradePrice;
 
     private NexusStat nexusStat => presenter.nexusBase.NexusStat;
@@ -27,6 +30,8 @@ public class NexusPanel : NexusPopupUI
         nextLevel.text = $"Lv {nexusStat.level + 1}";
         currentHp.text = $"{nexusStat.GetMaxHealthValue()}";
         nextHp.text = $"{nexusStat.GetUpgradedMaxHealthValue()}";
+        currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
+        nextWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount + 1}";
         upgradePrice.text = $"{nexusStat.upgradePrice}";
     }
 

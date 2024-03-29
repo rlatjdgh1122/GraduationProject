@@ -22,7 +22,7 @@ public class DummyPenguin : PoolableMono
     public PenguinInfoDataSO PenguinUIInfo => _penguinUIInfo;
 
     private int MaxNumberOfDumbAnim = 3;
-    public bool IsGoToHouse { get; protected set; } = false;
+    public bool IsGoToHouse { get; set; } = false;
     public Transform HouseTrm { get; private set; }
     public int RandomValue
     {
@@ -77,17 +77,23 @@ public class DummyPenguin : PoolableMono
     }
     private void OnBattleStartHandler()
     {
-        if (Owner)
+        Debug.Log("wqer");
+
+        //켜져있는 애들만
+        if (gameObject.activeSelf)
         {
-            Owner.SetPosition(transform.position);
+            if (Owner)
+            {
+                Owner.SetPosition(transform.position);
 
-            Owner.gameObject.SetActive(true);
-            Owner.StateInit();
+                Owner.gameObject.SetActive(true);
+                Owner.StateInit();
 
-            this.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
+            }
+            else
+                IsGoToHouse = true;
         }
-        else
-            IsGoToHouse = true;
     }
     private void Update()
     {
@@ -99,9 +105,10 @@ public class DummyPenguin : PoolableMono
     {
         Owner = owner;
     }
-    public void SetPostion(Vector3 pos)
+    public void SetPostion(Transform trm)
     {
-        transform.position = pos;
+        transform.position = trm.position;
+        transform.rotation = trm.rotation;
     }
     public void GoToHouse()
     {

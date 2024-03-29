@@ -19,8 +19,6 @@ public class BasicChaseState : BasicBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
-
-        
     }
 
     public override void UpdateState()

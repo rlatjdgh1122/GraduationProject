@@ -8,7 +8,9 @@ public class ShieldImpactState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
+
         _triggerCalled = false;
+        _penguin.StopImmediately();
     }
 
     public override void UpdateState()
@@ -17,16 +19,13 @@ public class ShieldImpactState : ShieldBaseState
 
         if (_triggerCalled)
         {
-            if (_penguin.IsInnerMeleeRange)
+            //if (_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
-           /* else
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);*/
         }
     }
 
     public override void Exit()
     {
-        _triggerCalled = true;
         base.Exit();
     }
 }

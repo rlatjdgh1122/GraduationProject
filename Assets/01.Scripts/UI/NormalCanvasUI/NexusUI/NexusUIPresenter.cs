@@ -38,6 +38,7 @@ public class NexusUIPresenter : NexusPopupUI
             (nexusBase.NexusStat.maxHealth.GetValue(), nexusBase.NexusStat.level, nexusBase.NexusStat.levelupIncreaseValue);
         nexusBase.NexusStat.level++;
         nexusBase.NexusStat.upgradePrice *= 2; // <-이건 임시
+        WorkerManager.Instance.MaxWorkerCount++; //이것도 임시수식
 
         OnUpdateNexusUI?.Invoke();
     }
@@ -63,13 +64,11 @@ public class NexusUIPresenter : NexusPopupUI
             if (view.building.IsUnlocked)
             {
                 view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
-                CostManager.Instance.Cost -= view.building.Price;
-                view.building.CurrentInstallCount++;
             }
         }
         else
         {
-            Debug.Log("재화가 부족합니다.");
+            UIManager.Instance.ShowWarningUI("생선이 부족합니다");
         }
     }
     #endregion

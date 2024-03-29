@@ -21,8 +21,6 @@ public class BasicAttackState : BasicBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
-
-       
     }
 
     public override void UpdateState()

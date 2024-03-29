@@ -71,7 +71,7 @@ public class GroundMove : MonoBehaviour
                     _parentSurface.BuildNavMesh();
 
                     // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
-                    CoroutineUtil.CallWaitForSeconds(1f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
+                    CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
                                                          () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
                     SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;

@@ -24,11 +24,15 @@ public class MopAoEAttackState : MopBaseState
         base.UpdateState();
 
         _penguin.LookTarget();
+
         if (IsArmyCalledIn_BattleMode())
         {
-            _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
-            //다죽였다면 이동
-            IsTargetNull(MopPenguinStateEnum.MustMove);
+            if (_triggerCalled)
+            {
+                _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+                //다죽였다면 이동
+                IsTargetNull(MopPenguinStateEnum.MustMove);
+            }
         }
 
         else if (IsArmyCalledIn_CommandMode())

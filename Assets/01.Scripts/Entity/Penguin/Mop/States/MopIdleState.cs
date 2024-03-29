@@ -10,7 +10,7 @@ public class MopIdleState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-        //if (_penguin.IsFreelyMove) { return; }
+
         IdleEnter();
     }
     public override void FixedUpdateState()

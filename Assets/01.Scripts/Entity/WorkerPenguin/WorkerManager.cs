@@ -10,13 +10,20 @@ public class WorkerManager : Singleton<WorkerManager>
     private WoodCutterPenguin _woodCutterPrefab;
 
     [SerializeField]
+    private BuilderPenguin _builderPrefabs;
+
+    [SerializeField]
     private int _maxWorkerCount;
 
     private List<MinerPenguin> _minerList = new List<MinerPenguin>();
     private List<WoodCutterPenguin> _woodCutterList = new List<WoodCutterPenguin>();
 
+    private List<BuilderPenguin> _builderList = new List<BuilderPenguin>();
+
     private List<MinerPenguin> _spawnedMinerList = new List<MinerPenguin>();
     private List<WoodCutterPenguin> _spawnedWoodCutterList = new List<WoodCutterPenguin>();
+
+    private List<BuilderPenguin> _spawnedBuilderList = new List<BuilderPenguin>();
 
     private WorkerFactroy _workerFactory;
 
@@ -46,8 +53,10 @@ public class WorkerManager : Singleton<WorkerManager>
         for (int i = 0; i < _maxWorkerCount; i++)
         {
             _minerList.Add(_minerPrefab);
+            _builderList.Add(_builderPrefabs);
             _woodCutterList.Add(_woodCutterPrefab);
         }
+
     }
 
     public void SendWorkers(int count, WorkableObject workableObject)
@@ -89,7 +98,7 @@ public class WorkerManager : Singleton<WorkerManager>
         }
     }
 
-    public void ReturnWorkers(WorkableObject workableObject)
+    public void ReturnMiners(WorkableObject workableObject)
     {
         if (workableObject.resourceType == ResourceType.Stone)
         {
@@ -115,6 +124,40 @@ public class WorkerManager : Singleton<WorkerManager>
                     worker.FinishWork();
                     _spawnedWoodCutterList.Remove(worker);
                 }
+            }
+        }
+    }
+
+    public void SendBuilders(int count, WorkableObject workableObject)
+    {
+        int calledPenguin = 0;
+
+        foreach (BuilderPenguin builder in _builderList)
+        {
+            if (builder.EndWork)
+            {
+                var penguin = _workerFactory.SpawnPenguinHandler(builder);
+                _spawnedBuilderList.Add(penguin);
+                penguin.StartWork(workableObject);
+            }
+
+            calledPenguin++;
+            if (calledPenguin >= count)
+                break;
+        }
+
+    }
+
+    public void ReturnBuilders(WorkableObject workableObject)
+    {
+        List<BuilderPenguin> list = new List<BuilderPenguin>(_builderList);
+
+        foreach (BuilderPenguin builder in list)
+        {
+            if (builder.CanWork && builder.Target == workableObject)
+            {
+                builder.FinishWork();
+                _spawnedBuilderList.Remove(builder);
             }
         }
     }

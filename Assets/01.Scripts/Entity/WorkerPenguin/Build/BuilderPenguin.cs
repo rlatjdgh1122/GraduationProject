@@ -10,6 +10,7 @@ public enum BuilderPenguinStateEnum
 
 public class BuilderPenguin : Worker
 {
+
     public WorkerStateMachine<WorkerPenguinStateEnum> StateMachine { get; private set; }
 
     protected override void Awake()
@@ -26,6 +27,7 @@ public class BuilderPenguin : Worker
 
             StateMachine.AddState(state, newState);
         }
+
     }
 
     protected override void Start()

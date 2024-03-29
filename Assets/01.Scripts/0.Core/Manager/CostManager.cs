@@ -19,6 +19,7 @@ public class CostManager : Singleton<CostManager>
         set
         {
             _currentCost = value;
+            _costUI.OnlyCurrentCostView(value);
         }
     }
 
@@ -38,6 +39,7 @@ public class CostManager : Singleton<CostManager>
     {
         _currentCost -= price;
         _costUI.SubtractCost(-Mathf.Abs(price));
+
     }
 
     //현재 재화에서 더하기
