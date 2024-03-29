@@ -34,12 +34,10 @@ public class ShieldBlockState : ShieldBaseState
 
         if (IsArmyCalledIn_CommandMode())
         {
-            Debug.Log("11");
             _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
         }
         else
         {
-            Debug.Log("22");
             //사거리가 멀어지면 맞으러 감
             if (!_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
