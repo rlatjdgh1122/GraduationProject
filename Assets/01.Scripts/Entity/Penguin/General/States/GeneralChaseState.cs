@@ -13,10 +13,6 @@ public class GeneralChaseState : GeneralBaseState
         base.Enter();
 
         ChaseEnter();
-        _penguin.StartImmediately();
-
-        Debug.Log("벨로시티 : " + _navAgent.velocity.magnitude);
-        Debug.Log("스탑 : " + _navAgent.isStopped);
 
         _penguin.skill.OnSkillStart += HoldShield;
     }

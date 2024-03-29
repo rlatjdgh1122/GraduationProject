@@ -43,8 +43,10 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
             _penguin.WaitForCommandToArmyCalled = false;
         }
 
-        //가장 가까운 타겟을 찾고
+        //가장 가까운 타겟을 찾음
         _penguin.FindFirstNearestEnemy();
+
+        _penguin.StartImmediately();
 
         //따라감
         if (_penguin.CurrentTarget != null)
