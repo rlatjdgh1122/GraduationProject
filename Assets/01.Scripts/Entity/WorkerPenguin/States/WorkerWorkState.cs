@@ -30,6 +30,7 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
                 _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
             }
         }
+
     }
 
     public override void Exit()
