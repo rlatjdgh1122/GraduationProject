@@ -12,6 +12,7 @@ public class ShieldBlockState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
+
         _triggerCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
         _penguin.FindFirstNearestEnemy();
@@ -40,18 +41,21 @@ public class ShieldBlockState : ShieldBaseState
             IsTargetNull(ShieldPenguinStateEnum.MustMove);
         }
 
-        if (IsArmyCalledIn_CommandMode())
+        else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
             }
         }
+        else
+        {
+            if (!_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
 
-        if (!_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+            IsTargetNull(ShieldPenguinStateEnum.Idle);
+        }
 
-        IsTargetNull(ShieldPenguinStateEnum.Idle);
 
         if (StunAtk > 0 && _penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
         {

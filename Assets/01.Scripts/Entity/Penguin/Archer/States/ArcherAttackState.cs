@@ -20,7 +20,6 @@ public class ArcherAttackState : ArcherBaseState
         base.UpdateState();
 
         _penguin.LookTarget();
-
         if (IsArmyCalledIn_BattleMode())
         {
             if (_triggerCalled)
@@ -31,14 +30,13 @@ public class ArcherAttackState : ArcherBaseState
             }
         }
 
-        if (IsArmyCalledIn_CommandMode())
+        else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {
                 _stateMachine.ChangeState(ArcherPenguinStateEnum.MustMove);
             }
         }
-
         else
         {
             if (_triggerCalled) //АјАн

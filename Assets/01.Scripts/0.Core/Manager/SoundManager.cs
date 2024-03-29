@@ -1,3 +1,4 @@
+using Define.CamDefine;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -33,17 +34,18 @@ public enum SoundName
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance;
-
+            
     private Dictionary<SoundName, AudioSource> bgmContainer = new();
     private AudioMixerGroup bgmMixer;
-    private AudioMixerGroup sfxMixer;
+    private AudioMixerGroup sfxMixer; 
     private AudioMixer mainMixer;
 
     private Camera mainCamera;
 
     private void Awake()
     {
-        mainCamera = Camera.main;
+        //아니 이거 왜 않됨??????????
+        mainCamera = Cam.MainCam;
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -147,7 +149,7 @@ public class SoundManager : MonoBehaviour
         AudioRolloffMode rolloffMode = AudioRolloffMode.Linear)
     {
 
-        float distance = Vector3.Distance(position, mainCamera.transform.position);
+        float distance = Vector3.Distance(position, Cam.MainCam.transform.position);
 
         if (distance > maxDistance) return;
 
@@ -161,7 +163,7 @@ public class SoundManager : MonoBehaviour
         source.spatialBlend = .8f;
         source.rolloffMode = rolloffMode;
 
-        float fovNormalization = 1 - (float)(mainCamera.fieldOfView - minFOV) / (maxFOV - minFOV);
+        float fovNormalization = 1 - (float)(Cam.MainCam.fieldOfView - minFOV) / (maxFOV - minFOV);
         source.volume = fovNormalization;
 
         source.outputAudioMixerGroup = type switch

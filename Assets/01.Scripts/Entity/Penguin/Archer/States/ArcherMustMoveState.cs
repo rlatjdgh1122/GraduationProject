@@ -20,11 +20,12 @@ public class ArcherMustMoveState : ArcherBaseState
 
         if (_penguin.WaitForCommandToArmyCalled)
         {
-            if (_penguin.NavAgent.desiredVelocity.magnitude < 0.05f)
+            if (_penguin.NavAgent.remainingDistance < 0.05f)
             {
                 _stateMachine.ChangeState(ArcherPenguinStateEnum.Idle);
             }
         }
+
         else if (_penguin.IsInnerTargetRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {

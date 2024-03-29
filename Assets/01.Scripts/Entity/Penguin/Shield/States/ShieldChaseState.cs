@@ -24,13 +24,16 @@ public class ShieldChaseState : ShieldBaseState
             _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
         }
 
-        if (_penguin.CurrentTarget != null)
-            _penguin.MoveToCurrentTarget();
+        else
+        {
+            if (_penguin.CurrentTarget != null)
+                _penguin.MoveToCurrentTarget();
 
-        if (_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
+            if (_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
 
-        IsTargetNull(ShieldPenguinStateEnum.Idle);
+            else IsTargetNull(ShieldPenguinStateEnum.Idle);
+        }
     }
 
     public override void Exit()
