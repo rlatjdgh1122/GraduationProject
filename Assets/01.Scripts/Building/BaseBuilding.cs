@@ -120,9 +120,9 @@ public abstract class BaseBuilding : WorkableObject
         if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
         {
             MatChangeToTransparency(OutlineColorType.None);
-            WorkerManager.Instance.SendWorkers(_buildingItemInfo.NecessaryResourceCount, this);
+            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
 
-            SignalHub.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnWorkers(this);
+            SignalHub.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnBuilders(this);
             SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
             RemainTimeUI.OnRemainUI();
             RemainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
@@ -150,7 +150,7 @@ public abstract class BaseBuilding : WorkableObject
         }
         else
         {
-            WorkerManager.Instance.SendWorkers(_buildingItemInfo.NecessaryResourceCount, this);
+            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
         }
     }
 
@@ -173,7 +173,7 @@ public abstract class BaseBuilding : WorkableObject
             _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
             UIManager.Instance.SpawnHudText(_installedFinText);
 
-            SignalHub.OnBattlePhaseStartEvent -= () => WorkerManager.Instance.ReturnWorkers(this);
+            SignalHub.OnBattlePhaseStartEvent -= () => WorkerManager.Instance.ReturnBuilders(this);
         }
     }
 

@@ -51,7 +51,7 @@ public class ResourceObject : WorkableObject
         OnRecieveResourceEvent?.Invoke();
 
         ResourceManager.Instance.AddResource(_resourceData, _receiveCountWhenCompleted);
-        WorkerManager.Instance.ReturnWorkers(this);
+        WorkerManager.Instance.ReturnMiners(this);
     }
 
     public void RemoveResource(int count)

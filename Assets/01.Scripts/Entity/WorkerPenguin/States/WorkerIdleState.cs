@@ -11,6 +11,7 @@ public class WorkerIdleState : WorkerState<WorkerPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
+
     }
 
     public override void UpdateState()
