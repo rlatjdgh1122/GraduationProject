@@ -89,6 +89,11 @@ public class Worker : Entity
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
     }
 
+    public void ChangeNavqualityToNone()
+    {
+        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+    }
+
     public virtual void AnimationTrigger()
     {
 
