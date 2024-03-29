@@ -34,14 +34,17 @@ public class PopupUI : MonoBehaviour
     public virtual void HidePanel()
     {
         SignalHub.OnOffPopUiEvent?.Invoke();
-        UIManager.Instance.currentPopupUI.Pop();
+
+        //예외처리
+        UIManager.Instance.currentPopupUI.TryPop(out var popupUI);
+
         _panel.blocksRaycasts = false;
         _panel.DOFade(0, _panelFadeTime);
     }
 
     public virtual void ShowAndHidePanel(float waitTime)
     {
-        if (_coroutine != null) 
+        if (_coroutine != null)
             StopCoroutine(_coroutine);
 
         _coroutine = StartCoroutine(ShowHideCoroutine(waitTime));
