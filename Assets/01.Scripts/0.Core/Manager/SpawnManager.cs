@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [System.Serializable]
 public class DummyPenguinListItem
@@ -98,14 +99,15 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         if (penguinToDummyDictionary.TryGetValue(obj, out var value))
         {
-            var pos = obj.transform.position;
+            var trm = obj.transform;
             //½ÇÁ¦ Æë±ÏÀ» ²¨ÁÖ°í
             obj.gameObject.SetActive(false);
 
             //°¡Â¥ Æë±ÏÀº À§Ä¡¸¦ ¼³Á¤ÇØÁÖ°í ÄÑÁÜ
             value.gameObject.SetActive(true);
+            value.IsGoToHouse = false;
+            value.SetPostion(trm);
             value.StateInit();
-            value.SetPostion(pos);
         }
     }
 

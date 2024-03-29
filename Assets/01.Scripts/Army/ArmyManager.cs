@@ -39,12 +39,12 @@ public class ArmyManager : Singleton<ArmyManager>
              {KeyCode.Alpha7, ()=> ChangeArmy(7) },
              {KeyCode.Alpha8, ()=> ChangeArmy(8) },
              {KeyCode.Alpha9, ()=> ChangeArmy(9) },
-             {KeyCode.A,      ()=>
+             /*{KeyCode.A,      ()=>
              {
                  curFocusMode = curFocusMode == MovefocusMode.Command ?
                  MovefocusMode.Battle :  MovefocusMode.Command;
              SignalHub.OnBattleModeChanged?.Invoke(curFocusMode); }
-            },
+            },*/
         };
     }
 
@@ -83,9 +83,21 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="legion"> 몇번째 군단</param>
     private void ChangeArmy(int legion)
     {
-        int Idx = legion - 1;
-        if (curArmyIdx == Idx) return;
         if (armies.Count < legion) return;
+
+        int Idx = legion - 1;
+
+        //중복 선택된 군단도 아웃라인 보이게
+        armies[Idx].Soldiers.ForEach(s => 
+        {
+            CoroutineUtil.CallWaitForSeconds(1f,
+                    () => s.OutlineCompo.enabled = true,
+                    () => s.OutlineCompo.enabled = false);
+
+            s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth); 
+        });
+
+        if (curArmyIdx == Idx) return;
 
         var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
         SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
@@ -97,7 +109,7 @@ public class ArmyManager : Singleton<ArmyManager>
             p =>
             p.Soldiers.ForEach(s =>
             {
-                CoroutineUtil.CallWaitForSeconds(.7f,
+                CoroutineUtil.CallWaitForSeconds(1f,
                     () => s.OutlineCompo.enabled = true,
                     () => s.OutlineCompo.enabled = false);
 
