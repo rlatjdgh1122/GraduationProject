@@ -89,6 +89,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
         int Idx = legion - 1;
         var curArmy = armies[Idx];
+
         //중복 선택된 군단도 아웃라인 보이게
         curArmy.Soldiers.ForEach(s =>
         {
@@ -106,6 +107,8 @@ public class ArmyManager : Singleton<ArmyManager>
                     () => curArmy.General.OutlineCompo.enabled = false);
         }
 
+        //군단 체인지 하는건 한 번만 실행해도 되니깐
+        //이전과 같은 군단을 선택했다면 리턴
         if (curArmyIdx == Idx) return;
 
         var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
@@ -123,8 +126,8 @@ public class ArmyManager : Singleton<ArmyManager>
                     () => s.OutlineCompo.enabled = false);
 
                 s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
-            })
 
+            })
            , p =>
            p.Soldiers.ForEach(s =>
            {
