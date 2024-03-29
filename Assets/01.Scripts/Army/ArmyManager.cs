@@ -83,6 +83,8 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="legion"> 몇번째 군단</param>
     private void ChangeArmy(int legion)
     {
+        //전투 라운드가 아니면 실행안해줌
+        if (!WaveManager.Instance.IsBattlePhase) return;
         if (armies.Count < legion) return;
 
         int Idx = legion - 1;
