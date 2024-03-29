@@ -8,6 +8,7 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
+        _worker.ChangeNavqualityToHigh();
         _triggerCalled = true;
 
         _worker.MoveToTarget();

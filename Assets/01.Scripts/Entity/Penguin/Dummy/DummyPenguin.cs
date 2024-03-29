@@ -82,6 +82,7 @@ public class DummyPenguin : PoolableMono
         //켜져있는 애들만
         if (gameObject.activeSelf)
         {
+            NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
             if (Owner)
             {
                 Owner.SetPosition(transform.position);
@@ -115,6 +116,17 @@ public class DummyPenguin : PoolableMono
         //여기서 풀 넣는게 맞나 싶음
         PoolManager.Instance.Push(this);
     }
+
+    public void ChangeNavqualityToNone() //Nave Quality None으로 변경
+    {
+        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+    }
+
+    public void ChangeNavqualityToHigh() //Nave Quality HighQuality로 변경
+    {
+        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+    }
+
     public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 
     private void OnDestroy()

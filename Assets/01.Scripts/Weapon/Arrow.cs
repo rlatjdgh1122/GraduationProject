@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Arrow : PoolableMono
 {
     [SerializeField] private float _bulletPower;
 
@@ -36,12 +36,9 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.CompareTag("Enemy"))
+        if (_damageCaster.CastArrowDamage(coll, _damageCaster.TargetLayer))
         {
-            if (_damageCaster.CastDamage())
-            {
-                Destroy(this.gameObject);
-            }
+            Destroy(this.gameObject);
         }
     }
 }
