@@ -77,7 +77,7 @@ public class InstallSystem : MonoBehaviour
         }
 
         isInstalling = true;
-        _cancelInstallBuildingText.enabled = true;
+        _cancelInstallBuildingText.gameObject.SetActive(true);
     }
 
     private void StopInstall()
@@ -92,7 +92,7 @@ public class InstallSystem : MonoBehaviour
             _curBuilding = null;
         }
 
-        //_cancelInstallBuildingText.enabled = false; 건물생성UI주석
+        _cancelInstallBuildingText.gameObject.SetActive(false);
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnEscEvent -= StopInstall;

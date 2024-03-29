@@ -1,11 +1,11 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class NexusBase : MonoBehaviour
 {
     #region components
     [SerializeField] private NexusStat _nexusStat;
     private Health _health;
-    private int _currentWorkerCount;
     #endregion
 
     #region property
@@ -43,16 +43,11 @@ public class NexusBase : MonoBehaviour
         }
     }
 
-    private void OnMouseEnter()
+    private void OnMouseOver()
     {
-        if (!WaveManager.Instance.IsBattlePhase && !_input.IsPointerOverUI())
+        if (!WaveManager.Instance.IsBattlePhase)
         {
             _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
         }
-    }
-
-    private void OnMouseExit()
-    {
-        _health.OffUIUpdate?.Invoke();
     }
 }
