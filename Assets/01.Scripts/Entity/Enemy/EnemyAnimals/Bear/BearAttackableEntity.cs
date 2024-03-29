@@ -5,20 +5,10 @@ using UnityEngine;
 
 public class BearAttackableEntity : AnimalAttackableEntity
 {
-    private float _initialHealth;
 
     [Header("Slash Effect")]
     [SerializeField] private ParticleSystem _leftHandEffectTransform;
     [SerializeField] private ParticleSystem _rightHandEffectTransform;
-
-    private float _currentKnockback = 0;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _initialHealth = owner.HealthCompo.maxHealth;
-    }
 
     public void StartEffect()
     {

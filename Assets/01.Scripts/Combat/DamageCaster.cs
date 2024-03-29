@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -11,7 +8,6 @@ public class DamageCaster : MonoBehaviour
     private float _detectRange = 1f;
     [SerializeField]
     private HitType _hitType;
-
 
     public LayerMask TargetLayer;
 
@@ -164,9 +160,11 @@ public class DamageCaster : MonoBehaviour
         //actionData.HitPoint
     }
 
-    public void SelectTypeAOECast(int damage, HitType hitType, bool Knb = false, float value = 0)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, bool Knb = false, float value = 0)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+
+        SoundManager.Play3DSound(sound, transform.position);
 
         foreach (var col in Colls)
         {
@@ -188,17 +186,6 @@ public class DamageCaster : MonoBehaviour
             }
         }
     }
-
-    //private IEnumerator BleedStart(int damage, int repeat, float duration, Health raycastHealth, RaycastHit ray, HitType hitType)
-    //{
-    //    for (int i = 0; i < repeat; i++)
-    //    {
-    //        yield return new WaitForSeconds(duration);
-    //        raycastHealth.ApplyDamage(damage, ray.point, ray.normal, hitType);
-    //        Debug.Log(damage);
-    //    }
-    //}
-
 
 
 #if UNITY_EDITOR

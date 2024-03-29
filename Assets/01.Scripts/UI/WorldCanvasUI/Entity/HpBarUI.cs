@@ -14,15 +14,12 @@ public class HpBarUI : WorldUI
     {
         base.Awake();
 
-        //_hpbar = transform.GetChild(0).Find("fillAmount").GetComponent<Image>();
-
         _fadeSequence = DOTween.Sequence();
     }
 
     public override void Update()
     {
         base.Update();
-        //_container.transform.rotation = Quaternion.LookRotation(_container.transform.position - _cam.transform.position);
 
         try
         {

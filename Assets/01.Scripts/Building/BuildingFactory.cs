@@ -12,10 +12,10 @@ public class BuildingFactory : EntityFactory<BaseBuilding>
         _installSysytem = GetComponent<InstallSystem>();
     }
 
-    public void SpawnBuildingHandler(BaseBuilding building)
+    public void SpawnBuildingHandler(BaseBuilding building, BuildingItemInfo info)
     {
         BaseBuilding spawnbuilding = SpawnObject(building, Input.mousePosition) as BaseBuilding;  //매개변수로 받아온 Building을 생성한다
-        _installSysytem.SelectBuilding(spawnbuilding);
+        _installSysytem.SelectBuilding(spawnbuilding, info);
     }
 
     protected override PoolableMono Create(BaseBuilding type)

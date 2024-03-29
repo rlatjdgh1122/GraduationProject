@@ -3,25 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DummyBaseState : EntityState<DummyPenguinStateEnum, DummyPenguin>
+public class DummyBaseState : DummyState
 {
-    public DummyBaseState(DummyPenguin penguin, EntityStateMachine<DummyPenguinStateEnum, DummyPenguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public DummyBaseState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
-    }
 
+    }
     public override void Enter()
     {
         base.Enter();
+
+        _triggerCalled = false;
     }
     public override void UpdateState()
     {
         base.UpdateState();
+
         if (_penguin.IsGoToHouse)
+        {
             _stateMachine.ChangeState(DummyPenguinStateEnum.GoToHouse);
+            //return;
+        }
     }
     public override void Exit()
     {
         base.Exit();
+    }
+    protected void StopImmediately()
+    {
+        if (_navAgent != null)
+        {
+            if (_navAgent.isActiveAndEnabled)
+            {
+                _navAgent.isStopped = true;
+            }
+        }
+    }
+    protected void MoveToPosition(Vector3 pos)
+    {
+        if (_navAgent.isActiveAndEnabled)
+        {
+            _navAgent?.ResetPath();
+            _navAgent?.SetDestination(pos);
+        }
     }
 
     protected DummyPenguinStateEnum RandomState()
@@ -30,11 +54,11 @@ public class DummyBaseState : EntityState<DummyPenguinStateEnum, DummyPenguin>
 
         switch (RandomValue)
         {
-            case 0: return DummyPenguinStateEnum.Idle;
+            case 0: return DummyPenguinStateEnum.FreelyIdle;
             case 1: return DummyPenguinStateEnum.Walk;
             case 2: return DummyPenguinStateEnum.Running;
             case 3: return DummyPenguinStateEnum.DumbToDo;
-            default: return DummyPenguinStateEnum.Idle;
+            default: return DummyPenguinStateEnum.FreelyIdle;
         }
 
     }

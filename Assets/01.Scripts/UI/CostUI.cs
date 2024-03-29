@@ -24,7 +24,6 @@ public class CostUI : MonoBehaviour
 
     private CostParticle _particleImage;
 
-
     public void CostTween(int value, bool isUI, Vector3 startPosition)
     {
         _particleImage = PoolManager.Instance.Pop(_costParticleImage.name) as CostParticle;

@@ -103,7 +103,6 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.AnimationTrigger();
         OnAttackTriggerEvent?.Invoke();
     }
-
     public void EffectStartTrigger()
     {
         OnEffectOnTriggerEvent?.Invoke();

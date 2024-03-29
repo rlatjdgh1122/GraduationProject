@@ -2,24 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Entity : PoolableMono
+public abstract class Entity : PoolableMono  
 {
 
     [SerializeField] protected BaseStat _characterStat;
     public BaseStat Stat => _characterStat;
     public Entity CurrentTarget;
+
     public bool IsDead = false;
-
-    public T ReturnGenericStat<T>() where T : BaseStat //사실 as랑 같음
-    {
-        if (_characterStat is T)
-        {
-            return _characterStat as T;
-        }
-
-        Debug.LogError("니가 넣은 스탯 타입이 아니잖아;;");
-        return null;
-    }
 
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
@@ -81,8 +71,11 @@ public abstract class Entity : PoolableMono
     #region 움직임 관리
     public void MoveToPosition(Vector3 pos)
     {
-        NavAgent?.ResetPath();
-        NavAgent?.SetDestination(pos);
+        if (NavAgent.isActiveAndEnabled)
+        {
+            NavAgent?.ResetPath();
+            NavAgent?.SetDestination(pos);
+        }
     }
     public void MoveToCurrentTarget()
     {
@@ -116,4 +109,24 @@ public abstract class Entity : PoolableMono
         }
     }
     #endregion
+    public T ReturnGenericStat<T>() where T : BaseStat
+    {
+        if (_characterStat is T)
+        {
+            return _characterStat as T;
+        }
+
+        Debug.LogError("니가 넣은 스탯 타입이 아니잖아;;");
+        return null;
+    }
+    public T ReturnGenericUIInfo<T>() where T : EntityInfoDataSO
+    {
+        if (_characterStat is T)
+        {
+            return _characterStat as T;
+        }
+
+        Debug.LogError("니가 넣은 스탯 타입이 아니잖아;;");
+        return null;
+    }
 }

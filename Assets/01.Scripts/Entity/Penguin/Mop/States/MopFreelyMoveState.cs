@@ -34,7 +34,7 @@ public class MopFreelyMoveState : MopBaseState
         if (WaveManager.Instance.IsBattlePhase)
         {
             _penguin.NavAgent.speed = normalNavSpeed;
-            _penguin.SetFreelyMoveAble(false);
+            //_penguin.SetFreelyMoveAble(false);
             _stateMachine.ChangeState(MopPenguinStateEnum.Move);
         }
 

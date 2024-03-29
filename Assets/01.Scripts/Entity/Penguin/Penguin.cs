@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +9,6 @@ public class Penguin : Entity
     public float attackSpeed = 1f;
     public int maxDetectedCount;
     public float provokeRange = 25f;
-
-    public bool isBot = false; //봇으로 만들거임
 
     public PassiveDataSO passiveData = null;
 
@@ -67,31 +64,11 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
-
-    //public Enemy CurrentTarget;
-
-    //public bool IsDead = false;
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     private Army owner;
-
     public Army Owner => owner;
-
-    private bool isFreelyMove = false;
-    public bool IsFreelyMove => isFreelyMove;
-
-    private void OnEnable()
-    {
-        if (!isBot)
-            SignalHub.OnIceArrivedEvent += FindFirstNearestEnemy;
-    }
-
-    private void OnDisable()
-    {
-        if (!isBot)
-            SignalHub.OnIceArrivedEvent -= FindFirstNearestEnemy;
-    }
 
     protected override void Awake()
     {
@@ -101,10 +78,9 @@ public class Penguin : Entity
         {
             NavAgent.speed = moveSpeed;
         }
-
         AttackCompo = GetComponent<EntityAttackData>();
+        SignalHub.OnBattlePhaseEndEvent += ChangedToDummyPenguinHandler;
     }
-
     #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
     public bool CheckAttackEventPassive(int curAttackCount)
@@ -128,11 +104,11 @@ public class Penguin : Entity
         owner = army;
     }
 
+    #region AI 관련
     public virtual void AnimationTrigger()
     {
 
     }
-
     public void FindFirstNearestEnemy()
     {
         CurrentTarget = FindNearestEnemy().FirstOrDefault();
@@ -143,7 +119,6 @@ public class Penguin : Entity
         Enemy[] objects = FindObjectsOfType<Enemy>().Where(e => e.enabled).ToArray();
 
         var nearbyEnemies = objects
-            .Where(obj => Vector3.Distance(transform.position, obj.transform.position) <= provokeRange)
             .OrderBy(obj => Vector3.Distance(transform.position, obj.transform.position))
             .Take(count)
             .ToList();
@@ -164,6 +139,7 @@ public class Penguin : Entity
         }
     }
 
+    #endregion
     protected override void HandleDie()
     {
         IsDead = true;
@@ -207,6 +183,8 @@ public class Penguin : Entity
     {
         if (NavAgent.isActiveAndEnabled)
         {
+            NavAgent.isStopped = false;
+
             if (prevMousePos != Vector3.zero)
             {
                 if (movingCoroutine != null)
@@ -278,14 +256,25 @@ public class Penguin : Entity
 
     #endregion
 
+    #region 더미 펭귄 스왑 관련
+    private void ChangedToDummyPenguinHandler()
+    {
+        SpawnManager.Instance.ChangedToDummyPenguin(this);
+    }
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
+    public virtual void StateInit() { }
+
+    #endregion
     public override void Init()
     {
         owner = null;
     }
-
-    public void SetFreelyMoveAble(bool b)
+    private void OnDestroy()
     {
-        isFreelyMove = b;
+        SignalHub.OnBattlePhaseEndEvent -= ChangedToDummyPenguinHandler;
     }
-
 }

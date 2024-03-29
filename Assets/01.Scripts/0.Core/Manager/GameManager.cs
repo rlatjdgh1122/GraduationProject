@@ -130,6 +130,8 @@ public class GameManager : Singleton<GameManager>
         PoolManager.Instance = new PoolManager(transform);
 
         _poolingListSO.List.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount)); //리스트에 있는 모든
+
+        _poolingListSO.DummyPenguinList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));   
     }
 
 }

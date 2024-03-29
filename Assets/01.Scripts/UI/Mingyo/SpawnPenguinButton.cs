@@ -13,8 +13,8 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
 {
     private int _price;
 
-    private PenguinStat _penguinStat;
-    private Penguin _spawnPenguin;
+    private PenguinInfoDataSO _infoData;
+    private DummyPenguin _dummyPenguin;
     private PenguinStoreUI _penguinStore;
     
     private Image _icon;
@@ -32,29 +32,29 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         _selectImg    = transform.Find("SelectImg").GetComponent<Image>();
     }
 
-    public void InstantiateSelf(PenguinStat stat, Penguin spawnPenguin, int price)
+    public void InstantiateSelf(PenguinInfoDataSO infoData, DummyPenguin dummyPenguin, int price)
     {
-        _penguinStat = stat;
-        _spawnPenguin = spawnPenguin;
+        _infoData = infoData;
+        _dummyPenguin = dummyPenguin;
 
         _price = price;
     }
 
     public void SlotUpdate()
     {
-        _icon.sprite = _penguinStat.PenguinIcon;
-        _nameText.text = _penguinStat.PenguinName;
+        _icon.sprite = _infoData.PenguinIcon;
+        _nameText.text = _infoData.PenguinName;
         _priceText.text = _price.ToString();
     }
 
     private void SpawnPenguinLeftEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
-        _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
+        _penguinStore.PenguinInformataion(_dummyPenguin, _infoData, _price);
         _penguinStore.OnEnableBuyPanel();
     }
     private void SpawnPenguinRightEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
     {
-        _penguinStore.PenguinInformataion(_spawnPenguin, _penguinStat, _price);
+        _penguinStore.PenguinInformataion(_dummyPenguin, _infoData, _price);
         _penguinStore.BuyPanel.OneClickBuyPenguin();
     }
 

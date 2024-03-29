@@ -8,7 +8,6 @@ public class Arrow : MonoBehaviour
     [SerializeField] private float _bulletPower;
 
     private Rigidbody _rigid;
-    private Entity _owner;
     private DamageCaster _damageCaster;
 
     private void OnEnable()
@@ -20,7 +19,6 @@ public class Arrow : MonoBehaviour
 
     public void Setting(Entity owner, LayerMask layer)
     {  
-        _owner = owner;
         _damageCaster.SetOwner(owner);
         _damageCaster.TargetLayer = layer; 
     }
@@ -32,15 +30,18 @@ public class Arrow : MonoBehaviour
 
     private IEnumerator WaitForDestroy()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
         Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (_damageCaster.CastDamage())
+        if (coll.CompareTag("Enemy"))
         {
-            Destroy(this.gameObject);
+            if (_damageCaster.CastDamage())
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

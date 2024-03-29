@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.1137, y: 2.1137, z: 2.1137}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6541904282116240716}
@@ -670,8 +670,82 @@ Transform:
   - {fileID: 6489927964811949241}
   - {fileID: 6203634787716235749}
   - {fileID: 8032445973632849269}
+  - {fileID: 8659632251232240189}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4191966614153208346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8659632251232240189}
+  - component: {fileID: 44355863567696279}
+  m_Layer: 0
+  m_Name: Whale
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8659632251232240189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4191966614153208346}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.41, y: -7.4, z: 17.85}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6541904282116240716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44355863567696279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4191966614153208346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa35b9623162614881082335023629b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behavioralCh: {x: 3, y: 7}
+  debug: 0
+  flockNum: 8
+  fragmentedFlock: 5000
+  fragmentedFlockYLimit: 0
+  migrationFrequency: 0.015
+  posChangeFrequency: 0.2
+  smoothChFrequency: 20
+  birdPref: {fileID: 7572990068838150601, guid: 52a76d8fb0e79204b9c742b64afbc9db,
+    type: 3}
+  birdsNum: 1
+  birdSpeed: 1
+  fragmentedBirds: 100
+  fragmentedBirdsYLimit: 0
+  soaring: 5.84
+  verticalWawe: 0.01
+  rotationClamp: 0
+  rotationClampValue: 0
+  scaleRandom: {x: 6, y: 6}
+  danger: 1
+  dangerRadius: 47.1
+  dangerSpeed: 1.5
+  dangerSoaring: 0.5
+  dangerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  HelpURL: nvjob.github.io/unity/nvjob-boids
+  ReportAProblem: nvjob.github.io/support
+  Patrons: nvjob.github.io/patrons
 --- !u!1 &8901456805101613881
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +890,7 @@ Transform:
   m_GameObject: {fileID: 9001321848679433072}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.65, z: 0}
+  m_LocalPosition: {x: 0, y: -15.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -838,7 +912,7 @@ MonoBehaviour:
   debug: 0
   flockNum: 8
   fragmentedFlock: 5000
-  fragmentedFlockYLimit: 0.042
+  fragmentedFlockYLimit: 0.014
   migrationFrequency: 0.015
   posChangeFrequency: 0.2
   smoothChFrequency: 20

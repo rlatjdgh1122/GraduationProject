@@ -11,7 +11,6 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] CanvasGroup canvasGroup;
 
     [SerializeField] TMP_Text txtSentence;
-    [SerializeField] GameObject dialog;
 
     private Tween fadeTween;
 
@@ -23,15 +22,12 @@ public class DialogSystem : MonoBehaviour
 
     public void Begin(string[] texts)
     {
-        dialog.SetActive(true);
+        sentences.Clear();
         FadeIn(2f);
 
-        if (dialCount == 1)
+        foreach (var sentence in texts)
         {
-            foreach (var sentence in texts)
-            {
-                sentences.Enqueue(sentence);
-            }
+            sentences.Enqueue(sentence);
         }
 
         Next();
@@ -80,7 +76,6 @@ public class DialogSystem : MonoBehaviour
     IEnumerator FadeTime()
     {
         yield return new WaitForSeconds(2f);
-        dialog.SetActive(false);
         canClick = true;
     }
 

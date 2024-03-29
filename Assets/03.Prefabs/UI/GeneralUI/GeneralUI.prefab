@@ -121,7 +121,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 316890224913008072}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.31105128
+  m_Size: 0.38340235
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1449,7 +1449,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -45.15869, y: 3185.4834}
+  m_SizeDelta: {x: -45.15869, y: 2312.957}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7256144668631093265
 MonoBehaviour:
@@ -1540,7 +1540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e8b183bc55c1247ba86c54dd840039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0.4
+  _panelFadeTime: 0.23
   _currentView: {fileID: 0}
   currentGeneralStat: {fileID: 0}
   selectedAbility:
@@ -4157,6 +4157,7 @@ MonoBehaviour:
   _panelFadeTime: 0.25
   nameText: {fileID: 7966981985640380276}
   levelText: {fileID: 6000373961226303016}
+  icon: {fileID: 783421664871988488}
   hp: {fileID: 218332385957486224}
   atk: {fileID: 2413202058632587457}
   range: {fileID: 692015038707699304}
@@ -5805,8 +5806,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panelFadeTime: 0
-  generalStat: {fileID: 11400000, guid: 64e0587224e8a5a41abef5e27cabfcc4, type: 2}
-  generalObj: {fileID: 3417498307375545620, guid: 22c7d6b4f4ea0eb4b951a514325b8b79,
+  GeneralInfoData: {fileID: 11400000, guid: 64e0587224e8a5a41abef5e27cabfcc4, type: 2}
+  dummyGeneralPenguin: {fileID: 2741885956036827859, guid: bf853ada5f60e2749b7059c5248503b6,
     type: 3}
   _outlineColor: {r: 0.96862745, g: 0.79607844, b: 0.26666668, a: 1}
   nameText: {fileID: 1777181709429348222}
@@ -5941,7 +5942,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD604\uC0C1\uAE08 \uAC8C\uC2DC\uD310"
+  m_text: "\uC6A9\uBCD1 \uC601\uC785"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6b9f9eec2937a74c8305cad91025fe7, type: 2}
   m_sharedMaterial: {fileID: -6298700896093532552, guid: c6b9f9eec2937a74c8305cad91025fe7,
@@ -6809,7 +6810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4326727946668397704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6831,10 +6832,10 @@ RectTransform:
   - {fileID: 1500915788047574095}
   m_Father: {fileID: 7548876121353889372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1480.1014, y: -364.815}
+  m_SizeDelta: {x: 544.2, y: 693.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346519578233768552
 MonoBehaviour:
@@ -6849,8 +6850,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panelFadeTime: 0
-  generalStat: {fileID: 11400000, guid: 24e81c687cdb6674389b3495a74553a3, type: 2}
-  generalObj: {fileID: 0}
+  GeneralInfoData: {fileID: 0}
+  dummyGeneralPenguin: {fileID: 0}
   _outlineColor: {r: 0.96862745, g: 0.79607844, b: 0.26666668, a: 1}
   nameText: {fileID: 1496570427189009414}
   purchaseText: {fileID: 5978633814689535389}

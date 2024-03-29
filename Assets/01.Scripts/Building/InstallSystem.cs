@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 public class InstallSystem : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _cancleInstallBuildingText, _buildingSpawnFailHudText;
+    private TextMeshProUGUI _cancelInstallBuildingText, _buildingSpawnFailHudText;
 
     [SerializeField]
     private LayerMask _groundLayer;
@@ -32,13 +32,17 @@ public class InstallSystem : MonoBehaviour
 
     private Ray _mousePointRay => Define.CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
+    private BuildingItemInfo _info;
+
     private void Start()
     {
         StopInstall();
     }
 
-    public void SelectBuilding(BaseBuilding building)
+    public void SelectBuilding(BaseBuilding building, BuildingItemInfo info)
     {
+        _info = info;
+
         _inputReader.OnLeftClickEvent += PlaceStructure;
         _inputReader.OnEscEvent += StopInstall;
 
@@ -73,7 +77,7 @@ public class InstallSystem : MonoBehaviour
         }
 
         isInstalling = true;
-        _cancleInstallBuildingText.enabled = true;
+        _cancelInstallBuildingText.enabled = true;
     }
 
     private void StopInstall()
@@ -81,7 +85,6 @@ public class InstallSystem : MonoBehaviour
         selectedBuildingIDX = -1;
 
         _curBuilding?.StopInstall();
-        //_previousGround?.UpdateOutlineColor(GroundOutlineColorType.None);
 
         if (_curBuilding != null && !_curBuilding.IsInstalling)
         {
@@ -89,8 +92,7 @@ public class InstallSystem : MonoBehaviour
             _curBuilding = null;
         }
 
-        _cancleInstallBuildingText.enabled = false;
-        //_outlineSelection.SetDefaultCursor();
+        _cancelInstallBuildingText.enabled = false;
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnEscEvent -= StopInstall;
@@ -100,19 +102,18 @@ public class InstallSystem : MonoBehaviour
 
     private void PlaceStructure()
     {
-        //if (_inputReader.IsPointerOverUI())
-        //{
-        //    return;
-        //}
-
         if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
             if(_previousGround.IsInstalledBuilding)
             {
-                UIManager.Instance.InitializHudTextSequence();
-                UIManager.Instance.SpawnHudText(_buildingSpawnFailHudText);
+                UIManager.Instance.ShowWarningUI("이미 설치되어 있습니다");
                 return;
             }
+
+            CostManager.Instance.Cost -= _info.Price;
+            _info.CurrentInstallCount++;
+
+            UIManager.Instance.ShowWarningUI("설치 완료!");
 
             _curBuilding?.Installed();
             _curBuilding?.transform.SetParent(_previousGround.transform);

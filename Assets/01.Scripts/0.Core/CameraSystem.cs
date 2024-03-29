@@ -35,9 +35,9 @@ public class CameraSystem : MonoBehaviour
     [Range(-100f, 100f)]
     [SerializeField] private float maxXValue = 50f;
     [Range(-100f, 100f)]
-    [SerializeField] private float minYValue = -50f;
+    [SerializeField] private float minZValue = -50f;
     [Range(-100f, 100f)]
-    [SerializeField] private float maxYValue = 50f;
+    [SerializeField] private float maxZValue = 50f;
 
 
     private bool isMoving = true;
@@ -48,13 +48,36 @@ public class CameraSystem : MonoBehaviour
     }
     public CinemachineVirtualCamera CinemachineCam => _cinemachineCam;
 
+    private Vector3 _startPosition;
+    private Quaternion _vCamstartRotation;
+
     private void Awake()
     {
         isMoving = true;
+        _startPosition = transform.position;
+        _vCamstartRotation = _cinemachineCam.transform.rotation;
     }
 
     private void LateUpdate()
     {
+        if (UIManager.Instance.currentPopupUI.Count != 0)
+        {
+            if (IsMoving == true)
+            {
+                IsMoving = false;
+            }
+            if (isRotating == true)
+            {
+                isRotating = false;
+            }
+        }
+        else
+        {
+            if (IsMoving == false)
+            {
+                IsMoving = true;
+            }
+        }
         CameraControl();
         CameraMove();
         //Move();
@@ -66,15 +89,18 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = new Vector3(0, transform.position.y, 0);
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            transform.position = _startPosition;
+            transform.rotation = Quaternion.identity;
+            _cinemachineCam.transform.rotation = _vCamstartRotation;
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
             isMoving = false;
-            transform.position = new Vector3(0, transform.position.y, 0);
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            isRotating = false;
+            transform.position = _startPosition;
+            transform.rotation = Quaternion.identity;
+            _cinemachineCam.transform.rotation = _vCamstartRotation;
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -84,7 +110,8 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraMove()
     {
-        if (isMoving)
+        if (isMoving &&
+            !isRotating)
         {
             float xInput = 0;
             float yInput = 0;
@@ -96,14 +123,14 @@ public class CameraSystem : MonoBehaviour
             Vector3 mousePosition = Input.mousePosition;
             if (mousePosition.x <= _edgeScrollSize)
             {
-                if (transform.position.x > -50)
+                if (transform.position.x > minXValue)
                 {
                     moveDir -= transform.right;
                 }
             }
             else if (mousePosition.x >= Screen.width - _edgeScrollSize)
             {
-                if (transform.position.x < 50)
+                if (transform.position.x < maxXValue)
                 {
                     moveDir += transform.right;
                 }
@@ -111,14 +138,14 @@ public class CameraSystem : MonoBehaviour
 
             if (mousePosition.y <= _edgeScrollSize)
             {
-                if (transform.position.z > -50)
+                if (transform.position.z > minZValue)
                 {
                     moveDir -= transform.forward;
                 }
             }
             else if (mousePosition.y >= Screen.height - _edgeScrollSize)
             {
-                if (transform.position.z < 50)
+                if (transform.position.z < maxZValue)
                 {
                     moveDir += transform.forward;
                 }
@@ -146,8 +173,6 @@ public class CameraSystem : MonoBehaviour
         if (_dragPanMoveActive)
         {
             Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
-
-            Debug.Log(mouseMovementDelta);
 
             inputDir.x = mouseMovementDelta.x * _dragSpeed;
             inputDir.z = mouseMovementDelta.y * _dragSpeed;

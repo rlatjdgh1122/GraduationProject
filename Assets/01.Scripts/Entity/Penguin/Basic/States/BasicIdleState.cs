@@ -11,15 +11,7 @@ public class BasicIdleState : BasicBaseState
     {
         base.Enter();
 
-        if (_penguin.IsFreelyMove) { return; }
-
         IdleEnter();
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
-       
     }
     public override void UpdateState()
     {
@@ -30,15 +22,14 @@ public class BasicIdleState : BasicBaseState
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
         if (_penguin.IsInnerTargetRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
-
-        if (_penguin.IsFreelyMove)
-        {
-            _stateMachine.ChangeState(BasicPenguinStateEnum.FreelyMove);
-        }
     }
+
+    
 
     public override void Exit()
     {
+        IdleExit();
+
         base.Exit();
     }
 }

@@ -14,4 +14,5 @@ public class PoolingPair
 public class PoolingListSO : ScriptableObject
 {
     public List<PoolingPair> List;
+    public List<PoolingPair> DummyPenguinList;
 }
