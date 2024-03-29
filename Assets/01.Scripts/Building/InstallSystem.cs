@@ -92,7 +92,7 @@ public class InstallSystem : MonoBehaviour
             _curBuilding = null;
         }
 
-        _cancelInstallBuildingText.enabled = false;
+        //_cancelInstallBuildingText.enabled = false; 건물생성UI주석
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnEscEvent -= StopInstall;

@@ -108,6 +108,7 @@ public class SpawnManager : Singleton<SpawnManager>
             value.IsGoToHouse = false;
             value.SetPostion(trm);
             value.StateInit();
+            value.ChangeNavqualityToHigh();
         }
     }
 

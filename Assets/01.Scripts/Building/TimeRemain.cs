@@ -20,7 +20,7 @@ public class TimeRemain : MonoBehaviour
 
         _canvas.worldCamera = Cam.MainCam;
 
-        _container = _canvas.transform.Find("TimeRemainText").GetComponent<TextMeshProUGUI>();
+        _container = transform.Find("TimeRemainText").GetComponent<TextMeshProUGUI>();
         _container.enabled = false;
     }
 

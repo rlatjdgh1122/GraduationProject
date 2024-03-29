@@ -89,6 +89,16 @@ public class Worker : Entity
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
     }
 
+    public void ChangeNavqualityToNone() //Nave Quality None으로 변경
+    {
+        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+    }
+
+    public void ChangeNavqualityToHigh() //Nave Quality HighQuality로 변경
+    {
+        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+    }
+
     public virtual void AnimationTrigger()
     {
 

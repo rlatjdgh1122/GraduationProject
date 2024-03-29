@@ -85,7 +85,7 @@ public abstract class BaseBuilding : WorkableObject
 
         try
         {
-            _remainTimeUI = transform.Find("Canvas").GetComponent<TimeRemain>();
+            _remainTimeUI = transform.Find("HealthUICanvas").GetComponent<TimeRemain>();
         }
         catch
         {
@@ -169,9 +169,8 @@ public abstract class BaseBuilding : WorkableObject
 
         if (_buildingItemInfo != null)
         {
-            UIManager.Instance.InitializHudTextSequence();
-            _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
-            UIManager.Instance.SpawnHudText(_installedFinText);
+            //_installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
+            //UIManager.Instance.SpawnHudText(_installedFinText);
 
             SignalHub.OnBattlePhaseStartEvent -= () => WorkerManager.Instance.ReturnBuilders(this);
         }

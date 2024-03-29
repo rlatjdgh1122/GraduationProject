@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,13 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
         base.Enter();
 
         _triggerCalled = true;
+        SignalHub.OnIceArrivedEvent += FindTarget;
+
+    }
+
+    private void FindTarget()
+    {
+        _penguin.FindFirstNearestEnemy();
     }
 
     public override void UpdateState()
@@ -25,6 +33,7 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
 
     public override void Exit()
     {
+        SignalHub.OnIceArrivedEvent -= FindTarget;
         base.Exit();
     }
 }
