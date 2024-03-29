@@ -10,6 +10,7 @@ public class CostParticle : PoolableMono
     [Header("Icon")]
     [SerializeField] private float _scaleValue;
     [SerializeField] private float _duration;
+    [SerializeField] private SoundName _soundName;
 
     private Image _icon;
 
@@ -59,6 +60,8 @@ public class CostParticle : PoolableMono
     public void OnAnyParticleFinished()
     {
         _repeat++;
+
+        SoundManager.Play2DSound(_soundName);
 
         _increaseValue = CostManager.Instance.Cost + (_repeat * _divideCost);
         CostManager.Instance.CostArriveText(_increaseValue);

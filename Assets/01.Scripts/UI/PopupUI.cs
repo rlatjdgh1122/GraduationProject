@@ -7,10 +7,14 @@ public class PopupUI : MonoBehaviour
     [SerializeField]
     private float _panelFadeTime;
 
+    [SerializeField]
+    private SoundName soundName = SoundName.UI;
+
     protected CanvasGroup _panel;
     protected RectTransform _rectTransform;
 
     private Coroutine _coroutine = null;
+
 
     public virtual void Awake()
     {
@@ -27,6 +31,7 @@ public class PopupUI : MonoBehaviour
     public virtual void ShowPanel()
     {
         UIManager.Instance.currentPopupUI.Push(this);
+        SoundManager.Play2DSound(soundName);
         _panel.blocksRaycasts = true;
         _panel.DOFade(1, _panelFadeTime);
     }
@@ -35,6 +40,7 @@ public class PopupUI : MonoBehaviour
     {
         SignalHub.OnOffPopUiEvent?.Invoke();
         UIManager.Instance.currentPopupUI.Pop();
+        SoundManager.Play2DSound(soundName);
         _panel.blocksRaycasts = false;
         _panel.DOFade(0, _panelFadeTime);
     }

@@ -72,6 +72,7 @@ public class UIManager : Singleton<UIManager>
     public void ShowPanel(string uiName)
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
+
         if (popupUI != null)
         {
             popupUI.ShowPanel();
@@ -81,6 +82,7 @@ public class UIManager : Singleton<UIManager>
     public void HidePanel(string uiName)
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
+
         popupUI.HidePanel();
     }
 
