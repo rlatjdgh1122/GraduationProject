@@ -26,7 +26,7 @@ public class ShieldGeneralPenguin : General
 
     protected override void Start()
     {
-        StateMachine.Init(GeneralPenguinStateEnum.Idle);
+        StateInit();
     }
 
     private void FixedUpdate()
@@ -38,6 +38,10 @@ public class ShieldGeneralPenguin : General
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
+    }
+    public override void StateInit()
+    {
+        StateMachine.Init(GeneralPenguinStateEnum.Idle);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

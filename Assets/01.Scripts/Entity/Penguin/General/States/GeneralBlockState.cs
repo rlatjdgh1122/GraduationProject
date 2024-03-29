@@ -8,7 +8,7 @@ public class GeneralBlockState : GeneralBaseState
     {
         base.Enter();
 
-        _triggerCalled = true;
+        _penguin.WaitForCommandToArmyCalled = false;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
 
@@ -22,11 +22,24 @@ public class GeneralBlockState : GeneralBaseState
 
         _penguin.LookTarget();
 
-        if (!_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
+        if (IsArmyCalledIn_CommandMode())
+        {
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.MustMove);
+        }
+        else
+        {
+            //죽지 않았다면 아니 근데 이거 업데이트에서 해주고 있을텐데
+            if (!_penguin.IsDead)
+            {
+                //사거리가 멀어지면 맞으러 감
+                if (!_penguin.IsInnerMeleeRange)
+                    if (!_penguin.IsDead)
+                        _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
 
-        if (_penguin.CurrentTarget == null)
-            _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
+                IsTargetNull(GeneralPenguinStateEnum.Idle);
+            }
+
+        }
     }
 
     private void SpinAttack()
@@ -36,14 +49,14 @@ public class GeneralBlockState : GeneralBaseState
 
     private void ImpactShield()
     {
-        if(!_penguin.canSpinAttack)
+        if (!_penguin.canSpinAttack)
             _stateMachine.ChangeState(GeneralPenguinStateEnum.Impact);
     }
 
     public override void Exit()
     {
         _penguin.skill.OnSkillCompleted -= SpinAttack;
-        //_penguin.HealthCompo.OnHit -= ImpactShield;
+        _penguin.HealthCompo.OnHit -= ImpactShield;
         base.Exit();
     }
 }

@@ -62,6 +62,16 @@ public class ArmyMovement : MonoBehaviour
         if (armySoldierList.Count > 0)
             armySoldierList.Clear();
 
+        //장군이 있다면 장군도 추가
+        if (curArmy.General)
+        {
+            PenguinMovementInfo armySoldier =
+                new(false, curArmy.General);
+
+            armySoldierList.Add(armySoldier);
+        }
+
+        //군사들 추가
         for (int i = 0; i < curArmy.Soldiers.Count; ++i)
         {
             PenguinMovementInfo armySoldier =

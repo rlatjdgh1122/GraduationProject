@@ -11,10 +11,8 @@ public class GeneralDeadState : GeneralBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
-        _penguin.CurrentTarget = null;
-        _penguin.enabled = false;
-        _penguin.NavAgent.enabled = false;
+
+        DeadEnter();
     }
 
     public override void UpdateState()

@@ -11,7 +11,9 @@ public class GeneralImpactState : GeneralBaseState
     public override void Enter()
     {
         base.Enter();
+
         _triggerCalled = false;
+        _penguin.StopImmediately();
 
         _penguin.skill.OnSkillCompleted += SpinAttack;
     }
@@ -19,12 +21,10 @@ public class GeneralImpactState : GeneralBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_triggerCalled && !_penguin.IsDead)
+
+        if (_triggerCalled)
         {
-            if (_penguin.IsInnerMeleeRange)
-                _stateMachine.ChangeState(GeneralPenguinStateEnum.Block);
-            else
-                _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.Block);
         }
     }
 

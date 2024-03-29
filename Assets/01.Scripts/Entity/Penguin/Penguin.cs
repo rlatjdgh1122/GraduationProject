@@ -266,7 +266,9 @@ public class Penguin : Entity
     #region ´õ¹Ì Æë±Ï ½º¿Ò °ü·Ã
     private void ChangedToDummyPenguinHandler()
     {
-        SpawnManager.Instance.ChangedToDummyPenguin(this);
+        //¾ÈÁ×¾ú´Ù¸é ´õ¹ÌÆë±ÏÀ¸·Î º¯½Å
+        if (!IsDead)
+            SpawnManager.Instance.ChangedToDummyPenguin(this);
     }
     public void SetPosition(Vector3 pos)
     {

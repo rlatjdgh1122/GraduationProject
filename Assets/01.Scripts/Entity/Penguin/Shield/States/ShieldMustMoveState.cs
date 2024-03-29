@@ -11,7 +11,6 @@ public class ShieldMustMoveState : ShieldBaseState
     {
         base.Enter();
 
-        Debug.Log("ewqr");
         MustMoveEnter();
     }
     public override void UpdateState()

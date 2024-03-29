@@ -2,6 +2,7 @@ public enum GeneralPenguinStateEnum
 {
     Idle,
     Move,
+    MustMove,
     Chase,
     Dead,
     Attack,

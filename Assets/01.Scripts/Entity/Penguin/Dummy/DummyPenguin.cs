@@ -77,8 +77,6 @@ public class DummyPenguin : PoolableMono
     }
     private void OnBattleStartHandler()
     {
-        Debug.Log("wqer");
-
         //켜져있는 애들만
         if (gameObject.activeSelf)
         {

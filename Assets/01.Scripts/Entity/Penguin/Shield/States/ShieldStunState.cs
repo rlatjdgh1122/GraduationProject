@@ -12,17 +12,14 @@ public class ShieldStunState : ShieldBaseState
     public override void Enter() //한명이 때리다가 죽으면 
     {
         base.Enter();
-        /*  _triggerCalled = false;
-          _penguin.WaitForCommandToArmyCalled = false;
-          _penguin.FindFirstNearestEnemy();
-          _penguin.StopImmediately();
-          _penguin.AnimatorCompo.speed = _penguin.attackSpeed;*/
+
         AttackEnter();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
         _penguin.LookTarget();
 
         if (IsArmyCalledIn_BattleMode())
@@ -34,6 +31,7 @@ public class ShieldStunState : ShieldBaseState
                 IsTargetNull(ShieldPenguinStateEnum.MustMove);
             }
         }
+
         if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
