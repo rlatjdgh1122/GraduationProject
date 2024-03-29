@@ -20,6 +20,8 @@ public class NexusBase : MonoBehaviour
 
     private void Awake()
     {
+        _nexusStat = Instantiate(_nexusStat);
+
         _health = GetComponent<Health>();
 
         _health.SetHealth(_nexusStat);

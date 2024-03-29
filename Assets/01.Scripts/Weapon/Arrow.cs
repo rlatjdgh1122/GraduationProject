@@ -30,13 +30,13 @@ public class Arrow : MonoBehaviour
 
     private IEnumerator WaitForDestroy()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
         Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.layer == _damageCaster.TargetLayer)
+        if (coll.CompareTag("Enemy"))
         {
             if (_damageCaster.CastDamage())
             {

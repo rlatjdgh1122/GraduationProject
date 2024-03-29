@@ -19,6 +19,7 @@ public class CostManager : Singleton<CostManager>
         set
         {
             _currentCost = value;
+            _costUI.OnlyCurrentCostView(value);
         }
     }
 
