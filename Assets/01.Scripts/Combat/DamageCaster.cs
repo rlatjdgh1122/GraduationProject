@@ -143,10 +143,38 @@ public class DamageCaster : MonoBehaviour
                 _hitType = HitType.CriticalHit;
                 adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
                 damage = (int)adjustedDamage;
-                Debug.Log("크리티컬!");
             }
             
             raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            _hitType = originType;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool CastArrowDamage(Collider coll, LayerMask targetLayer)
+    {
+        if (coll.TryGetComponent<IDamageable>(out IDamageable raycastHealth) && ((1 << coll.gameObject.layer) & targetLayer) != 0)
+        {
+            int damage = _owner.Stat.damage.GetValue();
+
+            float critical = _owner.Stat.criticalChance.GetValue() * 0.01f;
+            int criticalValue = _owner.Stat.criticalValue.GetValue();
+            float adjustedDamage;
+            float dice = UnityEngine.Random.value;
+            HitType originType = _hitType;
+
+            if (dice < critical)
+            {
+                _hitType = HitType.CriticalHit;
+                adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
+                damage = (int)adjustedDamage;
+
+            }
+
+            raycastHealth?.ApplyDamage(damage, coll.transform.position, coll.transform.position, _hitType);
             _hitType = originType;
 
             return true;

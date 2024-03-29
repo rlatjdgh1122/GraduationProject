@@ -19,6 +19,9 @@ public class RangeAttackableEntity : EntityAttackData
             owner.CurrentTarget.transform.position.y + 0.5f, owner.CurrentTarget.transform.position.z));
 
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+        //Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
+        //arrow.transform.position = _firePos.position;
+        //arrow.transform.rotation = Quaternion.Euler(_firePos.transform.forward);
         arrow.Setting(owner, DamageCasterCompo.TargetLayer);
         arrow.Fire(_firePos.forward);
     }
