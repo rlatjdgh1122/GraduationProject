@@ -23,6 +23,7 @@ public class Health : MonoBehaviour, IDamageable
     public UnityEvent OnHitEvent;
     public UnityEvent OnStunEvent;
     public UnityEvent OnEvasionEvent;
+    public UnityEvent WaterFallEvent;
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
@@ -57,6 +58,7 @@ public class Health : MonoBehaviour, IDamageable
         if (!IsPositionValid(knockbackPosition))
         {
             transform.DOMoveY(transform.position.y - 2f, 1.2f);
+
             Dead();
             return false;
         }
