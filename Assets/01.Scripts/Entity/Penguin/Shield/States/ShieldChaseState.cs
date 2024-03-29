@@ -23,7 +23,6 @@ public class ShieldChaseState : ShieldBaseState
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
         }
-
         else
         {
             if (_penguin.CurrentTarget != null)

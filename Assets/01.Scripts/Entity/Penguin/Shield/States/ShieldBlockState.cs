@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEngine;
 
 public class ShieldBlockState : ShieldBaseState
 {
@@ -13,8 +14,7 @@ public class ShieldBlockState : ShieldBaseState
     {
         base.Enter();
 
-        _triggerCalled = true;
-        _penguin.WaitForCommandToArmyCalled = true;
+        _penguin.WaitForCommandToArmyCalled  = false;
         _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
 
@@ -32,24 +32,15 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if (IsArmyCalledIn_BattleMode())
+        if (IsArmyCalledIn_CommandMode())
         {
-            if (!_penguin.IsInnerMeleeRange)
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
-
-            //다죽였다면 이동
-            IsTargetNull(ShieldPenguinStateEnum.MustMove);
-        }
-
-        else if (IsArmyCalledIn_CommandMode())
-        {
-            if (_penguin.WaitForCommandToArmyCalled)
-            {
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
-            }
+            Debug.Log("11");
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
         }
         else
         {
+            Debug.Log("22");
+            //사거리가 멀어지면 맞으러 감
             if (!_penguin.IsInnerMeleeRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
 

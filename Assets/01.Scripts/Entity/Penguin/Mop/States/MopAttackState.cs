@@ -24,14 +24,13 @@ public class MopAttackState : MopBaseState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
-
-       
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
         _penguin.LookTarget();
+
         if (IsArmyCalledIn_BattleMode())
         {
             if (_triggerCalled)

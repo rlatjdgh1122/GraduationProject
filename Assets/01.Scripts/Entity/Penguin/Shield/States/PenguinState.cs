@@ -34,6 +34,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void ChaseEnter()
     {
+        //굳이 필요한가?
         _triggerCalled = true;
 
         if (_penguin.MoveFocusMode == MovefocusMode.Battle)
