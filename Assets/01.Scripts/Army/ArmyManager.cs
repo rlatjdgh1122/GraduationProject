@@ -88,16 +88,23 @@ public class ArmyManager : Singleton<ArmyManager>
         if (armies.Count < legion) return;
 
         int Idx = legion - 1;
-
+        var curArmy = armies[Idx];
         //중복 선택된 군단도 아웃라인 보이게
-        armies[Idx].Soldiers.ForEach(s => 
+        curArmy.Soldiers.ForEach(s =>
         {
             CoroutineUtil.CallWaitForSeconds(1f,
                     () => s.OutlineCompo.enabled = true,
                     () => s.OutlineCompo.enabled = false);
 
-            s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth); 
+            s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
+
+        if (curArmy.General)
+        {
+            CoroutineUtil.CallWaitForSeconds(1f,
+                    () => curArmy.General.OutlineCompo.enabled = true,
+                    () => curArmy.General.OutlineCompo.enabled = false);
+        }
 
         if (curArmyIdx == Idx) return;
 

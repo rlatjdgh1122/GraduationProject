@@ -81,9 +81,10 @@ public class DummyPenguin : PoolableMono
         if (gameObject.activeSelf)
         {
             NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+            
             if (Owner)
             {
-                Owner.SetPosition(transform.position);
+                Owner.SetPosAndRotation(transform);
 
                 Owner.gameObject.SetActive(true);
                 Owner.StateInit();

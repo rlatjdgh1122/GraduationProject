@@ -270,9 +270,10 @@ public class Penguin : Entity
         if (!IsDead)
             SpawnManager.Instance.ChangedToDummyPenguin(this);
     }
-    public void SetPosition(Vector3 pos)
+    public void SetPosAndRotation(Transform trm)
     {
-        transform.position = pos;
+        transform.position = trm.position;
+        transform.rotation = trm.rotation;
     }
 
     public virtual void StateInit() { }
