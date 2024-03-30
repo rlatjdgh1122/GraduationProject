@@ -643,6 +643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6720297064757447693}
+  - {fileID: 2839532633814839988}
   m_Father: {fileID: 2883215905046207468}
   m_LocalEulerAnglesHint: {x: -7.3665466, y: -9.4234085, z: 5.7115583}
 --- !u!1 &2867935202554987540
@@ -738,6 +739,38 @@ Transform:
   - {fileID: 5231917464135566629}
   m_Father: {fileID: 3912808212600652985}
   m_LocalEulerAnglesHint: {x: 15.294498, y: -57.64783, z: -6.7065244}
+--- !u!1 &3180626891318618126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2839532633814839988}
+  m_Layer: 0
+  m_Name: Quiver_belt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2839532633814839988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3180626891318618126}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.07804496, y: -0.041550834, z: -0.4681043, w: 0.87923884}
+  m_LocalPosition: {x: -18.3, y: -18.3, z: -8.7}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7339096409626850835}
+  m_Father: {fileID: 5466459203070053859}
+  m_LocalEulerAnglesHint: {x: 5.644, y: -8.444, z: -56.478}
 --- !u!1 &3215557694301042102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,6 +2152,89 @@ Transform:
   - {fileID: 6890700110065373949}
   m_Father: {fileID: 2883215905046207468}
   m_LocalEulerAnglesHint: {x: 79.689835, y: -79.859985, z: 22.032087}
+--- !u!1 &5182594010214959629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7339096409626850835}
+  - component: {fileID: 5556285687009757305}
+  - component: {fileID: 555738847152578239}
+  m_Layer: 0
+  m_Name: Quiver_belt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7339096409626850835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182594010214959629}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.01, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2839532633814839988}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5556285687009757305
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182594010214959629}
+  m_Mesh: {fileID: -4819382837944262969, guid: 54af4ef4f4c12a44a959a7b9c5542272, type: 3}
+--- !u!23 &555738847152578239
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182594010214959629}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7109b8a69d51d0645886647989a30272, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5221905754447884891
 GameObject:
   m_ObjectHideFlags: 0

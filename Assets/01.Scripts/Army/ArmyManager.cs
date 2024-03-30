@@ -220,7 +220,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
         var Army = armies[legion - 1];
         var LegionStat = obj.ligeonStat;
-        var followCam = Army.FollowCam;
 
         if (Army.General != null)
         {
@@ -230,9 +229,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
         obj.SetOwner(Army);
         Army.General = obj;
-
-        followCam.Obj.transform.parent = obj.transform;
-        followCam.isInGeneral = true;
 
         Army.AddStat(Army, LegionStat);
 

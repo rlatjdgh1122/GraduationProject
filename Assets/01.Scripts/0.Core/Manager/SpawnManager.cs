@@ -100,15 +100,16 @@ public class SpawnManager : Singleton<SpawnManager>
         if (penguinToDummyDictionary.TryGetValue(obj, out var value))
         {
             var trm = obj.transform;
-            //Ω«¡¶ ∆Î±œ¿ª ≤®¡÷∞Ì
-            obj.gameObject.SetActive(false);
-
+            Debug.Log("pos 2 : " + trm.position);
             //∞°¬• ∆Î±œ¿∫ ¿ßƒ°∏¶ º≥¡§«ÿ¡÷∞Ì ƒ—¡‹
             value.gameObject.SetActive(true);
             value.IsGoToHouse = false;
             value.SetPostion(trm);
             value.StateInit();
             value.ChangeNavqualityToHigh();
+
+            //Ω«¡¶ ∆Î±œ¿ª ≤®¡‹
+            obj.gameObject.SetActive(false);
         }
     }
 

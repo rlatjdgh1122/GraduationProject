@@ -11,10 +11,14 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     #region Enter
     protected void IdleEnter()
     {
-        _penguin.NavAgent.ResetPath();
+
+        if (_navAgent != null)
+        {
+            _navAgent.ResetPath();
+            _navAgent.isStopped = false;
+        }
 
         _penguin.CurrentTarget = null;
-        _navAgent.isStopped = false;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
