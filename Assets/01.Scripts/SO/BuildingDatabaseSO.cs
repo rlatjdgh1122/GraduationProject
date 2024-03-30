@@ -1,7 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 public enum BuildingType
 {
@@ -48,8 +48,8 @@ public class BuildingItemInfo
     public string Description => _description;
 
     [SerializeField]
-    private Vector2Int _size;
-    public Vector2Int Size { get { return _size; } }
+    private Vector2 _size;
+    public Vector2 Size { get { return _size; } }
 
     [SerializeField]
     private GameObject _prefab;
