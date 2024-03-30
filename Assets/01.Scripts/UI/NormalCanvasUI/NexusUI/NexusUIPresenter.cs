@@ -26,6 +26,8 @@ public class NexusUIPresenter : NexusPopupUI
 
         _buildingFactory = FindAnyObjectByType<BuildingFactory>();
 
+        _buildingDatabase = Instantiate(_buildingDatabase);
+
         _buildingViews = GetComponentsInChildren<BuildingView>().ToList();
         _buildingViews.ForEach(item => item.building = 
             _buildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == item.name));
