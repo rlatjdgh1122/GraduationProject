@@ -91,8 +91,8 @@ public class QuestUI : PopupUI
     public void UpdatePopUpQuestUI(QuestData questData)
     {
         _currentQuestData = questData;
-        _questInfoUI.UpdatePopUpQuestUI(questData, () => SetCautionBoxImage(false, true));
-        _uncompletedQuestScrollViewUIs[questData.Id].UpdateQuestType(questData.QuestStateEnum);
+        _questInfoUI.UpdatePopUpQuestUI(_currentQuestData, () => SetCautionBoxImage(false, true));
+        _uncompletedQuestScrollViewUIs[_currentQuestData.Id].UpdateQuestType(_currentQuestData.QuestStateEnum);
 
 
         // 기존에 등록된 이벤트 핸들러 제거

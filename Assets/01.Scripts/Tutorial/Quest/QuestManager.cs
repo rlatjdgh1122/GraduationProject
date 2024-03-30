@@ -60,11 +60,16 @@ public class QuestManager : Singleton<QuestManager>
 
     public void StartTutorial(string questId)
     {
+        if (questId == null)
+        {
+            return;
+        }
+
         QuestData questData = GetQuestData(questId);
 
-        if (TutorialManager.Instance.CurQuestIdx != questData.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
+        if (TutorialManager.Instance.CurTutoQuestIdx != questData.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
         {
-            Debug.Log($"하... 너는 지금 {TutorialManager.Instance.CurQuestIdx}번째 튜토리얼 퀘스트를 해야하는데" +
+            Debug.Log($"하... 너는 지금 {TutorialManager.Instance.CurTutoQuestIdx}번째 튜토리얼 퀘스트를 해야하는데" +
                 $"{questData.TutorialQuestIdx}번째 퀘스트인 {questData.Id}를 하려고 하잖아;; 리턴함");
             return;
         }
@@ -151,6 +156,11 @@ public class QuestManager : Singleton<QuestManager>
         }
         else
         {
+            if (questData.IsTutorialQuest) //튜토리얼이면 바로 완료처리
+            {
+                EndQuest(questId);
+                return;
+            }
             questData.QuestStateEnum = QuestState.CanFinish; // 지울 수 없는 오브젝트가 없으면 퀘스트 완료가능하게
             _questUI.UpdatePopUpQuestUI(questData);
             _questUI.SetCautionBoxImage(true);
@@ -176,7 +186,7 @@ public class QuestManager : Singleton<QuestManager>
 
         if (questData.IsTutorialQuest)
         {
-            TutorialManager.Instance.IncreaseQuestIdx(); // 튜토리얼 퀘스트는 순서대로 해야 하니까 idx 증가
+            SetCanStartQuest(TutorialManager.Instance.GetNextTutorialQuest()); // 다음 튜토리얼 시작
         }
         _questUI.RemoveQuestContentUI(questData.Id); // 퀘스트 UI에서 삭제
     }
