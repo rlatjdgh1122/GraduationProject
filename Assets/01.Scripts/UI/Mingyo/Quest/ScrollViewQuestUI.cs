@@ -26,6 +26,7 @@ public class ScrollViewQuestUI : MonoBehaviour
 
     public void SetUpScrollViewUI(string questNameText, QuestState questState, Action action)
     {
+        _button.onClick.RemoveAllListeners();
         UpdateQuestType(questState);
         _questNameText.SetText(questNameText);
 
