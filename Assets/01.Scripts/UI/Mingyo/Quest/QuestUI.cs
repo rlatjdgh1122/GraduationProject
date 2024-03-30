@@ -32,9 +32,9 @@ public class QuestUI : PopupUI
     {
         base.Awake();
 
-        _questPopupContentsParentTrm = transform.Find("QuestList/UncompletedQuest/PopUp/ScrollView/Viewport/Content");
+        _questPopupContentsParentTrm = transform.Find("QuestList/PopUp/ScrollView/Viewport/Content").gameObject.transform;
 
-        _questInfoUI = transform.Find("QuestList/UncompletedQuest/ContentPopUp").GetComponent<QuestInfoUI>();
+        _questInfoUI = transform.Find("QuestList/ContentPopUp").GetComponent<QuestInfoUI>();
 
         Transform questButton = transform.parent.Find("MainInterfaceUI/QuestButton");
         questButton.GetComponent<Button>().onClick.AddListener(() => UIManager.Instance.ShowPanel("QuestUI"));
@@ -52,6 +52,7 @@ public class QuestUI : PopupUI
         if (!_uncompletedQuestScrollViewUIs.ContainsKey(questData.Id))
         {
             GameObject newQuestObj = Instantiate(_questUIPrefabs, _questPopupContentsParentTrm);
+            //newQuestObj.transform.SetParent(_questPopupContentsParentTrm);
             ScrollViewQuestUI newQuest = newQuestObj.GetComponent<ScrollViewQuestUI>();
             newQuest.SetUpScrollViewUI(questData.Id, QuestState.CanStart,
                 () => UpdatePopUpQuestUI(questData));
