@@ -156,14 +156,16 @@ public class QuestManager : Singleton<QuestManager>
         }
         else
         {
+            _questUI.UpdatePopUpQuestUI(questData);
+            _questUI.SetCautionBoxImage(true);
+
             if (questData.IsTutorialQuest) //튜토리얼이면 바로 완료처리
             {
                 EndQuest(questId);
                 return;
             }
+
             questData.QuestStateEnum = QuestState.CanFinish; // 지울 수 없는 오브젝트가 없으면 퀘스트 완료가능하게
-            _questUI.UpdatePopUpQuestUI(questData);
-            _questUI.SetCautionBoxImage(true);
         }
     }
 
@@ -188,7 +190,8 @@ public class QuestManager : Singleton<QuestManager>
         {
             SetCanStartQuest(TutorialManager.Instance.GetNextTutorialQuest()); // 다음 튜토리얼 시작
         }
-        _questUI.RemoveQuestContentUI(questData.Id); // 퀘스트 UI에서 삭제
+
+        _questUI.AddCompletedQuestUI(questData.Id); // 완료된 퀘스트 UI에 추가
     }
 
 

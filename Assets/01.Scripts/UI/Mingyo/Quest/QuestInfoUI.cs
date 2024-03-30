@@ -57,6 +57,7 @@ public class QuestInfoUI : MonoBehaviour
 
     public void UpdatePopUpQuestUI(QuestData questData, Action action = null)
     {
+        Debug.Log("gkfkrh");
         QuestState questState = questData.QuestStateEnum;
         string questName = questData.Id;
         string questContent = questData.QuestUIDataInfo.QuestContentsInfo;
@@ -96,6 +97,8 @@ public class QuestInfoUI : MonoBehaviour
                 break;
             case QuestState.Finish:
                 questStateText = "완료";
+                buttonText = "퀘스트 완료";
+                _questStartButton.interactable = false;
                 break;
         }
 
