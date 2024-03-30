@@ -12,7 +12,6 @@ public enum ShieldPenguinStateEnum
     Impact,
     Stun,
     Dead,
-    FreelyMove
 }
 
 public class ShieldPenguin : Penguin

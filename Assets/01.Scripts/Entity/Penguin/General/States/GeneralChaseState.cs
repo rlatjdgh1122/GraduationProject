@@ -31,7 +31,10 @@ public class GeneralChaseState : GeneralBaseState
                 _penguin.MoveToCurrentTarget();
 
             if (_penguin.IsInnerMeleeRange)
+            {
+                Debug.Log("지금 도착했다~");
                 _stateMachine.ChangeState(GeneralPenguinStateEnum.Block);
+            }
 
             else IsTargetNull(GeneralPenguinStateEnum.Idle);
         }
