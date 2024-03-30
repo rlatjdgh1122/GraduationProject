@@ -83,7 +83,10 @@ public abstract class BaseBuilding : WorkableObject
             Debug.LogError($"Not Founded id: {gameObject}"); 
         }
 
-        _remainTimeUI = transform.Find("Canvas").GetComponent<TimeRemain>();
+        if (_buildingItemInfo != null)
+        {
+            _remainTimeUI = transform.Find("Canvas").GetComponent<TimeRemain>();
+        }
 
         SetUpCompo();
     }
