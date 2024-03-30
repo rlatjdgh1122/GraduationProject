@@ -39,7 +39,11 @@ public enum SoundName
     Bear,
     DigStone,
     QuestEnd,
-    QuestStart
+    QuestStart,
+    Build,
+    Win,
+    Lose,
+    CostBox
 }
 
 public class SoundManager : MonoBehaviour

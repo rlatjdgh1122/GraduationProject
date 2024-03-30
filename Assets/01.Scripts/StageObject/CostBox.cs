@@ -27,6 +27,7 @@ public class CostBox : PoolableMono
     [SerializeField] private int _cost;
     [SerializeField] private ParticleSystem _clickParticle;
     [SerializeField] private Transform _box;
+    [SerializeField] private SoundName _costSound = SoundName.CostBox;
 
     public BoxEvent InspectorCustomBox;
     private bool _isClick;
@@ -64,6 +65,8 @@ public class CostBox : PoolableMono
 
     private void ClickEvent()
     {
+        SoundManager.Play2DSound(_costSound);
+
         _box.gameObject.SetActive(false);
 
         _clickParticle.Play();

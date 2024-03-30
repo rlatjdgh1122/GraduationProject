@@ -11,6 +11,8 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] CanvasGroup canvasGroup;
 
     [SerializeField] TMP_Text txtSentence;
+    [SerializeField] private float _fadeValue;
+    [SerializeField] private float _tippingSpeed;
 
     private Tween fadeTween;
 
@@ -23,7 +25,7 @@ public class DialogSystem : MonoBehaviour
     public void Begin(string[] texts)
     {
         sentences.Clear();
-        FadeIn(2f);
+        FadeIn(_fadeValue);
 
         foreach (var sentence in texts)
         {
@@ -60,7 +62,7 @@ public class DialogSystem : MonoBehaviour
         foreach (var letter in sentence)
         {
             txtSentence.text += letter;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(_tippingSpeed);
         }
 
         isTyping = false;
@@ -69,13 +71,13 @@ public class DialogSystem : MonoBehaviour
     private void End()
     {
         canClick = false;
-        FadeOut(2f);
+        FadeOut(_fadeValue);
         StartCoroutine(FadeTime());
     }
 
     IEnumerator FadeTime()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(_fadeValue);
         canClick = true;
     }
 
