@@ -23,6 +23,8 @@ public class CostManager : Singleton<CostManager>
         }
     }
 
+    [SerializeField] private SoundName _buySound = SoundName.Buy;
+
     [SerializeField] private CostUI _costUI;
 
     [Header("Default Cost Value")]
@@ -37,6 +39,8 @@ public class CostManager : Singleton<CostManager>
     }
     public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
     {
+        SoundManager.Play2DSound(_buySound);
+
         _currentCost -= price;
         _costUI.SubtractCost(-Mathf.Abs(price));
 

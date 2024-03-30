@@ -66,6 +66,7 @@ public class GroundMove : MonoBehaviour
             transform.DOMove(new Vector3(_moveDir.x, transform.position.y, _moveDir.z), _moveDuration).
                 OnComplete(() =>
                 {
+                    SoundManager.Play2DSound(SoundName.GroundHit);
                     _surface.enabled = true;
                     _surface.transform.SetParent(_parentSurface.transform);
                     _parentSurface.BuildNavMesh();

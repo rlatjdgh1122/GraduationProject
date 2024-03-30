@@ -35,7 +35,11 @@ public enum SoundName
     WaterFall,
     UI,
     PowerMopAttack,
-    Buy
+    Buy,
+    Bear,
+    DigStone,
+    QuestEnd,
+    QuestStart
 }
 
 public class SoundManager : MonoBehaviour
