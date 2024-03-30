@@ -28,6 +28,7 @@ public class BasicIdleState : BasicBaseState
 
     public override void Exit()
     {
+        SignalHub.OnIceArrivedEvent -= FindTarget;
         IdleExit();
 
         base.Exit();
