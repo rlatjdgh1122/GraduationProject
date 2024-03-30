@@ -57,7 +57,6 @@ public class QuestInfoUI : MonoBehaviour
 
     public void UpdatePopUpQuestUI(QuestData questData, Action action = null)
     {
-        Debug.Log("gkfkrh");
         QuestState questState = questData.QuestStateEnum;
         string questName = questData.Id;
         string questContent = questData.QuestUIDataInfo.QuestContentsInfo;

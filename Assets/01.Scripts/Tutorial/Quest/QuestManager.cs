@@ -178,6 +178,7 @@ public class QuestManager : Singleton<QuestManager>
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
         _curInprogressQuests[questData.Id].QuestStateEnum = QuestState.Finish; // 퀘스트에 완료처리 해주고
+        _questUI.UpdatePopUpQuestUI(questData);
 
         _curInprogressQuests.Remove(questData.Id); //현재 진행중 퀘스트 리스트에서 삭제
 
@@ -191,7 +192,7 @@ public class QuestManager : Singleton<QuestManager>
             SetCanStartQuest(TutorialManager.Instance.GetNextTutorialQuest()); // 다음 튜토리얼 시작
         }
 
-        _questUI.AddCompletedQuestUI(questData.Id); // 완료된 퀘스트 UI에 추가
+        //_questUI.RemoveQuestContentUI(questData.Id); // 완료된 퀘스트 UI에 추가
     }
 
 

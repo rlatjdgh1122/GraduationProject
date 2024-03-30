@@ -22,10 +22,12 @@ public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
         if (_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
 
-        if (_enemy.NavAgent?.remainingDistance < 0.1f /*&& !_enemy.NavAgent.pathPending*/)
+        //무조건 타겟을 따라가는건데 이게 필요한가요?
+
+        /*if (_enemy.NavAgent?.remainingDistance < 0.1f *//*&& !_enemy.NavAgent.pathPending*//*)
         {
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
-        }
+        }*/
     }
 
     public override void Exit()

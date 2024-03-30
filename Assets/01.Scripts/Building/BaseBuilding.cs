@@ -83,13 +83,9 @@ public abstract class BaseBuilding : WorkableObject
             Debug.LogError($"Not Founded id: {gameObject}"); 
         }
 
-        try
+        if (_buildingItemInfo != null)
         {
-            _remainTimeUI = transform.Find("HealthUICanvas").GetComponent<TimeRemain>();
-        }
-        catch
-        {
-
+            _remainTimeUI = transform.Find("Canvas").GetComponent<TimeRemain>();
         }
 
         SetUpCompo();
@@ -125,8 +121,8 @@ public abstract class BaseBuilding : WorkableObject
 
             SignalHub.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnBuilders(this);
             SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
-            RemainTimeUI.OnRemainUI();
-            RemainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
+            _remainTimeUI.OnRemainUI();
+            _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
         }
         else
         {
@@ -141,13 +137,13 @@ public abstract class BaseBuilding : WorkableObject
     private void PlusInstalledTime()
     {
         installedTime++;
-        RemainTimeUI.SetText((int)_buildingItemInfo.InstalledTime - installedTime);
+        _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime - installedTime);
 
         if (installedTime >= _buildingItemInfo.InstalledTime)
         {
             SignalHub.OnBattlePhaseEndEvent -= PlusInstalledTime;
             SetInstalled();
-            RemainTimeUI.OffRemainUI();
+            _remainTimeUI.OffRemainUI();
         }
         else
         {

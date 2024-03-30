@@ -52,6 +52,11 @@ public class ScrollViewQuestUI : MonoBehaviour
                 questTypeImg.color = Color.white;
                 _questStateImgBox.color = _checkMarkBoxColor;
                 break;
+            case QuestState.Finish:
+                questTypeImg.sprite = _checkMarkSprite;
+                questTypeImg.color = Color.white;
+                _questStateImgBox.color = _checkMarkBoxColor;
+                break;
                 default: break;
         }
     }
