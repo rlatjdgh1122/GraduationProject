@@ -33,7 +33,9 @@ public enum SoundName
     GroundHit,
     MopAttack,
     WaterFall,
-    UI
+    UI,
+    PowerMopAttack,
+    Buy
 }
 
 public class SoundManager : MonoBehaviour
