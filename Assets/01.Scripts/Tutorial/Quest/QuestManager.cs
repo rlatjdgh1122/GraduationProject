@@ -70,6 +70,7 @@ public class QuestManager : Singleton<QuestManager>
         }
 
         _dialogSystem.Begin(questData.TutorialTexts); //튜토리얼 텍스트 뜨게
+        StartQuest(questId); // 튜토리얼은 버튼 눌러서 시작이 아니라 그냥 시작하게
     }
 
     public void StartQuest(string questId) //퀘스트 시작
