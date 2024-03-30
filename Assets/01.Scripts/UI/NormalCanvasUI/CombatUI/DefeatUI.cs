@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class DefeatUI : PopupUI
 {
+    [SerializeField] private SoundName _loseSound;
+
     public override void Awake()
     {
         base.Awake();
@@ -15,6 +17,8 @@ public class DefeatUI : PopupUI
     public override void ShowPanel()
     {
         base.ShowPanel();
+
+        SoundManager.Play2DSound(_loseSound);
     }
 
     public override void HidePanel()
