@@ -9,18 +9,14 @@ using UnityEngine.UI;
 public class QuestUI : PopupUI
 {
     private Transform _questPopupContentsParentTrm;
-    private Transform _completedQuestsPopupContentsParentTrm;
 
     private QuestInfoUI _questInfoUI;
     public QuestInfoUI QuestInfoUICompo => _questInfoUI;
-
-    private QuestInfoUI _completedQuestInfoUI;
 
     [SerializeField]
     private GameObject _questUIPrefabs;
 
     private Dictionary<string, ScrollViewQuestUI> _uncompletedQuestScrollViewUIs = new Dictionary<string, ScrollViewQuestUI>();
-    private Dictionary<string, ScrollViewQuestUI> _completedQuestScrollViewUIs = new Dictionary<string, ScrollViewQuestUI>();
     private int _unStartedQuestsLength;
 
     private Image _questStateIcon;
@@ -32,15 +28,11 @@ public class QuestUI : PopupUI
     [SerializeField]
     private Color _exclamationBoxColor, _checkMarkBoxColor;
 
-    private CanvasGroup _completedQuestsCanvasGroup;
     public override void Awake()
     {
         base.Awake();
 
         _questPopupContentsParentTrm = transform.Find("QuestList/UncompletedQuest/PopUp/ScrollView/Viewport/Content");
-
-        _completedQuestsPopupContentsParentTrm = transform.Find("QuestList/CompletedQuest/PopUp/ScrollView/Viewport/Content");
-        _completedQuestInfoUI = transform.Find("QuestList/CompletedQuest/ContentPopUp").GetComponent<QuestInfoUI>();
 
         _questInfoUI = transform.Find("QuestList/UncompletedQuest/ContentPopUp").GetComponent<QuestInfoUI>();
 
@@ -49,8 +41,6 @@ public class QuestUI : PopupUI
 
         _questStateIcon = questButton.Find("CautionBox").GetChild(0).GetComponent<Image>();
         _questStateBox = questButton.Find("CautionBox").GetComponent<Image>();
-
-        _completedQuestsCanvasGroup = transform.Find("QuestList/CompletedQuest").GetComponent<CanvasGroup>();
 
         _uncompletedQuestScrollViewUIs.Clear();
 
@@ -98,23 +88,12 @@ public class QuestUI : PopupUI
     }
 
     private QuestData _currentQuestData;
-    private QuestData _finishQuestData;
-    public void UpdatePopUpQuestUI(QuestData questData, bool isFinished = false)
+    public void UpdatePopUpQuestUI(QuestData questData)
     {
-        if (isFinished) { _finishQuestData = questData; }
-        else { _currentQuestData = questData; }
+        _currentQuestData = questData;
 
-        if (!isFinished)
-        {
-            _questInfoUI.UpdatePopUpQuestUI(_currentQuestData, () => SetCautionBoxImage(false, true));
-            _uncompletedQuestScrollViewUIs[_currentQuestData.Id].UpdateQuestType(_currentQuestData.QuestStateEnum);
-        }
-        else
-        {
-            _completedQuestInfoUI.UpdatePopUpQuestUI(_finishQuestData, () => SetCautionBoxImage(true, true));
-            _completedQuestScrollViewUIs[_finishQuestData.Id].UpdateQuestType(_finishQuestData.QuestStateEnum);
-        }
-
+        _questInfoUI.UpdatePopUpQuestUI(_currentQuestData, () => SetCautionBoxImage(false, true));
+        _uncompletedQuestScrollViewUIs[_currentQuestData.Id].UpdateQuestType(_currentQuestData.QuestStateEnum);
 
         // 기존에 등록된 이벤트 핸들러 제거
         SignalHub.OnStartQuestEvent -= OnStartQuestEventHandler;
@@ -127,18 +106,6 @@ public class QuestUI : PopupUI
     private void OnStartQuestEventHandler()
     {
         SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[_currentQuestData.Id]);
-    }
-
-    public void AddCompletedQuestUI(string id)
-    {
-        QuestData questData = QuestManager.Instance.GetQuestData(id);
-        _completedQuestScrollViewUIs.Add(id, _uncompletedQuestScrollViewUIs[id]);
-        _uncompletedQuestScrollViewUIs.Remove(id);
-
-        _completedQuestScrollViewUIs[id].SetUpScrollViewUI(id, QuestState.Finish,
-                () => UpdatePopUpQuestUI(questData, true));
-
-        _completedQuestScrollViewUIs[id].transform.SetParent(_completedQuestsPopupContentsParentTrm);
     }
 
     public void UpdateQuestUIToProgress(QuestData questData)
@@ -155,6 +122,12 @@ public class QuestUI : PopupUI
         {
             SetCautionBoxImage(false, true);
         }
+    }
+
+    public void RemoveQuestContentUI(string id)
+    {
+        Destroy(_uncompletedQuestScrollViewUIs[id].gameObject);
+        _uncompletedQuestScrollViewUIs.Remove(id);
     }
 
     public void OpenCompletedQuests() //이거는 나중에 PopupPanel상속받는 거기서 할거임

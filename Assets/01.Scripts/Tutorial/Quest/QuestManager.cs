@@ -191,7 +191,7 @@ public class QuestManager : Singleton<QuestManager>
             SetCanStartQuest(TutorialManager.Instance.GetNextTutorialQuest()); // 다음 튜토리얼 시작
         }
 
-        _questUI.AddCompletedQuestUI(questData.Id); // 완료된 퀘스트 UI에 추가
+        _questUI.RemoveQuestContentUI(questData.Id); // 완료된 퀘스트 UI에 추가
     }
 
 
