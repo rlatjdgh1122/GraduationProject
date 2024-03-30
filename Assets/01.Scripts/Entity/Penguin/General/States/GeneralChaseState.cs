@@ -30,6 +30,11 @@ public class GeneralChaseState : GeneralBaseState
             if (_penguin.CurrentTarget != null)
                 _penguin.MoveToCurrentTarget();
 
+            if (_penguin.IsInnerMeleeRange)
+            {
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Attack);
+            }
+
             else IsTargetNull(GeneralPenguinStateEnum.Idle);
         }
     }
