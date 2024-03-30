@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 8871635372224633448}
   - component: {fileID: 6499961986628742624}
   - component: {fileID: 1878267562549974357}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: stone_medium_type01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: b6219a49d227ca042ae854b5182f28fa, type: 2}
+  resourceType: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   _resourceStat: {fileID: 11400000, guid: b6219a49d227ca042ae854b5182f28fa, type: 2}
   OnRecieveResourceEvent:
@@ -179,6 +180,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -209,6 +213,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEvasionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  WaterFallEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
