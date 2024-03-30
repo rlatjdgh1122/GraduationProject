@@ -7,4 +7,5 @@ public class ResourceDataSO : ScriptableObject
 {
     public string resourceName;
     public Sprite resourceIcon;
+    public Sprite workerIcon;
 }

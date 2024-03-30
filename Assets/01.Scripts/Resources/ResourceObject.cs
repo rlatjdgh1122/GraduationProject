@@ -10,6 +10,7 @@ public class ResourceObject : WorkableObject
     [SerializeField] private UnityEvent OnReviveInitEvent = null;
 
     private Sprite _resourceIcon;
+    private Sprite _workerIcon;
     private string _resourceName;
     private int _requiredWorkerCount;
     private int _currentWorkerCount;
@@ -18,6 +19,7 @@ public class ResourceObject : WorkableObject
 
     #region property
     public Sprite ResourceImage => _resourceIcon;
+    public Sprite WorkerIcon => _workerIcon;
     public string ResourceName => _resourceName;
     public int RequiredWorkerCount => _requiredWorkerCount;
     public int CurrentWorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }   
@@ -36,6 +38,7 @@ public class ResourceObject : WorkableObject
     {
         _requiredWorkerCount = _resourceStat.requiredWorkerCount;
         _resourceName = _resourceStat.resourceName;
+        _workerIcon = _resourceData.workerIcon;
         _resourceIcon = _resourceData.resourceIcon;
         _receiveCountAtOnce = _resourceStat.receiveCountAtOnce;
         _receiveCountWhenCompleted = _resourceStat.receiveCountWhenCompleted;
