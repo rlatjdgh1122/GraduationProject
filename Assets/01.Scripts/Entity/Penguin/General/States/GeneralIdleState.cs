@@ -11,12 +11,14 @@ public class GeneralIdleState : GeneralBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
+
+        IdleEnter();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(GeneralPenguinStateEnum.Move);
 
@@ -26,6 +28,8 @@ public class GeneralIdleState : GeneralBaseState
 
     public override void Exit()
     {
+        IdleExit();
+
         base.Exit();
     }
 

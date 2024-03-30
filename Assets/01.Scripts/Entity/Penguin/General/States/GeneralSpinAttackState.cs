@@ -11,21 +11,39 @@ public class GeneralSpinAttackState : GeneralBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = false;
 
+        AttackEnter();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_triggerCalled)
+        if (IsArmyCalledIn_BattleMode())
         {
-            if (!_penguin.IsInnerMeleeRange)
+            if (_triggerCalled)
+            {
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
+                //다죽였다면 이동
+                IsTargetNull(GeneralPenguinStateEnum.MustMove);
+            }
+        }
+
+        else if (IsArmyCalledIn_CommandMode())
+        {
+            if (_penguin.WaitForCommandToArmyCalled)
+            {
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.MustMove);
+            }
+        }
+        else
+        {
+            if (_triggerCalled) //공격
+            {
                 _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
 
-            if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
+                IsTargetNull(GeneralPenguinStateEnum.Idle);
+            }
         }
     }
 

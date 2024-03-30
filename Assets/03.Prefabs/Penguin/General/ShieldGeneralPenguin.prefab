@@ -321,12 +321,11 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   IsDead: 0
   innerDistance: 7
-  attackDistance: 2.5
+  attackDistance: 2
   moveSpeed: 4.5
   attackSpeed: 0.8
   maxDetectedCount: 0
   provokeRange: 25
-  isBot: 0
   passiveData: {fileID: 0}
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
@@ -350,6 +349,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -466,7 +468,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.15
-  m_Radius: 0.3
+  m_Radius: 0.45
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -481,11 +483,11 @@ NavMeshAgent:
   m_GameObject: {fileID: 481074842572994420}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.6
-  m_Speed: 1
-  m_Acceleration: 15
+  m_Radius: 0.45
+  m_Speed: 3.5
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 2500
+  m_AngularSpeed: 480
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

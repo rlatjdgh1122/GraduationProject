@@ -8,10 +8,8 @@ public class MopAoEAttackState : MopBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = false;
-        _penguin.WaitForCommandToArmyCalled = false;
-        _penguin.FindFirstNearestEnemy();
-        _penguin.StopImmediately();
+
+        AttackEnter(); 
     }
 
     public override void FixedUpdateState()

@@ -12,11 +12,7 @@ public class GeneralAoEAttackState : GeneralBaseState
     {
         base.Enter();
 
-        _triggerCalled = false;
-        _penguin.FindFirstNearestEnemy();
-        _penguin.StopImmediately();
-        _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
-
+        AttackEnter();
     }
     public override void UpdateState()
     {

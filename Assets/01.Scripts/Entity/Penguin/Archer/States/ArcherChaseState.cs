@@ -23,18 +23,16 @@ public class ArcherChaseState : ArcherBaseState
         if (IsArmyCalledIn_CommandMode())
         {
             _stateMachine.ChangeState(ArcherPenguinStateEnum.MustMove);
-            return;
-        }
-
-        else if (_penguin.IsInnerMeleeRange)
-        {
-            _stateMachine.ChangeState(ArcherPenguinStateEnum.Attack);
-            return;
         }
         else
         {
-            IsTargetNull(ArcherPenguinStateEnum.Idle);
-            return;
+            if (_penguin.CurrentTarget != null)
+                _penguin.MoveToCurrentTarget();
+
+            if (_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(ArcherPenguinStateEnum.Attack);
+
+            else IsTargetNull(ArcherPenguinStateEnum.Idle);
         }
     }
 

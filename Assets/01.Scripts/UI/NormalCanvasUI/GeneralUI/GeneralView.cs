@@ -28,6 +28,9 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
     {
         base.Awake();
 
+        //여기서도 클론으로
+        GeneralInfoData = Instantiate(GeneralInfoData);
+
         if (GeneralInfoData.GeneralDetailData.IsAvailable)
             SetUpgradeUI(GeneralInfoData);
         else

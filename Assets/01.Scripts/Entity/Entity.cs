@@ -93,7 +93,6 @@ public abstract class Entity : PoolableMono
             if (NavAgent.isActiveAndEnabled)
             {
                 NavAgent.isStopped = true;
-                //NavAgent.velocity = Vector3.zero;
             }
         }
     }

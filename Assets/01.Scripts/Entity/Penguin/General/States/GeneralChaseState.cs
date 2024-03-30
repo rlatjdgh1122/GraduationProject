@@ -11,8 +11,8 @@ public class GeneralChaseState : GeneralBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
-        _penguin.FindFirstNearestEnemy();
+
+        ChaseEnter();
 
         _penguin.skill.OnSkillStart += HoldShield;
     }
@@ -20,14 +20,21 @@ public class GeneralChaseState : GeneralBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_penguin.CurrentTarget != null)
-            _penguin.SetTarget(_penguin.CurrentTarget.transform.position);
 
-        if (_penguin.IsInnerMeleeRange)
-            _stateMachine.ChangeState(GeneralPenguinStateEnum.Attack);
+        if (IsArmyCalledIn_CommandMode())
+        {
+            _stateMachine.ChangeState(GeneralPenguinStateEnum.MustMove);
+        }
+        else
+        {
+            if (_penguin.CurrentTarget != null)
+                _penguin.MoveToCurrentTarget();
 
-        if (_penguin.CurrentTarget == null)
-            _stateMachine.ChangeState(GeneralPenguinStateEnum.Idle);
+            if (_penguin.IsInnerMeleeRange)
+                _stateMachine.ChangeState(GeneralPenguinStateEnum.Block);
+
+            else IsTargetNull(GeneralPenguinStateEnum.Idle);
+        }
     }
 
     public override void Exit()
