@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class TutorialManager : Singleton<TutorialManager>
 {
     private int curQuestIdx = 0;
-    public int CurQuestIdx => curQuestIdx;
+    public int CurTutoQuestIdx => curQuestIdx;
 
     [SerializeField]
     private string[] tutorialIds;
@@ -33,5 +33,20 @@ public class TutorialManager : Singleton<TutorialManager>
     public void IncreaseQuestIdx()
     {
         curQuestIdx++;
+    }
+
+    public string GetNextTutorialQuest()
+    {
+        IncreaseQuestIdx(); // 튜토리얼 퀘스트는 순서대로 해야 하니까 idx 증가
+
+        if (tutorialIds[CurTutoQuestIdx] != null)
+        {
+            return tutorialIds[CurTutoQuestIdx];
+        }
+        else
+        {
+            Debug.Log("튜토리얼 퀘스트 끝이다");
+            return null;
+        }
     }
 }

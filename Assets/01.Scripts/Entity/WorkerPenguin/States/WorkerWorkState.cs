@@ -13,6 +13,8 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
     {
         base.Enter();
         _triggerCalled = false;
+
+        _worker.StopImmediately();
     }
 
     public override void UpdateState()
@@ -35,6 +37,8 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 
     public override void Exit()
     {
+        _worker.StartImmediately();
+
         base.Exit();
     }
 }
