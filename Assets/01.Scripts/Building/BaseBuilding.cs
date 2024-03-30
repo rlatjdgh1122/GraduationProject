@@ -91,6 +91,7 @@ public abstract class BaseBuilding : WorkableObject
         {
 
         }
+
         SetUpCompo();
     }
 
