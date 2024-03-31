@@ -41,6 +41,7 @@ public class NexusUIPresenter : NexusPopupUI
         nexusBase.NexusStat.level++;
         nexusBase.NexusStat.upgradePrice *= 2; // <-이건 임시
         WorkerManager.Instance.MaxWorkerCount++; //이것도 임시수식
+        SoundManager.Play2DSound(SoundName.LevelUp); //이것도 임시
 
         OnUpdateNexusUI?.Invoke();
     }

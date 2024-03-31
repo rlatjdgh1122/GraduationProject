@@ -43,7 +43,10 @@ public enum SoundName
     Build,
     Win,
     Lose,
-    CostBox
+    CostBox,
+    LevelUp,
+    None,
+    WoodCut
 }
 
 public class SoundManager : MonoBehaviour
@@ -88,6 +91,8 @@ public class SoundManager : MonoBehaviour
 
         if (instance == null) return;
 
+        if(name == SoundName.None) return;
+
         instance.Play2D(name, type);
 
     }
@@ -108,6 +113,8 @@ public class SoundManager : MonoBehaviour
     {
 
         if (instance == null) return;
+
+        if (clipName == SoundName.None) return;
 
         instance.Play3D(clipName, position, minFOV, maxFOV, maxDistance, type, rolloffMode);
 
