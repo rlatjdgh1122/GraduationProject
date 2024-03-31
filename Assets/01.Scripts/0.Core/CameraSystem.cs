@@ -60,24 +60,24 @@ public class CameraSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (UIManager.Instance.currentPopupUI.Count != 0)
-        {
-            if (IsMoving == true)
-            {
-                IsMoving = false;
-            }
-            if (isRotating == true)
-            {
-                isRotating = false;
-            }
-        }
-        else
-        {
-            if (IsMoving == false)
-            {
-                IsMoving = true;
-            }
-        }
+        //if (UIManager.Instance.currentPopupUI.Count != 0)
+        //{
+        //    if (IsMoving == true)
+        //    {
+        //        IsMoving = false;
+        //    }
+        //    if (isRotating == true)
+        //    {
+        //        isRotating = false;
+        //    }
+        //}
+        //else
+        //{
+        //    if (IsMoving == false)
+        //    {
+        //        IsMoving = true;
+        //    }
+        //}
         CameraControl();
         CameraMove();
         //Move();

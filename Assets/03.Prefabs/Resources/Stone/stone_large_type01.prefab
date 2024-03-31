@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 5697cc85cf4f49245b54481cab6a47a3, type: 2}
+  resourceType: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   _resourceStat: {fileID: 11400000, guid: 5697cc85cf4f49245b54481cab6a47a3, type: 2}
   OnRecieveResourceEvent:
@@ -119,10 +120,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls: []
   OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStunEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEvasionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
@@ -203,6 +216,6 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 3be0096aee5f549eca5ff3432ff02572, type: 3}

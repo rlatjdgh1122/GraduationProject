@@ -40,7 +40,9 @@ public class Worker : Entity
 
     public float CheckDistance()
     {
-        return Vector3.Distance(transform.position, Target.transform.position);
+        Collider targetCollider = Target.gameObject.GetComponent<Collider>();
+        Vector3 workerPosition = transform.position;
+        return Vector3.Distance(workerPosition, targetCollider.ClosestPoint(workerPosition));
     }
 
     public void MoveToNexus()

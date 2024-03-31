@@ -79,8 +79,7 @@ public class WorkerManager : Singleton<WorkerManager>
                     break;
             }
         }
-
-        if (workableObject.resourceType == ResourceType.Wood)
+        else if (workableObject.resourceType == ResourceType.Wood)
         {
             foreach (WoodCutterPenguin wood in _woodCutterList)
             {

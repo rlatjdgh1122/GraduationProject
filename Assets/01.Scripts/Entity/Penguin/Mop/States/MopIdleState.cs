@@ -34,6 +34,7 @@ public class MopIdleState : MopBaseState
 
     public override void Exit()
     {
+        SignalHub.OnIceArrivedEvent -= FindTarget;
         IdleExit();
 
         base.Exit();

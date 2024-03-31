@@ -11,6 +11,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     #region Enter
     protected void IdleEnter()
     {
+        SignalHub.OnIceArrivedEvent += FindTarget;
 
         if (_navAgent != null)
         {
@@ -22,8 +23,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
-
-        SignalHub.OnIceArrivedEvent += FindTarget;
     }
     protected void AttackEnter()
     {
@@ -128,7 +127,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     /// 배틀모드일 때 다 죽이면 위치로 이동하는 함수
     /// </summary>
 
-    private void FindTarget()
+    public void FindTarget()
     {
         _penguin.FindFirstNearestEnemy();
     }
