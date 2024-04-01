@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WorkerManager : Singleton<WorkerManager>
@@ -34,12 +36,19 @@ public class WorkerManager : Singleton<WorkerManager>
     public int MaxWorkerCount
     {
         get { return _maxWorkerCount; }
-        set {  _maxWorkerCount = value; }
+        set 
+        {  
+            _maxWorkerCount = value;
+            OnUIUpdate?.Invoke(_maxWorkerCount);
+        }
     }
 
     public List<MinerPenguin> SpawnedMinerList => _spawnedMinerList;
     public List<WoodCutterPenguin> SpawnedWoodCutterList => _spawnedWoodCutterList;
     #endregion
+
+    public delegate void OnUIUpdateHandler(int count);
+    public event OnUIUpdateHandler OnUIUpdate;
 
     public override void Awake()
     {
@@ -56,7 +65,6 @@ public class WorkerManager : Singleton<WorkerManager>
             _builderList.Add(_builderPrefabs);
             _woodCutterList.Add(_woodCutterPrefab);
         }
-
     }
 
     public void SendWorkers(int count, WorkableObject workableObject)
