@@ -13,6 +13,11 @@ public class NexusStat : BaseStat
     public int priceIncreaseValue;
     public int levelupIncreaseValue;
 
+    [HideInInspector]
+    public BuildingItemInfo unlockedBuilding;
+    [HideInInspector]
+    public BuildingItemInfo previewBuilding;
+
     public override int GetMaxHealthValue()
     {
         return maxHealth.GetValue();
