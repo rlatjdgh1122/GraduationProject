@@ -46,7 +46,6 @@ public class DialogSystem : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0) && isTyping && canClick)
         {
-            Debug.Log("Qld");
             tippingSpeed = 0;
         }
     }

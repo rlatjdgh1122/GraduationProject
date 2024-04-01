@@ -119,6 +119,13 @@ public class InstallSystem : MonoBehaviour
             _curBuilding?.transform.SetParent(_previousGround.transform);
             _previousGround?.InstallBuilding();
             StopInstall();
+
+            if (TutorialManager.Instance.CurTutoQuestIdx == 4 ||
+                TutorialManager.Instance.CurTutoQuestIdx == 7) //ÀÏ´Ü Äù½ºÆ®
+            {
+                TutorialManager.Instance.CurTutorialProgressQuest();
+            }
+
             isInstalling = false;
         }
     }
