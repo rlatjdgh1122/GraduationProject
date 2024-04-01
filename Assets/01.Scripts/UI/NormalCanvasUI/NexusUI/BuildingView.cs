@@ -1,12 +1,15 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildingView : NexusPopupUI
 {
-    public BuildingItemInfo building;
     [HideInInspector]
     public SpawnBuildingButton spawn;
+
+    public NexusBase nexus;
+    public BuildingItemInfo building;
 
     public Button purchaseButton;
     public TextMeshProUGUI buildingName;
@@ -22,8 +25,10 @@ public class BuildingView : NexusPopupUI
 
     private void Start()
     {
+        building = nexus.BuildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
         spawn = GetComponent<SpawnBuildingButton>();
         SetDefaultUI();
+        UpdateUI();
     }
 
     public void OnPurchase()
@@ -45,7 +50,6 @@ public class BuildingView : NexusPopupUI
     {
         if (!building.IsUnlocked)
         {
-            UpdateUI();
             return;
         }
         else

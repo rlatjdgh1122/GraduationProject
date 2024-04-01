@@ -5,11 +5,13 @@ public class NexusBase : MonoBehaviour
 {
     #region components
     [SerializeField] private NexusStat _nexusStat;
+    [SerializeField] private BuildingDatabaseSO _buildingDatabase;
     private Health _health;
     #endregion
 
     #region property
     public NexusStat NexusStat => _nexusStat;
+    public BuildingDatabaseSO BuildingDatabase => _buildingDatabase;
     public Health HealthCompo => _health;
     #endregion
 
@@ -21,6 +23,7 @@ public class NexusBase : MonoBehaviour
     private void Awake()
     {
         _nexusStat = Instantiate(_nexusStat);
+        _buildingDatabase = Instantiate(_buildingDatabase);
 
         _health = GetComponent<Health>();
 
