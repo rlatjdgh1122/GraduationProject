@@ -77,10 +77,11 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
         var results = new System.Collections.Generic.List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
 
-        foreach (var ray in results)
+        
+        /*foreach (var ray in results)
         {
             Debug.Log(ray.gameObject.name);
-        }
+        }*/
 
         return results.Count > 0;
     }

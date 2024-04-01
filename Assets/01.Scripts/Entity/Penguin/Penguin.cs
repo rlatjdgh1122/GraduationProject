@@ -270,8 +270,6 @@ public class Penguin : Entity
         //켜져있는 애들만
         if (gameObject.activeSelf)
         {
-            Debug.Log("pos 1 : " + transform.position);
-            Debug.Log("navPos 1 : " + NavAgent.transform.position);
             //안죽었다면 더미펭귄으로 변신
             if (!IsDead)
                 SpawnManager.Instance.ChangedToDummyPenguin(this);

@@ -100,7 +100,7 @@ public class SpawnManager : Singleton<SpawnManager>
         if (penguinToDummyDictionary.TryGetValue(obj, out var value))
         {
             var trm = obj.transform;
-            Debug.Log("pos 2 : " + trm.position);
+
             //가짜 펭귄은 위치를 설정해주고 켜줌
             value.gameObject.SetActive(true);
             value.IsGoToHouse = false;

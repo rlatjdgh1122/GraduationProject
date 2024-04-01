@@ -97,7 +97,7 @@ public class ArmyManager : Singleton<ArmyManager>
                     () => s.OutlineCompo.enabled = true,
                     () => s.OutlineCompo.enabled = false);
 
-            s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
+            s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
 
         if (curArmy.General)
@@ -125,7 +125,7 @@ public class ArmyManager : Singleton<ArmyManager>
                     () => s.OutlineCompo.enabled = true,
                     () => s.OutlineCompo.enabled = false);
 
-                s.HealthCompo.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
+                s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
 
             })
            , p =>
