@@ -6,7 +6,7 @@ public class GeneralAttackState : GeneralBaseState
 {
 
     private int curAttackCount = 0;
-    public GeneralAttackState(General penguin, EntityStateMachine<GeneralPenguinStateEnum,General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    public GeneralAttackState(General penguin, EntityStateMachine<GeneralPenguinStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
 
     }
@@ -29,7 +29,9 @@ public class GeneralAttackState : GeneralBaseState
         {
             if (_triggerCalled)
             {
-                _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
+                if (_penguin.CurrentTarget.IsDead)
+                    _stateMachine.ChangeState(GeneralPenguinStateEnum.Chase);
+
                 //다죽였다면 이동
                 IsTargetNull(GeneralPenguinStateEnum.MustMove);
             }
@@ -51,7 +53,7 @@ public class GeneralAttackState : GeneralBaseState
                 IsTargetNull(GeneralPenguinStateEnum.Idle);
             }
         }
-       
+
     }
 
     public override void Exit()
