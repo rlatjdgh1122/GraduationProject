@@ -57,6 +57,8 @@ public class Health : MonoBehaviour, IDamageable
 
         if (!IsPositionValid(knockbackPosition))
         {
+            WaterFallEvent?.Invoke();
+
             transform.DOMoveY(transform.position.y - 2f, 1.2f);
 
             Dead();

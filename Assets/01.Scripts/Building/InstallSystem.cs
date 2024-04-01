@@ -92,7 +92,7 @@ public class InstallSystem : MonoBehaviour
             _curBuilding = null;
         }
 
-        _cancelInstallBuildingText.gameObject.SetActive(false);
+       // _cancelInstallBuildingText.gameObject.SetActive(false);
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnEscEvent -= StopInstall;

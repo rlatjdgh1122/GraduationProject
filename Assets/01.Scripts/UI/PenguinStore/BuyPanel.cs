@@ -52,7 +52,7 @@ public class BuyPanel : PopupUI
     private int _amountPrice;
     private void PriceUpdate() //Æë±ÏÀÇ ÃÑ °¡°ÝÀ» °è»êÇØ¼­ ¾÷µ«
     {
-        _amountPrice = (_price * _cnt);
+        _amountPrice = -(_price * _cnt);
 
         _presenter.TextUpdate(_priceText, _amountPrice.ToString());
 

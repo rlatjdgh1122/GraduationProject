@@ -28,6 +28,8 @@ public class Enemy : Entity
     //public bool IsDead = false;
     public bool IsProvoked = false;
 
+    public bool IsTargetPlayerInsideWhenNexus => CurrentTarget != null &&
+                           Vector3.Distance(transform.position, CurrentTarget.transform.position) <= 500;
     public bool IsTargetPlayerInside => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.transform.position) <= innerDistance;
     public bool CanAttack => CurrentTarget != null &&
