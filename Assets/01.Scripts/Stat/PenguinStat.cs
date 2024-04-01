@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-[CreateAssetMenu(menuName = "SO/Stat/Penguin")]
+[CreateAssetMenu(menuName = "SO/Stat/Penguin/Basic")]
 public class PenguinStat : BaseStat
 {
 

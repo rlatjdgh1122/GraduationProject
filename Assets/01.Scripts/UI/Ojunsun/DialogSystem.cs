@@ -12,7 +12,9 @@ public class DialogSystem : MonoBehaviour
 
     [SerializeField] TMP_Text txtSentence;
     [SerializeField] private float _fadeValue;
-    [SerializeField] private float _tippingSpeed;
+    [SerializeField] private float defaultTippingSpeed;
+
+    private float tippingSpeed;
 
     private Tween fadeTween;
 
@@ -21,6 +23,11 @@ public class DialogSystem : MonoBehaviour
     bool canClick = true;
 
     Queue<string> sentences = new Queue<string>();
+
+    private void Start()
+    {
+        tippingSpeed = defaultTippingSpeed;
+    }
 
     public void Begin(string[] texts)
     {
@@ -35,14 +42,25 @@ public class DialogSystem : MonoBehaviour
         Next();
     }
 
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0) && isTyping && canClick)
+        {
+            Debug.Log("Qld");
+            tippingSpeed = 0;
+        }
+    }
+
     public void Next()
     {
-        if(canClick)
+        if (canClick)
         {
             if (isTyping)
                 return;
 
-            if(sentences.Count <= 0)
+            tippingSpeed = defaultTippingSpeed;
+
+            if (sentences.Count <= 0)
             {
                 dialCount++;
                 End();
@@ -62,7 +80,7 @@ public class DialogSystem : MonoBehaviour
         foreach (var letter in sentence)
         {
             txtSentence.text += letter;
-            yield return new WaitForSeconds(_tippingSpeed);
+            yield return new WaitForSeconds(tippingSpeed);
         }
 
         isTyping = false;
