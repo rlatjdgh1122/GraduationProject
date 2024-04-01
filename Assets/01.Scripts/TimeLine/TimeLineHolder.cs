@@ -32,7 +32,7 @@ public class TimeLineHolder : MonoBehaviour
 
     private void BeforeBattleWave()
     {
-        if (waveManager.IsCurrentWaveCountEqualTo(4) && isFirst)
+        if (waveManager.IsCurrentWaveCountEqualTo(3) && isFirst)
         {
             pd.Play(ta[0]);
             isFirst = false;
