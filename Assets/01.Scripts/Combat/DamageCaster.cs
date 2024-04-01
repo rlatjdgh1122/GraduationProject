@@ -208,7 +208,7 @@ public class DamageCaster : MonoBehaviour
             {
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
 
-                if (Knb == true)
+                if (Knb == true && col.gameObject.layer != 13) //13은 넥서스 레이어고 임시
                     health.KnockBack(value, raycastHit.normal);
 
             }
