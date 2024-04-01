@@ -31,6 +31,8 @@ public abstract class DefenseBuilding : BaseBuilding
 
         _fov = GetComponent<FieldOfView>();
         _health = GetComponent<Health>();
+
+        _health.SetHealth(_characterStat);
         _health.enabled = false; // 설치 완료 되기 전까지는 공격 대상 X
     }
 

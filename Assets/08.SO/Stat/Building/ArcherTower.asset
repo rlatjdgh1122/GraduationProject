@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 599295a7da6fb5840b73025bd4da3766, type: 3}
-  m_Name: BuilderPenguin
+  m_Script: {fileID: 11500000, guid: 78dd65ec0f6029845a459fbb60555ed0, type: 3}
+  m_Name: ArcherTower
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 1000
+    _baseValue: 100
     _fewTimes: 0
     _finalValue: 0
     increases: 
@@ -25,7 +25,7 @@ MonoBehaviour:
     increases: 
     decreases: 
   evasion:
-    _baseValue: 5
+    _baseValue: 0
     _fewTimes: 0
     _finalValue: 0
     increases: 
@@ -78,3 +78,9 @@ MonoBehaviour:
     _finalValue: 0
     increases: 
     decreases: 
+  level: 0
+  upgradePrice: 0
+  needResourceHigh: 0
+  needResourceLow: 0
+  priceIncreaseValue: 0
+  levelupIncreaseValue: 0

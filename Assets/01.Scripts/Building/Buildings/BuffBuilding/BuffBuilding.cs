@@ -60,7 +60,8 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         SetBuffValue(DefaultBuffValue);
         SetOutoffRangeBuffDuration(DefaultOutoffRangeBuffDuration);
 
-        _health = GetComponent<Health>(); 
+        _health = GetComponent<Health>();
+        _health.SetHealth(_characterStat);
         _health.enabled = false; // 설치 완료 되기 전까지는 공격 대상 X
     }
 
