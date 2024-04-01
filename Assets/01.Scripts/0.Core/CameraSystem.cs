@@ -19,6 +19,7 @@ public class CameraSystem : MonoBehaviour
     [Header("카메라 확대&축소")]
     [SerializeField] private float _fieldOfViewMax = 50;
     [SerializeField] private float fieldOfViewMin = 10;
+    [SerializeField] private float _scrollAmount = 5f;
 
     [Header("카메라 회전")]
     [Range(0.1f, 9f)]
@@ -189,11 +190,11 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.mouseScrollDelta.y < 0)
         {
-            targetFieldOfView += 5;
+            targetFieldOfView += _scrollAmount;
         }
         if (Input.mouseScrollDelta.y > 0)
         {
-            targetFieldOfView -= 5;
+            targetFieldOfView -= _scrollAmount;
         }
 
         targetFieldOfView = Mathf.Clamp(targetFieldOfView, fieldOfViewMin, _fieldOfViewMax);
