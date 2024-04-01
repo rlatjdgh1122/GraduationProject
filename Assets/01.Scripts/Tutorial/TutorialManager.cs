@@ -19,7 +19,7 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
     {
         curQuestIdx = 0;
 
-        StartCurTutorialQuest();
+        //StartCurTutorialQuest();
         SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest();
     }
 
