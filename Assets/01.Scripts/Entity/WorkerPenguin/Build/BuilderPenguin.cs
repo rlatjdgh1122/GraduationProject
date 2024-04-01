@@ -37,6 +37,11 @@ public class BuilderPenguin : Worker
 
     protected override void Update()
     {
+        if (WorkerStateCheck)
+        {
+            StateMachine.Init(WorkerPenguinStateEnum.Idle);
+            WorkerStateCheck = false;
+        }
         StateMachine.CurrentState.UpdateState();
     }
 
