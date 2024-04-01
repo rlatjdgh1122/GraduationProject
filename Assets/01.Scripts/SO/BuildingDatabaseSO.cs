@@ -20,6 +20,10 @@ public enum DefaultBuildingType
 public class BuildingItemInfo
 {
     [SerializeField]
+    private int _unlockedLevel;
+    public int UnlockedLevel => _unlockedLevel;
+
+    [SerializeField]
     private BuildingType _buildingTypeEnum;
     public BuildingType BuildingTypeEnum { get { return _buildingTypeEnum; } }
 

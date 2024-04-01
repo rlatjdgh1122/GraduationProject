@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine.UI;
 
 public class NexusPanel : NexusPopupUI
 {
@@ -8,7 +9,7 @@ public class NexusPanel : NexusPopupUI
     public TextMeshProUGUI nextHp;
     public TextMeshProUGUI currentWorkerCount;
     public TextMeshProUGUI nextWorkerCount;
-
+    public Image buildingIcon;
     public TextMeshProUGUI upgradePrice;
 
     private NexusStat nexusStat => presenter.nexusBase.NexusStat;
@@ -32,6 +33,7 @@ public class NexusPanel : NexusPopupUI
         nextHp.text = $"{nexusStat.GetUpgradedMaxHealthValue()}";
         currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
         nextWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount + 1}";
+        buildingIcon.sprite = nexusStat.previewBuilding.UISprite;
         upgradePrice.text = $"{nexusStat.upgradePrice}";
     }
 
