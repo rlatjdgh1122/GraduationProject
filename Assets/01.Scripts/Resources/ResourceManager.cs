@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ResourceManager : Singleton<ResourceManager>
@@ -7,6 +8,9 @@ public class ResourceManager : Singleton<ResourceManager>
     public Dictionary<ResourceDataSO, Resource> resourceDictionary;
 
     public ResourceObject SelectedResource;
+
+    public delegate void OnUIUpdateHandler(Resource resource, int stackCount);
+    public event OnUIUpdateHandler OnUIUpdate;
 
     public override void Awake()
     {
@@ -19,12 +23,14 @@ public class ResourceManager : Singleton<ResourceManager>
         if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
         {
             resource.AddStack(count);
+            OnUIUpdate(resource, count);
         }
         else
         {
             Resource newResource = new Resource(resourceData);
             resourceStack.Add(newResource);
             resourceDictionary.Add(resourceData, newResource);
+            OnUIUpdate(newResource, count);
         }
     }
 
