@@ -15,7 +15,7 @@ public class NexusUpgradePanel : PopupUI
     [SerializeField] private RectTransform _element;    
 
     public NexusBase nexus;
-
+    
     public override void Awake()
     {
         base.Awake();

@@ -11,7 +11,7 @@ public class TimeLineHolder : MonoBehaviour
     public TimelineAsset[] ta;
     public bool isFirst;
 
-  /*  private void Start()
+    private void Start()
     {
         isFirst = true;
         pd = GetComponent<PlayableDirector>();
@@ -32,23 +32,15 @@ public class TimeLineHolder : MonoBehaviour
 
     private void BeforeBattleWave()
     {
-<<<<<<< HEAD
         if (waveManager.IsCurrentWaveCountEqualTo(3) && isFirst)
         {
             pd.Play(ta[0]);
             isFirst = false;
         }
-=======
-        //if(waveManager.IsCurrentWaveCountEqualTo(4) && isFirst)
-        //{
-        //    pd.Play(ta[0]);
-        //    isFirst = false;
-        //}
->>>>>>> parent of fdf090e2 (cutscene)
     }
 
     private void AfterBattleWave()
     {
 
-    }*/
+    }
 }
