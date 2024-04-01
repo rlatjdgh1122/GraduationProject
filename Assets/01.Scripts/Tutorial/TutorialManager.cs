@@ -15,19 +15,6 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
     [SerializeField]
     private string[] tutorialIds;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            QuestManager.Instance.SetCanStartQuest($"{tutorialIds[curQuestIdx]}");
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            QuestManager.Instance.ProgressQuest($"{tutorialIds[curQuestIdx]}");
-        }
-    }
-
     private void Start()
     {
         curQuestIdx = 0;
@@ -49,7 +36,8 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
 
         if (curQuestIdx == 1 || curQuestIdx == 2 ||
             curQuestIdx == 3 || curQuestIdx == 4 ||
-            curQuestIdx == 6 || curQuestIdx == 7)
+            curQuestIdx == 5 || curQuestIdx == 6 ||
+            curQuestIdx == 7)
         {
             return;
         }

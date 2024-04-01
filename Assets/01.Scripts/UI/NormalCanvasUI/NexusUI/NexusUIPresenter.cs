@@ -69,7 +69,7 @@ public class NexusUIPresenter : NexusPopupUI
 
         if (TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
         {
-            TutorialManager.Instance.CurTutorialProgressQuest();
+            TutorialManager.Instance.CurTutorialProgressQuest();        
         }
     }
 

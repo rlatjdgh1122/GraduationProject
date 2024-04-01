@@ -99,6 +99,12 @@ public class QuestManager : Singleton<QuestManager>
 
         Debug.Log($"{questData.Id} 퀘스트 시이작");
 
+        if (_curInprogressQuests.ContainsKey(questData.Id))
+        {
+            Debug.Log($"{questData.Id}는 이미 진행중인듯 퀘스트임 리턴함;;");
+            return;
+        }
+
         _curInprogressQuests.Add(questData.Id, questData); //현재 진행중 퀘스트 리스트에 추가
         InstantiateQuest(questData);
 
