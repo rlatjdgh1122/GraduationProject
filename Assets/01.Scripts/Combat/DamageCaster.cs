@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamageCaster : MonoBehaviour
@@ -65,6 +66,28 @@ public class DamageCaster : MonoBehaviour
                 if (Knb == true)
                     health.KnockBack(value, raycastHit.normal);
 
+            }
+        }
+    }
+
+    public void CastOverlap()
+    {
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+
+        foreach (var col in Colls)
+        {
+            RaycastHit raycastHit;
+
+            var dir = (col.transform.position - transform.position).normalized;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+
+            if (raycastSuccess &&
+                raycastHit.collider.TryGetComponent<Health>(out Health health))
+            {
+                int damage = _owner.Stat.damage.GetValue();
+
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             }
         }
     }
@@ -221,9 +244,12 @@ public class DamageCaster : MonoBehaviour
     {
         if (UnityEditor.Selection.activeObject == gameObject)
         {
+            //Gizmos.color = Color.red;
+            //Gizmos.DrawWireSphere(transform.position, _detectRange);
+            //Gizmos.color = Color.white;
+
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _detectRange);
-            Gizmos.color = Color.white;
+            Gizmos.DrawLine(transform.position, transform.forward);
         }
     }
 #endif
