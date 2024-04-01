@@ -73,12 +73,12 @@ public class Health : MonoBehaviour, IDamageable
     public bool Stun(RaycastHit ray, float duration)
     {
         GameObject enemy = ray.collider.gameObject;
-        Debug.Log(enemy.name + "이(가) 스턴 상태가 되었습니다.");
+        //Debug.Log(enemy.name + "이(가) 스턴 상태가 되었습니다.");
         OnStunEvent?.Invoke();
 
         StartCoroutine(StunCoroutine(enemy, duration));
         
-        Debug.Log(enemy.name + "이(가) 스턴 상태에서 벗어났습니다.");
+        //Debug.Log(enemy.name + "이(가) 스턴 상태에서 벗어났습니다.");
         return true;
     }
 
