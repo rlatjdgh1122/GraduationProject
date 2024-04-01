@@ -28,10 +28,10 @@ public class PassiveDataSO : ScriptableObject
 
     private float curTime = 0f;
 
-    private void Awake()
+   /* private void Awake()
     {
         EditorUtility.SetDirty(this);
-    }
+    }*/
     public void Start()
     {
         
