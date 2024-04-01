@@ -85,7 +85,7 @@ public abstract class BaseBuilding : WorkableObject
 
         if (_buildingItemInfo != null)
         {
-            _remainTimeUI = transform.Find("Canvas").GetComponent<TimeRemain>();
+            _remainTimeUI = transform.Find("TimeRemainCanvas").GetComponent<TimeRemain>();
         }
 
         SetUpCompo();
