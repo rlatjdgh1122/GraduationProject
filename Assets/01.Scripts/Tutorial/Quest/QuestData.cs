@@ -39,6 +39,8 @@ public class QuestData
 
     public bool IsTutorialQuest;
     public int TutorialQuestIdx;
+
+    [TextArea()]
     public string[] TutorialTexts;
 
     public int CurProgressCount = 0;

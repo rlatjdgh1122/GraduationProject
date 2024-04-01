@@ -52,6 +52,8 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
 
     Health _health;
 
+    private bool isEffectPlaying = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -66,9 +68,13 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
     {
         if (_curcolls.Length > previousColls.Length)
         {
-            feedbackPlayer.PlayFeedback();
+            if (!isEffectPlaying)
+            {
+                feedbackPlayer.PlayFeedback();
+            }
             OnPenguinInsideRangeEnter();
             isChecked = true;
+            isEffectPlaying = true;
         }
         else if(_curcolls.Length < previousColls.Length)
         {
@@ -81,6 +87,7 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
             {
                 isChecked = false;
                 feedbackPlayer.FinishFeedback();
+                isEffectPlaying = false;
             }
         }
 
