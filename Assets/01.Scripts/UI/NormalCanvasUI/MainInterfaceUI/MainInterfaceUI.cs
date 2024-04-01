@@ -44,10 +44,4 @@ public class MainInterfaceUI : MonoBehaviour
             _woodText.text = $"{resource.stackSize}";
         }
     }
-
-    private void OnDestroy()
-    {
-        WorkerManager.Instance.OnUIUpdate -= UpdateWorkerUI;
-        ResourceManager.Instance.OnUIUpdate -= UpdateResourceUI;
-    }
 }

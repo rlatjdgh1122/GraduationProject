@@ -43,7 +43,7 @@ public class BuildingItemInfo
     private int _price;
     public int Price => _price;
 
-    [SerializeField]
+    [SerializeField, TextArea()]
     private string _description;
     public string Description => _description;
 
@@ -93,5 +93,5 @@ public class BuildingItemInfo
 [CreateAssetMenu(menuName = "SO/Building/BuildingList")]
 public class BuildingDatabaseSO : ScriptableObject
 {
-   public List<BuildingItemInfo> BuildingItems = null;
+    public List<BuildingItemInfo> BuildingItems = null;
 }
