@@ -13,7 +13,6 @@ public class QuestManager : Singleton<QuestManager>
     private Dictionary<string, QuestData> _allQuests = new Dictionary<string, QuestData>();
 
     private Dictionary<string, QuestData> _curInprogressQuests = new Dictionary<string, QuestData>();
-    public Dictionary<string, QuestData> CurInprogressQuests => _curInprogressQuests; //지금 진행중인 퀘스트
 
     private DialogSystem _dialogSystem;
     private QuestUI _questUI;
