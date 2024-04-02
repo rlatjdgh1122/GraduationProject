@@ -16,6 +16,7 @@ public class TimeLineHolder : MonoBehaviour
         isFirst = true;
         pd = GetComponent<PlayableDirector>();
         waveManager = WaveManager.Instance;
+
     }
 
     private void OnEnable()
@@ -47,6 +48,7 @@ public class TimeLineHolder : MonoBehaviour
     private IEnumerator TutoQuestCorou()
     {
         yield return new WaitForSeconds(4.5f);
+        Debug.Log("지금이니~");
         TutorialManager.Instance.StartCurTutorialQuest();
     }
 

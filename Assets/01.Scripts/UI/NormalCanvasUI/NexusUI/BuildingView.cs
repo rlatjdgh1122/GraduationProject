@@ -7,8 +7,7 @@ public class BuildingView : NexusPopupUI
 {
     [HideInInspector]
     public SpawnBuildingButton spawn;
-
-    public NexusBase nexus;
+    [HideInInspector]
     public BuildingItemInfo building;
 
     public Button purchaseButton;
@@ -21,21 +20,22 @@ public class BuildingView : NexusPopupUI
     public override void Awake()
     {
         base.Awake();
+
+        OnUIUpdate += UpdateUI;
     }
 
-    private void Start()
+    protected override void Start()
     {
-        building = nexus.BuildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
+        base.Start();
+        building = _buildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
         spawn = GetComponent<SpawnBuildingButton>();
         SetDefaultUI();
-        UpdateUI();
     }
 
-    public void OnPurchase()
+    public override void OnClick()
     {
-        presenter.PurchaseBuilding(this);
-
-        UpdateUI();
+        _presenter.PurchaseBuilding(this);
+        base.OnClick();
     }
 
     public void UpdateUI()
@@ -58,5 +58,10 @@ public class BuildingView : NexusPopupUI
             purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
             UpdateUI();
         }
+    }
+
+    private void OnDisable()
+    {
+        OnUIUpdate -= UpdateUI;
     }
 }

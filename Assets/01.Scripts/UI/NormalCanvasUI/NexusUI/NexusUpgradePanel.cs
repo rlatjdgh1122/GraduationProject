@@ -23,13 +23,13 @@ public class NexusUpgradePanel : PopupUI
 
     public void UpdateUI()
     {
-        _level.text = $"레벨 {nexus.NexusStat.level}";
-        _previousHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
-        _currentHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
-        _previousWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount - 1}";
-        _currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
-        _unlockedImage.sprite = nexus.NexusStat.unlockedBuilding.UISprite;
-        _unlockedName.text = $"{nexus.NexusStat.unlockedBuilding.Name}";
+        //_level.text = $"레벨 {nexus.NexusStat.level}";
+        //_previousHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
+        //_currentHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
+        //_previousWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount - 1}";
+        //_currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
+        //_unlockedImage.sprite = nexus.NexusStat.unlockedBuilding.UISprite;
+        //_unlockedName.text = $"{nexus.NexusStat.unlockedBuilding.Name}";
 
         Sequence seq = DOTween.Sequence();
 
