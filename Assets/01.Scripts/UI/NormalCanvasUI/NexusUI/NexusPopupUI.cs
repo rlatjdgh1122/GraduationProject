@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NexusPopupUI : PopupUI
@@ -9,6 +10,7 @@ public class NexusPopupUI : PopupUI
     protected NexusUIPresenter _presenter;
     protected NexusStat _nexusStat;
     protected BuildingDatabaseSO _buildingDatabase;
+    protected NexusInfoDataSO _nexusInfo;
     #endregion
 
     protected event Action OnUIUpdate;
@@ -16,7 +18,6 @@ public class NexusPopupUI : PopupUI
     public override void Awake()
     {
         base.Awake();
-
         _presenter = UIManager.Instance.canvasTrm.Find("NexusUI").GetComponent<NexusUIPresenter>();
     }
 
@@ -24,6 +25,7 @@ public class NexusPopupUI : PopupUI
     {
         _nexusStat = NexusManager.Instance.NexusStat;
         _buildingDatabase = NexusManager.Instance.BuildingDatabase;
+        _nexusInfo = NexusManager.Instance.NexusInfo;
     }
 
     public virtual void OnClick()
