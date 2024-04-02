@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class NexusUIPresenter : NexusPopupUI
 {
-    private List<BuildingView> _buildingViews;
-
     [HideInInspector]
     public BuildingType buildingType;
 
@@ -18,17 +16,6 @@ public class NexusUIPresenter : NexusPopupUI
         base.Awake();
 
         _buildingFactory = FindAnyObjectByType<BuildingFactory>();
-
-        _buildingViews = GetComponentsInChildren<BuildingView>().ToList();
-        //_buildingViews.ForEach(item => item.building = 
-        //    nexusBase.BuildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == item.name));
-        //foreach (BuildingItemInfo building in nexusBase.BuildingDatabase.BuildingItems)
-        //{
-        //    if (nexusBase.NexusStat.level + 1 == building.UnlockedLevel)
-        //    {
-        //        nexusBase.NexusStat.previewBuilding = building;
-        //    }
-        //}
     }
 
     #region NexusUI
@@ -38,24 +25,12 @@ public class NexusUIPresenter : NexusPopupUI
             (_nexusStat.maxHealth.GetValue(), _nexusStat.level, _nexusStat.levelupIncreaseValue);
         _nexusStat.level++;
 
-        //foreach (BuildingItemInfo building in nexusBase.BuildingDatabase.BuildingItems)
-        //{
-        //    if (nexusBase.NexusStat.level == building.UnlockedLevel)
-        //    {
-        //        building.IsUnlocked = true;
-        //        nexusBase.NexusStat.unlockedBuilding = building;
-        //    }
-
-        //    if (nexusBase.NexusStat.level + 1 == building.UnlockedLevel)
-        //    {
-        //        nexusBase.NexusStat.previewBuilding = building;
-        //    }
-        //}
-
         //nexusBase.HealthCompo.SetHealth(nexusBase.NexusStat);
         _nexusStat.upgradePrice *= 2; // <-이건 임시
         WorkerManager.Instance.MaxWorkerCount++; //이것도 임시수식
         SoundManager.Play2DSound(SoundName.LevelUp); //이것도 임시
+        
+        NexusManager.Instance.UpdateNexusInfoData();
 
         if (TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
         {

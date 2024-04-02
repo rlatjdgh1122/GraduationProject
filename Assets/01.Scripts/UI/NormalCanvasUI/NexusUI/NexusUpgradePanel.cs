@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NexusUpgradePanel : PopupUI
+public class NexusUpgradePanel : NexusPopupUI
 {
     [SerializeField] private TextMeshProUGUI _level;
     [SerializeField] private TextMeshProUGUI _previousHp;
@@ -13,26 +13,28 @@ public class NexusUpgradePanel : PopupUI
     [SerializeField] private Image _unlockedImage;
     [SerializeField] private TextMeshProUGUI _unlockedName;
     [SerializeField] private RectTransform _element;    
-
-    public NexusBase nexus;
     
     public override void Awake()
     {
         base.Awake();
+
+        //OnUIUpdate += UpdateUI;
     }
 
     public void UpdateUI()
     {
-        //_level.text = $"레벨 {nexus.NexusStat.level}";
-        //_previousHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
-        //_currentHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
-        //_previousWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount - 1}";
-        //_currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
-        //_unlockedImage.sprite = nexus.NexusStat.unlockedBuilding.UISprite;
-        //_unlockedName.text = $"{nexus.NexusStat.unlockedBuilding.Name}";
+        _level.text = $"레벨 {_nexusStat.level}";
+        _previousHp.text = $"{_nexusInfo.previousMaxHealth}";
+        _currentHp.text = $"{_nexusInfo.currentMaxHealth}";
+        _previousWorkerCount.text = $"{_nexusInfo.previousWorkerCount}";
+        _currentWorkerCount.text = $"{_nexusInfo.currentWorkerCount}";
+        _unlockedImage.sprite = _nexusInfo.unlockedBuilding.UISprite;
+        _unlockedName.text = $"{_nexusInfo.unlockedBuilding.Name}";
+    }
 
+    private void PanelLogic()
+    {
         Sequence seq = DOTween.Sequence();
-
         seq.AppendInterval(.5f);
         seq.Append(_element.DOAnchorPosX(0, 1f)).SetEase(Ease.OutBack, 0.9f);
         seq.AppendInterval(3f);
@@ -43,13 +45,15 @@ public class NexusUpgradePanel : PopupUI
 
     public override void ShowPanel()
     {
+        //OnUIUpdate += UpdateUI;
         base.ShowPanel();
-
         UpdateUI();
+        PanelLogic();
     }
 
     public override void HidePanel()
-    {       
+    {
+        //OnUIUpdate -= UpdateUI;
         base.HidePanel();
     }
 }
