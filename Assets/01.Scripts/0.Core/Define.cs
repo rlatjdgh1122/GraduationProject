@@ -12,7 +12,7 @@ namespace Define
     {
         public static class Cam
         {
-            public static Camera _mainCam;
+            private static Camera _mainCam;
             public static Camera MainCam
             {
                 get

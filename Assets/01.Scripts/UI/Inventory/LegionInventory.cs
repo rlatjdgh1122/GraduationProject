@@ -241,6 +241,7 @@ public class LegionInventory : Singleton<LegionInventory>
             LegionList[legionNumber].LegionInven.Add(newInven);//군단 인벤에 데이터 추가
             LegionList[legionNumber].legionDictionary.Add(penguin, newInven);
         }
+
     }
 
 

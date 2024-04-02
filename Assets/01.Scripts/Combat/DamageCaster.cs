@@ -75,19 +75,12 @@ public class DamageCaster : MonoBehaviour
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
         foreach (var col in Colls)
-        {
-            RaycastHit raycastHit;
-
-            var dir = (col.transform.position - transform.position).normalized;
-
-            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
-
-            if (raycastSuccess &&
-                raycastHit.collider.TryGetComponent<Health>(out Health health))
+        {       
+            if (col.TryGetComponent<Health>(out Health health))
             {
                 int damage = _owner.Stat.damage.GetValue();
 
-                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+                health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType);
             }
         }
     }

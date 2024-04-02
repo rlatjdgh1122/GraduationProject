@@ -150,6 +150,8 @@ public class LegionChange : MonoBehaviour
         }
         else
         {
+            TutorialManager.Instance.CurTutorialProgressQuest();
+
             ChangeCurrentLegionNumber(Legion);
 
             LegionInventory.Instance.ShowMessage($"{Legion}군단 구매 성공!");

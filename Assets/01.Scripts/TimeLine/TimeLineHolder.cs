@@ -35,8 +35,19 @@ public class TimeLineHolder : MonoBehaviour
         if (waveManager.IsCurrentWaveCountEqualTo(3) && isFirst)
         {
             pd.Play(ta[0]);
+            StartCoroutine(TutoQuestCorou());
             isFirst = false;
         }
+        else
+        {
+            Debug.Log(waveManager.CurrentWaveCount);
+        }
+    }
+
+    private IEnumerator TutoQuestCorou()
+    {
+        yield return new WaitForSeconds(4.5f);
+        TutorialManager.Instance.StartCurTutorialQuest();
     }
 
     private void AfterBattleWave()

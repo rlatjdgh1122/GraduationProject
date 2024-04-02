@@ -66,6 +66,11 @@ public class NexusUIPresenter : NexusPopupUI
         _buildingViews.ForEach(view => view.SetDefaultUI());
 
         OnUpdateNexusUI?.Invoke();
+
+        if (TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest();        
+        }
     }
 
     public void OnAdmitBuildingPanel()

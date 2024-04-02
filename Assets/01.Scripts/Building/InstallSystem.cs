@@ -26,7 +26,7 @@ public class InstallSystem : MonoBehaviour
     private Dictionary<int, Ground> _groundDic = new Dictionary<int, Ground>(); //캐싱용 딕셔너리
 
     private bool isInstalling;
-    
+
     private Ground _previousGround;
     private BaseBuilding _curBuilding;
 
@@ -92,7 +92,7 @@ public class InstallSystem : MonoBehaviour
             _curBuilding = null;
         }
 
-       // _cancelInstallBuildingText.gameObject.SetActive(false);
+        _cancelInstallBuildingText.gameObject.SetActive(false);
 
         _inputReader.OnLeftClickEvent -= PlaceStructure;
         _inputReader.OnEscEvent -= StopInstall;
@@ -104,7 +104,7 @@ public class InstallSystem : MonoBehaviour
     {
         if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            if(_previousGround.IsInstalledBuilding)
+            if (_previousGround.IsInstalledBuilding)
             {
                 UIManager.Instance.ShowWarningUI("이미 설치되어 있습니다");
                 return;
@@ -119,6 +119,13 @@ public class InstallSystem : MonoBehaviour
             _curBuilding?.transform.SetParent(_previousGround.transform);
             _previousGround?.InstallBuilding();
             StopInstall();
+
+            if (TutorialManager.Instance.CurTutoQuestIdx == 4 ||
+                TutorialManager.Instance.CurTutoQuestIdx == 7) //일단 퀘스트
+            {
+                TutorialManager.Instance.CurTutorialProgressQuest();
+            }
+
             isInstalling = false;
         }
     }

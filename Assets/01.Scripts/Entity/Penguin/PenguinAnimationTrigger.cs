@@ -85,7 +85,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
         }
         else
         {
-            _penguin.AttackCompo?.RangeAttack(_penguin.transform.forward);
+            _penguin?.AttackCompo?.RangeAttack(_penguin.transform.forward);
         }
         OnRangeAttackTriggerEvent?.Invoke();
 
