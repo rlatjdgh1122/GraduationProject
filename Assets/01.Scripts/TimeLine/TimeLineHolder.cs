@@ -16,6 +16,8 @@ public class TimeLineHolder : MonoBehaviour
         isFirst = true;
         pd = GetComponent<PlayableDirector>();
         waveManager = WaveManager.Instance;
+
+        pd.Play(ta[0]);
     }
 
     private void OnEnable()
