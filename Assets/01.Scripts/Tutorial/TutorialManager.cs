@@ -34,7 +34,7 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
 
         SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest();
 
-        if (curQuestIdx == 1 || curQuestIdx == 2 ||
+        if (curQuestIdx == 1 || curQuestIdx == 2 || // 일단 퀘스트
             curQuestIdx == 3 || curQuestIdx == 4 ||
             curQuestIdx == 5 || curQuestIdx == 6 ||
             curQuestIdx == 7)

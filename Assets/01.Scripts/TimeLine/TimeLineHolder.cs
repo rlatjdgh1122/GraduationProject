@@ -17,7 +17,6 @@ public class TimeLineHolder : MonoBehaviour
         pd = GetComponent<PlayableDirector>();
         waveManager = WaveManager.Instance;
 
-        pd.Play(ta[0]);
     }
 
     private void OnEnable()
@@ -49,6 +48,7 @@ public class TimeLineHolder : MonoBehaviour
     private IEnumerator TutoQuestCorou()
     {
         yield return new WaitForSeconds(4.5f);
+        Debug.Log("지금이니~");
         TutorialManager.Instance.StartCurTutorialQuest();
     }
 
