@@ -12,34 +12,35 @@ public class NexusPanel : NexusPopupUI
     public Image buildingIcon;
     public TextMeshProUGUI upgradePrice;
 
-    private NexusStat nexusStat => presenter.nexusBase.NexusStat;
-
     public override void Awake()
     {
         base.Awake();
+
+        OnUIUpdate += UpdateUI;
     }
 
-    private void Start()
+    protected override void Start()
     {
-        presenter.OnUpdateNexusUI += UpdateUI;
+        base.Start();
         UpdateUI();
     }
 
     public void UpdateUI()
     {
-        currentLevel.text = $"Lv {nexusStat.level}";
-        nextLevel.text = $"Lv {nexusStat.level + 1}";
-        currentHp.text = $"{nexusStat.GetMaxHealthValue()}";
-        nextHp.text = $"{nexusStat.GetUpgradedMaxHealthValue()}";
+        currentLevel.text = $"Lv {_nexusStat.level}";
+        nextLevel.text = $"Lv {_nexusStat.level + 1}";
+        currentHp.text = $"{_nexusStat.GetMaxHealthValue()}";
+        nextHp.text = $"{_nexusStat.GetUpgradedMaxHealthValue()}";
         currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
         nextWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount + 1}";
-        buildingIcon.sprite = nexusStat.previewBuilding.UISprite;
-        upgradePrice.text = $"{nexusStat.upgradePrice}";
+        buildingIcon.sprite = _nexusStat.previewBuilding.UISprite;
+        upgradePrice.text = $"{_nexusStat.upgradePrice}";
     }
 
-    public void OnLevelUp()
+    public override void OnClick()
     {
-        presenter.LevelUp();
+        _presenter.LevelUp();
+        base.OnClick();
     }
 
     public override void MovePanel(float x, float y, float fadeTime)
@@ -49,6 +50,6 @@ public class NexusPanel : NexusPopupUI
 
     private void OnDisable()
     {
-        presenter.OnUpdateNexusUI -= UpdateUI;
+        OnUIUpdate -= UpdateUI;
     }
 }
