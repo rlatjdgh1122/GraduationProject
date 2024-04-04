@@ -24,7 +24,6 @@ public class ArcherAttackState : ArcherBaseState
         {
             if (_triggerCalled)
             {
-                _penguin.FindFirstNearestEnemy();
                 if (!_penguin.IsInnerMeleeRange)
                     _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
 
@@ -43,7 +42,6 @@ public class ArcherAttackState : ArcherBaseState
         {
             if (_triggerCalled) //АјАн
             {
-                _penguin.FindFirstNearestEnemy();
                 if (!_penguin.IsInnerMeleeRange)
                     _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyPenguinDeadState : EnemyPenguinBaseState
 {
-    public EnemyPenguinDeadState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName) 
+    public EnemyPenguinDeadState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
     }
@@ -13,8 +13,10 @@ public class EnemyPenguinDeadState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _enemy.enabled = false;
+
+        //_enemy.enabled = false;
         //_enemy.CharController.enabled = false;
+
         _enemy.NavAgent.enabled = false;
         _enemy.DieEventHandler();
     }

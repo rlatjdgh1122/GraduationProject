@@ -29,7 +29,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     protected void AttackEnter()
     {
         //적이 죽을때 이벤트를 연결
-        //_penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+        _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
@@ -119,21 +119,21 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     private Entity prevTarget = null;
     private void DeadTarget()
     {
+        prevTarget = _penguin.CurrentTarget;
+
+        _penguin.FindFirstNearestEnemy();
+
         Debug.Log("이전 : " + prevTarget);
+        Debug.Log("현재 : " + _penguin.CurrentTarget);
+
         if (prevTarget != null)
         {
             prevTarget.HealthCompo.OnDied -= DeadTarget;
-            prevTarget = null; // 이전 대상을 null로 설정하여 이전 대상 추적을 중단
         }
-        // 새로운 대상을 찾아 이벤트 핸들러 등록
-        _penguin.FindFirstNearestEnemy(); // 새로운 대상을 찾는 메서드 호출
-        Debug.Log("현재 : " + _penguin.CurrentTarget);
         if (_penguin.CurrentTarget != null)
         {
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
-            prevTarget = _penguin.CurrentTarget; // 현재 대상을 이전 대상으로 설정
         }
-
     }
     private void FindTarget()
     {
