@@ -32,7 +32,6 @@ public class DialogSystem : MonoBehaviour
     public void Begin(string[] texts)
     {
         sentences.Clear();
-        FadeIn(_fadeValue);
 
         foreach (var sentence in texts)
         {
@@ -54,6 +53,8 @@ public class DialogSystem : MonoBehaviour
     {
         if (canClick)
         {
+            FadeIn(_fadeValue);
+
             if (isTyping)
                 return;
 

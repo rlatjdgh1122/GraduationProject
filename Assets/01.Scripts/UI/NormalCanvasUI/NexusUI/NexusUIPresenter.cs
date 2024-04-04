@@ -67,7 +67,7 @@ public class NexusUIPresenter : NexusPopupUI
 
         OnUpdateNexusUI?.Invoke();
 
-        if (TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
+        if (TutorialManager.Instance.CurTutoQuestIdx == 4) //일단 퀘스트
         {
             TutorialManager.Instance.CurTutorialProgressQuest();        
         }

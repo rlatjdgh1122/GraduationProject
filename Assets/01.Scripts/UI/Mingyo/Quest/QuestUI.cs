@@ -43,17 +43,17 @@ public class QuestUI : PopupUI
         SetCautionBoxImage(false, true);
     }
 
-    public void CreateScrollViewUI(QuestData questData)
+    public void CreateScrollViewUI(Quest quest)
     {
-        if (!_uncompletedQuestScrollViewUIs.ContainsKey(questData.Id))
+        if (!_uncompletedQuestScrollViewUIs.ContainsKey(quest.QuestId))
         {
             GameObject newQuestObj = Instantiate(_questUIPrefabs, _questPopupContentsParentTrm);
             //newQuestObj.transform.SetParent(_questPopupContentsParentTrm);
             ScrollViewQuestUI newQuest = newQuestObj.GetComponent<ScrollViewQuestUI>();
-            newQuest.SetUpScrollViewUI(questData.Id, QuestState.CanStart,
-                () => UpdatePopUpQuestUI(questData));
+            newQuest.SetUpScrollViewUI(quest.QuestId, QuestState.CanStart,
+                () => UpdatePopUpQuestUI(quest));
 
-            _uncompletedQuestScrollViewUIs.Add(questData.Id, newQuest);
+            _uncompletedQuestScrollViewUIs.Add(quest.QuestId, newQuest);
             _unStartedQuestsLength++;
 
 
@@ -84,13 +84,13 @@ public class QuestUI : PopupUI
         }
     }
 
-    private QuestData _currentQuestData;
-    public void UpdatePopUpQuestUI(QuestData questData)
+    private Quest _currentQuest;
+    public void UpdatePopUpQuestUI(Quest quest)
     {
-        _currentQuestData = questData;
+        _currentQuest = quest;
 
-        _questInfoUI.UpdatePopUpQuestUI(_currentQuestData, () => SetCautionBoxImage(false, true));
-        _uncompletedQuestScrollViewUIs[_currentQuestData.Id].UpdateQuestType(_currentQuestData.QuestStateEnum);
+        _questInfoUI.UpdatePopUpQuestUI(_currentQuest, () => SetCautionBoxImage(false, true));
+        _uncompletedQuestScrollViewUIs[_currentQuest.QuestId].UpdateQuestType(_currentQuest.QuestStateEnum);
 
         // 기존에 등록된 이벤트 핸들러 제거
         SignalHub.OnStartQuestEvent -= OnStartQuestEventHandler;
@@ -102,12 +102,13 @@ public class QuestUI : PopupUI
 
     private void OnStartQuestEventHandler()
     {
-        SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[_currentQuestData.Id]);
+        SetQuestUIToRunning(_uncompletedQuestScrollViewUIs[_currentQuest.QuestId]);
     }
 
-    public void UpdateQuestUIToProgress(QuestData questData)
+    public void UpdateQuestUIToProgress(Quest quest)
     {
-        _questInfoUI.UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
+        _questInfoUI.UpdateProgressText($"{quest.QuestGoalList[0].CurrentAmount} / {quest.QuestGoalList[0].CurrentAmount}");
+        // 목표 1개니까 임시
     }
 
     private void SetQuestUIToRunning(ScrollViewQuestUI quest)

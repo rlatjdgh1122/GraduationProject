@@ -34,13 +34,14 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
 
         SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest();
 
-        if (curQuestIdx == 1 || curQuestIdx == 2 || // 일단 퀘스트
-            curQuestIdx == 3 || curQuestIdx == 4 ||
-            curQuestIdx == 5 || curQuestIdx == 6 ||
-            curQuestIdx == 7)
+        if (curQuestIdx == 1 || curQuestIdx == 2 || curQuestIdx == 3 || // 일단 퀘스트. 곰 컷신일때 같이 나온다 수정 해야됨
+            curQuestIdx == 4 || curQuestIdx == 5)
         {
+            Debug.Log("여기서는안해버리고");
             return;
         }
+
+        Debug.Log($"지금 라운드 {curQuestIdx}인데 이 다음 이벤트는 전투 끝나고 나올 예정");
 
         SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest();
 

@@ -69,6 +69,10 @@ public class CostBox : PoolableMono
         {
             TutorialManager.Instance.CurTutorialProgressQuest();
         }
+        else
+        {
+            Debug.Log(TutorialManager.Instance.CurTutoQuestIdx);
+        }
 
         SoundManager.Play2DSound(_costSound);
 

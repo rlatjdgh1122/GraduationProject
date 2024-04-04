@@ -55,13 +55,13 @@ public class QuestInfoUI : MonoBehaviour
         SignalHub.OnOffPopUiEvent += OffCanvasGroups;
     }
 
-    public void UpdatePopUpQuestUI(QuestData questData, Action action = null)
+    public void UpdatePopUpQuestUI(Quest quest ,Action action = null)
     {
-        QuestState questState = questData.QuestStateEnum;
-        string questName = questData.Id;
-        string questContent = questData.QuestUIDataInfo.QuestContentsInfo;
-        Sprite questRewardTypeImg = questData.QuestRewardInfo.RewardTypeImg;
-        int questRewardCount = questData.QuestRewardInfo.RewardCount;
+        QuestState questState = quest.QuestStateEnum;
+        string questName = quest.QuestId;
+        string questContent = quest.QuestDataCompo.QuestUIDataInfo.QuestContentsInfo;
+        Sprite questRewardTypeImg = quest.QuestDataCompo.QuestRewardInfo.RewardTypeImg;
+        int questRewardCount = quest.QuestDataCompo.QuestRewardInfo.RewardCount;
 
         _questStartButton.onClick.RemoveAllListeners();
 
@@ -78,7 +78,7 @@ public class QuestInfoUI : MonoBehaviour
             case QuestState.CanStart:
                 questStateText = "시작 가능";
                 buttonText = "퀘스트 시작하기";
-                _questStartButton.onClick.AddListener(() => StartQuest(questName));
+                _questStartButton.onClick.AddListener(() => StartQuestHandler(questName));
                 break;
             case QuestState.Running:
                 questStateText = "진행 중";
@@ -88,7 +88,7 @@ public class QuestInfoUI : MonoBehaviour
                 break;
             case QuestState.CanFinish:
                 _questStartButton.interactable = true;
-                _questStartButton.onClick.AddListener(() => EndQuest(questName, action));
+                _questStartButton.onClick.AddListener(() => EndQuestHandler(questName, action));
 
 
                 questStateText = "완료 가능";
@@ -107,17 +107,19 @@ public class QuestInfoUI : MonoBehaviour
         _questContentText.SetText(questContent);
         _questRewardTypeImg.sprite = questRewardTypeImg;
         _questRewardCountText.SetText(questRewardCount.ToString());
-        UpdateProgressText($"{questData.CurProgressCount} / {questData.RepeatCount}");
+
+        UpdateProgressText($"{quest.QuestGoalList[0].CurrentAmount} / {quest.QuestGoalList[0].CurrentAmount}");
+        // 목표 1개니까 임시
 
         _questStartButtonText.SetText(buttonText);
     }
 
-    private void StartQuest(string questId)
+    private void StartQuestHandler(string questId)
     {
         QuestManager.Instance.StartQuest(questId);
     }
 
-    private void EndQuest(string questId, Action action)
+    private void EndQuestHandler(string questId, Action action)
     {
         action?.Invoke();
         QuestManager.Instance.EndQuest(questId);

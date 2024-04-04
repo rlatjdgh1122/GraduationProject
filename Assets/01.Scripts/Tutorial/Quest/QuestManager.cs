@@ -10,9 +10,9 @@ public class QuestManager : Singleton<QuestManager>
     [SerializeField]
     private QuestDataSO _questDataSO;
 
-    private Dictionary<string, QuestData> _allQuests = new Dictionary<string, QuestData>();
-
-    private Dictionary<string, QuestData> _curInprogressQuests = new Dictionary<string, QuestData>();
+    private Dictionary<string, QuestData> _allQuestsData = new Dictionary<string, QuestData>();
+    private Dictionary<string, Quest> _curInprogressQuests = new();
+    private Dictionary<string, Quest> _canStartQuests = new();
 
     private DialogSystem _dialogSystem;
     private QuestUI _questUI;
@@ -34,24 +34,27 @@ public class QuestManager : Singleton<QuestManager>
 
     private void LoadQuestData()
     {
-        _allQuests.Clear();
+        _allQuestsData.Clear();
 
         for (int i = 0; i < _questDataSO.QuestDatas.Count; i++) //So에 있는 걸 딕셔너리에 추가함.
         {
-            _allQuests.Add(_questDataSO.QuestDatas[i].Id,
-                           new QuestData(_questDataSO.QuestDatas[i])); //So니까 실행 끝나고 데이터가 저장되면 안 돼서 생성자를 통해 걍 새로 생성
+            _allQuestsData.Add(_questDataSO.QuestDatas[i].Id,
+                               _questDataSO.QuestDatas[i]);
         }
     }
 
     public void SetCanStartQuest(string questId)
     {
         QuestData questData = GetQuestData(questId);
+        // 새로운 퀘스트 생성
+        Quest quest = new Quest(questData);
+        _canStartQuests.Add(questId, quest);
 
-        questData.QuestStateEnum = QuestState.CanStart;
+        quest.SetQuestState(QuestState.CanStart);
 
-        _questUI.CreateScrollViewUI(questData); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
+        _questUI.CreateScrollViewUI(quest); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
 
-        if (questData.IsTutorialQuest)
+        if (quest.QuestDataCompo.IsTutorialQuest)
         {
             StartTutorial(questId);
         }
@@ -64,126 +67,117 @@ public class QuestManager : Singleton<QuestManager>
             return;
         }
 
-        QuestData questData = GetQuestData(questId);
+        Quest quest = GetCanStartQuests(questId);
 
-        if (TutorialManager.Instance.CurTutoQuestIdx != questData.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
+        #region DebugByCase
+        if (TutorialManager.Instance.CurTutoQuestIdx != quest.QuestDataCompo.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
         {
             Debug.Log($"하... 너는 지금 {TutorialManager.Instance.CurTutoQuestIdx}번째 튜토리얼 퀘스트를 해야하는데" +
-                $"{questData.TutorialQuestIdx}번째 퀘스트인 {questData.Id}를 하려고 하잖아;; 리턴함");
+                $"{quest.QuestDataCompo.TutorialQuestIdx}번째 퀘스트인 {quest.QuestId}를 하려고 하잖아;; 리턴함");
             return;
         }
+        #endregion
 
-        _dialogSystem.Begin(questData.TutorialTexts); //튜토리얼 텍스트 뜨게
-        StartQuest(questId); // 튜토리얼은 버튼 눌러서 시작이 아니라 그냥 시작하게
+        _dialogSystem.Begin(quest.QuestDataCompo.TutorialTexts); //튜토리얼 텍스트 뜨게
+        StartQuest(quest.QuestId); // 튜토리얼은 버튼 눌러서 시작이 아니라 그냥 시작하게
     }
 
     public void StartQuest(string questId) //퀘스트 시작
     {
         QuestData questData = GetQuestData(questId);
+        Quest quest = GetCanStartQuests(questId);
 
-        switch (questData.QuestStateEnum)
+        #region DebugByCase
+        switch (quest.QuestStateEnum)
         {
             case QuestState.Running:
-                Debug.Log($"{questData.Id}는 이미 진행중인 퀘스트임 리턴함;;");
+                Debug.Log($"{quest.QuestId}는 이미 진행중인 퀘스트임 리턴함;;");
                 return;
             case QuestState.Finish:
-                Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
+                Debug.Log($"{quest.QuestId}는 이미 종료한 퀘스트임 리턴함;;");
                 return;
             case QuestState.Locked:
-                Debug.Log($"{questData.Id}는 아직 못하는 퀘스트임 리턴함;;");
+                Debug.Log($"{quest.QuestId}는 아직 못하는 퀘스트임 리턴함;;");
                 return;
             case QuestState.CanFinish:
-                Debug.Log($"{questData.Id}는 이미 진행중인 퀘스트임 리턴함;;");
+                Debug.Log($"{quest.QuestId}는 이미 진행중인 퀘스트임 리턴함;;");
                 break;
         }
+        #endregion
 
         Debug.Log($"{questData.Id} 퀘스트 시이작");
 
-        if (_curInprogressQuests.ContainsKey(questData.Id))
-        {
-            Debug.Log($"{questData.Id}는 이미 진행중인듯 퀘스트임 리턴함;;");
-            return;
-        }
+        _canStartQuests.Remove(questId); // 실제로 시작하였으니 시작가능 퀘스트에서 삭제
+        quest.QuestGoalList.Add(new QuestGoal(questData.QuestGoalType, questData.RequiredAmount)); // 목표 추가
+        quest.SetQuestState(QuestState.Running); // 퀘스트 상태 업데이트
+        _curInprogressQuests.Add(quest.QuestId, quest); // 활성 퀘스트에 추가
 
-        _curInprogressQuests.Add(questData.Id, questData); //현재 진행중 퀘스트 리스트에 추가
-        InstantiateQuest(questData);
-
-        _curInprogressQuests[questData.Id].QuestStateEnum = QuestState.Running;
-
-        _questUI.UpdatePopUpQuestUI(questData); // 퀘스트 상태 업데이트
+        _questUI.UpdatePopUpQuestUI(quest); // 퀘스트 UI상태 업데이트
         SignalHub.OnStartQuestEvent?.Invoke(); //퀘스트 시작 이벤트
 
-        SignalHub.OnProgressQuestEvent += () => _questUI.UpdateQuestUIToProgress(_allQuests[questData.Id]);
-    }
-
-    private void InstantiateQuest(QuestData questData) //퀘스트를 오브젝트로 생성하는 식임. ex: 보석 3개 먹는 퀘스트면 그 아이디의 퀘스트 오브젝트 3개를 생성
-    {
-        for (int i = 0; i < questData.RepeatCount; i++)
-        {
-            GameObject questObj = new GameObject(questData.Id);
-            questObj.transform.SetParent(transform);
-        }
+        SignalHub.OnProgressQuestEvent += () => _questUI.UpdateQuestUIToProgress(quest);
     }
 
     public void ProgressQuest(string questId) //퀘스트가 진행되었을때. ex: 보석을 먹었을때.
     {
         QuestData questData = GetQuestData(questId);
+        Quest quest = GetRunningQuest(questId);
 
-        switch (questData.QuestStateEnum)
+        #region DebugByCase
+        switch (quest.QuestStateEnum)
         {
             case QuestState.Finish:
                 Debug.Log($"{questData.Id}는 이미 종료한 퀘스트임 리턴함;;");
                 return;
             default:
-                if(questData.QuestStateEnum == QuestState.CanFinish)
+                if(quest.QuestStateEnum == QuestState.CanFinish)
                 {
                     Debug.Log("오우 이거 완료 가능함");
                     return;
                 }
-                if (questData.QuestStateEnum != QuestState.Running)
+                if (quest.QuestStateEnum != QuestState.Running)
                 {
                     Debug.Log($"이거 아직 시작 안 했는데용 너 지금 {questData.QuestStateEnum}임"); 
                     return;
                 }
                 break;
         }
+        #endregion
 
-        _allQuests[questData.Id].CurProgressCount++;
+        quest.QuestGoalList[0].CurrentAmount++; // 목표 1개니까 임시
+        SignalHub.OnProgressQuestEvent?.Invoke(); // 퀘스트 진행 이벤트
 
-        Transform[] foundChildren = transform.GetComponentsInChildren<Transform>(true);
-        Transform[] questObj = Array.FindAll(foundChildren, t => t.name == questData.Id && t != transform);
-
-        if (questObj.Length > 1)
+        if (quest.IsCompleted()) // 완료했다면
         {
-            Destroy(questObj[0].gameObject);
-            Debug.Log($"오우 이제 {questData.Id}퀘스트 {questObj.Length}번만 더 해");
-            SignalHub.OnProgressQuestEvent?.Invoke(); //퀘스트 진행 이벤트
-        }
-        else
-        {
-            _questUI.UpdatePopUpQuestUI(questData);
+            _questUI.UpdatePopUpQuestUI(quest);
             _questUI.SetCautionBoxImage(true);
 
-            if (questData.IsTutorialQuest) //튜토리얼이면 바로 완료처리
+            if (questData.IsTutorialQuest) // 튜토리얼이면 바로 완료처리
             {
                 EndQuest(questId);
                 return;
             }
 
-            questData.QuestStateEnum = QuestState.CanFinish; // 지울 수 없는 오브젝트가 없으면 퀘스트 완료가능하게
+            quest.SetQuestState(QuestState.CanFinish); // 퀘스트 완료가능하게
+        }
+        else // 아직 남았다면
+        {
+            Debug.Log($"오우 이제 {questData.Id}퀘스트" +
+                $"{quest.QuestGoalList[0].RequiredAmount - quest.QuestGoalList[0].CurrentAmount}번만 더 해");
         }
     }
 
     public void EndQuest(string questId)
     {
-        QuestData questData = _allQuests[questId];
+        QuestData questData = GetQuestData(questId);
+        Quest quest = GetRunningQuest(questId);
 
-        SignalHub.OnProgressQuestEvent -= () => _questUI.UpdateQuestUIToProgress(_allQuests[questData.Id]);
+        SignalHub.OnProgressQuestEvent -= () => _questUI.UpdateQuestUIToProgress(quest);
 
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
-        _curInprogressQuests[questData.Id].QuestStateEnum = QuestState.Finish; // 퀘스트에 완료처리 해주고
-        _questUI.UpdatePopUpQuestUI(questData);
+        quest.SetQuestState(QuestState.Finish); // 퀘스트에 완료처리 해주고
+        _questUI.UpdatePopUpQuestUI(quest);
 
         _curInprogressQuests.Remove(questData.Id); //현재 진행중 퀘스트 리스트에서 삭제
 
@@ -200,6 +194,17 @@ public class QuestManager : Singleton<QuestManager>
         //_questUI.RemoveQuestContentUI(questData.Id); // 완료된 퀘스트 UI에 추가
     }
 
+    public QuestData GetQuestData(string questId) => _allQuestsData[questId];
+    public Quest GetRunningQuest(string questId) => _curInprogressQuests[questId];
+    public Quest GetCanStartQuests(string questId) => _canStartQuests[questId];
 
-    public QuestData GetQuestData(string questId) => _allQuests[questId];
+    public bool IsQuestActive(string questId)
+    {
+        QuestData questData = _allQuestsData[questId];
+        if (questData.QuestStateEnum.Equals(QuestState.Running))
+        {
+            return true;
+        }
+        return false;
+    }
 }

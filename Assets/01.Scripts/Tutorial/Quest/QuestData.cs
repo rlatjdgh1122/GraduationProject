@@ -16,24 +16,10 @@ public enum QuestState
 [Serializable]
 public class QuestData
 {
-    public QuestData(QuestData questData)
-    {
-        IsTutorialQuest = questData.IsTutorialQuest;
-        QuestStateEnum = questData.QuestStateEnum;
-        TutorialQuestIdx = questData.TutorialQuestIdx;
-        RepeatCount = questData.RepeatCount;
-
-        Id = questData.Id;
-
-        TutorialTexts = questData.TutorialTexts;
-
-        QuestUIDataInfo = questData.QuestUIDataInfo;
-        QuestRewardInfo = questData.QuestRewardInfo;
-    }
-
     public QuestState QuestStateEnum;
+    public QuestGoalType QuestGoalType;
 
-    public int RepeatCount;
+    public int RequiredAmount;
 
     public string Id;
 
@@ -42,9 +28,6 @@ public class QuestData
 
     [TextArea()]
     public string[] TutorialTexts;
-
-    public int CurProgressCount = 0;
-
 
     public QuestUIData QuestUIDataInfo;
     public QuestRewardData QuestRewardInfo;
