@@ -17,4 +17,9 @@ public class StartUI : PopupUI
     {
         MovePanel(-1900f, 0, 2f);
     }
+
+    public void ExitBtn()
+    {
+        Application.Quit();
+    }
 }
