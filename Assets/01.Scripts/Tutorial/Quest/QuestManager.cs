@@ -108,7 +108,15 @@ public class QuestManager : Singleton<QuestManager>
         Debug.Log($"{questData.Id} 퀘스트 시이작");
 
         _canStartQuests.Remove(questId); // 실제로 시작하였으니 시작가능 퀘스트에서 삭제
-        quest.QuestGoalList.Add(new QuestGoal(questData.QuestGoalType, questData.RequiredAmount)); // 목표 추가
+
+        for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
+        {
+            quest.QuestGoalList.Add(new QuestGoal
+                (questData.QuestGoalType[i],
+                 questData.RequiredAmount[i],
+                 questData.GoalIds[i])); // 목표 추가
+        }
+
         quest.SetQuestState(QuestState.Running); // 퀘스트 상태 업데이트
         _curInprogressQuests.Add(quest.QuestId, quest); // 활성 퀘스트에 추가
 
@@ -118,7 +126,7 @@ public class QuestManager : Singleton<QuestManager>
         SignalHub.OnProgressQuestEvent += () => _questUI.UpdateQuestUIToProgress(quest);
     }
 
-    public void ProgressQuest(string questId) //퀘스트가 진행되었을때. ex: 보석을 먹었을때.
+    public void ProgressQuest(string questId, string goalID) //퀘스트가 진행되었을때. ex: 보석을 먹었을때.
     {
         QuestData questData = GetQuestData(questId);
         Quest quest = GetRunningQuest(questId);
@@ -144,7 +152,7 @@ public class QuestManager : Singleton<QuestManager>
         }
         #endregion
 
-        quest.QuestGoalList[0].CurrentAmount++; // 목표 1개니까 임시
+        quest.UpdateCondition(goalID); // 목표 1개니까 임시
         SignalHub.OnProgressQuestEvent?.Invoke(); // 퀘스트 진행 이벤트
 
         if (quest.IsCompleted()) // 완료했다면

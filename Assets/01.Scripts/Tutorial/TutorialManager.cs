@@ -15,6 +15,9 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
     [SerializeField]
     private string[] tutorialIds;
 
+    [SerializeField]
+    private string[] goalIds;
+
     private void Start()
     {
         curQuestIdx = 0;
@@ -30,7 +33,7 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
 
     public void CurTutorialProgressQuest()
     {
-        QuestManager.Instance.ProgressQuest(tutorialIds[curQuestIdx]);
+        QuestManager.Instance.ProgressQuest(tutorialIds[curQuestIdx], goalIds[curQuestIdx]);
 
         SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest();
 

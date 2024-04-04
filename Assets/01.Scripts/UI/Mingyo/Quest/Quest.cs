@@ -8,7 +8,7 @@ public class Quest
 
     public string QuestId;
 
-    public List<QuestGoal> QuestGoalList = new List<QuestGoal>(); // ∏Ò«•
+    public List<QuestGoal> QuestGoalList = new();
     public QuestData QuestDataCompo { get; private set; }
 
     public Quest(QuestData questData)
@@ -17,6 +17,17 @@ public class Quest
 
         QuestId = questData.Id;
         QuestDataCompo = questData;
+    }
+
+    public void UpdateCondition(string id)
+    {
+        for(int i = 0; i <  QuestGoalList.Count; i++)
+        {
+            if (QuestGoalList[i].GoalID == id)
+            {
+                QuestGoalList[i].CurrentAmount++;
+            }
+        }
     }
 
     public void SetQuestState(QuestState questState)
