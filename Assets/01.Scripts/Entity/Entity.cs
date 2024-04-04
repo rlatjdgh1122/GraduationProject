@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Entity : PoolableMono  
+public abstract class Entity : PoolableMono
 {
-
     [SerializeField] protected BaseStat _characterStat;
     public BaseStat Stat => _characterStat;
+
     public Entity CurrentTarget;
 
     public bool IsDead = false;
@@ -39,16 +39,6 @@ public abstract class Entity : PoolableMono
             HealthCompo.OnDied += HandleDie;
         }
     }
-
-    private void OnDestroy()
-    {
-        if (HealthCompo != null)
-        {
-            HealthCompo.OnHit -= HandleHit;
-            HealthCompo.OnDied -= HandleDie;
-        }
-    }
-
     protected virtual void HandleHit()
     {
 
@@ -65,8 +55,6 @@ public abstract class Entity : PoolableMono
     }
 
     protected abstract void HandleDie();
-
-
 
     #region 움직임 관리
     public void MoveToPosition(Vector3 pos)
@@ -118,14 +106,13 @@ public abstract class Entity : PoolableMono
         Debug.LogError("니가 넣은 스탯 타입이 아니잖아;;");
         return null;
     }
-    public T ReturnGenericUIInfo<T>() where T : EntityInfoDataSO
-    {
-        if (_characterStat is T)
-        {
-            return _characterStat as T;
-        }
 
-        Debug.LogError("니가 넣은 스탯 타입이 아니잖아;;");
-        return null;
+    private void OnDestroy()
+    {
+        if (HealthCompo != null)
+        {
+            HealthCompo.OnHit -= HandleHit;
+            HealthCompo.OnDied -= HandleDie;
+        }
     }
 }

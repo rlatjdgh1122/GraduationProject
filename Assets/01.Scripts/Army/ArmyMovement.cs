@@ -35,15 +35,23 @@ public class ArmyMovement : MonoBehaviour
 
     private static float heartbeat = 0.1f;
     private static WaitForSecondsRealtime waitingByheartbeat = new WaitForSecondsRealtime(heartbeat);
+
+    private void OnEnable()
+    {
+        SignalHub.OnArmyChanged += OnArmyChangedHandler;
+        SignalHub.OnModifyArmyInfo += OnModifyArmyInfoHnadler;
+        _inputReader.RightClickEvent += SetClickMovement;
+    }
+    private void OnDisable()
+    {
+        SignalHub.OnArmyChanged -= OnArmyChangedHandler;
+        SignalHub.OnModifyArmyInfo -= OnModifyArmyInfoHnadler;
+        _inputReader.RightClickEvent -= SetClickMovement;
+    }
     private void Awake()
     {
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-
-        _inputReader.RightClickEvent += SetClickMovement;
-        SignalHub.OnArmyChanged += OnArmyChangedHandler;
-        SignalHub.OnModifyArmyInfo += OnModifyArmyInfoHnadler;
     }
-
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
         curArmy = newArmy;
@@ -140,7 +148,7 @@ public class ArmyMovement : MonoBehaviour
 
         if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
-            Debug.Log("������ �ִ�1");
+            Debug.Log("현재 선택된 군단에 네브메쉬가 없는 펭귄이 존재합니다.");
         }
         while (!check)
         {
@@ -162,12 +170,8 @@ public class ArmyMovement : MonoBehaviour
                 }
             }
 
-            //��ΰ� ��ġ�� ������ �� ���������� ���
             yield return waitingByheartbeat;
         }
-
-        //��ΰ� ������ �� �ִٸ�
-        // ��ΰ� �ڸ��� ��ġ�� �ִ��� Ȯ���ϱ� ���� �ڷ�ƾ�� ������ 
 
         isCanMove = true;
 
@@ -187,7 +191,7 @@ public class ArmyMovement : MonoBehaviour
 
         if (!curArmy.Soldiers.TrueForAll(s => s.NavAgent.enabled))
         {
-            Debug.Log("������ �ִ�2");
+            Debug.Log("현재 선택된 군단에 네브메쉬가 없는 펭귄이 존재합니다.");
         }
 
         //성공적으로 위치에 도달할때까지 무한 반복
@@ -202,16 +206,5 @@ public class ArmyMovement : MonoBehaviour
     private void SetSoldierMovePosition(Vector3 mousePos, Penguin penguin)
     {
         penguin.MoveToMySeat(mousePos);
-    }
-
-    private void OnDestroy()
-    {
-        _inputReader.RightClickEvent -= SetClickMovement;
-        //SignalHub.OnArmyChanged -= OnArmyChangedHandler;
-    }
-
-    private void OnDisable()
-    {
-        SignalHub.OnArmyChanged -= OnArmyChangedHandler;
     }
 }

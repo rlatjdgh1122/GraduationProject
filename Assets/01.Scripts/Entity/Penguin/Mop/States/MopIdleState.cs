@@ -13,12 +13,6 @@ public class MopIdleState : MopBaseState
 
         IdleEnter();
     }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
-       
-    }
     public override void UpdateState()
     {
         base.UpdateState();
@@ -34,7 +28,6 @@ public class MopIdleState : MopBaseState
 
     public override void Exit()
     {
-        SignalHub.OnIceArrivedEvent -= FindTarget;
         IdleExit();
 
         base.Exit();

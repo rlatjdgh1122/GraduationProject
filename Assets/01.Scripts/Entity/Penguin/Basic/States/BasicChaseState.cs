@@ -15,12 +15,6 @@ public class BasicChaseState : BasicBaseState
 
         ChaseEnter();
     }
-
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-    }
-
     public override void UpdateState()
     {
         base.UpdateState();

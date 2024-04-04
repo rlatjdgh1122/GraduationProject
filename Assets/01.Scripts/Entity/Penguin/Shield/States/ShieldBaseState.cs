@@ -8,12 +8,6 @@ public class ShieldBaseState : PenguinState<ShieldPenguinStateEnum,Penguin> //»ó
     {
         base.Enter();
     }
-
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-    }
-
     public override void UpdateState()
     {
         base.UpdateState();

@@ -16,11 +16,6 @@ public class MopMoveState : MopBaseState
 
         MoveEnter();
     }
-
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-    }
     public override void UpdateState()
     {
         base.UpdateState();

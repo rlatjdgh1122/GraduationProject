@@ -8,7 +8,6 @@ public class ArcherAttackState : ArcherBaseState
     {
     }
 
-
     public override void Enter()
     {
         base.Enter();
@@ -20,16 +19,19 @@ public class ArcherAttackState : ArcherBaseState
         base.UpdateState();
 
         _penguin.LookTarget();
+
         if (IsArmyCalledIn_BattleMode())
         {
             if (_triggerCalled)
             {
-                _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
+                _penguin.FindFirstNearestEnemy();
+                if (!_penguin.IsInnerMeleeRange)
+                    _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
+
                 //다죽였다면 이동
                 IsTargetNull(ArcherPenguinStateEnum.MustMove);
             }
         }
-
         else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
@@ -41,7 +43,9 @@ public class ArcherAttackState : ArcherBaseState
         {
             if (_triggerCalled) //공격
             {
-                _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
+                _penguin.FindFirstNearestEnemy();
+                if (!_penguin.IsInnerMeleeRange)
+                    _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
 
                 IsTargetNull(ArcherPenguinStateEnum.Idle);
             }
@@ -52,6 +56,7 @@ public class ArcherAttackState : ArcherBaseState
     {
         _penguin.AnimatorCompo.speed = 1;
 
+        AttackExit();
         base.Exit();
     }
 }

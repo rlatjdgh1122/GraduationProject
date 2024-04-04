@@ -15,7 +15,6 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
 
         _triggerCalled = true;
         SignalHub.OnIceArrivedEvent += FindTarget;
-
     }
 
     private void FindTarget()

@@ -25,7 +25,11 @@ public class WorkableObject : PoolableMono
 
         HealthCompo.OnDied += HandleDie;
     }
-
+    private void OnDestroy()
+    {
+        if (HealthCompo != null)
+            HealthCompo.OnDied -= HandleDie;
+    }
     protected virtual void HandleDie()
     {
 

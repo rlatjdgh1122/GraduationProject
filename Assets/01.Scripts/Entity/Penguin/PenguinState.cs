@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
+using UnityEngine;
 
 public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Penguin
 {
@@ -26,14 +28,15 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void AttackEnter()
     {
+        //적이 죽을때 이벤트를 연결
+        //_penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+
         _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
-        _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
 
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
-        //그래서 애니메이션 자체 속도를 줄엿음
-
+        //그래서 애니메이션에서 속도를 줄엿음
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
     protected void ChaseEnter()
@@ -58,7 +61,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void MoveEnter()
     {
-        if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
+        //if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
 
         _triggerCalled = true;
         _penguin.SuccessfulToArmyCalled = false;
@@ -68,8 +71,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void MustMoveEnter()
     {
-        //_navAgent.isStopped = false;
-        //_penguin.StartImmediately();
         _penguin.MoveToMouseClickPositon();
     }
     protected void DeadEnter()
@@ -78,14 +79,17 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.CurrentTarget = null;
         _penguin.enabled = false;
         _penguin.NavAgent.enabled = false;
-        //_penguin.CharController.enabled = false;
     }
     #endregion
 
     #region Exit
     protected void IdleExit()
     {
-        _penguin.FindFirstNearestEnemy();
+        SignalHub.OnIceArrivedEvent -= FindTarget;
+    }
+    protected void AttackExit()
+    {
+        //_penguin.CurrentTarget.HealthCompo.OnDiedEndEvent -= DeadTarget;
     }
     #endregion
 
@@ -112,22 +116,26 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         return true;
     }
 
-    /// <summary>
-    /// 타겟이 있다면
-    /// </summary>
-    /// <param name="stateEnum"> 이 상태로 체인지</param>
-    /// <returns></returns>
-    protected bool IsTargetNotNull(T stateEnum)
+    private Entity prevTarget = null;
+    private void DeadTarget()
     {
-        if (_penguin.CurrentTarget == null) return false;
-        _stateMachine.ChangeState(stateEnum);
-        return true;
-    }
-    /// <summary>
-    /// 배틀모드일 때 다 죽이면 위치로 이동하는 함수
-    /// </summary>
+        Debug.Log("이전 : " + prevTarget);
+        if (prevTarget != null)
+        {
+            prevTarget.HealthCompo.OnDied -= DeadTarget;
+            prevTarget = null; // 이전 대상을 null로 설정하여 이전 대상 추적을 중단
+        }
+        // 새로운 대상을 찾아 이벤트 핸들러 등록
+        _penguin.FindFirstNearestEnemy(); // 새로운 대상을 찾는 메서드 호출
+        Debug.Log("현재 : " + _penguin.CurrentTarget);
+        if (_penguin.CurrentTarget != null)
+        {
+            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+            prevTarget = _penguin.CurrentTarget; // 현재 대상을 이전 대상으로 설정
+        }
 
-    public void FindTarget()
+    }
+    private void FindTarget()
     {
         _penguin.FindFirstNearestEnemy();
     }

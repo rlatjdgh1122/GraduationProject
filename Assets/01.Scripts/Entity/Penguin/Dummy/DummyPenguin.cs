@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -15,7 +16,7 @@ public enum DummyPenguinStateEnum
 [RequireComponent(typeof(NavMeshAgent))]
 public class DummyPenguin : PoolableMono
 {
-    public Penguin Owner = null;
+    private Penguin Owner = null;
 
     [SerializeField]
     private PenguinInfoDataSO _penguinUIInfo = null;
@@ -39,6 +40,15 @@ public class DummyPenguin : PoolableMono
 
     #endregion
     public DummyStateMachine DummyStateMachine { get; private set; }
+
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
+    }
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
+    }
     private void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
@@ -49,7 +59,6 @@ public class DummyPenguin : PoolableMono
 
         Setting();
 
-        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
     }
 
 
@@ -77,29 +86,24 @@ public class DummyPenguin : PoolableMono
     }
     private void OnBattleStartHandler()
     {
-        //켜져있는 애들만
-        if (gameObject.activeSelf)
+        ChangeNavqualityToNone();
+
+        if (Owner)
         {
-            NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-            
-            if (Owner)
-            {
-                Owner.SetPosAndRotation(transform);
+            Owner.SetPosAndRotation(transform);
 
-                Owner.gameObject.SetActive(true);
-                Owner.StateInit();
+            Owner.gameObject.SetActive(true);
+            Owner.StateInit();
 
-                this.gameObject.SetActive(false);
-            }
-            else
-                IsGoToHouse = true;
+            this.gameObject.SetActive(false);
         }
+        else
+            IsGoToHouse = true;
     }
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
     }
-
 
     public void SetOwner(Penguin owner)
     {
@@ -127,9 +131,4 @@ public class DummyPenguin : PoolableMono
     }
 
     public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
-
-    private void OnDestroy()
-    {
-        SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
-    }
 }

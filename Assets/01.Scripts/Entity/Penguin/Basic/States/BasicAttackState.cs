@@ -17,12 +17,6 @@ public class BasicAttackState : BasicBaseState
 
         AttackEnter();
     }
-
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-    }
-
     public override void UpdateState()
     {
         base.UpdateState();

@@ -14,8 +14,12 @@ public class Health : MonoBehaviour, IDamageable
     public LayerMask groundLayer;
 
     #region ActionEvent
+
     public Action OnHit;
     public Action OnDied;
+    //OnDied가 실행된다음 실행
+    public Action OnDiedEndEvent;
+
     public UnityEvent OnHealedEvent;
     public UnityEvent OnHitEvent;
     public UnityEvent OnStunEvent;
@@ -153,5 +157,6 @@ public class Health : MonoBehaviour, IDamageable
         _isDead = true;
         OnDeathEvent?.Invoke();
         OnDied?.Invoke();
+        OnDiedEndEvent?.Invoke();
     }
 }

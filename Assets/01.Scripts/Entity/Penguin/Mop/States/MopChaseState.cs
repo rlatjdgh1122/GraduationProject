@@ -14,11 +14,6 @@ public class MopChaseState : MopBaseState
 
         ChaseEnter();
     }
-
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-    }
     public override void UpdateState()
     {
         base.UpdateState();

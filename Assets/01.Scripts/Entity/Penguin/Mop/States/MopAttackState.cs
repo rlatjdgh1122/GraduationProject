@@ -20,11 +20,6 @@ public class MopAttackState : MopBaseState
             _penguin?.OnPassiveAttackEvent();
         }
     }
-
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-    }
     public override void UpdateState()
     {
         base.UpdateState();
