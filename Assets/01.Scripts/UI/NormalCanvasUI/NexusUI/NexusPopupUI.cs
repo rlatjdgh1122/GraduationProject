@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class NexusPopupUI : PopupUI
+public abstract class NexusPopupUI : PopupUI
 {
     #region components
     protected NexusUIPresenter _presenter;
@@ -12,8 +12,6 @@ public class NexusPopupUI : PopupUI
     protected BuildingDatabaseSO _buildingDatabase;
     protected NexusInfoDataSO _nexusInfo;
     #endregion
-
-    protected event Action OnUIUpdate;
 
     public override void Awake()
     {
@@ -28,8 +26,5 @@ public class NexusPopupUI : PopupUI
         _nexusInfo = NexusManager.Instance.NexusInfo;
     }
 
-    public virtual void OnClick()
-    {
-        OnUIUpdate?.Invoke();
-    }
+    public abstract void UIUpdate();
 }

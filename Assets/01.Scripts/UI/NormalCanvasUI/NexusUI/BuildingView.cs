@@ -20,8 +20,6 @@ public class BuildingView : NexusPopupUI
     public override void Awake()
     {
         base.Awake();
-
-        OnUIUpdate += UpdateUI;
     }
 
     protected override void Start()
@@ -29,39 +27,27 @@ public class BuildingView : NexusPopupUI
         base.Start();
         building = _buildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
         spawn = GetComponent<SpawnBuildingButton>();
-        SetDefaultUI();
+        purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
+
+        UpdateUI();
     }
 
-    public override void OnClick()
+    public void OnPurchase()
     {
         _presenter.PurchaseBuilding(this);
-        base.OnClick();
     }
 
     public void UpdateUI()
     {
+        lockedPanel.gameObject.SetActive(!building.IsUnlocked);
         buildingName.text = building.Name;
         buildingIcon.sprite = building.UISprite;
         buildingPrice.text = $"{building.Price}";
         maxInstallableCount.text = $"{building.CurrentInstallCount}/{building.MaxInstallableCount}";
     }
 
-    public void SetDefaultUI()
+    public override void UIUpdate()
     {
-        if (!building.IsUnlocked)
-        {
-            return;
-        }
-        else
-        {
-            lockedPanel.gameObject.SetActive(false);
-            purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
-            UpdateUI();
-        }
-    }
-
-    private void OnDisable()
-    {
-        OnUIUpdate -= UpdateUI;
+        UpdateUI();
     }
 }
