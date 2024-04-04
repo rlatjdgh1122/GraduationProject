@@ -51,4 +51,9 @@ public class BuildingUpgradePanel : NexusPopupUI
     {
         base.HidePanel();
     }
+
+    public override void UIUpdate()
+    {
+        throw new System.NotImplementedException();
+    }
 }
