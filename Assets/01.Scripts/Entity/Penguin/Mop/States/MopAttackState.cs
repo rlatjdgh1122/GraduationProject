@@ -26,16 +26,25 @@ public class MopAttackState : MopBaseState
 
         _penguin.LookTarget();
 
+        if (_triggerCalled)
+        {
+            if (_penguin.CheckAttackEventPassive(++curAttackCount))
+            {
+                _penguin?.OnPassiveAttackEvent();
+            }
+        }
+
         if (IsArmyCalledIn_BattleMode())
         {
             if (_triggerCalled)
             {
-                _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+                if (!_penguin.IsInnerMeleeRange)
+                    _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+
                 //다죽였다면 이동
                 IsTargetNull(MopPenguinStateEnum.MustMove);
             }
         }
-
         else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
@@ -47,7 +56,8 @@ public class MopAttackState : MopBaseState
         {
             if (_triggerCalled) //공격
             {
-                _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
+                if (!_penguin.IsInnerMeleeRange)
+                    _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
 
                 IsTargetNull(MopPenguinStateEnum.Idle);
             }

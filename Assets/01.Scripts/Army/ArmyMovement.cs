@@ -122,7 +122,9 @@ public class ArmyMovement : MonoBehaviour
             item.IsCheck = false;
             var obj = item.Obj;
 
-            obj.ArmyTriggerCalled = true;
+            if (obj.CurrentTarget == null)
+                obj.ArmyTriggerCalled = true;
+
             obj.MousePos = mousePos;
         }
 

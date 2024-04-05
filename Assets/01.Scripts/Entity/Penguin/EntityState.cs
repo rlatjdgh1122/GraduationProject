@@ -38,10 +38,12 @@ public class EntityState<T, G> where T : Enum where G : Entity
     {
         _triggerCalled = true;
 
-        if (_penguin is Penguin)
+        //이코드는 움직임 중점 모드일때 사용되었음
+
+        /*if (_penguin is Penguin)
         {
             var penguin = _penguin as Penguin;
             penguin.WaitForCommandToArmyCalled = true;
-        }
+        }*/
     }
 }
