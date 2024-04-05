@@ -10,12 +10,14 @@ public class NexusUIPresenter : NexusPopupUI
     public BuildingType buildingType;
 
     private BuildingFactory _buildingFactory;
+    private List<NexusPopupUI> _receiverList;
 
     public override void Awake()
     {
         base.Awake();
 
         _buildingFactory = FindAnyObjectByType<BuildingFactory>();
+        _receiverList = GetComponentsInChildren<NexusPopupUI>().ToList();
     }
 
     #region NexusUI
@@ -24,18 +26,31 @@ public class NexusUIPresenter : NexusPopupUI
         _nexusStat.maxHealth.AddSum
             (_nexusStat.maxHealth.GetValue(), _nexusStat.level, _nexusStat.levelupIncreaseValue);
         _nexusStat.level++;
-
-        //nexusBase.HealthCompo.SetHealth(nexusBase.NexusStat);
+        foreach (BuildingItemInfo building in _buildingDatabase.BuildingItems)
+        {
+            if (_nexusStat.level == building.UnlockedLevel)
+            {
+                building.IsUnlocked = true;
+            }
+        }
         _nexusStat.upgradePrice *= 2; // <-이건 임시
         WorkerManager.Instance.MaxWorkerCount++; //이것도 임시수식
         SoundManager.Play2DSound(SoundName.LevelUp); //이것도 임시
-        
+
+        NexusManager.Instance.SetNexusHealth();        
         NexusManager.Instance.UpdateNexusInfoData();
+
+        UpdateRecieverUI();
 
         if (TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
         {
             TutorialManager.Instance.CurTutorialProgressQuest();        
         }
+    }
+
+    public void UpdateRecieverUI()
+    {
+        _receiverList.ForEach(r => r.UIUpdate());
     }
 
     public void OnAdmitBuildingPanel()
@@ -76,5 +91,10 @@ public class NexusUIPresenter : NexusPopupUI
     public override void HidePanel()
     {
         base.HidePanel();
+    }
+
+    public override void UIUpdate()
+    {
+
     }
 }

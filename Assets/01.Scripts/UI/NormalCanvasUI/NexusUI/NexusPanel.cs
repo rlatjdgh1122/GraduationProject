@@ -15,8 +15,6 @@ public class NexusPanel : NexusPopupUI
     public override void Awake()
     {
         base.Awake();
-
-        OnUIUpdate += UpdateUI;
     }
 
     protected override void Start()
@@ -33,14 +31,21 @@ public class NexusPanel : NexusPopupUI
         nextHp.text = $"{_nexusInfo.nextMaxHealth}";
         currentWorkerCount.text = $"{_nexusInfo.currentWorkerCount}";
         nextWorkerCount.text = $"{_nexusInfo.nextWorkerCount}";
-        buildingIcon.sprite = _nexusInfo.previewBuilding.UISprite;
+        if (_nexusInfo.previewBuilding == null)
+        {
+            buildingIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            buildingIcon.gameObject.SetActive(true);
+            buildingIcon.sprite = _nexusInfo.previewBuilding.UISprite;
+        }
         upgradePrice.text = $"{_nexusStat.upgradePrice}";
     }
 
-    public override void OnClick()
+    public void OnLevelUp()
     {
         _presenter.LevelUp();
-        base.OnClick();
     }
 
     public override void MovePanel(float x, float y, float fadeTime)
@@ -48,8 +53,8 @@ public class NexusPanel : NexusPopupUI
         base.MovePanel(x, y, fadeTime);
     }
 
-    private void OnDisable()
+    public override void UIUpdate()
     {
-        OnUIUpdate -= UpdateUI;
+        UpdateUI();   
     }
 }

@@ -11,10 +11,13 @@ public class NexusManager : Singleton<NexusManager>
     private BuildingDatabaseSO _buildingDatabase;
     [SerializeField]
     private NexusInfoDataSO _nexusInfo;
+    [SerializeField]
+    private NexusBase _nexusBase;
 
     public NexusStat NexusStat => _nexusStat;
     public BuildingDatabaseSO BuildingDatabase => _buildingDatabase;
     public NexusInfoDataSO NexusInfo => _nexusInfo;
+    public NexusBase NexusBase => _nexusBase;
 
     public override void Awake()
     {
@@ -23,6 +26,14 @@ public class NexusManager : Singleton<NexusManager>
         _nexusInfo = Instantiate(_nexusInfo);
 
         SetNexusInfoData();
+    }
+
+    public void SetNexusHealth()
+    {
+        _nexusBase.HealthCompo.SetMaxHealth(_nexusStat); //최대 체력 올려주고
+        int healValue = (int)(_nexusStat.maxHealth.GetValue() * 0.2f);
+        Debug.Log(healValue);
+        _nexusBase.HealthCompo.ApplyHeal(healValue); //최대 체력의 20%만큼 힐
     }
 
     private void SetNexusInfoData()

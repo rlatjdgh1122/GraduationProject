@@ -48,6 +48,11 @@ public class Health : MonoBehaviour, IDamageable
         _evasion = owner.evasion.GetValue();
     }
 
+    public void SetMaxHealth(BaseStat owner)
+    {
+        maxHealth = owner.GetMaxHealthValue();
+    }
+
     public bool KnockBack(float value = 1, Vector3 normal = default)
     {
         Vector3 currentPosition = transform.position;
