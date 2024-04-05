@@ -44,9 +44,6 @@ public class QuestInfoUI : MonoBehaviour
 
         _questNameText = popUpBox.Find("QuestName").GetComponent<TextMeshProUGUI>();
 
-        _curProgressText = popUpBox.Find("Description02").GetComponent<TextMeshProUGUI>();
-
-
         Transform rewardBox = contents.Find("BoxReward").transform;
 
         _questRewardTypeImg = rewardBox.Find("key").GetComponent<Image>();

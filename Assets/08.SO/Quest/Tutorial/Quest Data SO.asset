@@ -17,22 +17,23 @@ MonoBehaviour:
     QuestGoalType: 
     Id: "\uCCAB\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
     QuestGoalCount: 2
-    RequiredAmount: 01000000
-    GoalIds:
-    - first
-    - first
-    IsTutorialQuest: 0
-    TutorialQuestIdx: 0
-    TutorialTexts:
-    - "\uB4DC\uB514\uC5B4 \uC77C\uC5B4\uB098\uC168\uAD70\uC694! "
-    - "\uC774\uB7F4 \uC2DC\uAC04 \uC5C6\uC5B4\uC694! \uACE7 \uC801\uB4E4\uC774 \uBAB0\uB824\uC62C\uAC81\uB2C8\uB2E4."
-    - "\uD3AD\uADC4 \uC9D1\uD569\uC18C\uB97C \uD074\uB9AD\uD558\uC5EC \uADFC\uC811
-      \uD3AD\uADC4 3\uB9C8\uB9AC\uB97C \uAD6C\uB9E4\uD574 \uAD70\uB2E8\uC744 \uD3B8\uC131\uD558\uC5EC
-      \uC655\uAD6D\uC744 \uBCF4\uD638 \uD558\uC138\uC694!"
+    QuestGoalInfo:
+      RequiredAmount: 
+      GoalIds: []
+    TutorialQuestInfo:
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 0
+      TutorialTexts:
+      - "\uB4DC\uB514\uC5B4 \uC77C\uC5B4\uB098\uC168\uAD70\uC694! "
+      - "\uC774\uB7F4 \uC2DC\uAC04 \uC5C6\uC5B4\uC694! \uACE7 \uC801\uB4E4\uC774
+        \uBAB0\uB824\uC62C\uAC81\uB2C8\uB2E4."
+      - "\uD3AD\uADC4 \uC9D1\uD569\uC18C\uB97C \uD074\uB9AD\uD558\uC5EC \uADFC\uC811
+        \uD3AD\uADC4 3\uB9C8\uB9AC\uB97C \uAD6C\uB9E4\uD574 \uAD70\uB2E8\uC744 \uD3B8\uC131\uD558\uC5EC
+        \uC655\uAD6D\uC744 \uBCF4\uD638 \uD558\uC138\uC694!"
     QuestUIDataInfo:
       QuestContentsInfo: "\uADFC\uAC70\uB9AC \uD3AD\uADC4\uC744 \uAD6C\uB9E4\uD574
         \uAD70\uB2E8\uC5D0 \uD3B8\uC131\uD558\uC5EC \uC804\uD22C\uB97C \uC2B9\uB9AC\uD558\uC2ED\uC2DC\uC624."
-      _questTypeIMG: {fileID: 0}
+      _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57, type: 3}
     QuestRewardInfo:
       RewardTypeImg: {fileID: 21300000, guid: 36fcb456d0ea6ab4193f9062a7edca9d, type: 3}
       RewardCount: 0
@@ -40,16 +41,18 @@ MonoBehaviour:
     QuestGoalType: 
     Id: "\uB450\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
     QuestGoalCount: 0
-    RequiredAmount: 
-    GoalIds: []
-    IsTutorialQuest: 1
-    TutorialQuestIdx: 1
-    TutorialTexts:
-    - "\uBC29\uC5B4\uC5D0 \uC131\uACF5\uD558\uC168\uAD70\uC694! \uC218\uACE0\uD558\uC168\uC2B5\uB2C8\uB2E4."
-    - "\uC801\uB4E4\uC774 \uBB3C\uACE0\uAE30 \uC0C1\uC790\uB97C \uAC00\uC9C0\uACE0
-      \uC654\uAD70\uC694! \uC804\uD22C\uAC00 \uB05D\uB09C \uB4A4 \uBB3C\uACE0\uAE30
-      \uC0C1\uC790\uB97C \uD074\uB9AD\uD558\uBA74 \uBB3C\uACE0\uAE30\uB97C \uD68D\uB4DD
-      \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4! "
+    QuestGoalInfo:
+      RequiredAmount: 
+      GoalIds: []
+    TutorialQuestInfo:
+      IsTutorialQuest: 0
+      TutorialQuestIdx: 0
+      TutorialTexts:
+      - "\uBC29\uC5B4\uC5D0 \uC131\uACF5\uD558\uC168\uAD70\uC694! \uC218\uACE0\uD558\uC168\uC2B5\uB2C8\uB2E4."
+      - "\uC801\uB4E4\uC774 \uBB3C\uACE0\uAE30 \uC0C1\uC790\uB97C \uAC00\uC9C0\uACE0
+        \uC654\uAD70\uC694! \uC804\uD22C\uAC00 \uB05D\uB09C \uB4A4 \uBB3C\uACE0\uAE30
+        \uC0C1\uC790\uB97C \uD074\uB9AD\uD558\uBA74 \uBB3C\uACE0\uAE30\uB97C \uD68D\uB4DD
+        \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4! "
     QuestUIDataInfo:
       QuestContentsInfo: "\uC801\uB4E4\uC758 \uC804\uB9AC\uD488\uC744 \uD68D\uB4DD\uD558\uC2ED\uC2DC\uC624"
       _questTypeIMG: {fileID: 0}
@@ -60,16 +63,18 @@ MonoBehaviour:
     QuestGoalType: 
     Id: "\uC138\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
     QuestGoalCount: 0
-    RequiredAmount: 
-    GoalIds: []
-    IsTutorialQuest: 1
-    TutorialQuestIdx: 2
-    TutorialTexts:
-    - "\uC798\uD558\uC168\uC2B5\uB2C8\uB2E4!"
-    - "\uADFC\uAC70\uB9AC \uD3AD\uADC4 \uB9CC\uC73C\uB85C\uB294 \uB2E4\uC74C \uC804\uD22C\uB97C
-      \uD558\uAE30 \uD798\uB4E4\uACA0\uC5B4\uC694!"
-    - "\uD3AD\uADC4 \uC9D1\uD569\uC18C\uB97C \uD074\uB9AD\uD558\uC5EC \uC6D0\uAC70\uB9AC
-      \uD3AD\uADC4\uC744 2\uB9C8\uB9AC \uAD6C\uB9E4\uD574 \uC804\uB825\uC744 \uBCF4\uAC15\uD558\uC138\uC694!"
+    QuestGoalInfo:
+      RequiredAmount: 
+      GoalIds: []
+    TutorialQuestInfo:
+      IsTutorialQuest: 0
+      TutorialQuestIdx: 0
+      TutorialTexts:
+      - "\uC798\uD558\uC168\uC2B5\uB2C8\uB2E4!"
+      - "\uADFC\uAC70\uB9AC \uD3AD\uADC4 \uB9CC\uC73C\uB85C\uB294 \uB2E4\uC74C \uC804\uD22C\uB97C
+        \uD558\uAE30 \uD798\uB4E4\uACA0\uC5B4\uC694!"
+      - "\uD3AD\uADC4 \uC9D1\uD569\uC18C\uB97C \uD074\uB9AD\uD558\uC5EC \uC6D0\uAC70\uB9AC
+        \uD3AD\uADC4\uC744 2\uB9C8\uB9AC \uAD6C\uB9E4\uD574 \uC804\uB825\uC744 \uBCF4\uAC15\uD558\uC138\uC694!"
     QuestUIDataInfo:
       QuestContentsInfo: "\uC6D0\uAC70\uB9AC \uD3AD\uADC4 2\uB9C8\uB9AC\uB97C \uAD6C\uB9E4\uD574
         \uAD70\uB2E8\uC744 \uBCF4\uAC15\uD558\uC2ED\uC2DC\uC624."
@@ -81,20 +86,22 @@ MonoBehaviour:
     QuestGoalType: 
     Id: "\uB124\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
     QuestGoalCount: 0
-    RequiredAmount: 
-    GoalIds: []
-    IsTutorialQuest: 1
-    TutorialQuestIdx: 3
-    TutorialTexts:
-    - "\uC655\uAD6D\uC744 \uC131\uC7A5 \uC2DC\uD0A4\uAE30 \uC704\uD574\uC120 \uAC74\uBB3C\uC774
-      \uD544\uC694\uD574\uC694"
-    - "\uC624 \uB9C8\uCE68 \uC801 \uBE59\uD558\uC5D0 \uB3CC\uACFC \uB098\uBB34\uAC00
-      \uD568\uAED8 \uC654\uAD70\uC694! "
-    - "\uC790\uC6D0\uC740 \uAC74\uBB3C\uC744 \uAC74\uC124\uD560 \uB54C \uC0AC\uC6A9\uD560
-      \uC218 \uC788\uC2B5\uB2C8\uB2E4"
-    - "\uC790\uC6D0\uC744 \uCE90\uAE30 \uC704\uD574\uC11C\uB294 \uB125\uC11C\uC2A4\uB97C
-      \uC5C5\uADF8\uB808\uC774\uB4DC \uD558\uC5EC \uC77C\uAFBC \uD3AD\uADC4\uC744
-      \uD68D\uB4DD\uD574\uC57C \uD569\uB2C8\uB2E4!"
+    QuestGoalInfo:
+      RequiredAmount: 
+      GoalIds: []
+    TutorialQuestInfo:
+      IsTutorialQuest: 0
+      TutorialQuestIdx: 0
+      TutorialTexts:
+      - "\uC655\uAD6D\uC744 \uC131\uC7A5 \uC2DC\uD0A4\uAE30 \uC704\uD574\uC120 \uAC74\uBB3C\uC774
+        \uD544\uC694\uD574\uC694."
+      - "\uC624 \uB9C8\uCE68 \uC801 \uBE59\uD558\uC5D0 \uB3CC\uACFC \uB098\uBB34\uAC00
+        \uD568\uAED8 \uC654\uAD70\uC694! "
+      - "\uC790\uC6D0\uC740 \uAC74\uBB3C\uC744 \uAC74\uC124\uD560 \uB54C \uC0AC\uC6A9\uD560
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      - "\uC790\uC6D0\uC744 \uCE90\uAE30 \uC704\uD574\uC11C\uB294 \uB125\uC11C\uC2A4\uB97C
+        \uC5C5\uADF8\uB808\uC774\uB4DC \uD558\uC5EC \uC77C\uAFBC \uD3AD\uADC4\uC744
+        \uD68D\uB4DD\uD574\uC57C \uD569\uB2C8\uB2E4!"
     QuestUIDataInfo:
       QuestContentsInfo: "\uB125\uC11C\uC2A4\uB97C \uC5C5\uADF8\uB808\uC774\uB4DC
         \uD558\uC5EC \uC77C\uAFBC \uD3AD\uADC4\uC744 \uD68D\uB4DD\uD558\uC2ED\uC2DC\uC624"
@@ -106,14 +113,16 @@ MonoBehaviour:
     QuestGoalType: 
     Id: "\uB2E4\uC12F\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
     QuestGoalCount: 0
-    RequiredAmount: 
-    GoalIds: []
-    IsTutorialQuest: 1
-    TutorialQuestIdx: 4
-    TutorialTexts:
-    - "\uC774\uC81C \uC790\uC6D0\uC744 \uD074\uB9AD\uD574 \uC77C\uAFBC\uC744 \uBC30\uCE58\uD558\uACE0
-      \uC790\uC6D0\uC744 \uD68D\uB4DD\uD558\uC138\uC694"
-    - "\uC5BB\uC740 \uC790\uC6D0\uC73C\uB85C \uC870\uAC01\uC0C1\uC744 \uC124\uCE58\uD574\uBD05\uC2DC\uB2E4!"
+    QuestGoalInfo:
+      RequiredAmount: 
+      GoalIds: []
+    TutorialQuestInfo:
+      IsTutorialQuest: 0
+      TutorialQuestIdx: 0
+      TutorialTexts:
+      - "\uC774\uC81C \uC790\uC6D0\uC744 \uD074\uB9AD\uD574 \uC77C\uAFBC\uC744 \uBC30\uCE58\uD558\uACE0
+        \uC790\uC6D0\uC744 \uD68D\uB4DD\uD558\uC138\uC694."
+      - "\uC5BB\uC740 \uC790\uC6D0\uC73C\uB85C \uC870\uAC01\uC0C1\uC744 \uC124\uCE58\uD574\uBD05\uC2DC\uB2E4!"
     QuestUIDataInfo:
       QuestContentsInfo: "\uC790\uC6D0\uC744 \uD68D\uB4DD\uD558\uC5EC \uC870\uAC01\uC0C1\uC744
         \uC124\uCE58\uD558\uC2ED\uC2DC\uC624."
@@ -125,14 +134,16 @@ MonoBehaviour:
     QuestGoalType: 
     Id: "\uC5EC\uC12F\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
     QuestGoalCount: 0
-    RequiredAmount: 
-    GoalIds: []
-    IsTutorialQuest: 1
-    TutorialQuestIdx: 5
-    TutorialTexts:
-    - "\uC870\uAC01\uC0C1\uC774 \uC124\uCE58\uB418\uAE30 \uC704\uD574\uC11C\uB294
-      \uC2DC\uAC04\uC774 \uD544\uC694\uD569\uB2C8\uB2E4."
-    - "\uADF8\uB3D9\uC548 \uBAB0\uB824\uC624\uB294 \uC801\uB4E4\uC744 \uD574\uCE58\uC6C1\uC2DC\uB2E4!"
+    QuestGoalInfo:
+      RequiredAmount: 
+      GoalIds: []
+    TutorialQuestInfo:
+      IsTutorialQuest: 0
+      TutorialQuestIdx: 0
+      TutorialTexts:
+      - "\uC870\uAC01\uC0C1\uC774 \uC124\uCE58\uB418\uAE30 \uC704\uD574\uC11C\uB294
+        \uC2DC\uAC04\uC774 \uD544\uC694\uD569\uB2C8\uB2E4."
+      - "\uADF8\uB3D9\uC548 \uBAB0\uB824\uC624\uB294 \uC801\uB4E4\uC744 \uD574\uCE58\uC6C1\uC2DC\uB2E4!"
     QuestUIDataInfo:
       QuestContentsInfo: "\uC801\uB4E4\uC744 \uD574\uCE58\uC6B0\uC138\uC694."
       _questTypeIMG: {fileID: 0}
@@ -143,19 +154,21 @@ MonoBehaviour:
     QuestGoalType: 
     Id: "\uC77C\uACF1\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
     QuestGoalCount: 0
-    RequiredAmount: 
-    GoalIds: []
-    IsTutorialQuest: 1
-    TutorialQuestIdx: 6
-    TutorialTexts:
-    - "\uC774\uB7F4\uC218\uAC00 \uBC8C\uC368\uBD80\uD130 \uD478\uAC00 \uB098\uD0C0\uB098\uB2E4\uB2C8..\r"
-    - "\uD478\uB97C \uCC98\uCE58\uD558\uB824\uBA74 \uC774\uC815\uB3C4 \uAD70\uB2E8\uC73C\uB85C\uB294
-      \uC2B9\uB9AC\uD560 \uC218 \uC5C6\uC5B4\uC694"
-    - "\uC544\uBB34\uB798\uB3C4 \uAD70\uB2E8\uC758 \uC218\uAC00 \uBD80\uC871\uD574
-      \uBCF4\uC5EC\uC694.\r"
-    - "\uAD70\uB2E8\uC744 \uCD94\uAC00\uB85C \uAD6C\uB9E4\uD574 \uBC29\uD328 \uD3AD\uADC4\uACFC
-      \uCCAD\uC18C\uBD80 \uD3AD\uADC4\uC744 \uAD70\uB2E8\uC5D0 \uCD94\uAC00\uD558\uC138\uC694!"
-    - "\uC544\uCC98\uD0C0\uC6CC \uB610\uD55C \uC124\uCE58 \uD558\uC138\uC694!"
+    QuestGoalInfo:
+      RequiredAmount: 
+      GoalIds: []
+    TutorialQuestInfo:
+      IsTutorialQuest: 0
+      TutorialQuestIdx: 0
+      TutorialTexts:
+      - "\uC774\uB7F4\uC218\uAC00 \uBC8C\uC368\uBD80\uD130 \uD478\uAC00 \uB098\uD0C0\uB098\uB2E4\uB2C8.."
+      - "\uD478\uB97C \uCC98\uCE58\uD558\uB824\uBA74 \uC774\uC815\uB3C4 \uAD70\uB2E8\uC73C\uB85C\uB294
+        \uC2B9\uB9AC\uD560 \uC218 \uC5C6\uC5B4\uC694"
+      - "\uC544\uBB34\uB798\uB3C4 \uAD70\uB2E8\uC758 \uC218\uAC00 \uBD80\uC871\uD574
+        \uBCF4\uC5EC\uC694."
+      - "\uAD70\uB2E8\uC744 \uCD94\uAC00\uB85C \uAD6C\uB9E4\uD574 \uBC29\uD328 \uD3AD\uADC4\uACFC
+        \uCCAD\uC18C\uBD80 \uD3AD\uADC4\uC744 \uAD70\uB2E8\uC5D0 \uCD94\uAC00\uD558\uC138\uC694!"
+      - "\uC544\uCC98\uD0C0\uC6CC \uB610\uD55C \uC124\uCE58 \uD558\uC138\uC694!"
     QuestUIDataInfo:
       QuestContentsInfo: "\uAD70\uB2E8\uC744 \uAC15\uD654\uD558\uC138\uC694"
       _questTypeIMG: {fileID: 0}

@@ -54,7 +54,7 @@ public class QuestManager : Singleton<QuestManager>
 
         _questUI.CreateScrollViewUI(quest); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
 
-        if (quest.QuestDataCompo.IsTutorialQuest)
+        if (quest.QuestDataCompo.TutorialQuestInfo.IsTutorialQuest)
         {
             StartTutorial(questId);
         }
@@ -70,15 +70,15 @@ public class QuestManager : Singleton<QuestManager>
         Quest quest = GetCanStartQuests(questId);
 
         #region DebugByCase
-        if (TutorialManager.Instance.CurTutoQuestIdx != quest.QuestDataCompo.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
+        if (TutorialManager.Instance.CurTutoQuestIdx != quest.QuestDataCompo.TutorialQuestInfo.TutorialQuestIdx) //튜토리얼 퀘스트를 순서대로 안 했을때
         {
             Debug.Log($"하... 너는 지금 {TutorialManager.Instance.CurTutoQuestIdx}번째 튜토리얼 퀘스트를 해야하는데" +
-                $"{quest.QuestDataCompo.TutorialQuestIdx}번째 퀘스트인 {quest.QuestId}를 하려고 하잖아;; 리턴함");
+                $"{quest.QuestDataCompo.TutorialQuestInfo.TutorialQuestIdx}번째 퀘스트인 {quest.QuestId}를 하려고 하잖아;; 리턴함");
             return;
         }
         #endregion
 
-        _dialogSystem.Begin(quest.QuestDataCompo.TutorialTexts); //튜토리얼 텍스트 뜨게
+        _dialogSystem.Begin(quest.QuestDataCompo.TutorialQuestInfo.TutorialTexts); //튜토리얼 텍스트 뜨게
         StartQuest(quest.QuestId); // 튜토리얼은 버튼 눌러서 시작이 아니라 그냥 시작하게
     }
 
@@ -112,9 +112,9 @@ public class QuestManager : Singleton<QuestManager>
         for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
         {
             quest.QuestGoalList.Add(new QuestGoal
-                (questData.QuestGoalType[i],
-                 questData.RequiredAmount[i],
-                 questData.GoalIds[i])); // 목표 추가
+                (questData.QuestGoalInfo.QuestGoalType[i],
+                 questData.QuestGoalInfo.RequiredAmount[i],
+                 questData.QuestGoalInfo.GoalIds[i])); // 목표 추가
         }
 
         quest.SetQuestState(QuestState.Running); // 퀘스트 상태 업데이트
@@ -160,7 +160,7 @@ public class QuestManager : Singleton<QuestManager>
             _questUI.UpdatePopUpQuestUI(quest);
             _questUI.SetCautionBoxImage(true);
 
-            if (questData.IsTutorialQuest) // 튜토리얼이면 바로 완료처리
+            if (questData.TutorialQuestInfo.IsTutorialQuest) // 튜토리얼이면 바로 완료처리
             {
                 EndQuest(questId);
                 return;
@@ -194,7 +194,7 @@ public class QuestManager : Singleton<QuestManager>
         _costUI.CostTween(questData.QuestRewardInfo.RewardCount, true, _questUI.QuestInfoUICompo.RewardPos.position);
         _questUI.QuestInfoUICompo.OffCanvasGroups();
 
-        if (questData.IsTutorialQuest)
+        if (questData.TutorialQuestInfo.IsTutorialQuest)
         {
             SetCanStartQuest(TutorialManager.Instance.GetNextTutorialQuest()); // 다음 튜토리얼 시작
         }
