@@ -16,9 +16,6 @@ public class ArcherBaseState : PenguinState<ArcherPenguinStateEnum, Penguin>
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(ArcherPenguinStateEnum.Dead);
     }
 
     public override void Exit()

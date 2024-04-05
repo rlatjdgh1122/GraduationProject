@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public abstract class Entity : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;
@@ -39,10 +40,6 @@ public abstract class Entity : PoolableMono
             HealthCompo.OnDied += HandleDie;
         }
     }
-    protected virtual void HandleHit()
-    {
-
-    }
 
     protected virtual void Start()
     {
@@ -53,7 +50,10 @@ public abstract class Entity : PoolableMono
     {
 
     }
+    protected virtual void HandleHit()
+    {
 
+    }
     protected abstract void HandleDie();
 
     #region 움직임 관리

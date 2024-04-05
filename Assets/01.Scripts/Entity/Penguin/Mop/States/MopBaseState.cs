@@ -1,4 +1,5 @@
-public class MopBaseState : PenguinState<MopPenguinStateEnum,Penguin> //상속받기 위해서 만든 짜바리 클래스
+//상속받기 위해서 만든 짜바리 클래스
+public class MopBaseState : PenguinState<MopPenguinStateEnum, Penguin>
 {
     public MopBaseState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
@@ -13,8 +14,8 @@ public class MopBaseState : PenguinState<MopPenguinStateEnum,Penguin> //상속받기
     {
         base.UpdateState();
 
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(MopPenguinStateEnum.Dead);
+        /*if (_penguin.IsDead)
+            _stateMachine.ChangeState(MopPenguinStateEnum.Dead);*/
     }
 
     public override void Exit()
