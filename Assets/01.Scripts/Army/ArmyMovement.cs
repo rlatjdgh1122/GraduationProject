@@ -122,6 +122,7 @@ public class ArmyMovement : MonoBehaviour
             item.IsCheck = false;
             var obj = item.Obj;
 
+            //공격상태일땐 안해줌
             if (obj.CurrentTarget == null)
                 obj.ArmyTriggerCalled = true;
 
