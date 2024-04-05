@@ -46,5 +46,6 @@ public class ArcherTowerPenguin : Penguin
 
     protected override void HandleDie()
     {
+
     }
 }

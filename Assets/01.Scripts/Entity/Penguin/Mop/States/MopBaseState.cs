@@ -13,9 +13,6 @@ public class MopBaseState : PenguinState<MopPenguinStateEnum, Penguin>
     public override void UpdateState()
     {
         base.UpdateState();
-
-        /*if (_penguin.IsDead)
-            _stateMachine.ChangeState(MopPenguinStateEnum.Dead);*/
     }
 
     public override void Exit()

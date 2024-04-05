@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Entity : PoolableMono
 {
@@ -14,12 +15,13 @@ public abstract class Entity : PoolableMono
 
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
-    #region Components
+    #region Components 
     public Health HealthCompo { get; private set; }
     public Animator AnimatorCompo { get; protected set; }
     public NavMeshAgent NavAgent { get; protected set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
+    public CharacterController CharacterCompo { get; private set; }
     #endregion
 
     protected virtual void Awake()
@@ -30,6 +32,7 @@ public abstract class Entity : PoolableMono
         NavAgent = transform?.GetComponent<NavMeshAgent>();
         OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
+        CharacterCompo = GetComponent<CharacterController>();
 
         HealthCompo?.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);

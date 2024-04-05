@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Rendering;
 
+[RequireComponent(typeof(DeadPenguin))]
 public class Penguin : Entity
 {
     public float moveSpeed = 4.5f;
@@ -69,12 +68,13 @@ public class Penguin : Entity
 
     #region components
     public EntityAttackData AttackCompo { get; private set; }
+    private IDeadable _deadCompo = null;
     #endregion
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     private Army owner;
-    public Army Owner => owner;
+    public Army MyArmy => owner;
 
     private void OnEnable()
     {
@@ -93,6 +93,7 @@ public class Penguin : Entity
             NavAgent.speed = moveSpeed;
         }
         AttackCompo = GetComponent<EntityAttackData>();
+        _deadCompo = GetComponent<IDeadable>();
     }
     #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
@@ -155,14 +156,7 @@ public class Penguin : Entity
     #endregion
     protected override void HandleDie()
     {
-        IsDead = true;
-
-        //사실 이런 경우가 생기면 안되는데 더미펭귄이 실제 펭귄이라서 같이 싸울때가 있기에 예외처리
-        if (Owner != null)
-        {
-            ArmyManager.Instance.Remove(Owner.Legion, this);
-        }
-        SignalHub.OnModifyArmyInfo?.Invoke();
+        _deadCompo.OnDied();
     }
 
     #region 스탯 관련

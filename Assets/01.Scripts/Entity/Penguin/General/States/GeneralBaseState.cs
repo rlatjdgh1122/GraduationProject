@@ -12,9 +12,6 @@ public class GeneralBaseState : GeneralState<GeneralPenguinStateEnum, General>
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(GeneralPenguinStateEnum.Dead);
     }
     protected void HoldShield()
     {

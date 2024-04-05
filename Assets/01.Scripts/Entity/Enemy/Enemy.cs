@@ -6,7 +6,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(DeadEnemy))]
 public class Enemy : Entity
 {
-
     [Header("Setting Values")]
     public float moveSpeed = 3f;
     public float attackSpeed = 1f;
@@ -21,7 +20,7 @@ public class Enemy : Entity
 
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
-    private IDeadable deadable = null;
+    private IDeadable _deadCompo = null;
     #endregion
     public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
@@ -43,7 +42,7 @@ public class Enemy : Entity
         NavAgent.speed = moveSpeed;
 
         AttackCompo = GetComponent<EntityAttackData>();
-        deadable = GetComponent<DeadEnemy>();
+        _deadCompo = GetComponent<IDeadable>();
     }
     private void OnEnable()
     {
@@ -62,7 +61,7 @@ public class Enemy : Entity
 
     protected override void HandleDie()
     {
-        deadable.OnDied();
+        _deadCompo.OnDied();
     }
 
     public virtual void AnimationTrigger()
