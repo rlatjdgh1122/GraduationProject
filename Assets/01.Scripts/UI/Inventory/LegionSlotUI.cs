@@ -6,124 +6,105 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LegionSlotUI : SlotUI, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class LegionSlotUI : SlotUI, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image _slotImage;
-    [SerializeField] protected UnitInformationUI _info;
-    [SerializeField] private int _legionNumber;
-    [SerializeField] private int _slotNumber;
+    public int Idx;
 
-    private Legion CurrentLegion;
+    [SerializeField]
+    private EntityInfoDataSO _data;
 
-    protected override void Awake()
+    private Image _bkImage;
+    private Color _bkColor;
+
+    private LegionInventoryManager _legion;
+
+    private KeyCode _removeKey;
+    private KeyCode _infoKey;
+
+    private void Awake()
     {
-        _data = null; //데이터 초기화
-        CurrentLegion = LegionInventory.Instance.LegionList[_legionNumber - 1];
+        unitImage = transform.Find("Penguin").GetComponent<Image>();
+        _bkImage  = transform.Find("Image").GetComponent<Image>();
+
+        _bkColor = _bkImage.color;
+        _legion  = LegionInventoryManager.Instance;
     }
 
-    public override void CleanUpSlot() //슬롯 초기화
+    public void CreateSlot(int Index, KeyCode removeSlot, KeyCode penguinInfo)
     {
-        ArrangementManager.Instance.RemoveArrangementInfoByLegionAndSlotIdx(_legionNumber, _slotNumber - 1);
-
-        _data = null;
-        _unitImage.enabled = false;
-        _unitImage.sprite = null;
+        Idx        = Index;
+        _removeKey = removeSlot;
+        _infoKey   = penguinInfo;
     }
 
-    public override void UpdateSlot(LegionInventoryData data)
+
+    public override void OnPointerDown(PointerEventData eventData)
     {
-        _unitImage.sprite = data.infoData.PenguinIcon;
+        if(_data == null && _legion.SelectData == null) return;
 
-        //내가 추가한거 - 성호
-
-        var info = new ArrangementInfo
+        if(_data == null && _legion.SelectData != null)
         {
-            Legion = _legionNumber,
-            SlotIdx = _slotNumber - 1, //배열은 0부터 시작하는거 까먹엇당 ㅎ
-            JobType = data.infoData.JobType,
-            PenguinType = data.infoData.PenguinType
-        };
-
-        ArrangementManager.Instance.AddArrangementInfo(info);
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (_data != null)
-        {
-            _info.InfoDataSlot(_data);
+            EnterSlot(_legion.SelectData.infoData);
         }
 
-        if (_data != null && Input.GetKey(KeyCode.LeftControl)) //이 슬롯의 데이터를 군단 인벤에서 제거
+        else if(_data != null)
         {
-            if (_data.infoData.JobType == PenguinJobType.General)
+            if(Input.GetKeyDown(_removeKey))
             {
-                CurrentLegion.MaxGereral = false;
-            }
-
-            LegionInventory.Instance.RemoveLegion(_data.infoData, _legionNumber - 1);
-
-            CleanUpSlot(); //슬롯 초기화
-
-            if (CurrentLegion.CurrentCount > 0)
-            {
-                CurrentLegion.CurrentCount--;
-            }
-        }
-
-        //UnitInformationUI의 데이터가 비어있지 않고 이 슬롯의 데이터가 비어있고 병사들이 군단에 꽉차있지 않으면
-        if (_data == null && _info._data != null && CurrentLegion.CurrentCount < CurrentLegion.MaxCount)
-        {
-            if (CurrentLegion.MaxGereral
-                && _info._data.infoData.JobType == PenguinJobType.General)
-            {
-
-                LegionInventory.Instance.ShowMessage("장군이 군단에 포함되어 있습니다!");
-                return; //만약 군단에 장군이 있다면 리턴
 
             }
-
-
-            _data = _info._data; //이 슬롯의 데이터는 UnitInformationUI의 데이터
-
-            if (_data.infoData.JobType == PenguinJobType.General)
+            else if(Input.GetKeyDown(_infoKey))
             {
-                CurrentLegion.MaxGereral = true;
+                Debug.Log("창 띄우기");
             }
             else
             {
-                CurrentLegion.CurrentCount++;
+                UnitInventoryData data = new UnitInventoryData(_data, 1);
+
+                _legion.SelectInfoData(data , SlotType.Legion);
             }
-
-            _unitImage.enabled = true;
-
-
-            LegionInventory.Instance.RemovePenguin(_info._data.infoData); //UnitInformationUI의 데이터를 지우고
-            LegionInventory.Instance.AddToLegion(_data.infoData, _legionNumber - 1); //이 슬롯의 데이터와 이 슬롯의 군단번호를 군단 인벤에 넘겨줌
-
-            UpdateSlot(_data);
         }
-
-        if (CurrentLegion.CurrentCount >= CurrentLegion.MaxCount)
-        {
-            LegionInventory.Instance.ShowMessage("군단이 가득찼습니다!");
-        }
-
-
-        LegionInventory.Instance.LegionCountInformation(_legionNumber - 1);
     }
 
-    #region UI Show Event
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _slotImage.DOFade(0.8f, 0f);
-    }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _slotImage.DOFade(0f, 0f);
+        _bkColor.a = 0;
+        _bkImage.color = _bkColor;
     }
 
-    #endregion
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _bkColor.a = 1;
+        _bkImage.color = _bkColor;
+    }
+
+
+    public override void UpdateSlot()
+    {
+        unitImage.enabled = true;
+        unitImage.sprite = _data.PenguinIcon;
+    }
+
+
+
+    public override void EnterSlot(EntityInfoDataSO data)
+    {
+        if (data == null) return;
+
+        _data = data;
+
+        UpdateSlot();
+
+        _legion.RemovePenguin(_legion.SelectData.infoData);
+    }
+
+
+    public override void ExitSlot(EntityInfoDataSO data)
+    {
+        _data = null;
+        unitImage.sprite = null;
+        unitImage.enabled = false;
+    }
 }

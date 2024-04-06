@@ -3,22 +3,18 @@ using System;
 [Serializable]
 public class LegionInventoryData
 {
-    public PenguinInfoDataSO infoData;
-    public int stackSize;
+    public EntityInfoDataSO InfoData;
 
-    public LegionInventoryData(PenguinInfoDataSO InfoData)
-    {
-        this.infoData = InfoData;
-        AddStack();
-    }
+    public string LegionName;
 
-    public void AddStack()
-    {
-        ++stackSize;
-    }
+    public int IndexNumber;
 
-    public void RemoveStack(int count = 1)
+    /// <param name="InfoData"></param>
+    /// <param name="LegionName">몇 군단인지</param>
+    public LegionInventoryData(EntityInfoDataSO InfoData, string LegionName, int Idx)
     {
-        stackSize -= count;
+        this.InfoData = InfoData;
+        this.LegionName = LegionName;
+        this.IndexNumber = Idx;
     }
 }

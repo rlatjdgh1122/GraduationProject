@@ -5,52 +5,61 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UnitSlotUI : SlotUI, IPointerDownHandler
+public class UnitSlotUI : SlotUI
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private UnitInformationUI _info;
-    [SerializeField] private Image _lockImg;
-    [SerializeField] private RectTransform _selectImg;
+    private TextMeshProUGUI _countText;
+    private Image _lockImg;
+    private int _stackSize = 0;
+    public EntityInfoDataSO _keyData;
+    private bool _locked => _stackSize <= 0;
 
-    private bool _locked;
-    public override void CleanUpSlot()
+    private void Awake()
     {
-        _data = null;
-
-        _unitImage.sprite = _emptyImage;
-        _text.text = string.Empty;
-
-        _info.CleanUpSlot();
+        unitImage = transform.Find("PenguinBK/Penguin").GetComponent<Image>();
+        _countText = transform.Find("CountBK/Count").GetComponent<TextMeshProUGUI>();
+        _lockImg = transform.Find("Lock").GetComponent<Image>();
     }
 
-
-    public override void UpdateSlot(LegionInventoryData data)
+    public void Create(EntityInfoDataSO data)
     {
-        _data = data;
+        _keyData = data;
 
-        _unitImage.sprite = _data.infoData.PenguinIcon;
+        unitImage.sprite = data.PenguinIcon;
 
-        if (_data.stackSize > 0)
-        {
-            _locked = false;
-            _text.text = $"{_data.stackSize} 마리";
-        }
-        else
-        {
-            _locked = true;
-            _text.text = "0 마리";
-        }
-        
+        UpdateSlot();
+    }
+
+    public override void EnterSlot(EntityInfoDataSO data)
+    {
+        if (data != _keyData) return;
+
+        ++_stackSize;
+
+        UpdateSlot();
+    }
+
+    public override void ExitSlot(EntityInfoDataSO data)
+    {
+        if (data != _keyData || _stackSize <= 0) return;
+
+        _stackSize--;
+
+        UpdateSlot();
+    }
+
+    public override void UpdateSlot()
+    {
         _lockImg.gameObject.SetActive(_locked);
+
+        _countText.text = $"{_stackSize} 마리";
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public override void OnPointerDown(PointerEventData eventData)
     {
-        if(!_locked)
-        {
-            _info.UpdateSlot(_data);
-            
-            _legionInventoryUI.ShowSelectImage(_selectImg);
-        }
+        if (_locked) return;
+
+        UnitInventoryData data = new UnitInventoryData(_keyData, _stackSize);
+
+        LegionInventoryManager.Instance.SelectInfoData(data);
     }
 }
