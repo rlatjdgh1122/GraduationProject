@@ -138,10 +138,4 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
         _penguin.FindFirstNearestEnemy();
     }
-
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-
-    }
 }

@@ -1,38 +1,23 @@
-using Unity.VisualScripting;
-
 public class MopAttackState : MopBaseState
 {
-
     private int curAttackCount = 0;
     public MopAttackState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
     }
 
+    // 공격 애니메이션 loop키기
     public override void Enter() //한명이 때리다가 죽으면 
     {
         base.Enter();
 
         AttackEnter();
-
-        if (_penguin.CheckAttackEventPassive(++curAttackCount))
-        {
-            _penguin?.OnPassiveAttackEvent();
-        }
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
         _penguin.LookTarget();
-
-        if (_triggerCalled)
-        {
-            if (_penguin.CheckAttackEventPassive(++curAttackCount))
-            {
-                _penguin?.OnPassiveAttackEvent();
-            }
-        }
 
         if (IsArmyCalledIn_BattleMode())
         {
@@ -68,5 +53,16 @@ public class MopAttackState : MopBaseState
     {
         _penguin.AnimatorCompo.speed = 1;
         base.Exit();
+    }
+
+    //공격이 끝날때마다
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        if (_penguin.CheckAttackEventPassive(++curAttackCount))
+        {
+            _penguin?.OnPassiveAttackEvent();
+        }
     }
 }
