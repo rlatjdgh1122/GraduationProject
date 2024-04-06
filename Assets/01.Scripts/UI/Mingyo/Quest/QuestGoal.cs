@@ -7,7 +7,8 @@ public enum QuestGoalType// 퀘스트 목표의 유형
     Kill,
     Gather,
     Upgrade,
-    Install
+    Install,
+    BattleWin
 }
 
 public class QuestGoal

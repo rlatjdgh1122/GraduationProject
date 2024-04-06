@@ -4,19 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
+public class TutorialManager : Singleton<TutorialManager>
 {
     private int curQuestIdx = 0;
     public int CurTutoQuestIdx => curQuestIdx;
 
-    public string[] QuestIds { get; set; }
-    public bool isRunning { get; set; }
-
     [SerializeField]
-    private string[] tutorialIds;
+    private QuestDataSO _questDataSO;
 
-    [SerializeField]
-    private string[] goalIds;
+    private QuestData curQuestData => _questDataSO.QuestDatas[curQuestIdx];
 
     private void Start()
     {
@@ -28,12 +24,12 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
 
     public void StartCurTutorialQuest()
     {
-        QuestManager.Instance.SetCanStartQuest(tutorialIds[curQuestIdx]);
+        QuestManager.Instance.SetCanStartQuest(curQuestData.Id);
     }
 
     public void CurTutorialProgressQuest()
     {
-        QuestManager.Instance.ProgressQuest(tutorialIds[curQuestIdx], goalIds[curQuestIdx]);
+        QuestManager.Instance.ProgressQuest(curQuestData.Id, curQuestData.QuestGoalInfo[0].GoalId); // 이거 인덱스가 바껴야됨
 
         SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest();
 
@@ -59,9 +55,9 @@ public class TutorialManager : Singleton<TutorialManager>, IQuestTriggerObj
     {
         IncreaseQuestIdx(); // 튜토리얼 퀘스트는 순서대로 해야 하니까 idx 증가
 
-        if (tutorialIds[CurTutoQuestIdx] != null)
+        if (curQuestData.Id != null)
         {
-            return tutorialIds[CurTutoQuestIdx];
+            return curQuestData.Id;
         }
         else
         {

@@ -22,10 +22,9 @@ public class QuestData
 
     public int QuestGoalCount; // 퀘스트 완료 조건의 개수 (ex: 원거리적도 3마리 잡고, 근거리 적도 3마리 잡아야 하면 2)
 
-    public QuestGoalData QuestGoalInfo;
+    public QuestGoalData[] QuestGoalInfo;
 
     public TutorialQuestData TutorialQuestInfo;
 
-    public QuestUIData QuestUIDataInfo;
     public QuestRewardData QuestRewardInfo;
 }

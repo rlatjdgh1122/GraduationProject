@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class QuestInfoUI : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _questInfoBoxUIPrefab;
+    private GameObject _questInfoBoxUIPrefab; 
 
     [SerializeField]
     private RectTransform _questInfoBoxRectParent;
@@ -62,10 +62,10 @@ public class QuestInfoUI : MonoBehaviour
     {
         QuestState questState = quest.QuestStateEnum;
         string questName = quest.QuestId;
-        string questContent = quest.QuestDataCompo.QuestUIDataInfo.QuestContentsInfo;
+        string questContent = quest.QuestDataCompo.QuestGoalInfo[0].QuestUIDataInfo.QuestContentsInfo; // 일단 0
         Sprite questRewardTypeImg = quest.QuestDataCompo.QuestRewardInfo.RewardTypeImg;
         int questRewardCount = quest.QuestDataCompo.QuestRewardInfo.RewardCount;
-        Sprite questTypeIMG = quest.QuestDataCompo.QuestUIDataInfo._questTypeIMG;
+        Sprite questTypeIMG = quest.QuestDataCompo.QuestGoalInfo[0].QuestUIDataInfo._questTypeIMG; // 일단 0
 
         _questStartButton.onClick.RemoveAllListeners();
 
@@ -113,15 +113,19 @@ public class QuestInfoUI : MonoBehaviour
 
         for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
         {
-            QuestInfoBoxUI questInfoBoxUI = PoolManager.Instance.Pop(_questInfoBoxUIPrefab.name)
-                .GetComponent<QuestInfoBoxUI>();
+            //QuestInfoBoxUI questInfoBoxUI = PoolManager.Instance.Pop(_questInfoBoxUIPrefab.name)
+            //    .GetComponent<QuestInfoBoxUI>();
+
+            QuestInfoBoxUI questInfoBoxUI = Instantiate(_questInfoBoxUIPrefab).GetComponent<QuestInfoBoxUI>(); // 임시
+            questInfoBoxUI.transform.SetParent(_questInfoBoxRectParent);
 
             questInfoBoxUI.SetUpQuestInfoBoxUI(0.5f, questContent, questTypeIMG); // 0.5는 레전드 임시 값
 
             _QuestBoxUI.Add(questInfoBoxUI.gameObject);
 
         }
-        UpdateProgressText($"{quest.QuestGoalList[0].CurrentAmount} / {quest.QuestGoalList[0].RequiredAmount}");
+
+        //UpdateProgressText($"{quest.QuestGoalList[0].CurrentAmount} / {quest.QuestGoalList[0].RequiredAmount}");
         // 목표 1개니까 임시
 
         _questStartButtonText.SetText(buttonText);

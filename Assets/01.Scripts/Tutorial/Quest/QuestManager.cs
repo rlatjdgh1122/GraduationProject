@@ -112,9 +112,9 @@ public class QuestManager : Singleton<QuestManager>
         for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
         {
             quest.QuestGoalList.Add(new QuestGoal
-                (questData.QuestGoalInfo.QuestGoalType[i],
-                 questData.QuestGoalInfo.RequiredAmount[i],
-                 questData.QuestGoalInfo.GoalIds[i])); // 목표 추가
+                (questData.QuestGoalInfo[i].QuestGoalType,
+                 questData.QuestGoalInfo[i].RequiredAmount,
+                 questData.QuestGoalInfo[i].GoalId)); // 목표 추가
         }
 
         quest.SetQuestState(QuestState.Running); // 퀘스트 상태 업데이트

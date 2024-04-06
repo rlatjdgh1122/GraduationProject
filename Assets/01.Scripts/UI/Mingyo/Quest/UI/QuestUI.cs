@@ -8,7 +8,7 @@ public class QuestUI : PopupUI
 
     private QuestInfoUI _questInfoUI;
     public QuestInfoUI QuestInfoUICompo => _questInfoUI;
-
+     
     [SerializeField]
     private GameObject _questUIPrefabs;
 
