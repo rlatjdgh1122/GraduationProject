@@ -9,7 +9,6 @@ public enum MopPenguinStateEnum
     Chase,
     Attack,
     AoEAttack,
-    Dead
 }
 
 public class MopPenguin : Penguin

@@ -69,6 +69,7 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
+    private Iliveable _liveCompo = null;
     #endregion
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
@@ -94,6 +95,7 @@ public class Penguin : Entity
         }
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
+        _liveCompo = GetComponent<Iliveable>();
     }
     #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
@@ -275,9 +277,12 @@ public class Penguin : Entity
     public virtual void StateInit() { }
 
     #endregion
+
+    //근데 스크립트가 꺼져있는데 이 함수가 호출이 되나?
     public override void Init()
     {
         owner = null;
+        _liveCompo.OnResurrected();
     }
 
 }

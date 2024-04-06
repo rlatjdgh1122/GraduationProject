@@ -8,7 +8,6 @@ public enum ArcherPenguinStateEnum
     MustMove,
     Chase,
     Attack,
-    Dead
 }
 
 public class ArcherPenguin : Penguin

@@ -11,7 +11,6 @@ public enum ShieldPenguinStateEnum
     Block,
     Impact,
     Stun,
-    Dead,
 }
 
 public class ShieldPenguin : Penguin

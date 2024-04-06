@@ -7,7 +7,6 @@ public enum EnemyPenguinStateEnum
     Move,
     Chase,
     Attack,
-    Dead,
     Reached,
     MustChase,
     Provoked

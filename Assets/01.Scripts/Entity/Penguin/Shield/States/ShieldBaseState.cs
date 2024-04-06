@@ -11,9 +11,6 @@ public class ShieldBaseState : PenguinState<ShieldPenguinStateEnum,Penguin> //»ó
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Dead);
     }
 
     public override void Exit()

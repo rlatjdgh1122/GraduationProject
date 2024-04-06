@@ -8,7 +8,6 @@ public enum BasicPenguinStateEnum
     MustMove,
     Chase,
     Attack,
-    Dead,
 }
 
 public class MeleePenguin : Penguin
