@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class QuestInfoUI : MonoBehaviour
@@ -30,7 +31,7 @@ public class QuestInfoUI : MonoBehaviour
     private Button _questStartButton;
     private TextMeshProUGUI _questStartButtonText;
 
-    private List<GameObject> _QuestBoxUI = new List<GameObject>();
+    private List<GameObject> _questBoxUI = new List<GameObject>();
 
     private void Awake()
     {
@@ -111,6 +112,16 @@ public class QuestInfoUI : MonoBehaviour
         _questRewardTypeImg.sprite = questRewardTypeImg;
         _questRewardCountText.SetText(questRewardCount.ToString());
 
+        // 임시
+        for (int i = 0; i < _questBoxUI.Count; i++)
+        {
+            Destroy(_questBoxUI[i].gameObject);
+        }
+
+        _questBoxUI.Clear();
+
+        Debug.Log(_questBoxUI.Count);
+
         for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
         {
             //QuestInfoBoxUI questInfoBoxUI = PoolManager.Instance.Pop(_questInfoBoxUIPrefab.name)
@@ -121,7 +132,7 @@ public class QuestInfoUI : MonoBehaviour
 
             questInfoBoxUI.SetUpQuestInfoBoxUI(0.5f, questContent, questTypeIMG); // 0.5는 레전드 임시 값
 
-            _QuestBoxUI.Add(questInfoBoxUI.gameObject);
+            _questBoxUI.Add(questInfoBoxUI.gameObject);
 
         }
 
