@@ -15,19 +15,9 @@ public class LegionInventory : InitLegionInventory
 
     private List<LegionInventoryData> _currentLegionList = new();
     private List<LegionInventoryData> _currentRemovePenguinList = new();
-    private List<LegionInventoryData> _savedLegionList;
+    private List<LegionInventoryData> _savedLegionList = new();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SaveLegion();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
-        }
-    }
+    private int _saveCnt = 0;
 
     /// <summary>
     /// 저장하지 않기
@@ -38,8 +28,12 @@ public class LegionInventory : InitLegionInventory
         {
             if (!_savedLegionList.Contains(data)) //저장 군단에 포함되어 있지 않는 데이터(새로 추가한 데이터)라면
             {
-                LegionInventoryManager.Instance.AddPenguin(data.InfoData); //다시 넣어주기
+                legion.AddPenguin(data.InfoData); //다시 넣어주기
             }
+        }
+        foreach (var data in _currentRemovePenguinList) //현재 군단에서 삭제된 펭귄 중
+        {
+            legion.RemovePenguin(data.InfoData); //다시 빼주기
         }
     }
 
@@ -52,7 +46,7 @@ public class LegionInventory : InitLegionInventory
         {
             if (!_savedLegionList.Contains(data)) //저장 군단에 포함되어 있지 않는 데이터(새로 추가한 데이터)라면
             {
-                _savedLegionList.Add(data); //저장 군단에 넣어주기
+                _savedLegionList?.Add(data); //저장 군단에 넣어주기
             }
         }
 
@@ -77,6 +71,7 @@ public class LegionInventory : InitLegionInventory
         _currentDictionary = new();
         _currentRemovePenguinList = new();
         _currentLegionList = new();
+        _saveCnt = 0;
     }
 
     /// <summary>
@@ -87,11 +82,14 @@ public class LegionInventory : InitLegionInventory
     {
         ResetLegion(); //리셋
 
+        if (_savedLegionList == null) return;
+
         foreach (var list in _savedLegionList.Where(list => list.LegionName == name)) //저장 군단에서 바뀔 군단의 이름과 같다면 
         {
             slotList[list.IndexNumber].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
             _currentLegionList.Add(list); //현재 군단에 넣어줘
             _currentDictionary.Add(list.IndexNumber, list);
+            _saveCnt++;
         }
     }
 
@@ -109,7 +107,7 @@ public class LegionInventory : InitLegionInventory
         }
 
         LegionInventoryData legionData 
-            = new LegionInventoryData(data, LegionInventoryManager.Instance.CurrentLegion, idx);
+            = new LegionInventoryData(data, legion.LegionName(legion.CurrentLegion), idx);
 
         _currentLegionList.Add(legionData);
         _currentDictionary.Add(idx, legionData);
@@ -142,7 +140,7 @@ public class LegionInventory : InitLegionInventory
             _currentRemovePenguinList.Add(curData);
 
             //여기를 상호작용하게 바꿔야함
-            LegionInventoryManager.Instance.AddPenguin(curData.InfoData);
+            legion.AddPenguin(curData.InfoData);
         }
     }
 
@@ -157,7 +155,6 @@ public class LegionInventory : InitLegionInventory
 
     public bool ChangedInCurrentLegion()
     {
-        return _currentLegionList != null 
-            || _currentRemovePenguinList != null;
+        return _currentLegionList.Count != _saveCnt;
     }
 }

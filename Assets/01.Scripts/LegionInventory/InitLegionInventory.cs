@@ -18,9 +18,12 @@ public class InitLegionInventory : MonoBehaviour
 
     protected List<LegionSlotUI> slotList = new();
 
+    protected LegionInventoryManager legion;
+
     public virtual void Awake()
     {
         legionInventoryParent = transform.Find("LegionInventory/LegionPanel");
+        legion = LegionInventoryManager.Instance;
 
         CreateLegionSlot();
     }

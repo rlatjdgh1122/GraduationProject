@@ -21,9 +21,10 @@ public enum SlotType
 
 public class LegionInventoryManager : Singleton<LegionInventoryManager>
 {
-    public string CurrentLegion;
+    public int CurrentLegion { get; private set; }
 
     public LegionInventory LegionInven { get; private set; } = null;
+    public LegionChange  LegionChange  { get; private set; } = null;
 
     private UnitInventory     _unitInven     = null;
     private UnitInformationUI _unitInfo      = null;
@@ -39,6 +40,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _unitInven   = FindObjectOfType<UnitInventory>();
         LegionInven  = FindObjectOfType<LegionInventory>();
         _unitInfo    = FindObjectOfType<UnitInformationUI>();
+        LegionChange = FindObjectOfType<LegionChange>();
     }
 
     /// <summary>
@@ -103,5 +105,10 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public List<LegionInfo> LegionList()
     {
         return _legionList;
+    }
+
+    public void ChangeLegionNumber(int number)
+    {
+        CurrentLegion = number;
     }
 }

@@ -13,7 +13,7 @@ public class InitLegionChange : PopupUI
     private Transform _buttonParent;
     protected LegionInventoryManager legion;
 
-    protected List<CanvasGroup> _buttonList = new();
+    protected List<LegionChangeButton> _buttonList = new();
 
     public override void Awake()
     {
@@ -33,9 +33,10 @@ public class InitLegionChange : PopupUI
             btn.transform.parent = _buttonParent;
 
             btn.CreateBtn(i + 1, legion.LegionList()[i].Price);
+            if (!LegionInventoryManager.Instance.LegionList()[i].Locked)
+                btn.UnLocked();
 
-            CanvasGroup canvasGroup = btn.GetComponent<CanvasGroup>();
-            _buttonList.Add(canvasGroup);
+            _buttonList.Add(btn);
         }
     }
 
@@ -47,7 +48,7 @@ public class InitLegionChange : PopupUI
 
         for (int i = 0; i < _buttonList.Count; i++)
         {
-            UIManager.Instance.HudTextSequence.Append(_buttonList[i].DOFade(1, _changeTime));
+            UIManager.Instance.HudTextSequence.Append(_buttonList[i].canvasGroup.DOFade(1, _changeTime));
         }
     }
 
@@ -57,7 +58,7 @@ public class InitLegionChange : PopupUI
 
         for (int i = _buttonList.Count - 1; i >= 0; i--)
         {
-            _buttonList[i].alpha = 0;
+            _buttonList[i].canvasGroup.alpha = 0;
         }
     }
 }
