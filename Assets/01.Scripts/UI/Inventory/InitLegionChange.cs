@@ -15,6 +15,9 @@ public class InitLegionChange : PopupUI
 
     protected List<LegionChangeButton> _buttonList = new();
 
+    [SerializeField]
+    protected LegionCountUI legionCountUI;
+
     public override void Awake()
     {
         base.Awake();
@@ -27,6 +30,7 @@ public class InitLegionChange : PopupUI
 
     public void CreateChangeButton()
     {
+            Debug.Log("HI");
         for (int i = 0; i < legion.LegionCount; i++)
         {
             LegionChangeButton btn = Instantiate(_buttonPrefab);
@@ -40,9 +44,9 @@ public class InitLegionChange : PopupUI
         }
     }
 
-    public override void ShowPanel()
+    public void ShowChangeLegionPanel()
     {
-        base.ShowPanel();
+        ShowPanel();
 
         UIManager.Instance.InitializHudTextSequence();
 
@@ -52,9 +56,9 @@ public class InitLegionChange : PopupUI
         }
     }
 
-    public override void HidePanel()
+    public void HideChangeLegionPanel()
     {
-        base.HidePanel();
+        HidePanel();
 
         for (int i = _buttonList.Count - 1; i >= 0; i--)
         {

@@ -509,7 +509,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 234
+  m_text: 1 / <size=25>3</size>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6b9f9eec2937a74c8305cad91025fe7, type: 2}
   m_sharedMaterial: {fileID: -6298700896093532552, guid: c6b9f9eec2937a74c8305cad91025fe7,
@@ -644,7 +644,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC548\uB155\uD558\uC138\uC6A9\u3157\uD5E4\n"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6b9f9eec2937a74c8305cad91025fe7, type: 2}
   m_sharedMaterial: {fileID: -6298700896093532552, guid: c6b9f9eec2937a74c8305cad91025fe7,
@@ -714,6 +714,153 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &976901316227815517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 225459322021805371}
+  - component: {fileID: 7505938800413950714}
+  - component: {fileID: 2642082995594080503}
+  - component: {fileID: 5220072092087486735}
+  - component: {fileID: 7968930265667874167}
+  m_Layer: 5
+  m_Name: SaveButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &225459322021805371
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976901316227815517}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5486, y: 0.5486, z: 1.0972}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4636538262610809840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -428.6, y: 416.6}
+  m_SizeDelta: {x: 32.5145, y: 40.2527}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7505938800413950714
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976901316227815517}
+  m_CullTransparentMesh: 1
+--- !u!114 &2642082995594080503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976901316227815517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a440c3b369d1aa94c9a0bf01e6d933a8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5220072092087486735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976901316227815517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2642082995594080503}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 17796304076423483}
+        m_TargetAssemblyTypeName: LegionUI, Assembly-CSharp
+        m_MethodName: SaveLegion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7968930265667874167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976901316227815517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b27ef8d95144749b2eed742d1a9006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetSize: 1.1
+  _fadeTime: 0.1
 --- !u!1 &1141953166862728865
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,10 +1134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slotPrefab: {fileID: 6803324485262796071, guid: d2f0da1549edf5040b36f3834807d0b6,
     type: 3}
-  so1: {fileID: 11400000, guid: d4f7e5829d55d7a41988559a69047d60, type: 2}
-  so2: {fileID: 11400000, guid: 7af39911ad28aaa4b9c79a1c6c38da1c, type: 2}
-  so3: {fileID: 11400000, guid: 8ca706b8392d1ad4bb005c9c78e0d4fd, type: 2}
-  so4: {fileID: 11400000, guid: 5b56615f33db28343a4be7bf09a326af, type: 2}
 --- !u!1 &1646656478757542640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,7 +1433,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6345438895578080898}
+  - {fileID: 7554111646272648090}
   - {fileID: 3175244566115800775}
+  - {fileID: 225459322021805371}
   - {fileID: 7626470616449451418}
   m_Father: {fileID: 5735782764846877500}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1369,7 +1514,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1524,6 +1669,81 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2120915423805631130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7554111646272648090}
+  - component: {fileID: 3510615022606604660}
+  - component: {fileID: 1245380517629423467}
+  m_Layer: 5
+  m_Name: LegionPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7554111646272648090
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120915423805631130}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4636538262610809840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 10.2168, y: 1.7593}
+  m_SizeDelta: {x: 1336.1343, y: 940.93}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3510615022606604660
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120915423805631130}
+  m_CullTransparentMesh: 1
+--- !u!114 &1245380517629423467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120915423805631130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 4632ed6ff4d95684495202bb61ebf871, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.4
 --- !u!1 &2143470136824065654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,7 +2388,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2764395577513447019}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -2184,7 +2404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1ab6f5305b3624e90bb1f4bd6c48b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0
+  _panelFadeTime: 0.2
   soundName: 16
 --- !u!1 &2857805012770662776
 GameObject:
@@ -3465,6 +3685,7 @@ GameObject:
   - component: {fileID: 5735782764846877500}
   - component: {fileID: 2698071731623223917}
   - component: {fileID: 9147596383596125234}
+  - component: {fileID: 17796304076423483}
   m_Layer: 5
   m_Name: LegionInventory
   m_TagString: Untagged
@@ -3545,6 +3766,20 @@ MonoBehaviour:
     Price: 123
     Locked: 1
     MaxCount: 5
+--- !u!114 &17796304076423483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4527286307534031057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e37ebdb7e8bd554aae066451d1c5186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panelFadeTime: 0.5
+  soundName: 16
 --- !u!1 &4595319159536802129
 GameObject:
   m_ObjectHideFlags: 0
@@ -3808,7 +4043,7 @@ GameObject:
   - component: {fileID: 6390855731049113919}
   - component: {fileID: 549080149368076710}
   m_Layer: 5
-  m_Name: SaveLegion
+  m_Name: SaveLegionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3882,7 +4117,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4859963012959320942}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -3935,8 +4170,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 395.3042, y: -178.6977}
-  m_SizeDelta: {x: 1810.5186, y: 663.2048}
+  m_AnchoredPosition: {x: 433.9884, y: -178.6977}
+  m_SizeDelta: {x: 1887.887, y: 663.2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4169888248095013450
 CanvasRenderer:
@@ -4464,7 +4699,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7626470616449451418}
   - component: {fileID: 2564192361569896522}
-  - component: {fileID: 2592401486276267738}
   m_Layer: 5
   m_Name: LegionPanel
   m_TagString: Untagged
@@ -4502,36 +4736,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6044933236073557523}
   m_CullTransparentMesh: 1
---- !u!114 &2592401486276267738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6044933236073557523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4632ed6ff4d95684495202bb61ebf871, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.4
 --- !u!1 &6048509684090686834
 GameObject:
   m_ObjectHideFlags: 0
@@ -4602,7 +4806,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -4729,8 +4933,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2809232616036842054}
-        m_TargetAssemblyTypeName: PopupUI, Assembly-CSharp
-        m_MethodName: HidePanel
+        m_TargetAssemblyTypeName: LegionBuyPanel, Assembly-CSharp
+        m_MethodName: CancelBuyClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4867,7 +5071,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ShieldPEnguin
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6b9f9eec2937a74c8305cad91025fe7, type: 2}
   m_sharedMaterial: {fileID: -6298700896093532552, guid: c6b9f9eec2937a74c8305cad91025fe7,
@@ -5350,6 +5554,7 @@ MonoBehaviour:
     type: 3}
   _removeKey: 306
   _infoKey: 324
+  _savedLegionList: []
 --- !u!1 &6581378620366964579
 GameObject:
   m_ObjectHideFlags: 0
@@ -5650,7 +5855,7 @@ GameObject:
   - component: {fileID: 1119360777449610802}
   - component: {fileID: 7149790638392091113}
   m_Layer: 5
-  m_Name: ChangeLegion
+  m_Name: ChangeLegionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5675,7 +5880,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -153.95581, y: 201.216}
+  m_AnchoredPosition: {x: -197, y: 201.216}
   m_SizeDelta: {x: 263, y: 497.568}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1119360777449610802
@@ -5695,6 +5900,7 @@ MonoBehaviour:
   _changeTime: 0.04
   _buttonPrefab: {fileID: 222687304992268300, guid: 3e291c8491cdce24fbf840df535d15f3,
     type: 3}
+  legionCountUI: {fileID: 8656092032687702318}
   _changeLegionButon: {fileID: 4679536528582141104}
   _savePanel: {fileID: 549080149368076710}
 --- !u!225 &7149790638392091113
@@ -5705,7 +5911,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6699782924823153685}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5779,7 +5985,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -6231,7 +6437,7 @@ GameObject:
   - component: {fileID: 2184992538433306176}
   - component: {fileID: 327133472307207334}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ExitToLegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6339,9 +6545,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LegionInventoryUI, Assembly-CSharp
-        m_MethodName: HidePanel
+      - m_Target: {fileID: 17796304076423483}
+        m_TargetAssemblyTypeName: LegionUI, Assembly-CSharp
+        m_MethodName: HideLegionUIPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7343,7 +7549,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -189.95581, y: 393.21606}
+  m_AnchoredPosition: {x: -233, y: 393.21606}
   m_SizeDelta: {x: 147.5597, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7424899218446576058
@@ -7459,7 +7665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6632079515948961824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7734,6 +7940,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2454943415218022778}
+  - component: {fileID: 8656092032687702318}
   m_Layer: 5
   m_Name: LegionCount
   m_TagString: Untagged
@@ -7762,3 +7969,15 @@ RectTransform:
   m_AnchoredPosition: {x: -50, y: -85}
   m_SizeDelta: {x: 201.52881, y: 46.547302}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &8656092032687702318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9030009122340290646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b01eeb7fb737af4caad10d6ce6531fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

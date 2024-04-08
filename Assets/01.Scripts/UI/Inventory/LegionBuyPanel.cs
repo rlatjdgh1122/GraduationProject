@@ -31,8 +31,8 @@ public class LegionBuyPanel : PopupUI
         int amount = currentCost - price;
 
         _currentCostText.text = currentCost.ToString();
-        _priceText.text = price.ToString();
-        _amountCostText.text = amount.ToString();
+        _priceText.text       = price.ToString();
+        _amountCostText.text  = amount.ToString();
 
         if (amount < 0)
         {
@@ -46,25 +46,45 @@ public class LegionBuyPanel : PopupUI
         }
     }
 
-    public void BuyLegionClick()
+    public void BuyLegionClick() //군단 사기 버튼을 누르면
     {
-        if (!_canBuy)
+        if (!_canBuy) //살 수 없으면
         {
             UIManager.Instance.ShowWarningUI("재화가 부족합니다!");
 
             return;
         }
 
-        LegionInventoryManager.Instance.LegionList()[_legionNumber].Locked = false;
+        LegionInventoryManager.Instance.LegionList()[_legionNumber].Locked = false; //군단 버튼 해금
 
         int legion = _legionNumber + 1;
         UIManager.Instance.ShowWarningUI($"{legion}군단 구매 성공!");
 
-        _legionChange.ChangingLegion(_legionNumber);
-
+        _legionChange.ChangingLegion(_legionNumber); //구매한 군단으로 바꾸기
+        LegionInventoryManager.Instance.ChangeLegionNumber(_legionNumber);
         _canBuy = false;
-        _legionNumber = 0;
 
-        HidePanel();
+        HideBuyPanel();
+    }
+
+    public void CancelBuyClick() //군단 구매를 취소하면
+    {
+        _legionNumber = LegionInventoryManager.Instance.CurrentLegion;
+        LegionInventoryManager.Instance.ChangeLegion(_legionNumber); //가장 최신 군단으로 돌아가기
+
+        HideBuyPanel();
+
+    }
+
+    public void ShowBuyPanel()
+    {
+        UIManager.Instance.ShowPanel(this.gameObject.name);
+    }
+
+    public void HideBuyPanel()
+    {
+        UIManager.Instance.HidePanel(this.gameObject.name);
+
+        _legionChange.HidePanel();
     }
 }

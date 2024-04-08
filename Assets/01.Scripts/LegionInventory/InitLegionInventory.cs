@@ -20,6 +20,11 @@ public class InitLegionInventory : MonoBehaviour
 
     protected LegionInventoryManager legion;
 
+    protected int saveCnt = 0;
+    protected int currentPenguinCnt = 0;
+    protected int currentRemovePenguinCnt = 0;
+    protected int currentGeneral = 0;
+
     public virtual void Awake()
     {
         legionInventoryParent = transform.Find("LegionInventory/LegionPanel");
@@ -38,5 +43,13 @@ public class InitLegionInventory : MonoBehaviour
             slot.transform.parent = legionInventoryParent;
             slotList.Add(slot);
         }
+    }
+
+    protected void CheckType(EntityInfoDataSO data)
+    {
+        if (data.JobType == PenguinJobType.Solider)
+            currentPenguinCnt++;
+        else
+            currentGeneral++;
     }
 }

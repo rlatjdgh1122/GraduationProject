@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class LegionSavePanel : PopupUI
 
     private Button _cancelBtn;
     private Button _savelBtn;
+    private TextMeshProUGUI _titleText;
 
     private int _legionNumber;
 
@@ -19,7 +21,8 @@ public class LegionSavePanel : PopupUI
         base.Awake();
 
         _cancelBtn = transform.Find("Button/Cancel").GetComponent<Button>();
-        _savelBtn = transform.Find("Button/BuyBtn").GetComponent<Button>();
+        _savelBtn  = transform.Find("Button/BuyBtn").GetComponent<Button>();
+        _titleText = transform.Find("TitleText").GetComponent<TextMeshProUGUI>();
 
         _cancelBtn.onClick.AddListener(() => CancelPanel());
         _savelBtn.onClick.AddListener(() => SavePanel());
@@ -27,28 +30,39 @@ public class LegionSavePanel : PopupUI
 
     public void LegionNumber(int legionNumber)
     {
+        Debug.Log(legionNumber);
         _legionNumber = legionNumber;
+    }
+
+    public void ShowSavePanel()
+    {
+        UIManager.Instance.ShowPanel(this.name);
+
+        int legion = LegionInventoryManager.Instance.CurrentLegion + 1;
+        _titleText.text = $"{legion}군단을 저장하시겠습니까?";
     }
 
     private void CancelPanel()
     {
-        LegionInventoryManager.Instance.LegionInven.UndoLegion();
+        LegionInventoryManager.Instance.UndoLegion(); //저장 취소
 
-        HidePanel();
+        HideSavePanel();
     }
 
     private void SavePanel()
     {
-        LegionInventoryManager.Instance.LegionInven.SaveLegion();
+        LegionInventoryManager.Instance.SaveLegion(); //저장하기
 
-        HidePanel();
+        UIManager.Instance.ShowWarningUI("저장 성공!");
+
+        HideSavePanel();
     }
 
-    public override void HidePanel()
+    public void HideSavePanel()
     {
-        base.HidePanel();
+        UIManager.Instance.HidePanel(this.name);
 
-        _legionChange.ChangeLegion(_legionNumber);
+        _legionChange.ChangeLegion(_legionNumber); //군단 바뀌는 조건문 실행
 
         _legionNumber = 0;
     }

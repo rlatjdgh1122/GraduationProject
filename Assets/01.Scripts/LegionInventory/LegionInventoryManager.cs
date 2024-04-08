@@ -23,9 +23,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 {
     public int CurrentLegion { get; private set; }
 
-    public LegionInventory LegionInven { get; private set; } = null;
     public LegionChange  LegionChange  { get; private set; } = null;
 
+    private LegionInventory     _legionInven = null;
     private UnitInventory     _unitInven     = null;
     private UnitInformationUI _unitInfo      = null;
 
@@ -38,7 +38,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public override void Awake()
     {
         _unitInven   = FindObjectOfType<UnitInventory>();
-        LegionInven  = FindObjectOfType<LegionInventory>();
+        _legionInven  = FindObjectOfType<LegionInventory>();
         _unitInfo    = FindObjectOfType<UnitInformationUI>();
         LegionChange = FindObjectOfType<LegionChange>();
     }
@@ -77,7 +77,10 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public void RemovePenguin(EntityInfoDataSO data)
     {
         _unitInven.PenguinSlotExit(data);
+    }
 
+    public void RemoveStack()
+    {
         _selectData.RemoveStack();
     }
 
@@ -87,28 +90,98 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     /// <param name="data"></param>
     public void DeadLegionPenguin(LegionInventoryData data)
     {
-        LegionInven.DeadPenguin(data);
+        _legionInven.DeadPenguin(data);
     }
 
+    /// <summary>
+    /// 군단 이름 바꾸기
+    /// </summary>
+    /// <param name="legionNumber">바꿀 군단 번호</param>
+    /// <param name="name">바꿀 이름</param>
     public void LegionNameChange(int legionNumber, string name)
     {
-        LegionInven.ChangeName(_legionList[legionNumber].Name, name);
+        _legionInven.ChangeLegionNameInSaveData(_legionList[legionNumber].Name, name);
 
         _legionList[legionNumber].Name = name;
     }
 
-    public string LegionName(int legionNumber)
+    /// <summary>
+    /// 현재 군단 바꾸기
+    /// </summary>
+    /// <param name="number"></param>
+    public void ChangeLegionNumber(int number)
     {
-        return _legionList[legionNumber].Name;
+        CurrentLegion = number;
+    }
+
+    /// <summary>
+    /// 현재 군단에 펭귄 등록하기
+    /// </summary>
+    /// <param name="slotPosition"></param>
+    /// <param name="infoData"></param>
+    public void LegionRegistration(int slotPosition, EntityInfoDataSO infoData)
+    {
+        _legionInven.LegionRegistration(slotPosition, infoData);
+    }
+
+    /// <summary>
+    /// 현재 군단에서 펭귄 빼기
+    /// </summary>
+    /// <param name="slotPosition"></param>
+    public void RemovePenguinInCurrentLegion(int slotPosition)
+    {
+        _legionInven.RemovePenguinInCurrentLegion(slotPosition);
+    }
+
+    /// <summary>
+    /// 군단 저장하기
+    /// </summary>
+    public void SaveLegion()
+    {
+        _legionInven.SaveLegion();
+    }
+
+    /// <summary>
+    /// 군단 저장 취소하기
+    /// </summary>
+    public void UndoLegion()
+    {
+        _legionInven.UndoLegion();
+
+        UIManager.Instance.ShowWarningUI("저장 취소!");
+    }
+
+    /// <summary>
+    /// 현재 군단에서 변경 사항이 있다면
+    /// </summary>
+    public bool ChangedInCurrentLegion()
+    {
+        return _legionInven. ChangedInCurrentLegion();
+    }
+
+    /// <summary>
+    /// 군단 바꾸기
+    /// </summary>
+    public void ChangeLegion(int legionNumber)
+    {
+        _legionInven.ChangeLegion(_legionList[legionNumber].Name);
+    }
+
+    public bool LimitOfGeneral()
+    {
+        return _legionInven.LimitOfGeneral();
+    }
+
+    /// <summary>
+    /// 현재 군단의 최대 인원 수를 초과했다면
+    /// </summary>
+    public bool ExcedLimitOfLegion()
+    {
+        return _legionInven.ExcedLimitOfLegion(CurrentLegion);
     }
 
     public List<LegionInfo> LegionList()
     {
         return _legionList;
-    }
-
-    public void ChangeLegionNumber(int number)
-    {
-        CurrentLegion = number;
     }
 }

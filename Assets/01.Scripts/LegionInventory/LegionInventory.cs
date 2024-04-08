@@ -11,13 +11,11 @@ using UnityEngine.UI;
 
 public class LegionInventory : InitLegionInventory
 {
-    private Dictionary<int, LegionInventoryData> _currentDictionary = new(); 
+    private Dictionary<int, LegionInventoryData> _currentDictionary = new();
 
     private List<LegionInventoryData> _currentLegionList = new();
     private List<LegionInventoryData> _currentRemovePenguinList = new();
     private List<LegionInventoryData> _savedLegionList = new();
-
-    private int _saveCnt = 0;
 
     /// <summary>
     /// 저장하지 않기
@@ -71,7 +69,10 @@ public class LegionInventory : InitLegionInventory
         _currentDictionary = new();
         _currentRemovePenguinList = new();
         _currentLegionList = new();
-        _saveCnt = 0;
+        saveCnt = 0;
+        currentPenguinCnt = 0;
+        currentRemovePenguinCnt = 0;
+        currentGeneral = 0;
     }
 
     /// <summary>
@@ -88,14 +89,23 @@ public class LegionInventory : InitLegionInventory
         {
             slotList[list.IndexNumber].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
             _currentLegionList.Add(list); //현재 군단에 넣어줘
-            _currentDictionary.Add(list.IndexNumber, list);
-            _saveCnt++;
+
+            if (!_currentDictionary.ContainsKey(list.IndexNumber))
+            {
+                _currentDictionary.Add(list.IndexNumber, list);
+            }
+            else break;
+
+            _currentLegionSavedList = _currentLegionList;
+
+            saveCnt++;
+            CheckType(list.InfoData);
         }
     }
 
 
     /// <summary>
-    /// 임시 군단에 추가하기
+    /// 현재 군단에 추가하기
     /// </summary>
     /// <param name="idx"></param>
     /// <param name="data"></param>
@@ -107,11 +117,14 @@ public class LegionInventory : InitLegionInventory
         }
 
         LegionInventoryData legionData 
-            = new LegionInventoryData(data, legion.LegionName(legion.CurrentLegion), idx);
+            = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);
 
         _currentLegionList.Add(legionData);
         _currentDictionary.Add(idx, legionData);
+
+        CheckType(data);
     }
+
 
     /// <summary>
     /// 펭귄이 죽었으면
@@ -122,16 +135,16 @@ public class LegionInventory : InitLegionInventory
         var savedData = _savedLegionList.FirstOrDefault(saveData => saveData == data);
         if (savedData != null)
         {
-            Remove(savedData.IndexNumber);
+            RemovePenguinInCurrentLegion(savedData.IndexNumber);
             SaveLegion();
         }
     }
 
     /// <summary>
-    /// 임시 군단에서 펭귄 지우기
+    /// 현재 군단에서 펭귄 지우기
     /// </summary>
     /// <param name="idx"></param>
-    public void Remove(int idx)
+    public void RemovePenguinInCurrentLegion(int idx)
     {
         if (_currentDictionary.TryGetValue(idx, out LegionInventoryData curData))
         {
@@ -141,20 +154,48 @@ public class LegionInventory : InitLegionInventory
 
             //여기를 상호작용하게 바꿔야함
             legion.AddPenguin(curData.InfoData);
+
+            currentRemovePenguinCnt++;
         }
     }
 
-
-    public void ChangeName(string beforeName, string afterName)
+    /// <summary>
+    /// 군단이 바뀌면 저장된 펭귄의 군단 이름도 바꿔줌
+    /// </summary>
+    /// <param name="beforeName">그 전 이름</param>
+    /// <param name="afterName">바뀔 이름</param>
+    public void ChangeLegionNameInSaveData(string beforeName, string afterName)
     {
-        foreach (var list in _savedLegionList.Where(list => list.LegionName == beforeName))
+        foreach (var list in _savedLegionList.Where(list => list.LegionName == beforeName)) //저장된 군단에서 전 군단 이름의 데이터 찾기
         {
-            list.LegionName = afterName;
+            list.LegionName = afterName; //바뀐 군단 이름으로 저장하기
         }
     }
 
+    /// <summary>
+    /// 만약 현재 군단에서 바뀐게 있다면
+    /// </summary>
+    /// <returns></returns>
     public bool ChangedInCurrentLegion()
     {
-        return _currentLegionList.Count != _saveCnt;
+        return currentPenguinCnt + currentGeneral - currentRemovePenguinCnt != saveCnt;
+    }
+
+    public bool ExcedLimitOfLegion(int legionNumber)
+    {
+        if(legion.LegionList()[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
+        {
+            UIManager.Instance.ShowWarningUI("군단이 가득 찼습니다!");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool LimitOfGeneral()
+    {
+        return currentGeneral > 0 ? true : false;
     }
 }

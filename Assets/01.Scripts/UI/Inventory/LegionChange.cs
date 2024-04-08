@@ -17,7 +17,6 @@ public class LegionChange : InitLegionChange
     private LegionBuyPanel _buyPanel;
     [SerializeField]
     private LegionSavePanel _savePanel;
-    private Coroutine _waitCorou = null;
 
 
     public override void Awake()
@@ -28,7 +27,7 @@ public class LegionChange : InitLegionChange
         _buttonText = _changeLegionButon.transform.Find("Text").GetComponent<TextMeshProUGUI>();
 
         _changeLegionButon.onClick.RemoveAllListeners();
-        _changeLegionButon.onClick.AddListener(() => ShowPanel());
+        _changeLegionButon.onClick.AddListener(() => ShowChangeLegionPanel());
     }
 
     /// <summary>
@@ -37,32 +36,34 @@ public class LegionChange : InitLegionChange
     /// <param name="legionNumber">몇 군단이니?</param>
     public void ClickLegionChangeButton(int legionNumber)
     {
-        if (legion.LegionInven.ChangedInCurrentLegion()) // 현재 군단에 바뀐게 있다면
+        if (legion.ChangedInCurrentLegion()) // 현재 군단에 바뀐게 있다면
         {
-            _savePanel.ShowPanel();
-            _savePanel.LegionNumber(legionNumber);
+            _savePanel.LegionNumber(legionNumber); //현재 군단을 세이브 패널에 넣어주고
+            _savePanel.ShowSavePanel();
         }
         else
         {
+            legion.SaveLegion(); //혹시 모르니깐 저장해주고
             ChangeLegion(legionNumber);
         }
     }
 
     public void ChangeLegion(int legionNumber)
     {
-        legion.ChangeLegionNumber(legionNumber); //현재 군단 바꾸기
-
         if (legion.LegionList()[legionNumber].Locked) //군단이 잠겨있다면
         {
-            _buyPanel.ShowPanel();
+            _buyPanel.ShowBuyPanel(); //군단 사는 창 띄우기
+            //군단을 살 수 있는지 체크하기
             _buyPanel.CheckCanBuy(CostManager.Instance.Cost, legion.LegionList()[legionNumber].Price, legionNumber);
         }
-        else
+        else //안잠겨있다면
         {
             HidePanel();
 
-            legion.LegionInven.ChangeLegion(legion.LegionName(legionNumber));
-            ChangeButtonName(legionNumber);
+            legion.ChangeLegionNumber(legionNumber); //현재 군단을 선택한 군단 번호로 바꾸기
+
+            legion.ChangeLegion(legionNumber); //현재 군단을 선택한 군단으로 바꾸기
+            ChangeButtonName(legionNumber); //버튼 이름을 선택한 군단 번호로 바꾸기
         }
     }
 
@@ -75,7 +76,7 @@ public class LegionChange : InitLegionChange
     {
         _buttonList[legionNumber].UnLocked(); //군단 슬롯 해금
 
-        legion.LegionInven.ChangeLegion(legion.LegionName(legionNumber)); //군단 바꾸기
+        legion.ChangeLegion(legionNumber); //군단 바꾸기
         HidePanel(); //패널 닫기
 
         ChangeButtonName(legionNumber);
