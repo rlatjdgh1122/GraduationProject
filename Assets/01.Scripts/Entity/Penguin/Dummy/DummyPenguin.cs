@@ -88,6 +88,7 @@ public class DummyPenguin : PoolableMono
     {
         ChangeNavqualityToNone();
 
+        //군단에 소속된 펭귄이라면
         if (Owner)
         {
             Owner.SetPosAndRotation(transform);
@@ -100,6 +101,7 @@ public class DummyPenguin : PoolableMono
 
             this.gameObject.SetActive(false);
         }
+        //군단에 소속되지 않은 펭귄이라면
         else
             IsGoToHouse = true;
     }

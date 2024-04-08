@@ -10,6 +10,7 @@ public class Enemy : Entity
     public float moveSpeed = 3f;
     public float attackSpeed = 1f;
     public float rotationSpeed = 2f;
+
     [SerializeField]
     [Range(0.1f, 6f)]
     protected float nexusDistance;
