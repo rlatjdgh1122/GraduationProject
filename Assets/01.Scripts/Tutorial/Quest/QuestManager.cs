@@ -123,7 +123,6 @@ public class QuestManager : Singleton<QuestManager>
         _questUI.UpdatePopUpQuestUI(quest); // 퀘스트 UI상태 업데이트
         SignalHub.OnStartQuestEvent?.Invoke(); //퀘스트 시작 이벤트
 
-        SignalHub.OnProgressQuestEvent += () => _questUI.UpdateQuestUIToProgress(quest);
     }
 
     public void ProgressQuest(string questId, string goalID) //퀘스트가 진행되었을때. ex: 보석을 먹었을때.
@@ -155,6 +154,8 @@ public class QuestManager : Singleton<QuestManager>
         quest.UpdateCondition(goalID);
         SignalHub.OnProgressQuestEvent?.Invoke(); // 퀘스트 진행 이벤트
 
+        _questUI.UpdateQuestUIToProgress(quest);
+
         if (quest.IsCompleted()) // 완료했다면
         {
             _questUI.UpdatePopUpQuestUI(quest);
@@ -183,8 +184,6 @@ public class QuestManager : Singleton<QuestManager>
     {
         QuestData questData = GetQuestData(questId);
         Quest quest = GetRunningQuest(questId);
-
-        SignalHub.OnProgressQuestEvent -= () => _questUI.UpdateQuestUIToProgress(quest);
 
         Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
