@@ -235,8 +235,8 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
-        MoveToMouseClick(pos);
+      /*  Vector3 pos = curMousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
+        MoveToMouseClick(pos);*/
     }
     private void MoveToMouseClick(Vector3 pos)
     {

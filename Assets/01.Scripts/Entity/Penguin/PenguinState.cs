@@ -18,7 +18,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         if (_navAgent != null)
         {
             _navAgent.ResetPath();
-            _navAgent.isStopped = false;
+            //_navAgent.isStopped = false;
             _penguin.SetNavmeshPriority(Penguin.PriorityType.High);
         }
 
@@ -121,7 +121,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         return true;
     }
 
-    private void DeadTarget()
+    protected void DeadTarget()
     {
         var prevTarget = _penguin.CurrentTarget;
 
@@ -136,7 +136,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
         }
     }
-    private void FindTarget()
+    protected void FindTarget()
     {
         _penguin.FindFirstNearestEnemy();
     }
