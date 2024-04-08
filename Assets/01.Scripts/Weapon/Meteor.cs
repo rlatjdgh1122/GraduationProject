@@ -6,7 +6,6 @@ using UnityEngine;
 public class Meteor : PoolableMono
 {
     [SerializeField] private float _meteorPower;
-    private bool _canMove = false;
 
     private Rigidbody _rigid;
     private DamageCaster _damageCaster;
@@ -25,25 +24,21 @@ public class Meteor : PoolableMono
 
     public void Fire(Vector3 dir)
     {
-        StartCoroutine(BeforeMeteorAtk());
-
-        if (_canMove)
-        {
-            _rigid.AddForce(dir * _meteorPower, ForceMode.Impulse);
-        }
+        _rigid.AddForce(dir * _meteorPower, ForceMode.Impulse);
     }
 
-    private IEnumerator BeforeMeteorAtk()
+    private void OnTriggerEnter(Collider coll)
     {
-        yield return new WaitForSeconds(3);
-        _canMove = true;
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Explode();
+        }
     }
 
     private void Explode()
     {
         // 메테오 폭발 로직 추가
         _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
-        _canMove = false;
         Destroy(this.gameObject);
     }
 }

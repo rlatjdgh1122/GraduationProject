@@ -24,7 +24,7 @@ public class WizardPenguin : Penguin
         foreach (WizardPenguinStateEnum state in Enum.GetValues(typeof(WizardPenguinStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"Archer{typeName}State");
+            Type t = Type.GetType($"Wizard{typeName}State");
             //리플렉션
             var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<WizardPenguinStateEnum, Penguin>;
 
