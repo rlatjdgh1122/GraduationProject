@@ -96,8 +96,6 @@ public class LegionInventory : InitLegionInventory
             }
             else break;
 
-            _currentLegionSavedList = _currentLegionList;
-
             saveCnt++;
             CheckType(list.InfoData);
         }
