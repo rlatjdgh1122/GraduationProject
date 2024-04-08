@@ -56,6 +56,12 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy.AttackCompo.RangeAttack(transform.forward);
     }
 
+    private void MagicAttackTrigger()
+    {
+        OnAttackSoundEvent?.Invoke();
+        _enemy.AttackCompo.MagicAttack(transform.forward);
+    }
+
     public void DeadCompleteTrigger()
     {
         _enemy.enabled = false;
