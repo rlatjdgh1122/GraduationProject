@@ -127,11 +127,10 @@ public class QuestInfoUI : MonoBehaviour
             QuestInfoBoxUI questInfoBoxUI = Instantiate(_questInfoBoxUIPrefab).GetComponent<QuestInfoBoxUI>(); // юс╫ц
             questInfoBoxUI.transform.SetParent(_questInfoBoxRectParent);
 
-            questInfoBoxUI.SetUpQuestInfoBoxUI(
-                                                quest.QuestGoalList[i].CurrentAmount,
-                                                quest.QuestGoalList[i].RequiredAmount,
-                                                questContent,
-                                                questTypeIMG);
+            questInfoBoxUI.SetUpQuestInfoBoxUI(quest.QuestGoalList[i].CurrentAmount,
+                                               quest.QuestGoalList[i].RequiredAmount,
+                                               questContent,
+                                               questTypeIMG);
 
             if (!_questBoxUIs.ContainsKey(quest))
             {
