@@ -119,7 +119,7 @@ public class QuestInfoUI : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
+        for (int i = 0; i < quest.QuestDataCompo.QuestGoalInfo.Length; i++)
         {
             //QuestInfoBoxUI questInfoBoxUI = PoolManager.Instance.Pop(_questInfoBoxUIPrefab.name)
             //    .GetComponent<QuestInfoBoxUI>();

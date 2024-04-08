@@ -15,7 +15,6 @@ MonoBehaviour:
   QuestDatas:
   - QuestStateEnum: 0
     Id: "\uCCAB\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
-    QuestGoalCount: 2
     QuestGoalInfo:
     - RequiredAmount: 3
       GoalId: TutoMeleeBuy
@@ -46,63 +45,48 @@ MonoBehaviour:
       RewardCount: 0
   - QuestStateEnum: 0
     Id: "\uB450\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
-    QuestGoalCount: 0
     QuestGoalInfo:
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+    - RequiredAmount: 1
+      GoalId: TutoGetFishBox
+      QuestGoalType: 1
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
+        QuestContentsInfo: "\uBB3C\uACE0\uAE30 \uC0C1\uC790\uB97C \uD074\uB9AD\uD558\uC5EC
+          \uBB3C\uACE0\uAE30\uB97C \uD68D\uB4DD\uD558\uC138\uC694."
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
     TutorialQuestInfo:
-      IsTutorialQuest: 0
-      TutorialQuestIdx: 0
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 1
       TutorialTexts:
       - "\uBC29\uC5B4\uC5D0 \uC131\uACF5\uD558\uC168\uAD70\uC694! \uC218\uACE0\uD558\uC168\uC2B5\uB2C8\uB2E4."
       - "\uC801\uB4E4\uC774 \uBB3C\uACE0\uAE30 \uC0C1\uC790\uB97C \uAC00\uC9C0\uACE0
-        \uC654\uAD70\uC694! \uC804\uD22C\uAC00 \uB05D\uB09C \uB4A4 \uBB3C\uACE0\uAE30
-        \uC0C1\uC790\uB97C \uD074\uB9AD\uD558\uBA74 \uBB3C\uACE0\uAE30\uB97C \uD68D\uB4DD
-        \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4! "
+        \uC654\uAD70\uC694! "
+      - "\uC804\uD22C\uAC00 \uB05D\uB09C \uB4A4 \uBB3C\uACE0\uAE30 \uC0C1\uC790\uB97C
+        \uD074\uB9AD\uD558\uBA74 \uBB3C\uACE0\uAE30\uB97C \uD68D\uB4DD \uD560 \uC218
+        \uC788\uC2B5\uB2C8\uB2E4!"
     QuestRewardInfo:
       RewardTypeImg: {fileID: 21300000, guid: 36fcb456d0ea6ab4193f9062a7edca9d, type: 3}
       RewardCount: 0
   - QuestStateEnum: 0
     Id: "\uC138\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
-    QuestGoalCount: 0
     QuestGoalInfo:
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+    - RequiredAmount: 2
+      GoalId: TutoArcherBuy
+      QuestGoalType: 1
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+        QuestContentsInfo: "\uC6D0\uAC70\uB9AC \uD3AD\uADC4\uC744 2\uB9C8\uB9AC \uAD6C\uB9E4\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
+    - RequiredAmount: 1
+      GoalId: TutoSecondWin
+      QuestGoalType: 4
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
+        QuestContentsInfo: "\uC804\uD22C\uC5D0\uC11C \uC2B9\uB9AC\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
     TutorialQuestInfo:
-      IsTutorialQuest: 0
-      TutorialQuestIdx: 0
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 2
       TutorialTexts:
       - "\uC798\uD558\uC168\uC2B5\uB2C8\uB2E4!"
       - "\uADFC\uAC70\uB9AC \uD3AD\uADC4 \uB9CC\uC73C\uB85C\uB294 \uB2E4\uC74C \uC804\uD22C\uB97C
@@ -114,29 +98,18 @@ MonoBehaviour:
       RewardCount: 0
   - QuestStateEnum: 0
     Id: "\uB124\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
-    QuestGoalCount: 0
     QuestGoalInfo:
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+    - RequiredAmount: 1
+      GoalId: TutoNexusUpgrade
+      QuestGoalType: 2
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
+        QuestContentsInfo: "\uB125\uC11C\uC2A4\uB97C \uC5C5\uADF8\uB808\uC774\uB4DC
+          \uD558\uC5EC \uC77C\uAFBC \uD3AD\uADC4\uC744 \uD68D\uB4DD\uD558\uC138\uC694."
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
     TutorialQuestInfo:
-      IsTutorialQuest: 0
-      TutorialQuestIdx: 0
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 3
       TutorialTexts:
       - "\uC655\uAD6D\uC744 \uC131\uC7A5 \uC2DC\uD0A4\uAE30 \uC704\uD574\uC120 \uAC74\uBB3C\uC774
         \uD544\uC694\uD574\uC694."
@@ -152,29 +125,24 @@ MonoBehaviour:
       RewardCount: 0
   - QuestStateEnum: 0
     Id: "\uB2E4\uC12F\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
-    QuestGoalCount: 0
     QuestGoalInfo:
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+    - RequiredAmount: 5
+      GoalId: TutoGetResource
+      QuestGoalType: 1
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+        QuestContentsInfo: "\uC790\uC6D0\uC744 \uD68D\uB4DD\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
+    - RequiredAmount: 1
+      GoalId: TutoInstallStatue
+      QuestGoalType: 3
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
+        QuestContentsInfo: "\uC870\uAC01\uC0C1\uC744 \uC124\uCE58\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
     TutorialQuestInfo:
-      IsTutorialQuest: 0
-      TutorialQuestIdx: 0
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 4
       TutorialTexts:
       - "\uC774\uC81C \uC790\uC6D0\uC744 \uD074\uB9AD\uD574 \uC77C\uAFBC\uC744 \uBC30\uCE58\uD558\uACE0
         \uC790\uC6D0\uC744 \uD68D\uB4DD\uD558\uC138\uC694."
@@ -184,29 +152,17 @@ MonoBehaviour:
       RewardCount: 0
   - QuestStateEnum: 0
     Id: "\uC5EC\uC12F\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
-    QuestGoalCount: 0
     QuestGoalInfo:
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+    - RequiredAmount: 1
+      GoalId: TutoThirdWin
+      QuestGoalType: 4
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
+        QuestContentsInfo: "\uC804\uD22C\uC5D0\uC11C \uC2B9\uB9AC\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
     TutorialQuestInfo:
-      IsTutorialQuest: 0
-      TutorialQuestIdx: 0
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 5
       TutorialTexts:
       - "\uC870\uAC01\uC0C1\uC774 \uC124\uCE58\uB418\uAE30 \uC704\uD574\uC11C\uB294
         \uC2DC\uAC04\uC774 \uD544\uC694\uD569\uB2C8\uB2E4."
@@ -216,29 +172,25 @@ MonoBehaviour:
       RewardCount: 0
   - QuestStateEnum: 0
     Id: "\uC77C\uACF1\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
-    QuestGoalCount: 0
     QuestGoalInfo:
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+    - RequiredAmount: 2
+      GoalId: TutoShieldBuy
+      QuestGoalType: 1
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
+        QuestContentsInfo: "\uBC29\uD328 \uD3AD\uADC4\uC744 \uAD70\uB2E8\uC5D0 \uD3B8\uC131\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
+    - RequiredAmount: 2
+      GoalId: TutoMopBuy
+      QuestGoalType: 1
       QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
-    - RequiredAmount: 0
-      GoalId: 
-      QuestGoalType: 0
-      QuestUIDataInfo:
-        QuestContentsInfo: 
-        _questTypeIMG: {fileID: 0}
+        QuestContentsInfo: "\uB300\uAC78\uB808 \uD3AD\uADC4\uC744 \uAD70\uB2E8\uC5D0
+          \uD3B8\uC131\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
     TutorialQuestInfo:
-      IsTutorialQuest: 0
-      TutorialQuestIdx: 0
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 6
       TutorialTexts:
       - "\uC774\uB7F4\uC218\uAC00 \uBC8C\uC368\uBD80\uD130 \uD478\uAC00 \uB098\uD0C0\uB098\uB2E4\uB2C8.."
       - "\uD478\uB97C \uCC98\uCE58\uD558\uB824\uBA74 \uC774\uC815\uB3C4 \uAD70\uB2E8\uC73C\uB85C\uB294
@@ -247,7 +199,27 @@ MonoBehaviour:
         \uBCF4\uC5EC\uC694."
       - "\uAD70\uB2E8\uC744 \uCD94\uAC00\uB85C \uAD6C\uB9E4\uD574 \uBC29\uD328 \uD3AD\uADC4\uACFC
         \uCCAD\uC18C\uBD80 \uD3AD\uADC4\uC744 \uAD70\uB2E8\uC5D0 \uCD94\uAC00\uD558\uC138\uC694!"
-      - "\uC544\uCC98\uD0C0\uC6CC \uB610\uD55C \uC124\uCE58 \uD558\uC138\uC694!"
+    QuestRewardInfo:
+      RewardTypeImg: {fileID: 21300000, guid: 36fcb456d0ea6ab4193f9062a7edca9d, type: 3}
+      RewardCount: 0
+  - QuestStateEnum: 0
+    Id: "\uC5EC\uB35F\uBC88\uC9F8 \uD29C\uD1A0\uB9AC\uC5BC"
+    QuestGoalInfo:
+    - RequiredAmount: 1
+      GoalId: TutoInstallArcherTower
+      QuestGoalType: 3
+      QuestUIDataInfo:
+        QuestContentsInfo: "\uC544\uCC98 \uD0C0\uC6CC\uB97C \uC124\uCE58\uD558\uC138\uC694"
+        _questTypeIMG: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+          type: 3}
+    TutorialQuestInfo:
+      IsTutorialQuest: 1
+      TutorialQuestIdx: 7
+      TutorialTexts:
+      - "\uC798\uD558\uC168\uC2B5\uB2C8\uB2E4!"
+      - "\uD558\uC9C0\uB9CC \uC544\uC9C1 \uC774\uAC78\uB85C\uB294 \uBD80\uC871\uD574\uC694"
+      - "\uC544\uCC98\uD0C0\uC6CC\uB97C \uAD6C\uB9E4\uD574 \uBC29\uC5B4\uB97C \uB354\uC6B1
+        \uAC15\uD654\uD558\uC138\uC694!"
     QuestRewardInfo:
       RewardTypeImg: {fileID: 21300000, guid: 36fcb456d0ea6ab4193f9062a7edca9d, type: 3}
       RewardCount: 0

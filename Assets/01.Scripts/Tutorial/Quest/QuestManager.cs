@@ -52,7 +52,7 @@ public class QuestManager : Singleton<QuestManager>
 
         quest.SetQuestState(QuestState.CanStart);
 
-        _questUI.CreateScrollViewUI(quest); //일단은 여기에 다가 둠. 퀘스트 UI에 퀘스트 추가하는 코드임
+        _questUI.CreateScrollViewUI(quest); // 퀘스트 UI에 퀘스트 추가하는 코드
 
         if (quest.QuestDataCompo.TutorialQuestInfo.IsTutorialQuest)
         {
@@ -109,7 +109,7 @@ public class QuestManager : Singleton<QuestManager>
 
         _canStartQuests.Remove(questId); // 실제로 시작하였으니 시작가능 퀘스트에서 삭제
 
-        for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
+        for (int i = 0; i < quest.QuestDataCompo.QuestGoalInfo.Length; i++)
         {
             quest.QuestGoalList.Add(new QuestGoal
                 (questData.QuestGoalInfo[i].QuestGoalType,
@@ -170,7 +170,7 @@ public class QuestManager : Singleton<QuestManager>
         }
         else // 아직 남았다면
         {
-            for (int i = 0; i < questData.QuestGoalCount; i++)
+            for (int i = 0; i < questData.QuestGoalInfo.Length; i++)
             {
                 Debug.Log($"오우 이제 {questData.Id}퀘스트의 {i + 1}번째 퀘스트" +
                 $"{quest.QuestGoalList[i].RequiredAmount}번 중에 {quest.QuestGoalList[i].CurrentAmount}번 함");
