@@ -107,9 +107,7 @@ public class QuestUI : PopupUI
 
     public void UpdateQuestUIToProgress(Quest quest)
     {
-        // 추가 해야됨
         _questInfoUI.UpdateQuestBoxUIInfo(quest);
-        // 목표 1개니까 임시
     }
 
     private void SetQuestUIToRunning(ScrollViewQuestUI quest)

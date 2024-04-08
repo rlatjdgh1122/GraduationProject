@@ -10,7 +10,7 @@ public class QuestInfoBoxUI : PoolableMono
     private Slider _questValueSlider;
 
     [SerializeField]
-    private TextMeshProUGUI _questGoalText, _rewardCount;
+    private TextMeshProUGUI _questGoalText, _questProgressText;
 
     [SerializeField]
     private Image _questTypeIMG;
@@ -20,15 +20,16 @@ public class QuestInfoBoxUI : PoolableMono
     public void SetUpQuestInfoBoxUI(float sliderValue,float sliderMaxValue, string text, Sprite Img)
     {
         _questValueSlider.maxValue = sliderMaxValue;
-        UpdateSliderValue(sliderValue);
         _questGoalText.text = text;
         this.sliderMaxValue = sliderMaxValue;
         _questTypeIMG.sprite = Img;
+
+        UpdateSliderValue(sliderValue);
     }
 
     public void UpdateSliderValue(float sliderValue)
     {
         _questValueSlider.value = sliderValue;
-        _rewardCount.SetText($"{sliderValue} / {sliderMaxValue}");
+        _questProgressText.SetText($"{sliderValue} / {sliderMaxValue}");
     }
 }

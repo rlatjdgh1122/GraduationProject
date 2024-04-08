@@ -61,10 +61,8 @@ public class QuestInfoUI : MonoBehaviour
     {
         QuestState questState = quest.QuestStateEnum;
         string questName = quest.QuestId;
-        string questContent = quest.QuestDataCompo.QuestGoalInfo[0].QuestUIDataInfo.QuestContentsInfo; // 일단 0
         Sprite questRewardTypeImg = quest.QuestDataCompo.QuestRewardInfo.RewardTypeImg;
         int questRewardCount = quest.QuestDataCompo.QuestRewardInfo.RewardCount;
-        Sprite questTypeIMG = quest.QuestDataCompo.QuestGoalInfo[0].QuestUIDataInfo._questTypeIMG; // 일단 0
 
         _questStartButton.onClick.RemoveAllListeners();
 
@@ -129,8 +127,8 @@ public class QuestInfoUI : MonoBehaviour
 
             questInfoBoxUI.SetUpQuestInfoBoxUI(quest.QuestGoalList[i].CurrentAmount,
                                                quest.QuestGoalList[i].RequiredAmount,
-                                               questContent,
-                                               questTypeIMG);
+                                               quest.QuestDataCompo.QuestGoalInfo[i].QuestUIDataInfo.QuestContentsInfo,
+                                               quest.QuestDataCompo.QuestGoalInfo[i].QuestUIDataInfo.QuestTypeIMG);
 
             if (!_questBoxUIs.ContainsKey(quest))
             {
