@@ -16,6 +16,7 @@ public class ArcherTowerDeadState : ArcherTowerBaseState
         _penguin.CurrentTarget = null;
         _penguin.enabled = false;
         _penguin.NavAgent.enabled = false;
+
     }
 
     public override void UpdateState()

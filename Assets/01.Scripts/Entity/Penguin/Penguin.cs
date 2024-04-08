@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+
 [RequireComponent(typeof(DeadPenguin))]
 public class Penguin : Entity
 {
+    public enum PriorityType
+    {
+        High = 50,
+        Low = 51,
+    }
+
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -76,6 +84,7 @@ public class Penguin : Entity
 
     private Army owner;
     public Army MyArmy => owner;
+
 
     private void OnEnable()
     {
@@ -201,12 +210,6 @@ public class Penguin : Entity
                 StopCoroutine(movingCoroutine);
 
             movingCoroutine = StartCoroutine(Moving());
-
-            /* if (prevMousePos != Vector3.zero)
-             {
-             }
-             else
-                 MoveToMouseClick(mousePos + SeatPos);*/
         }
     }
     private IEnumerator Moving()
@@ -250,6 +253,12 @@ public class Penguin : Entity
             NavAgent.isStopped = false;
             NavAgent?.SetDestination(MousePos + SeatPos);
         }
+    }
+
+    public void SetNavmeshPriority(PriorityType type)
+    {
+        if (NavAgent != null)
+            NavAgent.avoidancePriority = (int)type;
     }
     #endregion
 

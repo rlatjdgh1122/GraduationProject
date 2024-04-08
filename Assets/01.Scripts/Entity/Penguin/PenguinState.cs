@@ -19,6 +19,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         {
             _navAgent.ResetPath();
             _navAgent.isStopped = false;
+            _penguin.SetNavmeshPriority(Penguin.PriorityType.High);
         }
 
         _penguin.CurrentTarget = null;
@@ -87,6 +88,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     #region Exit
     protected void IdleExit()
     {
+        _penguin.SetNavmeshPriority(Penguin.PriorityType.Low);
         SignalHub.OnIceArrivedEvent -= FindTarget;
     }
     protected void AttackExit()

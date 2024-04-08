@@ -1172,6 +1172,7 @@ GameObject:
   - component: {fileID: 3496813715336790843}
   - component: {fileID: 6997479935234560311}
   - component: {fileID: 2030206095074393266}
+  - component: {fileID: 2707706033544461591}
   m_Layer: 11
   m_Name: ArcherPenguin
   m_TagString: Player
@@ -1417,7 +1418,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4862602252113058120}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.35
+  m_Radius: 0.23
   m_Speed: 1
   m_Acceleration: 20
   avoidancePriority: 50
@@ -1426,7 +1427,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.33
+  m_Height: 1.15
   m_BaseOffset: -0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -2133,6 +2134,18 @@ MonoBehaviour:
     - {x: -0.44585338, y: -0.53741634, z: -0.7158201}
     - {x: -0.22979543, y: -0.22698571, z: 0.9463993}
     - {x: 0.23135628, y: -0.2253576, z: 0.94640803}
+--- !u!114 &2707706033544461591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5002279329585421089
 GameObject:
   m_ObjectHideFlags: 0

@@ -95,6 +95,9 @@ public class DummyPenguin : PoolableMono
             Owner.gameObject.SetActive(true);
             Owner.StateInit();
 
+            //더미상태에서 풀리면 TentTrm(중앙)을 기준으로 다음 마우스 위치와 계산함
+            Owner.MousePos = GameManager.Instance.TentTrm.position;
+
             this.gameObject.SetActive(false);
         }
         else
