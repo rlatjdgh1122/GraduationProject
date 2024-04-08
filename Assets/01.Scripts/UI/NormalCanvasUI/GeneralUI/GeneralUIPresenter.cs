@@ -60,10 +60,10 @@ public class GeneralUIPresenter : PopupUI
             currentCost -= currentGeneralStat.InfoData.Price;
             _currentView.SetUpgradeUI(currentGeneralStat);
 
-            if (TutorialManager.Instance.CurTutoQuestIdx == 6) //일단 퀘스트
-            {
-                TutorialManager.Instance.CurTutorialProgressQuest();
-            }
+            //if (TutorialManager.Instance.CurTutoQuestIdx == 6) //일단 퀘스트
+            //{
+            //    TutorialManager.Instance.CurTutorialProgressQuest();
+            //}
         }
         else
         {

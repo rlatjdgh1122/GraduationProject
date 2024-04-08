@@ -107,7 +107,8 @@ public class QuestUI : PopupUI
 
     public void UpdateQuestUIToProgress(Quest quest)
     {
-        _questInfoUI.UpdateProgressText($"{quest.QuestGoalList[0].CurrentAmount} / {quest.QuestGoalList[0].CurrentAmount}");
+        // 추가 해야됨
+        _questInfoUI.UpdateQuestBoxUIInfo(quest);
         // 목표 1개니까 임시
     }
 

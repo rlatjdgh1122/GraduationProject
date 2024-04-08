@@ -8,7 +8,7 @@ public class Quest
 
     public string QuestId;
 
-    public List<QuestGoal> QuestGoalList = new();
+    public List<QuestGoal> QuestGoalList { get; private set; } = new();
     public QuestData QuestDataCompo { get; private set; }
 
     public Quest(QuestData questData)
@@ -25,7 +25,7 @@ public class Quest
         {
             if (QuestGoalList[i].GoalID == id)
             {
-                QuestGoalList[i].CurrentAmount++;
+                QuestGoalList[i].IncreaseCurrentAmountValue();
             }
         }
     }

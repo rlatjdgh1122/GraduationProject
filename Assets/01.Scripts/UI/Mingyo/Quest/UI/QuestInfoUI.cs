@@ -18,8 +18,6 @@ public class QuestInfoUI : MonoBehaviour
     private TextMeshProUGUI _questStateText; // 진행중인지 뜰 텍스트
     private TextMeshProUGUI _questNameText; // 퀘스트 이름
 
-    private TextMeshProUGUI _curProgressText; // 어떤 퀘스트인지
-
     private TextMeshProUGUI _questRewardCountText; // 보상 갯수
     public RectTransform RewardPos => _questRewardCountText.rectTransform; // 보상 갯수
 
@@ -31,7 +29,7 @@ public class QuestInfoUI : MonoBehaviour
     private Button _questStartButton;
     private TextMeshProUGUI _questStartButtonText;
 
-    private List<GameObject> _questBoxUI = new List<GameObject>();
+    private Dictionary<Quest, List<QuestInfoBoxUI>> _questBoxUIs = new();
 
     private void Awake()
     {
@@ -113,14 +111,13 @@ public class QuestInfoUI : MonoBehaviour
         _questRewardCountText.SetText(questRewardCount.ToString());
 
         // 임시
-        for (int i = 0; i < _questBoxUI.Count; i++)
+        foreach (var questBoxUI in _questBoxUIs.Values) // 일단 다 끄고
         {
-            Destroy(_questBoxUI[i].gameObject);
+            for (int i = 0; i < questBoxUI.Count; i++)
+            {
+                questBoxUI[i].gameObject.SetActive(false);
+            }
         }
-
-        _questBoxUI.Clear();
-
-        Debug.Log(_questBoxUI.Count);
 
         for (int i = 0; i < quest.QuestDataCompo.QuestGoalCount; i++)
         {
@@ -130,16 +127,34 @@ public class QuestInfoUI : MonoBehaviour
             QuestInfoBoxUI questInfoBoxUI = Instantiate(_questInfoBoxUIPrefab).GetComponent<QuestInfoBoxUI>(); // 임시
             questInfoBoxUI.transform.SetParent(_questInfoBoxRectParent);
 
-            questInfoBoxUI.SetUpQuestInfoBoxUI(0.5f, questContent, questTypeIMG); // 0.5는 레전드 임시 값
+            questInfoBoxUI.SetUpQuestInfoBoxUI(
+                                                quest.QuestGoalList[i].CurrentAmount,
+                                                quest.QuestGoalList[i].RequiredAmount,
+                                                questContent,
+                                                questTypeIMG);
 
-            _questBoxUI.Add(questInfoBoxUI.gameObject);
+            if (!_questBoxUIs.ContainsKey(quest))
+            {
+                _questBoxUIs.Add(quest, new List<QuestInfoBoxUI>());
+            }
 
+            _questBoxUIs[quest].Add(questInfoBoxUI);
+
+            questInfoBoxUI.gameObject.SetActive(true); // 여기서 켜줌
         }
 
-        //UpdateProgressText($"{quest.QuestGoalList[0].CurrentAmount} / {quest.QuestGoalList[0].RequiredAmount}");
-        // 목표 1개니까 임시
-
         _questStartButtonText.SetText(buttonText);
+    }
+
+    public void UpdateQuestBoxUIInfo(Quest quest)
+    {
+        // 이렇게 하면 문제가 업데이트 된 UI가 현재 QuestInfoUI가 아니면 오류 생김
+        // 아마 QuestInfoBoxUI도 생성이 아니라 업데이트 하는 방식으로 해야 할 듯.
+
+        for (int i = 0; i < _questBoxUIs[quest].Count; i++)
+        {
+            _questBoxUIs[quest][i].UpdateSliderValue(quest.QuestGoalList[i].CurrentAmount);
+        }
     }
 
     private void StartQuestHandler(string questId)
@@ -153,15 +168,9 @@ public class QuestInfoUI : MonoBehaviour
         QuestManager.Instance.EndQuest(questId);
     }
 
-    public void UpdateProgressText(string content)
-    {
-        _curProgressText.SetText($"현재 진행 상황: {content}");
-    }
-
     public void QuestStartBtn(string questId)
     {
         QuestManager.Instance.StartQuest(questId);
-
 
         SignalHub.OnStartQuestEvent?.Invoke();
     }

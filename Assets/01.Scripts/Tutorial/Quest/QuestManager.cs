@@ -152,7 +152,7 @@ public class QuestManager : Singleton<QuestManager>
         }
         #endregion
 
-        quest.UpdateCondition(goalID); // 목표 1개니까 임시
+        quest.UpdateCondition(goalID);
         SignalHub.OnProgressQuestEvent?.Invoke(); // 퀘스트 진행 이벤트
 
         if (quest.IsCompleted()) // 완료했다면
@@ -170,8 +170,12 @@ public class QuestManager : Singleton<QuestManager>
         }
         else // 아직 남았다면
         {
-            Debug.Log($"오우 이제 {questData.Id}퀘스트" +
-                $"{quest.QuestGoalList[0].RequiredAmount - quest.QuestGoalList[0].CurrentAmount}번만 더 해");
+            for (int i = 0; i < questData.QuestGoalCount; i++)
+            {
+                Debug.Log($"오우 이제 {questData.Id}퀘스트의 {i + 1}번째 퀘스트" +
+                $"{quest.QuestGoalList[i].RequiredAmount}번 중에 {quest.QuestGoalList[i].CurrentAmount}번 함");
+            }
+            
         }
     }
 

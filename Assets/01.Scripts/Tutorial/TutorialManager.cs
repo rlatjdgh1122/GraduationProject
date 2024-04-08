@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum QuestGoalIdx
+{
+    First = 0,
+    Second = 1,
+}
+
 public class TutorialManager : Singleton<TutorialManager>
 {
     private int curQuestIdx = 0;
@@ -19,7 +25,19 @@ public class TutorialManager : Singleton<TutorialManager>
         curQuestIdx = 0;
 
         StartCurTutorialQuest();
-        SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest();
+        SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest(QuestGoalIdx.Second);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            CurTutorialProgressQuest(QuestGoalIdx.Second);
+        }
     }
 
     public void StartCurTutorialQuest()
@@ -27,22 +45,22 @@ public class TutorialManager : Singleton<TutorialManager>
         QuestManager.Instance.SetCanStartQuest(curQuestData.Id);
     }
 
-    public void CurTutorialProgressQuest()
+    public void CurTutorialProgressQuest(QuestGoalIdx goalIdx)
     {
-        QuestManager.Instance.ProgressQuest(curQuestData.Id, curQuestData.QuestGoalInfo[0].GoalId); // 이거 인덱스가 바껴야됨
+        QuestManager.Instance.ProgressQuest(curQuestData.Id, curQuestData.QuestGoalInfo[(int)goalIdx].GoalId); // 이거 인덱스가 바껴야됨
 
-        SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest();
+        //SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest(goalIdx);
 
-        if (curQuestIdx == 1 || curQuestIdx == 2 || curQuestIdx == 3 || // 일단 퀘스트. 곰 컷신일때 같이 나온다 수정 해야됨
-            curQuestIdx == 4 || curQuestIdx == 5)
-        {
-            Debug.Log("여기서는안해버리고");
-            return;
-        }
+        //if (curQuestIdx == 1 || curQuestIdx == 2 || curQuestIdx == 3 || // 일단 퀘스트. 곰 컷신일때 같이 나온다 수정 해야됨
+        //    curQuestIdx == 4 || curQuestIdx == 5)
+        //{
+        //    Debug.Log("여기서는안해버리고");
+        //    return;
+        //}
 
-        Debug.Log($"지금 라운드 {curQuestIdx}인데 이 다음 이벤트는 전투 끝나고 나올 예정");
+        //Debug.Log($"지금 라운드 {curQuestIdx}인데 이 다음 이벤트는 전투 끝나고 나올 예정");
 
-        SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest();
+        //SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest(goalIdx);
 
     }
 
@@ -68,6 +86,9 @@ public class TutorialManager : Singleton<TutorialManager>
 
     private void OnEnable()
     {
-        SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest();
+        foreach(QuestGoalIdx idx in Enum.GetValues(typeof(QuestGoalIdx)))
+        {
+            SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest(idx);
+        }
     }
 }

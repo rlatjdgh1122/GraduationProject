@@ -13,9 +13,9 @@ public enum QuestGoalType// 퀘스트 목표의 유형
 
 public class QuestGoal
 {
-    public QuestGoalType GoalType;
-    public int RequiredAmount;
-    public int CurrentAmount;
+    public QuestGoalType GoalType { get; private set; }
+    public int RequiredAmount { get; private set; }
+    public int CurrentAmount { get; private set; }
 
     public string GoalID;
 
@@ -26,6 +26,11 @@ public class QuestGoal
         RequiredAmount = amount;
         CurrentAmount = 0;
         GoalID = goalID;
+    }
+
+    public void IncreaseCurrentAmountValue()
+    {
+        CurrentAmount++;
     }
 
     // 목표 달성 여부 확인
