@@ -27,7 +27,6 @@ public class ShieldIdleState : ShieldBaseState
 
     public override void Exit()
     {
-        SignalHub.OnIceArrivedEvent -= FindTarget;
         IdleExit();
 
         base.Exit();

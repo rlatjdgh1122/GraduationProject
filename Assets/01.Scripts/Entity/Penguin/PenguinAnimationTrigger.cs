@@ -91,6 +91,19 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
+    private void MagicAttackTrigger()
+    {
+        if (_penguin.CurrentTarget != null)
+        {
+            _penguin.AttackCompo?.MagicAttack(_penguin.CurrentTarget.transform.position);
+        }
+        else
+        {
+            _penguin?.AttackCompo?.MagicAttack(_penguin.transform.forward);
+        }
+        OnRangeAttackTriggerEvent?.Invoke();
+    }
+
     public void DeadCompleteTrigger()
     {
         _penguin.enabled = false;

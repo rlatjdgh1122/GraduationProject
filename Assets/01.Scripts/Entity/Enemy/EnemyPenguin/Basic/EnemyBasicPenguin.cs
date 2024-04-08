@@ -7,7 +7,6 @@ public enum EnemyPenguinStateEnum
     Move,
     Chase,
     Attack,
-    Dead,
     Reached,
     MustChase,
     Provoked
@@ -15,7 +14,7 @@ public enum EnemyPenguinStateEnum
 
 public class EnemyBasicPenguin : Enemy
 {
-    public EnemyStateMachine<EnemyPenguinStateEnum> StateMachine { get; private set; }  
+    public EnemyStateMachine<EnemyPenguinStateEnum> StateMachine { get; private set; }
 
     protected override void Awake()
     {
@@ -38,13 +37,9 @@ public class EnemyBasicPenguin : Enemy
     {
         StateMachine.Init(EnemyPenguinStateEnum.Idle);
     }
-
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
-
-        if (IsDead)
-            StateMachine.ChangeState(EnemyPenguinStateEnum.Dead);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 3110575024032912176}
   - component: {fileID: 591842340144636730}
   - component: {fileID: 239097232365048931}
+  - component: {fileID: 7807761171550603744}
   m_Layer: 11
   m_Name: MopPenguin
   m_TagString: Player
@@ -554,8 +555,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 1113781379576890578}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.35
-  m_Speed: 3.5
+  m_Radius: 0.23
+  m_Speed: 1
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 480
@@ -563,7 +564,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.33
+  m_Height: 1.15
   m_BaseOffset: -0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -7086,6 +7087,18 @@ MonoBehaviour:
     - {x: -0.40914756, y: -0.19284587, z: 0.89185685}
     - {x: -0.0011716121, y: -0.023782756, z: 0.99971646}
     - {x: -0.46358585, y: -0.056091066, z: 0.88427484}
+--- !u!114 &7807761171550603744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113781379576890578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1297160086335662581
 GameObject:
   m_ObjectHideFlags: 0

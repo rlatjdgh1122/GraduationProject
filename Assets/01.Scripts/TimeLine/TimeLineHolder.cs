@@ -33,16 +33,16 @@ public class TimeLineHolder : MonoBehaviour
 
     private void BeforeBattleWave()
     {
-        if (waveManager.IsCurrentWaveCountEqualTo(3) && isFirst)
-        {
-            pd.Play(ta[0]);
-            StartCoroutine(TutoQuestCorou());
-            isFirst = false;
-        }
-        else
-        {
-            Debug.Log(waveManager.CurrentWaveCount);
-        }
+        //if (waveManager.IsCurrentWaveCountEqualTo(3) && isFirst)
+        //{
+        //    pd.Play(ta[0]);
+        //    StartCoroutine(TutoQuestCorou());
+        //    isFirst = false;
+        //}
+        //else
+        //{
+        //    Debug.Log(waveManager.CurrentWaveCount);
+        //}
     }
 
     private IEnumerator TutoQuestCorou()

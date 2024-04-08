@@ -15,9 +15,6 @@ public class BasicBaseState : PenguinState<BasicPenguinStateEnum, Penguin> //»ó¼
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(BasicPenguinStateEnum.Dead);
     }
 
     public override void Exit()

@@ -24,12 +24,6 @@ public class EntityState<T, G> where T : Enum where G : Entity
         _penguin.AnimatorCompo.SetBool(_animBoolHash, true); //들어오면 내 애니메이션을 활성화 해주는 것
         _navAgent = _penguin.NavAgent;
     }
-
-    public virtual void FixedUpdateState()
-    {
-
-    }
-
     public virtual void UpdateState()
     {
 
@@ -44,10 +38,12 @@ public class EntityState<T, G> where T : Enum where G : Entity
     {
         _triggerCalled = true;
 
-        if (_penguin is Penguin)
+        //이코드는 움직임 중점 모드일때 사용되었음
+
+        /*if (_penguin is Penguin)
         {
             var penguin = _penguin as Penguin;
             penguin.WaitForCommandToArmyCalled = true;
-        }
+        }*/
     }
 }

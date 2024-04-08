@@ -1214,6 +1214,7 @@ GameObject:
   - component: {fileID: 6565461361065889471}
   - component: {fileID: 2713781819061574539}
   - component: {fileID: 3813698743995947974}
+  - component: {fileID: 7422626103857272151}
   m_Layer: 11
   m_Name: ShieldPenguin
   m_TagString: Untagged
@@ -1441,7 +1442,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.15
-  m_Radius: 0.4
+  m_Radius: 0.23
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1456,16 +1457,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 4169427133079595497}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
-  m_Speed: 3.5
+  m_Radius: 0.23
+  m_Speed: 1
   m_Acceleration: 20
-  avoidancePriority: 1
+  avoidancePriority: 50
   m_AngularSpeed: 480
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.33
+  m_Height: 1.15
   m_BaseOffset: -0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -1748,6 +1749,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22f0b49ab804d8e4ab7bb886c7dd5143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7422626103857272151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169427133079595497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4562683283069987933

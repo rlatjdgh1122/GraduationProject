@@ -1,15 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class NexusPopupUI : PopupUI
+public abstract class NexusPopupUI : PopupUI
 {
-    protected NexusUIPresenter presenter;
+    #region components
+    protected NexusUIPresenter _presenter;
+    protected NexusStat _nexusStat;
+    protected BuildingDatabaseSO _buildingDatabase;
+    protected NexusInfoDataSO _nexusInfo;
+    #endregion
 
     public override void Awake()
     {
         base.Awake();
-
-        presenter = UIManager.Instance.canvasTrm.Find("NexusUI").GetComponent<NexusUIPresenter>(); 
+        _presenter = UIManager.Instance.canvasTrm.Find("NexusUI").GetComponent<NexusUIPresenter>();
     }
+
+    protected virtual void Start()
+    {
+        _nexusStat = NexusManager.Instance.NexusStat;
+        _buildingDatabase = NexusManager.Instance.BuildingDatabase;
+        _nexusInfo = NexusManager.Instance.NexusInfo;
+    }
+
+    public abstract void UIUpdate();
 }

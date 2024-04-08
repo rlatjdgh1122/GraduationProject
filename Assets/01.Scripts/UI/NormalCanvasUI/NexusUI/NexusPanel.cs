@@ -12,34 +12,40 @@ public class NexusPanel : NexusPopupUI
     public Image buildingIcon;
     public TextMeshProUGUI upgradePrice;
 
-    private NexusStat nexusStat => presenter.nexusBase.NexusStat;
-
     public override void Awake()
     {
         base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
-        presenter.OnUpdateNexusUI += UpdateUI;
+        base.Start();
         UpdateUI();
     }
 
     public void UpdateUI()
     {
-        currentLevel.text = $"Lv {nexusStat.level}";
-        nextLevel.text = $"Lv {nexusStat.level + 1}";
-        currentHp.text = $"{nexusStat.GetMaxHealthValue()}";
-        nextHp.text = $"{nexusStat.GetUpgradedMaxHealthValue()}";
-        currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
-        nextWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount + 1}";
-        buildingIcon.sprite = nexusStat.previewBuilding.UISprite;
-        upgradePrice.text = $"{nexusStat.upgradePrice}";
+        currentLevel.text = $"Lv {_nexusStat.level}";   
+        nextLevel.text = $"Lv {_nexusStat.level + 1}";
+        currentHp.text = $"{_nexusInfo.currentMaxHealth}";
+        nextHp.text = $"{_nexusInfo.nextMaxHealth}";
+        currentWorkerCount.text = $"{_nexusInfo.currentWorkerCount}";
+        nextWorkerCount.text = $"{_nexusInfo.nextWorkerCount}";
+        if (_nexusInfo.previewBuilding == null)
+        {
+            buildingIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            buildingIcon.gameObject.SetActive(true);
+            buildingIcon.sprite = _nexusInfo.previewBuilding.UISprite;
+        }
+        upgradePrice.text = $"{_nexusStat.upgradePrice}";
     }
 
     public void OnLevelUp()
     {
-        presenter.LevelUp();
+        _presenter.LevelUp();
     }
 
     public override void MovePanel(float x, float y, float fadeTime)
@@ -47,8 +53,8 @@ public class NexusPanel : NexusPopupUI
         base.MovePanel(x, y, fadeTime);
     }
 
-    private void OnDisable()
+    public override void UIUpdate()
     {
-        presenter.OnUpdateNexusUI -= UpdateUI;
+        UpdateUI();   
     }
 }

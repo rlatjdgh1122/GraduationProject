@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Rendering;
 
+
+
+[RequireComponent(typeof(DeadPenguin))]
 public class Penguin : Entity
 {
+    public enum PriorityType
+    {
+        High = 50,
+        Low = 51,
+    }
+
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -39,16 +46,21 @@ public class Penguin : Entity
         get
         {
             Vector3 vec = (curMousePos - prevMousePos);
+
             if (prevMousePos != Vector3.zero && vec != Vector3.zero)
             {
-                //float value = Mathf.Atan2(vec.z, vec.x) * Mathf.Rad2Deg;
                 float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
-                //float value = Quaternion.LookRotation(vec).eulerAngles.y;
                 value = (value > 180f) ? value - 360f : value; // 변환
                 return value; // -180 ~ 180
             }
-            else
-                return 0;
+            else //처음 움직였을 때
+            {
+                Vector3 v = (curMousePos - transform.position);
+
+                float value = Quaternion.FromToRotation(Vector3.forward, v).eulerAngles.y;
+                value = (value > 180f) ? value - 360f : value; // 변환
+                return value; // -180 ~ 180
+            }
         }
     }
     public Vector3 SeatPos
@@ -64,13 +76,24 @@ public class Penguin : Entity
 
     #region components
     public EntityAttackData AttackCompo { get; private set; }
+    private IDeadable _deadCompo = null;
+    private Iliveable _liveCompo = null;
     #endregion
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     private Army owner;
-    public Army Owner => owner;
+    public Army MyArmy => owner;
 
+
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseEndEvent += ChangedToDummyPenguinHandler;
+    }
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= ChangedToDummyPenguinHandler;
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -80,7 +103,8 @@ public class Penguin : Entity
             NavAgent.speed = moveSpeed;
         }
         AttackCompo = GetComponent<EntityAttackData>();
-        SignalHub.OnBattlePhaseEndEvent += ChangedToDummyPenguinHandler;
+        _deadCompo = GetComponent<IDeadable>();
+        _liveCompo = GetComponent<Iliveable>();
     }
     #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
@@ -143,14 +167,7 @@ public class Penguin : Entity
     #endregion
     protected override void HandleDie()
     {
-        IsDead = true;
-
-        //사실 이런 경우가 생기면 안되는데 더미펭귄이 실제 펭귄이라서 같이 싸울때가 있기에 예외처리
-        if (Owner != null)
-        {
-            ArmyManager.Instance.Remove(Owner.Legion, this);
-        }
-        SignalHub.OnModifyArmyInfo?.Invoke();
+        _deadCompo.OnDied();
     }
 
     #region 스탯 관련
@@ -179,46 +196,31 @@ public class Penguin : Entity
     #region 움직임 관련
     //배틀모드일때 다죽이고 마지막 마우스 위치로 이동 코드
 
-
-    public void MoveToMySeat(Vector3 mousePos) //싸울때말고 군단 위치로
+    /// <summary>
+    /// 배치된 위치로 이동
+    /// </summary>
+    /// <param name="mousePos"></param>
+    public void MoveToMySeat(Vector3 mousePos)
     {
         if (NavAgent.isActiveAndEnabled)
         {
             NavAgent.isStopped = false;
 
-            if (prevMousePos != Vector3.zero)
-            {
-                if (movingCoroutine != null)
-                    StopCoroutine(movingCoroutine);
+            if (movingCoroutine != null)
+                StopCoroutine(movingCoroutine);
 
-                movingCoroutine = StartCoroutine(Moving());
-            }
-            else
-                MoveToMouseClick(mousePos + SeatPos);
+            movingCoroutine = StartCoroutine(Moving());
         }
     }
-    float totalTime = 1f; // 총 시간 (1초로 가정)
-    float balancingValue = 10f;
-    float currentTime = 0f; // 현재 시간
-
-    private Vector3 Cur = Vector3.zero;
-    private Vector3 Prev = Vector3.zero;
     private IEnumerator Moving()
     {
-        currentTime = 0f;
+        float currentTime = 0f;
         float t = 0f;
 
-        float AC = Vector3.Distance(MousePos, SeatPos);
         Vector3 movePos = Quaternion.Euler(0, Angle, 0) * SeatPos;
-        float AB = Vector3.Distance(MousePos, movePos);
 
-        float BC =
-            Mathf.Pow(AB, 2) + Mathf.Pow(AC, 2) - (2 * AC * AB) * Mathf.Cos(Angle);
-        //마우스 위치부터 나의 위치와 움직일 위치에 거리
-
-        float result = Mathf.Sqrt(BC); //이게 클수록 수는 작게
-
-        totalTime = result / balancingValue;
+        float distance = Vector3.Distance(prevMousePos, curMousePos);
+        float totalTime = distance / moveSpeed;
 
         while (currentTime <= totalTime)
         {
@@ -233,23 +235,8 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
-        MoveToMouseClick(pos);
-    }
-
-
-    public void SetTarget(Vector3 mousePos)
-    {
-        MoveToPosition(mousePos);
-    }
-    public void MoveToMouseClickPositon()
-    {
-        //StartImmediately();
-        if (NavAgent != null)
-        {
-            NavAgent.isStopped = false;
-            NavAgent?.SetDestination(MousePos + SeatPos);
-        }
+      /*  Vector3 pos = curMousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
+        MoveToMouseClick(pos);*/
     }
     private void MoveToMouseClick(Vector3 pos)
     {
@@ -257,6 +244,21 @@ public class Penguin : Entity
         {
             NavAgent.SetDestination(pos);
         }
+    }
+
+    public void MoveToMouseClickPositon()
+    {
+        if (NavAgent != null)
+        {
+            NavAgent.isStopped = false;
+            NavAgent?.SetDestination(MousePos + SeatPos);
+        }
+    }
+
+    public void SetNavmeshPriority(PriorityType type)
+    {
+        if (NavAgent != null)
+            NavAgent.avoidancePriority = (int)type;
     }
     #endregion
 
@@ -284,12 +286,12 @@ public class Penguin : Entity
     public virtual void StateInit() { }
 
     #endregion
+
+    //근데 스크립트가 꺼져있는데 이 함수가 호출이 되나?
     public override void Init()
     {
         owner = null;
+        _liveCompo.OnResurrected();
     }
-    private void OnDestroy()
-    {
-        SignalHub.OnBattlePhaseEndEvent -= ChangedToDummyPenguinHandler;
-    }
+
 }

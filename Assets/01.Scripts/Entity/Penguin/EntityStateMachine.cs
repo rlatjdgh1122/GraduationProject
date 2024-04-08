@@ -25,6 +25,14 @@ public class EntityStateMachine<T, G> where T : Enum where G : Entity
         //UnityEngine.Debug.Log($"이전 : {PrevState}, 이후 : {CurrentState}");
     }
 
+    /// <summary>
+    /// 만약 이전 상태가 파라미터 값과 같다면
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    public bool IsEqualPrevState(T state)
+    => PrevState.Equals(state);
+
     public void AddState(T state, EntityState<T, G> playerState)
     {
         StateDictionary.Add(state, playerState);

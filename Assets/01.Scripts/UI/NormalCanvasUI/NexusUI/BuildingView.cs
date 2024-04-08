@@ -7,8 +7,7 @@ public class BuildingView : NexusPopupUI
 {
     [HideInInspector]
     public SpawnBuildingButton spawn;
-
-    public NexusBase nexus;
+    [HideInInspector]
     public BuildingItemInfo building;
 
     public Button purchaseButton;
@@ -23,40 +22,32 @@ public class BuildingView : NexusPopupUI
         base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
-        building = nexus.BuildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
+        base.Start();
+        building = _buildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
         spawn = GetComponent<SpawnBuildingButton>();
-        SetDefaultUI();
+        purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
+
         UpdateUI();
     }
 
     public void OnPurchase()
     {
-        presenter.PurchaseBuilding(this);
-
-        UpdateUI();
+        _presenter.PurchaseBuilding(this);
     }
 
     public void UpdateUI()
     {
+        lockedPanel.gameObject.SetActive(!building.IsUnlocked);
         buildingName.text = building.Name;
         buildingIcon.sprite = building.UISprite;
         buildingPrice.text = $"{building.Price}";
         maxInstallableCount.text = $"{building.CurrentInstallCount}/{building.MaxInstallableCount}";
     }
 
-    public void SetDefaultUI()
+    public override void UIUpdate()
     {
-        if (!building.IsUnlocked)
-        {
-            return;
-        }
-        else
-        {
-            lockedPanel.gameObject.SetActive(false);
-            purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
-            UpdateUI();
-        }
+        UpdateUI();
     }
 }

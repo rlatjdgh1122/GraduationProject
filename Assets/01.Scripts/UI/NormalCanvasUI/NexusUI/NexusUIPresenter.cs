@@ -6,71 +6,51 @@ using UnityEngine;
 
 public class NexusUIPresenter : NexusPopupUI
 {
-    #region events
-    public Action OnUpdateNexusUI;
-    #endregion
-
-    private List<BuildingView> _buildingViews;
-
     [HideInInspector]
     public BuildingType buildingType;
-    public NexusBase nexusBase;
 
     private BuildingFactory _buildingFactory;
+    private List<NexusPopupUI> _receiverList;
 
     public override void Awake()
     {
         base.Awake();
 
         _buildingFactory = FindAnyObjectByType<BuildingFactory>();
-
-        _buildingViews = GetComponentsInChildren<BuildingView>().ToList();
-        _buildingViews.ForEach(view => view.nexus = nexusBase);
-        //_buildingViews.ForEach(item => item.building = 
-        //    nexusBase.BuildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == item.name));
-        foreach (BuildingItemInfo building in nexusBase.BuildingDatabase.BuildingItems)
-        {
-            if (nexusBase.NexusStat.level + 1 == building.UnlockedLevel)
-            {
-                nexusBase.NexusStat.previewBuilding = building;
-            }
-        }
+        _receiverList = GetComponentsInChildren<NexusPopupUI>().ToList();
     }
 
     #region NexusUI
     public void LevelUp()
     {
-        nexusBase.NexusStat.maxHealth.AddSum
-            (nexusBase.NexusStat.maxHealth.GetValue(), nexusBase.NexusStat.level, nexusBase.NexusStat.levelupIncreaseValue);
-        nexusBase.NexusStat.level++;
-
-        foreach (BuildingItemInfo building in nexusBase.BuildingDatabase.BuildingItems)
+        _nexusStat.maxHealth.AddSum
+            (_nexusStat.maxHealth.GetValue(), _nexusStat.level, _nexusStat.levelupIncreaseValue);
+        _nexusStat.level++;
+        foreach (BuildingItemInfo building in _buildingDatabase.BuildingItems)
         {
-            if (nexusBase.NexusStat.level == building.UnlockedLevel)
+            if (_nexusStat.level == building.UnlockedLevel)
             {
                 building.IsUnlocked = true;
-                nexusBase.NexusStat.unlockedBuilding = building;
-            }
-
-            if (nexusBase.NexusStat.level + 1 == building.UnlockedLevel)
-            {
-                nexusBase.NexusStat.previewBuilding = building;
             }
         }
-
-        nexusBase.HealthCompo.SetHealth(nexusBase.NexusStat);
-        nexusBase.NexusStat.upgradePrice *= 2; // <-이건 임시
+        _nexusStat.upgradePrice *= 2; // <-이건 임시
         WorkerManager.Instance.MaxWorkerCount++; //이것도 임시수식
         SoundManager.Play2DSound(SoundName.LevelUp); //이것도 임시
 
-        _buildingViews.ForEach(view => view.SetDefaultUI());
+        NexusManager.Instance.SetNexusHealth();        
+        NexusManager.Instance.UpdateNexusInfoData();
 
-        OnUpdateNexusUI?.Invoke();
+        UpdateRecieverUI();
 
         //if (TutorialManager.Instance.CurTutoQuestIdx == 4) //일단 퀘스트
         //{
         //    TutorialManager.Instance.CurTutorialProgressQuest();        
         //}
+    }
+
+    public void UpdateRecieverUI()
+    {
+        _receiverList.ForEach(r => r.UIUpdate());
     }
 
     public void OnAdmitBuildingPanel()
@@ -111,5 +91,10 @@ public class NexusUIPresenter : NexusPopupUI
     public override void HidePanel()
     {
         base.HidePanel();
+    }
+
+    public override void UIUpdate()
+    {
+
     }
 }

@@ -28,11 +28,6 @@ public class ShieldGeneralPenguin : General
     {
         StateInit();
     }
-
-    private void FixedUpdate()
-    {
-        StateMachine.CurrentState.FixedUpdateState();
-    }
     protected override void Update()
     {
         base.Update();

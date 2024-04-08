@@ -3,12 +3,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(DeadEnemy))]
 public class Enemy : Entity
 {
     [Header("Setting Values")]
     public float moveSpeed = 3f;
     public float attackSpeed = 1f;
     public float rotationSpeed = 2f;
+
     [SerializeField]
     [Range(0.1f, 6f)]
     protected float nexusDistance;
@@ -19,13 +21,11 @@ public class Enemy : Entity
 
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
+    private IDeadable _deadCompo = null;
     #endregion
-
-    //public Penguin CurrentTarget;
     public Transform NexusTarget => GameObject.Find("Nexus").transform;
 
     public bool IsMove = false;
-    //public bool IsDead = false;
     public bool IsProvoked = false;
 
     public bool IsTargetPlayerInsideWhenNexus => CurrentTarget != null &&
@@ -43,8 +43,8 @@ public class Enemy : Entity
         NavAgent.speed = moveSpeed;
 
         AttackCompo = GetComponent<EntityAttackData>();
+        _deadCompo = GetComponent<IDeadable>();
     }
-
     private void OnEnable()
     {
         SignalHub.OnIceArrivedEvent += SetTarget;
@@ -62,7 +62,7 @@ public class Enemy : Entity
 
     protected override void HandleDie()
     {
-        IsDead = true;
+        _deadCompo.OnDied();
     }
 
     public virtual void AnimationTrigger()
@@ -124,7 +124,6 @@ public class Enemy : Entity
     private void FriendlyPenguinDeadHandler()
     {
         WaveManager.Instance.CheckIsEndBattlePhase();
-        //Debug.Log("!!!!!!!!");
         SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
     }
 

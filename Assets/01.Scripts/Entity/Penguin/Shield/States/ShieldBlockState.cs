@@ -15,13 +15,13 @@ public class ShieldBlockState : ShieldBaseState
         base.Enter();
 
         _penguin.WaitForCommandToArmyCalled = false;
-        _penguin.FindFirstNearestEnemy();
         _penguin.StopImmediately();
+        _penguin.FindFirstNearestEnemy();
 
-        /*foreach (var enemy in _penguin.FindNearestEnemy(5)) //일단 임시로 5마리도발 이것도 SO로 뺄거임
-        {
-            enemy.IsProvoked = true;
-        }*/
+        if (_penguin.CurrentTarget != null)
+            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+        else
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
 
         _penguin.HealthCompo.OnHit += ImpactShield;
     }
@@ -60,6 +60,9 @@ public class ShieldBlockState : ShieldBaseState
 
     public override void Exit()
     {
+        if (_penguin.CurrentTarget != null)
+            _penguin.CurrentTarget.HealthCompo.OnDied -= DeadTarget;
+
         _penguin.HealthCompo.OnHit -= ImpactShield;
         base.Exit();
     }

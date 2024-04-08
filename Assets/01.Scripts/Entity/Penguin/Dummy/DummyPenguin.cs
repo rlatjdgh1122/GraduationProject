@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -15,7 +16,7 @@ public enum DummyPenguinStateEnum
 [RequireComponent(typeof(NavMeshAgent))]
 public class DummyPenguin : PoolableMono
 {
-    public Penguin Owner = null;
+    private Penguin Owner = null;
 
     [SerializeField]
     private PenguinInfoDataSO _penguinUIInfo = null;
@@ -39,6 +40,15 @@ public class DummyPenguin : PoolableMono
 
     #endregion
     public DummyStateMachine DummyStateMachine { get; private set; }
+
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
+    }
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
+    }
     private void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
@@ -49,7 +59,6 @@ public class DummyPenguin : PoolableMono
 
         Setting();
 
-        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
     }
 
 
@@ -77,29 +86,29 @@ public class DummyPenguin : PoolableMono
     }
     private void OnBattleStartHandler()
     {
-        //켜져있는 애들만
-        if (gameObject.activeSelf)
+        ChangeNavqualityToNone();
+
+        //군단에 소속된 펭귄이라면
+        if (Owner)
         {
-            NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-            
-            if (Owner)
-            {
-                Owner.SetPosAndRotation(transform);
+            Owner.SetPosAndRotation(transform);
 
-                Owner.gameObject.SetActive(true);
-                Owner.StateInit();
+            Owner.gameObject.SetActive(true);
+            Owner.StateInit();
 
-                this.gameObject.SetActive(false);
-            }
-            else
-                IsGoToHouse = true;
+            //더미상태에서 풀리면 TentTrm(중앙)을 기준으로 다음 마우스 위치와 계산함
+            Owner.MousePos = GameManager.Instance.TentTrm.position;
+
+            this.gameObject.SetActive(false);
         }
+        //군단에 소속되지 않은 펭귄이라면
+        else
+            IsGoToHouse = true;
     }
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
     }
-
 
     public void SetOwner(Penguin owner)
     {
@@ -127,9 +136,4 @@ public class DummyPenguin : PoolableMono
     }
 
     public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
-
-    private void OnDestroy()
-    {
-        SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
-    }
 }

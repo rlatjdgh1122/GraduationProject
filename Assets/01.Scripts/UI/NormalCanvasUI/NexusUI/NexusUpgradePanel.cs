@@ -1,9 +1,10 @@
 using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NexusUpgradePanel : PopupUI
+public class NexusUpgradePanel : NexusPopupUI
 {
     [SerializeField] private TextMeshProUGUI _level;
     [SerializeField] private TextMeshProUGUI _previousHp;
@@ -12,10 +13,10 @@ public class NexusUpgradePanel : PopupUI
     [SerializeField] private TextMeshProUGUI _currentWorkerCount;
     [SerializeField] private Image _unlockedImage;
     [SerializeField] private TextMeshProUGUI _unlockedName;
-    [SerializeField] private RectTransform _element;    
+    [SerializeField] private RectTransform _element;
 
-    public NexusBase nexus;
-    
+    private Coroutine _panelCoroutine;
+
     public override void Awake()
     {
         base.Awake();
@@ -23,33 +24,57 @@ public class NexusUpgradePanel : PopupUI
 
     public void UpdateUI()
     {
-        _level.text = $"레벨 {nexus.NexusStat.level}";
-        _previousHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
-        _currentHp.text = $"{nexus.NexusStat.maxHealth.GetValue()}";
-        _previousWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount - 1}";
-        _currentWorkerCount.text = $"{WorkerManager.Instance.MaxWorkerCount}";
-        _unlockedImage.sprite = nexus.NexusStat.unlockedBuilding.UISprite;
-        _unlockedName.text = $"{nexus.NexusStat.unlockedBuilding.Name}";
+        _level.text = $"레벨 {_nexusStat.level}";
+        _previousHp.text = $"{_nexusInfo.previousMaxHealth}";
+        _currentHp.text = $"{_nexusInfo.currentMaxHealth}";
+        _previousWorkerCount.text = $"{_nexusInfo.previousWorkerCount}";
+        _currentWorkerCount.text = $"{_nexusInfo.currentWorkerCount}";
+        if (_nexusInfo.unlockedBuilding != null)
+        {
+            _unlockedImage.sprite = _nexusInfo.unlockedBuilding.UISprite;
+            _unlockedName.text = $"{_nexusInfo.unlockedBuilding.Name}";
+        }
+    }
 
-        Sequence seq = DOTween.Sequence();
+    private void PanelLogic()
+    {
+        if (_panelCoroutine != null)
+            StopCoroutine(_panelCoroutine);
 
-        seq.AppendInterval(.5f);
-        seq.Append(_element.DOAnchorPosX(0, 1f)).SetEase(Ease.OutBack, 0.9f);
-        seq.AppendInterval(3f);
-        seq.Append(_element.DOAnchorPosX(-618, 1f)).SetEase(Ease.OutBack, 0.9f);
-        seq.AppendInterval(3f);
-        seq.Append(_element.DOAnchorPosX(618, 0f).OnComplete(() => HidePanel()));
+        _panelCoroutine = StartCoroutine(PanelLogicCorutine());
+    }
+
+    private IEnumerator PanelLogicCorutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _element.DOAnchorPosX(0, .8f).SetEase(Ease.OutBack, 0.9f);
+        yield return new WaitForSeconds(2.5f);
+        if (_nexusInfo.unlockedBuilding == null)
+        {
+            _element.DOAnchorPosX(618, 0f).OnComplete(() => HidePanel());
+        }
+        else
+        {
+            _element.DOAnchorPosX(-618, .8f).SetEase(Ease.OutBack, 0.9f);
+            yield return new WaitForSeconds(2.5f);
+            _element.DOAnchorPosX(618, 0f).OnComplete(() => HidePanel());
+        }
     }
 
     public override void ShowPanel()
     {
         base.ShowPanel();
 
+        PanelLogic();
         UpdateUI();
     }
 
     public override void HidePanel()
-    {       
+    {
         base.HidePanel();
+    }
+
+    public override void UIUpdate()
+    {
     }
 }
