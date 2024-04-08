@@ -15,9 +15,6 @@ public class InitLegionChange : PopupUI
 
     protected List<LegionChangeButton> _buttonList = new();
 
-    [SerializeField]
-    protected LegionCountUI legionCountUI;
-
     public override void Awake()
     {
         base.Awake();
@@ -30,7 +27,6 @@ public class InitLegionChange : PopupUI
 
     public void CreateChangeButton()
     {
-            Debug.Log("HI");
         for (int i = 0; i < legion.LegionCount; i++)
         {
             LegionChangeButton btn = Instantiate(_buttonPrefab);

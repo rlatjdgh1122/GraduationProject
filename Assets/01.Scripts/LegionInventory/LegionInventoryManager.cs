@@ -25,9 +25,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 
     public LegionChange  LegionChange  { get; private set; } = null;
 
-    private LegionInventory     _legionInven = null;
-    private UnitInventory     _unitInven     = null;
-    private UnitInformationUI _unitInfo      = null;
+    private LegionInventory   _legionInven = null;
+    private UnitInventory     _unitInven   = null;
+    private UnitInformationUI _unitInfo    = null;
 
     private UnitInventoryData _selectData;
     public UnitInventoryData SelectData => _selectData;
@@ -35,10 +35,11 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public List<LegionInfo> _legionList = new();
     public int LegionCount => _legionList.Count;
 
+
     public override void Awake()
     {
         _unitInven   = FindObjectOfType<UnitInventory>();
-        _legionInven  = FindObjectOfType<LegionInventory>();
+        _legionInven = FindObjectOfType<LegionInventory>();
         _unitInfo    = FindObjectOfType<UnitInformationUI>();
         LegionChange = FindObjectOfType<LegionChange>();
     }
@@ -87,9 +88,13 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     /// <summary>
     /// 군단에 있는 펭귄이 죽었으면
     /// </summary>
-    /// <param name="data"></param>
-    public void DeadLegionPenguin(LegionInventoryData data)
+    /// <param name="so">펭귄 정보</param>
+    /// <param name="legionName">군단 이름</param>
+    /// <param name="legionPosition">군단 안에서의 위치</param>
+    public void DeadLegionPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
     {
+        LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
+
         _legionInven.DeadPenguin(data);
     }
 
@@ -147,8 +152,6 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public void UndoLegion()
     {
         _legionInven.UndoLegion();
-
-        UIManager.Instance.ShowWarningUI("저장 취소!");
     }
 
     /// <summary>
