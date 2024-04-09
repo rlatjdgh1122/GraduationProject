@@ -15,9 +15,6 @@ public class InitLegionChange : PopupUI
 
     protected List<LegionChangeButton> _buttonList = new();
 
-    [SerializeField]
-    protected LegionCountUI legionCountUI;
-
     public override void Awake()
     {
         base.Awake();

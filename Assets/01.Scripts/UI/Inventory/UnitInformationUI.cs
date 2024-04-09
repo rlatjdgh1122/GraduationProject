@@ -17,6 +17,10 @@ public class UnitInformationUI : MonoBehaviour
     private Image _defSlide;
     private Image _rangeSlide;
 
+    private CanvasGroup _generalInfo;
+    private TextMeshProUGUI _synergyText;
+    private TextMeshProUGUI _passiveText;
+
     private void Awake()
     {
         _penguinIcon   = transform.Find("PenguinFace").GetComponent<Image>();
@@ -25,23 +29,32 @@ public class UnitInformationUI : MonoBehaviour
         _atkSlide   = transform.Find("Atk/fillAmount").GetComponent<Image>();
         _defSlide   = transform.Find("Def/fillAmount").GetComponent<Image>();
         _rangeSlide = transform.Find("Range/fillAmount").GetComponent<Image>();
+
+        _generalInfo = transform.Find("GeneralInfo").GetComponent<CanvasGroup>();
+        _synergyText = _generalInfo.transform.Find("Synergy").GetComponent<TextMeshProUGUI>();
+        _passiveText = _generalInfo.transform.Find("Passive").GetComponent<TextMeshProUGUI>();
     }
 
     public void ShowInformation(UnitInventoryData data)
     {
+        CleanUpUI();
+
         if (data == null)
         {
-            CleanUpUI();
+            return;
         }
-        else
+
+        SetUIElements(data);
+
+        if(data.InfoData.JobType == PenguinJobType.General)
         {
-            SetUIElements(data);
+            ShowGeneralInfo(data.InfoData as GeneralInfoDataSO);
         }
     }
 
     private void SetUIElements(UnitInventoryData data)
     {
-        so = data.infoData;
+        so = data.InfoData;
 
         _penguinIcon.gameObject.SetActive(true);
         _penguinIcon.sprite = so.PenguinIcon;
@@ -53,6 +66,15 @@ public class UnitInformationUI : MonoBehaviour
         _rangeSlide.DOFillAmount(so.range, 0.5f);
     }
 
+    private void ShowGeneralInfo(GeneralInfoDataSO generalData)
+    {
+        _generalInfo.DOFade(1, 0.5f);
+        _synergyText.text = generalData.Characteristic;
+        _passiveText.text = generalData.Type;
+
+        return;
+    }
+
     private void CleanUpUI()
     {
         _penguinIcon.gameObject.SetActive(false);
@@ -62,5 +84,9 @@ public class UnitInformationUI : MonoBehaviour
         _atkSlide.DOFillAmount(0, 0.5f);
         _defSlide.DOFillAmount(0, 0.5f);
         _rangeSlide.DOFillAmount(0, 0.5f);
+
+        _generalInfo.DOFade(0, 0.2f);
+        _synergyText.text = string.Empty;
+        _passiveText.text = string.Empty;
     }
 }
