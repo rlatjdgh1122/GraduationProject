@@ -5,7 +5,8 @@ public class ArrangementManager : Singleton<ArrangementManager>
 {
     [SerializeField] private Transform SpawnPoint;
 
-    private float distance = 1;
+    [Header("배치 거리"), Range(0.5f, 3f)] 
+    public float distance = 1;
     private int width = 5;
     private int length = 7;
 
@@ -13,21 +14,11 @@ public class ArrangementManager : Singleton<ArrangementManager>
     private List<Vector3> seatPosList = new();
 
     private MultiKeyDictionary<int, int, Penguin> penguinSpawnDictionary = new();
-
-    private int prevUILegion = 0;
-    private int curUILegion = 0;
     public override void Awake()
     {
         Setting();
 
-        SignalHub.OnUILegionChanged += OnUILegionHandler;
         SignalHub.OnCompletedGoToHouseEvent += SpawnPenguins;
-    }
-
-    private void OnUILegionHandler(int prevLegion, int newLegion)
-    {
-        prevUILegion = prevLegion;
-        curUILegion = newLegion;
     }
 
     private void Setting()
@@ -90,7 +81,6 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
         if (penguinSpawnDictionary.TryGetValue(info.Legion, out var value))
         {
-            Debug.Log($"[����] {info.Legion}���� {info.SlotIdx}��");
 
             ArmyManager.Instance.Remove(info.Legion, value[info.SlotIdx]);
             penguinSpawnDictionary[info.Legion].Remove(info.SlotIdx);
@@ -98,7 +88,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
     }
     private void OnJoinArmyByInfo(ArrangementInfo info)
     {
-        Penguin obj = SpawnManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
+        Penguin obj = PenguinManager.Instance.SpawnSoldier(info.PenguinType, SpawnPoint.position, seatPosList[info.SlotIdx]);
 
         if (info.JobType == PenguinJobType.Solider)
         {
@@ -110,7 +100,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
             ArmyManager.Instance.JoinArmyToGeneral(info.Legion, obj as General);
         }
 
-        SpawnManager.Instance.SetOwnerDummyPenguin(info.PenguinType, obj);
+        PenguinManager.Instance.SetOwnerDummyPenguin(info.PenguinType, obj);
         penguinSpawnDictionary.Add(info.Legion, info.SlotIdx, obj);
     }
     private void OnDestroy()

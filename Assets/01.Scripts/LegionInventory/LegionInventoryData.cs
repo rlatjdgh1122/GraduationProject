@@ -5,9 +5,17 @@ public class LegionInventoryData
 {
     public EntityInfoDataSO InfoData;
 
-    public string LegionName;
+    public string LegionName
+    {
+        get => InfoData.LegionName;
+        set { InfoData.LegionName = value; }
+    }
 
-    public int IndexNumber;
+    public int IndexNumber
+    {
+        get => InfoData.SlotIdx;
+        set { InfoData.SlotIdx = value; }
+    }
 
     public float CurrentHPPercent;
 

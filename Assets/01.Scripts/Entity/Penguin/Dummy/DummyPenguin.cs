@@ -16,7 +16,7 @@ public enum DummyPenguinStateEnum
 [RequireComponent(typeof(NavMeshAgent))]
 public class DummyPenguin : PoolableMono
 {
-    private Penguin Owner = null;
+    //private Penguin Owner = null;
 
     [SerializeField]
     private PenguinInfoDataSO _penguinUIInfo = null;
@@ -58,9 +58,7 @@ public class DummyPenguin : PoolableMono
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
 
         Setting();
-
     }
-
 
     private void Setting()
     {
@@ -108,11 +106,6 @@ public class DummyPenguin : PoolableMono
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
-    }
-
-    public void SetOwner(Penguin owner)
-    {
-        Owner = owner;
     }
     public void SetPostion(Transform trm)
     {

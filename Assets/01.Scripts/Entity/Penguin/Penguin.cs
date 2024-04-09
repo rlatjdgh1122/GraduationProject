@@ -274,7 +274,7 @@ public class Penguin : Entity
         {
             //¾ÈÁ×¾ú´Ù¸é ´õ¹ÌÆë±ÏÀ¸·Î º¯½Å
             if (!IsDead)
-                SpawnManager.Instance.ChangedToDummyPenguin(this);
+                PenguinManager.Instance.ChangedToDummyPenguin(this);
         }
     }
     public void SetPosAndRotation(Transform trm)
