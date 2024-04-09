@@ -1,15 +1,8 @@
-using DG.Tweening;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 
-public class LegionInventory : InitLegionInventory
+public class LegionInventory : LegionUI
 {
     private Dictionary<int, LegionInventoryData> _currentDictionary = new();
 
@@ -99,6 +92,8 @@ public class LegionInventory : InitLegionInventory
             saveCnt++;
             CheckType(list.InfoData);
         }
+
+        LegionCountTextSetting();
     }
 
 
@@ -121,6 +116,7 @@ public class LegionInventory : InitLegionInventory
         _currentDictionary.Add(idx, legionData);
 
         CheckType(data);
+        LegionCountTextSetting();
     }
 
 
@@ -130,11 +126,14 @@ public class LegionInventory : InitLegionInventory
     /// <param name="data"></param>
     public void DeadPenguin(LegionInventoryData data)
     {
-        var savedData = _savedLegionList.FirstOrDefault(saveData => saveData == data);
-        if (savedData != null)
+        foreach(var saveData in _savedLegionList.ToList())
         {
-            RemovePenguinInCurrentLegion(savedData.IndexNumber);
-            SaveLegion();
+            if(saveData.LegionName == data.LegionName && saveData.IndexNumber == data.IndexNumber)
+            {
+                _savedLegionList.Remove(saveData);
+                slotList[saveData.IndexNumber].ExitSlot(null);
+                SaveLegion();
+            }
         }
     }
 

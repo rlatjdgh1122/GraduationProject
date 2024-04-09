@@ -46,6 +46,8 @@ public class LegionSavePanel : PopupUI
     {
         LegionInventoryManager.Instance.UndoLegion(); //历厘 秒家
 
+        UIManager.Instance.ShowWarningUI("历厘 秒家!");
+
         HideSavePanel();
     }
 

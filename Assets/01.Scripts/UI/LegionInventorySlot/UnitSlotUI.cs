@@ -13,9 +13,11 @@ public class UnitSlotUI : SlotUI
     public EntityInfoDataSO _keyData;
     private bool _locked => _stackSize <= 0;
 
-    private void Awake()
+    protected override void Awake()
     {
-        unitImage = transform.Find("PenguinBK/Penguin").GetComponent<Image>();
+        base.Awake();
+
+        unitImage = transform.Find("Penguin").GetComponent<Image>();
         _countText = transform.Find("CountBK/Count").GetComponent<TextMeshProUGUI>();
         _lockImg = transform.Find("Lock").GetComponent<Image>();
     }
@@ -61,5 +63,17 @@ public class UnitSlotUI : SlotUI
         UnitInventoryData data = new UnitInventoryData(_keyData, _stackSize);
 
         LegionInventoryManager.Instance.SelectInfoData(data);
+    }
+
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        if(!_locked)
+            base.OnPointerEnter(eventData);
+    }
+
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        if(!_locked)
+            base.OnPointerExit(eventData);
     }
 }
