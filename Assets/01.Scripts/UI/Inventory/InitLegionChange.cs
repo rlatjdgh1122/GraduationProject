@@ -30,7 +30,6 @@ public class InitLegionChange : PopupUI
 
     public void CreateChangeButton()
     {
-            Debug.Log("HI");
         for (int i = 0; i < legion.LegionCount; i++)
         {
             LegionChangeButton btn = Instantiate(_buttonPrefab);

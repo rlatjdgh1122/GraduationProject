@@ -109,9 +109,15 @@ public class LegionInventory : InitLegionInventory
     /// <param name="data"></param>
     public void LegionRegistration(int idx, EntityInfoDataSO data)
     {
-        if(_currentDictionary.TryGetValue(idx, out _))
+        if (_currentDictionary.ContainsKey(idx))
         {
             return;
+        }
+
+        if (data.PenguinType == PenguinTypeEnum.Basic && // 1¹ø Äù½ºÆ®
+            TutorialManager.Instance.CurTutoQuestIdx == 0)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
 
         LegionInventoryData legionData 
