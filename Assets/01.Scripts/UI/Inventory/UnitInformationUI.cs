@@ -37,28 +37,24 @@ public class UnitInformationUI : MonoBehaviour
 
     public void ShowInformation(UnitInventoryData data)
     {
+        CleanUpUI();
+
         if (data == null)
         {
-            CleanUpUI();
-        }
-        else
-        {
-            SetUIElements(data);
+            return;
         }
 
-        if(data.infoData.JobType == PenguinJobType.General)
-        {
-            ShowGeneralInfo();
-        }
-        else
-        {
+        SetUIElements(data);
 
+        if(data.InfoData.JobType == PenguinJobType.General)
+        {
+            ShowGeneralInfo(data.InfoData as GeneralInfoDataSO);
         }
     }
 
     private void SetUIElements(UnitInventoryData data)
     {
-        so = data.infoData;
+        so = data.InfoData;
 
         _penguinIcon.gameObject.SetActive(true);
         _penguinIcon.sprite = so.PenguinIcon;
@@ -70,9 +66,13 @@ public class UnitInformationUI : MonoBehaviour
         _rangeSlide.DOFillAmount(so.range, 0.5f);
     }
 
-    private void ShowGeneralInfo()
+    private void ShowGeneralInfo(GeneralInfoDataSO generalData)
     {
+        _generalInfo.DOFade(1, 0.5f);
+        _synergyText.text = generalData.Characteristic;
+        _passiveText.text = generalData.Type;
 
+        return;
     }
 
     private void CleanUpUI()
@@ -84,5 +84,9 @@ public class UnitInformationUI : MonoBehaviour
         _atkSlide.DOFillAmount(0, 0.5f);
         _defSlide.DOFillAmount(0, 0.5f);
         _rangeSlide.DOFillAmount(0, 0.5f);
+
+        _generalInfo.DOFade(0, 0.2f);
+        _synergyText.text = string.Empty;
+        _passiveText.text = string.Empty;
     }
 }

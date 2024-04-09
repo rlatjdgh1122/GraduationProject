@@ -13,12 +13,6 @@ public class LegionInfo
     public int MaxCount;                           //최대 군단 병사 수
 }
 
-public enum SlotType
-{
-    Unit,
-    Legion
-}
-
 public class LegionInventoryManager : Singleton<LegionInventoryManager>
 {
     public int CurrentLegion { get; private set; }
@@ -49,16 +43,16 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     /// </summary>
     /// <param name="selectSO">데이터</param>
     /// <param name="size"></param>
-    public void SelectInfoData(UnitInventoryData selectSO, SlotType type = SlotType.Unit)
+    public void SelectInfoData(UnitInventoryData selectSO)
     {
         _selectData = selectSO;
 
         _unitInfo.ShowInformation(_selectData);
 
-        if(type == SlotType.Legion)
-        {
-            _selectData = null;
-        }
+        //if(selectSO.SlotType == SlotType.Legion)
+        //{
+        //    _selectData = null;
+        //}
     }
 
     /// <summary>

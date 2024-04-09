@@ -35,6 +35,7 @@ public class InitialUnitInventory : MonoBehaviour
     private void CreateUnitSlot(EntityInfoDataSO so)
     {
         UnitSlotUI slot = Instantiate(_slotPrefab);
+
         slot.Create(so);
         
         if (so is GeneralInfoDataSO)
