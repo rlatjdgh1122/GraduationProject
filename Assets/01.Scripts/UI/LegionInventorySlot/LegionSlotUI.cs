@@ -28,9 +28,6 @@ public abstract class LegionSlotUI : SlotUI
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(Data);
-        Debug.Log(legion.SelectData);
-
         if (Data == null && legion.SelectData == null) return;
 
         if (Data != null)
