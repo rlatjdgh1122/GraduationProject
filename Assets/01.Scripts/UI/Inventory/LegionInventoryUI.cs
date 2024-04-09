@@ -8,6 +8,7 @@ public class LegionInventoryUI : PopupUI
     {
         UIManager.Instance.ShowPanel(this.gameObject.name);
 
+        LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
 
