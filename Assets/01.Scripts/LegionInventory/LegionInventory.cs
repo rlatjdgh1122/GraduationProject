@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 
 public class LegionInventory : LegionUI
@@ -112,6 +113,10 @@ public class LegionInventory : LegionUI
         LegionInventoryData legionData 
             = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);
 
+        legionData.HPPercent(1);
+
+        slotList[idx].HpValue(legionData.CurrentHPPercent);
+
         _currentLegionList.Add(legionData);
         _currentDictionary.Add(idx, legionData);
 
@@ -137,6 +142,19 @@ public class LegionInventory : LegionUI
         }
     }
 
+    public void DamagePenguin(LegionInventoryData data, float curHP)
+    {
+        foreach (var saveData in _savedLegionList.ToList())
+        {
+            if (saveData.LegionName == data.LegionName && saveData.IndexNumber == data.IndexNumber)
+            {
+                saveData.HPPercent(curHP);
+
+                slotList[saveData.IndexNumber].HpValue(saveData.CurrentHPPercent);
+            }
+        }
+    }
+
     /// <summary>
     /// 현재 군단에서 펭귄 지우기
     /// </summary>
@@ -149,8 +167,13 @@ public class LegionInventory : LegionUI
             _currentDictionary.Remove(idx);
             _currentRemovePenguinList.Add(curData);
 
-            //여기를 상호작용하게 바꿔야함
-            legion.AddPenguin(curData.InfoData);
+            if(curData.CurrentHPPercent == 1)
+                legion.AddPenguin(curData.InfoData);
+            else
+            {
+
+                return;
+            }
 
             currentRemovePenguinCnt++;
         }
@@ -182,7 +205,6 @@ public class LegionInventory : LegionUI
     {
         if(legion.LegionList()[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
         {
-            UIManager.Instance.ShowWarningUI("군단이 가득 찼습니다!");
             return true;
         }
         else

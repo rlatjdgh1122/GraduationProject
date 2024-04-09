@@ -6,7 +6,7 @@ public class InitLegionInventory : MonoBehaviour
     [SerializeField]
     private int _legionSlotCount;
     [SerializeField]
-    private LegionSlotUI _legionSlot;
+    private LegionSlot _legionSlot;
 
     [SerializeField]
     private KeyCode _removeKey = KeyCode.LeftControl;
@@ -15,7 +15,7 @@ public class InitLegionInventory : MonoBehaviour
 
     protected Transform legionInventoryParent;
 
-    protected List<LegionSlotUI> slotList = new();
+    protected List<LegionSlot> slotList = new();
 
     protected LegionInventoryManager legion;
 
@@ -36,7 +36,7 @@ public class InitLegionInventory : MonoBehaviour
     {
         for (int i = 0; i < _legionSlotCount; i++)
         {
-            LegionSlotUI slot = Instantiate(_legionSlot);
+            LegionSlot slot = Instantiate(_legionSlot);
             slot.CreateSlot(i, _removeKey, _infoKey);
 
             slot.transform.parent = legionInventoryParent;

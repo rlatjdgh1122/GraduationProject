@@ -48,11 +48,10 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _selectData = selectSO;
 
         _unitInfo.ShowInformation(_selectData);
-
-        //if(selectSO.SlotType == SlotType.Legion)
-        //{
-        //    _selectData = null;
-        //}
+    }
+    public void RemoveStack()
+    {
+        _selectData.RemoveStack();
     }
 
     /// <summary>
@@ -74,11 +73,6 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _unitInven.PenguinSlotExit(data);
     }
 
-    public void RemoveStack()
-    {
-        _selectData.RemoveStack();
-    }
-
     /// <summary>
     /// ±º´Ü¿¡ ÀÖ´Â Æë±ÏÀÌ Á×¾úÀ¸¸é
     /// </summary>
@@ -90,6 +84,13 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
 
         _legionInven.DeadPenguin(data);
+    }
+
+    public void TakeDamagePenguinInLegion(EntityInfoDataSO so, string legionName, int legionPosition, int maxHP, int curHP)
+    {
+        LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
+
+        _legionInven.DamagePenguin(data, (float)curHP / (float)maxHP);
     }
 
     /// <summary>

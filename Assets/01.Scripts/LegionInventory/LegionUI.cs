@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -8,12 +9,43 @@ public class LegionUI : InitLegionInventory
     private TextMeshProUGUI _generalCountText;
     private TextMeshProUGUI _soliderCountText;
 
+    private bool _showHP = false;
+
     public override void Awake()
     {
         base.Awake();
 
         _generalCountText = transform.Find("LegionCount/GeneralCount").GetComponent<TextMeshProUGUI>();
         _soliderCountText = transform.Find("LegionCount/SoliderCount").GetComponent<TextMeshProUGUI>();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            _showHP = !_showHP;
+
+            ShowHP();
+        }
+    }
+
+    private void ShowHP()
+    {
+        if(_showHP)
+        {
+            foreach(var slot in slotList)
+            {
+                if(slot.Data != null)
+                    slot.ShowHP();
+            }
+        }
+        else
+        {
+            foreach (var slot in slotList)
+            {
+                slot.HideHP();
+            }
+        }
     }
 
     public void LegionCountTextSetting()
