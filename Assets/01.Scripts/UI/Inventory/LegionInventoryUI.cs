@@ -13,7 +13,7 @@ public class LegionInventoryUI : PopupUI
 
     public void HideLegionUIPanel()
     {
-        if(LegionInventoryManager.Instance.ChangedInCurrentLegion())
+        if (LegionInventoryManager.Instance.ChangedInCurrentLegion())
         {
             UIManager.Instance.ShowPanel("SaveLegionPanel");
         }
