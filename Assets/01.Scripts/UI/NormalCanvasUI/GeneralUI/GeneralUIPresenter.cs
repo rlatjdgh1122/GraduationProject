@@ -55,15 +55,15 @@ public class GeneralUIPresenter : PopupUI
             PurchaseGeneral();
 
             _penguinFactory.SpawnDummyPenguinHandler(_currentView.dummyGeneralPenguin);
-            LegionInventory.Instance.AddPenguin(general.InfoData);
+            LegionInventoryManager.Instance.AddPenguin(general.InfoData);
 
             currentCost -= currentGeneralStat.InfoData.Price;
             _currentView.SetUpgradeUI(currentGeneralStat);
 
-            if (TutorialManager.Instance.CurTutoQuestIdx == 6) //일단 퀘스트
-            {
-                TutorialManager.Instance.CurTutorialProgressQuest();
-            }
+            //if (TutorialManager.Instance.CurTutoQuestIdx == 6) //일단 퀘스트
+            //{
+            //    TutorialManager.Instance.CurTutorialProgressQuest();
+            //}
         }
         else
         {

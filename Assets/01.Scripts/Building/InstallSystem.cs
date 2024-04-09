@@ -120,11 +120,11 @@ public class InstallSystem : MonoBehaviour
             _previousGround?.InstallBuilding();
             StopInstall();
 
-            if (TutorialManager.Instance.CurTutoQuestIdx == 4 ||
-                TutorialManager.Instance.CurTutoQuestIdx == 7) //일단 퀘스트
-            {
-                TutorialManager.Instance.CurTutorialProgressQuest();
-            }
+            //if (TutorialManager.Instance.CurTutoQuestIdx == 4 ||
+            //    TutorialManager.Instance.CurTutoQuestIdx == 7) //일단 퀘스트
+            //{
+            //    TutorialManager.Instance.CurTutorialProgressQuest();
+            //}
 
             isInstalling = false;
         }

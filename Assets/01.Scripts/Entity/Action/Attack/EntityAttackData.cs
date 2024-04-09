@@ -47,6 +47,11 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
+    public virtual void MagicAttack(Vector3 targetPos)
+    {
+
+    }
+
     public virtual void SpecialAttack(float aFewTimes)
     {
 

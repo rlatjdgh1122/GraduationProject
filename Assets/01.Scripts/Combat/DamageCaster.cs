@@ -199,6 +199,23 @@ public class DamageCaster : MonoBehaviour
         return false;
     }
 
+    public bool CastMeteorDamage(Vector3 position, LayerMask targetLayer)
+    {
+        var colls = Physics.OverlapSphere(position, _detectRange, targetLayer);
+
+        foreach (var col in colls)
+        {
+            if (col.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
+            {
+                // 메테오 데미지 계산 및 적용
+                int damage = _owner.Stat.damage.GetValue();
+                raycastHealth.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType);
+            }
+        }
+
+        return true; // 메테오 폭발 시 모든 대상에게 데미지를 입힌 것으로 가정
+    }
+
     public void ShowCritical(EntityActionData actionData)
     {
         //actionData.HitPoint
