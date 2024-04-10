@@ -12,6 +12,7 @@ public class LegionBuyPanel : PopupUI
 
     private bool _canBuy = false;
     private int _legionNumber = 0;
+    private int _price = 0;
 
     private LegionChange _legionChange;
 
@@ -21,7 +22,7 @@ public class LegionBuyPanel : PopupUI
 
         _priceText       = transform.Find("Price").GetComponent<TextMeshProUGUI>();
         _currentCostText = transform.Find("CurrentCost").GetComponent<TextMeshProUGUI>();
-        _amountCostText  = transform.Find("FinalCost").GetComponent<TextMeshProUGUI>();
+        _amountCostText  = transform.Find("Button/BuyButton/Text").GetComponent<TextMeshProUGUI>();
 
         _legionChange    = transform.parent.GetComponent<LegionChange>();
     }
@@ -29,10 +30,11 @@ public class LegionBuyPanel : PopupUI
     public void CheckCanBuy(int currentCost, int price, int legionNumber)
     {
         int amount = currentCost - price;
+        _price = price;
 
         _currentCostText.text = currentCost.ToString();
-        _priceText.text       = price.ToString();
-        _amountCostText.text  = amount.ToString();
+        _priceText.text       = $"-{price}";
+        _amountCostText.text  = $"{legionNumber}군단 구매하기 (남는 재화 : {amount})";
 
         if (CostManager.Instance.CheckRemainingCost(price))
         {
@@ -52,13 +54,17 @@ public class LegionBuyPanel : PopupUI
             return;
         }
 
-        LegionInventoryManager.Instance.LegionList()[_legionNumber].Locked = false; //군단 버튼 해금
 
         int legion = _legionNumber + 1;
+
+        LegionInventoryManager.Instance.LegionList()[_legionNumber].Locked = false; //군단 버튼 해금
         UIManager.Instance.ShowWarningUI($"{legion}군단 구매 성공!");
 
         _legionChange.ChangingLegion(_legionNumber); //구매한 군단으로 바꾸기
         LegionInventoryManager.Instance.ChangeLegionNumber(_legionNumber);
+
+        CostManager.Instance.SubtractFromCurrentCost(_price);
+
         _canBuy = false;
 
         HidePanel();

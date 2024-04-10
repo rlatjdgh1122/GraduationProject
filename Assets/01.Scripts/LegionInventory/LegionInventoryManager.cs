@@ -114,6 +114,16 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         CurrentLegion = number;
     }
 
+    public int GetLegionIdxByLegionName(string name)
+    {
+        for(int i = 0; i < _legionList.Count; i++)
+        {
+            if (_legionList[i].Name == name) return i;
+        }
+        Debug.Log("군단 이름 못찾음 뭐하냐");
+        return -1;
+    }
+
     /// <summary>
     /// 현재 군단에 펭귄 등록하기
     /// </summary>
