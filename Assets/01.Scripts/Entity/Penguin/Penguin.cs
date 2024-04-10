@@ -7,6 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
 {
+    public enum PriorityType
+    {
+        High = 50,
+        Low = 51,
+    }
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -252,7 +257,10 @@ public class Penguin : Entity
 
     #endregion
 
-    //�ٵ� ��ũ��Ʈ�� �����ִµ� �� �Լ��� ȣ���� �ǳ�?
+    public void SetNavmeshPriority(PriorityType type)
+    {
+        NavAgent.avoidancePriority = (int)type;
+    }
     public override void Init()
     {
         owner = null;

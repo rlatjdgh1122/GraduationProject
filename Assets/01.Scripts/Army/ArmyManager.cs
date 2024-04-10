@@ -204,8 +204,8 @@ public class ArmyManager : Singleton<ArmyManager>
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
-
-        var Army = armies[legion - 1];
+        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[idx];
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
@@ -224,7 +224,8 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        var Army = armies[legion - 1];
+        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[idx];
         var LegionStat = obj.ligeonStat;
 
         if (Army.General != null)
@@ -249,11 +250,22 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="legion"> 몇번째 군단 *owner.Legion 입력*</param>
     /// <param name="obj"> Penguin 타입만 가능 *this 입력*</param>
 
-    public void Remove(string legion, Penguin obj)
+    public void RemovePenguin(string legion, Penguin obj)
     {
-        var soldiers = armies[legion - 1].Soldiers;
-        soldiers.Remove(obj); //리스트에서 제외
+        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
 
+        obj.SetOwner(null);
+        //여기서도 뭔가 있어야함
+
+        if (obj is General)
+        {
+            armies[idx].General = null;
+        }
+        else
+        {
+            var army = armies[idx].Soldiers;
+            army.Remove(obj); //리스트에서 제외
+        }
     }
 
     /// <summary>
@@ -263,7 +275,7 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         Army newArmy = new Army();
 
-        newArmy.LegionName = ArmiesCount + 1;
+        newArmy.LegionName = $"{ArmiesCount + 1}군단";
         newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
 
         GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");
