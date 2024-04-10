@@ -169,15 +169,15 @@ public class QuestManager : Singleton<QuestManager>
 
             quest.SetQuestState(QuestState.CanFinish); // 퀘스트 완료가능하게
         }
-        else // 아직 남았다면
-        {
-            for (int i = 0; i < questData.QuestGoalInfo.Length; i++)
-            {
-                Debug.Log($"오우 이제 {questData.Id}퀘스트의 {i + 1}번째 퀘스트" +
-                $"{quest.QuestGoalList[i].RequiredAmount}번 중에 {quest.QuestGoalList[i].CurrentAmount}번 함");
-            }
+        //else // 아직 남았다면
+        //{
+        //    for (int i = 0; i < questData.QuestGoalInfo.Length; i++)
+        //    {
+        //        Debug.Log($"오우 이제 {questData.Id}퀘스트의 {i + 1}번째 퀘스트" +
+        //        $"{quest.QuestGoalList[i].RequiredAmount}번 중에 {quest.QuestGoalList[i].CurrentAmount}번 함");
+        //    }
             
-        }
+        //}
     }
 
     public void EndQuest(string questId)

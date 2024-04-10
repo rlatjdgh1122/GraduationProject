@@ -46,10 +46,14 @@ public class TutorialManager : Singleton<TutorialManager>
         QuestManager.Instance.SetCanStartQuest(_curQuestData.Id);
     }
 
+    public void CurTutorialProgressQuestHandler()
+    {
+    }
+
     public void CurTutorialProgressQuest(QuestGoalIdx goalIdx)
     {
         QuestManager.Instance.ProgressQuest(_curQuestData.Id, _curQuestData.QuestGoalInfo[(int)goalIdx].GoalId); // ÀÌ°Å ÀÎµ¦½º°¡ ¹Ù²¸¾ßµÊ
-        SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest(goalIdx);
+        SignalHub.OnBattlePhaseEndEvent -= CurTutorialProgressQuestHandler; CurTutorialProgressQuest(goalIdx);
 
         for(int i = 0; i < _curQuestData.QuestGoalInfo.Length; i++)
         {
