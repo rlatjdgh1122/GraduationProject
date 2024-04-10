@@ -28,7 +28,7 @@ public abstract class LegionSlotUI : SlotUI
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if(Data == null && legion.SelectData == null) return;
+        if (Data == null && legion.SelectData == null) return;
 
         if (Data != null)
         {
@@ -49,21 +49,17 @@ public abstract class LegionSlotUI : SlotUI
             }
         }
 
+        if (legion.SelectData.SlotType == SlotType.Legion) return;
+
         if (legion.SelectData.InfoData.JobType == PenguinJobType.General && legion.LimitOfGeneral()) //장군이 이미 군단에 있고 장군을 슬롯에 추가할려고 하면
         {
-            if (legion.SelectData.SlotType != SlotType.Legion)
-            {
-                UIManager.Instance.ShowWarningUI("장군이 이미 군단에 포함되어 있습니다!");
-                return;
-            }
+            UIManager.Instance.ShowWarningUI("장군이 이미 군단에 포함되어 있습니다!");
+            return;
         }
         else if (legion.SelectData.InfoData.JobType != PenguinJobType.General && legion.ExcedLimitOfLegion()) //만약 군단 안에 펭귄이 최대 펭귄 수를 넘었으면
         {
-            if(legion.SelectData.SlotType != SlotType.Legion)
-            {
-                UIManager.Instance.ShowWarningUI("군단이 가득 찼습니다!");
-                return;
-            }
+            UIManager.Instance.ShowWarningUI("군단이 가득 찼습니다!");
+            return;
         }
 
         if (Data == null && legion.SelectData != null) //슬롯에 데이터 넣기

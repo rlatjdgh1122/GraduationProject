@@ -8,19 +8,21 @@ public class LegionInventoryUI : PopupUI
     {
         UIManager.Instance.ShowPanel(this.gameObject.name);
 
+        LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
 
-    public void HideLegionUIPanel()
+    public override void HidePanel()
     {
-        if(LegionInventoryManager.Instance.ChangedInCurrentLegion())
+        base.HidePanel();
+
+        if (LegionInventoryManager.Instance.ChangedInCurrentLegion())
         {
             UIManager.Instance.ShowPanel("SaveLegionPanel");
         }
         else
         {
             LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
-            UIManager.Instance.HidePanel(this.gameObject.name);
         }
     }
 

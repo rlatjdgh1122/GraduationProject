@@ -37,6 +37,11 @@ public class CostManager : Singleton<CostManager>
         Cost = _defaultCost;
         _costUI.OnlyCurrentCostView(Cost);
     }
+
+    /// <summary>
+    /// 현재 재화에서 가격을 빼주기
+    /// </summary>
+    /// <param name="price">가격</param>
     public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
     {
         SoundManager.Play2DSound(_buySound);
@@ -46,9 +51,25 @@ public class CostManager : Singleton<CostManager>
 
     }
 
-    //현재 재화에서 더하기
-    //만약 tween이 true면 돈 뿅뿅뿅하는거,
-    //UI가 아니면 false
+    /// <summary>
+    /// 현재 재화에서 가격을 뺏을 때 재화가 남는지 여부
+    /// </summary>
+    /// <param name="price">가격</param>
+    /// <returns></returns>
+    public bool CheckRemainingCost(int price)
+    {
+        int remainCost = _currentCost - price;
+
+        return remainCost >= 0 ? true : false;
+    }
+
+    /// <summary>
+    /// 현재 재화에서 더하기
+    /// </summary>
+    /// <param name="value">더해질 값</param>
+    /// <param name="tween">tween이 true면 돈 뿅뿅뿅하는거</param>
+    /// <param name="isUI">UI가 아니면 false</param>
+    /// <param name="startTransform">시작 위치</param>
     public void AddFromCurrentCost(int value, bool tween = false, bool isUI = false, Vector3 startTransform = new())
     {
         if(tween)

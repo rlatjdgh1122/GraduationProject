@@ -17,6 +17,7 @@ public enum HitType
     BiteHit,
     IceHit,
     MopHit,
+    MagicHit,
     BuildHit
 }
 

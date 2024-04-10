@@ -20,8 +20,8 @@ public class LegionSavePanel : PopupUI
     {
         base.Awake();
 
-        _cancelBtn = transform.Find("Button/Cancel").GetComponent<Button>();
-        _savelBtn  = transform.Find("Button/BuyBtn").GetComponent<Button>();
+        _cancelBtn = transform.Find("Button/CancelButton").GetComponent<Button>();
+        _savelBtn  = transform.Find("Button/SaveButton").GetComponent<Button>();
         _titleText = transform.Find("TitleText").GetComponent<TextMeshProUGUI>();
 
         _cancelBtn.onClick.AddListener(() => CancelPanel());

@@ -52,7 +52,7 @@ public class LegionChange : InitLegionChange
     {
         if (legion.LegionList()[legionNumber].Locked) //군단이 잠겨있다면
         {
-            _buyPanel.ShowBuyPanel(); //군단 사는 창 띄우기
+            _buyPanel.ShowPanel(); //군단 사는 창 띄우기
             //군단을 살 수 있는지 체크하기
             _buyPanel.CheckCanBuy(CostManager.Instance.Cost, legion.LegionList()[legionNumber].Price, legionNumber);
         }

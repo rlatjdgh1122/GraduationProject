@@ -1,19 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
-
-[RequireComponent(typeof(DeadPenguin))]
+[RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
 {
-    public enum PriorityType
-    {
-        High = 50,
-        Low = 51,
-    }
-
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -21,11 +14,11 @@ public class Penguin : Entity
 
     public PassiveDataSO passiveData = null;
 
-    #region ±º´Ü Æ÷Áö¼Ç °ü·Ã
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     public bool ArmyTriggerCalled = false;
-    public bool WaitForCommandToArmyCalled = true; //±º´ÜÀÇ ¸í·ÉÀ» µéÀ» ¼ö ÀÖÀ»¶§±îÁö ´ë±â
-    public bool SuccessfulToArmyCalled = false; //±º´ÜÀÇ ¸í·ÉÀ» ¼º°øÀûÀ¸·Î ÇØ°áÇß´Â°¡
+    public bool WaitForCommandToArmyCalled = true; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    public bool SuccessfulToArmyCalled = false; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½ï¿½ß´Â°ï¿½
     public MovefocusMode MoveFocusMode => ArmyManager.Instance.CurFocusMode;
 
     private Coroutine movingCoroutine = null;
@@ -40,7 +33,7 @@ public class Penguin : Entity
             curMousePos = value;
         }
     }
-    private Vector3 _seatPos = Vector3.zero; //±º´Ü¿¡¼­ ¹èÄ¡µÈ ÀÚ¸® OK?
+    private Vector3 _seatPos = Vector3.zero; //ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ú¸ï¿½ OK?
     private float Angle
     {
         get
@@ -50,15 +43,15 @@ public class Penguin : Entity
             if (prevMousePos != Vector3.zero && vec != Vector3.zero)
             {
                 float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
-                value = (value > 180f) ? value - 360f : value; // º¯È¯
+                value = (value > 180f) ? value - 360f : value; // ï¿½ï¿½È¯
                 return value; // -180 ~ 180
             }
-            else //Ã³À½ ¿òÁ÷¿´À» ¶§
+            else //Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             {
                 Vector3 v = (curMousePos - transform.position);
 
                 float value = Quaternion.FromToRotation(Vector3.forward, v).eulerAngles.y;
-                value = (value > 180f) ? value - 360f : value; // º¯È¯
+                value = (value > 180f) ? value - 360f : value; // ï¿½ï¿½È¯
                 return value; // -180 ~ 180
             }
         }
@@ -77,7 +70,7 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
-    private Iliveable _liveCompo = null;
+    private ILiveable _liveCompo = null;
     #endregion
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
@@ -94,10 +87,11 @@ public class Penguin : Entity
         }
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
-        _liveCompo = GetComponent<Iliveable>();
+        _liveCompo = GetComponent<ILiveable>();
     }
-    #region ÀÏ¹Ý º´»çµé ÆÐ½Ãºê
-    //General¿¡¼­ •û¿È ¤»
+
+    #region ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½Ãºï¿½
+    //Generalï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     public bool CheckAttackEventPassive(int curAttackCount)
 => passiveData.CheckAttackEventPassive(curAttackCount);
 
@@ -119,7 +113,7 @@ public class Penguin : Entity
         owner = army;
     }
 
-    #region AI °ü·Ã
+    #region AI ï¿½ï¿½ï¿½ï¿½
     public virtual void AnimationTrigger()
     {
 
@@ -160,7 +154,7 @@ public class Penguin : Entity
         _deadCompo.OnDied();
     }
 
-    #region ½ºÅÈ °ü·Ã
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void AddStat(int value, StatType type, StatMode mode)
     {
         Stat.AddStat(value, type, mode);
@@ -183,11 +177,11 @@ public class Penguin : Entity
 
     #endregion
 
-    #region ¿òÁ÷ÀÓ °ü·Ã
-    //¹èÆ²¸ðµåÀÏ¶§ ´ÙÁ×ÀÌ°í ¸¶Áö¸· ¸¶¿ì½º À§Ä¡·Î ÀÌµ¿ ÄÚµå
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    //ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Úµï¿½
 
     /// <summary>
-    /// ¹èÄ¡µÈ À§Ä¡·Î ÀÌµ¿
+    /// ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½
     /// </summary>
     /// <param name="mousePos"></param>
     public void MoveToMySeat(Vector3 mousePos)
@@ -200,6 +194,12 @@ public class Penguin : Entity
                 StopCoroutine(movingCoroutine);
 
             movingCoroutine = StartCoroutine(Moving());
+
+            /* if (prevMousePos != Vector3.zero)
+             {
+             }
+             else
+                 MoveToMouseClick(mousePos + SeatPos);*/
         }
     }
     private IEnumerator Moving()
@@ -225,8 +225,8 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-      /*  Vector3 pos = curMousePos + movePos; // ¹Ì¸® °è»êµÈ È¸Àü À§Ä¡¸¦ ¿©±â¿¡¼­ »ç¿ë
-        MoveToMouseClick(pos);*/
+        Vector3 pos = MousePos + movePos; // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½
+        MoveToMouseClick(pos);
     }
     private void MoveToMouseClick(Vector3 pos)
     {
@@ -244,25 +244,15 @@ public class Penguin : Entity
             NavAgent?.SetDestination(MousePos + SeatPos);
         }
     }
-
-    public void SetNavmeshPriority(PriorityType type)
-    {
-        if (NavAgent != null)
-            NavAgent.avoidancePriority = (int)type;
-    }
     #endregion
 
-    #region ¸í·É¿¡ µû¸¥ ÇÔ¼ö °ü·Ã
-
-    #endregion
-
-    #region ´õ¹Ì Æë±Ï ½º¿Ò °ü·Ã
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     public virtual void StateInit() { }
 
     #endregion
 
-    //±Ùµ¥ ½ºÅ©¸³Æ®°¡ ²¨Á®ÀÖ´Âµ¥ ÀÌ ÇÔ¼ö°¡ È£ÃâÀÌ µÇ³ª?
+    //ï¿½Ùµï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´Âµï¿½ ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½Ç³ï¿½?
     public override void Init()
     {
         owner = null;
