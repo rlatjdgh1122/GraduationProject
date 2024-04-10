@@ -46,6 +46,13 @@ public class CostManager : Singleton<CostManager>
 
     }
 
+    public bool CheckRemainingCost(int price)
+    {
+        int remainCost = _currentCost - price;
+
+        return remainCost >= 0 ? true : false;
+    }
+
     //현재 재화에서 더하기
     //만약 tween이 true면 돈 뿅뿅뿅하는거,
     //UI가 아니면 false
