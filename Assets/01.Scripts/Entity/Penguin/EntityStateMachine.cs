@@ -15,6 +15,7 @@ public class EntityStateMachine<T, G> where T : Enum where G : Entity
         PrevState = CurrentState;
         CurrentState.Enter();
     }
+
     public void ChangeState(T newState)
     {
         PrevState = CurrentState;

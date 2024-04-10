@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(DeadPenguin))]
+[RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
 {
     public float moveSpeed = 4.5f;
@@ -69,7 +70,7 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
-    private Iliveable _liveCompo = null;
+    private ILiveable _liveCompo = null;
     #endregion
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
@@ -95,8 +96,9 @@ public class Penguin : Entity
         }
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
-        _liveCompo = GetComponent<Iliveable>();
+        _liveCompo = GetComponent<ILiveable>();
     }
+
     #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
     public bool CheckAttackEventPassive(int curAttackCount)
