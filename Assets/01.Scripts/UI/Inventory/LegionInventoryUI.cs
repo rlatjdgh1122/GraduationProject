@@ -23,7 +23,6 @@ public class LegionInventoryUI : PopupUI
         else
         {
             LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
-            UIManager.Instance.HidePanel(this.gameObject.name);
         }
     }
 
