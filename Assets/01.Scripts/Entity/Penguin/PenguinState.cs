@@ -93,6 +93,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void AttackExit()
     {
+        _penguin.AnimatorCompo.speed = 1;
         if (_penguin.CurrentTarget != null)
             _penguin.CurrentTarget.HealthCompo.OnDiedEndEvent -= DeadTarget;
     }

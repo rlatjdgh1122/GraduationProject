@@ -5,22 +5,6 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    public Transform TentTrm { get; private set; } = null;
-
-    public override void Awake()
-    {
-        if (TentTrm == null)
-        {
-            TentTrm = FindObjectOfType<TentInitPos>().transform;
-            if(TentTrm == null)
-            {
-                Debug.Log($"TentTrm이 아직도 Null인데? 씬에 있나 확인해봐~");
-            }
-        }
-
-
-    }
-
     public int GetCurrentPenguinCount()
     {
         Penguin[] penguins = FindObjectsOfType<Penguin>();
@@ -146,8 +130,8 @@ public class GameManager : Singleton<GameManager>
         PoolManager.Instance = new PoolManager(transform);
 
         _poolingListSO.List.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount)); //리스트에 있는 모든
-
         _poolingListSO.DummyPenguinList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
+        _poolingListSO.GeneralPenguinList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
 
 }

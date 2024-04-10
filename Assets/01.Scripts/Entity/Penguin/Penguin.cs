@@ -1,19 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
-
-[RequireComponent(typeof(DeadPenguin))]
+[RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
 {
-    public enum PriorityType
-    {
-        High = 50,
-        Low = 51,
-    }
-
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
     public int maxDetectedCount;
@@ -77,14 +70,13 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
-    private Iliveable _liveCompo = null;
+    private ILiveable _liveCompo = null;
     #endregion
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     private Army owner;
     public Army MyArmy => owner;
-
 
     private void OnEnable()
     {
@@ -104,8 +96,9 @@ public class Penguin : Entity
         }
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
-        _liveCompo = GetComponent<Iliveable>();
+        _liveCompo = GetComponent<ILiveable>();
     }
+
     #region 일반 병사들 패시브
     //General에서 뺴옴 ㅋ
     public bool CheckAttackEventPassive(int curAttackCount)
@@ -210,6 +203,12 @@ public class Penguin : Entity
                 StopCoroutine(movingCoroutine);
 
             movingCoroutine = StartCoroutine(Moving());
+
+            /* if (prevMousePos != Vector3.zero)
+             {
+             }
+             else
+                 MoveToMouseClick(mousePos + SeatPos);*/
         }
     }
     private IEnumerator Moving()
@@ -235,8 +234,8 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-      /*  Vector3 pos = curMousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
-        MoveToMouseClick(pos);*/
+        Vector3 pos = MousePos + movePos; // 미리 계산된 회전 위치를 여기에서 사용
+        MoveToMouseClick(pos);
     }
     private void MoveToMouseClick(Vector3 pos)
     {
@@ -253,12 +252,6 @@ public class Penguin : Entity
             NavAgent.isStopped = false;
             NavAgent?.SetDestination(MousePos + SeatPos);
         }
-    }
-
-    public void SetNavmeshPriority(PriorityType type)
-    {
-        if (NavAgent != null)
-            NavAgent.avoidancePriority = (int)type;
     }
     #endregion
 

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(DeadEnemy))]
+[RequireComponent(typeof(EnemyDeadController))]
 public class Enemy : Entity
 {
     [Header("Setting Values")]
