@@ -84,16 +84,6 @@ public class Penguin : Entity
 
     private Army owner;
     public Army MyArmy => owner;
-
-
-    private void OnEnable()
-    {
-        SignalHub.OnBattlePhaseEndEvent += ChangedToDummyPenguinHandler;
-    }
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseEndEvent -= ChangedToDummyPenguinHandler;
-    }
     protected override void Awake()
     {
         base.Awake();
@@ -267,21 +257,6 @@ public class Penguin : Entity
     #endregion
 
     #region 더미 펭귄 스왑 관련
-    private void ChangedToDummyPenguinHandler()
-    {
-        //켜져있는 애들만
-        if (gameObject.activeSelf)
-        {
-            //안죽었다면 더미펭귄으로 변신
-            if (!IsDead)
-                PenguinManager.Instance.ChangedToDummyPenguin(this);
-        }
-    }
-    public void SetPosAndRotation(Transform trm)
-    {
-        transform.position = trm.position;
-        transform.rotation = trm.rotation;
-    }
 
     public virtual void StateInit() { }
 

@@ -11,7 +11,7 @@ public class LegionInventoryData
         set { InfoData.LegionName = value; }
     }
 
-    public int IndexNumber
+    public int SlotIdx
     {
         get => InfoData.SlotIdx;
         set { InfoData.SlotIdx = value; }
@@ -25,7 +25,7 @@ public class LegionInventoryData
     {
         this.InfoData = InfoData;
         this.LegionName = LegionName;
-        this.IndexNumber = Idx;
+        this.SlotIdx = Idx;
     }
 
     public void HPPercent(float percent)

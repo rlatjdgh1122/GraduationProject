@@ -81,12 +81,12 @@ public class LegionInventory : LegionUI
 
         foreach (var list in _savedLegionList.Where(list => list.LegionName == name)) //저장 군단에서 바뀔 군단의 이름과 같다면 
         {
-            slotList[list.IndexNumber].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
+            slotList[list.SlotIdx].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
             _currentLegionList.Add(list); //현재 군단에 넣어줘
 
-            if (!_currentDictionary.ContainsKey(list.IndexNumber))
+            if (!_currentDictionary.ContainsKey(list.SlotIdx))
             {
-                _currentDictionary.Add(list.IndexNumber, list);
+                _currentDictionary.Add(list.SlotIdx, list);
             }
             else break;
 
@@ -133,10 +133,10 @@ public class LegionInventory : LegionUI
     {
         foreach(var saveData in _savedLegionList.ToList())
         {
-            if(saveData.LegionName == data.LegionName && saveData.IndexNumber == data.IndexNumber)
+            if(saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
             {
                 _savedLegionList.Remove(saveData);
-                slotList[saveData.IndexNumber].ExitSlot(null);
+                slotList[saveData.SlotIdx].ExitSlot(null);
                 SaveLegion();
             }
         }
@@ -146,11 +146,11 @@ public class LegionInventory : LegionUI
     {
         foreach (var saveData in _savedLegionList.ToList())
         {
-            if (saveData.LegionName == data.LegionName && saveData.IndexNumber == data.IndexNumber)
+            if (saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
             {
                 saveData.HPPercent(curHP);
 
-                slotList[saveData.IndexNumber].HpValue(saveData.CurrentHPPercent);
+                slotList[saveData.SlotIdx].HpValue(saveData.CurrentHPPercent);
             }
         }
     }

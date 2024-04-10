@@ -31,23 +31,31 @@ public class PenguinManager
 
     //Type으로 펭귄 등록
     private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
-    #region 펭귄 관련
-    private List<DummyPenguinListItem> _dummyPenguinList = new();
-    public List<DummyPenguinListItem> DummyPenguinList => _dummyPenguinList;
-    public int DummyPenguinCount => _dummyPenguinList.Count;
 
-    private List<Penguin> _soldierpenguinList = new();
-    public int SoldierPenguinCount => _soldierpenguinList.Count;
+    #region 펭귄 리스트
+    private List<DummyPenguinListItem> _dummyPenguinList = new();
+    public List<DummyPenguin> DummyPenguinList = new();
+    /// <summary>
+    /// 군단에 소속되지안흔 더미 펭귄
+    /// </summary>
+    public List<DummyPenguin> NotBelongDummyPenguinList = new();
+    public List<Penguin> SoldierPenguinList = new();
+    public int DummyPenguinCount => NotBelongDummyPenguinList.Count;
+    public int SoldierPenguinCount => SoldierPenguinList.Count;
     #endregion
 
 
     #region 변수
     private Dictionary<Penguin, DummyPenguin> penguinToDummyDic = new();
     private Dictionary<DummyPenguin, Penguin> dummyToPenguinDic = new();
+
     private Dictionary<EntityInfoDataSO, DummyPenguin> infoDataToDummyDic = new();
+
+    private Dictionary<LegionInventoryData, Penguin> legionDataToPenguinDic = new();
+    private Dictionary<Penguin, LegionInventoryData> penguinToLegionDataDic = new();
     #endregion
 
-    //게이 매니저에서 등록
+    //군단 매니저에서 등록
     public void Setting(SoldierListSO soldierTypeListSO)
     {
         foreach (var solider in soldierTypeListSO.soldierTypes)
@@ -64,9 +72,19 @@ public class PenguinManager
             dummyPenguin = obj
         });
     }
+
+    public void RemoveDummyPenguin(DummyPenguin obj)
+    {
+
+    }
     public void AddSoliderPenguin(Penguin obj)
     {
-        _soldierpenguinList.Add(obj);
+        SoldierPenguinList.Add(obj);
+    }
+    public void AddSpawnMapping(LegionInventoryData data, Penguin penguin)
+    {
+        legionDataToPenguinDic.Add(data, penguin);
+        penguinToLegionDataDic.Add(penguin, data);
     }
 
 
@@ -110,6 +128,36 @@ public class PenguinManager
 
         return resultPenguin;
     }
+    public Penguin GetPenguinByLegionData(LegionInventoryData data)
+    {
+        Penguin resultPenguin = null;
+        if (legionDataToPenguinDic.TryGetValue(data, out var penguin))
+        {
+            resultPenguin = penguin;
+        }
+        else
+        {
+            Debug.Log($"GetPenguinByDummyPenguin에서 오류");
+            Debug.Log($"{data}과 등록된 펭귄이 없습니다.");
+        }
+
+        return resultPenguin;
+    }
+    public DummyPenguin GetDummyByPenguin(Penguin penguin)
+    {
+        DummyPenguin resultDummy = null;
+        if (penguinToDummyDic.TryGetValue(penguin, out var dummy))
+        {
+            resultDummy = dummy;
+        }
+        else
+        {
+            Debug.Log("GetDummyByPenguin에서 오류");
+            Debug.Log($"{penguin.name}과 등록된 더미 펭귄이 없습니다.");
+        }
+
+        return resultDummy;
+    }
     public T GetStatByInfoData<T>(EntityInfoDataSO data) where T : BaseStat
     {
         T resultStat = null;
@@ -127,21 +175,6 @@ public class PenguinManager
 
         return resultStat;
     }
-    public DummyPenguin GetDummyByPenguin(Penguin penguin)
-    {
-        DummyPenguin resultDummy = null;
-        if (penguinToDummyDic.TryGetValue(penguin, out var dummy))
-        {
-            resultDummy = dummy;
-        }
-        else
-        {
-            Debug.Log("GetDummyByPenguin에서 오류");
-            Debug.Log($"{penguin.name}과 등록된 더미 펭귄이 없습니다.");
-        }
-
-        return resultDummy;
-    }
     public (EntityInfoDataSO, string, int) GetLegionDataByPenguin(Penguin penguin)
     {
         var dummy = GetDummyByPenguin(penguin);
@@ -152,6 +185,8 @@ public class PenguinManager
 
     public void SetOwnerDummyPenguin(PenguinTypeEnum type, Penguin penguin)
     {
+        //여기서 소속된 더미펭귄 리스트랑 소속되지않은 애들 나누기
+
         foreach (var info in _dummyPenguinList)
         {
             var PenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
@@ -176,46 +211,6 @@ public class PenguinManager
         }
 
     }
-
-    #region 더미 펭귄과 실제 펭귄 스왑 관련
-    /// <summary>
-    /// 전투가 끝나면 더미펭귄으로 바뀜
-    /// </summary>
-    /// <param name="obj"></param>
-    public void ChangedToDummyPenguin(Penguin obj)
-    {
-        if (penguinToDummyDic.TryGetValue(obj, out var value))
-        {
-            var trm = obj.transform;
-
-            //가짜 펭귄은 위치를 설정해주고 켜줌
-            value.gameObject.SetActive(true);
-            value.IsGoToHouse = false;
-            value.SetPostion(trm);
-            value.StateInit();
-            value.ChangeNavqualityToHigh();
-
-            //실제 펭귄을 꺼줌
-            obj.gameObject.SetActive(false);
-        }
-    }
-
-    /// <summary>
-    /// 나의 더미 펭귄을 가져옴
-    /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
-    public DummyPenguin GetDummyPenguin(Penguin obj)
-    {
-        if (penguinToDummyDic.TryGetValue(obj, out var value))
-            return value;
-
-        Debug.Log($"{obj.name}은 더미 펭귄을 가지고 있지 않습니다.");
-        return null;
-    }
-
-
-    #endregion
 }
 
 

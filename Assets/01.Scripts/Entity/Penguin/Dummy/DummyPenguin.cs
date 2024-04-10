@@ -41,14 +41,6 @@ public class DummyPenguin : PoolableMono
     #endregion
     public DummyStateMachine DummyStateMachine { get; private set; }
 
-    private void OnEnable()
-    {
-        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
-    }
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
-    }
     private void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
@@ -82,35 +74,10 @@ public class DummyPenguin : PoolableMono
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
     }
-    private void OnBattleStartHandler()
-    {
-        ChangeNavqualityToNone();
-
-        //군단에 소속된 펭귄이라면
-        if (Owner)
-        {
-            Owner.SetPosAndRotation(transform);
-
-            Owner.gameObject.SetActive(true);
-            Owner.StateInit();
-
-            //더미상태에서 풀리면 TentTrm(중앙)을 기준으로 다음 마우스 위치와 계산함
-            Owner.MousePos = GameManager.Instance.TentTrm.position;
-
-            this.gameObject.SetActive(false);
-        }
-        //군단에 소속되지 않은 펭귄이라면
-        else
-            IsGoToHouse = true;
-    }
+   
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
-    }
-    public void SetPostion(Transform trm)
-    {
-        transform.position = trm.position;
-        transform.rotation = trm.rotation;
     }
     public void GoToHouse()
     {
@@ -118,15 +85,17 @@ public class DummyPenguin : PoolableMono
         PoolManager.Instance.Push(this);
     }
 
-    public void ChangeNavqualityToNone() //Nave Quality None으로 변경
+    #region 스왑 관련
+    public void ChangeNavqualityToNone() //Nave Quality None으로 변경) 전투 시작
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
-    public void ChangeNavqualityToHigh() //Nave Quality HighQuality로 변경
+    public void ChangeNavqualityToHigh() //Nave Quality HighQuality로 변경) 전투 끝나고
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
+    #endregion
 
     public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 }
