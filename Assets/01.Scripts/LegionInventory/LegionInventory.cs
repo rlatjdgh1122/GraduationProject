@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 
 
@@ -112,6 +113,7 @@ public class LegionInventory : LegionUI
         }
 
         data = Instantiate(data);
+        Debug.Log(data.GetType().Name);
 
         LegionInventoryData legionData
             = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);

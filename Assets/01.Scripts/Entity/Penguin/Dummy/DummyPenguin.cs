@@ -16,8 +16,6 @@ public enum DummyPenguinStateEnum
 [RequireComponent(typeof(NavMeshAgent))]
 public class DummyPenguin : PoolableMono
 {
-    //private Penguin Owner = null;
-
     [SerializeField]
     private PenguinInfoDataSO _penguinUIInfo = null;
     public PenguinInfoDataSO PenguinUIInfo => _penguinUIInfo;
@@ -48,7 +46,6 @@ public class DummyPenguin : PoolableMono
 
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
-
         _penguinUIInfo = Instantiate(_penguinUIInfo);
         Setting();
     }
@@ -83,6 +80,11 @@ public class DummyPenguin : PoolableMono
     {
         //���⼭ Ǯ �ִ°� �³� ����
         PoolManager.Instance.Push(this);
+    }
+
+    private void OnMouseDown()
+    {
+        var infoData = PenguinManager.Instance.GetInfoDataByDummyPenguin<PenguinInfoDataSO>(this);
     }
 
     #region ���� ����

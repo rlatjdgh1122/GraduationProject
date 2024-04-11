@@ -44,7 +44,7 @@ public class PenguinManager
     /// ±º´Ü¿¡ ¼Ò¼ÓµÈ ´õ¹Ì Æë±Ï
     /// </summary>
     public List<DummyPenguin> NotBelongDummyPenguinList = new();
-    
+
     public List<Penguin> SoldierPenguinList = new();
     public int DummyPenguinCount => DummyPenguinList.Count;
     public int SoldierPenguinCount => SoldierPenguinList.Count;
@@ -56,6 +56,7 @@ public class PenguinManager
     private Dictionary<DummyPenguin, Penguin> dummyToPenguinDic = new();
 
     private Dictionary<EntityInfoDataSO, DummyPenguin> infoDataToDummyDic = new();
+    private Dictionary<DummyPenguin, EntityInfoDataSO> dummyToInfoDataDic = new();
 
     private Dictionary<LegionInventoryData, Penguin> legionDataToPenguinDic = new();
     private Dictionary<Penguin, LegionInventoryData> penguinToLegionDataDic = new();
@@ -78,9 +79,7 @@ public class PenguinManager
             dummyPenguin = obj
         });
         DummyPenguinList.Add(obj);
-        infoDataToDummyDic.Add(obj.PenguinUIInfo, obj);
     }
-
     public void RemoveDummyPenguin(DummyPenguin obj)
     {
 
@@ -89,6 +88,44 @@ public class PenguinManager
     {
         SoldierPenguinList.Add(obj);
     }
+    public void RemoveSoliderPenguin(Penguin obj)
+    {
+
+    }
+
+    public void AddInfoDataMapping(EntityInfoDataSO data, DummyPenguin dummy)
+    {
+        EntityInfoDataSO dataType = null;
+
+        if (data.JobType == PenguinJobType.General)
+        {
+            dataType = data as GeneralInfoDataSO;
+        }
+        else
+        {
+            dataType = data as PenguinInfoDataSO;
+        }
+
+        infoDataToDummyDic.Add(dataType, dummy);
+        dummyToInfoDataDic.Add(dummy, dataType);
+    }
+    public DummyPenguin GetDummyByInfoData(EntityInfoDataSO infoData)
+    {
+        DummyPenguin resultDummy = null;
+        if (infoDataToDummyDic.TryGetValue(infoData, out var dummy))
+            resultDummy = dummy;
+
+        return resultDummy;
+    }
+
+    public T GetInfoDataByDummyPenguin<T>(DummyPenguin dummy) where T : EntityInfoDataSO
+    {
+        if (dummyToInfoDataDic.TryGetValue(dummy, out var infoDataSO))
+            return (T)infoDataSO;
+
+        return default;
+    }
+
     public void AddSpawnMapping(LegionInventoryData data, Penguin penguin)
     {
         legionDataToPenguinDic.Add(data, penguin);
@@ -278,8 +315,8 @@ public class PenguinManager
         if (BelongDummyPenguinList.Count > 0) BelongDummyPenguinList.Clear();
         if (NotBelongDummyPenguinList.Count > 0) NotBelongDummyPenguinList.Clear();
 
-        
-        foreach(var item in _dummyPenguinList)
+
+        foreach (var item in _dummyPenguinList)
         {
             if (item.IsHaveOwner)
             {
