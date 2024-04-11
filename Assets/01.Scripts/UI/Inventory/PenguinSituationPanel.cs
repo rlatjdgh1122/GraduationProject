@@ -54,7 +54,7 @@ public class PenguinSituationPanel : PopupUI
     {
         if (!canRetire) return;
 
-        LegionInventoryManager.Instance.DeadLegionPenguin(data, data.LegionName, data.SlotIdx);
+        LegionInventoryManager.Instance.DeadLegionPenguin(data.LegionName, data.SlotIdx);
 
         HidePanel();
 

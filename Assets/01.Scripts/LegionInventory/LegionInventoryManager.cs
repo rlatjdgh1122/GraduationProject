@@ -92,13 +92,6 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _legionInven.DeadPenguin(legionName, slotIdx);
     }
 
-    public void TakeDamagePenguinInLegion(EntityInfoDataSO so, string legionName, int legionPosition, int maxHP, int curHP)
-    {
-        LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
-
-        _legionInven.DamagePenguin(data, (float)curHP / (float)maxHP);
-    }
-
     /// <summary>
     /// ���� �̸� �ٲٱ�
     /// </summary>

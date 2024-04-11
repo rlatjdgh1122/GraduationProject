@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class LegionInventory : LegionUI
 {
-    private Dictionary<int, LegionInventoryData> _currentDictionary = new();
+    private Dictionary<int, EntityInfoDataSO> _currentDictionary = new();
 
-    private List<LegionInventoryData> _currentLegionList = new();
-    private List<LegionInventoryData> _currentRemovePenguinList = new();
-    public List<LegionInventoryData> _savedLegionList = new();
+    private List<EntityInfoDataSO> _currentLegionList = new();
+    private List<EntityInfoDataSO> _currentRemovePenguinList = new();
+    public List<EntityInfoDataSO> _savedLegionList = new();
 
     /// <summary>
     /// 저장하지 않기
@@ -21,12 +21,12 @@ public class LegionInventory : LegionUI
         {
             if (!_savedLegionList.Contains(data)) //저장 군단에 포함되어 있지 않는 데이터(새로 추가한 데이터)라면
             {
-                legion.AddPenguin(data.InfoData); //다시 넣어주기
+                legion.AddPenguin(data); //다시 넣어주기
             }
         }
         foreach (var data in _currentRemovePenguinList) //현재 군단에서 삭제된 펭귄 중
         {
-            legion.RemovePenguin(data.InfoData); //다시 빼주기
+            legion.RemovePenguin(data); //다시 빼주기
         }
     }
 
@@ -82,7 +82,7 @@ public class LegionInventory : LegionUI
 
         foreach (var list in _savedLegionList.Where(list => list.LegionName == name)) //저장 군단에서 바뀔 군단의 이름과 같다면 
         {
-            slotList[list.SlotIdx].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
+            slotList[list.SlotIdx].EnterSlot(list); //그 위치의 슬롯을 업뎃
             _currentLegionList.Add(list); //현재 군단에 넣어줘
 
             if (!_currentDictionary.ContainsKey(list.SlotIdx))
@@ -92,7 +92,7 @@ public class LegionInventory : LegionUI
             else break;
 
             saveCnt++;
-            CheckType(list.InfoData);
+            CheckType(list);
         }
 
         LegionCountTextSetting();
@@ -111,17 +111,17 @@ public class LegionInventory : LegionUI
             return;
         }
 
-        //data = Instantiate(data);
+        data = Instantiate(data);
 
-        LegionInventoryData legionData
-            = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);
+        data.LegionName = legion.LegionList()[legion.CurrentLegion].Name;
+        data.SlotIdx = idx;
 
-        legionData.HPPercent(1);
+        //나중에 피 받아오깅
 
-        slotList[idx].HpValue(legionData.CurrentHPPercent);
+        //slotList[idx].HpValue(ㅇㅁㅅㅁ.CurrentHPPercent);
 
-        _currentLegionList.Add(legionData);
-        _currentDictionary.Add(idx, legionData);
+        _currentLegionList.Add(data);
+        _currentDictionary.Add(idx, data);
 
         CheckType(data);
         LegionCountTextSetting();
@@ -162,40 +162,28 @@ public class LegionInventory : LegionUI
         }
     }
 
-
-    public void DamagePenguin(LegionInventoryData data, float curHP)
-    {
-        foreach (var saveData in _savedLegionList.ToList())
-        {
-            if (saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
-            {
-                saveData.HPPercent(curHP);
-
-                slotList[saveData.SlotIdx].HpValue(saveData.CurrentHPPercent);
-            }
-        }
-    }
-
     /// <summary>
     /// 현재 군단에서 펭귄 지우기
     /// </summary>
     /// <param name="idx"></param>
     public void RemovePenguinInCurrentLegion(int idx)
     {
-        if (_currentDictionary.TryGetValue(idx, out LegionInventoryData curData))
+        if (_currentDictionary.TryGetValue(idx, out EntityInfoDataSO curData))
         {
             _currentLegionList.Remove(curData);
             _currentDictionary.Remove(idx);
             _currentRemovePenguinList.Add(curData);
 
-            if (curData.CurrentHPPercent == 1)
-                legion.AddPenguin(curData.InfoData);
-            else
-            {
-                UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
-                legion.ShowPenguinSituation(curData.InfoData, curData.CurrentHPPercent, (curData.InfoData as PenguinInfoDataSO).Price);
-                return;
-            }
+            
+
+            //if (curData.CurrentHPPercent == 1)
+            //    legion.AddPenguin(curData.InfoData);
+            //else
+            //{
+            //    UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
+            //    legion.ShowPenguinSituation(curData.InfoData, curData.CurrentHPPercent, (curData.InfoData as PenguinInfoDataSO).Price);
+            //    return;
+            //}
 
             currentRemovePenguinCnt++;
             currentPenguinCnt--;

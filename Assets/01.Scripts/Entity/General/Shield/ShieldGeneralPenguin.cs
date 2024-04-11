@@ -2,6 +2,7 @@ using System;
 
 public class ShieldGeneralPenguin : General
 {
+    //
     public EntityStateMachine<ShieldGeneralPenguinStateEnum, General> StateMachine { get; private set; }
 
     protected override void Awake()

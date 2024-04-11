@@ -8,9 +8,8 @@ public class PenguinDeadController : EntityDeadController<Penguin>, ILiveable
         base.OnDied();
 
         ArmyManager.Instance.RemovePenguin(_owner.MyArmy.LegionName, _owner);
-        var legionData = PenguinManager.Instance.GetLegionDataByPenguin(_owner);
-        Debug.Log("A : " + legionData.Item2 + ", " + legionData.Item3);
-        LegionInventoryManager.Instance.DeadLegionPenguin(legionData.Item2, legionData.Item3);
+        var infoData = PenguinManager.Instance.GetInfoDataByPenguin(_owner);
+        LegionInventoryManager.Instance.DeadLegionPenguin(infoData.LegionName,infoData.SlotIdx);
 
         SignalHub.OnModifyCurArmy?.Invoke();
     }
