@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(FieldOfView))]
 public abstract class DefenseBuilding : BaseBuilding
 {
     [SerializeField]
@@ -24,6 +25,8 @@ public abstract class DefenseBuilding : BaseBuilding
     private HashSet<Ground> currentGrounds = new();
 
     private Health _health;
+
+    protected Transform _currentTarget => _fov.FindVisibleTargets().FirstOrDefault();
 
     protected override void Awake()
     {

@@ -43,9 +43,9 @@ public class Health : MonoBehaviour, IDamageable
 
     public void SetHealth(BaseStat owner)
     {
-        currentHealth = maxHealth = owner.GetMaxHealthValue();
-        _armor = owner.armor.GetValue();
-        _evasion = owner.evasion.GetValue();
+        //currentHealth = maxHealth = owner.GetMaxHealthValue();
+        //_armor = owner.armor.GetValue();
+        //_evasion = owner.evasion.GetValue();
     }
 
     public void SetMaxHealth(BaseStat owner)
