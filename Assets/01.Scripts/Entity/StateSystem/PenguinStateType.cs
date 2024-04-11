@@ -1,4 +1,8 @@
 public enum PenguinStateType
 {
-    Idle
+    Idle,
+    Chase,
+    Move,
+    MustMove,
+    Attack
 }
