@@ -111,8 +111,7 @@ public class LegionInventory : LegionUI
             return;
         }
 
-        data = Instantiate(data);
-        Debug.Log(data.GetType().Name);
+        //data = Instantiate(data);
 
         LegionInventoryData legionData
             = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);

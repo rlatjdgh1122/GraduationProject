@@ -10,7 +10,6 @@ public class LegionInventoryData
     {
         get => InfoData.LegionName;
         set {
-            Debug.Log(value);
             InfoData.LegionName = value;
         }
     }
