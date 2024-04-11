@@ -22,6 +22,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     private LegionInventory   _legionInven = null;
     private UnitInventory     _unitInven   = null;
     private UnitInformationUI _unitInfo    = null;
+    private PenguinSituationUI _penguinSituation = null;
 
     private UnitInventoryData _selectData;
     public UnitInventoryData SelectData => _selectData;
@@ -36,6 +37,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _legionInven = FindObjectOfType<LegionInventory>();
         _unitInfo    = FindObjectOfType<UnitInformationUI>();
         LegionChange = FindObjectOfType<LegionChange>();
+        _penguinSituation = FindObjectOfType<PenguinSituationUI>();
     }
 
     /// <summary>
@@ -191,5 +193,10 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public List<LegionInfo> LegionList()
     {
         return _legionList;
+    }
+
+    public void ShowPenguinSituation(EntityInfoDataSO so, float percent, int penguinPrice)
+    {
+        _penguinSituation.SetPenguinSituation(so, percent, penguinPrice);
     }
 }

@@ -427,9 +427,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NexusUIPresenter, Assembly-CSharp
-        m_MethodName: OnAdmitNexusPanel
+      - m_Target: {fileID: 2294811811312486826}
+        m_TargetAssemblyTypeName: PenguinSituationUI, Assembly-CSharp
+        m_MethodName: ShowHealPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.93725497, g: 0.7686275, b: 0.2392157, a: 1}
+  m_Color: {r: 0.93725497, g: 0.7686275, b: 0.2392157, a: 0.3882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -633,7 +633,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7589480585006604606}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2294811811312486826}
+        m_TargetAssemblyTypeName: PenguinSituationPanel, Assembly-CSharp
+        m_MethodName: SituationEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &243912014729111833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,7 +1235,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5572315895843412960}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9071238078617424390}
+        m_TargetAssemblyTypeName: InitLegionChange, Assembly-CSharp
+        m_MethodName: ShowChangeLegionPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5318537008951302312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,14 +1458,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3546785434707128921}
-  - component: {fileID: 3694687659295051014}
+  - component: {fileID: 2294811811312486826}
+  - component: {fileID: 5234472112278360994}
   m_Layer: 5
   m_Name: PenguinSituation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3546785434707128921
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1463,7 +1488,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3694687659295051014
+--- !u!114 &2294811811312486826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1472,13 +1497,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1115822663686213114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b7f6539ecf8b0744820467924009c43, type: 3}
+  m_Script: {fileID: 11500000, guid: f26334e2555d00544b0c123f7ad2665b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _panelFadeTime: 0
   soundName: 16
   _healPanel: {fileID: 7206639820517199220}
   _retirePanel: {fileID: 435105376734617936}
+  _situationText: {fileID: 6489133821348983078}
+  _penguinNameText: {fileID: 2828228312383431689}
+--- !u!225 &5234472112278360994
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115822663686213114}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1452613167261670304
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,8 +3461,8 @@ RectTransform:
   - {fileID: 7632393460023186576}
   - {fileID: 2459740258916762786}
   - {fileID: 2481770091744619189}
-  - {fileID: 552760533131042270}
   - {fileID: 1070551915115353970}
+  - {fileID: 552760533131042270}
   m_Father: {fileID: 3546785434707128921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6709,7 +6748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7654,9 +7693,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NexusUIPresenter, Assembly-CSharp
-        m_MethodName: OnAdmitNexusPanel
+      - m_Target: {fileID: 2294811811312486826}
+        m_TargetAssemblyTypeName: PenguinSituationUI, Assembly-CSharp
+        m_MethodName: ShowRetirePanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

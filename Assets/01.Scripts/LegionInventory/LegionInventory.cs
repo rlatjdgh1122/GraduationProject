@@ -133,7 +133,9 @@ public class LegionInventory : LegionUI
     /// <param name="data"></param>
     public void DeadPenguin(LegionInventoryData data)
     {
-        foreach (var saveData in _savedLegionList.ToList())
+        var saveList = _savedLegionList.ToList();
+
+        foreach (var saveData in saveList)
         {
             if (saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
             {
@@ -143,6 +145,7 @@ public class LegionInventory : LegionUI
             }
         }
     }
+
 
     public void DamagePenguin(LegionInventoryData data, float curHP)
     {
@@ -173,7 +176,8 @@ public class LegionInventory : LegionUI
                 legion.AddPenguin(curData.InfoData);
             else
             {
-
+                UIManager.Instance.ShowWarningUI("∆Î±œ¿« √º∑¬¿Ã ¥‚æ∆¿÷Ω¿¥œ¥Ÿ!");
+                legion.ShowPenguinSituation(curData.InfoData, curData.CurrentHPPercent, (curData.InfoData as PenguinInfoDataSO).Price);
                 return;
             }
 

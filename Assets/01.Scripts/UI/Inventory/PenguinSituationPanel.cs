@@ -1,4 +1,6 @@
 using DG.Tweening;
+using StatOperator;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,37 +9,59 @@ using UnityEngine.UI;
 
 public class PenguinSituationPanel : PopupUI
 {
-    [SerializeField]
-    private CanvasGroup _healPanel, _retirePanel;
+    protected EntityInfoDataSO data;
 
-    [SerializeField]
-    private TextMeshProUGUI _situationText;
+    protected int hpPercent;
+    protected int price;
 
-    public void ShowHealPanel()
+    protected bool canClick;
+
+    protected bool canHeal;
+    protected bool canRetire;
+
+
+    public void CheckBuy(float percent, int penguinPrice)
     {
-        ChangingPanel(_retirePanel, _healPanel);
+        hpPercent = (int)(percent * 100);
 
+        price = penguinPrice - (int)StatCalculator.Percent(penguinPrice, hpPercent);
 
+        if (CostManager.Instance.CheckRemainingCost(price))
+        {
+            canClick = true;
+        }
+        else
+        {
+            canClick = false;
+        }
     }
 
-    public void ShowRetirePanel()
+    public void SituationEvent()
     {
-        ChangingPanel(_healPanel, _retirePanel);
+        if (!canClick) return;
 
+        if (canHeal)
+        {
 
+        }
+        else if (canRetire)
+        {
+            RetireEvent();
+        }
     }
 
-    private void ChangingPanel(CanvasGroup beforePanel, CanvasGroup afterPanel)
+    public void RetireEvent()
     {
-        beforePanel.alpha = 0;
-        beforePanel.blocksRaycasts = false;
+        if (!canRetire) return;
 
-        afterPanel.DOFade(1, 0.4f);
-        afterPanel.blocksRaycasts = true;
-    }
+        LegionInventoryManager.Instance.DeadLegionPenguin(data, data.LegionName, data.SlotIdx);
 
-    private void SetSituationText(string text)
-    {
-        _situationText.text = text;
+        HidePanel();
+
+        canHeal   = false;
+        canRetire = false;
+        canClick  = false;
+
+        data = null;
     }
 }
