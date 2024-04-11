@@ -6,8 +6,7 @@ using UnityEngine;
 public class Meteor : PoolableMono
 {
     [SerializeField] private float _meteorPower;
-    [SerializeField] private float _explosionRadius;
-
+    
     private Rigidbody _rigid;
     private DamageCaster _damageCaster;
 
@@ -41,11 +40,5 @@ public class Meteor : PoolableMono
         // 메테오 폭발 로직 추가
         _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
         Destroy(this.gameObject);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _explosionRadius);
     }
 }
