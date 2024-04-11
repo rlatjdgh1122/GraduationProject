@@ -81,7 +81,6 @@ public class LegionInventory : LegionUI
 
         foreach (var list in _savedLegionList.Where(list => list.LegionName == name)) //저장 군단에서 바뀔 군단의 이름과 같다면 
         {
-            Debug.Log(list);
             slotList[list.SlotIdx].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
             _currentLegionList.Add(list); //현재 군단에 넣어줘
 

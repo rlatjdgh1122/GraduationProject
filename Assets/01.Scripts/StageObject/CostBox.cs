@@ -87,7 +87,7 @@ public class CostBox : PoolableMono
 
     private IEnumerator DisableBox()
     {
-        yield return new WaitForSeconds(_clickParticle.duration);
+        yield return new WaitForSeconds(0.62f);
 
 
         PoolManager.Instance.Push(this);
