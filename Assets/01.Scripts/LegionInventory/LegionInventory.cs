@@ -82,7 +82,6 @@ public class LegionInventory : LegionUI
 
         foreach (var list in _savedLegionList.Where(list => list.LegionName == name)) //저장 군단에서 바뀔 군단의 이름과 같다면 
         {
-            Debug.Log(list);
             slotList[list.SlotIdx].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
             _currentLegionList.Add(list); //현재 군단에 넣어줘
 
@@ -148,7 +147,9 @@ public class LegionInventory : LegionUI
     }
     public void DeadPenguin(string legionName, int slotIdx)
     {
-        foreach (var saveData in _savedLegionList.ToList())
+        var saveList = _savedLegionList.ToList();
+
+        foreach (var saveData in saveList)
         {
             Debug.Log("B : " + saveData.LegionName + ", " + saveData.SlotIdx);
             if (saveData.LegionName == legionName
@@ -161,6 +162,7 @@ public class LegionInventory : LegionUI
             }
         }
     }
+
 
     public void DamagePenguin(LegionInventoryData data, float curHP)
     {
@@ -191,7 +193,8 @@ public class LegionInventory : LegionUI
                 legion.AddPenguin(curData.InfoData);
             else
             {
-
+                UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
+                legion.ShowPenguinSituation(curData.InfoData, curData.CurrentHPPercent, (curData.InfoData as PenguinInfoDataSO).Price);
                 return;
             }
 

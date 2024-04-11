@@ -16,8 +16,6 @@ public class LegionInventoryUI : PopupUI
     {
         base.HidePanel();
 
-        Debug.Log("HI");
-
         if (LegionInventoryManager.Instance.ChangedInCurrentLegion())
         {
             UIManager.Instance.ShowPanel("SaveLegionPanel");
@@ -30,7 +28,6 @@ public class LegionInventoryUI : PopupUI
 
     public void SaveLegion()
     {
-        Debug.Log("저장");
         LegionInventoryManager.Instance.SaveLegion();
         UIManager.Instance.ShowWarningUI("저장 성공!");
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);

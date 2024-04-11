@@ -9,9 +9,9 @@ using UnityEngine;
 public class LegionInfo
 {
     public string Name;
-    public int Price;                               //±º´Ü °¡°Ý
-    public bool Locked;                             //±º´ÜÀÌ Àá°ÜÀÖ´Â°¡
-    public int MaxCount;                           //ÃÖ´ë ±º´Ü º´»ç ¼ö
+    public int Price;                               //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool Locked;                             //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´Â°ï¿½
+    public int MaxCount;                           //ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 }
 
 public class LegionInventoryManager : Singleton<LegionInventoryManager>
@@ -19,10 +19,10 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public int CurrentLegion { get; private set; }
 
     public LegionChange LegionChange { get; private set; } = null;
-
     private LegionInventory _legionInven = null;
     private UnitInventory _unitInven = null;
     private UnitInformationUI _unitInfo = null;
+    private PenguinSituationUI _penguinSituation = null;
 
     private UnitInventoryData _selectData;
     public UnitInventoryData SelectData => _selectData;
@@ -37,12 +37,13 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _legionInven = FindObjectOfType<LegionInventory>();
         _unitInfo = FindObjectOfType<UnitInformationUI>();
         LegionChange = FindObjectOfType<LegionChange>();
+        _penguinSituation = FindObjectOfType<PenguinSituationUI>();
     }
 
     /// <summary>
-    /// ¼±ÅÃÇÑ µ¥ÀÌÅÍ
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="selectSO">µ¥ÀÌÅÍ</param>
+    /// <param name="selectSO">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
     /// <param name="size"></param>
     public void SelectInfoData(UnitInventoryData selectSO)
     {
@@ -56,7 +57,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ÀÎº¥¿¡ Ãß°¡ÇÒ Æë±Ï
+    /// ï¿½Îºï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="data"></param>
     public void AddPenguin(EntityInfoDataSO data)
@@ -66,20 +67,20 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 
 
     /// <summary>
-    /// ÀÎº¥¿¡¼­ Æë±Ï Áö¿ì±â
+    /// ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="data">Áö¿öÁú Æë±Ï µ¥ÀÌÅÍ</param>
+    /// <param name="data">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
     public void RemovePenguin(EntityInfoDataSO data)
     {
         _unitInven.PenguinSlotExit(data);
     }
 
     /// <summary>
-    /// ±º´Ü¿¡ ÀÖ´Â Æë±ÏÀÌ Á×¾úÀ¸¸é
+    /// ï¿½ï¿½ï¿½Ü¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="so">Æë±Ï Á¤º¸</param>
-    /// <param name="legionName">±º´Ü ÀÌ¸§</param>
-    /// <param name="legionPosition">±º´Ü ¾È¿¡¼­ÀÇ À§Ä¡</param>
+    /// <param name="so">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</param>
+    /// <param name="legionName">ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½</param>
+    /// <param name="legionPosition">ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡</param>
     public void DeadLegionPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
     {
         /*LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
@@ -99,10 +100,10 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ±º´Ü ÀÌ¸§ ¹Ù²Ù±â
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½Ù²Ù±ï¿½
     /// </summary>
-    /// <param name="legionNumber">¹Ù²Ü ±º´Ü ¹øÈ£</param>
-    /// <param name="name">¹Ù²Ü ÀÌ¸§</param>
+    /// <param name="legionNumber">ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£</param>
+    /// <param name="name">ï¿½Ù²ï¿½ ï¿½Ì¸ï¿½</param>
     public void LegionNameChange(int legionNumber, string name)
     {
         _legionInven.ChangeLegionNameInSaveData(_legionList[legionNumber].Name, name);
@@ -111,7 +112,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ÇöÀç ±º´Ü ¹Ù²Ù±â
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
     /// </summary>
     /// <param name="number"></param>
     public void ChangeLegionNumber(int number)
@@ -125,12 +126,12 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         {
             if (_legionList[i].Name == name) return i;
         }
-        Debug.Log("±º´Ü ÀÌ¸§ ¸øÃ£À½ ¹¹ÇÏ³Ä");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½Ï³ï¿½");
         return -1;
     }
 
     /// <summary>
-    /// ÇöÀç ±º´Ü¿¡ Æë±Ï µî·ÏÇÏ±â
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
     /// </summary>
     /// <param name="slotPosition"></param>
     /// <param name="infoData"></param>
@@ -140,7 +141,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ÇöÀç ±º´Ü¿¡¼­ Æë±Ï »©±â
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="slotPosition"></param>
     public void RemovePenguinInCurrentLegion(int slotPosition)
@@ -149,7 +150,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ±º´Ü ÀúÀåÇÏ±â
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
     /// </summary>
     public void SaveLegion()
     {
@@ -157,7 +158,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ±º´Ü ÀúÀå Ãë¼ÒÇÏ±â
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
     /// </summary>
     public void UndoLegion()
     {
@@ -165,7 +166,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ÇöÀç ±º´Ü¿¡¼­ º¯°æ »çÇ×ÀÌ ÀÖ´Ù¸é
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
     /// </summary>
     public bool ChangedInCurrentLegion()
     {
@@ -173,7 +174,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ±º´Ü ¹Ù²Ù±â
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
     /// </summary>
     public void ChangeLegion(int legionNumber)
     {
@@ -186,7 +187,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     }
 
     /// <summary>
-    /// ÇöÀç ±º´ÜÀÇ ÃÖ´ë ÀÎ¿ø ¼ö¸¦ ÃÊ°úÇß´Ù¸é
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ß´Ù¸ï¿½
     /// </summary>
     public bool ExcedLimitOfLegion()
     {
@@ -196,5 +197,10 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public List<LegionInfo> LegionList()
     {
         return _legionList;
+    }
+
+    public void ShowPenguinSituation(EntityInfoDataSO so, float percent, int penguinPrice)
+    {
+        _penguinSituation.SetPenguinSituation(so, percent, penguinPrice);
     }
 }
