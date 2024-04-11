@@ -182,6 +182,7 @@ public class LegionInventory : LegionUI
             }
 
             currentRemovePenguinCnt++;
+            currentPenguinCnt--;
         }
     }
 

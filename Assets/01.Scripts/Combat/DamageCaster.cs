@@ -201,7 +201,7 @@ public class DamageCaster : MonoBehaviour
 
     public bool CastMeteorDamage(Vector3 position, LayerMask targetLayer)
     {
-        Collider[] colliders = Physics.OverlapSphere(position, _detectRange * 5, targetLayer);
+        Collider[] colliders = Physics.OverlapSphere(position, _detectRange * 3, targetLayer);
 
         foreach (Collider collider in colliders)
         {

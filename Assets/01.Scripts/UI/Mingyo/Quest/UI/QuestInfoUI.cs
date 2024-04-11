@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class QuestInfoUI : MonoBehaviour
@@ -13,7 +10,7 @@ public class QuestInfoUI : MonoBehaviour
     private GameObject _questInfoBoxUIPrefab; 
 
     [SerializeField]
-    private RectTransform _questInfoBoxRectParent;
+    private RectTransform _questInfoBoxRectParent;  
 
     private TextMeshProUGUI _questStateText; // 진행중인지 뜰 텍스트
     private TextMeshProUGUI _questNameText; // 퀘스트 이름
