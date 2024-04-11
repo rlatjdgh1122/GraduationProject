@@ -113,7 +113,7 @@ public class LegionInventory : LegionUI
 
         int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
 
-        if(data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0)
+        if(data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0) //일단 퀘스트
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
