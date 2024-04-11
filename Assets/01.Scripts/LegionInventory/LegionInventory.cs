@@ -42,9 +42,9 @@ public class LegionInventory : LegionUI
             }
         }
 
-        foreach(var data in _currentRemovePenguinList) //현재 삭제된 펭귄과
+        foreach (var data in _currentRemovePenguinList) //현재 삭제된 펭귄과
         {
-            if(_savedLegionList.Contains(data)) //저장 군단에 있는 데이터가 같다면
+            if (_savedLegionList.Contains(data)) //저장 군단에 있는 데이터가 같다면
             {
                 _savedLegionList.Remove(data); //저장군단에서 삭제시켜줌
             }
@@ -105,14 +105,14 @@ public class LegionInventory : LegionUI
     /// <param name="data"></param>
     public void LegionRegistration(int idx, EntityInfoDataSO data)
     {
-        if(_currentDictionary.TryGetValue(idx, out _))
+        if (_currentDictionary.TryGetValue(idx, out _))
         {
             return;
         }
 
         data = Instantiate(data);
 
-        LegionInventoryData legionData 
+        LegionInventoryData legionData
             = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);
 
         legionData.HPPercent(1);
@@ -133,9 +133,9 @@ public class LegionInventory : LegionUI
     /// <param name="data"></param>
     public void DeadPenguin(LegionInventoryData data)
     {
-        foreach(var saveData in _savedLegionList.ToList())
+        foreach (var saveData in _savedLegionList.ToList())
         {
-            if(saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
+            if (saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
             {
                 _savedLegionList.Remove(saveData);
                 slotList[saveData.SlotIdx].ExitSlot(null);
@@ -169,7 +169,7 @@ public class LegionInventory : LegionUI
             _currentDictionary.Remove(idx);
             _currentRemovePenguinList.Add(curData);
 
-            if(curData.CurrentHPPercent == 1)
+            if (curData.CurrentHPPercent == 1)
                 legion.AddPenguin(curData.InfoData);
             else
             {
@@ -206,7 +206,7 @@ public class LegionInventory : LegionUI
 
     public bool ExcedLimitOfLegion(int legionNumber)
     {
-        if(legion.LegionList()[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
+        if (legion.LegionList()[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
         {
             return true;
         }
@@ -219,5 +219,13 @@ public class LegionInventory : LegionUI
     public bool LimitOfGeneral()
     {
         return currentGeneral > 0 ? true : false;
+    }
+
+    private void OnDestroy()
+    {
+        ResetLegion();
+
+        if (_savedLegionList.Count > 0)
+            _savedLegionList.Clear();
     }
 }

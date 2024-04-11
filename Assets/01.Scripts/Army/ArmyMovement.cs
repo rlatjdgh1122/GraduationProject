@@ -20,13 +20,11 @@ public class ArmyMovement : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
     private ParticleSystem ClickParticle;
     private Army curArmy = null;
-
     public List<PenguinMovementInfo> armySoldierList = new();
 
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
 
-    //�������� �ʰ� ��ΰ� ��ġ�� �̵��ߴٸ�
     private bool result => successfulSeatMyPos && isCanMove;
 
     private Coroutine WaitForAllTrueCoutine = null;
@@ -39,13 +37,13 @@ public class ArmyMovement : MonoBehaviour
     private void OnEnable()
     {
         SignalHub.OnArmyChanged += OnArmyChangedHandler;
-        SignalHub.OnModifyArmyInfo += OnModifyArmyInfoHnadler;
+        SignalHub.OnModifyCurArmy += OnModifyCurArmyHnadler;
         _inputReader.RightClickEvent += SetClickMovement;
     }
     private void OnDisable()
     {
         SignalHub.OnArmyChanged -= OnArmyChangedHandler;
-        SignalHub.OnModifyArmyInfo -= OnModifyArmyInfoHnadler;
+        SignalHub.OnModifyCurArmy -= OnModifyCurArmyHnadler;
         _inputReader.RightClickEvent -= SetClickMovement;
     }
     private void Awake()
@@ -57,7 +55,7 @@ public class ArmyMovement : MonoBehaviour
         curArmy = newArmy;
         SetArmyNumber();
     }
-    private void OnModifyArmyInfoHnadler()
+    private void OnModifyCurArmyHnadler()
     {
         curArmy = ArmyManager.Instance.GetCurArmy();
         SetArmyNumber();
@@ -209,5 +207,11 @@ public class ArmyMovement : MonoBehaviour
     private void SetSoldierMovePosition(Vector3 mousePos, Penguin penguin)
     {
         penguin.MoveToMySeat(mousePos);
+    }
+
+    private void OnDestroy()
+    {
+        if (armySoldierList.Count > 0)
+            armySoldierList.Clear();
     }
 }

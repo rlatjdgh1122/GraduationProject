@@ -12,11 +12,10 @@ public class PenguinSpawnHandler : MonoBehaviour
     /// </summary>
     private void DummyToPenguinSwapHandler()
     {
-        var dummyPenguinList = PenguinManager.Instance.DummyPenguinList;
+        var belongDummyPenguinList = PenguinManager.Instance.BelongDummyPenguinList;
+        var notBelongDummyPenguinList = PenguinManager.Instance.NotBelongDummyPenguinList;
 
-        Debug.Log(dummyPenguinList.Count);
-
-        foreach (var dummy in dummyPenguinList)
+        foreach (var dummy in belongDummyPenguinList)
         {
             var trm = dummy.transform;
 
@@ -34,7 +33,7 @@ public class PenguinSpawnHandler : MonoBehaviour
         }
 
         //군단에 소속되지 않은 더미펭귄들은 집으로 감
-        foreach (var dummy in dummyPenguinList)
+        foreach (var dummy in notBelongDummyPenguinList)
         {
             dummy.ChangeNavqualityToNone();
             dummy.IsGoToHouse = true;

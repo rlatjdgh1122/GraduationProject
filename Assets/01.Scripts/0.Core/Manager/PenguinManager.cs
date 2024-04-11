@@ -35,12 +35,18 @@ public class PenguinManager
     #region Æë±Ï ¸®½ºÆ®
     private List<DummyPenguinListItem> _dummyPenguinList = new();
     public List<DummyPenguin> DummyPenguinList = new();
+
     /// <summary>
     /// ±º´Ü¿¡ ¼Ò¼ÓµÇÁö¾ÈÈç ´õ¹Ì Æë±Ï
     /// </summary>
+    public List<DummyPenguin> BelongDummyPenguinList = new();
+    /// <summary>
+    /// ±º´Ü¿¡ ¼Ò¼ÓµÈ ´õ¹Ì Æë±Ï
+    /// </summary>
     public List<DummyPenguin> NotBelongDummyPenguinList = new();
+    
     public List<Penguin> SoldierPenguinList = new();
-    public int DummyPenguinCount => NotBelongDummyPenguinList.Count;
+    public int DummyPenguinCount => DummyPenguinList.Count;
     public int SoldierPenguinCount => SoldierPenguinList.Count;
     #endregion
 
@@ -196,6 +202,8 @@ public class PenguinManager
         {
             ReleaseDummyPenguin(data);
         }
+
+
     }
 
     //Æë±Ï°ú ´õ¹ÌÆë±ÏÀ» ¸ÊÇÎ
@@ -222,12 +230,13 @@ public class PenguinManager
                     //Æë±ÏÀÌ¶û ´õ¹ÌÆë±ÏÀÌ¶û ¿¬°á
                     penguinToDummyDic.Add(penguin, dummyPenguin);
                     dummyToPenguinDic.Add(dummyPenguin, penguin);
+
                     break;
                 }
             }
 
         }
-
+        UpdateOwnershipDataList();
     }
 
     //Æë±Ï°ú ´õ¹ÌÆë±ÏÀ» µñ¼Å³Ê¸®¿¡¼­ Á¦¿Ü
@@ -256,11 +265,32 @@ public class PenguinManager
                     //Æë±ÏÀÌ¶û ´õ¹ÌÆë±ÏÀÌ¶û ¿¬°á
                     penguinToDummyDic.Remove(penguin);
                     dummyToPenguinDic.Remove(dummyPenguin);
+
                     break;
                 }
             }
 
         }
+    }
+
+    private void UpdateOwnershipDataList()
+    {
+        if (BelongDummyPenguinList.Count > 0) BelongDummyPenguinList.Clear();
+        if (NotBelongDummyPenguinList.Count > 0) NotBelongDummyPenguinList.Clear();
+
+        
+        foreach(var item in _dummyPenguinList)
+        {
+            if (item.IsHaveOwner)
+            {
+                BelongDummyPenguinList.Add(item.dummyPenguin);
+            }
+            else
+            {
+                NotBelongDummyPenguinList.Add(item.dummyPenguin);
+            }
+        }
+
     }
 }
 
