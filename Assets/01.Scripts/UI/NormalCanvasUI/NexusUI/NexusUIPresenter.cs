@@ -42,10 +42,10 @@ public class NexusUIPresenter : NexusPopupUI
 
         UpdateRecieverUI();
 
-        //if (TutorialManager.Instance.CurTutoQuestIdx == 4) //일단 퀘스트
-        //{
-        //    TutorialManager.Instance.CurTutorialProgressQuest();        
-        //}
+        if (TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);        
+        }
     }
 
     public void UpdateRecieverUI()

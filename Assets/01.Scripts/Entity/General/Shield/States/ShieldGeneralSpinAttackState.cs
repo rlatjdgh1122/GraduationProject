@@ -24,7 +24,6 @@ public class ShieldGeneralSpinAttackState : ShieldGeneralBaseState
             if (_triggerCalled)
             {
                 _stateMachine.ChangeState(ShieldGeneralPenguinStateEnum.Chase);
-                //다죽였다면 이동
                 IsTargetNull(ShieldGeneralPenguinStateEnum.MustMove);
             }
         }

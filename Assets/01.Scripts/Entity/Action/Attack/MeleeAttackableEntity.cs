@@ -37,4 +37,9 @@ public class MeleeAttackableEntity : EntityAttackData
     {
         DamageCasterCompo.CastDamage();
     }
+
+    public override void DashAttack()
+    {
+        DamageCasterCompo.CastDashDamage();
+    }
 }

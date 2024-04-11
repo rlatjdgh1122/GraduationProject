@@ -11,9 +11,9 @@ public class PenguinIdleState : State
         IdleEnter();
     }
 
-    public override void ExitState()
+    public override void UpdateState()
     {
-        base.ExitState();
+        base.UpdateState();
 
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Move);
@@ -22,10 +22,10 @@ public class PenguinIdleState : State
             _stateMachine.ChangeState(PenguinStateType.Chase);
     }
 
-    public override void UpdateState()
+    public override void ExitState()
     {
         IdleExit();
 
-        base.UpdateState();
+        base.ExitState();
     }
 }

@@ -17,20 +17,6 @@ public class FieldOfView : MonoBehaviour
     [SerializeField]
     private LayerMask _targetLayer, _obstacleLayer;
 
-    void Start()
-    {
-        StartCoroutine(FindTargetsWithDelay(0.2f));
-    }
-
-    IEnumerator FindTargetsWithDelay(float delay)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
-        }
-    }
-
     public HashSet<Transform> FindVisibleTargets()
     {
         HashSet<Transform> visibleTargets = new();

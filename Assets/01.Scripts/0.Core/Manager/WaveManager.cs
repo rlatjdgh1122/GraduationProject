@@ -112,15 +112,11 @@ public class WaveManager : Singleton<WaveManager>
         SignalHub.OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
         SignalHub.OnBattlePhaseEndEvent += OnBattlePhaseEndHandle;     // 전투페이즈 종료 이벤트 
         SignalHub.OnIceArrivedEvent += OnIceArrivedHandle;
-        SignalHub.OnBattlePhaseStartEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, 90.0f), 1f, Ease.InOutBack);
-        SignalHub.OnBattlePhaseEndEvent += () => RotateClockHand(new Vector3(0.0f, 0.0f, -90.0f), 1f, Ease.InOutBack);
     }
 
     private void Start()
     {
         maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
-        BattlePhaseEndEventHandler(isWin);
-
     }
 
     private void Update()
@@ -182,17 +178,6 @@ public class WaveManager : Singleton<WaveManager>
         //_currentEnemyGround = null;
     }
 
-    private void RotateClockHand(Vector3 vector, float targetTime, Ease ease, params Action[] actions) // 시계 업데이트
-    {
-        _clockHandImgTrm.DOLocalRotate(vector, targetTime).SetEase(ease).OnComplete(() =>
-        {
-            foreach (var action in actions) //실행할 함수가 있다면 실행
-            {
-                action?.Invoke();
-            }
-        });
-    }
-
     public void ShowDefeatUI()
     {
         UIManager.Instance.ShowPanel("DefeatUI");
@@ -240,6 +225,19 @@ public class WaveManager : Singleton<WaveManager>
     public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
     {
         isWin = _isWin;
+
+        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+        bool isDone = questIdx == 0 || questIdx == 2;
+
+        if (isDone) // 일단 퀘스트
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
+        }
+        else if (questIdx == 5)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+
         SignalHub.OnBattlePhaseEndEvent?.Invoke();
     }
 
