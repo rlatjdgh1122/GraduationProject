@@ -20,6 +20,7 @@ public class MortarRock : PoolableMono
     public IEnumerator BulletMove(Vector3 startPos, Vector3 endPos)
     {
         timer = 0;
+        //여기에 거시기 그 폭발 범위 이미지
         while (transform.position.y >= 0f)
         {
             timer += Time.deltaTime;
@@ -28,6 +29,7 @@ public class MortarRock : PoolableMono
             yield return new WaitForEndOfFrame();
         }
 
+        //여기에 데미지 캐스팅과 이펙트
         PoolManager.Instance.Push(this);
     }
 
