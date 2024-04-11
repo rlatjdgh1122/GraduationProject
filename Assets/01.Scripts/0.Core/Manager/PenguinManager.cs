@@ -237,7 +237,7 @@ public class PenguinManager
         //오너를 가지고 있지 않은 애들을 골라 오너를 넣어줌
         foreach (var info in _dummyPenguinList)
         {
-            var dummyPenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
+            var dummyPenguinType = info.dummyPenguin.DefaultInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
             //오너를 가지고 있지 않다면
@@ -272,7 +272,7 @@ public class PenguinManager
 
         foreach (var info in _dummyPenguinList)
         {
-            var dummyPenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
+            var dummyPenguinType = info.dummyPenguin.DefaultInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
             //오너를 가지고 있다면
