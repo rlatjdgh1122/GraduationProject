@@ -23,6 +23,7 @@ public class TestStateMachine
 
     public void ChangeState(PenguinStateType newState)
     {
+        Debug.Log(newState);
         PrevState = CurrentState;
         CurrentState.ExitState();
         CurrentState = StateDictionary[newState];

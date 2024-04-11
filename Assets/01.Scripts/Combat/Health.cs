@@ -33,6 +33,7 @@ public class Health : MonoBehaviour, IDamageable
     private EntityActionData _actionData;
 
     private bool _isDead = false;
+    public bool IsDead => _isDead;
     public bool IsMaxHP => currentHealth == maxHealth;
 
     private void Awake()

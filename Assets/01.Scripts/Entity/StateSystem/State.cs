@@ -165,7 +165,7 @@ public class State : MonoBehaviour, IState
         _penguin.AnimatorCompo.SetBool(_animBoolHash, false); //³ª°¥¶© ²¨ÁÜ
     }
 
-    public virtual void AnimationEndTrigger()
+    public virtual void AnimationTrigger()
     {
         _triggerCalled = true;
     }

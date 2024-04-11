@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -130,6 +131,38 @@ public class DamageCaster : MonoBehaviour
                 if (Stun == true)
                     health.Stun(raycastHit, duration);
 
+            }
+        }
+    }
+
+    public void CastDashDamage()
+    {
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+        General general = _owner as General;
+
+        foreach (var col in Colls)
+        {
+            RaycastHit raycastHit;
+
+            var dir = (col.transform.position - transform.position).normalized;
+            dir.y = 0;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+
+            if (raycastSuccess
+                && raycastHit.collider.TryGetComponent<Health>(out Health health))
+            {
+                if (health.currentHealth < health.maxHealth * 0.5f)
+                {
+                    health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
+                    if (health.IsDead && general.CurrentTarget != null)
+                        general?.OnPassiveAttackEvent();
+                }
+                else
+                {
+                    int damage = _owner.Stat.damage.GetValue() * 2;
+                    health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+                }   
             }
         }
     }
