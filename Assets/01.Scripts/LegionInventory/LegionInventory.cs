@@ -132,12 +132,27 @@ public class LegionInventory : LegionUI
     /// Æë±ÏÀÌ Á×¾úÀ¸¸é
     /// </summary>
     /// <param name="data"></param>
-    public void DeadPenguin(LegionInventoryData data)
+    public void DeadPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
+    {
+        /*foreach (var saveData in _savedLegionList.ToList())
+        {
+            if (saveData.LegionName == legionName && saveData.SlotIdx == data.SlotIdx)
+            {
+                _savedLegionList.Remove(saveData);
+                slotList[saveData.SlotIdx].ExitSlot(null);
+                SaveLegion();
+            }
+        }*/
+    }
+    public void DeadPenguin(string legionName, int slotIdx)
     {
         foreach (var saveData in _savedLegionList.ToList())
         {
-            if (saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
+            Debug.Log("B : " + saveData.LegionName + ", " + saveData.SlotIdx);
+            if (saveData.LegionName == legionName
+                && saveData.SlotIdx == slotIdx)
             {
+                Debug.Log("»èÁ¦");
                 _savedLegionList.Remove(saveData);
                 slotList[saveData.SlotIdx].ExitSlot(null);
                 SaveLegion();

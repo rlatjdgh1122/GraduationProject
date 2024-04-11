@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PenguinDeadController : EntityDeadController<Penguin>, ILiveable
 {
     //»ç¸ÁÇÒ¶§
@@ -7,7 +9,8 @@ public class PenguinDeadController : EntityDeadController<Penguin>, ILiveable
 
         ArmyManager.Instance.RemovePenguin(_owner.MyArmy.LegionName, _owner);
         var legionData = PenguinManager.Instance.GetLegionDataByPenguin(_owner);
-        LegionInventoryManager.Instance.DeadLegionPenguin(legionData.Item1, legionData.Item2, legionData.Item3);
+        Debug.Log("A : " + legionData.Item2 + ", " + legionData.Item3);
+        LegionInventoryManager.Instance.DeadLegionPenguin(legionData.Item2, legionData.Item3);
 
         SignalHub.OnModifyCurArmy?.Invoke();
     }

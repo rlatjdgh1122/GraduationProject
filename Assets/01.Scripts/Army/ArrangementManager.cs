@@ -113,6 +113,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
         Penguin spawnPenguin =
             PenguinManager.Instance.SpawnSoldier(_penguinType, SpawnPoint.position, seatPosList[_slotIdx]);
 
+        PenguinManager.Instance.AddSoliderPenguin(spawnPenguin);
         PenguinManager.Instance.AddSpawnMapping(data, spawnPenguin);
 
         if (_jobType == PenguinJobType.Solider)

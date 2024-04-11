@@ -9,7 +9,10 @@ public class LegionInventoryData
     public string LegionName
     {
         get => InfoData.LegionName;
-        set { InfoData.LegionName = value; }
+        set {
+            Debug.Log(value);
+            InfoData.LegionName = value;
+        }
     }
 
     public int SlotIdx

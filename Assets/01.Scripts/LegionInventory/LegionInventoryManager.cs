@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,11 +18,11 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 {
     public int CurrentLegion { get; private set; }
 
-    public LegionChange  LegionChange  { get; private set; } = null;
+    public LegionChange LegionChange { get; private set; } = null;
 
-    private LegionInventory   _legionInven = null;
-    private UnitInventory     _unitInven   = null;
-    private UnitInformationUI _unitInfo    = null;
+    private LegionInventory _legionInven = null;
+    private UnitInventory _unitInven = null;
+    private UnitInformationUI _unitInfo = null;
 
     private UnitInventoryData _selectData;
     public UnitInventoryData SelectData => _selectData;
@@ -32,9 +33,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 
     public override void Awake()
     {
-        _unitInven   = FindObjectOfType<UnitInventory>();
+        _unitInven = FindObjectOfType<UnitInventory>();
         _legionInven = FindObjectOfType<LegionInventory>();
-        _unitInfo    = FindObjectOfType<UnitInformationUI>();
+        _unitInfo = FindObjectOfType<UnitInformationUI>();
         LegionChange = FindObjectOfType<LegionChange>();
     }
 
@@ -81,9 +82,13 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     /// <param name="legionPosition">군단 안에서의 위치</param>
     public void DeadLegionPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
     {
-        LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
-
-        _legionInven.DeadPenguin(data);
+        /*LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
+        Debug.Log(so.GetInstanceID());
+        _legionInven.DeadPenguin(data);*/
+    }
+    public void DeadLegionPenguin(string legionName, int slotIdx)
+    {
+        _legionInven.DeadPenguin(legionName, slotIdx);
     }
 
     public void TakeDamagePenguinInLegion(EntityInfoDataSO so, string legionName, int legionPosition, int maxHP, int curHP)
@@ -116,7 +121,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 
     public int GetLegionIdxByLegionName(string name)
     {
-        for(int i = 0; i < _legionList.Count; i++)
+        for (int i = 0; i < _legionList.Count; i++)
         {
             if (_legionList[i].Name == name) return i;
         }
@@ -164,7 +169,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     /// </summary>
     public bool ChangedInCurrentLegion()
     {
-        return _legionInven. ChangedInCurrentLegion();
+        return _legionInven.ChangedInCurrentLegion();
     }
 
     /// <summary>
