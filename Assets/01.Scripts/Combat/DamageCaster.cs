@@ -137,7 +137,8 @@ public class DamageCaster : MonoBehaviour
 
     public void CastDashDamage()
     {
-        var Colls = Physics.OverlapSphere(transform.position, _detectRange * 2f, TargetLayer);
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+        General general = _owner as General;
 
         foreach (var col in Colls)
         {
@@ -154,10 +155,12 @@ public class DamageCaster : MonoBehaviour
                 if (health.currentHealth < health.maxHealth * 0.5f)
                 {
                     health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
+                    if (health.IsDead && general.CurrentTarget != null)
+                        general?.OnPassiveAttackEvent();
                 }
                 else
                 {
-                    int damage = _owner.Stat.damage.GetValue();
+                    int damage = _owner.Stat.damage.GetValue() * 2;
                     health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
                 }   
             }

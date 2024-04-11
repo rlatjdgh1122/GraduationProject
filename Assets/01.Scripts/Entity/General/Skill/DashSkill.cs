@@ -20,8 +20,7 @@ public class DashSkill : Skill
 
     public void DashHandler()
     {
-        Quaternion playerRotation = owner.AnimatorCompo.transform.rotation; //Visual의 회전값을가져온다
-        Vector3 forwardDirection = playerRotation * Vector3.forward;
+        Vector3 forwardDirection = -owner.CurrentTarget.transform.forward;
         Dash(forwardDirection, _dashDelay, _dashTime, _dashSpeed);
     }
 
@@ -37,7 +36,7 @@ public class DashSkill : Skill
 
         float startTime = Time.time;
 
-        owner.NavAgent.radius = 0.01f;
+        owner.NavAgent.enabled = false;
 
         while (Time.time < startTime + time)
         {
@@ -46,6 +45,6 @@ public class DashSkill : Skill
             yield return null;
         }
 
-        owner.NavAgent.radius = 0.45f;
+        owner.NavAgent.enabled = true;
     }
 }
