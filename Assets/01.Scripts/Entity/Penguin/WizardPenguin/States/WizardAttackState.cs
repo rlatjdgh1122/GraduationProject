@@ -45,8 +45,6 @@ public class WizardAttackState : WizardBaseState
             {
                 if (!_penguin.IsInnerMeleeRange)
                     _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
-
-                IsTargetNull(WizardPenguinStateEnum.Idle);
             }
         }
     }
@@ -57,5 +55,14 @@ public class WizardAttackState : WizardBaseState
 
         AttackExit();
         base.Exit();
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        _stateMachine.ChangeState(WizardPenguinStateEnum.Wait);
+        IsTargetNull(WizardPenguinStateEnum.Idle);
+
     }
 }
