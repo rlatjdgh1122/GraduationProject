@@ -16,9 +16,6 @@ public class WizardBaseState : PenguinState<WizardPenguinStateEnum, Penguin>
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(WizardPenguinStateEnum.Dead);
     }
 
     public override void Exit()
