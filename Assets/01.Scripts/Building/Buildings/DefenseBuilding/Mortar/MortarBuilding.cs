@@ -25,7 +25,7 @@ public class MortarBuilding : DefenseBuilding
 
     private void Fire()
     {
-        MortarRock rock = Instantiate(_rockPrefab);
+        MortarRock rock = PoolManager.Instance.Pop("stone-small") as MortarRock;
         rock.transform.position = _firePos.position;
         StartCoroutine(rock.BulletMove(rock.transform.position, rock.transform.position + new Vector3(Random.Range(-10f,10f),0, Random.Range(-10f, 10f))));
     }

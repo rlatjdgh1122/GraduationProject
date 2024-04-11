@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MortarRock : MonoBehaviour
+public class MortarRock : PoolableMono
 {
     private float timer;
 
@@ -28,7 +28,7 @@ public class MortarRock : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        Destroy(gameObject);
+        PoolManager.Instance.Push(this);
     }
 
 }
