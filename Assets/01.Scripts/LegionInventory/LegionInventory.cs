@@ -110,11 +110,25 @@ public class LegionInventory : LegionUI
             return;
         }
 
-        if (data.PenguinType == PenguinTypeEnum.Basic && // 1¹ø Äù½ºÆ®
-            TutorialManager.Instance.CurTutoQuestIdx == 0)
+        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+
+        if(data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0)
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
+        if (data.PenguinType == PenguinTypeEnum.Archer && questIdx == 2)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+        if(data.PenguinType == PenguinTypeEnum.Shield && questIdx == 6)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+        if (data.PenguinType == PenguinTypeEnum.Mop && questIdx == 6)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
+        }
+
 
         LegionInventoryData legionData 
             = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);

@@ -47,6 +47,11 @@ public class ResourceObject : WorkableObject
     public void ReceiveResourceOnce() //캘 때마다 얻는 자원
     {
         ResourceManager.Instance.AddResource(_resourceData, _receiveCountAtOnce);
+
+        if (TutorialManager.Instance.CurTutoQuestIdx == 4) // 일단 퀘스트
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
     }
 
     public void RecieveResourceComplete() //다 캐면 실행

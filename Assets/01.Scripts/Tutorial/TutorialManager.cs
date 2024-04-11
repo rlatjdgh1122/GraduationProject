@@ -26,7 +26,6 @@ public class TutorialManager : Singleton<TutorialManager>
         curQuestIdx = 0;
 
         StartCurTutorialQuest();
-        SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest(QuestGoalIdx.Second);
     }
 
     private void Update()
@@ -46,28 +45,9 @@ public class TutorialManager : Singleton<TutorialManager>
         QuestManager.Instance.SetCanStartQuest(_curQuestData.Id);
     }
 
-    public void CurTutorialProgressQuestHandler()
-    {
-    }
-
     public void CurTutorialProgressQuest(QuestGoalIdx goalIdx)
     {
-        QuestManager.Instance.ProgressQuest(_curQuestData.Id, _curQuestData.QuestGoalInfo[(int)goalIdx].GoalId); // 이거 인덱스가 바껴야됨
-        SignalHub.OnBattlePhaseEndEvent -= CurTutorialProgressQuestHandler; CurTutorialProgressQuest(goalIdx);
-
-        for(int i = 0; i < _curQuestData.QuestGoalInfo.Length; i++)
-        {
-            if (_curQuestData.QuestGoalInfo[i].QuestGoalType == QuestGoalType.BattleWin)
-            {
-                SignalHub.OnBattlePhaseEndEvent += () => CurTutorialProgressQuest(goalIdx);
-            }
-        }
-        //if (curQuestIdx == 1 || curQuestIdx == 2 || curQuestIdx == 3 || // 일단 퀘스트. 곰 컷신일때 같이 나온다 수정 해야됨
-        //    curQuestIdx == 4 || curQuestIdx == 5)
-        //{
-        //    Debug.Log("여기서는안해버리고");
-        //    return;
-        //}
+        QuestManager.Instance.ProgressQuest(_curQuestData.Id, _curQuestData.QuestGoalInfo[(int)goalIdx].GoalId); 
     }
 
     public void IncreaseQuestIdx()
@@ -87,14 +67,6 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             Debug.Log("튜토리얼 퀘스트 끝이다");
             return null;
-        }
-    }
-
-    private void OnEnable()
-    {
-        foreach(QuestGoalIdx idx in Enum.GetValues(typeof(QuestGoalIdx)))
-        {
-            SignalHub.OnBattlePhaseEndEvent -= () => CurTutorialProgressQuest(idx);
         }
     }
 }
