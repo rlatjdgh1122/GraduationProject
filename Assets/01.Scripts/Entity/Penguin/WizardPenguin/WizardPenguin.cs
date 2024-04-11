@@ -8,7 +8,7 @@ public enum WizardPenguinStateEnum
     MustMove,
     Chase,
     Attack,
-    Dead
+    Wait
 }
 
 public class WizardPenguin : Penguin

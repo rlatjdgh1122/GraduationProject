@@ -89,8 +89,9 @@ public class GameManager : Singleton<GameManager>
     private int dummyPenguinCount;
     public int GetDummyPenguinCount => dummyPenguinCount;
 
-    public Transform NexusTrm => GameObject.Find("Nexus").transform;
-    public Transform WorkerSpawnPoint => GameObject.Find("WorkerSpawnPoint").transform;
+    public Transform NexusTrm { get; private set; } = null;
+    public Transform TentTrm { get; private set; } = null;
+    public Transform WorkerSpawnPoint { get; private set; } = null;
 
     [SerializeField] private BuildingDatabaseSO buildingList = null;
     private Dictionary<string, BaseBuilding> _buildingDictionary = new();
@@ -98,16 +99,12 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private PoolingListSO _poolingListSO;
 
-    //private void Start()
-    //{
-    //    buildingList.BuildingItems.ForEach(item =>
-    //    {
-    //        mainUI.SetBuildingItemUI(item.Name, item.Image);
-    //        _buildingDictionary.Add(item.Name, item.BuildItem);
-    //    });
-    //    Init();
-    //}
-
+    public override void Awake()
+    {
+        TentTrm = FindObjectOfType<TentInitPos>().transform;
+        NexusTrm = GameObject.Find("Nexus").transform;
+        WorkerSpawnPoint = GameObject.Find("WorkerSpawnPoint").transform;
+    }
     private void Start()
     {
         MakePool();

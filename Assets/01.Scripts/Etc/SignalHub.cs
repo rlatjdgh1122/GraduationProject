@@ -22,7 +22,6 @@ public enum MovefocusMode
 
 public delegate void ChangedArmy(Army prevArmy, Army newArmy);
 public delegate void ChangedArmyScreen(Army prevArmy, Army newArmy);
-public delegate void ChagnedUILegion(int prevLegion, int newLegion);
 public delegate void PenguinArrangementSetting(ArrangementInfo info);
 public delegate void ChangedBattleMode(MovefocusMode mode);
 
@@ -70,13 +69,12 @@ public static class SignalHub
     /// <summary>
     /// 군단에 추가 되거나 삭제 되는 둥 군단에 정보가 수정될 때 호출
     /// </summary>
-    public static ModifyArmyInfo OnModifyArmyInfo;
+    public static ModifyArmyInfo OnModifyCurArmy;
 
     #endregion
 
     #region 군단 UI
     public static PenguinArrangementSetting OnModifyArrangementInfo;
-    public static ChagnedUILegion OnUILegionChanged;
     #endregion
 
     #region 웨이브

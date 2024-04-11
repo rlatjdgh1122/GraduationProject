@@ -9,6 +9,7 @@ public class LegionSlot : LegionSlotUI
 {
     private Image _hpSlide;
     private Image _hp;
+    private float _hpPercent;
 
     protected override void Awake()
     {
@@ -42,7 +43,7 @@ public class LegionSlot : LegionSlotUI
 
     public override void ChoosePenguinSituation()
     {
-
+        legion.ShowPenguinSituation(Data, _hpPercent, (Data as PenguinInfoDataSO).Price);
     }
 
     public override void PushDataInSlot()
@@ -62,7 +63,11 @@ public class LegionSlot : LegionSlotUI
         legion.SelectInfoData(data);
     }
 
-    public void HpValue(float value) => _hpSlide.DOFillAmount(value, 0.3f);
+    public void HpValue(float value)
+    {
+        _hpPercent = value;
+        _hpSlide.DOFillAmount(value, 0.3f);
+    }
 
     public void ShowHP() => _hp.gameObject.SetActive(true);
 

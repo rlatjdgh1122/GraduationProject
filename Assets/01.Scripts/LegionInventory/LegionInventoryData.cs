@@ -1,13 +1,24 @@
 using System;
+using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class LegionInventoryData
 {
     public EntityInfoDataSO InfoData;
+    public string LegionName
+    {
+        get => InfoData.LegionName;
+        set {
+            InfoData.LegionName = value;
+        }
+    }
 
-    public string LegionName;
-
-    public int IndexNumber;
+    public int SlotIdx
+    {
+        get => InfoData.SlotIdx;
+        set { InfoData.SlotIdx = value; }
+    }
 
     public float CurrentHPPercent;
 
@@ -17,7 +28,7 @@ public class LegionInventoryData
     {
         this.InfoData = InfoData;
         this.LegionName = LegionName;
-        this.IndexNumber = Idx;
+        this.SlotIdx = Idx;
     }
 
     public void HPPercent(float percent)

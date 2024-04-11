@@ -20,16 +20,18 @@ public class WizardAttackState : WizardBaseState
         base.UpdateState();
 
         _penguin.LookTarget();
+
         if (IsArmyCalledIn_BattleMode())
         {
             if (_triggerCalled)
             {
-                _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
+                if (!_penguin.IsInnerMeleeRange)
+                    _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
+
                 //다죽였다면 이동
                 IsTargetNull(WizardPenguinStateEnum.MustMove);
             }
         }
-
         else if (IsArmyCalledIn_CommandMode())
         {
             if (_penguin.WaitForCommandToArmyCalled)
@@ -41,9 +43,8 @@ public class WizardAttackState : WizardBaseState
         {
             if (_triggerCalled) //공격
             {
-                _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
-
-                IsTargetNull(WizardPenguinStateEnum.Idle);
+                if (!_penguin.IsInnerMeleeRange)
+                    _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
             }
         }
     }
@@ -52,6 +53,16 @@ public class WizardAttackState : WizardBaseState
     {
         _penguin.AnimatorCompo.speed = 1;
 
+        AttackExit();
         base.Exit();
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        _stateMachine.ChangeState(WizardPenguinStateEnum.Wait);
+        IsTargetNull(WizardPenguinStateEnum.Idle);
+
     }
 }

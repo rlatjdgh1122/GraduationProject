@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TentInitPos : MonoBehaviour
 {
-    int remainCnt => SpawnManager.Instance.DummyPenguinCount;
+    int remainCnt => PenguinManager.Instance.DummyPenguinCount;
     int initCount = 0;
 
     private void OnTriggerEnter(Collider other)

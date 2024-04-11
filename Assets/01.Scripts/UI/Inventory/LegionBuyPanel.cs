@@ -62,7 +62,7 @@ public class LegionBuyPanel : PopupUI
 
         _legionChange.ChangingLegion(_legionNumber); //구매한 군단으로 바꾸기
         LegionInventoryManager.Instance.ChangeLegionNumber(_legionNumber);
-
+        ArmyManager.Instance.CreateArmy();
         CostManager.Instance.SubtractFromCurrentCost(_price);
 
         _canBuy = false;

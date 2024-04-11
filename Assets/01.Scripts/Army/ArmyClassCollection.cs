@@ -20,7 +20,7 @@ public struct ArmyInfo //UI부분, 기획이 더 필요
 [System.Serializable]
 public class Army
 {
-    public int Legion; //몇번째 군단
+    public string LegionName; //몇번째 군단
     public bool IsCanReadyAttackInCurArmySoldiersList = true; //군단 전체가 움직일 준비가 되었는가
     public List<Penguin> Soldiers = new(); //군인 펭귄들
     public General General = null; //장군

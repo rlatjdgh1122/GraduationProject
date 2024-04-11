@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
+    [SerializeField] private SoldierListSO SoldierListSO = null;
     [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
     private Dictionary<KeyCode, Action> keyDictionary = new();
@@ -14,10 +16,15 @@ public class ArmyManager : Singleton<ArmyManager>
     public MovefocusMode curFocusMode = MovefocusMode.Battle;
     public MovefocusMode CurFocusMode => curFocusMode;
 
-    private int curArmyIdx = 0;
+    private int curArmyIdx = -1;
     public int CurLegion => curArmyIdx + 1;
 
     public int ArmiesCount => armies.Count;
+
+    public override void Awake()
+    {
+        PenguinManager.Instance.Setting(SoldierListSO);
+    }
 
     private void Start()
     {
@@ -85,6 +92,7 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         //전투 라운드가 아니면 실행안해줌
         if (!WaveManager.Instance.IsBattlePhase) return;
+        //아직 생성되지 않은 군단에 접근하면 리턴해줌
         if (armies.Count < legion) return;
 
         int Idx = legion - 1;
@@ -112,9 +120,10 @@ public class ArmyManager : Singleton<ArmyManager>
         if (curArmyIdx == Idx) return;
 
         var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
-        SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
 
         curArmyIdx = Idx;
+        //SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
+        SignalHub.OnModifyCurArmy?.Invoke();
 
         armies.IdxExcept(
             Idx,
@@ -191,15 +200,15 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="legion"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
 
-    public void JoinArmyToSoldier(int legion, Penguin obj) //들어가고 싶은 군단, 군인펭귄
+    public void JoinArmyToSoldier(string legion, Penguin obj) //들어가고 싶은 군단, 군인펭귄
     {
-        if (armies.Find(p => p.Legion == legion) == null)
+        if (armies.Find(p => p.LegionName == legion) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
-
-        var Army = armies[legion - 1];
+        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[idx];
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
@@ -210,15 +219,16 @@ public class ArmyManager : Singleton<ArmyManager>
     /// </summary>
     /// <param name="legion"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
-    public void JoinArmyToGeneral(int legion, General obj) //들어가고 싶은 군단, 장군펭귄
+    public void JoinArmyToGeneral(string legion, General obj) //들어가고 싶은 군단, 장군펭귄
     {
-        if (armies.Find(p => p.Legion == legion) == null)
+        if (armies.Find(p => p.LegionName == legion) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
 
-        var Army = armies[legion - 1];
+        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[idx];
         var LegionStat = obj.ligeonStat;
 
         if (Army.General != null)
@@ -243,11 +253,22 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="legion"> 몇번째 군단 *owner.Legion 입력*</param>
     /// <param name="obj"> Penguin 타입만 가능 *this 입력*</param>
 
-    public void Remove(int legion, Penguin obj)
+    public void RemovePenguin(string legion, Penguin obj)
     {
-        var soldiers = armies[legion - 1].Soldiers;
-        soldiers.Remove(obj); //리스트에서 제외
+        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
 
+        obj.SetOwner(null);
+        //여기서도 뭔가 있어야함
+
+        if (obj is General)
+        {
+            armies[idx].General = null;
+        }
+        else
+        {
+            var army = armies[idx].Soldiers;
+            army.Remove(obj); //리스트에서 제외
+        }
     }
 
     /// <summary>
@@ -257,10 +278,10 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         Army newArmy = new Army();
 
-        newArmy.Legion = ArmiesCount + 1;
+        newArmy.LegionName = $"{ArmiesCount + 1}군단";
         newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
 
-        GameObject followCam = new GameObject($"{newArmy.Legion}Legion_FollowCam");
+        GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");
         ArmyFollowCam armyFollowCam = new ArmyFollowCam();
 
         //위치 초기화

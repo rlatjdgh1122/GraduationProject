@@ -16,8 +16,6 @@ public enum DummyPenguinStateEnum
 [RequireComponent(typeof(NavMeshAgent))]
 public class DummyPenguin : PoolableMono
 {
-    private Penguin Owner = null;
-
     [SerializeField]
     private PenguinInfoDataSO _penguinUIInfo = null;
     public PenguinInfoDataSO PenguinUIInfo => _penguinUIInfo;
@@ -41,14 +39,6 @@ public class DummyPenguin : PoolableMono
     #endregion
     public DummyStateMachine DummyStateMachine { get; private set; }
 
-    private void OnEnable()
-    {
-        SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
-    }
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
-    }
     private void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
@@ -56,11 +46,9 @@ public class DummyPenguin : PoolableMono
 
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
-
+        _penguinUIInfo = Instantiate(_penguinUIInfo);
         Setting();
-
     }
-
 
     private void Setting()
     {
@@ -70,7 +58,7 @@ public class DummyPenguin : PoolableMono
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Dummy{typeName}State");
-            //¸®ÇÃ·º¼Ç
+            //ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½
             var newState = Activator.CreateInstance(t, this, DummyStateMachine, typeName) as DummyState;
 
             DummyStateMachine.AddState(state, newState);
@@ -84,56 +72,32 @@ public class DummyPenguin : PoolableMono
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
     }
-    private void OnBattleStartHandler()
-    {
-        ChangeNavqualityToNone();
-
-        //±º´Ü¿¡ ¼Ò¼ÓµÈ Æë±ÏÀÌ¶ó¸é
-        if (Owner)
-        {
-            Owner.SetPosAndRotation(transform);
-
-            Owner.gameObject.SetActive(true);
-            Owner.StateInit();
-
-            //´õ¹Ì»óÅÂ¿¡¼­ Ç®¸®¸é TentTrm(Áß¾Ó)À» ±âÁØÀ¸·Î ´ÙÀ½ ¸¶¿ì½º À§Ä¡¿Í °è»êÇÔ
-            //Owner.MousePos = GameManager.Instance.TentTrm.position;
-
-            this.gameObject.SetActive(false);
-        }
-        //±º´Ü¿¡ ¼Ò¼ÓµÇÁö ¾ÊÀº Æë±ÏÀÌ¶ó¸é
-        else
-            IsGoToHouse = true;
-    }
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
     }
-
-    public void SetOwner(Penguin owner)
-    {
-        Owner = owner;
-    }
-    public void SetPostion(Transform trm)
-    {
-        transform.position = trm.position;
-        transform.rotation = trm.rotation;
-    }
     public void GoToHouse()
     {
-        //¿©±â¼­ Ç® ³Ö´Â°Ô ¸Â³ª ½ÍÀ½
+        //ï¿½ï¿½ï¿½â¼­ Ç® ï¿½Ö´Â°ï¿½ ï¿½Â³ï¿½ ï¿½ï¿½ï¿½ï¿½
         PoolManager.Instance.Push(this);
     }
 
-    public void ChangeNavqualityToNone() //Nave Quality NoneÀ¸·Î º¯°æ
+    private void OnMouseDown()
+    {
+        var infoData = PenguinManager.Instance.GetInfoDataByDummyPenguin<PenguinInfoDataSO>(this);
+    }
+
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public void ChangeNavqualityToNone() //Nave Quality Noneï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
-    public void ChangeNavqualityToHigh() //Nave Quality HighQuality·Î º¯°æ
+    public void ChangeNavqualityToHigh() //Nave Quality HighQualityï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
+    #endregion
 
     public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();
 }
