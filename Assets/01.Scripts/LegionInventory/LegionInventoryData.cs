@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class LegionInventoryData
 {
     public EntityInfoDataSO InfoData;
-
     public string LegionName
     {
         get => InfoData.LegionName;

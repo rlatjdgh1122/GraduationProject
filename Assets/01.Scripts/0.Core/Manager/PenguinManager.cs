@@ -71,6 +71,8 @@ public class PenguinManager
             IsHaveOwner = false,
             dummyPenguin = obj
         });
+        DummyPenguinList.Add(obj);
+        infoDataToDummyDic.Add(obj.PenguinUIInfo, obj);
     }
 
     public void RemoveDummyPenguin(DummyPenguin obj)
@@ -183,33 +185,82 @@ public class PenguinManager
         return (UIData, UIData.LegionName, UIData.SlotIdx);
     }
 
-    public void SetOwnerDummyPenguin(PenguinTypeEnum type, Penguin penguin)
+    public void ApplySaveData(List<LegionInventoryData> addDataList, List<LegionInventoryData> removeDataList)
     {
-        //여기서 소속된 더미펭귄 리스트랑 소속되지않은 애들 나누기
+        foreach (var data in addDataList)
+        {
+            ApplyDummyPenguin(data);
+        }
 
+        foreach (var data in removeDataList)
+        {
+            ReleaseDummyPenguin(data);
+        }
+    }
+
+    //펭귄과 더미펭귄을 맵핑
+    private void ApplyDummyPenguin(LegionInventoryData data)
+    {
+        var dataType = data.InfoData.PenguinType;
+        var penguin = GetPenguinByLegionData(data);
+
+        //지금까지 생성된 더미펭귄들에서
+        //오너를 가지고 있지 않은 애들을 골라 오너를 넣어줌
         foreach (var info in _dummyPenguinList)
         {
-            var PenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
+            var dummyPenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
             //오너를 가지고 있지 않다면
             if (!info.IsHaveOwner)
             {
                 //펭귄 타입이 같다면
-                if (PenguinType == type)
+                if (dataType == dummyPenguinType)
                 {
-                    dummyPenguin.SetOwner(penguin);
                     info.IsHaveOwner = true;
 
                     //펭귄이랑 더미펭귄이랑 연결
                     penguinToDummyDic.Add(penguin, dummyPenguin);
-                    DummyToPenguinDic.TryAdd(dummyPenguin, penguin);
+                    dummyToPenguinDic.Add(dummyPenguin, penguin);
                     break;
                 }
             }
 
         }
 
+    }
+
+    //펭귄과 더미펭귄을 딕셔너리에서 제외
+    private void ReleaseDummyPenguin(LegionInventoryData data)
+    {
+        var dataType = data.InfoData.PenguinType;
+        var penguin = GetPenguinByLegionData(data);
+
+        //지금까지 생성된 더미펭귄들에서
+        //오너를 가지고 있는 더미펭귄들을 골라 오너를 지워주고
+        //딕셔너리에서 지워줌
+
+        foreach (var info in _dummyPenguinList)
+        {
+            var dummyPenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
+            var dummyPenguin = info.dummyPenguin;
+
+            //오너를 가지고 있다면
+            if (info.IsHaveOwner)
+            {
+                //펭귄 타입이 같다면
+                if (dataType == dummyPenguinType)
+                {
+                    info.IsHaveOwner = false;
+
+                    //펭귄이랑 더미펭귄이랑 연결
+                    penguinToDummyDic.Remove(penguin);
+                    dummyToPenguinDic.Remove(dummyPenguin);
+                    break;
+                }
+            }
+
+        }
     }
 }
 

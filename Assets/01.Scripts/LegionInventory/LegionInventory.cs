@@ -9,7 +9,7 @@ public class LegionInventory : LegionUI
 
     private List<LegionInventoryData> _currentLegionList = new();
     private List<LegionInventoryData> _currentRemovePenguinList = new();
-    private List<LegionInventoryData> _savedLegionList = new();
+    public List<LegionInventoryData> _savedLegionList = new();
 
     /// <summary>
     /// 저장하지 않기
@@ -49,7 +49,7 @@ public class LegionInventory : LegionUI
                 _savedLegionList.Remove(data); //저장군단에서 삭제시켜줌
             }
         }
-
+        ArrangementManager.Instance.ApplySaveData(_savedLegionList);
         ResetLegion(); //리셋
     }
 
@@ -81,6 +81,7 @@ public class LegionInventory : LegionUI
 
         foreach (var list in _savedLegionList.Where(list => list.LegionName == name)) //저장 군단에서 바뀔 군단의 이름과 같다면 
         {
+            Debug.Log(list);
             slotList[list.SlotIdx].EnterSlot(list.InfoData); //그 위치의 슬롯을 업뎃
             _currentLegionList.Add(list); //현재 군단에 넣어줘
 
@@ -109,6 +110,8 @@ public class LegionInventory : LegionUI
         {
             return;
         }
+
+        data = Instantiate(data);
 
         LegionInventoryData legionData 
             = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);

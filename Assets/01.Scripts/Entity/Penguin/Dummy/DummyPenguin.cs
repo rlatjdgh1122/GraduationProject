@@ -49,6 +49,7 @@ public class DummyPenguin : PoolableMono
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
 
+        _penguinUIInfo = Instantiate(_penguinUIInfo);
         Setting();
     }
 

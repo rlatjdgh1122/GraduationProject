@@ -14,6 +14,8 @@ public class PenguinSpawnHandler : MonoBehaviour
     {
         var dummyPenguinList = PenguinManager.Instance.DummyPenguinList;
 
+        Debug.Log(dummyPenguinList.Count);
+
         foreach (var dummy in dummyPenguinList)
         {
             var trm = dummy.transform;
