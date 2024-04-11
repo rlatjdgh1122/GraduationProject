@@ -28,7 +28,6 @@ public class KatanaGeneralAttackState : KatanaGeneralBaseState
                 if (_penguin.CurrentTarget.IsDead)
                     _stateMachine.ChangeState(KatanaGeneralStateEnum.Chase);
 
-                //다죽였다면 이동
                 IsTargetNull(KatanaGeneralStateEnum.MustMove);
             }
         }

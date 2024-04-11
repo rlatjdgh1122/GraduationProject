@@ -44,5 +44,11 @@ public class KatanaGeneralPenguin : General
         TestStateMachine.Init(PenguinStateType.Idle);
     }
 
-    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+    public override void OnPassiveAttackEvent()
+    {
+        if (CurrentTarget != null)
+            TestStateMachine.ChangeState(PenguinStateType.Dash);
+    }
+
+    public override void AnimationTrigger() => TestStateMachine.CurrentState.AnimationTrigger();
 }
