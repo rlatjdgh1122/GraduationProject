@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GeneralDummyPengiun : DummyPenguin
 {
-    public AnimationClip[] a;
     private void OnMouseDown()
     {
         var infoData = PenguinManager.Instance.GetInfoDataByDummyPenguin<GeneralInfoDataSO>(this);
+        Debug.Log(infoData.Type);
     }
 }
