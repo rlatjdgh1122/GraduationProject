@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -13,7 +10,7 @@ public class UnitSlotUI : SlotUI
     public EntityInfoDataSO _keyData;
     private bool _locked => _stackSize <= 0;
 
-    protected override void Awake()
+    protected override void Awake()  
     {
         base.Awake();
 

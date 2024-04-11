@@ -60,7 +60,7 @@ public class DummyPenguin : PoolableMono
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Dummy{typeName}State");
-            //¸®ÇÃ·º¼Ç
+            //ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½
             var newState = Activator.CreateInstance(t, this, DummyStateMachine, typeName) as DummyState;
 
             DummyStateMachine.AddState(state, newState);
@@ -74,24 +74,23 @@ public class DummyPenguin : PoolableMono
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
     }
-   
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
     }
     public void GoToHouse()
     {
-        //¿©±â¼­ Ç® ³Ö´Â°Ô ¸Â³ª ½ÍÀ½
+        //ï¿½ï¿½ï¿½â¼­ Ç® ï¿½Ö´Â°ï¿½ ï¿½Â³ï¿½ ï¿½ï¿½ï¿½ï¿½
         PoolManager.Instance.Push(this);
     }
 
-    #region ½º¿Ò °ü·Ã
-    public void ChangeNavqualityToNone() //Nave Quality NoneÀ¸·Î º¯°æ) ÀüÅõ ½ÃÀÛ
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public void ChangeNavqualityToNone() //Nave Quality Noneï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
-    public void ChangeNavqualityToHigh() //Nave Quality HighQuality·Î º¯°æ) ÀüÅõ ³¡³ª°í
+    public void ChangeNavqualityToHigh() //Nave Quality HighQualityï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
