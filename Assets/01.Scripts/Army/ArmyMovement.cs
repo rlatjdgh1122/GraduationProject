@@ -208,4 +208,10 @@ public class ArmyMovement : MonoBehaviour
     {
         penguin.MoveToMySeat(mousePos);
     }
+
+    private void OnDestroy()
+    {
+        if (armySoldierList.Count > 0)
+            armySoldierList.Clear();
+    }
 }
