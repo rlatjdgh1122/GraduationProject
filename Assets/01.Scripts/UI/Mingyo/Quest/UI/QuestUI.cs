@@ -15,7 +15,7 @@ public class QuestUI : PopupUI
     private Dictionary<string, ScrollViewQuestUI> _uncompletedQuestScrollViewUIs = new Dictionary<string, ScrollViewQuestUI>();
     private int _unStartedQuestsLength;
 
-    private Image _questStateIcon;
+    private Image _questStateIcon;  
     private Image _questStateBox;
 
     [SerializeField]
