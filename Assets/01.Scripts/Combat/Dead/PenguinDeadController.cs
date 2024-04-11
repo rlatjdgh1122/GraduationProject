@@ -1,14 +1,15 @@
-public class PenguinDeadController : EntityDeadController<Penguin> , ILiveable
+public class PenguinDeadController : EntityDeadController<Penguin>, ILiveable
 {
     //사망할때
     public override void OnDied()
     {
         base.OnDied();
 
-        //사실 이런 경우가 생기면 안되는데 더미펭귄이 실제 펭귄이라서 같이 싸울때가 있기에 예외처리
         ArmyManager.Instance.RemovePenguin(_owner.MyArmy.LegionName, _owner);
+        var legionData = PenguinManager.Instance.GetLegionDataByPenguin(_owner);
+        LegionInventoryManager.Instance.DeadLegionPenguin(legionData.Item1, legionData.Item2, legionData.Item3);
 
-        SignalHub.OnModifyArmyInfo?.Invoke();
+        SignalHub.OnModifyCurArmy?.Invoke();
     }
 
     //부활할때

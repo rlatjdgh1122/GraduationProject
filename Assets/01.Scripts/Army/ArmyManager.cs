@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,7 +16,7 @@ public class ArmyManager : Singleton<ArmyManager>
     public MovefocusMode curFocusMode = MovefocusMode.Battle;
     public MovefocusMode CurFocusMode => curFocusMode;
 
-    private int curArmyIdx = 0;
+    private int curArmyIdx = -1;
     public int CurLegion => curArmyIdx + 1;
 
     public int ArmiesCount => armies.Count;
@@ -91,6 +92,7 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         //전투 라운드가 아니면 실행안해줌
         if (!WaveManager.Instance.IsBattlePhase) return;
+        //아직 생성되지 않은 군단에 접근하면 리턴해줌
         if (armies.Count < legion) return;
 
         int Idx = legion - 1;
@@ -118,9 +120,10 @@ public class ArmyManager : Singleton<ArmyManager>
         if (curArmyIdx == Idx) return;
 
         var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
-        SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
 
         curArmyIdx = Idx;
+        //SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
+        SignalHub.OnModifyCurArmy?.Invoke();
 
         armies.IdxExcept(
             Idx,

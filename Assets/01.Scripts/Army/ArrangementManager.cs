@@ -45,7 +45,6 @@ public class ArrangementManager : Singleton<ArrangementManager>
         //추가된 정보에 따라 생성
         foreach (var item in addDataList)
         {
-            Debug.Log("add : " + item.InfoData.GetInstanceID());
             SpawnPenguin(item);
         }
 
@@ -55,7 +54,6 @@ public class ArrangementManager : Singleton<ArrangementManager>
             var legionName = item.LegionName;
             var penguin = PenguinManager.Instance.GetPenguinByLegionData(item);
 
-            Debug.Log("remove : " + item.InfoData.GetInstanceID());
             RemovePenguin(legionName, penguin);
         }
 
