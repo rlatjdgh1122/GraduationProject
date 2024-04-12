@@ -59,6 +59,8 @@ public class PenguinManager
 
     private Dictionary<EntityInfoDataSO, Penguin> infoDataToPenguinDic = new();
     private Dictionary<Penguin, EntityInfoDataSO> penguinToInfoDataDic = new();
+
+    public BaseStat GetCurrentStat = null;
     #endregion
 
     //군단 매니저에서 등록
@@ -209,10 +211,12 @@ public class PenguinManager
         if (infoDataToPenguinDic.TryGetValue(data, out var penguin))
         {
             resultStat = penguin.ReturnGenericStat<T>();
+            GetCurrentStat = resultStat;
         }
 
         return resultStat;
     }
+
     public EntityInfoDataSO GetInfoDataByPenguin(Penguin penguin)
     {
         EntityInfoDataSO resultInfoData = null;
