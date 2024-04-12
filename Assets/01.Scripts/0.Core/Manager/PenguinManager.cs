@@ -311,7 +311,6 @@ public class PenguinManager
                 NotBelongDummyPenguinList.Add(item.dummyPenguin);
             }
         }
-
     }
 }
 

@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PenguinInfoUI : MonoBehaviour
+public void 
+
+public class PenguinInfoUI : PopupUI
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public override void HidePanel()
     {
-        
+        base.HidePanel();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ShowPanel()
     {
-        
+        base.ShowPanel();
     }
 }
