@@ -10,6 +10,8 @@ public class MortarBuilding : DefenseBuilding
     [SerializeField]
     private Transform _firePos;
 
+    private readonly string prefabName = "stone-small";
+
     protected override void Running()
     {
         Debug.Log(_currentTarget);
@@ -25,7 +27,7 @@ public class MortarBuilding : DefenseBuilding
 
     private void Fire()
     {
-        MortarRock rock = PoolManager.Instance.Pop("stone-small") as MortarRock;
+        MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         rock.transform.position = _firePos.position;
         StartCoroutine(rock.BulletMove(rock.transform.position, rock.transform.position + new Vector3(Random.Range(-10f,10f),0, Random.Range(-10f, 10f))));
     }

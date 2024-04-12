@@ -7,6 +7,14 @@ using UnityEngine;
 public class MortarRock : PoolableMono
 {
     private float timer;
+    private DamageCaster _damageCaster;
+    private MortarEffect _attackFeedback;
+
+    private void Awake()
+    {
+        _damageCaster = GetComponent<DamageCaster>();
+        _attackFeedback = transform.GetChild(0).GetComponent<MortarEffect>();
+    }
 
     private Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
     {
@@ -21,7 +29,7 @@ public class MortarRock : PoolableMono
     {
         timer = 0;
         //여기에 거시기 그 폭발 범위 이미지
-        while (transform.position.y >= 0f)
+        while (transform.position.y >= - 0.5f)
         {
             timer += Time.deltaTime;
             Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
@@ -29,8 +37,30 @@ public class MortarRock : PoolableMono
             yield return new WaitForEndOfFrame();
         }
 
-        //여기에 데미지 캐스팅과 이펙트
         PoolManager.Instance.Push(this);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        DestroyRock();
+    }
+
+    private void DestroyRock()
+    {
+        _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
+        _attackFeedback.CreateFeedback();
+
+        CoroutineUtil.CallWaitForSeconds(0.7f, null, () =>
+        {
+            Debug.Log("wlrma");
+            _attackFeedback.FinishFeedback();
+            CoroutineUtil.CallWaitForOneFrame(null);
+            PoolManager.Instance.Push(this);
+        });
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("Now");
+    }
 }
