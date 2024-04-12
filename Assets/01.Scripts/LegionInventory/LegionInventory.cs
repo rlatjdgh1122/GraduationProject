@@ -116,27 +116,27 @@ public class LegionInventory : LegionUI
         data.LegionName = legion.LegionList()[legion.CurrentLegion].Name;
         data.SlotIdx = idx;
 
-        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+        //int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+        //
+        //if (data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0) //�ϴ� ����Ʈ
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
+        //if (data.PenguinType == PenguinTypeEnum.Archer && questIdx == 2)
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
+        //if (data.PenguinType == PenguinTypeEnum.Shield && questIdx == 6)
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
+        //if (data.PenguinType == PenguinTypeEnum.Mop && questIdx == 6)
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
+        //}
 
-        if(data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0) //�ϴ� ����Ʈ
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if (data.PenguinType == PenguinTypeEnum.Archer && questIdx == 2)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if(data.PenguinType == PenguinTypeEnum.Shield && questIdx == 6)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if (data.PenguinType == PenguinTypeEnum.Mop && questIdx == 6)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
-        }
 
-
-        LegionInventoryData legionData 
+        LegionInventoryData legionData
             = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);
 
         //���߿� �� �޾ƿ���
@@ -150,23 +150,6 @@ public class LegionInventory : LegionUI
         LegionCountTextSetting();
     }
 
-
-    /// <summary>
-    /// ����� �׾�����
-    /// </summary>
-    /// <param name="data"></param>
-    public void DeadPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
-    {
-        /*foreach (var saveData in _savedLegionList.ToList())
-        {
-            if (saveData.LegionName == legionName && saveData.SlotIdx == data.SlotIdx)
-            {
-                _savedLegionList.Remove(saveData);
-                slotList[saveData.SlotIdx].ExitSlot(null);
-                SaveLegion();
-            }
-        }*/
-    }
     public void DeadPenguin(string legionName, int slotIdx)
     {
         var saveList = _savedLegionList.ToList();
@@ -197,16 +180,26 @@ public class LegionInventory : LegionUI
             _currentDictionary.Remove(idx);
             _currentRemovePenguinList.Add(curData);
 
-            
+            var penguin = PenguinManager.Instance.GetPenguinByInfoData(curData);
+            var dummy = PenguinManager.Instance.GetDummyByPenguin(penguin);
+            float curHp = penguin.HealthCompo.currentHealth;
+            float maxHp = penguin.HealthCompo.maxHealth;
 
-            //if (curData.CurrentHPPercent == 1)
-            //    legion.AddPenguin(curData.InfoData);
-            //else
-            //{
-            //    UIManager.Instance.ShowWarningUI("����� ü���� ����ֽ��ϴ�!");
-            //    legion.ShowPenguinSituation(curData.InfoData, curData.CurrentHPPercent, (curData.InfoData as PenguinInfoDataSO).Price);
-            //    return;
-            //}
+            float hpPercent = curHp / maxHp;
+
+            if (hpPercent >= 1)
+            {
+                Debug.Log(dummy.DefaultInfo.name);
+                legion.AddPenguin(dummy.DefaultInfo);
+            }
+            else
+            {
+                Debug.Log("피 없");
+                UIManager.Instance.ShowWarningUI("����� ü���� ����ֽ��ϴ�!");
+
+                legion.ShowPenguinSituation(curData, hpPercent);
+                return;
+            }
 
             currentRemovePenguinCnt++;
             currentPenguinCnt--;

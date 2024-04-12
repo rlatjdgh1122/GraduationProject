@@ -43,7 +43,7 @@ public class LegionSlot : LegionSlotUI
 
     public override void ChoosePenguinSituation()
     {
-        legion.ShowPenguinSituation(Data, _hpPercent, (Data as PenguinInfoDataSO).Price);
+        legion.ShowPenguinSituation(Data, _hpPercent);
     }
 
     public override void PushDataInSlot()

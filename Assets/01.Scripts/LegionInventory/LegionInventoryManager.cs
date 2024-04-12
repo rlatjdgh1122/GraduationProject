@@ -192,8 +192,8 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         return _legionList;
     }
 
-    public void ShowPenguinSituation(EntityInfoDataSO so, float percent, int penguinPrice)
+    public void ShowPenguinSituation(EntityInfoDataSO so, float percent)
     {
-        _penguinSituation.SetPenguinSituation(so, percent, penguinPrice);
+        _penguinSituation.SetPenguinSituation(so, percent, (so as PenguinInfoDataSO).Price);
     }
 }
