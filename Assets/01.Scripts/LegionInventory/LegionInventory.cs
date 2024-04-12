@@ -189,8 +189,8 @@ public class LegionInventory : LegionUI
 
             if (hpPercent >= 1)
             {
-                Debug.Log(dummy.PenguinUIInfo.name);
-                legion.AddPenguin(dummy.PenguinUIInfo);
+                Debug.Log(dummy.DefaultInfo.name);
+                legion.AddPenguin(dummy.DefaultInfo);
             }
             else
             {
