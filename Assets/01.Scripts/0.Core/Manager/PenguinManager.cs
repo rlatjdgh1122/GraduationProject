@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml.XPath;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -126,6 +127,15 @@ public class PenguinManager
 
         return null;
     }
+    public EntityInfoDataSO GetNotCloneInfoDataByPenguin(Penguin penguin)
+    {
+        EntityInfoDataSO result = null;
+
+        var dummy = GetDummyByPenguin(penguin);
+        result = dummy.NotCloneInfo;
+
+        return result;
+    }
 
     /// <summary>
     /// 팽귄 생성하는 함수
@@ -206,7 +216,7 @@ public class PenguinManager
     public EntityInfoDataSO GetInfoDataByPenguin(Penguin penguin)
     {
         EntityInfoDataSO resultInfoData = null;
-        if(penguinToInfoDataDic.TryGetValue(penguin, out var infoData))
+        if (penguinToInfoDataDic.TryGetValue(penguin, out var infoData))
         {
             resultInfoData = infoData;
         }
@@ -237,7 +247,7 @@ public class PenguinManager
         //오너를 가지고 있지 않은 애들을 골라 오너를 넣어줌
         foreach (var info in _dummyPenguinList)
         {
-            var dummyPenguinType = info.dummyPenguin.DefaultInfo.PenguinType;
+            var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
             //오너를 가지고 있지 않다면
@@ -272,7 +282,7 @@ public class PenguinManager
 
         foreach (var info in _dummyPenguinList)
         {
-            var dummyPenguinType = info.dummyPenguin.DefaultInfo.PenguinType;
+            var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
             //오너를 가지고 있다면

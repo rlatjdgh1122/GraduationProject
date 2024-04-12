@@ -18,7 +18,7 @@ public class DummyPenguin : PoolableMono
 {
     [SerializeField]
     private PenguinInfoDataSO _defaultInfo = null;
-    public PenguinInfoDataSO DefaultInfo => _defaultInfo;
+    public PenguinInfoDataSO NotCloneInfo => _defaultInfo;
 
     private int MaxNumberOfDumbAnim = 3;
     public bool IsGoToHouse { get; set; } = false;
