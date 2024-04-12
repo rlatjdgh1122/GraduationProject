@@ -13,6 +13,26 @@ public class Stat
     public List<int> increases; //증가 % (곱연산)
     public List<int> decreases; //감소 % (합연산)
 
+    /// <summary>
+    /// 기존 벨류값 기준 몇 퍼센트가 되었는지
+    /// </summary>
+    /// <returns> 퍼센트</returns>
+    public int GetStatPercent()
+    {
+        int result = 0;
+        foreach (var item in increases)
+        {
+            result += item;
+        }
+
+        foreach (var item in decreases)
+        {
+            result -= item;
+        }
+
+        return result;
+    }
+
     public int GetValue()
     {
         return Modify();

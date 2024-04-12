@@ -17,8 +17,8 @@ public enum DummyPenguinStateEnum
 public class DummyPenguin : PoolableMono
 {
     [SerializeField]
-    private PenguinInfoDataSO _penguinUIInfo = null;
-    public PenguinInfoDataSO PenguinUIInfo => _penguinUIInfo;
+    private PenguinInfoDataSO _defaultInfo = null;
+    public PenguinInfoDataSO DefaultInfo => _defaultInfo;
 
     private int MaxNumberOfDumbAnim = 3;
     public bool IsGoToHouse { get; set; } = false;
@@ -46,7 +46,7 @@ public class DummyPenguin : PoolableMono
 
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm?.GetComponent<Animator>();
-        _penguinUIInfo = Instantiate(_penguinUIInfo);
+
         Setting();
     }
 
@@ -85,6 +85,9 @@ public class DummyPenguin : PoolableMono
     private void OnMouseDown()
     {
         var infoData = PenguinManager.Instance.GetInfoDataByDummyPenguin<PenguinInfoDataSO>(this);
+        var statData = PenguinManager.Instance.GetStatByInfoData<PenguinStat>(infoData);
+
+
     }
 
     #region ���� ����
