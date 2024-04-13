@@ -30,5 +30,7 @@ public class MortarBuilding : DefenseBuilding
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         rock.transform.position = _firePos.position;
         StartCoroutine(rock.BulletMove(rock.transform.position, rock.transform.position + new Vector3(Random.Range(-10f,10f),0, Random.Range(-10f, 10f))));
+    
+        SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
     }
 }

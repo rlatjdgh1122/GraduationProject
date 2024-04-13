@@ -29,7 +29,7 @@ public class MortarRock : PoolableMono
     {
         timer = 0;
         //여기에 거시기 그 폭발 범위 이미지
-        while (transform.position.y >= - 0.5f)
+        while (transform.position.y >= -1f)
         {
             timer += Time.deltaTime;
             Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
@@ -49,18 +49,13 @@ public class MortarRock : PoolableMono
     {
         _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
         _attackFeedback.CreateFeedback();
+        SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position);
 
         CoroutineUtil.CallWaitForSeconds(0.7f, null, () =>
         {
-            Debug.Log("wlrma");
             _attackFeedback.FinishFeedback();
             CoroutineUtil.CallWaitForOneFrame(null);
             PoolManager.Instance.Push(this);
         });
-    }
-
-    private void OnDisable()
-    {
-        Debug.Log("Now");
     }
 }
