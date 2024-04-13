@@ -77,16 +77,12 @@ public class DummyPenguin : PoolableMono
     }
     public void GoToHouse()
     {
-        //���⼭ Ǯ �ִ°� �³� ����
         PoolManager.Instance.Push(this);
     }
 
     private void OnMouseDown()
     {
-        var infoData = PenguinManager.Instance.GetInfoDataByDummyPenguin<PenguinInfoDataSO>(this);
-        var statData = PenguinManager.Instance.GetStatByInfoData<PenguinStat>(infoData);
-
-        PenguinManager.Instance.ShowInfoUI(statData, infoData);
+        PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
     }
 
     #region ���� ����

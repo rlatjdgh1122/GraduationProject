@@ -1,13 +1,27 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PenguinInfoUI : PopupUI
 {
     [SerializeField] private GameObject _statItemObject = null;
     [SerializeField] private int _statItemCount = 3;
-    private BaseStat _ownerStat => PenguinManager.Instance.GetCurrentStat;
     private EntityInfoDataSO _ownerInfoData => PenguinManager.Instance.GetCurrentInfoData;
+    private BaseStat _ownerStat => PenguinManager.Instance.GetCurrentStat;
 
+    #region 정보창 변수
+
+    [Header("정보창 변수")]
+    [SerializeField] private TextMeshProUGUI _weaponNameTxt = null;
+    [SerializeField] private TextMeshProUGUI _penguinNameTxt = null;
+    [SerializeField] private Image _penguinIcon = null;
+    [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
+
+    #endregion
+
+    #region 스탯아이템 변수
+    [Header("스탯창 변수")]
     [SerializeField] private Transform Attack_StatItemTrm = null;
     [SerializeField] private Transform Armor_StatItemTrm = null;
 
@@ -16,7 +30,13 @@ public class PenguinInfoUI : PopupUI
 
     private List<IStatable> _armorStatItemList = new();
     private int _armorStatCount = 0;
+    #endregion
 
+    private void Start()
+    {
+        SpawnAttackSlotItem(_statItemCount);
+        SpawnArmorSlotItem(_statItemCount);
+    }
     protected virtual void ShowStat()
     {
         ShowAttackStat(_ownerStat.damage);
@@ -27,10 +47,12 @@ public class PenguinInfoUI : PopupUI
         ShowAromorStat(_ownerStat.maxHealth);
         ShowAromorStat(_ownerStat.evasion);
     }
-    private void Start()
+    protected virtual void ShowInfo()
     {
-        SpawnAttackSlotItem(_statItemCount);
-        SpawnArmorSlotItem(_statItemCount);
+        _weaponNameTxt.text = _ownerInfoData.Weapon;
+        _penguinNameTxt.text = _ownerInfoData.PenguinName;
+        _penguinIcon.sprite = _ownerInfoData.PenguinIcon;
+        _legionNameTxt.text = _ownerInfoData.LegionName;
     }
     public override void HidePanel()
     {
@@ -43,6 +65,7 @@ public class PenguinInfoUI : PopupUI
         base.ShowPanel();
 
         ShowStat();
+        ShowInfo();
     }
     private void SpawnAttackSlotItem(int count)
     {

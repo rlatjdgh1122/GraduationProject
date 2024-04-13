@@ -37,7 +37,7 @@ public abstract class Entity : PoolableMono
         HealthCompo?.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
 
-        _characterStat.Init();
+        //_characterStat.Init();
 
         if (HealthCompo != null)
         {

@@ -28,7 +28,7 @@ public abstract class BaseStat : ScriptableObject
     public Stat criticalValue;
 
     private Dictionary<Stat, string> statTypeToNameDic;
-    public void Init()
+    public void OnEnable()
     {
         statTypeToNameDic = new()
         {
@@ -38,7 +38,7 @@ public abstract class BaseStat : ScriptableObject
 
             { damage,            "공격력"},
             { criticalChance,    "크리티컬 확률"},
-            { criticalValue,     "크리티컬 추가 데미지"},
+            { criticalValue,     "크리티컬 데미지"},
 
         };
     }

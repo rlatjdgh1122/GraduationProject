@@ -32,7 +32,9 @@ public class PenguinManager
     }
 
     //Type으로 펭귄 등록
-    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
+    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeToPenguinDic = new();
+    //Type으로 클론이 아닌 스탯을 가져옴(군단에 소속되지 않은 더미펭귄한테 사용)
+    private Dictionary<PenguinTypeEnum, BaseStat> soldierTypeToNotCloneStatDic = new();
 
     #region 펭귄 리스트
     private List<DummyPenguinListItem> _dummyPenguinList = new();
@@ -70,7 +72,10 @@ public class PenguinManager
         foreach (var solider in soldierTypeListSO.soldierTypes)
         {
             var type = solider.type;
-            soldierTypeDictionary.Add(type, solider.obj);
+            soldierTypeToPenguinDic.Add(type, solider.obj);
+
+            //클론이 되지 않은 스탯을 등록해줌
+            soldierTypeToNotCloneStatDic.Add(type, solider.obj.Stat);
         }
     }
     public void AddDummyPenguin(DummyPenguin obj)
@@ -82,19 +87,27 @@ public class PenguinManager
         });
         DummyPenguinList.Add(obj);
     }
+
+    /// <summary>
+    /// 퇴출할 때 사용
+    /// </summary>
+    /// <param name="obj"></param>
     public void RemoveDummyPenguin(DummyPenguin obj)
     {
-
+        DummyPenguinList.Remove(obj);
     }
     public void AddSoliderPenguin(Penguin obj)
     {
         SoldierPenguinList.Add(obj);
     }
+    /// <summary>
+    /// 퇴출할 때 사용
+    /// </summary>
+    /// <param name="obj"></param>
     public void RemoveSoliderPenguin(Penguin obj)
     {
-
+        SoldierPenguinList.Remove(obj);
     }
-
     public void AddInfoDataMapping(EntityInfoDataSO data, Penguin penguin)
     {
         EntityInfoDataSO dataType = null;
@@ -111,11 +124,17 @@ public class PenguinManager
         infoDataToPenguinDic.Add(dataType, penguin);
         penguinToInfoDataDic.Add(penguin, dataType);
     }
-
-    public void ShowInfoUI<T1, T2>(T1 stat, T2 infoData) where T1 : BaseStat where T2 : EntityInfoDataSO
+    public void ShowInfoUI<T1, T2>(DummyPenguin dummy) where T1 : EntityInfoDataSO where T2 : BaseStat
     {
-        GetCurrentStat = stat;
+        T1 infoData = GetInfoDataByDummyPenguin<T1>(dummy);
+
+        //군단에 소속되지 않았다면 디폴트 정보를 넘겨줌
+        if (infoData == null) infoData = dummy.NotCloneInfo as T1;
+
+        T2 statData = GetStatByInfoData<T2>(infoData);
+
         GetCurrentInfoData = infoData;
+        GetCurrentStat = statData;
 
         // 장군 정보와 펭귄 정보는 따로
         //if (stat is PenguinStat && infoData is EntityInfoDataSO)
@@ -137,11 +156,17 @@ public class PenguinManager
 
     public T GetInfoDataByDummyPenguin<T>(DummyPenguin dummy) where T : EntityInfoDataSO
     {
+        T result = null;
         Penguin penguin = GetPenguinByDummyPenguin(dummy);
-        if (penguinToInfoDataDic.TryGetValue(penguin, out var infoDataSO))
-            return (T)infoDataSO;
 
-        return null;
+        if (penguin == null) return result;
+
+        if (penguinToInfoDataDic.TryGetValue(penguin, out var infoDataSO))
+        {
+            result = (T)infoDataSO;
+        }
+
+        return result;
     }
     public EntityInfoDataSO GetNotCloneInfoDataByPenguin(Penguin penguin)
     {
@@ -180,7 +205,7 @@ public class PenguinManager
     }
     private Penguin GetPenguinByType(PenguinTypeEnum type)
     {
-        if (soldierTypeDictionary.TryGetValue(type, out var value)) return value;
+        if (soldierTypeToPenguinDic.TryGetValue(type, out var value)) return value;
 
         Debug.Log("해당하는 타입의 오브젝트는 없습니다. SoldierListSO를 확인해주세요.");
         return null;
@@ -191,11 +216,6 @@ public class PenguinManager
         if (dummyToPenguinDic.TryGetValue(dummyPenguin, out var penguin))
         {
             resultPenguin = penguin;
-        }
-        else
-        {
-            Debug.Log($"GetPenguinByDummyPenguin에서 오류");
-            Debug.Log($"{dummyPenguin.name}과 등록된 펭귄이 없습니다.");
         }
 
         return resultPenguin;
@@ -233,6 +253,12 @@ public class PenguinManager
         {
             resultStat = penguin.ReturnGenericStat<T>();
             GetCurrentStat = resultStat;
+        }
+        else
+        {
+            //군단에 소속되지 않았다면 클론이 아닌 디폴트 스탯을 가져옴
+            if (soldierTypeToNotCloneStatDic.TryGetValue(data.PenguinType, out var notCloneStat))
+                resultStat = notCloneStat as T;
         }
 
         return resultStat;
