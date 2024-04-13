@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using UnityEngine;
 
 [Serializable]
 public class LegionInfo
@@ -75,9 +71,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _unitInven.PenguinSlotExit(data);
     }
 
-    public void DeadLegionPenguin(string legionName, int slotIdx)
+    public void DeadLegionPenguin(string legionName, int slotIdx, bool retire = false)
     {
-        _legionInven.DeadPenguin(legionName, slotIdx);
+        _legionInven.DeadPenguin(legionName, slotIdx, retire);
     }
 
     /// <summary>
