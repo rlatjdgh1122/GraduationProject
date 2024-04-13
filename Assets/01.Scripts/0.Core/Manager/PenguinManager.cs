@@ -61,6 +61,7 @@ public class PenguinManager
     private Dictionary<Penguin, EntityInfoDataSO> penguinToInfoDataDic = new();
 
     public BaseStat GetCurrentStat = null;
+    public EntityInfoDataSO GetCurrentInfoData = null;
     #endregion
 
     //군단 매니저에서 등록
@@ -110,6 +111,19 @@ public class PenguinManager
         infoDataToPenguinDic.Add(dataType, penguin);
         penguinToInfoDataDic.Add(penguin, dataType);
     }
+
+    public void ShowInfoUI<T1, T2>(T1 stat, T2 infoData) where T1 : BaseStat where T2 : EntityInfoDataSO
+    {
+        GetCurrentStat = stat;
+        GetCurrentInfoData = infoData;
+
+        // 장군 정보와 펭귄 정보는 따로
+        //if (stat is PenguinStat && infoData is EntityInfoDataSO)
+        UIManager.Instance.ShowPanel("PenguinInfoUI");
+        /*else
+            UIManager.Instance.ShowPanel("GeneralInfoUI");*/
+    }
+
     public DummyPenguin GetDummyByInfoData(EntityInfoDataSO infoData)
     {
         DummyPenguin resultDummy = null;

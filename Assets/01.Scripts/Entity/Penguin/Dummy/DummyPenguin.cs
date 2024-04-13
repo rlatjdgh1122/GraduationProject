@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -87,7 +86,7 @@ public class DummyPenguin : PoolableMono
         var infoData = PenguinManager.Instance.GetInfoDataByDummyPenguin<PenguinInfoDataSO>(this);
         var statData = PenguinManager.Instance.GetStatByInfoData<PenguinStat>(infoData);
 
-
+        PenguinManager.Instance.ShowInfoUI(statData, infoData);
     }
 
     #region ���� ����
