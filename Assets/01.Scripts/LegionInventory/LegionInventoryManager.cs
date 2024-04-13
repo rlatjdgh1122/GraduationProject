@@ -75,18 +75,6 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _unitInven.PenguinSlotExit(data);
     }
 
-    /// <summary>
-    /// ���ܿ� �ִ� ����� �׾�����
-    /// </summary>
-    /// <param name="so">��� ����</param>
-    /// <param name="legionName">���� �̸�</param>
-    /// <param name="legionPosition">���� �ȿ����� ��ġ</param>
-    public void DeadLegionPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
-    {
-        /*LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
-        Debug.Log(so.GetInstanceID());
-        _legionInven.DeadPenguin(data);*/
-    }
     public void DeadLegionPenguin(string legionName, int slotIdx)
     {
         _legionInven.DeadPenguin(legionName, slotIdx);
@@ -119,7 +107,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         {
             if (_legionList[i].Name == name) return i;
         }
-        Debug.Log("���� �̸� ��ã�� ���ϳ�");
+
         return -1;
     }
 

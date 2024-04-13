@@ -26,6 +26,8 @@ public class PenguinSituationUI : PenguinSituationPanel
     {
         data = so;
 
+        UIManager.Instance.ShowWarningUI("∆Î±œ¿« √º∑¬¿Ã ¥‚æ∆¿÷Ω¿¥œ¥Ÿ!");
+
         CheckBuy(percent, penguinPrice);
 
         ShowPanel();

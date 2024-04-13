@@ -153,6 +153,13 @@ public class PenguinManager
         return result;
     }
 
+    public EntityInfoDataSO GetNotCloneInfoDataByInfoDataInPenguin(EntityInfoDataSO data)
+    {
+        var penguin = GetPenguinByInfoData(data);
+
+        return GetNotCloneInfoDataByPenguin(penguin);
+    }
+
     /// <summary>
     /// ÆØ±Ï »ý¼ºÇÏ´Â ÇÔ¼ö
     /// </summary>

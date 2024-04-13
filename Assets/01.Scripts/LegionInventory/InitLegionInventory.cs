@@ -19,10 +19,15 @@ public class InitLegionInventory : MonoBehaviour
 
     protected LegionInventoryManager legion;
 
-    protected int saveCnt = 0;
     protected int currentPenguinCnt = 0;
     protected int currentRemovePenguinCnt = 0;
     protected int currentGeneral = 0;
+
+    protected Dictionary<int, EntityInfoDataSO> currentDictionary = new();
+
+    protected List<EntityInfoDataSO> currentLegionList = new();
+    protected List<EntityInfoDataSO> currentRemovePenguinList = new();
+    protected List<EntityInfoDataSO> savedLegionList = new();
 
     public virtual void Awake()
     {
