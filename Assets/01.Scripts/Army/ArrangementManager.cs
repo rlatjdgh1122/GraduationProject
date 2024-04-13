@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArrangementManager : Singleton<ArrangementManager>
 {
-    [SerializeField] private Transform SpawnPoint;
+    private Transform SpawnPoint => GameManager.Instance.TentTrm;
 
     [Header("배치 거리"), Range(0.5f, 3f)]
     public float distance = 1;
