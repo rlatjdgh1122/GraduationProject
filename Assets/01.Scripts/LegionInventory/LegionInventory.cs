@@ -6,25 +6,19 @@ using UnityEngine;
 
 public class LegionInventory : LegionUI
 {
-    private Dictionary<int, EntityInfoDataSO> _currentDictionary = new();
-
-    private List<EntityInfoDataSO> _currentLegionList = new();
-    private List<EntityInfoDataSO> _currentRemovePenguinList = new();
-    public List<EntityInfoDataSO> _savedLegionList = new();
-
     /// <summary>
     /// 저장 취소하기
     /// </summary>
     public void UndoLegion()
     {
-        foreach (var data in _currentRemovePenguinList) //군단에서 지웠는데 저장 취소하면
+        foreach (var data in currentRemovePenguinList) //군단에서 지웠는데 저장 취소하면
         {
             //인벤에 들어간 펭귄을 빼줘
             legion.RemovePenguin(PenguinManager.Instance.GetNotCloneInfoDataByInfoDataInPenguin(data));
         }
-        foreach (var data in _currentLegionList) //군단에 추가했는데 저장 취소하면
+        foreach (var data in currentLegionList) //군단에 추가했는데 저장 취소하면
         {
-            if (!_savedLegionList.Contains(data))
+            if (!savedLegionList.Contains(data))
             {
                 //인벤에 들어간 펭귄을 더해줘
                 legion.AddPenguin(PenguinManager.Instance.GetNotCloneInfoDataByInfoDataInPenguin(data));
@@ -37,22 +31,23 @@ public class LegionInventory : LegionUI
     /// </summary>
     public void SaveLegion()
     {
-        foreach (var data in _currentLegionList)
+        foreach (var data in currentLegionList)
         {
-            if (!_savedLegionList.Contains(data))
+            if (!savedLegionList.Contains(data))
             {
-                _savedLegionList?.Add(data);
+                savedLegionList?.Add(data);
             }
         }
 
-        foreach (var data in _currentRemovePenguinList)
+        foreach (var data in currentRemovePenguinList)
         {
-            if (_savedLegionList.Contains(data))
+            if (savedLegionList.Contains(data))
             {
-                _savedLegionList.Remove(data);
+                savedLegionList.Remove(data);
             }
         }
-        ArrangementManager.Instance.ApplySaveData(_savedLegionList);
+
+        ArrangementManager.Instance.ApplySaveData(savedLegionList);
         ResetLegion();
     }
 
@@ -63,10 +58,9 @@ public class LegionInventory : LegionUI
             list.ExitSlot(null);
         }
 
-        _currentDictionary = new();
-        _currentRemovePenguinList = new();
-        _currentLegionList = new();
-        saveCnt = 0;
+        currentDictionary = new();
+        currentRemovePenguinList = new();
+        currentLegionList = new();
         currentPenguinCnt = 0;
         currentRemovePenguinCnt = 0;
         currentGeneral = 0;
@@ -74,18 +68,19 @@ public class LegionInventory : LegionUI
 
     public void ChangeLegion(string name)
     {
+        Debug.Log(name);
         ResetLegion();
 
-        if (_savedLegionList == null) return;
+        if (savedLegionList == null) return;
 
-        foreach (var list in _savedLegionList.Where(list => list.LegionName == name))
+        foreach (var list in savedLegionList.Where(list => list.LegionName == name))
         {
             slotList[list.SlotIdx].EnterSlot(list);
-            _currentLegionList.Add(list);
+            currentLegionList.Add(list);
 
-            if (!_currentDictionary.ContainsKey(list.SlotIdx))
+            if (!currentDictionary.ContainsKey(list.SlotIdx))
             {
-                _currentDictionary.Add(list.SlotIdx, list);
+                currentDictionary.Add(list.SlotIdx, list);
 
                 var penguin = PenguinManager.Instance.GetPenguinByInfoData(list);
 
@@ -98,7 +93,6 @@ public class LegionInventory : LegionUI
             }
             else break;
 
-            saveCnt++;
             CheckType(list);
         }
 
@@ -109,7 +103,7 @@ public class LegionInventory : LegionUI
 
     public void LegionRegistration(int idx, EntityInfoDataSO data)
     {
-        if (_currentDictionary.ContainsKey(idx))
+        if (currentDictionary.ContainsKey(idx))
         {
             return;
         }
@@ -140,8 +134,8 @@ public class LegionInventory : LegionUI
 
         slotList[idx].HpValue(1);
 
-        _currentLegionList.Add(data);
-        _currentDictionary.Add(idx, data);
+        currentLegionList.Add(data);
+        currentDictionary.Add(idx, data);
 
         CheckType(data);
 
@@ -150,15 +144,15 @@ public class LegionInventory : LegionUI
 
     public void DeadPenguin(string legionName, int slotIdx)
     {
-        var saveList = _savedLegionList.ToList();
+        var saveList = savedLegionList.ToList();
 
         foreach (var saveData in saveList)
         {
             if (saveData.LegionName == legionName
                 && saveData.SlotIdx == slotIdx)
             {
-                _savedLegionList.Remove(saveData);
-                _currentLegionList.Remove(saveData);
+                savedLegionList.Remove(saveData);
+                currentLegionList.Remove(saveData);
                 slotList[saveData.SlotIdx].ExitSlot(null);
             }
         }
@@ -166,7 +160,7 @@ public class LegionInventory : LegionUI
 
     public void RemovePenguinInCurrentLegion(int idx)
     {
-        if (_currentDictionary.TryGetValue(idx, out EntityInfoDataSO curData))
+        if (currentDictionary.TryGetValue(idx, out EntityInfoDataSO curData))
         {
             var penguin = PenguinManager.Instance.GetPenguinByInfoData(curData);
 
@@ -179,9 +173,9 @@ public class LegionInventory : LegionUI
             {
                 legion.AddPenguin(PenguinManager.Instance.GetNotCloneInfoDataByPenguin(penguin));
 
-                _currentLegionList.Remove(curData);
-                _currentDictionary.Remove(idx);
-                _currentRemovePenguinList.Add(curData);
+                currentLegionList.Remove(curData);
+                currentDictionary.Remove(idx);
+                currentRemovePenguinList.Add(curData);
 
                 slotList[idx].ExitSlot(null);
 
@@ -200,7 +194,7 @@ public class LegionInventory : LegionUI
 
     public void ChangeLegionNameInSaveData(string beforeName, string afterName)
     {
-        foreach (var list in _savedLegionList.Where(list => list.LegionName == beforeName))
+        foreach (var list in savedLegionList.Where(list => list.LegionName == beforeName))
         {
             list.LegionName = afterName;
         }

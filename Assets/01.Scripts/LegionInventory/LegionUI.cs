@@ -80,7 +80,25 @@ public class LegionUI : InitLegionInventory
 
     public bool ChangedInCurrentLegion()
     {
-        return currentPenguinCnt + currentGeneral - currentRemovePenguinCnt != saveCnt;
+        bool value = false;
+
+        foreach (var data in currentLegionList)
+        {
+            if (!savedLegionList.Contains(data))
+            {
+                value = true;
+            }
+        }
+
+        foreach (var data in currentRemovePenguinList)
+        {
+            if (savedLegionList.Contains(data))
+            {
+                value = true;
+            }
+        }
+
+        return value;
     }
 
     public bool ExcedLimitOfLegion(int legionNumber)
