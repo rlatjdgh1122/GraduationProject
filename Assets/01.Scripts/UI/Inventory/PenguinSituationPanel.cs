@@ -36,7 +36,7 @@ public class PenguinSituationPanel : PopupUI
         }
     }
 
-    public void SituationEvent()
+    public void SituationButtonEvent()
     {
         if (!canClick) return;
 
