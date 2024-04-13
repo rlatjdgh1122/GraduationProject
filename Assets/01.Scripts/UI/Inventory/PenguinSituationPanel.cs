@@ -44,7 +44,7 @@ public class PenguinSituationPanel : PopupUI
 
             return;
         }
-
+        
         if (canHeal)
         {
             HealEvent();

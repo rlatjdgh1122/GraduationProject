@@ -44,7 +44,7 @@ public class InitLegionInventory : MonoBehaviour
             LegionSlot slot = Instantiate(_legionSlot);
             slot.CreateSlot(i, _removeKey, _infoKey);
 
-            slot.transform.parent = legionInventoryParent;
+            slot.transform.SetParent(legionInventoryParent);
             slotList.Add(slot);
         }
     }

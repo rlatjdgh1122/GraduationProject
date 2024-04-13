@@ -187,6 +187,7 @@ public class LegionInventory : LegionUI
             {
                 UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
 
+                Debug.Log(curData.LegionName);
                 legion.ShowPenguinSituation(curData, hpPercent);
 
                 return;
