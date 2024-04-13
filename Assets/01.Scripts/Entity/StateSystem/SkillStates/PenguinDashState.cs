@@ -1,42 +1,38 @@
 public class PenguinDashState : KatanaBaseState
 {
+    DashSkill dashSkill => _general.skill as DashSkill;
+
     public override void EnterState()
     {
         base.EnterState();
 
-        AttackEnter();
+        if (_penguin.CurrentTarget == null)
+            return;
 
-        _general.skill.OnSkillStart?.Invoke();
+        if (_penguin.CurrentTarget != null)
+            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+
+        _triggerCalled = false;
+        _penguin.WaitForCommandToArmyCalled = false;
+
+        _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (IsArmyCalledIn_BattleMode())
+        if (_general.canDash)
         {
-            if (_triggerCalled)
-            {
-                _stateMachine.ChangeState(PenguinStateType.Chase);
-                IsTargetNull(PenguinStateType.MustMove);
-            }
+            dashSkill.DashHandler();
+            _general.canDash = false;
         }
 
-        else if (IsArmyCalledIn_CommandMode())
+        if (_triggerCalled) 
         {
-            if (_penguin.WaitForCommandToArmyCalled)
-            {
-                _stateMachine.ChangeState(PenguinStateType.MustMove);
-            }
-        }
-        else
-        {
-            if (_triggerCalled) //АјАн
-            {
-                _stateMachine.ChangeState(PenguinStateType.Chase);
+            _stateMachine.ChangeState(PenguinStateType.Chase);
 
-                IsTargetNull(PenguinStateType.Idle);
-            }
+            IsTargetNull(PenguinStateType.Idle);
         }
     }
 

@@ -24,7 +24,7 @@ public class State : MonoBehaviour, IState
 
         if (_navAgent != null)
         {
-            _navAgent.ResetPath();
+            _navAgent?.ResetPath();
             //_navAgent.isStopped = false;
             //_penguin.SetNavmeshPriority(Penguin.PriorityType.High);
         }

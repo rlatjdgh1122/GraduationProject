@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DashSkill : Skill
 {
@@ -11,40 +9,39 @@ public class DashSkill : Skill
 
     private General owner => _owner as General;
 
+    private Coroutine _dashCoroutine;
+
     public override void SetOwner(Entity owner)
     {
         base.SetOwner(owner);
-
-        OnSkillStart += DashHandler;
     }
 
     public void DashHandler()
     {
-        Vector3 forwardDirection = -owner.CurrentTarget.transform.forward;
-        Dash(forwardDirection, _dashDelay, _dashTime, _dashSpeed);
+        owner.canDash = false;
+        Vector3 direction = (owner.CurrentTarget.transform.position - owner.transform.position).normalized;
+        owner.transform.rotation = Quaternion.LookRotation(direction);
+        Dash(_dashDelay, _dashTime, _dashSpeed);
     }
 
-    public void Dash(Vector3 dir, float delay, float time, float speed)
+    public void Dash(float delay, float time, float speed)
     {
-        StopCoroutine(DashCoroutine(dir, delay, time, speed));
-        StartCoroutine(DashCoroutine(dir, delay, time, speed));
+        if (_dashCoroutine != null)
+            StopCoroutine(DashCoroutine(0, 0, 0));
+
+        _dashCoroutine = StartCoroutine(DashCoroutine(delay, time, speed));
     }
 
-    private IEnumerator DashCoroutine(Vector3 dir, float delay, float time, float speed)
+    private IEnumerator DashCoroutine(float delay, float time, float speed)
     {
         yield return new WaitForSeconds(delay);
 
         float startTime = Time.time;
 
-        owner.NavAgent.enabled = false;
-
         while (Time.time < startTime + time)
         {
-            owner.CharacterCompo.Move(dir * speed * Time.deltaTime);
-
+            owner.CharacterCompo.Move(owner.transform.forward * speed * Time.deltaTime);
             yield return null;
         }
-
-        owner.NavAgent.enabled = true;
     }
 }

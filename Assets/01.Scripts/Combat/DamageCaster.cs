@@ -156,7 +156,9 @@ public class DamageCaster : MonoBehaviour
                 {
                     health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
                     if (health.IsDead && general.CurrentTarget != null)
-                        general?.OnPassiveAttackEvent();
+                    {
+                        general.OnPassiveAttackEvent();
+                    }
                 }
                 else
                 {

@@ -30,6 +30,8 @@ public class KatanaGeneralPenguin : General
     protected override void Start()
     {
         StateInit();
+
+        canDash = true;
     }
 
     protected override void Update()
@@ -46,8 +48,12 @@ public class KatanaGeneralPenguin : General
 
     public override void OnPassiveAttackEvent()
     {
-        if (CurrentTarget != null)
-            TestStateMachine.ChangeState(PenguinStateType.Dash);
+        TestStateMachine.ChangeState(PenguinStateType.Dash);
+    }
+
+    public override void DashEndTrigger()
+    {
+        canDash = true;
     }
 
     public override void AnimationTrigger() => TestStateMachine.CurrentState.AnimationTrigger();
