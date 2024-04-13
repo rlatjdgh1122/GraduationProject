@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -165,10 +166,15 @@ public class LegionInventory : LegionUI
         {
             var penguin = PenguinManager.Instance.GetPenguinByInfoData(curData);
 
-            float curHp = penguin.HealthCompo.currentHealth;
-            float maxHp = penguin.HealthCompo.maxHealth;
+            float hpPercent = 1;
 
-            float hpPercent = curHp / maxHp;
+            if (penguin != null)
+            {
+                float curHp = penguin.HealthCompo.currentHealth;
+                float maxHp = penguin.HealthCompo.maxHealth;
+
+                hpPercent = curHp / maxHp;
+            }
 
             if (hpPercent >= 1) //피가 풀피면
             {

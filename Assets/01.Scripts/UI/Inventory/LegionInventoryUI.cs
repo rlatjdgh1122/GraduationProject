@@ -32,4 +32,13 @@ public class LegionInventoryUI : PopupUI
         UIManager.Instance.ShowWarningUI("历厘 己傍!");
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
+
+    public void UndoLegion()
+    {
+        UIManager.Instance.ShowWarningUI("历厘 秒家");
+        if (!LegionInventoryManager.Instance.ChangedInCurrentLegion()) return;
+
+        LegionInventoryManager.Instance.UndoLegion();
+        LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
+    }
 }
