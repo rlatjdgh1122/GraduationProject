@@ -56,7 +56,7 @@ public class WaveManager : Singleton<WaveManager>
     [SerializeField]
     Color targetColor;
 
-    private int currentWaveCount = 0;
+    private int currentWaveCount = 1;
     public int CurrentWaveCount => currentWaveCount;
 
     public bool IsBattlePhase = false;

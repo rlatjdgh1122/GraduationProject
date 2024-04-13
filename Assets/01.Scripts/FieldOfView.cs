@@ -38,7 +38,10 @@ public class FieldOfView : MonoBehaviour
                 // 타겟으로 가는 레이캐스트에 _obstacleLayer 걸리지 않으면 _visibleTargets에 Add
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleLayer))
                 {
-                    visibleTargets.Add(target);
+                    if (target.gameObject.activeInHierarchy)
+                    {
+                        visibleTargets.Add(target);
+                    }
                 }
             }
         }

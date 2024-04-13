@@ -10,6 +10,9 @@ public class MortarRock : PoolableMono
     private DamageCaster _damageCaster;
     private MortarEffect _attackFeedback;
 
+    [SerializeField] // 일단 여기다가 넣음
+    private int damage;
+
     private void Awake()
     {
         _damageCaster = GetComponent<DamageCaster>();
@@ -47,7 +50,7 @@ public class MortarRock : PoolableMono
 
     private void DestroyRock()
     {
-        _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
+        _damageCaster.CastBuildingAoEDamage(transform.position, _damageCaster.TargetLayer, damage);
         _attackFeedback.CreateFeedback();
         SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position);
 

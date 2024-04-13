@@ -15,8 +15,6 @@ public abstract class DefenseBuilding : BaseBuilding
     FieldOfView _fov;
     protected FieldOfView FOV => _fov;
 
-    HashSet<Transform> _visibleTargets => _fov.FindVisibleTargets();
-
     private Dictionary<int, Ground> _groundOutlines = new();
 
     private HashSet<Ground> _previousGrounds = new();
