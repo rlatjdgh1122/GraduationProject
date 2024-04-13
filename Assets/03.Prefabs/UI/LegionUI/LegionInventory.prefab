@@ -636,7 +636,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2294811811312486826}
         m_TargetAssemblyTypeName: PenguinSituationPanel, Assembly-CSharp
-        m_MethodName: SituationEvent
+        m_MethodName: SituationButtonEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1500,7 +1500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26334e2555d00544b0c123f7ad2665b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0
+  _panelFadeTime: 0.5
   soundName: 16
   _healPanel: {fileID: 7206639820517199220}
   _retirePanel: {fileID: 435105376734617936}
@@ -6174,9 +6174,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6095376238662104690}
-        m_TargetAssemblyTypeName: LegionBuyPanel, Assembly-CSharp
-        m_MethodName: CancelBuyClick
+      - m_Target: {fileID: 2294811811312486826}
+        m_TargetAssemblyTypeName: PopupUI, Assembly-CSharp
+        m_MethodName: HidePanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6233,7 +6233,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5530245116915139813}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

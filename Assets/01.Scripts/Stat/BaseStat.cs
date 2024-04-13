@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -26,6 +27,31 @@ public abstract class BaseStat : ScriptableObject
     public Stat criticalChance;
     public Stat criticalValue;
 
+    private Dictionary<Stat, string> statTypeToNameDic;
+    public void OnEnable()
+    {
+        statTypeToNameDic = new()
+        {
+            { maxHealth,         "최대체력"},
+            { armor,             "방어력"},
+            { evasion,           "회피 확률"},
+
+            { damage,            "공격력"},
+            { criticalChance,    "크리티컬 확률"},
+            { criticalValue,     "크리티컬 데미지"},
+
+        };
+    }
+    public string GetStatNameByStat(Stat stat)
+    {
+        if (statTypeToNameDic.TryGetValue(stat, out string name))
+        {
+            return name;
+        }
+        Debug.Log("해당하는 스탯은 이름이 등록되지 않았습니다.");
+
+        return "등록되지 않은 스탯";
+    }
     public virtual int GetMaxHealthValue()
     {
         return maxHealth.GetValue() + (vitality.GetValue() * 5);

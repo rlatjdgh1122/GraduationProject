@@ -36,14 +36,12 @@ public class LegionSlot : LegionSlotUI
     public override void RemovePenguinData()
     {
         legion.RemovePenguinInCurrentLegion(Idx);
-
-        ExitSlot(null);
     }
 
 
     public override void ChoosePenguinSituation()
     {
-        legion.ShowPenguinSituation(Data, _hpPercent, (Data as PenguinInfoDataSO).Price);
+        legion.ShowPenguinSituation(Data, _hpPercent);
     }
 
     public override void PushDataInSlot()
@@ -61,6 +59,13 @@ public class LegionSlot : LegionSlotUI
         UnitInventoryData data = new UnitInventoryData(Data, 1, SlotType.Legion);
 
         legion.SelectInfoData(data);
+    }
+
+    public override void ExitSlot(EntityInfoDataSO data)
+    {
+        base.ExitSlot(data);
+
+        HideHP();
     }
 
     public void HpValue(float value)

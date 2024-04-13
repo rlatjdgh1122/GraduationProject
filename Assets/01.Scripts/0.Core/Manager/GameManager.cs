@@ -85,10 +85,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     public float ElapsedTime => Time.time;
-
-    private int dummyPenguinCount;
-    public int GetDummyPenguinCount => dummyPenguinCount;
-
     public Transform NexusTrm { get; private set; } = null;
     public Transform TentTrm { get; private set; } = null;
     public Transform WorkerSpawnPoint { get; private set; } = null;

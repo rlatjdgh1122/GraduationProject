@@ -6,114 +6,115 @@ using UnityEngine;
 
 public class LegionInventory : LegionUI
 {
-    private Dictionary<int, LegionInventoryData> _currentDictionary = new();
-
-    private List<LegionInventoryData> _currentLegionList = new();
-    private List<LegionInventoryData> _currentRemovePenguinList = new();
-    public List<LegionInventoryData> _savedLegionList = new();
-
     /// <summary>
-    /// ÀúÀåÇÏÁö ¾Ê±â
+    /// ì €ì¥ ì·¨ì†Œí•˜ê¸°
     /// </summary>
     public void UndoLegion()
     {
-        foreach (var data in _currentLegionList) //ÇöÀç ±º´Ü¿¡¼­
+        foreach (var data in currentRemovePenguinList) //êµ°ë‹¨ì—ì„œ ì§€ì› ëŠ”ë° ì €ì¥ ì·¨ì†Œí•˜ë©´
         {
-            if (!_savedLegionList.Contains(data)) //ÀúÀå ±º´Ü¿¡ Æ÷ÇÔµÇ¾î ÀÖÁö ¾Ê´Â µ¥ÀÌÅÍ(»õ·Î Ãß°¡ÇÑ µ¥ÀÌÅÍ)¶ó¸é
-            {
-                legion.AddPenguin(data.InfoData); //´Ù½Ã ³Ö¾îÁÖ±â
-            }
+            //ì¸ë²¤ì— ë“¤ì–´ê°„ í­ê·„ì„ ë¹¼ì¤˜
+            legion.RemovePenguin(PenguinManager.Instance.GetNotCloneInfoDataByInfoDataInPenguin(data));
         }
-        foreach (var data in _currentRemovePenguinList) //ÇöÀç ±º´Ü¿¡¼­ »èÁ¦µÈ Æë±Ï Áß
+        foreach (var data in currentLegionList) //êµ°ë‹¨ì— ì¶”ê°€í–ˆëŠ”ë° ì €ì¥ ì·¨ì†Œí•˜ë©´
         {
-            legion.RemovePenguin(data.InfoData); //´Ù½Ã »©ÁÖ±â
+            if (!savedLegionList.Contains(data))
+            {
+                //ì¸ë²¤ì— ë“¤ì–´ê°„ í­ê·„ì„ ë”í•´ì¤˜
+                legion.AddPenguin(PenguinManager.Instance.GetNotCloneInfoDataByInfoDataInPenguin(data));
+            }
         }
     }
 
     /// <summary>
-    /// ÀúÀåÇÏ±â
+    /// ì €ì¥í•˜ê¸°
     /// </summary>
     public void SaveLegion()
     {
-        foreach (var data in _currentLegionList) //ÇöÀç ±º´Ü¿¡¼­
+        foreach (var data in currentLegionList)
         {
-            if (!_savedLegionList.Contains(data)) //ÀúÀå ±º´Ü¿¡ Æ÷ÇÔµÇ¾î ÀÖÁö ¾Ê´Â µ¥ÀÌÅÍ(»õ·Î Ãß°¡ÇÑ µ¥ÀÌÅÍ)¶ó¸é
+            if (!savedLegionList.Contains(data))
             {
-                _savedLegionList?.Add(data); //ÀúÀå ±º´Ü¿¡ ³Ö¾îÁÖ±â
+                savedLegionList?.Add(data);
             }
         }
 
-        foreach (var data in _currentRemovePenguinList) //ÇöÀç »èÁ¦µÈ Æë±Ï°ú
+        foreach (var data in currentRemovePenguinList)
         {
-            if (_savedLegionList.Contains(data)) //ÀúÀå ±º´Ü¿¡ ÀÖ´Â µ¥ÀÌÅÍ°¡ °°´Ù¸é
+            if (savedLegionList.Contains(data))
             {
-                _savedLegionList.Remove(data); //ÀúÀå±º´Ü¿¡¼­ »èÁ¦½ÃÄÑÁÜ
+                savedLegionList.Remove(data);
             }
         }
-        ArrangementManager.Instance.ApplySaveData(_savedLegionList);
-        ResetLegion(); //¸®¼Â
+
+        ArrangementManager.Instance.ApplySaveData(savedLegionList);
+        ResetLegion();
     }
 
-    private void ResetLegion() //¸®¼Â
+    private void ResetLegion()
     {
-        foreach (var list in slotList) //¸ğµç ½½·ÔÀ» ÃÊ±âÈ­ ½ÃÄÑÁà
+        foreach (var list in slotList)
         {
             list.ExitSlot(null);
         }
 
-        _currentDictionary = new();
-        _currentRemovePenguinList = new();
-        _currentLegionList = new();
-        saveCnt = 0;
+        currentDictionary = new();
+        currentRemovePenguinList = new();
+        currentLegionList = new();
         currentPenguinCnt = 0;
         currentRemovePenguinCnt = 0;
         currentGeneral = 0;
     }
 
-    /// <summary>
-    /// ±º´Ü ¹Ù²Ù±â
-    /// </summary>
-    /// <param name="name">±º´Ü ÀÌ¸§</param>
     public void ChangeLegion(string name)
     {
-        ResetLegion(); //¸®¼Â
+        ResetLegion();
 
-        if (_savedLegionList == null) return;
+        if (savedLegionList == null) return;
 
-        foreach (var list in _savedLegionList.Where(list => list.LegionName == name)) //ÀúÀå ±º´Ü¿¡¼­ ¹Ù²ğ ±º´ÜÀÇ ÀÌ¸§°ú °°´Ù¸é 
+        foreach (var list in savedLegionList.Where(list => list.LegionName == name))
         {
-            slotList[list.SlotIdx].EnterSlot(list.InfoData); //±× À§Ä¡ÀÇ ½½·ÔÀ» ¾÷µ«
-            _currentLegionList.Add(list); //ÇöÀç ±º´Ü¿¡ ³Ö¾îÁà
+            slotList[list.SlotIdx].EnterSlot(list);
+            currentLegionList.Add(list);
 
-            if (!_currentDictionary.ContainsKey(list.SlotIdx))
+            if (!currentDictionary.ContainsKey(list.SlotIdx))
             {
-                _currentDictionary.Add(list.SlotIdx, list);
+                currentDictionary.Add(list.SlotIdx, list);
+
+                var penguin = PenguinManager.Instance.GetPenguinByInfoData(list);
+
+                float curHp = penguin.HealthCompo.currentHealth;
+                float maxHp = penguin.HealthCompo.maxHealth;
+
+                float hpPercent = curHp / maxHp;
+
+                PenguinTakeDamage(list.SlotIdx, hpPercent);
             }
             else break;
 
-            saveCnt++;
-            CheckType(list.InfoData);
+            CheckType(list);
         }
 
         LegionCountTextSetting();
     }
 
+    private void PenguinTakeDamage(int idx, float hp) => slotList[idx].HpValue(hp);
 
-    /// <summary>
-    /// ÇöÀç ±º´Ü¿¡ Ãß°¡ÇÏ±â
-    /// </summary>
-    /// <param name="idx"></param>
-    /// <param name="data"></param>
     public void LegionRegistration(int idx, EntityInfoDataSO data)
     {
-        if (_currentDictionary.ContainsKey(idx))
+        if (currentDictionary.ContainsKey(idx))
         {
             return;
         }
 
-        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+        data = Instantiate(data);
 
-        if(data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0) //ÀÏ´Ü Äù½ºÆ®
+        data.LegionName = legion.LegionList()[legion.CurrentLegion].Name;
+        data.SlotIdx = idx;
+
+        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+        
+        if (data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0)
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
@@ -121,7 +122,7 @@ public class LegionInventory : LegionUI
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
-        if(data.PenguinType == PenguinTypeEnum.Shield && questIdx == 6)
+        if (data.PenguinType == PenguinTypeEnum.Shield && questIdx == 6)
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
@@ -130,140 +131,77 @@ public class LegionInventory : LegionUI
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
         }
 
+        slotList[idx].HpValue(1);
 
-        LegionInventoryData legionData 
-            = new LegionInventoryData(data, legion.LegionList()[legion.CurrentLegion].Name, idx);
-
-        legionData.HPPercent(1);
-
-        slotList[idx].HpValue(legionData.CurrentHPPercent);
-
-        _currentLegionList.Add(legionData);
-        _currentDictionary.Add(idx, legionData);
+        currentLegionList.Add(data);
+        currentDictionary.Add(idx, data);
 
         CheckType(data);
+
         LegionCountTextSetting();
     }
 
-
-    /// <summary>
-    /// Æë±ÏÀÌ Á×¾úÀ¸¸é
-    /// </summary>
-    /// <param name="data"></param>
-    public void DeadPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
+    public void DeadPenguin(string legionName, int slotIdx, bool retire = false)
     {
-        /*foreach (var saveData in _savedLegionList.ToList())
-        {
-            if (saveData.LegionName == legionName && saveData.SlotIdx == data.SlotIdx)
-            {
-                _savedLegionList.Remove(saveData);
-                slotList[saveData.SlotIdx].ExitSlot(null);
-                SaveLegion();
-            }
-        }*/
-    }
-    public void DeadPenguin(string legionName, int slotIdx)
-    {
-        var saveList = _savedLegionList.ToList();
+        var saveList = savedLegionList.ToList();
 
         foreach (var saveData in saveList)
         {
-            Debug.Log("B : " + saveData.LegionName + ", " + saveData.SlotIdx);
             if (saveData.LegionName == legionName
                 && saveData.SlotIdx == slotIdx)
             {
-                Debug.Log("»èÁ¦");
-                _savedLegionList.Remove(saveData);
+                savedLegionList.Remove(saveData);
+
+                if(retire) currentLegionList.Remove(saveData);
+
                 slotList[saveData.SlotIdx].ExitSlot(null);
-                SaveLegion();
             }
         }
     }
 
-
-    public void DamagePenguin(LegionInventoryData data, float curHP)
-    {
-        foreach (var saveData in _savedLegionList.ToList())
-        {
-            if (saveData.LegionName == data.LegionName && saveData.SlotIdx == data.SlotIdx)
-            {
-                saveData.HPPercent(curHP);
-
-                slotList[saveData.SlotIdx].HpValue(saveData.CurrentHPPercent);
-            }
-        }
-    }
-
-    /// <summary>
-    /// ÇöÀç ±º´Ü¿¡¼­ Æë±Ï Áö¿ì±â
-    /// </summary>
-    /// <param name="idx"></param>
     public void RemovePenguinInCurrentLegion(int idx)
     {
-        if (_currentDictionary.TryGetValue(idx, out LegionInventoryData curData))
+        if (currentDictionary.TryGetValue(idx, out EntityInfoDataSO curData))
         {
-            _currentLegionList.Remove(curData);
-            _currentDictionary.Remove(idx);
-            _currentRemovePenguinList.Add(curData);
+            var penguin = PenguinManager.Instance.GetPenguinByInfoData(curData);
 
-            if (curData.CurrentHPPercent == 1)
-                legion.AddPenguin(curData.InfoData);
+            float curHp = penguin.HealthCompo.currentHealth;
+            float maxHp = penguin.HealthCompo.maxHealth;
+
+            float hpPercent = curHp / maxHp;
+
+            if (hpPercent >= 1) //í”¼ê°€ í’€í”¼ë©´
+            {
+                legion.AddPenguin(PenguinManager.Instance.GetNotCloneInfoDataByPenguin(penguin));
+
+                currentLegionList.Remove(curData);
+                currentDictionary.Remove(idx);
+                currentRemovePenguinList.Add(curData);
+
+                slotList[idx].ExitSlot(null);
+
+                currentRemovePenguinCnt++;
+                currentPenguinCnt--;
+            }
             else
             {
-                UIManager.Instance.ShowWarningUI("Æë±ÏÀÇ Ã¼·ÂÀÌ ´â¾ÆÀÖ½À´Ï´Ù!");
-                legion.ShowPenguinSituation(curData.InfoData, curData.CurrentHPPercent, (curData.InfoData as PenguinInfoDataSO).Price);
+                UIManager.Instance.ShowWarningUI("í­ê·„ì˜ ì²´ë ¥ì´ ë‹³ì•„ìˆìŠµë‹ˆë‹¤!");
+
+                Debug.Log(curData.LegionName);
+                legion.ShowPenguinSituation(curData, hpPercent);
+
                 return;
             }
-
-            currentRemovePenguinCnt++;
-            currentPenguinCnt--;
         }
+
+        LegionCountTextSetting();
     }
 
-    /// <summary>
-    /// ±º´ÜÀÌ ¹Ù²î¸é ÀúÀåµÈ Æë±ÏÀÇ ±º´Ü ÀÌ¸§µµ ¹Ù²ãÁÜ
-    /// </summary>
-    /// <param name="beforeName">±× Àü ÀÌ¸§</param>
-    /// <param name="afterName">¹Ù²ğ ÀÌ¸§</param>
     public void ChangeLegionNameInSaveData(string beforeName, string afterName)
     {
-        foreach (var list in _savedLegionList.Where(list => list.LegionName == beforeName)) //ÀúÀåµÈ ±º´Ü¿¡¼­ Àü ±º´Ü ÀÌ¸§ÀÇ µ¥ÀÌÅÍ Ã£±â
+        foreach (var list in savedLegionList.Where(list => list.LegionName == beforeName))
         {
-            list.LegionName = afterName; //¹Ù²ï ±º´Ü ÀÌ¸§À¸·Î ÀúÀåÇÏ±â
+            list.LegionName = afterName;
         }
-    }
-
-    /// <summary>
-    /// ¸¸¾à ÇöÀç ±º´Ü¿¡¼­ ¹Ù²ï°Ô ÀÖ´Ù¸é
-    /// </summary>
-    /// <returns></returns>
-    public bool ChangedInCurrentLegion()
-    {
-        return currentPenguinCnt + currentGeneral - currentRemovePenguinCnt != saveCnt;
-    }
-
-    public bool ExcedLimitOfLegion(int legionNumber)
-    {
-        if (legion.LegionList()[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public bool LimitOfGeneral()
-    {
-        return currentGeneral > 0 ? true : false;
-    }
-
-    private void OnDestroy()
-    {
-        ResetLegion();
-
-        if (_savedLegionList.Count > 0)
-            _savedLegionList.Clear();
     }
 }

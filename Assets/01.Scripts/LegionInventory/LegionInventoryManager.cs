@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using UnityEngine;
 
 [Serializable]
 public class LegionInfo
@@ -75,28 +71,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _unitInven.PenguinSlotExit(data);
     }
 
-    /// <summary>
-    /// ���ܿ� �ִ� ����� �׾�����
-    /// </summary>
-    /// <param name="so">��� ����</param>
-    /// <param name="legionName">���� �̸�</param>
-    /// <param name="legionPosition">���� �ȿ����� ��ġ</param>
-    public void DeadLegionPenguin(EntityInfoDataSO so, string legionName, int legionPosition)
+    public void DeadLegionPenguin(string legionName, int slotIdx, bool retire = false)
     {
-        /*LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
-        Debug.Log(so.GetInstanceID());
-        _legionInven.DeadPenguin(data);*/
-    }
-    public void DeadLegionPenguin(string legionName, int slotIdx)
-    {
-        _legionInven.DeadPenguin(legionName, slotIdx);
-    }
-
-    public void TakeDamagePenguinInLegion(EntityInfoDataSO so, string legionName, int legionPosition, int maxHP, int curHP)
-    {
-        LegionInventoryData data = new LegionInventoryData(so, legionName, legionPosition);
-
-        _legionInven.DamagePenguin(data, (float)curHP / (float)maxHP);
+        _legionInven.DeadPenguin(legionName, slotIdx, retire);
     }
 
     /// <summary>
@@ -126,7 +103,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         {
             if (_legionList[i].Name == name) return i;
         }
-        Debug.Log("���� �̸� ��ã�� ���ϳ�");
+
         return -1;
     }
 
@@ -199,8 +176,8 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         return _legionList;
     }
 
-    public void ShowPenguinSituation(EntityInfoDataSO so, float percent, int penguinPrice)
+    public void ShowPenguinSituation(EntityInfoDataSO so, float percent)
     {
-        _penguinSituation.SetPenguinSituation(so, percent, penguinPrice);
+        _penguinSituation.SetPenguinSituation(so, percent, (so as PenguinInfoDataSO).Price);
     }
 }

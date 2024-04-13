@@ -6,7 +6,6 @@ public class GeneralDummyPengiun : DummyPenguin
 {
     private void OnMouseDown()
     {
-        var infoData = PenguinManager.Instance.GetInfoDataByDummyPenguin<GeneralInfoDataSO>(this);
-        Debug.Log(infoData.Type);
+        PenguinManager.Instance.ShowInfoUI<GeneralInfoDataSO, GeneralStat>(this);
     }
 }

@@ -19,10 +19,15 @@ public class InitLegionInventory : MonoBehaviour
 
     protected LegionInventoryManager legion;
 
-    protected int saveCnt = 0;
     protected int currentPenguinCnt = 0;
     protected int currentRemovePenguinCnt = 0;
     protected int currentGeneral = 0;
+
+    protected Dictionary<int, EntityInfoDataSO> currentDictionary = new();
+
+    protected List<EntityInfoDataSO> currentLegionList = new();
+    protected List<EntityInfoDataSO> currentRemovePenguinList = new();
+    protected List<EntityInfoDataSO> savedLegionList = new();
 
     public virtual void Awake()
     {
@@ -39,7 +44,7 @@ public class InitLegionInventory : MonoBehaviour
             LegionSlot slot = Instantiate(_legionSlot);
             slot.CreateSlot(i, _removeKey, _infoKey);
 
-            slot.transform.parent = legionInventoryParent;
+            slot.transform.SetParent(legionInventoryParent);
             slotList.Add(slot);
         }
     }

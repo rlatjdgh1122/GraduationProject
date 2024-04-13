@@ -4,5 +4,6 @@ public enum PenguinStateType
     Chase,
     Move,
     MustMove,
-    Attack
+    Attack,
+    Dash
 }

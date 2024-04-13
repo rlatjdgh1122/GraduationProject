@@ -35,7 +35,7 @@ public class PenguinStoreUI : PopupUI
         foreach (var spwanObj in _slotList) //Make Penguin Slot
         {
             var dummyPenguin = spwanObj;
-            var UIinfo = spwanObj.PenguinUIInfo;
+            var UIinfo = spwanObj.NotCloneInfo;
 
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
             btn.InstantiateSelf(UIinfo, dummyPenguin, UIinfo.Price);

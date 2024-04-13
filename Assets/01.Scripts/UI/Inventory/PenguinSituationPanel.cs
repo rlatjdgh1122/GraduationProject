@@ -26,7 +26,7 @@ public class PenguinSituationPanel : PopupUI
 
         price = penguinPrice - (int)StatCalculator.Percent(penguinPrice, hpPercent);
 
-        if (CostManager.Instance.CheckRemainingCost(price))
+        if (CostManager.Instance.CheckRemainingCost(price) && percent < 1)
         {
             canClick = true;
         }
@@ -36,32 +36,42 @@ public class PenguinSituationPanel : PopupUI
         }
     }
 
-    public void SituationEvent()
+    public void SituationButtonEvent()
     {
-        if (!canClick) return;
+        if (!canClick)
+        {
+            UIManager.Instance.ShowWarningUI("Æë±ÏÀÇ HP°¡ °¡µæÂ÷ÀÖ½À´Ï´Ù");
 
+            return;
+        }
+        
         if (canHeal)
         {
-
+            HealEvent();
         }
         else if (canRetire)
         {
             RetireEvent();
         }
+
+        HidePanel();
     }
 
     public void RetireEvent()
     {
         if (!canRetire) return;
 
-        LegionInventoryManager.Instance.DeadLegionPenguin(data, data.LegionName, data.SlotIdx);
-
-        HidePanel();
+        LegionInventoryManager.Instance.DeadLegionPenguin(data.LegionName, data.SlotIdx, true);
 
         canHeal   = false;
         canRetire = false;
         canClick  = false;
 
         data = null;
+    }
+
+    public void HealEvent()
+    {
+        //Æë±Ï HP È¸º¹½ÃÅ°±â
     }
 }

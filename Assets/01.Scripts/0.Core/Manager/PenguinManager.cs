@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Xml.XPath;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PenguinManager
@@ -30,7 +32,9 @@ public class PenguinManager
     }
 
     //Type으로 펭귄 등록
-    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeDictionary = new();
+    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeToPenguinDic = new();
+    //Type으로 클론이 아닌 스탯을 가져옴(군단에 소속되지 않은 더미펭귄한테 사용)
+    private Dictionary<PenguinTypeEnum, BaseStat> soldierTypeToNotCloneStatDic = new();
 
     #region 펭귄 리스트
     private List<DummyPenguinListItem> _dummyPenguinList = new();
@@ -55,11 +59,11 @@ public class PenguinManager
     private Dictionary<Penguin, DummyPenguin> penguinToDummyDic = new();
     private Dictionary<DummyPenguin, Penguin> dummyToPenguinDic = new();
 
-    private Dictionary<EntityInfoDataSO, DummyPenguin> infoDataToDummyDic = new();
-    private Dictionary<DummyPenguin, EntityInfoDataSO> dummyToInfoDataDic = new();
+    private Dictionary<EntityInfoDataSO, Penguin> infoDataToPenguinDic = new();
+    private Dictionary<Penguin, EntityInfoDataSO> penguinToInfoDataDic = new();
 
-    private Dictionary<LegionInventoryData, Penguin> legionDataToPenguinDic = new();
-    private Dictionary<Penguin, LegionInventoryData> penguinToLegionDataDic = new();
+    public BaseStat GetCurrentStat = null;
+    public EntityInfoDataSO GetCurrentInfoData = null;
     #endregion
 
     //군단 매니저에서 등록
@@ -68,7 +72,10 @@ public class PenguinManager
         foreach (var solider in soldierTypeListSO.soldierTypes)
         {
             var type = solider.type;
-            soldierTypeDictionary.Add(type, solider.obj);
+            soldierTypeToPenguinDic.Add(type, solider.obj);
+
+            //클론이 되지 않은 스탯을 등록해줌
+            soldierTypeToNotCloneStatDic.Add(type, solider.obj.Stat);
         }
     }
     public void AddDummyPenguin(DummyPenguin obj)
@@ -80,20 +87,28 @@ public class PenguinManager
         });
         DummyPenguinList.Add(obj);
     }
+
+    /// <summary>
+    /// 퇴출할 때 사용
+    /// </summary>
+    /// <param name="obj"></param>
     public void RemoveDummyPenguin(DummyPenguin obj)
     {
-
+        DummyPenguinList.Remove(obj);
     }
     public void AddSoliderPenguin(Penguin obj)
     {
         SoldierPenguinList.Add(obj);
     }
+    /// <summary>
+    /// 퇴출할 때 사용
+    /// </summary>
+    /// <param name="obj"></param>
     public void RemoveSoliderPenguin(Penguin obj)
     {
-
+        SoldierPenguinList.Remove(obj);
     }
-
-    public void AddInfoDataMapping(EntityInfoDataSO data, DummyPenguin dummy)
+    public void AddInfoDataMapping(EntityInfoDataSO data, Penguin penguin)
     {
         EntityInfoDataSO dataType = null;
 
@@ -106,32 +121,69 @@ public class PenguinManager
             dataType = data as PenguinInfoDataSO;
         }
 
-        infoDataToDummyDic.Add(dataType, dummy);
-        dummyToInfoDataDic.Add(dummy, dataType);
+        infoDataToPenguinDic.Add(dataType, penguin);
+        penguinToInfoDataDic.Add(penguin, dataType);
     }
+    public void ShowInfoUI<T1, T2>(DummyPenguin dummy) where T1 : EntityInfoDataSO where T2 : BaseStat
+    {
+        T1 infoData = GetInfoDataByDummyPenguin<T1>(dummy);
+
+        //군단에 소속되지 않았다면 디폴트 정보를 넘겨줌
+        if (infoData == null) infoData = dummy.NotCloneInfo as T1;
+
+        T2 statData = GetStatByInfoData<T2>(infoData);
+
+        GetCurrentInfoData = infoData;
+        GetCurrentStat = statData;
+
+        // 장군 정보와 펭귄 정보는 따로
+        //if (stat is PenguinStat && infoData is EntityInfoDataSO)
+        UIManager.Instance.ShowPanel("PenguinInfoUI");
+        /*else
+            UIManager.Instance.ShowPanel("GeneralInfoUI");*/
+    }
+
     public DummyPenguin GetDummyByInfoData(EntityInfoDataSO infoData)
     {
         DummyPenguin resultDummy = null;
-        if (infoDataToDummyDic.TryGetValue(infoData, out var dummy))
-            resultDummy = dummy;
+        if (infoDataToPenguinDic.TryGetValue(infoData, out var dummy))
+        {
+            resultDummy = GetDummyByPenguin(dummy);
+        }
 
         return resultDummy;
     }
 
     public T GetInfoDataByDummyPenguin<T>(DummyPenguin dummy) where T : EntityInfoDataSO
     {
-        if (dummyToInfoDataDic.TryGetValue(dummy, out var infoDataSO))
-            return (T)infoDataSO;
+        T result = null;
+        Penguin penguin = GetPenguinByDummyPenguin(dummy);
 
-        return default;
+        if (penguin == null) return result;
+
+        if (penguinToInfoDataDic.TryGetValue(penguin, out var infoDataSO))
+        {
+            result = (T)infoDataSO;
+        }
+
+        return result;
     }
-
-    public void AddSpawnMapping(LegionInventoryData data, Penguin penguin)
+    public EntityInfoDataSO GetNotCloneInfoDataByPenguin(Penguin penguin)
     {
-        legionDataToPenguinDic.Add(data, penguin);
-        penguinToLegionDataDic.Add(penguin, data);
+        EntityInfoDataSO result = null;
+
+        var dummy = GetDummyByPenguin(penguin);
+        result = dummy.NotCloneInfo;
+
+        return result;
     }
 
+    public EntityInfoDataSO GetNotCloneInfoDataByInfoDataInPenguin(EntityInfoDataSO data)
+    {
+        var penguin = GetPenguinByInfoData(data);
+
+        return GetNotCloneInfoDataByPenguin(penguin);
+    }
 
     /// <summary>
     /// 팽귄 생성하는 함수
@@ -153,7 +205,7 @@ public class PenguinManager
     }
     private Penguin GetPenguinByType(PenguinTypeEnum type)
     {
-        if (soldierTypeDictionary.TryGetValue(type, out var value)) return value;
+        if (soldierTypeToPenguinDic.TryGetValue(type, out var value)) return value;
 
         Debug.Log("해당하는 타입의 오브젝트는 없습니다. SoldierListSO를 확인해주세요.");
         return null;
@@ -165,25 +217,15 @@ public class PenguinManager
         {
             resultPenguin = penguin;
         }
-        else
-        {
-            Debug.Log($"GetPenguinByDummyPenguin에서 오류");
-            Debug.Log($"{dummyPenguin.name}과 등록된 펭귄이 없습니다.");
-        }
 
         return resultPenguin;
     }
-    public Penguin GetPenguinByLegionData(LegionInventoryData data)
+    public Penguin GetPenguinByInfoData(EntityInfoDataSO data)
     {
         Penguin resultPenguin = null;
-        if (legionDataToPenguinDic.TryGetValue(data, out var penguin))
+        if (infoDataToPenguinDic.TryGetValue(data, out var penguin))
         {
             resultPenguin = penguin;
-        }
-        else
-        {
-            Debug.Log($"GetPenguinByDummyPenguin에서 오류");
-            Debug.Log($"{data}과 등록된 펭귄이 없습니다.");
         }
 
         return resultPenguin;
@@ -207,28 +249,33 @@ public class PenguinManager
     {
         T resultStat = null;
 
-        if (infoDataToDummyDic.TryGetValue(data, out var dummy))
+        if (infoDataToPenguinDic.TryGetValue(data, out var penguin))
         {
-            Penguin penguin = GetPenguinByDummyPenguin(dummy);
             resultStat = penguin.ReturnGenericStat<T>();
+            GetCurrentStat = resultStat;
         }
         else
         {
-            Debug.Log("GetStatByInfoData에서 오류");
-            Debug.Log("UI정보와 등록된 더미 펭귄이 없습니다.");
+            //군단에 소속되지 않았다면 클론이 아닌 디폴트 스탯을 가져옴
+            if (soldierTypeToNotCloneStatDic.TryGetValue(data.PenguinType, out var notCloneStat))
+                resultStat = notCloneStat as T;
         }
 
         return resultStat;
     }
-    public (EntityInfoDataSO, string, int) GetLegionDataByPenguin(Penguin penguin)
-    {
-        var dummy = GetDummyByPenguin(penguin);
-        var UIData = dummy.PenguinUIInfo;
 
-        return (UIData, UIData.LegionName, UIData.SlotIdx);
+    public EntityInfoDataSO GetInfoDataByPenguin(Penguin penguin)
+    {
+        EntityInfoDataSO resultInfoData = null;
+        if (penguinToInfoDataDic.TryGetValue(penguin, out var infoData))
+        {
+            resultInfoData = infoData;
+        }
+
+        return resultInfoData;
     }
 
-    public void ApplySaveData(List<LegionInventoryData> addDataList, List<LegionInventoryData> removeDataList)
+    public void ApplySaveData(List<EntityInfoDataSO> addDataList, List<EntityInfoDataSO> removeDataList)
     {
         foreach (var data in addDataList)
         {
@@ -239,21 +286,19 @@ public class PenguinManager
         {
             ReleaseDummyPenguin(data);
         }
-
-
     }
 
     //펭귄과 더미펭귄을 맵핑
-    private void ApplyDummyPenguin(LegionInventoryData data)
+    private void ApplyDummyPenguin(EntityInfoDataSO data)
     {
-        var dataType = data.InfoData.PenguinType;
-        var penguin = GetPenguinByLegionData(data);
+        var dataType = data.PenguinType;
+        var penguin = GetPenguinByInfoData(data);
 
         //지금까지 생성된 더미펭귄들에서
         //오너를 가지고 있지 않은 애들을 골라 오너를 넣어줌
         foreach (var info in _dummyPenguinList)
         {
-            var dummyPenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
+            var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
             //오너를 가지고 있지 않다면
@@ -277,10 +322,10 @@ public class PenguinManager
     }
 
     //펭귄과 더미펭귄을 딕셔너리에서 제외
-    private void ReleaseDummyPenguin(LegionInventoryData data)
+    private void ReleaseDummyPenguin(EntityInfoDataSO data)
     {
-        var dataType = data.InfoData.PenguinType;
-        var penguin = GetPenguinByLegionData(data);
+        var dataType = data.PenguinType;
+        var penguin = GetPenguinByInfoData(data);
 
         //지금까지 생성된 더미펭귄들에서
         //오너를 가지고 있는 더미펭귄들을 골라 오너를 지워주고
@@ -288,7 +333,7 @@ public class PenguinManager
 
         foreach (var info in _dummyPenguinList)
         {
-            var dummyPenguinType = info.dummyPenguin.PenguinUIInfo.PenguinType;
+            var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
 
             //오너를 가지고 있다면
@@ -327,7 +372,6 @@ public class PenguinManager
                 NotBelongDummyPenguinList.Add(item.dummyPenguin);
             }
         }
-
     }
 }
 

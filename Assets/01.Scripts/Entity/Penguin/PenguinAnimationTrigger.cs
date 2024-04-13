@@ -54,7 +54,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// </summary>
     public void AoEAttackTrigger(int isKnb)
     {
-        _penguin.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 1.5f);
+        _penguin.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 150f);
         OnAoEAttackTriggerEvent?.Invoke();
     }
 
@@ -62,7 +62,6 @@ public class PenguinAnimationTrigger : MonoBehaviour
     {
         _penguin.AttackCompo.MeleeAttack();
         OnAttackTriggerEvent?.Invoke();
-
     }
 
     public void StunTrigger(int isStun)
@@ -75,6 +74,11 @@ public class PenguinAnimationTrigger : MonoBehaviour
     {
         _penguin.AttackCompo.AoEStunAttack(isStun == 0 ? false : true, 3f);
         //OnStunTriggerEvent?.Invoke();
+    }
+
+    public void DashAttackTrigger()
+    {
+        _penguin.AttackCompo.DashAttack();
     }
 
     private void RangeAttackTrigger()

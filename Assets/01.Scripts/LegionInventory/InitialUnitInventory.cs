@@ -40,11 +40,11 @@ public class InitialUnitInventory : MonoBehaviour
         
         if (so is GeneralInfoDataSO)
         {
-            slot.transform.parent = spawnGeneralSlotParent;
+            slot.transform.SetParent(spawnGeneralSlotParent);
         }
         else
         {
-            slot.transform.parent = spawnPenguinSlotParent;
+            slot.transform.SetParent(spawnPenguinSlotParent);
         }
 
         penguinDictionary.Add(so, slot);

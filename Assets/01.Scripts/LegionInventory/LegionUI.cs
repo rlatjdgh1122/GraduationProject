@@ -72,4 +72,44 @@ public class LegionUI : InitLegionInventory
             text.color = Color.white;
         }
     }
+
+    public bool LimitOfGeneral()
+    {
+        return currentGeneral > 0 ? true : false;
+    }
+
+    public bool ChangedInCurrentLegion()
+    {
+        bool value = false;
+
+        foreach (var data in currentLegionList)
+        {
+            if (!savedLegionList.Contains(data))
+            {
+                value = true;
+            }
+        }
+
+        foreach (var data in currentRemovePenguinList)
+        {
+            if (savedLegionList.Contains(data))
+            {
+                value = true;
+            }
+        }
+
+        return value;
+    }
+
+    public bool ExcedLimitOfLegion(int legionNumber)
+    {
+        if (legion.LegionList()[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

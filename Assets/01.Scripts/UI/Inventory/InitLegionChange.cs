@@ -30,7 +30,7 @@ public class InitLegionChange : PopupUI
         for (int i = 0; i < legion.LegionCount; i++)
         {
             LegionChangeButton btn = Instantiate(_buttonPrefab);
-            btn.transform.parent = _buttonParent;
+            btn.transform.SetParent(_buttonParent);
 
             btn.CreateBtn(i + 1, legion.LegionList()[i].Price);
             if (!LegionInventoryManager.Instance.LegionList()[i].Locked)

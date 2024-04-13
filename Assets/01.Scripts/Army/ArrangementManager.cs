@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArrangementManager : Singleton<ArrangementManager>
 {
-    [SerializeField] private Transform SpawnPoint;
+    private Transform SpawnPoint => GameManager.Instance.TentTrm;
 
     [Header("배치 거리"), Range(0.5f, 3f)]
     public float distance = 1;
@@ -12,9 +12,9 @@ public class ArrangementManager : Singleton<ArrangementManager>
     private int length = 7;
 
     private List<Vector3> seatPosList = new();
-    private List<LegionInventoryData> prevSaveDataList = new();
-    private List<LegionInventoryData> addDataList = new();
-    private List<LegionInventoryData> removeDataList = new();
+    private List<EntityInfoDataSO> prevSaveDataList = new();
+    private List<EntityInfoDataSO> addDataList = new();
+    private List<EntityInfoDataSO> removeDataList = new();
     public override void Awake()
     {
         Setting();
@@ -37,7 +37,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
     /// 저장되어있는 데이터로 실제 펭귄들을 적용
     /// </summary>
     /// <param name="dataList"></param>
-    public void ApplySaveData(List<LegionInventoryData> dataList)
+    public void ApplySaveData(List<EntityInfoDataSO> dataList)
     {
         //이전 데이터와 현재 데이터를 비교
         CompareDataList(dataList);
@@ -52,7 +52,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
         foreach (var item in removeDataList)
         {
             var legionName = item.LegionName;
-            var penguin = PenguinManager.Instance.GetPenguinByLegionData(item);
+            var penguin = PenguinManager.Instance.GetPenguinByInfoData(item);
 
             RemovePenguin(legionName, penguin);
         }
@@ -66,7 +66,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
     /// 이전 데이터에서 있던게 없다면 removeDataList 추가
     /// </summary>
     /// <param name="dataList"></param>
-    private void CompareDataList(List<LegionInventoryData> dataList)
+    private void CompareDataList(List<EntityInfoDataSO> dataList)
     {
         if (addDataList.Count > 0) addDataList.Clear();
         if (removeDataList.Count > 0) removeDataList.Clear();
@@ -103,18 +103,18 @@ public class ArrangementManager : Singleton<ArrangementManager>
         prevSaveDataList = dataList.ToList();
     }
 
-    private void SpawnPenguin(LegionInventoryData data)
+    private void SpawnPenguin(EntityInfoDataSO data)
     {
         var _legionName = data.LegionName;
-        var _slotIdx = data.InfoData.SlotIdx;
-        var _jobType = data.InfoData.JobType;
-        var _penguinType = data.InfoData.PenguinType;
+        var _slotIdx = data.SlotIdx;
+        var _jobType = data.JobType;
+        var _penguinType = data.PenguinType;
 
         Penguin spawnPenguin =
             PenguinManager.Instance.SpawnSoldier(_penguinType, SpawnPoint.position, seatPosList[_slotIdx]);
 
         PenguinManager.Instance.AddSoliderPenguin(spawnPenguin);
-        PenguinManager.Instance.AddSpawnMapping(data, spawnPenguin);
+        PenguinManager.Instance.AddInfoDataMapping(data, spawnPenguin);
 
         if (_jobType == PenguinJobType.Solider)
         {

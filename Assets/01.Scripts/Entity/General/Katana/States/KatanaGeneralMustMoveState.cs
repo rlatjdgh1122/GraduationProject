@@ -17,8 +17,6 @@ public class KatanaGeneralMustMoveState : KatanaGeneralBaseState
     {
         base.UpdateState();
 
-        base.UpdateState();
-
         if (_penguin.WaitForCommandToArmyCalled)
         {
             if (_penguin.NavAgent.remainingDistance < 0.05f)
