@@ -24,7 +24,17 @@ public abstract class DefenseBuilding : BaseBuilding
 
     private Health _health;
 
-    protected Transform _currentTarget => _fov.FindVisibleTargets().FirstOrDefault();
+    protected Transform _currentTarget
+    {
+        get
+        {
+            if (_fov.FindVisibleTargets().FirstOrDefault() != null)
+            {
+                return _fov.FindVisibleTargets().FirstOrDefault().transform;
+            }
+            return null;
+        }
+    }
 
     protected override void Awake()
     {

@@ -23,7 +23,7 @@ public class Enemy : Entity
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
     #endregion
-    public Transform NexusTarget => GameObject.Find("Nexus").transform;
+    public Transform NexusTarget;
 
     public bool IsMove = false;
     public bool IsProvoked = false;
@@ -48,6 +48,7 @@ public class Enemy : Entity
     private void OnEnable()
     {
         SignalHub.OnIceArrivedEvent += SetTarget;
+        NexusTarget = GameObject.Find("Nexus").transform;
     }
 
     private void OnDisable()

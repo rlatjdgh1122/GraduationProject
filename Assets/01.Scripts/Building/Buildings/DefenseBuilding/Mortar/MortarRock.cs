@@ -37,6 +37,7 @@ public class MortarRock : PoolableMono
             timer += Time.deltaTime;
             Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
             transform.position = tempPos;
+            transform.rotation = Quaternion.Euler(0, timer * 720f, 0);
             yield return new WaitForEndOfFrame();
         }
 
