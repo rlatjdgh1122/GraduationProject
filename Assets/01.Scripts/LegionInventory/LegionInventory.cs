@@ -68,7 +68,6 @@ public class LegionInventory : LegionUI
 
     public void ChangeLegion(string name)
     {
-        Debug.Log(name);
         ResetLegion();
 
         if (savedLegionList == null) return;
@@ -142,7 +141,7 @@ public class LegionInventory : LegionUI
         LegionCountTextSetting();
     }
 
-    public void DeadPenguin(string legionName, int slotIdx)
+    public void DeadPenguin(string legionName, int slotIdx, bool retire = false)
     {
         var saveList = savedLegionList.ToList();
 
@@ -152,7 +151,9 @@ public class LegionInventory : LegionUI
                 && saveData.SlotIdx == slotIdx)
             {
                 savedLegionList.Remove(saveData);
-                currentLegionList.Remove(saveData);
+
+                if(retire) currentLegionList.Remove(saveData);
+
                 slotList[saveData.SlotIdx].ExitSlot(null);
             }
         }
@@ -184,7 +185,11 @@ public class LegionInventory : LegionUI
             }
             else
             {
+                UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
+
+                Debug.Log(curData.LegionName);
                 legion.ShowPenguinSituation(curData, hpPercent);
+
                 return;
             }
         }

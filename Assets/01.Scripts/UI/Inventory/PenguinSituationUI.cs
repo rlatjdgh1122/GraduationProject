@@ -24,9 +24,13 @@ public class PenguinSituationUI : PenguinSituationPanel
     }
     public void SetPenguinSituation(EntityInfoDataSO so, float percent, int penguinPrice)
     {
-        data = so;
+        if (so.LegionName == "소속된 군단 없음")
+        {
+            UIManager.Instance.ShowWarningUI("군단을 저장해주세요!");
+            return;
+        }
 
-        UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
+        data = so;
 
         CheckBuy(percent, penguinPrice);
 
