@@ -16,12 +16,11 @@ public class MortarBuilding : DefenseBuilding
 
     protected override void Running()
     {
-        StartCoroutine(FireRoutine());
     }
 
     protected override void Update()
     {
-        if (WaveManager.Instance.IsBattlePhase)
+        if (WaveManager.Instance.IsBattlePhase) // 이것을 Running으로 옮길 것 입니다.
         {
             if (_currentTarget != null && !isFired)
             {
@@ -43,6 +42,7 @@ public class MortarBuilding : DefenseBuilding
 
     private void Fire()
     {
+        Debug.Log("?!");
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         rock.transform.position = _firePos.position;
         StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));

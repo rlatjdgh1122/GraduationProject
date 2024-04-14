@@ -13,6 +13,8 @@ public class MortarRock : PoolableMono
     [SerializeField] // 일단 여기다가 넣음
     private int damage;
 
+    private bool isDestoried;
+
     private void Awake()
     {
         _damageCaster = GetComponent<DamageCaster>();
@@ -31,6 +33,7 @@ public class MortarRock : PoolableMono
     public IEnumerator BulletMove(Vector3 startPos, Vector3 endPos)
     {
         timer = 0;
+        isDestoried = false;
         //여기에 거시기 그 폭발 범위 이미지
         while (transform.position.y >= -1f)
         {
@@ -41,6 +44,7 @@ public class MortarRock : PoolableMono
             yield return new WaitForEndOfFrame();
         }
 
+        isDestoried = true;
         PoolManager.Instance.Push(this);
     }
 
@@ -51,15 +55,19 @@ public class MortarRock : PoolableMono
 
     private void DestroyRock()
     {
-        _damageCaster.CastBuildingAoEDamage(transform.position, _damageCaster.TargetLayer, damage);
-        _attackFeedback.CreateFeedback();
-        SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position);
-
-        CoroutineUtil.CallWaitForSeconds(0.7f, null, () =>
+        if (!isDestoried)
         {
-            _attackFeedback.FinishFeedback();
-            CoroutineUtil.CallWaitForOneFrame(null);
-            PoolManager.Instance.Push(this);
-        });
+            isDestoried = true;
+            _damageCaster.CastBuildingAoEDamage(transform.position, _damageCaster.TargetLayer, damage);
+            _attackFeedback.CreateFeedback();
+            SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position);
+
+            CoroutineUtil.CallWaitForSeconds(0.7f, null, () =>
+            {
+                _attackFeedback.FinishFeedback();
+                CoroutineUtil.CallWaitForOneFrame(null);
+                PoolManager.Instance.Push(this);
+            });
+        }
     }
 }
