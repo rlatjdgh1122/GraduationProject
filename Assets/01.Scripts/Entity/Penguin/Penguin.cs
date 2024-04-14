@@ -230,8 +230,8 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        Vector3 pos = MousePos + movePos; // �̸� ���� ȸ�� ��ġ�� ���⿡�� ���
-        MoveToMouseClick(pos);
+        //Vector3 pos = MousePos + movePos; // �̸� ���� ȸ�� ��ġ�� ���⿡�� ���
+        //MoveToMouseClick(pos);
     }
     private void MoveToMouseClick(Vector3 pos)
     {
