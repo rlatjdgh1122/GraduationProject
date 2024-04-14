@@ -155,10 +155,6 @@ public class DamageCaster : MonoBehaviour
                 if (health.currentHealth < health.maxHealth * 0.5f)
                 {
                     health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
-                    if (health.IsDead && general.CurrentTarget != null)
-                    {
-                        general.OnPassiveAttackEvent();
-                    }
                 }
                 else
                 {

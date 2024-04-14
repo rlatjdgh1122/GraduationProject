@@ -1,13 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class DashSkill : Skill
 {
     [SerializeField] private float _dashDelay;
     [SerializeField] private float _dashTime;
     [SerializeField] private float _dashSpeed;
+    [SerializeField] private ParticleSystem _effect;
 
-    private General owner => _owner as General;
+    private General general => _owner as General;
 
     private Coroutine _dashCoroutine;
 
@@ -18,9 +20,6 @@ public class DashSkill : Skill
 
     public void DashHandler()
     {
-        owner.canDash = false;
-        Vector3 direction = (owner.CurrentTarget.transform.position - owner.transform.position).normalized;
-        owner.transform.rotation = Quaternion.LookRotation(direction);
         Dash(_dashDelay, _dashTime, _dashSpeed);
     }
 
@@ -38,10 +37,15 @@ public class DashSkill : Skill
 
         float startTime = Time.time;
 
+        general.NavAgent.enabled = false;
+        _effect.Play();
+
         while (Time.time < startTime + time)
         {
-            owner.CharacterCompo.Move(owner.transform.forward * speed * Time.deltaTime);
+            general.CharacterCompo.Move(general.transform.forward * speed * Time.deltaTime);
             yield return null;
         }
+
+        general.NavAgent.enabled = true;
     }
 }

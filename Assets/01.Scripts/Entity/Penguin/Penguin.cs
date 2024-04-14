@@ -165,13 +165,15 @@ public class Penguin : Entity
 
     public virtual void LookTargetImmediately()
     {
+        
+
         if (CurrentTarget != null)
         {
             Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0f);
+            transform.rotation = targetRotation;
         }
     }
 

@@ -1,3 +1,6 @@
+using DG.Tweening;
+using UnityEngine;
+
 public class PenguinDashState : KatanaBaseState
 {
     DashSkill dashSkill => _general.skill as DashSkill;
@@ -9,24 +12,19 @@ public class PenguinDashState : KatanaBaseState
         if (_penguin.CurrentTarget == null)
             return;
 
-        if (_penguin.CurrentTarget != null)
-            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+        //if (_penguin.CurrentTarget != null)
+        //    _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
-        _penguin.WaitForCommandToArmyCalled = false;
+        //_penguin.WaitForCommandToArmyCalled = false;
 
-        _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
+        //_penguin.AnimatorCompo.speed = _penguin.attackSpeed;
+        dashSkill.DashHandler();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_general.canDash)
-        {
-            dashSkill.DashHandler();
-            _general.canDash = false;
-        }
 
         if (_triggerCalled) 
         {
