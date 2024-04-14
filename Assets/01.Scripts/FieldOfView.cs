@@ -17,9 +17,9 @@ public class FieldOfView : MonoBehaviour
     [SerializeField]
     private LayerMask _targetLayer, _obstacleLayer;
 
-    public HashSet<Transform> FindVisibleTargets()
+    public HashSet<Enemy> FindVisibleTargets()
     {
-        HashSet<Transform> visibleTargets = new();
+        HashSet<Enemy> visibleTargets = new();
 
         // viewRadius를 반지름으로 한 원 영역 내 _targetLayer 레이어인 콜라이더를 모두 가져옴
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, _targetLayer);
@@ -38,7 +38,13 @@ public class FieldOfView : MonoBehaviour
                 // 타겟으로 가는 레이캐스트에 _obstacleLayer 걸리지 않으면 _visibleTargets에 Add
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleLayer))
                 {
-                    visibleTargets.Add(target);
+                    if (target.TryGetComponent(out Enemy enemy))
+                    {
+                        if (enemy.NavAgent.enabled)
+                        {
+                            visibleTargets.Add(enemy);
+                        }
+                    }
                 }
             }
         }

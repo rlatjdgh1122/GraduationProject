@@ -7,6 +7,17 @@ using UnityEngine;
 public class MortarRock : PoolableMono
 {
     private float timer;
+    private DamageCaster _damageCaster;
+    private MortarEffect _attackFeedback;
+
+    [SerializeField] // 일단 여기다가 넣음
+    private int damage;
+
+    private void Awake()
+    {
+        _damageCaster = GetComponent<DamageCaster>();
+        _attackFeedback = transform.GetChild(0).GetComponent<MortarEffect>();
+    }
 
     private Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
     {
@@ -20,15 +31,35 @@ public class MortarRock : PoolableMono
     public IEnumerator BulletMove(Vector3 startPos, Vector3 endPos)
     {
         timer = 0;
-        while (transform.position.y >= 0f)
+        //여기에 거시기 그 폭발 범위 이미지
+        while (transform.position.y >= -1f)
         {
             timer += Time.deltaTime;
             Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
             transform.position = tempPos;
+            transform.rotation = Quaternion.Euler(0, timer * 720f, 0);
             yield return new WaitForEndOfFrame();
         }
 
         PoolManager.Instance.Push(this);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        DestroyRock();
+    }
+
+    private void DestroyRock()
+    {
+        _damageCaster.CastBuildingAoEDamage(transform.position, _damageCaster.TargetLayer, damage);
+        _attackFeedback.CreateFeedback();
+        SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position);
+
+        CoroutineUtil.CallWaitForSeconds(0.7f, null, () =>
+        {
+            _attackFeedback.FinishFeedback();
+            CoroutineUtil.CallWaitForOneFrame(null);
+            PoolManager.Instance.Push(this);
+        });
+    }
 }

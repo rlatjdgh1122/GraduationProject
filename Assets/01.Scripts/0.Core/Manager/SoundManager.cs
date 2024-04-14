@@ -46,7 +46,15 @@ public enum SoundName
     CostBox,
     LevelUp,
     None,
-    WoodCut
+    WoodCut,
+
+
+    #region Buildings
+
+    MortarFire,
+    MortarExplosion,
+
+    #endregion
 }
 
 public class SoundManager : MonoBehaviour

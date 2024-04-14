@@ -249,6 +249,22 @@ public class DamageCaster : MonoBehaviour
         return true;
     }
 
+    public bool CastBuildingAoEDamage(Vector3 position, LayerMask targetLayer, int damage) // 건물은 Entity 상속 안 받아서 매개변수로 데미지 받음
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, _detectRange * 3, targetLayer);
+
+        foreach (Collider collider in colliders)
+        {
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType);
+            }
+        }
+
+        return true;
+    }
+
     public void ShowCritical(EntityActionData actionData)
     {
         //actionData.HitPoint

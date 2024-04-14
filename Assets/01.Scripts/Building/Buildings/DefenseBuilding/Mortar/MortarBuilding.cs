@@ -10,23 +10,43 @@ public class MortarBuilding : DefenseBuilding
     [SerializeField]
     private Transform _firePos;
 
+    private readonly string prefabName = "stone-small";
+
+    private bool isFired;
+
     protected override void Running()
     {
-        Debug.Log(_currentTarget);
+        StartCoroutine(FireRoutine());
     }
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (WaveManager.Instance.IsBattlePhase)
+        {
+            if (_currentTarget != null && !isFired)
+            {
+                StartCoroutine(FireRoutine());
+            }
+        }
+    }
+
+    private IEnumerator FireRoutine()
+    {
+        isFired = true;
+        while (WaveManager.Instance.IsBattlePhase && _currentTarget != null)
         {
             Fire();
+            yield return new WaitForSeconds(3f);
         }
+        isFired = false;
     }
 
     private void Fire()
     {
-        MortarRock rock = PoolManager.Instance.Pop("stone-small") as MortarRock;
+        MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         rock.transform.position = _firePos.position;
-        StartCoroutine(rock.BulletMove(rock.transform.position, rock.transform.position + new Vector3(Random.Range(-10f,10f),0, Random.Range(-10f, 10f))));
+        StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
+
+        SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
     }
 }

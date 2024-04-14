@@ -15,8 +15,6 @@ public abstract class DefenseBuilding : BaseBuilding
     FieldOfView _fov;
     protected FieldOfView FOV => _fov;
 
-    HashSet<Transform> _visibleTargets => _fov.FindVisibleTargets();
-
     private Dictionary<int, Ground> _groundOutlines = new();
 
     private HashSet<Ground> _previousGrounds = new();
@@ -26,7 +24,17 @@ public abstract class DefenseBuilding : BaseBuilding
 
     private Health _health;
 
-    protected Transform _currentTarget => _fov.FindVisibleTargets().FirstOrDefault();
+    protected Transform _currentTarget
+    {
+        get
+        {
+            if (_fov.FindVisibleTargets().FirstOrDefault() != null)
+            {
+                return _fov.FindVisibleTargets().FirstOrDefault().transform;
+            }
+            return null;
+        }
+    }
 
     protected override void Awake()
     {
