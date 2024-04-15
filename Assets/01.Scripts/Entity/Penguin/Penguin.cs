@@ -165,8 +165,6 @@ public class Penguin : Entity
 
     public virtual void LookTargetImmediately()
     {
-        
-
         if (CurrentTarget != null)
         {
             Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;

@@ -1,7 +1,5 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -14,6 +12,7 @@ public class DamageCaster : MonoBehaviour
     public LayerMask TargetLayer;
 
     private Entity _owner;
+    private Skill _skill;
 
     public void SetOwner(Entity owner)
     {
@@ -137,8 +136,8 @@ public class DamageCaster : MonoBehaviour
 
     public void CastDashDamage()
     {
-        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
-        General general = _owner as General;
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange * 2f, TargetLayer);
+        KatanaGeneralPenguin general = _owner as KatanaGeneralPenguin;
 
         foreach (var col in Colls)
         {
@@ -147,13 +146,15 @@ public class DamageCaster : MonoBehaviour
             var dir = (col.transform.position - transform.position).normalized;
             dir.y = 0;
 
-            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange * 2f, TargetLayer);
 
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
                 if (health.currentHealth < health.maxHealth * 0.5f)
                 {
+                    general.canDash = true;
+                    Debug.Log("대쉬 처형");
                     health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
                 }
                 else

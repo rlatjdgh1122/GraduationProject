@@ -1,5 +1,4 @@
-using DG.Tweening;
-using UnityEngine;
+using System.Diagnostics;
 
 public class PenguinDashState : KatanaBaseState
 {
@@ -9,17 +8,17 @@ public class PenguinDashState : KatanaBaseState
     {
         base.EnterState();
 
+        _penguin.LookTargetImmediately();
+
         if (_penguin.CurrentTarget == null)
-            return;
-
-        //if (_penguin.CurrentTarget != null)
-        //    _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
-
-        _triggerCalled = false;
-        //_penguin.WaitForCommandToArmyCalled = false;
-
-        //_penguin.AnimatorCompo.speed = _penguin.attackSpeed;
-        dashSkill.DashHandler();
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }    
+        else
+        {
+            _triggerCalled = false;
+            dashSkill.DashHandler();
+        }
     }
 
     public override void UpdateState()
@@ -28,9 +27,16 @@ public class PenguinDashState : KatanaBaseState
 
         if (_triggerCalled) 
         {
-            _stateMachine.ChangeState(PenguinStateType.Chase);
+            if (_general.canDash)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Dash);
+            }
+            else
+            {
+                _stateMachine.ChangeState(PenguinStateType.Chase);
 
-            IsTargetNull(PenguinStateType.Idle);
+                IsTargetNull(PenguinStateType.Idle);
+            }
         }
     }
 

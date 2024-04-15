@@ -6,6 +6,7 @@ public class KatanaGeneralPenguin : General
 {
     public EntityStateMachine<KatanaGeneralStateEnum, General> StateMachine { get; private set; }
     public TestStateMachine TestStateMachine { get; private set; }
+    public DashSkill DashSkill;
 
     protected override void Awake()
     {
@@ -30,8 +31,6 @@ public class KatanaGeneralPenguin : General
     protected override void Start()
     {
         StateInit();
-
-        canDash = true;
     }
 
     protected override void Update()
@@ -49,11 +48,6 @@ public class KatanaGeneralPenguin : General
     public override void OnPassiveAttackEvent()
     {
         TestStateMachine.ChangeState(PenguinStateType.Dash);
-    }
-
-    public override void DashEndTrigger()
-    {
-        canDash = true;
     }
 
     public override void AnimationTrigger() => TestStateMachine.CurrentState.AnimationTrigger();
