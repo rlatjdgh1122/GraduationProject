@@ -13,8 +13,12 @@ public class MortarEffect : Feedback
 
     public override void CreateFeedback()
     {
+    }
+
+    public void CreateFeedback(Vector3 pos)
+    {
         EffectPlayer effect = PoolManager.Instance.Pop("MortarGroundStrikeHit") as EffectPlayer;
-        effect.transform.position = transform.position;
+        effect.transform.position = pos;
         effect.transform.rotation = transform.rotation;
         effect.StartPlay(_effectEndTime);
     }

@@ -32,6 +32,7 @@ public class MortarBuilding : DefenseBuilding
     private IEnumerator FireRoutine()
     {
         isFired = true;
+        
         while (WaveManager.Instance.IsBattlePhase && _currentTarget != null)
         {
             Fire();
@@ -42,11 +43,12 @@ public class MortarBuilding : DefenseBuilding
 
     private void Fire()
     {
-        Debug.Log("?!");
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         rock.transform.position = _firePos.position;
         StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
 
         SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
+
+        
     }
 }

@@ -120,7 +120,7 @@ public class Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, bool isPlayHitEvent = true)
     {
         if (_isDead) return;
 
@@ -140,7 +140,7 @@ public class Health : MonoBehaviour, IDamageable
 
         currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
 
-        OnHitEvent?.Invoke();
+        if (isPlayHitEvent) { OnHitEvent?.Invoke(); }
         OnHit?.Invoke();
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
