@@ -154,7 +154,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curArmyIdx].AddStat(armies[curArmyIdx], value, type, mode);
+        armies[curArmyIdx].AddStat(value, type, mode);
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curArmyIdx].RemoveStat(armies[curArmyIdx], value, type, mode);
+        armies[curArmyIdx].RemoveStat(value, type, mode);
     }
 
     /// <summary>
@@ -177,7 +177,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion - 1].RemoveStat(armies[legion], value, type, mode);
+        armies[legion - 1].RemoveStat(value, type, mode);
     }
     /// <summary>
     /// 군단의 스탯을 삭제
@@ -188,7 +188,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion - 1].AddStat(armies[legion], value, type, mode);
+        armies[legion - 1].AddStat(value, type, mode);
     }
 
     #endregion
@@ -229,7 +229,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
-        var LegionStat = obj.ligeonStat;
+        var Abilities = obj.ReturnGenericStat<GeneralStat>().GeneralDetailData.abilities;
 
         if (Army.General != null)
         {
@@ -240,7 +240,7 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.General = obj;
 
-        Army.AddStat(Army, LegionStat);
+        Army.AddStat(Abilities);
 
     }
     #endregion
@@ -281,6 +281,7 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.LegionName = $"{ArmiesCount + 1}군단";
         newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
 
+        armies.Add(newArmy);
         GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");
         ArmyFollowCam armyFollowCam = new ArmyFollowCam();
 
@@ -290,7 +291,6 @@ public class ArmyManager : Singleton<ArmyManager>
         armyFollowCam.Obj = followCam;
         newArmy.FollowCam = armyFollowCam;
 
-        armies.Add(newArmy);
     }
 
     #endregion

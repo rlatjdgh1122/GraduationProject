@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,40 +23,34 @@ public class Army
 {
     public string LegionName; //몇번째 군단
     public bool IsCanReadyAttackInCurArmySoldiersList = true; //군단 전체가 움직일 준비가 되었는가
-    public List<Penguin> Soldiers = new(); //군인 펭귄들
-    public General General = null; //장군
 
     public ArmyFollowCam FollowCam = null; //군단 오브젝트
     public ArmyInfo Info; //정보
 
-    public void AddStat(Army army, LigeonStatAdjustment ligeonStat)
-    {
-        var IncStatList = ligeonStat.IncStat;
-        var DecStatList = ligeonStat.DecStat;
+    public List<Penguin> Soldiers = new(); //군인 펭귄들
+    public General General = null; //장군
 
-        foreach (var incStat in IncStatList)
-        {
-            AddStat(army, incStat.value, incStat.type, StatMode.Increase);
-        }
-
-        foreach (var DecStat in DecStatList)
-        {
-            AddStat(army, DecStat.value, DecStat.type, StatMode.Decrease);
-        }
-    }
-    public void AddStat(Army army, int value, StatType type, StatMode mode)
+    public void AddStat(int value, StatType type, StatMode mode)
     {
-        army.General?.AddStat(value, type, mode);
-        foreach (var solider in army.Soldiers)
+        this.General?.AddStat(value, type, mode);
+        foreach (var solider in this.Soldiers)
         {
             solider.AddStat(value, type, mode);
         }
     }
-    public void RemoveStat(Army army, int value, StatType type, StatMode mode)
-    {
-        army.General?.RemoveStat(value, type, mode);
 
-        foreach (var solider in army.Soldiers)
+    public void AddStat(List<Ability> abilities)
+    {
+        foreach (var incStat in abilities)
+        {
+            AddStat(incStat.value, incStat.statType, incStat.statMode);
+        }
+    }
+    public void RemoveStat(int value, StatType type, StatMode mode)
+    {
+        this.General?.RemoveStat(value, type, mode);
+
+        foreach (var solider in this.Soldiers)
         {
             solider.RemoveStat(value, type, mode);
         }
