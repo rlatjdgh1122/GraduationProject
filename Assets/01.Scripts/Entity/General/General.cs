@@ -24,6 +24,7 @@ public class General : Penguin
     public Skill skill;
 
     public bool canSpinAttack = false;
+    public bool canDash = false;
 
     protected override void Awake()
     {
