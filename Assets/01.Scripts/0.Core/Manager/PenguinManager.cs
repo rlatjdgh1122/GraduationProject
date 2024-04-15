@@ -36,6 +36,7 @@ public class PenguinManager
     //Type으로 클론이 아닌 스탯을 가져옴(군단에 소속되지 않은 더미펭귄한테 사용)
     private Dictionary<PenguinTypeEnum, BaseStat> soldierTypeToNotCloneStatDic = new();
 
+    public CameraSystem CameraCompo { get; set; }
     #region 펭귄 리스트
     private List<DummyPenguinListItem> _dummyPenguinList = new();
     public List<DummyPenguin> DummyPenguinList = new();
@@ -65,6 +66,10 @@ public class PenguinManager
     public BaseStat GetCurrentStat = null;
     public EntityInfoDataSO GetCurrentInfoData = null;
     #endregion
+    public void GetComponent_CameraSystem(CameraSystem compo)
+    {
+        CameraCompo = compo;
+    }
 
     //군단 매니저에서 등록
     public void Setting(SoldierListSO soldierTypeListSO)
@@ -137,6 +142,8 @@ public class PenguinManager
         GetCurrentStat = statData;
 
         UIManager.Instance.HidePanel("PenguinInfoUI");
+        PenguinManager.Instance.CameraCompo.SetCameraTartget(dummy.transform.position, 30f, 5f);
+
         // 장군 정보와 펭귄 정보는 따로
         //if (stat is PenguinStat && infoData is EntityInfoDataSO)
         UIManager.Instance.ShowPanel("PenguinInfoUI");

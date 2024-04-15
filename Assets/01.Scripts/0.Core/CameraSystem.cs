@@ -1,10 +1,7 @@
 using Cinemachine;
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CameraSystem : MonoBehaviour
 {
@@ -15,6 +12,7 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float _dragSpeed = 2f;
     private bool _dragPanMoveActive;
     private Vector2 _lastMousePosition;
+    private Vector3 prevPos = Vector3.zero;
 
     [Header("카메라 확대&축소")]
     [SerializeField] private float _fieldOfViewMax = 50;
@@ -24,6 +22,7 @@ public class CameraSystem : MonoBehaviour
     [Header("카메라 회전")]
     [Range(0.1f, 9f)]
     [SerializeField] private float _rotateSpeed;
+    [SerializeField] private float zoomSpeed = 10f;
 
     private float targetFieldOfView = 50f;
     private bool isRotating = false;
@@ -48,6 +47,7 @@ public class CameraSystem : MonoBehaviour
         set => isMoving = value;
     }
     public CinemachineVirtualCamera CinemachineCam => _cinemachineCam;
+    private CinemachineTransposer transposer;
 
     private Vector3 _startPosition;
     private Quaternion _vCamstartRotation;
@@ -57,6 +57,10 @@ public class CameraSystem : MonoBehaviour
         isMoving = true;
         _startPosition = transform.position;
         _vCamstartRotation = _cinemachineCam.transform.rotation;
+
+        transposer = _cinemachineCam.GetCinemachineComponent<CinemachineTransposer>();
+
+        PenguinManager.Instance.GetComponent_CameraSystem(this);
     }
 
     private void LateUpdate()
@@ -152,7 +156,7 @@ public class CameraSystem : MonoBehaviour
                 }
             }
 
-            transform.position += moveDir * _moveSpeed * Time.deltaTime;
+            transform.position += moveDir * _moveSpeed * Time.unscaledDeltaTime;
         }
     }
 
@@ -183,7 +187,7 @@ public class CameraSystem : MonoBehaviour
 
         Vector3 moveDir = transform.forward * inputDir.x + transform.right * inputDir.z;
 
-        transform.position += moveDir * _moveSpeed * Time.deltaTime;
+        transform.position += moveDir * _moveSpeed * Time.unscaledDeltaTime;
     }
 
     private void CameraZoomHandle()
@@ -199,9 +203,9 @@ public class CameraSystem : MonoBehaviour
 
         targetFieldOfView = Mathf.Clamp(targetFieldOfView, fieldOfViewMin, _fieldOfViewMax);
 
-        float zoomSpeed = 10f;
+
         _cinemachineCam.m_Lens.FieldOfView
-            = Mathf.Lerp(_cinemachineCam.m_Lens.FieldOfView, targetFieldOfView, Time.deltaTime * zoomSpeed);
+            = Mathf.Lerp(_cinemachineCam.m_Lens.FieldOfView, targetFieldOfView, Time.unscaledDeltaTime * zoomSpeed);
     }
 
     private void CameraRotate()
@@ -236,7 +240,29 @@ public class CameraSystem : MonoBehaviour
 
     public void SetCameraTartget(Vector3 target)
     {
+        prevPos = transform.position;
+
         Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
         transform.DOMove(vec, 0.5f);
+    }
+    public void SetCameraTartget(Vector3 target, float zoomValue = 30f, float pivotX = 5f)
+    {
+        prevPos = transform.position;
+
+        targetFieldOfView = zoomValue;
+        transposer.m_FollowOffset.x = pivotX;
+
+        Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
+        transform.DOMove(vec, 0.5f);
+    }
+
+
+    public void RollbackCameraTarget()
+    {
+        if (prevPos != Vector3.zero)
+        {
+            transposer.m_FollowOffset.x = 0f;
+            transform.DOMove(prevPos, 0.2f);
+        }
     }
 }
