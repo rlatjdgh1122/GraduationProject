@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DashSkill : Skill
 {
     [SerializeField] private float _dashDelay;
     [SerializeField] private float _dashTime;
     [SerializeField] private float _dashSpeed;
-    [SerializeField] private ParticleSystem _effect;
+
+    public UnityEvent OnDashEvent;
 
     private General general => _owner as General;
 
@@ -32,12 +34,15 @@ public class DashSkill : Skill
 
     private IEnumerator DashCoroutine(float delay, float time, float speed)
     {
+        general.Stat.AddStat(50, StatType.Armor, StatMode.Increase);
         yield return new WaitForSeconds(delay);
 
         float startTime = Time.time;
 
+        OnDashEvent?.Invoke();
+
+        general.Stat.AddStat(50, StatType.Armor, StatMode.Decrease);
         general.NavAgent.enabled = false;
-        _effect.Play();
 
         while (Time.time < startTime + time)
         {

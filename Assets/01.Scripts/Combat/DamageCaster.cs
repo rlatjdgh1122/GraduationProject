@@ -153,12 +153,16 @@ public class DamageCaster : MonoBehaviour
             {
                 if (health.currentHealth < health.maxHealth * 0.5f)
                 {
-                    general.canDash = true;
-                    Debug.Log("대쉬 처형");
                     health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
+                    if (health.IsDead)
+                    {
+                        general.canDash = true;
+                        return;
+                    }
                 }
                 else
                 {
+                    general.canDash = false;
                     int damage = _owner.Stat.damage.GetValue() * 2;
                     health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
                 }   
@@ -219,7 +223,6 @@ public class DamageCaster : MonoBehaviour
                 _hitType = HitType.CriticalHit;
                 adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
                 damage = (int)adjustedDamage;
-
             }
 
             raycastHealth?.ApplyDamage(damage, coll.transform.position, coll.transform.position, _hitType);

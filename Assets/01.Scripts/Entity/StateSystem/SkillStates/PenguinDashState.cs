@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 public class PenguinDashState : KatanaBaseState
 {
     DashSkill dashSkill => _general.skill as DashSkill;
