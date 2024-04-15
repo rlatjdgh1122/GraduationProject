@@ -8,7 +8,7 @@ public class MortarRock : PoolableMono
 {
     private float timer;
     private DamageCaster _damageCaster;
-    private MortarEffect _attackFeedback;
+    private MortarExplosionEffect _attackFeedback;
 
     [SerializeField] // 일단 여기다가 넣음
     private int damage;
@@ -23,7 +23,7 @@ public class MortarRock : PoolableMono
     private void Awake()
     {
         _damageCaster = GetComponent<DamageCaster>();
-        _attackFeedback = transform.GetChild(0).GetComponent<MortarEffect>();
+        _attackFeedback = transform.GetChild(0).GetComponent<MortarExplosionEffect>();
     }
 
     private Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)

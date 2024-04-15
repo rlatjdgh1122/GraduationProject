@@ -14,6 +14,15 @@ public class MortarBuilding : DefenseBuilding
 
     private bool isFired;
 
+    private ParticleSystem _mortarFireParticle;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _mortarFireParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+    }
+
+
     protected override void Running()
     {
     }
@@ -44,6 +53,7 @@ public class MortarBuilding : DefenseBuilding
     private void Fire()
     {
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
+        _mortarFireParticle.Play();
         rock.transform.position = _firePos.position;
         StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
 
