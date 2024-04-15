@@ -1,37 +1,37 @@
+using System.Diagnostics;
+
 public class PenguinDashState : KatanaBaseState
 {
+    DashSkill dashSkill => _general.skill as DashSkill;
+
     public override void EnterState()
     {
         base.EnterState();
 
-        AttackEnter();
+        _penguin.LookTargetImmediately();
 
-        _general.skill.OnSkillStart?.Invoke();
+        if (_penguin.CurrentTarget == null)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }    
+        else
+        {
+            _triggerCalled = false;
+            dashSkill.DashHandler();
+        }
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (IsArmyCalledIn_BattleMode())
+        if (_triggerCalled) 
         {
-            if (_triggerCalled)
+            if (_general.canDash)
             {
-                _stateMachine.ChangeState(PenguinStateType.Chase);
-                IsTargetNull(PenguinStateType.MustMove);
+                _stateMachine.ChangeState(PenguinStateType.Dash);
             }
-        }
-
-        else if (IsArmyCalledIn_CommandMode())
-        {
-            if (_penguin.WaitForCommandToArmyCalled)
-            {
-                _stateMachine.ChangeState(PenguinStateType.MustMove);
-            }
-        }
-        else
-        {
-            if (_triggerCalled) //АјАн
+            else
             {
                 _stateMachine.ChangeState(PenguinStateType.Chase);
 

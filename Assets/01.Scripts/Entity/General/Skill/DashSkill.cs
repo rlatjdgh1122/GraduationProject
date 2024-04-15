@@ -1,50 +1,50 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DashSkill : Skill
 {
     [SerializeField] private float _dashDelay;
     [SerializeField] private float _dashTime;
     [SerializeField] private float _dashSpeed;
+    [SerializeField] private ParticleSystem _effect;
 
-    private General owner => _owner as General;
+    private General general => _owner as General;
+
+    private Coroutine _dashCoroutine;
 
     public override void SetOwner(Entity owner)
     {
         base.SetOwner(owner);
-
-        OnSkillStart += DashHandler;
     }
 
     public void DashHandler()
     {
-        Vector3 forwardDirection = -owner.CurrentTarget.transform.forward;
-        Dash(forwardDirection, _dashDelay, _dashTime, _dashSpeed);
+        Dash(_dashDelay, _dashTime, _dashSpeed);
     }
 
-    public void Dash(Vector3 dir, float delay, float time, float speed)
+    public void Dash(float delay, float time, float speed)
     {
-        StopCoroutine(DashCoroutine(dir, delay, time, speed));
-        StartCoroutine(DashCoroutine(dir, delay, time, speed));
+        if (_dashCoroutine != null)
+            StopCoroutine(DashCoroutine(0, 0, 0));
+
+        _dashCoroutine = StartCoroutine(DashCoroutine(delay, time, speed));
     }
 
-    private IEnumerator DashCoroutine(Vector3 dir, float delay, float time, float speed)
+    private IEnumerator DashCoroutine(float delay, float time, float speed)
     {
         yield return new WaitForSeconds(delay);
 
         float startTime = Time.time;
 
-        owner.NavAgent.enabled = false;
+        general.NavAgent.enabled = false;
+        _effect.Play();
 
         while (Time.time < startTime + time)
         {
-            owner.CharacterCompo.Move(dir * speed * Time.deltaTime);
-
+            general.CharacterCompo.Move(general.transform.forward * speed * Time.deltaTime);
             yield return null;
         }
 
-        owner.NavAgent.enabled = true;
+        general.NavAgent.enabled = true;
     }
 }
