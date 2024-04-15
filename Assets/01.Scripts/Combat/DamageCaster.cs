@@ -262,6 +262,13 @@ public class DamageCaster : MonoBehaviour
                 damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
                 isHit = true;
             }
+
+            if (collider.TryGetComponent(out Health health))
+            {
+                health.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
+
+                health.KnockBack(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
+            }
         }
 
         return isHit;
