@@ -19,7 +19,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     [SerializeField] private UnityEvent OnDeadCompleteTriggerEvent = null;
 
     [SerializeField] private UnityEvent OnAnimationEndTriggerEvent = null;
-
+    [SerializeField] private UnityEvent OnDashEndTriggerEvent = null;
 
     [SerializeField] private UnityEvent OnEffectOnTriggerEvent = null;
     [SerializeField] private UnityEvent OnEffectOffTriggerEvent = null;
@@ -120,6 +120,12 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.AnimationTrigger();
         OnAttackTriggerEvent?.Invoke();
     }
+
+    public void DashEndTrigger()
+    {
+        OnDashEndTriggerEvent?.Invoke();
+    }
+
     public void EffectStartTrigger()
     {
         OnEffectOnTriggerEvent?.Invoke();

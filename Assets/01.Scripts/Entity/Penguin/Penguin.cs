@@ -123,6 +123,12 @@ public class Penguin : Entity
     {
 
     }
+
+    public virtual void DashEndTrigger()
+    {
+
+    }
+
     public void FindFirstNearestEnemy()
     {
         CurrentTarget = FindNearestEnemy().FirstOrDefault();
@@ -150,6 +156,18 @@ public class Penguin : Entity
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
+        }
+    }
+
+    public virtual void LookTargetImmediately()
+    {
+        if (CurrentTarget != null)
+        {
+            Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
+
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            transform.rotation = targetRotation;
         }
     }
 
