@@ -30,20 +30,29 @@ public class Army
     public List<Penguin> Soldiers = new(); //±∫¿Œ ∆Î±œµÈ
     public General General = null; //¿Â±∫
 
-    public void AddStat(int value, StatType type, StatMode mode)
-    {
-        this.General?.AddStat(value, type, mode);
-        foreach (var solider in this.Soldiers)
-        {
-            solider.AddStat(value, type, mode);
-        }
-    }
+    public List<Ability> Abilities = new();
+
 
     public void AddStat(List<Ability> abilities)
     {
         foreach (var incStat in abilities)
         {
             AddStat(incStat.value, incStat.statType, incStat.statMode);
+        }
+    }
+    public void RemoveStat(List<Ability> abilities)
+    {
+        foreach (var incStat in abilities)
+        {
+            RemoveStat(incStat.value, incStat.statType, incStat.statMode);
+        }
+    }
+    public void AddStat(int value, StatType type, StatMode mode)
+    {
+        this.General?.AddStat(value, type, mode);
+        foreach (var solider in this.Soldiers)
+        {
+            solider.AddStat(value, type, mode);
         }
     }
     public void RemoveStat(int value, StatType type, StatMode mode)

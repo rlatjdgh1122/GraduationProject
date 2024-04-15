@@ -136,6 +136,7 @@ public class PenguinManager
         GetCurrentInfoData = infoData;
         GetCurrentStat = statData;
 
+        UIManager.Instance.HidePanel("PenguinInfoUI");
         // 장군 정보와 펭귄 정보는 따로
         //if (stat is PenguinStat && infoData is EntityInfoDataSO)
         UIManager.Instance.ShowPanel("PenguinInfoUI");

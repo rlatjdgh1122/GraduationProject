@@ -209,9 +209,16 @@ public class ArmyManager : Singleton<ArmyManager>
         }
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
+        var Abilities = Army.Abilities;
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
+
+        //스탯 추가
+        if (Abilities.Count > 0)
+        {
+            obj.AddStat(Abilities);
+        }
     }
 
     /// <summary>
@@ -229,7 +236,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
-        var Abilities = obj.ReturnGenericStat<GeneralStat>().GeneralDetailData.abilities;
 
         if (Army.General != null)
         {
@@ -239,6 +245,9 @@ public class ArmyManager : Singleton<ArmyManager>
 
         obj.SetOwner(Army);
         Army.General = obj;
+
+        var Abilities = obj.ReturnGenericStat<GeneralStat>().GeneralDetailData.abilities;
+        Army.Abilities.AddRange(Abilities);
 
         Army.AddStat(Abilities);
 
@@ -255,19 +264,35 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public void RemovePenguin(string legion, Penguin obj)
     {
+        //증가된 군단 스탯 지우기
+
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[idx];
+        var Abilities = Army.Abilities;
 
         obj.SetOwner(null);
-        //여기서도 뭔가 있어야함
 
+        //장군이라면
         if (obj is General)
         {
             armies[idx].General = null;
+            //군단 능력치 전부 빼기
+            if (Abilities.Count > 0)
+                Army.RemoveStat(Abilities);
+
+
+            //군단 능력치 없애기
+            if (Abilities.Count > 0)
+                Army.Abilities.Clear();
         }
-        else
+        else if (obj is Penguin)
         {
-            var army = armies[idx].Soldiers;
-            army.Remove(obj); //리스트에서 제외
+            //군단 리스트에서 제외
+            Army.Soldiers.Remove(obj);
+
+            //군단 능력치 빼기
+            if (Abilities.Count > 0)
+                obj.RemoveStat(Abilities);
         }
     }
 
