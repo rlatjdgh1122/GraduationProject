@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,12 +22,19 @@ public class MortarBuilding : DefenseBuilding
     private IgnitingPenguinAnimaionTrigger _ignitingPenguin;
     private BurningRope _burningRope;
 
+    private Transform _cannonTransform;
+
+    private float chargingMoveValue = -0.5f;
+    private float fireMoveValue = 0.5f;
+
     protected override void Awake()
     {
         base.Awake();
         _mortarFireParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
         _ignitingPenguin = transform.Find("IgnitingPenguin/Visual").GetComponent<IgnitingPenguinAnimaionTrigger>();
         _burningRope = transform.Find("Rope").GetComponent<BurningRope>();
+
+        _cannonTransform = transform.Find("Visual/Cannon").transform;
     }
 
 
@@ -63,6 +71,8 @@ public class MortarBuilding : DefenseBuilding
     private void Fire()
     {
         //여기서는 이싱 넣어서 펑 앞으로 나가는 느낌
+        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
+        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.InOutBack);
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
@@ -72,5 +82,12 @@ public class MortarBuilding : DefenseBuilding
         SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
 
         
+    }
+
+    public void ChargingCannon()
+    {
+        float endYValue = _cannonTransform.localPosition.y + chargingMoveValue;
+
+        _cannonTransform.DOLocalMoveY(endYValue, 3f);
     }
 }
