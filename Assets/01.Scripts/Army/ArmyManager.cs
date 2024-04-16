@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
-    [SerializeField] private SoldierListSO SoldierListSO = null;
     [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
     private Dictionary<KeyCode, Action> keyDictionary = new();
@@ -20,12 +15,6 @@ public class ArmyManager : Singleton<ArmyManager>
     public int CurLegion => curArmyIdx + 1;
 
     public int ArmiesCount => armies.Count;
-
-    public override void Awake()
-    {
-        PenguinManager.Instance.Setting(SoldierListSO);
-    }
-
     private void Start()
     {
         CreateArmy();

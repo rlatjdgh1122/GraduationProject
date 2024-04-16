@@ -94,12 +94,16 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private PoolingListSO _poolingListSO;
+    [SerializeField]
+    private SoldierRegisterSO _soldierRegisterSO;
 
     public override void Awake()
     {
         TentTrm = FindObjectOfType<TentInitPos>().transform;
         NexusTrm = GameObject.Find("Nexus").transform;
         WorkerSpawnPoint = GameObject.Find("WorkerSpawnPoint").transform;
+
+        PenguinManager.Instance.Setting(_soldierRegisterSO);
     }
     private void Start()
     {

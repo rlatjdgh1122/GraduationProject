@@ -31,10 +31,10 @@ public class PenguinManager
         public DummyPenguin dummyPenguin;
     }
 
-    //Type으로 펭귄 등록
-    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeToPenguinDic = new();
-    //Type으로 클론이 아닌 스탯을 가져옴(군단에 소속되지 않은 더미펭귄한테 사용)
-    private Dictionary<PenguinTypeEnum, BaseStat> soldierTypeToNotCloneStatDic = new();
+    //Type으로 클론이 아닌 것들을 저장해줌
+    private Dictionary<PenguinTypeEnum, Penguin> soldierTypeToDefaultPenguinDic = new();
+    private Dictionary<PenguinTypeEnum, BaseStat> soldierTypeToDefaultStatDic = new();
+    private Dictionary<PenguinTypeEnum, EntityInfoDataSO> soldierTypeToDefaultInfoDataDic = new();
 
     public CameraSystem CameraCompo { get; set; }
     #region 펭귄 리스트
@@ -71,16 +71,18 @@ public class PenguinManager
         CameraCompo = compo;
     }
 
-    //군단 매니저에서 등록
-    public void Setting(SoldierListSO soldierTypeListSO)
+    //게임 매니저에서 등록
+    public void Setting(SoldierRegisterSO soldierTypeListSO)
     {
-        foreach (var solider in soldierTypeListSO.soldierTypes)
+        foreach (var Soldier in soldierTypeListSO.soldierTypes)
         {
-            var type = solider.type;
-            soldierTypeToPenguinDic.Add(type, solider.obj);
+            var type = Soldier.Type;
+            soldierTypeToDefaultPenguinDic.Add(type, Soldier.Obj);
 
             //클론이 되지 않은 스탯을 등록해줌
-            soldierTypeToNotCloneStatDic.Add(type, solider.obj.Stat);
+            soldierTypeToDefaultStatDic.Add(type, Soldier.Stat);
+            //클론이 되지 않은 스탯을 등록해줌
+            soldierTypeToDefaultInfoDataDic.Add(type, Soldier.InfoData);
         }
     }
     public void AddDummyPenguin(DummyPenguin obj)
@@ -203,7 +205,7 @@ public class PenguinManager
     public Penguin SpawnSoldier(PenguinTypeEnum type, Vector3 SpawnPoint, Vector3 seatPos = default)
     {
         Penguin obj;
-        var prefab = GetPenguinByType(type);
+        var prefab = GetDefaultPenguinByType(type);
 
         obj = PoolManager.Instance.Pop(prefab.name) as Penguin;
         obj.gameObject.SetActive(false);
@@ -211,9 +213,9 @@ public class PenguinManager
         obj.SeatPos = seatPos;
         return obj;
     }
-    private Penguin GetPenguinByType(PenguinTypeEnum type)
+    private Penguin GetDefaultPenguinByType(PenguinTypeEnum type)
     {
-        if (soldierTypeToPenguinDic.TryGetValue(type, out var value)) return value;
+        if (soldierTypeToDefaultPenguinDic.TryGetValue(type, out var value)) return value;
 
         Debug.Log("해당하는 타입의 오브젝트는 없습니다. SoldierListSO를 확인해주세요.");
         return null;
@@ -265,7 +267,7 @@ public class PenguinManager
         else
         {
             //군단에 소속되지 않았다면 클론이 아닌 디폴트 스탯을 가져옴
-            if (soldierTypeToNotCloneStatDic.TryGetValue(data.PenguinType, out var notCloneStat))
+            if (soldierTypeToDefaultStatDic.TryGetValue(data.PenguinType, out var notCloneStat))
                 resultStat = notCloneStat as T;
         }
 
