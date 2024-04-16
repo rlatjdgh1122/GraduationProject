@@ -5,5 +5,6 @@ public class Ability
 {
     public string abilityName;
     public StatType statType;
-    public int increaseValue; // stat will increase to %
+    public StatMode statMode;
+    public int value; // stat will statMode to %
 }

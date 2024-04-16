@@ -178,6 +178,26 @@ public class Penguin : Entity
     }
 
     #region ���� ����
+
+    /// <summary>
+    ///  군단 능력치 받기
+    /// </summary>
+    /// <param name="abilities"></param>
+    public void AddStat(List<Ability> abilities)
+    {
+        foreach (var incStat in abilities)
+        {
+            AddStat(incStat.value, incStat.statType, incStat.statMode);
+        }
+    }
+    public void RemoveStat(List<Ability> abilities)
+    {
+        foreach (var incStat in abilities)
+        {
+            RemoveStat(incStat.value, incStat.statType, incStat.statMode);
+        }
+    }
+
     public void AddStat(int value, StatType type, StatMode mode)
     {
         Stat.AddStat(value, type, mode);
@@ -248,8 +268,8 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        Vector3 pos = MousePos + movePos; // �̸� ���� ȸ�� ��ġ�� ���⿡�� ���
-        MoveToMouseClick(pos);
+        //Vector3 pos = MousePos + movePos; // �̸� ���� ȸ�� ��ġ�� ���⿡�� ���
+        //MoveToMouseClick(pos);
     }
     private void MoveToMouseClick(Vector3 pos)
     {
