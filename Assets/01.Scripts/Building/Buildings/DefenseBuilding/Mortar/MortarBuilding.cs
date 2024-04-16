@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem.iOS;
 
 public class MortarBuilding : DefenseBuilding
 {
@@ -16,10 +18,15 @@ public class MortarBuilding : DefenseBuilding
 
     private ParticleSystem _mortarFireParticle;
 
+    private IgnitingPenguinAnimaionTrigger _ignitingPenguin;
+    private BurningRope _burningRope;
+
     protected override void Awake()
     {
         base.Awake();
         _mortarFireParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+        _ignitingPenguin = transform.Find("IgnitingPenguin/Visual").GetComponent<IgnitingPenguinAnimaionTrigger>();
+        _burningRope = transform.Find("Rope").GetComponent<BurningRope>();
     }
 
 
@@ -44,8 +51,10 @@ public class MortarBuilding : DefenseBuilding
         
         while (WaveManager.Instance.IsBattlePhase && _currentTarget != null)
         {
+            _ignitingPenguin.SetGetTourchAnimation();
+            float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
+            yield return new WaitForSeconds(waitTime);
             Fire();
-            yield return new WaitForSeconds(3f);
         }
         isFired = false;
     }
