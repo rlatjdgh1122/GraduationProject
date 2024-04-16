@@ -18,10 +18,17 @@ public enum HitType
     IceHit,
     MopHit,
     MagicHit,
-    BuildHit
+    BuildHit,
+
+
+    #region Building
+
+    MortarGroundStrikeHit,
+
+    #endregion
 }
 
 public interface IDamageable
 {
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType);
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, bool isPlayHitEvent = true);
 }
