@@ -51,6 +51,7 @@ public class MortarBuilding : DefenseBuilding
         
         while (WaveManager.Instance.IsBattlePhase && _currentTarget != null)
         {
+            // ¿©±â¼­´Â ÂÞ¿í ¶¯±â´Â ´À³¦
             _ignitingPenguin.SetGetTourchAnimation();
             float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
             yield return new WaitForSeconds(waitTime);
@@ -61,6 +62,8 @@ public class MortarBuilding : DefenseBuilding
 
     private void Fire()
     {
+        //¿©±â¼­´Â ÀÌ½Ì ³Ö¾î¼­ Æã ¾ÕÀ¸·Î ³ª°¡´Â ´À³¦
+
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
         rock.transform.position = _firePos.position;
