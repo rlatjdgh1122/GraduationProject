@@ -12,7 +12,6 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float _dragSpeed = 2f;
     private bool _dragPanMoveActive;
     private Vector2 _lastMousePosition;
-    private Vector3 prevPos = Vector3.zero;
 
     [Header("카메라 확대&축소")]
     [SerializeField] private float _fieldOfViewMax = 50;
@@ -52,6 +51,8 @@ public class CameraSystem : MonoBehaviour
     private Vector3 _startPosition;
     private Quaternion _vCamstartRotation;
 
+    private Vector3 prevPos = Vector3.zero;
+    private float prevTargetFieldOfView = 0f;
     private void Awake()
     {
         isMoving = true;
@@ -245,15 +246,17 @@ public class CameraSystem : MonoBehaviour
         Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
         transform.DOMove(vec, 0.5f);
     }
-    public void SetCameraTartget(Vector3 target, float zoomValue = 30f, float pivotX = 5f)
+    public void SetFollowTarget(Transform targetTrm, float zoomValue = 30f, float pivotX = 5f)
     {
         prevPos = transform.position;
+        prevTargetFieldOfView = targetFieldOfView;
 
         targetFieldOfView = zoomValue;
         transposer.m_FollowOffset.x = pivotX;
+        transposer.m_FollowOffset.y = 35f;
+        transposer.m_FollowOffset.z = -24.5f;
 
-        Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
-        transform.DOMove(vec, 0.5f);
+        _cinemachineCam.Follow = targetTrm;
     }
 
 
@@ -261,7 +264,14 @@ public class CameraSystem : MonoBehaviour
     {
         if (prevPos != Vector3.zero)
         {
+            _cinemachineCam.Follow = this.transform;
+
+            targetFieldOfView = prevTargetFieldOfView;
+
             transposer.m_FollowOffset.x = 0f;
+            transposer.m_FollowOffset.y = 0f;
+            transposer.m_FollowOffset.z = -24.5f;
+
             transform.DOMove(prevPos, 0.2f);
         }
     }
