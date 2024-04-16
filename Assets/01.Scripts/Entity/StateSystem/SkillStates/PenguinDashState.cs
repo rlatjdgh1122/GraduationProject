@@ -25,7 +25,7 @@ public class PenguinDashState : KatanaBaseState
 
         if (_triggerCalled) 
         {
-            if (_general.canDash)
+            if (dashSkill.canDash)
             {
                 _stateMachine.ChangeState(PenguinStateType.Dash);
             }

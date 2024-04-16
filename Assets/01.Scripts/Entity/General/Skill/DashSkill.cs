@@ -14,6 +14,8 @@ public class DashSkill : Skill
 
     private Coroutine _dashCoroutine;
 
+    public bool canDash = false;
+
     public override void SetOwner(Entity owner)
     {
         base.SetOwner(owner);
@@ -34,14 +36,11 @@ public class DashSkill : Skill
 
     private IEnumerator DashCoroutine(float delay, float time, float speed)
     {
-        general.Stat.AddStat(50, StatType.Armor, StatMode.Increase);
         yield return new WaitForSeconds(delay);
 
         float startTime = Time.time;
 
         OnDashEvent?.Invoke();
-
-        general.Stat.AddStat(50, StatType.Armor, StatMode.Decrease);
         general.NavAgent.enabled = false;
 
         while (Time.time < startTime + time)

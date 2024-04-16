@@ -12,13 +12,12 @@ public class DamageCaster : MonoBehaviour
     public LayerMask TargetLayer;
 
     private Entity _owner;
-    private Skill _skill;
+    private General _general => _owner as General;
 
     public void SetOwner(Entity owner)
     {
         _owner = owner;
     }
-
 
     /// <summary>
     /// 스패셜 데미지
@@ -137,7 +136,8 @@ public class DamageCaster : MonoBehaviour
     public void CastDashDamage()
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange * 2f, TargetLayer);
-        KatanaGeneralPenguin general = _owner as KatanaGeneralPenguin;
+
+        DashSkill dashSkill = _general.skill as DashSkill;
 
         foreach (var col in Colls)
         {
@@ -156,13 +156,16 @@ public class DamageCaster : MonoBehaviour
                     health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
                     if (health.IsDead)
                     {
-                        general.canDash = true;
+                        health.ApplyHitType(HitType.DashHit);
+                        health.OnDashDeathEvent?.Invoke();
+                        dashSkill.canDash = true;
+                        _hitType = HitType.KatanaHit;
                         return;
                     }
                 }
                 else
                 {
-                    general.canDash = false;
+                    dashSkill.canDash = false;
                     int damage = _owner.Stat.damage.GetValue() * 2;
                     health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
                 }   

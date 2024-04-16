@@ -18,7 +18,9 @@ public enum HitType
     IceHit,
     MopHit,
     MagicHit,
-    BuildHit
+    BuildHit,
+    DashHit,
+    KatanaHit,
 }
 
 public interface IDamageable
