@@ -59,16 +59,34 @@ public class MortarBuilding : DefenseBuilding
     private IEnumerator FireRoutine()
     {
         isFired = true;
-        
+        float elapsedTime = 0.0f;
+        float remainWaitTime = 0.0f;
+
         while (WaveManager.Instance.IsBattlePhase && _currentTarget != null)
         {
             _ignitingPenguin.SetGetTourchAnimation();
             float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
-            yield return new WaitForSeconds(waitTime);
-            if (_currentTarget == null) { break; }
+            remainWaitTime = waitTime - Time.deltaTime;
+
+            while (elapsedTime < waitTime)
+            {
+                elapsedTime += Time.deltaTime;
+
+                if (_currentTarget == null)
+                {
+                    CoroutineUtil.CallWaitForSeconds(remainWaitTime,
+                        () => _ignitingPenguin.StartSwingAnimation(),
+                        () => _ignitingPenguin.StopSwingAnimation());
+                    ;
+                    yield break;
+                }
+
+                yield return null;
+            }
+
             Fire();
+            elapsedTime = 0.0f; // 시간 초기화
         }
-        isFired = false;
     }
 
     private void Fire()
@@ -83,8 +101,6 @@ public class MortarBuilding : DefenseBuilding
         StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
 
         SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
-
-        
     }
 
     public void ChargingCannon()

@@ -11,6 +11,9 @@ public class IgnitingPenguinAnimaionTrigger : MonoBehaviour
     private GameObject _torch;
 
     [SerializeField]
+    private GameObject[] _fans;
+
+    [SerializeField]
     private UnityEvent GetTorchEvent, UseTorchEvent;
 
     private float animaionLength;
@@ -31,14 +34,6 @@ public class IgnitingPenguinAnimaionTrigger : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            SetGetTourchAnimation();
-        }
-    }
-
     public void SetGetTourchAnimation()
     {
         _animator.SetTrigger("GetTorchTrigger");
@@ -54,5 +49,24 @@ public class IgnitingPenguinAnimaionTrigger : MonoBehaviour
     {
         _torch.SetActive(false);
         UseTorchEvent?.Invoke();
+    }
+
+    public void StartSwingAnimation()
+    {
+        for(int i = 0; i < _fans.Length; i++)
+        {
+            _fans[i].SetActive(true);
+        }
+
+        _animator.SetBool("IsSwinging", true);
+    }
+
+    public void StopSwingAnimation()
+    {
+        for (int i = 0; i < _fans.Length; i++)
+        {
+            _fans[i].SetActive(false);
+        }
+        _animator.SetBool("IsSwinging", false);
     }
 }
