@@ -182,18 +182,20 @@ public class LegionInventory : LegionUI
 
                 currentLegionList.Remove(curData);
                 currentDictionary.Remove(idx);
+
                 currentRemovePenguinList.Add(curData);
 
                 slotList[idx].ExitSlot(null);
 
+                if (curData.JobType == PenguinJobType.General) currentGeneral--;
+                else currentPenguinCnt--;
+
                 currentRemovePenguinCnt++;
-                currentPenguinCnt--;
             }
             else
             {
                 UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
 
-                Debug.Log(curData.LegionName);
                 legion.ShowPenguinSituation(curData, hpPercent);
 
                 return;

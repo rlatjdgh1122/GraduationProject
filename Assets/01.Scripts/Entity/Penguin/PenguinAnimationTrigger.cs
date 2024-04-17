@@ -118,7 +118,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     private void AnimationEndTrigger()
     {
         _penguin.AnimationTrigger();
-        OnAttackTriggerEvent?.Invoke();
+        //OnAttackTriggerEvent?.Invoke();
     }
 
     public void DashEndTrigger()

@@ -6,7 +6,6 @@ public class KatanaGeneralPenguin : General
 {
     public EntityStateMachine<KatanaGeneralStateEnum, General> StateMachine { get; private set; }
     public TestStateMachine TestStateMachine { get; private set; }
-    public DashSkill DashSkill;
 
     protected override void Awake()
     {

@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 public class PenguinDashState : KatanaBaseState
 {
     DashSkill dashSkill => _general.skill as DashSkill;
@@ -27,7 +25,7 @@ public class PenguinDashState : KatanaBaseState
 
         if (_triggerCalled) 
         {
-            if (_general.canDash)
+            if (dashSkill.canDash)
             {
                 _stateMachine.ChangeState(PenguinStateType.Dash);
             }
