@@ -19,13 +19,9 @@ public enum HitType
     MopHit,
     MagicHit,
     BuildHit,
-
-
-    #region Building
-
     MortarGroundStrikeHit,
-
-    #endregion
+    DashHit,
+    KatanaHit,
 }
 
 public interface IDamageable
