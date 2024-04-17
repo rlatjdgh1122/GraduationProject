@@ -24,8 +24,11 @@ public class MortarBuilding : DefenseBuilding
 
     private Transform _cannonTransform;
 
-    private float chargingMoveValue = -0.5f;
-    private float fireMoveValue = 0.5f;
+    private float chargingMoveValue = -1f;
+    private float fireMoveValue = 1f;
+
+    private Vector3 _originScale = Vector3.one;
+    private Vector3 _chargingScale = new Vector3(1.2f, 1.0f, 1.2f);
 
     protected override void Awake()
     {
@@ -59,10 +62,10 @@ public class MortarBuilding : DefenseBuilding
         
         while (WaveManager.Instance.IsBattlePhase && _currentTarget != null)
         {
-            // ¿©±â¼­´Â ÂÞ¿í ¶¯±â´Â ´À³¦
             _ignitingPenguin.SetGetTourchAnimation();
             float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
             yield return new WaitForSeconds(waitTime);
+            if (_currentTarget == null) { break; }
             Fire();
         }
         isFired = false;
@@ -70,9 +73,9 @@ public class MortarBuilding : DefenseBuilding
 
     private void Fire()
     {
-        //¿©±â¼­´Â ÀÌ½Ì ³Ö¾î¼­ Æã ¾ÕÀ¸·Î ³ª°¡´Â ´À³¦
         float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
-        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.InOutBack);
+        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
+        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
@@ -89,5 +92,7 @@ public class MortarBuilding : DefenseBuilding
         float endYValue = _cannonTransform.localPosition.y + chargingMoveValue;
 
         _cannonTransform.DOLocalMoveY(endYValue, 3f);
+
+        _cannonTransform.DOScale(_chargingScale, 3f);
     }
 }
