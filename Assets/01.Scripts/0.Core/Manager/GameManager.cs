@@ -94,12 +94,16 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private PoolingListSO _poolingListSO;
+    [SerializeField]
+    private SoldierRegisterSO _soldierRegisterSO;
 
     public override void Awake()
     {
         TentTrm = FindObjectOfType<TentInitPos>().transform;
         NexusTrm = GameObject.Find("Nexus").transform;
         WorkerSpawnPoint = GameObject.Find("WorkerSpawnPoint").transform;
+
+        PenguinManager.Instance.Setting(_soldierRegisterSO);
     }
     private void Start()
     {
@@ -125,6 +129,6 @@ public class GameManager : Singleton<GameManager>
         _poolingListSO.List.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount)); //리스트에 있는 모든
         _poolingListSO.DummyPenguinList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
         _poolingListSO.GeneralPenguinList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
+        _poolingListSO.EffectList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
-
 }

@@ -41,7 +41,7 @@ public class GeneralUIPresenter : PopupUI
         _currentView = generalView;
         currentGeneralStat = _currentView.GeneralInfoData;
 
-        if (selectedAbility.increaseValue == 0) //아직 업그레이드 선택지가 정해져있지 않은 상황에서
+        if (selectedAbility.value == 0) //아직 업그레이드 선택지가 정해져있지 않은 상황에서
             SetRandom(); //업그레이드 선택지 초기값 설정해주는 거
     }
 
@@ -130,7 +130,7 @@ public class GeneralUIPresenter : PopupUI
     public void AddAbilityStat()    
     {
         //selectedAbility.baseIncreaseValue += selectedAbility.increaseValue;
-        currentGeneralStat.AddStat(selectedAbility.increaseValue, selectedAbility.statType, StatMode.Increase);
+        currentGeneralStat.AddStat(selectedAbility.value, selectedAbility.statType, StatMode.Increase);
     }
 
     public void ShowBoxes()

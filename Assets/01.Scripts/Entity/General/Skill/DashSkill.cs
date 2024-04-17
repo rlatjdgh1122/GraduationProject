@@ -1,16 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DashSkill : Skill
 {
     [SerializeField] private float _dashDelay;
     [SerializeField] private float _dashTime;
     [SerializeField] private float _dashSpeed;
-    [SerializeField] private ParticleSystem _effect;
+
+    public UnityEvent OnDashEvent;
 
     private General general => _owner as General;
 
     private Coroutine _dashCoroutine;
+
+    public bool canDash = false;
 
     public override void SetOwner(Entity owner)
     {
@@ -36,8 +40,8 @@ public class DashSkill : Skill
 
         float startTime = Time.time;
 
+        OnDashEvent?.Invoke();
         general.NavAgent.enabled = false;
-        _effect.Play();
 
         while (Time.time < startTime + time)
         {

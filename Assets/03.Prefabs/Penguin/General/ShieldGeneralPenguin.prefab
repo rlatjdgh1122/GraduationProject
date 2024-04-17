@@ -334,8 +334,14 @@ MonoBehaviour:
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
   ligeonStat:
-    IncStat: []
-    DecStat: []
+    IncStat:
+    - type: 256
+      value: 20
+    - type: 128
+      value: 50
+    DecStat:
+    - type: 1024
+      value: 25
   skill: {fileID: 0}
   canSpinAttack: 0
 --- !u!114 &8035068806920498670

@@ -57,8 +57,9 @@ public class PenguinInfoUI : PopupUI
     public override void HidePanel()
     {
         base.HidePanel();
-
         Init();
+
+        PenguinManager.Instance.CameraCompo.RollbackCameraTarget();
     }
     public override void ShowPanel()
     {
@@ -86,6 +87,8 @@ public class PenguinInfoUI : PopupUI
     private void ShowAttackStat(Stat stat)
     {
         string statName = _ownerStat.GetStatNameByStat(stat);
+
+        //정보창이 띄워져있는 상황에서 또 띄울때 예외처리해야됨
         _attackStatItemList[_attackStatCount].Modify(stat, statName);
 
         ++_attackStatCount;

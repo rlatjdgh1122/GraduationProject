@@ -26,6 +26,7 @@ public class Health : MonoBehaviour, IDamageable
     public UnityEvent OnEvasionEvent;
     public UnityEvent WaterFallEvent;
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
+    public UnityEvent OnDashDeathEvent;
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
     #endregion
@@ -148,6 +149,11 @@ public class Health : MonoBehaviour, IDamageable
         {
             Dead();
         }
+    }
+
+    public void ApplyHitType(HitType hitType)
+    {
+        _actionData.HitType = hitType;
     }
 
     public void ApplyHeal(int amount)

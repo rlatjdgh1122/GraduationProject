@@ -21,6 +21,8 @@ public class UnitInformationUI : MonoBehaviour
     private TextMeshProUGUI _synergyText;
     private TextMeshProUGUI _passiveText;
 
+    private CanvasGroup _detailInfoButton;
+
     private void Awake()
     {
         _penguinIcon   = transform.Find("PenguinFace").GetComponent<Image>();
@@ -33,6 +35,8 @@ public class UnitInformationUI : MonoBehaviour
         _generalInfo = transform.Find("GeneralInfo").GetComponent<CanvasGroup>();
         _synergyText = _generalInfo.transform.Find("Synergy").GetComponent<TextMeshProUGUI>();
         _passiveText = _generalInfo.transform.Find("Passive").GetComponent<TextMeshProUGUI>();
+
+        _detailInfoButton = transform.Find("DetailInfoButton").GetComponent<CanvasGroup>();
     }
 
     public void ShowInformation(UnitInventoryData data)
@@ -64,6 +68,9 @@ public class UnitInformationUI : MonoBehaviour
         _atkSlide.DOFillAmount(so.atk, 0.5f);
         _defSlide.DOFillAmount(so.hp, 0.5f);
         _rangeSlide.DOFillAmount(so.range, 0.5f);
+
+        _detailInfoButton.DOFade(1, 0.5f);
+        _detailInfoButton.blocksRaycasts = true;
     }
 
     private void ShowGeneralInfo(GeneralInfoDataSO generalData)
@@ -88,5 +95,8 @@ public class UnitInformationUI : MonoBehaviour
         _generalInfo.DOFade(0, 0.2f);
         _synergyText.text = string.Empty;
         _passiveText.text = string.Empty;
+
+        _detailInfoButton.DOFade(0, 0.5f);
+        _detailInfoButton.blocksRaycasts = false;
     }
 }
