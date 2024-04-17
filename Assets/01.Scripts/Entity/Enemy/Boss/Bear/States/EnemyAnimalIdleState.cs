@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 public class EnemyAnimalIdleState : EnemyAnimalBaseState
@@ -12,6 +13,9 @@ public class EnemyAnimalIdleState : EnemyAnimalBaseState
     {
         base.Enter();
         _triggerCalled = true;
+
+        
+
     }
 
     public override void UpdateState()
