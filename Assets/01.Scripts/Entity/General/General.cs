@@ -4,23 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class LigeonStat
-{
-    public StatType type;
-    public int value = 10;
-}
 
-[Serializable]
-public class LigeonStatAdjustment
-{
-    public List<LigeonStat> IncStat;
-    public List<LigeonStat> DecStat;
-}
 public class General : Penguin
 {
     //public PassiveDataSO passiveData = null;
-    public LigeonStatAdjustment ligeonStat = null;
     public Skill skill;
 
     public bool canSpinAttack = false;

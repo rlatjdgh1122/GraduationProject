@@ -19,11 +19,12 @@ public enum HitType
     MopHit,
     MagicHit,
     BuildHit,
+    MortarGroundStrikeHit,
     DashHit,
     KatanaHit,
 }
 
 public interface IDamageable
 {
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType);
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, bool isPlayHitEvent = true);
 }

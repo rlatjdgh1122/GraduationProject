@@ -15,14 +15,14 @@ public class LegionInventory : LegionUI
         foreach (var data in currentRemovePenguinList) //군단에서 지웠는데 저장 취소하면
         {
             //인벤에 들어간 펭귄을 빼줘
-            legion.RemovePenguin(PenguinManager.Instance.GetNotCloneInfoDataByInfoDataInPenguin(data));
+            legion.RemovePenguin(PenguinManager.Instance.GetDefaultInfoDataByType(data.PenguinType));
         }
         foreach (var data in currentLegionList) //군단에 추가했는데 저장 취소하면
         {
             if (!savedLegionList.Contains(data))
             {
                 //인벤에 들어간 펭귄을 더해줘
-                legion.AddPenguin(PenguinManager.Instance.GetNotCloneInfoDataByInfoDataInPenguin(data));
+                legion.AddPenguin(PenguinManager.Instance.GetDefaultInfoDataByType(data.PenguinType));
             }
         }
     }
@@ -178,22 +178,24 @@ public class LegionInventory : LegionUI
 
             if (hpPercent >= 1) //피가 풀피면
             {
-                legion.AddPenguin(PenguinManager.Instance.GetNotCloneInfoDataByPenguin(penguin));
+                legion.AddPenguin(PenguinManager.Instance.GetDefaultInfoDataByType(curData.PenguinType));
 
                 currentLegionList.Remove(curData);
                 currentDictionary.Remove(idx);
+
                 currentRemovePenguinList.Add(curData);
 
                 slotList[idx].ExitSlot(null);
 
+                if (curData.JobType == PenguinJobType.General) currentGeneral--;
+                else currentPenguinCnt--;
+
                 currentRemovePenguinCnt++;
-                currentPenguinCnt--;
             }
             else
             {
                 UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
 
-                Debug.Log(curData.LegionName);
                 legion.ShowPenguinSituation(curData, hpPercent);
 
                 return;

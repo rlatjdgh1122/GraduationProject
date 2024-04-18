@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
-    [SerializeField] private SoldierListSO SoldierListSO = null;
     [SerializeField] private List<Army> armies;
     public List<Army> Armies { get { return armies; } }
     private Dictionary<KeyCode, Action> keyDictionary = new();
@@ -20,12 +15,6 @@ public class ArmyManager : Singleton<ArmyManager>
     public int CurLegion => curArmyIdx + 1;
 
     public int ArmiesCount => armies.Count;
-
-    public override void Awake()
-    {
-        PenguinManager.Instance.Setting(SoldierListSO);
-    }
-
     private void Start()
     {
         CreateArmy();
@@ -154,7 +143,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curArmyIdx].AddStat(armies[curArmyIdx], value, type, mode);
+        armies[curArmyIdx].AddStat(value, type, mode);
     }
 
     /// <summary>
@@ -165,7 +154,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curArmyIdx].RemoveStat(armies[curArmyIdx], value, type, mode);
+        armies[curArmyIdx].RemoveStat(value, type, mode);
     }
 
     /// <summary>
@@ -177,7 +166,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion - 1].RemoveStat(armies[legion], value, type, mode);
+        armies[legion - 1].RemoveStat(value, type, mode);
     }
     /// <summary>
     /// 군단의 스탯을 삭제
@@ -188,7 +177,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion - 1].AddStat(armies[legion], value, type, mode);
+        armies[legion - 1].AddStat(value, type, mode);
     }
 
     #endregion
@@ -209,9 +198,16 @@ public class ArmyManager : Singleton<ArmyManager>
         }
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
+        var Abilities = Army.Abilities;
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
+
+        //스탯 추가
+        if (Abilities.Count > 0)
+        {
+            obj.AddStat(Abilities);
+        }
     }
 
     /// <summary>
@@ -229,7 +225,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
-        var LegionStat = obj.ligeonStat;
 
         if (Army.General != null)
         {
@@ -240,7 +235,10 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.General = obj;
 
-        Army.AddStat(Army, LegionStat);
+        var Abilities = obj.ReturnGenericStat<GeneralStat>().GeneralDetailData.abilities;
+        Army.Abilities.AddRange(Abilities);
+
+        Army.AddStat(Abilities);
 
     }
     #endregion
@@ -255,19 +253,35 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public void RemovePenguin(string legion, Penguin obj)
     {
+        //증가된 군단 스탯 지우기
+
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[idx];
+        var Abilities = Army.Abilities;
 
         obj.SetOwner(null);
-        //여기서도 뭔가 있어야함
 
+        //장군이라면
         if (obj is General)
         {
             armies[idx].General = null;
+            //군단 능력치 전부 빼기
+            if (Abilities.Count > 0)
+                Army.RemoveStat(Abilities);
+
+
+            //군단 능력치 없애기
+            if (Abilities.Count > 0)
+                Army.Abilities.Clear();
         }
-        else
+        else if (obj is Penguin)
         {
-            var army = armies[idx].Soldiers;
-            army.Remove(obj); //리스트에서 제외
+            //군단 리스트에서 제외
+            Army.Soldiers.Remove(obj);
+
+            //군단 능력치 빼기
+            if (Abilities.Count > 0)
+                obj.RemoveStat(Abilities);
         }
     }
 
@@ -281,6 +295,7 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.LegionName = $"{ArmiesCount + 1}군단";
         newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
 
+        armies.Add(newArmy);
         GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");
         ArmyFollowCam armyFollowCam = new ArmyFollowCam();
 
@@ -290,7 +305,6 @@ public class ArmyManager : Singleton<ArmyManager>
         armyFollowCam.Obj = followCam;
         newArmy.FollowCam = armyFollowCam;
 
-        armies.Add(newArmy);
     }
 
     #endregion

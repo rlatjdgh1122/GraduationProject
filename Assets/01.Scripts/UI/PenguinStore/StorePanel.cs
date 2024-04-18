@@ -18,7 +18,11 @@ public class StorePanel : PopupUI
         _legionUI = FindObjectOfType<LegionInventoryUI>();
 
         _legionChangeButton.onClick.RemoveAllListeners();
-        _legionChangeButton.onClick.AddListener(() => _legionUI.ShowLegionUIPanel());
+        _legionChangeButton.onClick.AddListener(() =>
+        {
+            _legionUI.ShowLegionUIPanel();
+            HidePanel();
+        });
     }
 
     public override void HidePanel()
