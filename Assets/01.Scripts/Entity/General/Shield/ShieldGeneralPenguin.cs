@@ -1,24 +1,29 @@
 using System;
+using UnityEngine;
 
 public class ShieldGeneralPenguin : General
 {
     //
-    public EntityStateMachine<ShieldGeneralPenguinStateEnum, General> StateMachine { get; private set; }
+    //public EntityStateMachine<ShieldGeneralPenguinStateEnum, General> StateMachine { get; private set; }
+    public TestStateMachine TestStateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new EntityStateMachine<ShieldGeneralPenguinStateEnum, General>();
+        TestStateMachine = new TestStateMachine();
+        Transform stateTrm = transform.Find("States");
 
-        foreach (ShieldGeneralPenguinStateEnum state in Enum.GetValues(typeof(ShieldGeneralPenguinStateEnum)))
+        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
         {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"ShieldGeneral{typeName}State");
-            //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<ShieldGeneralPenguinStateEnum, General>;
-
-            StateMachine.AddState(state, newState);
+            IState stateScript = stateTrm.GetComponent($"Penguin{state}State") as IState;
+            if (stateScript == null)
+            {
+                Debug.LogError($"There is no script : {state}");
+                return;
+            }
+            stateScript.SetUp(this, TestStateMachine, state.ToString());
+            TestStateMachine.AddState(state, stateScript);
         }
     }
 
@@ -26,16 +31,17 @@ public class ShieldGeneralPenguin : General
     {
         StateInit();
     }
+
     protected override void Update()
     {
         base.Update();
 
-        StateMachine.CurrentState.UpdateState();
+        TestStateMachine.CurrentState.UpdateState();
     }
     public override void StateInit()
     {
-        StateMachine.Init(ShieldGeneralPenguinStateEnum.Idle);
+        TestStateMachine.Init(PenguinStateType.Idle);
     }
 
-    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+    public override void AnimationTrigger() => TestStateMachine.CurrentState.AnimationTrigger();
 }

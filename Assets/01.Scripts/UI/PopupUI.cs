@@ -6,6 +6,8 @@ public class PopupUI : MonoBehaviour
 {
     [SerializeField]
     private float _panelFadeTime;
+    [SerializeField]
+    private float _panelDelayTime;
 
     [SerializeField]
     private SoundName soundName = SoundName.UI;
@@ -13,7 +15,8 @@ public class PopupUI : MonoBehaviour
     protected CanvasGroup _panel;
     protected RectTransform _rectTransform;
 
-    private Coroutine _coroutine = null;
+    private Coroutine _showCoroutine = null;
+    private Coroutine _showAndHideCoroutine = null;
 
 
     public virtual void Awake()
@@ -30,6 +33,15 @@ public class PopupUI : MonoBehaviour
 
     public virtual void ShowPanel()
     {
+        if (_showCoroutine != null)
+            StopCoroutine(_showCoroutine);
+
+        _showCoroutine = StartCoroutine(ShowPanelCoroutine(_panelDelayTime));
+    }
+
+    private IEnumerator ShowPanelCoroutine(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
         UIManager.Instance.currentPopupUI.Push(this);
         SoundManager.Play2DSound(soundName);
         _panel.blocksRaycasts = true;
@@ -49,10 +61,10 @@ public class PopupUI : MonoBehaviour
 
     public virtual void ShowAndHidePanel(float waitTime)
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        if (_showAndHideCoroutine != null)
+            StopCoroutine(_showAndHideCoroutine);
 
-        _coroutine = StartCoroutine(ShowHideCoroutine(waitTime));
+        _showAndHideCoroutine = StartCoroutine(ShowHideCoroutine(waitTime));
     }
 
     private IEnumerator ShowHideCoroutine(float waitTime)
