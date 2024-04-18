@@ -3,22 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyGorillaStateEnum
+{
+    Idle,
+    Move,
+    Chase,
+    Attack,
+    Reached,
+    MustChase,
+    Provoked
+}
+
 public class EnemyGorilla : Enemy
 {
-    public EnemyStateMachine<EnemyPenguinStateEnum> StateMachine { get; private set; }
+    public EnemyStateMachine<EnemyGorillaStateEnum> StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new EnemyStateMachine<EnemyPenguinStateEnum>();
+        StateMachine = new EnemyStateMachine<EnemyGorillaStateEnum>();
 
-        foreach (EnemyPenguinStateEnum state in Enum.GetValues(typeof(EnemyPenguinStateEnum)))
+        foreach (EnemyGorillaStateEnum state in Enum.GetValues(typeof(EnemyGorillaStateEnum)))
         {
             string typeName = state.ToString();
-            Type t = Type.GetType($"EnemyAnimal{typeName}State");
+            Type t = Type.GetType($"EnemyGorilla{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyPenguinStateEnum>;
+            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyGorillaStateEnum>;
 
             StateMachine.AddState(state, newState);
         }
@@ -26,7 +37,7 @@ public class EnemyGorilla : Enemy
 
     protected override void Start()
     {
-        StateMachine.Init(EnemyPenguinStateEnum.Idle);
+        StateMachine.Init(EnemyGorillaStateEnum.Idle);
     }
 
     protected override void Update()
