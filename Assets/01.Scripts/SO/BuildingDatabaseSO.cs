@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using Vector2 = UnityEngine.Vector2;
 
 public enum BuildingType
 {
     Defense,
     Buff,
-    Resource
+    Resource,
+    Trap
 }
 
 public enum DefaultBuildingType

@@ -138,14 +138,20 @@ public class InstallSystem : MonoBehaviour
         { return; }
 
 
+        Installing();
+    }
+
+    private void Installing()
+    {
         if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            if (!_groundDic.ContainsKey(hit.transform.gameObject.GetHashCode())) // Ä³½Ì
+            int hashCode = hit.transform.gameObject.GetHashCode();
+            if (!_groundDic.ContainsKey(hashCode)) // Ä³½Ì
             {
-                _groundDic.Add(hit.transform.gameObject.GetHashCode(), hit.transform.GetComponent<Ground>());
+                _groundDic.Add(hashCode, hit.transform.GetComponent<Ground>());
             }
 
-            Ground _curGround = _groundDic[hit.transform.gameObject.GetHashCode()];
+            Ground _curGround = _groundDic[hashCode];
 
             if (_previousGround == null
              || _curGround != _previousGround)
@@ -162,12 +168,12 @@ public class InstallSystem : MonoBehaviour
                 if (_curGround.IsInstalledBuilding)
                 {
                     _curGround.UpdateOutlineColor(OutlineColorType.Red);
-                    _curBuilding.MatChangeToTransparency(OutlineColorType.Red);
+                    _curBuilding.ChangeToTransparencyMat(OutlineColorType.Red);
                 }
                 else
                 {
                     _curGround.UpdateOutlineColor(OutlineColorType.Green);
-                    _curBuilding.MatChangeToTransparency(OutlineColorType.Green);
+                    _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
 
                 }
             }

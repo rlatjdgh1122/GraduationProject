@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseTrap : MonoBehaviour
+public class BaseTrap : BaseBuilding
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Running()
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

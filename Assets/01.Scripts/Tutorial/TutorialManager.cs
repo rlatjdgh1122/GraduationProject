@@ -30,14 +30,14 @@ public class TutorialManager : Singleton<TutorialManager>
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            CurTutorialProgressQuest(QuestGoalIdx.Second);
-        }
+        //if(Input.GetKeyDown(KeyCode.S))
+        //{
+        //    CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    CurTutorialProgressQuest(QuestGoalIdx.Second);
+        //}
     }
 
     public void StartCurTutorialQuest()

@@ -5,36 +5,6 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    public int GetCurrentPenguinCount()
-    {
-        Penguin[] penguins = FindObjectsOfType<Penguin>();
-
-        int activeCount = 0;
-
-        foreach (Penguin penguin in penguins)
-        {
-            if (penguin.enabled)
-            {
-                activeCount++;
-            }
-        }
-
-        return activeCount;
-    }
-
-    private int currentPreparationTimeSpawnPenguinCount;
-    public int CurrentPreparationTimeSpawnPenguinCount => currentPreparationTimeSpawnPenguinCount;
-
-    public void PlusCurrentPreparationTimeSpawnPenguinCount()
-    {
-        currentPreparationTimeSpawnPenguinCount++;
-    }
-
-    public void ResetCurrentPreparationTimeSpawnPenguinCount()
-    {
-        currentPreparationTimeSpawnPenguinCount = 0;
-    }
-
     public int GetDeadPenguinCount()
     {
         Penguin[] penguins = FindObjectsOfType<Penguin>();
@@ -103,7 +73,10 @@ public class GameManager : Singleton<GameManager>
         NexusTrm = GameObject.Find("Nexus").transform;
         WorkerSpawnPoint = GameObject.Find("WorkerSpawnPoint").transform;
 
-        PenguinManager.Instance.Setting(_soldierRegisterSO);
+        if (_soldierRegisterSO != null)
+        {
+            PenguinManager.Instance.Setting(_soldierRegisterSO);
+        }
     }
     private void Start()
     {

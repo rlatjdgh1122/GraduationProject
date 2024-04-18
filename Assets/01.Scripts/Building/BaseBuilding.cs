@@ -62,6 +62,8 @@ public abstract class BaseBuilding : WorkableObject
 
     protected LayerMask _groundLayer = 1 << 3;
 
+    private BattlePhaseStartEvent _phaseStartSubscriptionAction;
+
     protected Ground InstalledGround()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
@@ -116,10 +118,11 @@ public abstract class BaseBuilding : WorkableObject
     {
         if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
         {
-            MatChangeToTransparency(OutlineColorType.None);
+            ChangeToTransparencyMat(OutlineColorType.None);
             WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
 
-            SignalHub.OnBattlePhaseStartEvent += () => WorkerManager.Instance.ReturnBuilders(this);
+            _phaseStartSubscriptionAction = () => WorkerManager.Instance.ReturnBuilders(this);
+            SignalHub.OnBattlePhaseStartEvent += _phaseStartSubscriptionAction;
             SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
             _remainTimeUI.OnRemainUI();
             _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
@@ -153,7 +156,6 @@ public abstract class BaseBuilding : WorkableObject
 
     public virtual void SetSelect()
     {
-
         isSelected = true;
     }
 
@@ -169,7 +171,7 @@ public abstract class BaseBuilding : WorkableObject
             //_installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
             //UIManager.Instance.SpawnHudText(_installedFinText);
 
-            SignalHub.OnBattlePhaseStartEvent -= () => WorkerManager.Instance.ReturnBuilders(this);
+            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
     }
 
@@ -188,7 +190,7 @@ public abstract class BaseBuilding : WorkableObject
         isSelected = false;
     }
 
-    public void MatChangeToTransparency(OutlineColorType colorType)
+    public void ChangeToTransparencyMat(OutlineColorType colorType)
     {
         if (colorType == OutlineColorType.Green)
         {
@@ -239,6 +241,14 @@ public abstract class BaseBuilding : WorkableObject
         for (int i = 0; i < _skinRenderers.Length; i++)
         {
             _skinRenderers[i].material = _skinNormalMats[i];
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (_phaseStartSubscriptionAction != null)
+        {
+            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
     }
 }

@@ -28,11 +28,16 @@ public class MortarRock : PoolableMono
 
     private Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
     {
-        Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
+        float parabolaHeight = ParabolaFunc(height, t);
 
         var mid = Vector3.Lerp(start, end, t);
 
-        return new Vector3(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t), mid.z);
+        return new Vector3(mid.x, parabolaHeight + Mathf.Lerp(start.y, end.y, t), mid.z);
+    }
+
+    private float ParabolaFunc(float height, float t)
+    {
+        return  -4 * height * t * t + 4 * height * t;
     }
 
     public IEnumerator BulletMove(Vector3 startPos, Vector3 endPos)
@@ -45,23 +50,35 @@ public class MortarRock : PoolableMono
         _mortarAttackRangeSprite.transform.position = endPos;
         _mortarAttackRangeSprite.transform.SetParent(null);
 
-        while (transform.position.y >= -1f)
+        float distance = Vector3.Distance(startPos, endPos);
+
+        float height = distance * 0.2f;
+
+        while (!isDestoried)
         {
+            if (transform.localPosition.y <= -1f) // -1보다 작아지면 바다에 빠진 것
+            {
+                break;
+            } 
             timer += Time.deltaTime;
-            Vector3 tempPos = Parabola(startPos, endPos, 5, timer);
+            Vector3 tempPos = Parabola(startPos, endPos, height, timer);
             transform.position = tempPos;
             transform.rotation = Quaternion.Euler(0, timer * 720f, 0);
             yield return new WaitForEndOfFrame();
         }
 
+        Debug.Log(timer);
         isDestoried = true;
         _mortarAttackRangeSprite.transform.SetParent(transform);
         _mortarAttackRangeSprite.SetActive(false);
         PoolManager.Instance.Push(this);
+
+        yield return null;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("부딫");
         DestroyRock();
     }
 
@@ -78,8 +95,6 @@ public class MortarRock : PoolableMono
 
             CoroutineUtil.CallWaitForSeconds(0.7f, null, () =>
             {
-                _attackFeedback.FinishFeedback();
-                CoroutineUtil.CallWaitForOneFrame(null);
                 PoolManager.Instance.Push(this);
             });
         }

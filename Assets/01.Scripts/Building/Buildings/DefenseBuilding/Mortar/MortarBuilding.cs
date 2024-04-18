@@ -13,7 +13,7 @@ public class MortarBuilding : DefenseBuilding
     [SerializeField]
     private Transform _firePos;
 
-    private readonly string prefabName = "stone-small";
+    private readonly string prefabName = "MortarRock";
 
     private bool isFired;
 
@@ -29,6 +29,8 @@ public class MortarBuilding : DefenseBuilding
 
     private Vector3 _originScale = Vector3.one;
     private Vector3 _chargingScale = new Vector3(1.2f, 1.0f, 1.2f);
+
+    private bool isBattlePhase => WaveManager.Instance.IsBattlePhase;
 
     protected override void Awake()
     {
@@ -47,7 +49,7 @@ public class MortarBuilding : DefenseBuilding
 
     protected override void Update()
     {
-        if (WaveManager.Instance.IsBattlePhase) // 이것을 Running으로 옮길 것 입니다.
+        if (isBattlePhase) // 이것을 Running으로 옮길 것 입니다.
         {
             if (_currentTarget != null && !isFired)
             {
@@ -62,7 +64,7 @@ public class MortarBuilding : DefenseBuilding
         float elapsedTime = 0.0f;
         float remainWaitTime = 0.0f;
 
-        while (WaveManager.Instance.IsBattlePhase && _currentTarget != null)
+        while (isBattlePhase && _currentTarget != null)
         {
             _ignitingPenguin.SetGetTourchAnimation();
             float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
@@ -72,7 +74,7 @@ public class MortarBuilding : DefenseBuilding
             {
                 elapsedTime += Time.deltaTime;
 
-                if (_currentTarget == null)
+                if (!isBattlePhase) // 쏘려고 하는데 전투페이즈가 아니면 부채로 호다닥 끔
                 {
                     CoroutineUtil.CallWaitForSeconds(remainWaitTime,
                         () => _ignitingPenguin.StartSwingAnimation(),
@@ -98,6 +100,7 @@ public class MortarBuilding : DefenseBuilding
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
         rock.transform.position = _firePos.position;
+
         StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
 
         SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
