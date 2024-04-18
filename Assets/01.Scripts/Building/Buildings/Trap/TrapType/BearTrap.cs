@@ -8,7 +8,8 @@ public class BearTrap : BaseTrap
 
     public override void Init()
     {
-        base.Init(); 
+        base.Init();
+        _animator.SetBool("IsCatched", false);
     }
 
     protected override void Awake()
@@ -20,5 +21,6 @@ public class BearTrap : BaseTrap
     protected override void CatchEnemy(Enemy enemy)
     {
         Debug.Log($"{enemy} catch");
+        _animator.SetBool("IsCatched", true);
     }
 }
