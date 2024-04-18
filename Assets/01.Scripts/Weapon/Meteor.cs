@@ -40,5 +40,6 @@ public class Meteor : PoolableMono
         // 메테오 폭발 로직 추가
         _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
         Destroy(this.gameObject);
+        //PoolManager.Instance.Push(this);
     }
 }
