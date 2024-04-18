@@ -37,8 +37,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
 
-        //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
-        //그래서 애니메이션에서 속도를 줄엿음
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
     protected void ChaseEnter()

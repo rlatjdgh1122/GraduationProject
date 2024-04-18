@@ -38,7 +38,7 @@ public class EnemyState<T> where T : Enum
         _enemy.AnimatorCompo.SetBool(_animBoolHash, false); //³ª°¥¶© ²¨ÁÜ
     }
 
-    public void AnimationFinishTrigger()
+    public virtual void AnimationFinishTrigger()
     {
         _triggerCalled = true;
     }

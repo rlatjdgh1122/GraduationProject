@@ -19,6 +19,7 @@ public class Enemy : Entity
     public Action OnProvoked = null;
     public UnityEvent OnProvokedEvent;
 
+    public PassiveDataSO passiveData = null;
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
@@ -133,4 +134,21 @@ public class Enemy : Entity
         SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
         SignalHub.OnEnemyPenguinDead?.Invoke();
     }
+
+    #region passive
+    public bool CheckAttackEventPassive(int curAttackCount)
+=> passiveData.CheckAttackEventPassive(curAttackCount);
+
+    public virtual void OnPassiveAttackEvent()
+    {
+
+    }
+    public bool CheckStunEventPassive(float maxHp, float currentHP)
+ => passiveData.CheckStunEventPassive(maxHp, currentHP);
+
+    public virtual void OnPassiveStunEvent()
+    {
+
+    }
+    #endregion
 }

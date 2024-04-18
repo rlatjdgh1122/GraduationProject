@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGorillaAttackState :EnemyGorillaBaseState
+public class EnemyGorillaAttackState : EnemyGorillaBaseState
 {
     public EnemyGorillaAttackState(Enemy enemyBase, EnemyStateMachine<EnemyGorillaStateEnum> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
@@ -21,18 +21,11 @@ public class EnemyGorillaAttackState :EnemyGorillaBaseState
 
         _enemy.LookTarget();
 
-        if (_enemy.CurrentTarget.IsDead)
-        {
-            _enemy.CurrentTarget = null;
-
-            _stateMachine.ChangeState(EnemyGorillaStateEnum.Move);
-        }
-
         if (_triggerCalled) //공격이 한 차례 끝났을 때,
         {
-            if (_enemy.IsTargetPlayerInside)
+            if (!_enemy.IsTargetPlayerInside)
                 _stateMachine.ChangeState(EnemyGorillaStateEnum.Chase); //사거리 안에 타겟 플레이어가 있다 -> 따라가
-            else
+            else if (_enemy.CurrentTarget == null)
                 _stateMachine.ChangeState(EnemyGorillaStateEnum.Move); //없다 -> 넥서스로 Move
 
             _triggerCalled = false;
@@ -41,8 +34,17 @@ public class EnemyGorillaAttackState :EnemyGorillaBaseState
 
     public override void Exit()
     {
-        AttackComboExit();
-
         base.Exit();
+
+        AttackComboExit();
+    }
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        if (_enemy.CheckAttackEventPassive(++AttackCount))
+        {
+            _enemy?.OnPassiveAttackEvent();
+        }
     }
 }

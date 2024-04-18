@@ -11,7 +11,8 @@ public enum EnemyGorillaStateEnum
     Attack,
     Reached,
     MustChase,
-    Provoked
+    Provoked,
+    ChestHit
 }
 
 public class EnemyGorilla : Enemy
@@ -42,6 +43,12 @@ public class EnemyGorilla : Enemy
     protected override void Update()
     {
         StateMachine.CurrentState.UpdateState();
+    }
+
+    public override void OnPassiveAttackEvent()
+    {
+        attackSpeed *= 1.1f;
+        StateMachine.ChangeState(EnemyGorillaStateEnum.ChestHit);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();

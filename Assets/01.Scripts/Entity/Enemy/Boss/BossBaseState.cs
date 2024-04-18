@@ -6,6 +6,8 @@ using UnityEngine;
 public class BossBaseState<T> : EnemyState<T> where T : Enum
 {
     protected AnimalAttackableEntity _animalAttack;
+    protected int AttackCount = 0;
+
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
     private readonly string _mustMoveHash = "ComboCounter";
     public BossBaseState(Enemy enemyBase, EnemyStateMachine<T> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
@@ -49,8 +51,15 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
         }
         _enemy.AnimatorCompo.SetInteger(_comboCounterHash, _animalAttack.ComboCounter);
 
-        _enemy.StopImmediately();
+        AttackEnter();
+    }
 
+    protected void AttackEnter()
+    {
+        if (_enemy.CurrentTarget != null)
+            _enemy.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+
+        _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
@@ -71,14 +80,20 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
         ++_animalAttack.ComboCounter;
         _animalAttack.LastAttackTime = Time.time;
 
-        _enemy.AnimatorCompo.speed = 1;
+        AttackExit();
     }
-
+    protected void AttackExit()
+    {
+        _enemy.AnimatorCompo.speed = 1;
+        if (_enemy.CurrentTarget != null)
+            _enemy.CurrentTarget.HealthCompo.OnDiedEndEvent -= DeadTarget;
+    }
     protected void ReachedExit()
     {
         _enemy.HealthCompo.OnHit -= ChangeStateWhenHitted;
         _enemy.AnimatorCompo.speed = 1;
     }
+
     #endregion
 
     #region Handler
@@ -95,5 +110,29 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
         }
     }
 
+    private void DeadTarget()
+    {
+        var prevTarget = _enemy.CurrentTarget;
+
+        _enemy.SetTarget();
+
+        if (prevTarget != null)
+        {
+            prevTarget.HealthCompo.OnDied -= DeadTarget;
+        }
+        if (_enemy.CurrentTarget != null)
+        {
+            _enemy.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+        }
+    }
+
+    #endregion
+
+    #region Etc
+
+    protected void InitAttackCount()
+    {
+        AttackCount = 0;
+    }
     #endregion
 }

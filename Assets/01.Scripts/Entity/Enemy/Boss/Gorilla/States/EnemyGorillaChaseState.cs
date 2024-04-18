@@ -29,6 +29,7 @@ public class EnemyGorillaChaseState : EnemyGorillaBaseState
         if (_enemy.IsProvoked)
             _stateMachine.ChangeState(EnemyGorillaStateEnum.Provoked); //도발당할 시 도발State로
 
+
         if (!_enemy.IsTargetPlayerInside)
             _stateMachine.ChangeState(EnemyGorillaStateEnum.Move); //플레이어 펭귄이 아예 감지 사거리를 벗어났다 -> 넥서스로 Move
     }
