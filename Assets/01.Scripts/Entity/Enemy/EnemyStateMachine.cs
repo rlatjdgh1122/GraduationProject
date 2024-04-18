@@ -10,8 +10,6 @@ public class EnemyStateMachine<T> where T : Enum
 
     public void Init(T startState)
     {
-        Debug.Log(Equals(typeof(T), startState.GetType()));
-
         PrevState = CurrentState;
         CurrentState = StateDictionary[startState];
         CurrentState.Enter();

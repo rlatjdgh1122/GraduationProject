@@ -30,7 +30,6 @@ public class EnemyGorilla : Enemy
             Type t = Type.GetType($"EnemyGorilla{typeName}State");
             //리플렉션
             var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyGorillaStateEnum>;
-
             StateMachine.AddState(state, newState);
         }
     }
