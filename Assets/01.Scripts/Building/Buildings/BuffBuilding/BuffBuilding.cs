@@ -65,6 +65,11 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         _health.enabled = false; // 설치 완료 되기 전까지는 공격 대상 X
     }
 
+    public override void Init()
+    {
+        isEffectPlaying = false;
+    }
+
     public Collider[] BuffRunning(FeedbackPlayer feedbackPlayer, Collider[] _curcolls, Collider[] previousColls)
     {
         if (_curcolls.Length > previousColls.Length)

@@ -14,7 +14,12 @@ public class StrengthBuffBuilding : BuffBuilding
     private Dictionary<int , Penguin> _inRangePenguins = new Dictionary<int , Penguin>();
 
     private FeedbackPlayer _feedbackPlayer;
-    private BuffEffectFeedback _feedbackEffect; 
+    private BuffEffectFeedback _feedbackEffect;
+
+    public override void Init()
+    {
+        _inRangePenguins.Clear();
+    }
 
     protected override void Awake()
     {

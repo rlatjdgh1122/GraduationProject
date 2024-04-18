@@ -32,6 +32,12 @@ public class MortarBuilding : DefenseBuilding
 
     private bool isBattlePhase => WaveManager.Instance.IsBattlePhase;
 
+    public override void Init()
+    {
+        isFired = false;
+        _cannonTransform.transform.localScale = _originScale;
+    }
+
     protected override void Awake()
     {
         base.Awake();

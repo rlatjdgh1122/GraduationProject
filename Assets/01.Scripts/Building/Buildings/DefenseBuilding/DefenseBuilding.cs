@@ -47,6 +47,14 @@ public abstract class DefenseBuilding : BaseBuilding
         _health.enabled = false; // 설치 완료 되기 전까지는 공격 대상 X
     }
 
+    public override void Init()
+    {
+        _groundOutlines.Clear();
+        _previousGrounds.Clear();
+        _removedGrounds.Clear();
+        currentGrounds.Clear();
+    }
+
     protected override void Update()
     {
         base.Update();

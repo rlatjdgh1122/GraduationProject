@@ -27,11 +27,14 @@ public class DefaultBuilding : BaseBuilding
 
     private ConstructionStation _constructionStation;
 
+    public override void Init()
+    {
+        isSpawnUIOn = false;
+    }
+
     protected virtual void Start()
     {
         Installed();
-
-        _onSpawnUIVec = _offSpawnUIVec + new Vector3(0, onSpawnUIYPosValue, 0);
     }
 
     protected override void Awake()
