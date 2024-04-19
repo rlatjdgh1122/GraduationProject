@@ -12,7 +12,7 @@ public class EnemyGorillaAttackState : EnemyGorillaBaseState
     {
         base.Enter();
 
-        AttackComboEnter();
+        AttackEnter();
     }
 
     public override void UpdateState()
@@ -36,7 +36,7 @@ public class EnemyGorillaAttackState : EnemyGorillaBaseState
     {
         base.Exit();
 
-        AttackComboExit();
+        AttackExit();
     }
     public override void AnimationFinishTrigger()
     {

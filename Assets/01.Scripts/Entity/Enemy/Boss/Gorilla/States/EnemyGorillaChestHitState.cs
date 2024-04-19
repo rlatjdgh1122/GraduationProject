@@ -12,7 +12,7 @@ public class EnemyGorillaChestHitState : EnemyGorillaBaseState
     {
         base.Enter();
 
-        Debug.Log(_enemy.AnimatorCompo.GetBool("Attack"));
+        _enemy.StopImmediately();
         _triggerCalled = false;
     }
 
@@ -22,7 +22,10 @@ public class EnemyGorillaChestHitState : EnemyGorillaBaseState
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(EnemyGorillaStateEnum.Idle);
+            if (_enemy.CanAttack) //사거리 안에 있다
+                _stateMachine.ChangeState(EnemyGorillaStateEnum.Attack);
+            else
+                _stateMachine.ChangeState(EnemyGorillaStateEnum.Idle);
         }
     }
 

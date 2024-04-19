@@ -17,13 +17,13 @@ public class EnemyStateMachine<T> where T : Enum
 
     public void ChangeState(T newState)
     {
-        
+
         PrevState = CurrentState;
         PrevState.Exit();
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
 
-        Debug.Log("이 전 : " + PrevState + " , 이 후 : " + CurrentState);
+        // Debug.Log("이 전 : " + PrevState + " , 이 후 : " + CurrentState);
     }
 
     public bool IsEqualPrevState(T state)
