@@ -8,7 +8,6 @@ public class PenguinStoreUI : PopupUI
     [Header("Make Penguin Slot")]
     [SerializeField] private Transform _spawnPenguinButtonParent;
     [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
-    public List<DummyPenguin> _slotList; 
 
     #region Component
     public DummyPenguinFactory _penguinFactory { get; private set; }
@@ -30,12 +29,19 @@ public class PenguinStoreUI : PopupUI
         BuyPanel            = transform.Find("BuyPanel").GetComponent<BuyPanel>();
         _infoPanel          = transform.Find("DetailInfoPanel").GetComponent<InfoPanel>();
 
+        DummyPenguin[] penguins = Resources.LoadAll<DummyPenguin>("PenguinPrefab/Dummy");
+
         #endregion
 
-        foreach (var spwanObj in _slotList) //Make Penguin Slot
+        foreach (var spawnObj in penguins) //Make Penguin Slot
         {
-            var dummyPenguin = spwanObj;
-            var UIinfo = spwanObj.NotCloneInfo;
+            if (spawnObj.GetType() == typeof(GeneralDummyPengiun))
+            {
+                continue;
+            }
+
+            var dummyPenguin = spawnObj;
+            var UIinfo = spawnObj.NotCloneInfo;
 
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
             btn.InstantiateSelf(UIinfo, dummyPenguin, UIinfo.Price);
