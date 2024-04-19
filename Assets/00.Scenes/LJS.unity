@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08022401, g: 0.09962477, b: 0.30105427, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1140,6 +1140,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   OnHealedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1152,7 +1155,13 @@ MonoBehaviour:
   OnEvasionEvent:
     m_PersistentCalls:
       m_Calls: []
+  WaterFallEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
   OnUIUpdate:
@@ -1197,8 +1206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65da7b89cfadd8b49a9568508a9d4477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nexusStat: {fileID: 11400000, guid: 390a69cde83dbd04ea1fe35b49bb15fb, type: 2}
-  _input: {fileID: 0}
 --- !u!1 &202459227
 GameObject:
   m_ObjectHideFlags: 0
@@ -5827,9 +5834,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panelFadeTime: 0
+  soundName: 16
   _eliminatedEnemy: {fileID: 0}
   _deadPenguin: {fileID: 0}
   _reward: {fileID: 0}
+  _winSound: 0
   _cost: 1
   _btn: {fileID: 0}
 --- !u!224 &593408991
@@ -13722,6 +13731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c22fde6271a62943981109e9dd1f8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buySound: 18
   _costUI: {fileID: 516390344}
   _defaultCost: 10
 --- !u!1001 &933822335
@@ -19854,11 +19864,13 @@ MonoBehaviour:
   _dragSpeed: 2
   _fieldOfViewMax: 70
   fieldOfViewMin: 10
+  _scrollAmount: 5
   _rotateSpeed: 5
+  zoomSpeed: 10
   minXValue: -50
   maxXValue: 50
-  minYValue: -50
-  maxYValue: 50
+  minZValue: -50
+  maxZValue: 50
 --- !u!1 &1622996067
 GameObject:
   m_ObjectHideFlags: 0
@@ -22872,6 +22884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingList: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909, type: 2}
   _poolingListSO: {fileID: 11400000, guid: 07de459dc533c5d4f90da9a22e6f7b16, type: 2}
+  _soldierRegisterSO: {fileID: 0}
 --- !u!4 &1947758594
 Transform:
   m_ObjectHideFlags: 0
