@@ -148,29 +148,17 @@ public class BuyPanel : PopupUI
         ResetBuyPanel();
     }
 
-    private void ShowMessage(string message) //값들 임시로 박아둔것
-    {
-        UIManager.Instance.InitializHudTextSequence();
-
-        _presenter.StatuesMessageText.text = message;
-
-        UIManager.Instance.HudTextSequence.Append(_presenter.StatuCanvas.DOFade(1, 0.04f))
-                .AppendInterval(0.8f)
-                .Append(_presenter.StatuCanvas.DOFade(0, 0.04f));
-
-    }
-
     public void OneClickBuyPenguin()
     {
         if (_price > CostManager.Instance.Cost)
         {
-            ShowMessage("재화가 부족합니다!");
+            UIManager.Instance.ShowWarningUI("재화가 부족합니다!");
             return;
         }
 
         AmountCostUpdate();
         BuyButton();
-        ShowMessage("구매 성공!");
+        UIManager.Instance.ShowWarningUI("구매 성공!");
     }
 
     public override void HidePanel()

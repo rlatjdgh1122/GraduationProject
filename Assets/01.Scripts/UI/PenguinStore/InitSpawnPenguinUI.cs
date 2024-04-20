@@ -10,11 +10,9 @@ public class InitSpawnPenguinUI : PopupUI
 
     public DummyPenguinFactory PenguinFactory { get; private set; }
 
-    public CanvasGroup StatuCanvas { get; private set; }
-    public TextMeshProUGUI StatuesMessageText { get; private set; }
-
     public BuyPanel BuyPanel { get; private set; }
     protected InfoPanel infoPanel;
+    protected UnLockedPenguinPanel unlockedPenguinPanel;
 
     #endregion
 
@@ -25,18 +23,17 @@ public class InitSpawnPenguinUI : PopupUI
     [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
     [SerializeField] protected List<PenguinTypeEnum> _slotLockType;
 
-    protected Dictionary<PenguinTypeEnum, SpawnPenguinButton> lockButtonDicntionary;
+    protected Dictionary<PenguinTypeEnum, SpawnPenguinButton> lockButtonDicntionary = new();
+    protected Dictionary<PenguinTypeEnum, PenguinInfoDataSO> penguinInfODictionary = new();
 
     public override void Awake()
     {
         base.Awake();
 
         PenguinFactory = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
-        StatuCanvas = transform.Find("StatusMessage").GetComponent<CanvasGroup>();
-        StatuesMessageText = StatuCanvas.transform.Find("WhenBuyPenguin").GetComponent<TextMeshProUGUI>();
         BuyPanel = transform.Find("BuyPanel").GetComponent<BuyPanel>();
         infoPanel = transform.Find("DetailInfoPanel").GetComponent<InfoPanel>();
-
+        unlockedPenguinPanel = transform.Find("UnLockedPenguin").GetComponent<UnLockedPenguinPanel>();
         penguins = Resources.LoadAll<DummyPenguin>("PenguinPrefab/Dummy");
 
         CreateSlot();
@@ -54,10 +51,12 @@ public class InitSpawnPenguinUI : PopupUI
             var dummyPenguin = spawnObj;
             var UIinfo = spawnObj.NotCloneInfo;
 
+
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
 
             if (CheckSlotLock(UIinfo.PenguinType))
             {
+                penguinInfODictionary.Add(UIinfo.PenguinType, UIinfo);
                 lockButtonDicntionary.Add(UIinfo.PenguinType, btn);
             }
 

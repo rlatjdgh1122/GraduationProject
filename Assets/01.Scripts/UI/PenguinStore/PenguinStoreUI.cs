@@ -9,7 +9,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
     public void PenguinInformataion(DummyPenguin dummyPenguin, EntityInfoDataSO infoData, int price)
     {
         BuyPanel.PenguinInformataion(dummyPenguin, infoData, price);
-        infoPanel.PenguinInformataion(dummyPenguin, infoData);
+        infoPanel.PenguinInformataion(infoData);
     }
 
     public void UnlockSlot(PenguinTypeEnum unLockType)
@@ -17,6 +17,15 @@ public class PenguinStoreUI : InitSpawnPenguinUI
         if (lockButtonDicntionary.TryGetValue(unLockType, out SpawnPenguinButton btn))
         {
             btn.UnLockedButton();
+            UnLockedPenguin(unLockType);
+        }
+    }
+
+    public void UnLockedPenguin(PenguinTypeEnum unLockType)
+    {
+        if (penguinInfODictionary.TryGetValue(unLockType, out PenguinInfoDataSO data))
+        {
+            unlockedPenguinPanel.UnLocked(data);
         }
     }
 

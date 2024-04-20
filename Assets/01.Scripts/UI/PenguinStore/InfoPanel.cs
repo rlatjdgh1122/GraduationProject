@@ -10,14 +10,13 @@ public class InfoPanel : PopupUI
     private PenguinStoreUI _presenter;
 
     [Header("PenguinInfoPanel")]
-    private TextMeshProUGUI _infoPenguinNameText;
-    private Image _penguinFace;
-    private Slider _rangeSlider;
-    private Slider _hpSlider;
-    private Slider _atkSlider;
+    protected TextMeshProUGUI infoPenguinNameText;
+    protected Image penguinFace;
+    protected Slider rangeSlider;
+    protected Slider hpSlider;
+    protected Slider atkSlider;
 
     private EntityInfoDataSO _infoData;
-    private DummyPenguin _dummyPenguin;
 
     public override void Awake()
     {
@@ -25,28 +24,30 @@ public class InfoPanel : PopupUI
 
         _presenter = transform.parent.GetComponent<PenguinStoreUI>();
 
-        _infoPenguinNameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
-        _penguinFace = transform.Find("PenguinImg").GetComponent<Image>();
-        _rangeSlider = transform.Find("Rng").GetComponent<Slider>();
-        _hpSlider = transform.Find("Hp").GetComponent<Slider>();
-        _atkSlider = transform.Find("Atk").GetComponent<Slider>();
-        _infoPenguinNameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
+        infoPenguinNameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
+        penguinFace = transform.Find("PenguinImg").GetComponent<Image>();
+        rangeSlider = transform.Find("Rng").GetComponent<Slider>();
+        hpSlider = transform.Find("Hp").GetComponent<Slider>();
+        atkSlider = transform.Find("Atk").GetComponent<Slider>();
+        infoPenguinNameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
     }
 
-    public void PenguinInformataion(DummyPenguin dummyPenguin, EntityInfoDataSO infoData)
+    public void PenguinInformataion(EntityInfoDataSO infoData)
     {
-        _infoData = infoData;   
-        _dummyPenguin = dummyPenguin;
+        _infoData = infoData;
     }
 
-    private void UpdatePenguinInfo(float time)
+    public void UpdatePenguinInfo()
     {
-        _penguinFace.sprite = _infoData.PenguinIcon;
-        _infoPenguinNameText.text = _infoData.PenguinName;
+        penguinFace.sprite = _infoData.PenguinIcon;
+        infoPenguinNameText.text = _infoData.PenguinName;
+    }
 
-        _atkSlider.DOValue(_infoData.atk, time);
-        _hpSlider.DOValue(_infoData.hp, time);
-        _rangeSlider.DOValue(_infoData.range, time);
+    public void UpdateSlider(float time)
+    {
+        atkSlider.DOValue(_infoData.atk, time);
+        hpSlider.DOValue(_infoData.hp, time);
+        rangeSlider.DOValue(_infoData.range, time);
     }
 
 
@@ -59,6 +60,6 @@ public class InfoPanel : PopupUI
     {
         base.ShowPanel();
 
-        UpdatePenguinInfo(0.5f);
+        UpdatePenguinInfo();
     }
 }
