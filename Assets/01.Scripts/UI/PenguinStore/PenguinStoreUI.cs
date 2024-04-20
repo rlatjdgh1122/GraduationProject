@@ -1,58 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class PenguinStoreUI : PopupUI
+public class PenguinStoreUI : InitSpawnPenguinUI
 {
-    [Header("Make Penguin Slot")]
-    [SerializeField] private Transform _spawnPenguinButtonParent;
-    [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
-
-    #region Component
-    public DummyPenguinFactory _penguinFactory { get; private set; }
-
-    public CanvasGroup _statuCanvas {get; private set;}
-    public TextMeshProUGUI _statuesMessageText { get; private set; }
-
-    public BuyPanel BuyPanel { get; private set; }
-    private InfoPanel _infoPanel;
-    #endregion
-
-    public override void Awake()
-    {
-        #region Componenet
-
-        _penguinFactory     = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
-        _statuCanvas        = transform.Find("StatusMessage").GetComponent<CanvasGroup>();
-        _statuesMessageText = _statuCanvas.transform.Find("WhenBuyPenguin").GetComponent<TextMeshProUGUI>();
-        BuyPanel            = transform.Find("BuyPanel").GetComponent<BuyPanel>();
-        _infoPanel          = transform.Find("DetailInfoPanel").GetComponent<InfoPanel>();
-
-        DummyPenguin[] penguins = Resources.LoadAll<DummyPenguin>("PenguinPrefab/Dummy");
-
-        #endregion
-
-        foreach (var spawnObj in penguins) //Make Penguin Slot
-        {
-            if (spawnObj.GetType() == typeof(GeneralDummyPengiun))
-            {
-                continue;
-            }
-
-            var dummyPenguin = spawnObj;
-            var UIinfo = spawnObj.NotCloneInfo;
-
-            SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
-            btn.InstantiateSelf(UIinfo, dummyPenguin, UIinfo.Price);
-            btn.SlotUpdate();
-        }
-    }
-
     public void PenguinInformataion(DummyPenguin dummyPenguin, EntityInfoDataSO infoData, int price)
     {
         BuyPanel.PenguinInformataion(dummyPenguin, infoData, price);
-        _infoPanel.PenguinInformataion(dummyPenguin, infoData);
+        infoPanel.PenguinInformataion(dummyPenguin, infoData);
+    }
+
+    public void UnlockSlot(PenguinTypeEnum unLockType)
+    {
+        if (lockButtonDicntionary.TryGetValue(unLockType, out SpawnPenguinButton btn))
+        {
+            btn.UnLockedButton();
+        }
     }
 
     public void OnEnableStorePanel() //스토어 패널 활성화
@@ -83,11 +48,5 @@ public class PenguinStoreUI : PopupUI
     public void OnDisablePenguinInfo() //펭귄 정보 비활성화
     {
         UIManager.Instance.HidePanel("DetailInfoPanel");
-    }
-
-
-    public void TextUpdate(TextMeshProUGUI text, string str)
-    {
-        text.text = str;
     }
 }

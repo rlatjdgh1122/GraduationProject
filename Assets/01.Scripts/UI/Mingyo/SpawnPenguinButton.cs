@@ -22,6 +22,9 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
     private TextMeshProUGUI _priceText;
 
     private Image _selectImg;
+    private Image _locked;
+
+    private bool _isLocked = false;
 
     protected virtual void Awake()
     {
@@ -30,14 +33,16 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         _nameText     = transform.Find("PenguinImg/PenguinName").GetComponent<TextMeshProUGUI>();
         _priceText    = transform.Find("PenguinImg/Cost/CostText").GetComponent<TextMeshProUGUI>();
         _selectImg    = transform.Find("SelectImg").GetComponent<Image>();
+        _locked       = transform.Find("Locked").GetComponent<Image>();
     }
 
-    public void InstantiateSelf(PenguinInfoDataSO infoData, DummyPenguin dummyPenguin, int price)
+    public void InstantiateSelf(PenguinInfoDataSO infoData, DummyPenguin dummyPenguin, int price, bool isLocked = false)
     {
         _infoData = infoData;
         _dummyPenguin = dummyPenguin;
-
         _price = price;
+
+        _isLocked = isLocked;
     }
 
     public void SlotUpdate()
@@ -45,6 +50,13 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         _icon.sprite = _infoData.PenguinIcon;
         _nameText.text = _infoData.PenguinName;
         _priceText.text = _price.ToString();
+        _locked.gameObject.SetActive(_isLocked);
+    }
+
+    public void UnLockedButton()
+    {
+        _isLocked = false;
+        _locked.gameObject.SetActive(_isLocked);
     }
 
     private void SpawnPenguinLeftEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
@@ -60,6 +72,12 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(_isLocked)
+        {
+            UIManager.Instance.ShowWarningUI("잠겨있습니다!");
+            return;
+        }
+
         if(Input.GetMouseButtonDown(0)) //마우스 왼쪽 버튼
         {
             SpawnPenguinLeftEventHandler();

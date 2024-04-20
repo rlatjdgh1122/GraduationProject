@@ -54,7 +54,7 @@ public class BuyPanel : PopupUI
     {
         _amountPrice = -(_price * _cnt);
 
-        _presenter.TextUpdate(_priceText, _amountPrice.ToString());
+        _priceText.text = $"{_amountPrice}";
 
         _amountPrice = Mathf.Abs(_amountPrice);
     }
@@ -62,7 +62,7 @@ public class BuyPanel : PopupUI
     private void CurrentCostUpdate() //현재 보유 재화 업뎃
     {
         _buyToPenguinNameText.text = $"{_infoData.PenguinName} 구매하기";
-        _presenter.TextUpdate(_currentCostText, CostManager.Instance.Cost.ToString());
+        _currentCostText.text = $"{CostManager.Instance.Cost}";
     }
 
     public void PlusCnt() //UI 안에 있는 +버튼을 누르면
@@ -70,7 +70,7 @@ public class BuyPanel : PopupUI
         if (_maxCount < _cnt) return;
 
         _cnt++;
-        _presenter.TextUpdate(_buyCntText, _cnt.ToString());
+        _buyCntText.text = $"{_cnt}";
         AmountCostUpdate();
     }
     public void MinusCnt()//UI 안에 있는 -버튼을 누르면
@@ -78,8 +78,7 @@ public class BuyPanel : PopupUI
         if (_cnt <= 1) return;
 
         _cnt--;
-        _presenter.TextUpdate(_buyCntText, _cnt.ToString());
-        AmountCostUpdate();
+        _buyCntText.text = $"{_cnt}";
     }
 
     private int _amount;
@@ -120,7 +119,7 @@ public class BuyPanel : PopupUI
             _buyButtonImg.color = Color.white;
             str = $"구매하기 (남는 재화 : {_amount})";
         }
-        _presenter.TextUpdate(_buyButtonText, str);
+        _buyButtonText.text = str;
     }
 
     public void ResetBuyPanel()
@@ -129,7 +128,7 @@ public class BuyPanel : PopupUI
         PriceUpdate();
         CurrentCostUpdate();
         AmountCostUpdate();
-        _presenter.TextUpdate(_buyCntText, _cnt.ToString());
+        _buyCntText.text = $"{_cnt}";
     }
 
     public void BuyButton()
@@ -142,7 +141,7 @@ public class BuyPanel : PopupUI
         {
             LegionInventoryManager.Instance.AddPenguin(_dummyPenguin.NotCloneInfo);
 
-            _presenter._penguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
+            _presenter.PenguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
         }
 
 
@@ -153,11 +152,11 @@ public class BuyPanel : PopupUI
     {
         UIManager.Instance.InitializHudTextSequence();
 
-        _presenter._statuesMessageText.text = message;
+        _presenter.StatuesMessageText.text = message;
 
-        UIManager.Instance.HudTextSequence.Append(_presenter._statuCanvas.DOFade(1, 0.04f))
+        UIManager.Instance.HudTextSequence.Append(_presenter.StatuCanvas.DOFade(1, 0.04f))
                 .AppendInterval(0.8f)
-                .Append(_presenter._statuCanvas.DOFade(0, 0.04f));
+                .Append(_presenter.StatuCanvas.DOFade(0, 0.04f));
 
     }
 
