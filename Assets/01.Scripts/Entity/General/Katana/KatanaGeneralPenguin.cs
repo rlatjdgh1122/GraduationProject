@@ -11,32 +11,19 @@ public class KatanaGeneralPenguin : General
         base.Awake();
 
         StateMachine = new PenguinStateMachine();
-        Transform stateTrm = transform.Find("States");
-
-        //foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
-        //{
-        //    IState stateScript = stateTrm.GetComponent($"Penguin{state}State") as IState;
-        //    if (stateScript == null)
-        //    {
-        //        Debug.LogError($"There is no script : {state}");
-        //        return;
-        //    }
-        //    stateScript.SetUp(this, StateMachine, state.ToString());
-        //    StateMachine.AddState(state, stateScript);
-        //}
 
         foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Penguin{typeName}State");
             //리플렉션
-            IState newState = Activator.CreateInstance(t) as IState;
+            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
             if (newState == null)
             {
                 Debug.LogError($"There is no script : {state}");
                 return;
             }
-            newState.SetUp(this, StateMachine, typeName);
+            //newState.SetUp(this, StateMachine, typeName);
             StateMachine.AddState(state, newState);
         }
     }

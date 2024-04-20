@@ -4,6 +4,10 @@ public class PenguinAttackState : State
 {
     private int curAttackCount = 0;
 
+    public PenguinAttackState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    {
+    }
+
     public override void EnterState()
     {
         base.EnterState();

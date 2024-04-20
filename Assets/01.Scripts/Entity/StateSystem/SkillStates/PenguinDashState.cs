@@ -1,5 +1,9 @@
 public class PenguinDashState : KatanaBaseState
 {
+    public PenguinDashState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    {
+    }
+
     DashSkill dashSkill => _general.skill as DashSkill;
 
     public override void EnterState()
