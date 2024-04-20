@@ -32,12 +32,6 @@ public class MortarBuilding : DefenseBuilding
 
     private bool isBattlePhase => WaveManager.Instance.IsBattlePhase;
 
-    public override void Init()
-    {
-        isFired = false;
-        _cannonTransform.transform.localScale = _originScale;
-    }
-
     protected override void Awake()
     {
         base.Awake();
@@ -50,10 +44,6 @@ public class MortarBuilding : DefenseBuilding
 
 
     protected override void Running()
-    {
-    }
-
-    protected override void Update()
     {
         if (isBattlePhase) // 이것을 Running으로 옮길 것 입니다.
         {
@@ -119,5 +109,13 @@ public class MortarBuilding : DefenseBuilding
         _cannonTransform.DOLocalMoveY(endYValue, 3f);
 
         _cannonTransform.DOScale(_chargingScale, 3f);
+    }
+
+    protected override void SetInstalled()
+    {
+        base.SetInstalled();
+
+        _cannonTransform.transform.localScale = _originScale;
+        isFired = false;
     }
 }
