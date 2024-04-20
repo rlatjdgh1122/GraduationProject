@@ -86,9 +86,10 @@ public class Health : MonoBehaviour, IDamageable
     {
         GameObject enemy = ray.collider.gameObject;
         //Debug.Log(enemy.name + "이(가) 스턴 상태가 되었습니다.");
-        OnStunEvent?.Invoke();
 
+        OnStunEvent?.Invoke();
         StartCoroutine(StunCoroutine(enemy, duration));
+
         
         //Debug.Log(enemy.name + "이(가) 스턴 상태에서 벗어났습니다.");
         return true;
@@ -117,7 +118,6 @@ public class Health : MonoBehaviour, IDamageable
         {
             _navMeshAgent.speed = 0;
         }
-        
 
         yield return new WaitForSeconds(duration);
 
@@ -133,7 +133,7 @@ public class Health : MonoBehaviour, IDamageable
 
         if (_navMeshAgent != null)
         {
-        _navMeshAgent.speed = speed;
+            _navMeshAgent.speed = speed;
         }
     }
 

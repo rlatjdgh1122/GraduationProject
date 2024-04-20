@@ -56,14 +56,16 @@ public abstract class BaseTrap : BaseBuilding
             {
                 var catchedInfo = GetCathedEnemy();
 
-                if (catchedInfo.iscatched)
+                if (catchedInfo._catchedEnemy != null)
                 {
                     CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
                     isPlayed = true;
+                    yield break;
                 }
             }
 
-            yield return new WaitForEndOfFrame();
+            Debug.Log("Ω««‡¡ﬂ");
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
