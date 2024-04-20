@@ -51,12 +51,20 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         _nameText.text = _infoData.PenguinName;
         _priceText.text = _price.ToString();
         _locked.gameObject.SetActive(_isLocked);
+        _nameText.gameObject.SetActive(!_isLocked);
+
+        if (_isLocked)
+        {
+            _icon.color = Color.black;
+        }
     }
 
     public void UnLockedButton()
     {
         _isLocked = false;
+        _icon.color = Color.white;
         _locked.gameObject.SetActive(_isLocked);
+        _nameText.gameObject.SetActive(!_isLocked);
     }
 
     private void SpawnPenguinLeftEventHandler() //Inspector 버튼 이벤트에서 구독할 함수
