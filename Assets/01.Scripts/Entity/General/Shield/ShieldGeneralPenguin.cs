@@ -5,13 +5,13 @@ public class ShieldGeneralPenguin : General
 {
     //
     //public EntityStateMachine<ShieldGeneralPenguinStateEnum, General> StateMachine { get; private set; }
-    public TestStateMachine TestStateMachine { get; private set; }
+    public PenguinStateMachine TestStateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        TestStateMachine = new TestStateMachine();
+        TestStateMachine = new PenguinStateMachine();
         Transform stateTrm = transform.Find("States");
 
         foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))

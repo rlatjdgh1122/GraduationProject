@@ -156,7 +156,7 @@ public class DamageCaster : MonoBehaviour
                     health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
                     if (health.IsDead)
                     {
-                        health.ApplyHitType(HitType.BleedHit);
+                        health.ApplyHitType(HitType.DashHit);
                         health.OnDashDeathEvent?.Invoke();
                         dashSkill.canDash = true;
                         _hitType = HitType.KatanaHit;

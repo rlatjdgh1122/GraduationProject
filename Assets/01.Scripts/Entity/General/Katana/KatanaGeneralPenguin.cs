@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class KatanaGeneralPenguin : General
 {
-    public EntityStateMachine<KatanaGeneralStateEnum, General> StateMachine { get; private set; }
-    public TestStateMachine TestStateMachine { get; private set; }
+    public PenguinStateMachine StateMachine { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        TestStateMachine = new TestStateMachine();
+        StateMachine = new PenguinStateMachine();
         Transform stateTrm = transform.Find("States");
 
         foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
@@ -22,8 +21,8 @@ public class KatanaGeneralPenguin : General
                 Debug.LogError($"There is no script : {state}");
                 return;
             }
-            stateScript.SetUp(this, TestStateMachine, state.ToString());
-            TestStateMachine.AddState(state, stateScript);
+            stateScript.SetUp(this, StateMachine, state.ToString());
+            StateMachine.AddState(state, stateScript);
         }
     }
 
@@ -36,18 +35,18 @@ public class KatanaGeneralPenguin : General
     {
         base.Update();
 
-        TestStateMachine.CurrentState.UpdateState();
+        StateMachine.CurrentState.UpdateState();
     }
 
     public override void StateInit()
     {
-        TestStateMachine.Init(PenguinStateType.Idle);
+        StateMachine.Init(PenguinStateType.Idle);
     }
 
     public override void OnPassiveAttackEvent()
     {
-        TestStateMachine.ChangeState(PenguinStateType.Dash);
+        StateMachine.ChangeState(PenguinStateType.Dash);
     }
 
-    public override void AnimationTrigger() => TestStateMachine.CurrentState.AnimationTrigger();
+    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }

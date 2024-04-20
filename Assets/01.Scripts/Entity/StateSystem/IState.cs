@@ -9,5 +9,5 @@ public interface IState
     public void ExitState();
     public void AnimationTrigger();
 
-    public void SetUp(Penguin penguin, TestStateMachine stateMachine , string animationBoolName);
+    public void SetUp(Penguin penguin, PenguinStateMachine stateMachine , string animationBoolName);
 }
