@@ -35,7 +35,7 @@ public abstract class BaseTrap : BaseBuilding
 
     private (bool iscatched, RaycastHit _raycastHit, Enemy _catchedEnemy) GetCathedEnemy()
     {
-        bool catched = Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 1f, _enemyLayer);
+        bool catched = Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 3f, _enemyLayer);
         if (catched)
         {
             return (catched, hit, hit.collider.GetComponent<Enemy>());
@@ -65,10 +65,9 @@ public abstract class BaseTrap : BaseBuilding
             }
 
             Debug.Log("Ω««‡¡ﬂ");
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
     }
 
     protected abstract void CatchEnemy(Enemy enemy, RaycastHit raycastHit);
-
 }
