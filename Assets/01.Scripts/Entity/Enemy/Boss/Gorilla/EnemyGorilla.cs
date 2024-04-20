@@ -47,7 +47,7 @@ public class EnemyGorilla : Enemy
 
     public override void OnPassiveAttackEvent()
     {
-        attackSpeed *= 1.1f;
+        attackSpeed *= 1.2f;
         StateMachine.ChangeState(EnemyGorillaStateEnum.ChestHit);
     }
 
