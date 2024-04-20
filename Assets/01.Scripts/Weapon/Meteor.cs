@@ -10,7 +10,7 @@ public class Meteor : PoolableMono
     private Rigidbody _rigid;
     private DamageCaster _damageCaster;
 
-    private void OnEnable()
+    private void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
         _damageCaster = GetComponent<DamageCaster>();
@@ -29,7 +29,7 @@ public class Meteor : PoolableMono
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground") || coll.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Explode();
         }
@@ -40,5 +40,6 @@ public class Meteor : PoolableMono
         // 메테오 폭발 로직 추가
         _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
         Destroy(this.gameObject);
+        //PoolManager.Instance.Push(this);
     }
 }

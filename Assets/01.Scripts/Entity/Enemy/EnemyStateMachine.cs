@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyStateMachine<T> where T : Enum
 {
@@ -16,16 +17,20 @@ public class EnemyStateMachine<T> where T : Enum
 
     public void ChangeState(T newState)
     {
+
         PrevState = CurrentState;
         PrevState.Exit();
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
 
-        //UnityEngine.Debug.Log("이 전 : " + PrevState + " , 이 후 : " + CurrentState);
+        // Debug.Log("이 전 : " + PrevState + " , 이 후 : " + CurrentState);
     }
 
     public bool IsEqualPrevState(T state)
-        => PrevState.Equals(state);
+    {
+        if (state == null) return false;
+        return PrevState.Equals(state);
+    }
 
     public void AddState(T state, EnemyState<T> playerState)
     {

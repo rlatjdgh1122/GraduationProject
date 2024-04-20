@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -74,7 +75,7 @@ public class DamageCaster : MonoBehaviour
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
         foreach (var col in Colls)
-        {       
+        {
             if (col.TryGetComponent<Health>(out Health health))
             {
                 int damage = _owner.Stat.damage.GetValue();
@@ -168,7 +169,7 @@ public class DamageCaster : MonoBehaviour
                     dashSkill.canDash = false;
                     int damage = _owner.Stat.damage.GetValue() * 2;
                     health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-                }   
+                }
             }
         }
     }
@@ -199,7 +200,7 @@ public class DamageCaster : MonoBehaviour
                 adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
                 damage = (int)adjustedDamage;
             }
-            
+
             raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
             _hitType = originType;
 

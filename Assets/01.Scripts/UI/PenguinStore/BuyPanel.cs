@@ -54,7 +54,7 @@ public class BuyPanel : PopupUI
     {
         _amountPrice = -(_price * _cnt);
 
-        _presenter.TextUpdate(_priceText, _amountPrice.ToString());
+        _priceText.text = $"{_amountPrice}";
 
         _amountPrice = Mathf.Abs(_amountPrice);
     }
@@ -62,7 +62,7 @@ public class BuyPanel : PopupUI
     private void CurrentCostUpdate() //현재 보유 재화 업뎃
     {
         _buyToPenguinNameText.text = $"{_infoData.PenguinName} 구매하기";
-        _presenter.TextUpdate(_currentCostText, CostManager.Instance.Cost.ToString());
+        _currentCostText.text = $"{CostManager.Instance.Cost}";
     }
 
     public void PlusCnt() //UI 안에 있는 +버튼을 누르면
@@ -70,7 +70,7 @@ public class BuyPanel : PopupUI
         if (_maxCount < _cnt) return;
 
         _cnt++;
-        _presenter.TextUpdate(_buyCntText, _cnt.ToString());
+        _buyCntText.text = $"{_cnt}";
         AmountCostUpdate();
     }
     public void MinusCnt()//UI 안에 있는 -버튼을 누르면
@@ -78,8 +78,7 @@ public class BuyPanel : PopupUI
         if (_cnt <= 1) return;
 
         _cnt--;
-        _presenter.TextUpdate(_buyCntText, _cnt.ToString());
-        AmountCostUpdate();
+        _buyCntText.text = $"{_cnt}";
     }
 
     private int _amount;
@@ -120,7 +119,7 @@ public class BuyPanel : PopupUI
             _buyButtonImg.color = Color.white;
             str = $"구매하기 (남는 재화 : {_amount})";
         }
-        _presenter.TextUpdate(_buyButtonText, str);
+        _buyButtonText.text = str;
     }
 
     public void ResetBuyPanel()
@@ -129,7 +128,7 @@ public class BuyPanel : PopupUI
         PriceUpdate();
         CurrentCostUpdate();
         AmountCostUpdate();
-        _presenter.TextUpdate(_buyCntText, _cnt.ToString());
+        _buyCntText.text = $"{_cnt}";
     }
 
     public void BuyButton()
@@ -142,36 +141,24 @@ public class BuyPanel : PopupUI
         {
             LegionInventoryManager.Instance.AddPenguin(_dummyPenguin.NotCloneInfo);
 
-            _presenter._penguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
+            _presenter.PenguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
         }
 
 
         ResetBuyPanel();
     }
 
-    private void ShowMessage(string message) //값들 임시로 박아둔것
-    {
-        UIManager.Instance.InitializHudTextSequence();
-
-        _presenter._statuesMessageText.text = message;
-
-        UIManager.Instance.HudTextSequence.Append(_presenter._statuCanvas.DOFade(1, 0.04f))
-                .AppendInterval(0.8f)
-                .Append(_presenter._statuCanvas.DOFade(0, 0.04f));
-
-    }
-
     public void OneClickBuyPenguin()
     {
         if (_price > CostManager.Instance.Cost)
         {
-            ShowMessage("재화가 부족합니다!");
+            UIManager.Instance.ShowWarningUI("재화가 부족합니다!");
             return;
         }
 
         AmountCostUpdate();
         BuyButton();
-        ShowMessage("구매 성공!");
+        UIManager.Instance.ShowWarningUI("구매 성공!");
     }
 
     public override void HidePanel()

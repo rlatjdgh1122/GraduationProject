@@ -58,8 +58,9 @@ public class CostBox : PoolableMono
                     }
                     break;
             }
+
+            _isClick = true;
         }
-        _isClick = true;
     }
 
 
