@@ -87,7 +87,10 @@ public abstract class BaseBuilding : WorkableObject
 
         if (_buildingItemInfo != null)
         {
-            _remainTimeUI = transform.Find("TimeRemainCanvas").GetComponent<TimeRemain>();
+            if (_buildingItemInfo.BuildingTypeEnum != BuildingType.Trap)
+            {
+                _remainTimeUI = transform.Find("TimeRemainCanvas").GetComponent<TimeRemain>();
+            }
         }
 
         SetUpCompo();
@@ -251,4 +254,5 @@ public abstract class BaseBuilding : WorkableObject
             SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
     }
+
 }

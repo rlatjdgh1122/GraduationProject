@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour, IDamageable
@@ -103,10 +104,20 @@ public class Health : MonoBehaviour, IDamageable
         }
 
         CharacterController controller = enemy.GetComponent<CharacterController>();
+
         if (controller != null)
         {
-            controller.enabled = false; 
+            controller.enabled = false;
         }
+
+        NavMeshAgent _navMeshAgent = enemy.GetComponent<NavMeshAgent>();
+        float speed = _navMeshAgent.speed;
+
+        if (_navMeshAgent != null)
+        {
+            _navMeshAgent.speed = 0;
+        }
+        
 
         yield return new WaitForSeconds(duration);
 
@@ -118,6 +129,11 @@ public class Health : MonoBehaviour, IDamageable
         if (controller != null)
         {
             controller.enabled = true; 
+        }
+
+        if (_navMeshAgent != null)
+        {
+        _navMeshAgent.speed = speed;
         }
     }
 

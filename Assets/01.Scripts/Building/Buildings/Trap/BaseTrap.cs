@@ -8,46 +8,65 @@ public abstract class BaseTrap : BaseBuilding
     private LayerMask _enemyLayer;
 
     private bool isBattlePhase => WaveManager.Instance.IsBattlePhase;
-    private bool isCatchedEnemy;
 
-    private bool isRunning => isBattlePhase && isCatchedEnemy;
+    private bool isRunning => isBattlePhase && !isPlayed;
 
-    public override void Init()
+    private bool isPlayed;
+
+    protected DamageCaster _damageCaster;
+
+    protected override void Awake()
     {
-        base.Init();
-        isCatchedEnemy = false;
+        base.Awake();
+        _damageCaster = GetComponent<DamageCaster>();
+
+
+        isPlayed = false;                   //나중에 UI로 설치하느게 생기면 지워야함
+        StartCoroutine(RunningCoroutine()); //나중에 UI로 설치하느게 생기면 지워야함
     }
 
-    private Enemy _trappedEnemy
+    protected override void SetInstalled()
     {
-        get
+        base.SetInstalled();
+
+        isPlayed = false;
+        StartCoroutine(RunningCoroutine());
+    }
+
+    private (bool iscatched, RaycastHit _raycastHit, Enemy _catchedEnemy) GetCathedEnemy()
+    {
+        bool catched = Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 1f, _enemyLayer);
+        if (catched)
         {
-            if (Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 1f, _enemyLayer))
+            return (catched, hit, hit.collider.GetComponent<Enemy>());
+        }
+        return (catched, default, null);
+    }
+
+    protected override void Running() //코루틴으로 해서 암것도 안 함
+    {
+
+    }
+
+    private IEnumerator RunningCoroutine()
+    {
+        while (true)
+        {
+            if (isRunning)
             {
-                return hit.collider.GetComponent<Enemy>();
+                var catchedInfo = GetCathedEnemy();
+
+                if (catchedInfo.iscatched)
+                {
+                    CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
+                    isPlayed = true;
+                }
             }
-            return null;
+
+            yield return new WaitForEndOfFrame();
         }
     }
 
-    protected override void Running() // 나중에는 이거 주석 풀고 써야됨
-    {
-        //if (!isRunning) { return; }
-
-        //if (_trappedEnemy != null)
-        //{
-        //    CatchEnemy(_trappedEnemy);
-        //}
-    }
-
-    protected override void Update()
-    {
-        if (_trappedEnemy != null)
-        {
-            CatchEnemy(_trappedEnemy);
-        }
-    }
-
-    protected abstract void CatchEnemy(Enemy enemy);
+    protected abstract void CatchEnemy(Enemy enemy, RaycastHit raycastHit);
 
 }

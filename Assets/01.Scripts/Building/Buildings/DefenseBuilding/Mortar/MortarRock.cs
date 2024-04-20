@@ -67,7 +67,6 @@ public class MortarRock : PoolableMono
             yield return new WaitForEndOfFrame();
         }
 
-        Debug.Log(timer);
         isDestoried = true;
         _mortarAttackRangeSprite.transform.SetParent(transform);
         _mortarAttackRangeSprite.SetActive(false);
@@ -78,7 +77,6 @@ public class MortarRock : PoolableMono
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ºÎ‹H");
         DestroyRock();
     }
 

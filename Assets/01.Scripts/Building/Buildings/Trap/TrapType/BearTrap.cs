@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BearTrap : BaseTrap
 {
+    [SerializeField]
+    private float stunDuration; // ³ªÁß¿¡ ½ºÅÝ So·Î »©½Ã¿À
     Animator _animator;
 
     public override void Init()
@@ -18,9 +20,12 @@ public class BearTrap : BaseTrap
         _animator = transform.Find("Visual").GetComponent<Animator>();
     }
 
-    protected override void CatchEnemy(Enemy enemy)
+    protected override void CatchEnemy(Enemy enemy, RaycastHit raycastHit)
     {
-        Debug.Log($"{enemy} catch");
+        _damageCaster.CastBuildingStunDamage(enemy.HealthCompo,
+                                             raycastHit,
+                                             stunDuration,
+                                             _characterStat.damage.GetValue());
         _animator.SetBool("IsCatched", true);
     }
 }
