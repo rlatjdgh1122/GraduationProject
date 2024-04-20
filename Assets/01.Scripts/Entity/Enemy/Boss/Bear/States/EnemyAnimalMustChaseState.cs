@@ -8,7 +8,7 @@ public class EnemyAnimalMustChaseState : EnemyAnimalBaseState
     public override void Enter()
     {
         base.Enter();
-        _triggerCalled = true;
+        _triggerCalled = true;  
         _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
     }
 

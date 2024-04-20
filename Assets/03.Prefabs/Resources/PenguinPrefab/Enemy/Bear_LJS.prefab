@@ -1774,6 +1774,7 @@ GameObject:
   - component: {fileID: 437750768202099827}
   - component: {fileID: 1822430018049317374}
   - component: {fileID: 4248819816302077476}
+  - component: {fileID: 213502241397231819}
   m_Layer: 12
   m_Name: Bear_LJS
   m_TagString: Untagged
@@ -1791,7 +1792,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.93, y: 2.14, z: -9.42}
-  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4213202519416074522}
@@ -1840,6 +1841,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  NexusTarget: {fileID: 0}
   IsMove: 0
   IsProvoked: 0
 --- !u!114 &8774250041756432437
@@ -2074,6 +2076,18 @@ NavMeshAgent:
   m_BaseOffset: 0.47
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &213502241397231819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6186144316036918896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691a6779977f98f47b1a28d68065f5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6288274593364168463
 GameObject:
   m_ObjectHideFlags: 0
