@@ -3,13 +3,13 @@ using UnityEngine.AI;
 
 public class State : MonoBehaviour, IState
 {
-    protected TestStateMachine _stateMachine;
+    protected PenguinStateMachine _stateMachine;
     protected Penguin _penguin;
     protected NavMeshAgent _navAgent; //편의를 위해서 여기에도 NavAgent 선언
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
 
-    public void SetUp(Penguin penguin, TestStateMachine stateMachine, string animationBoolName)
+    public void SetUp(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName)
     {
         _penguin = penguin;
         _stateMachine = stateMachine;
