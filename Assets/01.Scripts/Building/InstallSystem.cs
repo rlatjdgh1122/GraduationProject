@@ -151,34 +151,43 @@ public class InstallSystem : MonoBehaviour
                 _groundDic.Add(hashCode, hit.transform.GetComponent<Ground>());
             }
 
-            Ground _curGround = _groundDic[hashCode];
+            Ground curGround = _groundDic[hashCode];
 
             if (_previousGround == null
-             || _curGround != _previousGround)
+             || curGround != _previousGround)
             {
                 _previousGround?.UpdateOutlineColor(OutlineColorType.None);
 
-                Vector3 buildingPos = new Vector3(_curGround.transform.position.x, 0f, _curGround.transform.position.z);
-                Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
-                //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
-                _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
-                                                              2f,
-                                                              _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
-
-                if (_curGround.IsInstalledBuilding)
-                {
-                    _curGround.UpdateOutlineColor(OutlineColorType.Red);
-                    _curBuilding.ChangeToTransparencyMat(OutlineColorType.Red);
-                }
-                else
-                {
-                    _curGround.UpdateOutlineColor(OutlineColorType.Green);
-                    _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
-
-                }
+                MoveSelectBuilding(curGround);
+                UpdateGroundColor(curGround);
             }
 
-            _previousGround = _curGround;
+            _previousGround = curGround;
+        }
+    }
+
+    private void MoveSelectBuilding(Ground curGround)
+    {
+        Vector3 buildingPos = new Vector3(curGround.transform.position.x, 0f, curGround.transform.position.z);
+        Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
+        //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
+        _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
+                                                      2f,
+                                                      _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
+    }
+
+    private void UpdateGroundColor(Ground curGround)
+    {
+        if (curGround.IsInstalledBuilding)
+        {
+            curGround.UpdateOutlineColor(OutlineColorType.Red);
+            _curBuilding.ChangeToTransparencyMat(OutlineColorType.Red);
+        }
+        else
+        {
+            curGround.UpdateOutlineColor(OutlineColorType.Green);
+            _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
+
         }
     }
 }
