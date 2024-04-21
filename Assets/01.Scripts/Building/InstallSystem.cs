@@ -153,16 +153,23 @@ public class InstallSystem : MonoBehaviour
 
             Ground curGround = _groundDic[hashCode];
 
-            if (_previousGround == null
-             || curGround != _previousGround)
+            if (_previousGround == null ||
+                curGround != _previousGround)
             {
                 _previousGround?.UpdateOutlineColor(OutlineColorType.None);
-
-                MoveSelectBuilding(curGround);
-                UpdateGroundColor(curGround);
             }
 
-            _previousGround = curGround;
+            if (_curBuilding.BuildingItemInfoCompo.BuildingTypeEnum ==
+                BuildingType.Trap)
+            {
+                MoveTrap(hit.point);
+            }
+            else
+            {
+                MoveSelectBuilding(curGround);
+                UpdateGroundColor(curGround);
+                _previousGround = curGround;
+            }
         }
     }
 
@@ -174,6 +181,11 @@ public class InstallSystem : MonoBehaviour
         _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
                                                       2f,
                                                       _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
+    }
+
+    private void MoveTrap(Vector3 pos)
+    {
+        _curBuilding.transform.position = pos;
     }
 
     private void UpdateGroundColor(Ground curGround)
