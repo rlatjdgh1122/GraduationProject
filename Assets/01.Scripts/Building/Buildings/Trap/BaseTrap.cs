@@ -35,10 +35,13 @@ public abstract class BaseTrap : BaseBuilding
 
     private (bool iscatched, RaycastHit _raycastHit, Enemy _catchedEnemy) GetCathedEnemy()
     {
-        bool catched = Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 3f, _enemyLayer);
+        bool catched = Physics.SphereCast(transform.position, 0.5f, transform.up * 0.5f, out RaycastHit hit, 1f, _enemyLayer);
         if (catched)
         {
-            return (catched, hit, hit.collider.GetComponent<Enemy>());
+            if (hit.collider.TryGetComponent(out Enemy enemy))
+            {
+                return (catched, hit, enemy);
+            }
         }
         return (catched, default, null);
     }
@@ -70,4 +73,12 @@ public abstract class BaseTrap : BaseBuilding
     }
 
     protected abstract void CatchEnemy(Enemy enemy, RaycastHit raycastHit);
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position + (transform.up * 0.5f), 0.5f);
+    }
 }

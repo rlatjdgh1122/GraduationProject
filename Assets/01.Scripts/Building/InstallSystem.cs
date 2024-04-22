@@ -104,7 +104,8 @@ public class InstallSystem : MonoBehaviour
     {
         if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            if (_previousGround.IsInstalledBuilding)
+            if (_previousGround.IsInstalledBuilding &&
+                _curBuilding.BuildingItemInfoCompo.BuildingTypeEnum != BuildingType.Trap)
             {
                 UIManager.Instance.ShowWarningUI("이미 설치되어 있습니다");
                 return;
@@ -163,13 +164,15 @@ public class InstallSystem : MonoBehaviour
                 BuildingType.Trap)
             {
                 MoveTrap(hit.point);
+                _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
             }
             else
             {
                 MoveSelectBuilding(curGround);
                 UpdateGroundColor(curGround);
-                _previousGround = curGround;
             }
+
+            _previousGround = curGround;
         }
     }
 
@@ -197,7 +200,7 @@ public class InstallSystem : MonoBehaviour
         }
         else
         {
-            curGround.UpdateOutlineColor(OutlineColorType.Green);
+            curGround.UpdateOutlineColor(OutlineColorType.Green);   
             _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
 
         }
