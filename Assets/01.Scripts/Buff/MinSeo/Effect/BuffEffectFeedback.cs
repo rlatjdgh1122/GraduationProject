@@ -17,7 +17,7 @@ public class BuffEffectFeedback : Feedback
         this.effectTime = effectTime;
     }
 
-    public override void CreateFeedback()
+    public override void StartFeedback()
     {
         if (_curEffect != null) { return; }
         _curEffect = PoolManager.Instance.Pop(_effect.name) as EffectPlayer;

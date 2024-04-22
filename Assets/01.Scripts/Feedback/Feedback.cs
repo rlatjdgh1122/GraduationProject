@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Feedback : MonoBehaviour
+public abstract class Feedback : MonoBehaviour, IFeedback
 {
     protected EntityActionData actionData;
     protected Transform actionDataTrm => actionData.transform;
@@ -13,7 +13,7 @@ public abstract class Feedback : MonoBehaviour
         owner = transform.parent.GetComponent<Entity>();
     }
 
-    public abstract void CreateFeedback(); //피드백 생성
+    public abstract void StartFeedback(); //피드백 생성
     public abstract void FinishFeedback(); //피드백 종료
 
     protected virtual void OnDestroy()

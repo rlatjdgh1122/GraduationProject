@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DashEffectFeedback : Feedback
+public class DashEffectFeedback : EffectFeedback
 {
     [SerializeField] private float _effectEndTime;
 
@@ -9,7 +9,7 @@ public class DashEffectFeedback : Feedback
         base.Start();
     }
 
-    public override void CreateFeedback()
+    public override void StartFeedback()
     {
         EffectPlayer effect = PoolManager.Instance.Pop("DashEffect") as EffectPlayer;
         effect.transform.position = gameObject.transform.position;

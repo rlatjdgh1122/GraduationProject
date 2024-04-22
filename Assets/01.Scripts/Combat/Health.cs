@@ -30,6 +30,8 @@ public class Health : MonoBehaviour, IDamageable
     public UnityEvent OnDashDeathEvent;
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
+
+    private FeedbackController feedbackCompo = null;
     #endregion
 
     private EntityActionData _actionData;
@@ -42,6 +44,7 @@ public class Health : MonoBehaviour, IDamageable
     {
         _isDead = false;
         _actionData = GetComponent<EntityActionData>();
+        feedbackCompo = GetComponent<FeedbackController>();
     }
 
     public void SetHealth(BaseStat owner)
@@ -86,13 +89,18 @@ public class Health : MonoBehaviour, IDamageable
     {
         GameObject enemy = ray.collider.gameObject;
 
-        OnStunEvent?.Invoke();
-        StartCoroutine(StunCoroutine(enemy, duration));
+        //OnStunEvent?.Invoke();
+        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Stun, out var feedback))
+        {
+            feedback.StartFeedback();
+
+            StartCoroutine(StunCoroutine(enemy, duration));
+        }
 
         return true;
     }
 
-    private IEnumerator StunCoroutine(GameObject enemy ,float duration)
+    private IEnumerator StunCoroutine(GameObject enemy, float duration)
     {
         Animator animator = enemy.GetComponentInChildren<Animator>();
 
@@ -120,12 +128,12 @@ public class Health : MonoBehaviour, IDamageable
 
         if (animator != null)
         {
-            animator.speed = 1f; 
+            animator.speed = 1f;
         }
 
         if (controller != null)
         {
-            controller.enabled = true; 
+            controller.enabled = true;
         }
 
         if (_navMeshAgent != null)
@@ -142,7 +150,11 @@ public class Health : MonoBehaviour, IDamageable
         float adjustedEvasion = _evasion * 0.01f;
         if (dice < adjustedEvasion)
         {
-            OnEvasionEvent?.Invoke();
+            if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Evasion, out var feedback))
+            {
+                feedback.StartFeedback();
+            }
+            //OnEvasionEvent?.Invoke();
             return;
         }
 

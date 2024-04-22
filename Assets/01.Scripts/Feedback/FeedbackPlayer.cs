@@ -21,7 +21,7 @@ public class FeedbackPlayer : MonoBehaviour
         FinishFeedback();
         foreach (Feedback f in _feedbackToPlay)
         {
-            f.CreateFeedback();
+            f.StartFeedback();
         }
     }
 
