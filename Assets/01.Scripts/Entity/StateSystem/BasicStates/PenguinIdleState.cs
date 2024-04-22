@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PenguinIdleState : State
 {
+    public PenguinIdleState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    {
+    }
+
     public override void EnterState()
     {
         base.EnterState();

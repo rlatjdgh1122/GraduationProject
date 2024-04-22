@@ -60,7 +60,7 @@ public class MopAttackState : MopBaseState
     {
         base.AnimationFinishTrigger();
 
-        if (_penguin.CheckAttackEventPassive(++curAttackCount))
+        if (_penguin.CheckAttackPassive(++curAttackCount))
         {
             _penguin?.OnPassiveAttackEvent();
         }

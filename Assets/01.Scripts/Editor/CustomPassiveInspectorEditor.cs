@@ -33,7 +33,7 @@ public class CustomPassiveInspectorEditor : Editor
         Passive_IsAroundEnemyCountEventEvent_Prop = serializedObject.FindProperty("IsAroundEnemyCountEventEvent");
 
         Passive_AttackCount_Prop = serializedObject.FindProperty("AttackCount");
-        Passive_EverySecond_Prop = serializedObject.FindProperty("EverySecond");
+        Passive_EverySecond_Prop = serializedObject.FindProperty("Second");
         Passive_AroundRadius_Prop = serializedObject.FindProperty("AroundRadius");
         Passive_AroundEnemyCount_Prop = serializedObject.FindProperty("AroundEnemyCount");
         Passive_CheckTarget_Prop = serializedObject.FindProperty("CheckTarget");

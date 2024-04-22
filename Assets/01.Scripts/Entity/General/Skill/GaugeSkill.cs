@@ -7,9 +7,7 @@ public class GaugeSkill : Skill
 
     bool IsUsed = false;
 
-    private General owner => _owner as General;
-
-    public override void SetOwner(Entity owner)
+    public override void SetOwner(General owner)
     {
         base.SetOwner(owner);
 
@@ -33,7 +31,7 @@ public class GaugeSkill : Skill
 
             if (_hitValue >= _targetValue)
             {
-                owner.canSpinAttack = true;
+                _owner.canSpinAttack = true;
                 OnSkillCompleted?.Invoke();
                 IsAvaliable = false;
             }

@@ -24,5 +24,4 @@ public class ShieldGeneralBaseState : GeneralState<ShieldGeneralPenguinStateEnum
     {
         base.Exit();
     }
-
 }

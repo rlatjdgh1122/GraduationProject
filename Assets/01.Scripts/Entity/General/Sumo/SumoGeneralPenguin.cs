@@ -1,30 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Polyperfect.Common;
 
 public class SumoGeneralPenguin : General
 {
-    public PenguinStateMachine StateMachine { get; private set; }
+    private bool _canCalculate = false;
 
     protected override void Awake()
     {
         base.Awake();
-
-        StateMachine = new PenguinStateMachine();
-        Transform stateTrm = transform.Find("States");
-
-        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
-        {
-            IState stateScript = stateTrm.GetComponent($"Penguin{state}State") as IState;
-            if (stateScript == null)
-            {
-                Debug.LogError($"There is no script : {state}");
-                return;
-            }
-            stateScript.SetUp(this, StateMachine, state.ToString());
-            StateMachine.AddState(state, stateScript);
-        }
     }
 
     protected override void Start()
@@ -37,6 +19,12 @@ public class SumoGeneralPenguin : General
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
+
+        if (IsInnerMeleeRange && !_canCalculate)
+        {
+            RunSecondPassive();
+            _canCalculate = true;
+        }
     }
 
     public override void StateInit()
@@ -44,10 +32,10 @@ public class SumoGeneralPenguin : General
         StateMachine.Init(PenguinStateType.Idle);
     }
 
-    //public override void OnPassiveAttackEvent()
-    //{
-    //    StateMachine.ChangeState(PenguinStateType.Dash);
-    //}
+    public override void OnPassiveSecondEvent()
+    {
+        StateMachine.ChangeState(PenguinStateType.Stun);
+    }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }

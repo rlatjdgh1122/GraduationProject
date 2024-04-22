@@ -17,7 +17,8 @@ public enum PenguinTypeEnum
     Builder,
     ShieldGeneral,
     KatanaGeneral,
-    Wizard
+    Wizard,
+    SumoGeneral,
 }
 
 public class PenguinSpawner : DefaultBuilding

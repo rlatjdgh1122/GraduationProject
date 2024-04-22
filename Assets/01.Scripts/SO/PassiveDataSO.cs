@@ -1,8 +1,5 @@
-using UnityEditor;
 using UnityEngine;
 
-
-//[ExecuteInEditMode]
 [CreateAssetMenu(menuName = "SO/PassiveData")]
 public class PassiveDataSO : ScriptableObject
 {
@@ -12,7 +9,7 @@ public class PassiveDataSO : ScriptableObject
 
     //몇 초 마다
     public bool IsSecondEvent = false;
-    public float EverySecond = 10f;
+    public int Second = 10;
 
     //뒤에서 때릴때
     public bool IsBackAttack = false;
@@ -23,51 +20,6 @@ public class PassiveDataSO : ScriptableObject
     public int AroundEnemyCount = 3;
 
     public LayerMask CheckTarget;
-
-    private General Owner = null;
-
-    private float curTime = 0f;
-
-   /* private void Awake()
-    {
-        EditorUtility.SetDirty(this);
-    }*/
-    public void Start()
-    {
-        
-    }
-    public void Update()
-    {
-        if (IsSecondEvent)
-        {
-            curTime += Time.deltaTime;
-            if (curTime > EverySecond)
-            {
-                Owner.OnPassiveSecondEvent();
-                curTime = 0;
-            }
-        }
-
-        if (IsAroundEnemyCountEventEvent)
-        {
-/*            var colls = Physics.OverlapSphere(Owner.transform.position, AroundRadius, CheckTarget);
-
-            if (colls.Length == AroundEnemyCount)
-            {
-                if (colls.Length == AroundEnemyCount)
-                    Owner.OnPassiveAroundEvent();
-            }
-            else
-            {
-
-            }*/
-        }
-    }
-
-    public void SetOwner(General obj)
-    {
-        Owner = obj;
-    }
 
     /// <summary>
     /// 체력이 50이하 일 때 페시브 활성화 확인 여부

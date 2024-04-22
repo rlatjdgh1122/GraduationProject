@@ -1,5 +1,9 @@
 public class PenguinChaseState : State
 {
+    public PenguinChaseState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    {
+    }
+
     public override void EnterState()
     {
         base.EnterState();
