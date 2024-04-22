@@ -74,17 +74,35 @@ public class Penguin : Entity
 
     #region components
     public EntityAttackData AttackCompo { get; private set; }
+    public PenguinStateMachine StateMachine { get; private set; }
     private IDeadable _deadCompo = null;
     private ILiveable _liveCompo = null;
     #endregion
+
     public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
     public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
     private Army owner;
     public Army MyArmy => owner;
+
     protected override void Awake()
     {
         base.Awake();
+
+        StateMachine = new PenguinStateMachine();
+
+        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
+        {
+            string typeName = state.ToString();
+            Type t = Type.GetType($"Penguin{typeName}State");
+            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
+            if (newState == null)
+            {
+                Debug.LogError($"There is no script : {state}");
+                return;
+            }
+            StateMachine.AddState(state, newState);
+        }
 
         if (NavAgent != null)
         {
@@ -95,19 +113,35 @@ public class Penguin : Entity
         _liveCompo = GetComponent<ILiveable>();
     }
 
-    #region �Ϲ� ����� �нú�
-    //General���� ���� ��
-    public bool CheckAttackEventPassive(int curAttackCount)
+    #region passive
+    public bool CheckAttackPassive(int curAttackCount)
 => passiveData.CheckAttackEventPassive(curAttackCount);
+
+    public bool CheckStunPassive(float maxHp, float currentHP)
+ => passiveData.CheckStunEventPassive(maxHp, currentHP);
+
+    public void RunSecondPassive()
+    {
+        StartCoroutine(CheckSecondCoroutine(passiveData.Second));
+    }
+
+    private IEnumerator CheckSecondCoroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        OnPassiveSecondEvent();
+    }
 
     public virtual void OnPassiveAttackEvent()
     {
-
+    
     }
-    public bool CheckStunEventPassive(float maxHp, float currentHP)
- => passiveData.CheckStunEventPassive(maxHp, currentHP);
 
     public virtual void OnPassiveStunEvent()
+    {
+
+    }
+
+    public virtual void OnPassiveSecondEvent()
     {
 
     }
@@ -304,5 +338,4 @@ public class Penguin : Entity
         owner = null;
         _liveCompo.OnResurrected();
     }
-
 }

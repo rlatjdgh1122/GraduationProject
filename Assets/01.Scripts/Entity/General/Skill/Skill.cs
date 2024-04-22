@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    protected Entity _owner;
+    protected General _owner;
 
     #region events
     public Action OnSkillStart = null;
@@ -13,9 +13,15 @@ public abstract class Skill : MonoBehaviour
     #endregion
 
     public bool IsAvaliable = true;
+    public bool CanUseSkill = false;
 
-    public virtual void SetOwner(Entity owner)
+    public virtual void SetOwner(General owner)
     {
         _owner = owner;
+    }
+
+    public virtual void PlaySkill()
+    {
+
     }
 }

@@ -46,7 +46,7 @@ public class ShieldBlockState : ShieldBaseState
         }
 
 
-        if (StunAtk > 0 && _penguin.CheckStunEventPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
+        if (StunAtk > 0 && _penguin.CheckStunPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
         {
             _penguin?.OnPassiveStunEvent();
             StunAtk--;

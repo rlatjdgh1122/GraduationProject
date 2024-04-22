@@ -1,53 +1,41 @@
-//using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using Polyperfect.Common;
 
-//public class SumoGeneralPenguin : General
-//{
-//    public PenguinStateMachine StateMachine { get; private set; }
+public class SumoGeneralPenguin : General
+{
+    private bool _canCalculate = false;
 
-//    protected override void Awake()
-//    {
-//        base.Awake();
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
-//        StateMachine = new PenguinStateMachine();
-//        Transform stateTrm = transform.Find("States");
+    protected override void Start()
+    {
+        StateInit();
+    }
 
-//        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
-//        {
-//            IState stateScript = stateTrm.GetComponent($"Penguin{state}State") as IState;
-//            if (stateScript == null)
-//            {
-//                Debug.LogError($"There is no script : {state}");
-//                return;
-//            }
-//            stateScript.SetUp(this, StateMachine, state.ToString());
-//            StateMachine.AddState(state, stateScript);
-//        }
-//    }
+    protected override void Update()
+    {
+        base.Update();
 
-//    protected override void Start()
-//    {
-//        StateInit();
-//    }
+        StateMachine.CurrentState.UpdateState();
 
-//    protected override void Update()
-//    {
-//        base.Update();
+        if (IsInnerMeleeRange && !_canCalculate)
+        {
+            RunSecondPassive();
+            _canCalculate = true;
+        }
+    }
 
-//        StateMachine.CurrentState.UpdateState();
-//    }
+    public override void StateInit()
+    {
+        StateMachine.Init(PenguinStateType.Idle);
+    }
 
-//    public override void StateInit()
-//    {
-//        StateMachine.Init(PenguinStateType.Idle);
-//    }
+    public override void OnPassiveSecondEvent()
+    {
+        StateMachine.ChangeState(PenguinStateType.Stun);
+    }
 
-//    //public override void OnPassiveAttackEvent()
-//    //{
-//    //    StateMachine.ChangeState(PenguinStateType.Dash);
-//    //}
-
-//    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
-//}
+    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
+}

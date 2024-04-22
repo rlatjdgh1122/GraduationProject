@@ -5,7 +5,7 @@ public class State
 {
     protected PenguinStateMachine _stateMachine;
     protected Penguin _penguin;
-    protected NavMeshAgent _navAgent; //편의를 위해서 여기에도 NavAgent 선언
+    protected NavMeshAgent _navAgent;
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
 

@@ -1,10 +1,10 @@
-public class PenguinDashState : KatanaBaseState
+public class PenguinDashState : State
 {
+    private General General => _penguin as General;
+
     public PenguinDashState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
-
-    DashSkill dashSkill => _general.skill as DashSkill;
 
     public override void EnterState()
     {
@@ -19,7 +19,7 @@ public class PenguinDashState : KatanaBaseState
         else
         {
             _triggerCalled = false;
-            dashSkill.DashHandler();
+            General.skill.PlaySkill();
         }
     }
 
@@ -29,7 +29,7 @@ public class PenguinDashState : KatanaBaseState
 
         if (_triggerCalled) 
         {
-            if (dashSkill.canDash)
+            if (General.skill.CanUseSkill)
             {
                 _stateMachine.ChangeState(PenguinStateType.Dash);
             }

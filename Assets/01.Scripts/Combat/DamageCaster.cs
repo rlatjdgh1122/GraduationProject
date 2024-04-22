@@ -89,7 +89,7 @@ public class DamageCaster : MonoBehaviour
     /// 단일 스턴 데미지
     /// </summary>
     /// <returns> 공격 맞았나 여부</returns>
-    public void CastStunDamage(bool Stun, float duration)
+    public void CastStunDamage(bool Stun, float duration) 
     {
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
@@ -138,8 +138,6 @@ public class DamageCaster : MonoBehaviour
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange * 2f, TargetLayer);
 
-        DashSkill dashSkill = _general.skill as DashSkill;
-
         foreach (var col in Colls)
         {
             RaycastHit raycastHit;
@@ -159,14 +157,14 @@ public class DamageCaster : MonoBehaviour
                     {
                         health.ApplyHitType(HitType.DashHit);
                         health.OnDashDeathEvent?.Invoke();
-                        dashSkill.canDash = true;
+                        _general.skill.CanUseSkill = true;
                         _hitType = HitType.KatanaHit;
                         return;
                     }
                 }
                 else
                 {
-                    dashSkill.canDash = false;
+                    _general.skill.CanUseSkill = false;
                     int damage = _owner.Stat.damage.GetValue() * 2;
                     health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
                 }
