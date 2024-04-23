@@ -43,7 +43,7 @@ public class DamageCaster : MonoBehaviour
     /// <summary>
     /// 광역 데미지
     /// </summary>
-    public void CaseAoEDamage(float knbValue)
+    public void CaseAoEDamage(float knbValue = 0f, float stunValue = 0f)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -63,9 +63,47 @@ public class DamageCaster : MonoBehaviour
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
                 health.Knockback(knbValue, raycastHit.normal);
+                health.Stun(stunValue);
 
             }
         }
+    }
+    /// <summary>
+    /// 단일 데미지
+    /// </summary>
+    /// <returns> 공격 맞았나 여부</returns>
+    public bool CastDamage(float knbValue = 0f, float stunValue = 0f)
+    {
+        RaycastHit raycastHit;
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
+
+        if (raycastSuccess
+            && raycastHit.collider.TryGetComponent<Health>(out Health health))
+        {
+            int damage = _owner.Stat.damage.GetValue();
+
+            float critical = _owner.Stat.criticalChance.GetValue() * 0.01f;
+            int criticalValue = _owner.Stat.criticalValue.GetValue();
+            float adjustedDamage;
+            float dice = UnityEngine.Random.value;
+            HitType originType = _hitType;
+
+            if (dice < critical)
+            {
+                _hitType = HitType.CriticalHit;
+                adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
+                damage = (int)adjustedDamage;
+            }
+
+            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            health.Knockback(knbValue, raycastHit.normal);
+            health.Stun(stunValue);
+
+            _hitType = originType;
+            return true;
+        }
+
+        return false;
     }
 
     public void CastOverlap()
@@ -79,55 +117,6 @@ public class DamageCaster : MonoBehaviour
                 int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 단일 스턴 데미지
-    /// </summary>
-    /// <returns> 공격 맞았나 여부</returns>
-    public void CastStunDamage(bool Stun, float duration)
-    {
-        RaycastHit raycastHit;
-        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
-        if (raycastSuccess
-            && raycastHit.collider.TryGetComponent<Health>(out Health health))
-        {
-            int damage = _owner.Stat.damage.GetValue();
-
-            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-
-            if (Stun == true)
-                health.Stun(raycastHit, duration);
-        }
-
-    }
-
-    public void CastAoEStunDamage(bool Stun, float duration)
-    {
-        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
-
-        foreach (var col in Colls)
-        {
-            RaycastHit raycastHit;
-
-            var dir = (col.transform.position - transform.position).normalized;
-            dir.y = 0;
-
-            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
-
-            if (raycastSuccess
-                && raycastHit.collider.TryGetComponent<Health>(out Health health))
-            {
-                int damage = _owner.Stat.damage.GetValue();
-
-                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-
-                if (Stun == true)
-                    health.Stun(raycastHit, duration);
-
             }
         }
     }
@@ -169,43 +158,6 @@ public class DamageCaster : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// 단일 데미지
-    /// </summary>
-    /// <returns> 공격 맞았나 여부</returns>
-    public bool CastDamage()
-    {
-        RaycastHit raycastHit;
-        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
-        if (raycastSuccess
-            && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
-        {
-            int damage = _owner.Stat.damage.GetValue();
-
-            float critical = _owner.Stat.criticalChance.GetValue() * 0.01f;
-            int criticalValue = _owner.Stat.criticalValue.GetValue();
-            float adjustedDamage;
-            float dice = UnityEngine.Random.value;
-            HitType originType = _hitType;
-
-            if (dice < critical)
-            {
-                _hitType = HitType.CriticalHit;
-                adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
-                damage = (int)adjustedDamage;
-            }
-
-            raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-            _hitType = originType;
-
-            return true;
-        }
-
-        return false;
-    }
-
     public bool CastArrowDamage(Collider coll, LayerMask targetLayer)
     {
         if (coll.TryGetComponent<IDamageable>(out IDamageable raycastHealth) && ((1 << coll.gameObject.layer) & targetLayer) != 0)
@@ -256,7 +208,7 @@ public class DamageCaster : MonoBehaviour
         //actionData.HitPoint
     }
 
-    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0f, float stunValue = 0f)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -276,6 +228,7 @@ public class DamageCaster : MonoBehaviour
             {
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
                 health.Knockback(knbValue);
+                health.Stun(stunValue);
 
             }
         }
@@ -311,7 +264,7 @@ public class DamageCaster : MonoBehaviour
     public void CastBuildingStunDamage(Health enemyHealth, RaycastHit hit, float duration, int damage)
     {
         enemyHealth.ApplyDamage(damage, hit.point, hit.normal, _hitType);
-        enemyHealth.Stun(hit, duration);
+        enemyHealth.Stun(duration);
     }
 
     #endregion

@@ -20,7 +20,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable
     public Action OnDied;
 
     public UnityEvent WaterFallEvent;
-    public UnityEvent OnDeathEvent; //���߿� Vector3���ڰ�
+    public UnityEvent OnDeathEvent;
     public UnityEvent OnDashDeathEvent;
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
@@ -51,63 +51,6 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable
     public void SetMaxHealth(BaseStat owner)
     {
         maxHealth = owner.GetMaxHealthValue();
-    }
-
-    public bool Stun(RaycastHit ray, float duration)
-    {
-        GameObject enemy = ray.collider.gameObject;
-
-        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var stunF))
-        {
-            //OnStunEvent?.Invoke();
-            stunF.PlayFeedback();
-
-            StartCoroutine(StunCoroutine(enemy, duration));
-        }
-
-        return true;
-    }
-
-    private IEnumerator StunCoroutine(GameObject enemy, float duration)
-    {
-        Animator animator = enemy.GetComponentInChildren<Animator>();
-
-        if (animator != null)
-        {
-            animator.speed = 0f;
-        }
-
-        CharacterController controller = enemy.GetComponent<CharacterController>();
-
-        if (controller != null)
-        {
-            controller.enabled = false;
-        }
-
-        NavMeshAgent _navMeshAgent = enemy.GetComponent<NavMeshAgent>();
-        float speed = _navMeshAgent.speed;
-
-        if (_navMeshAgent != null)
-        {
-            _navMeshAgent.speed = 0;
-        }
-
-        yield return new WaitForSeconds(duration);
-
-        if (animator != null)
-        {
-            animator.speed = 1f;
-        }
-
-        if (controller != null)
-        {
-            controller.enabled = true;
-        }
-
-        if (_navMeshAgent != null)
-        {
-            _navMeshAgent.speed = speed;
-        }
     }
 
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
@@ -150,7 +93,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable
     }
     public void Stun(float value)
     {
-        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var knockbackF, value))
         {
             knockbackF.PlayFeedback();
         }

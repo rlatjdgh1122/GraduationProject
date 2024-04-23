@@ -52,8 +52,9 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// <summary>
     /// ±¤¿ª °ø°Ý
     /// </summary>
-    public void AoEAttackTrigger(float knbValue)
+    public void AoEAttackTrigger(AnimationEvent animationEvent)
     {
+
         _penguin.AttackCompo.AoEAttack(knbValue);
         OnAoEAttackTriggerEvent?.Invoke();
     }
