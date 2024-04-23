@@ -61,7 +61,15 @@ public class State
 
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
-        _penguin.FindFirstNearestEnemy();
+        if (!_penguin.TargetLock)
+        {
+            _penguin.FindFirstNearestEnemy();
+        }
+        else
+        {
+            if (_penguin.CurrentTarget == null)
+                _penguin.FindFirstNearestEnemy();
+        }
 
         _penguin.StartImmediately();
 
