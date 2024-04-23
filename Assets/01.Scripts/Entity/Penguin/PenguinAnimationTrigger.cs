@@ -64,9 +64,9 @@ public class PenguinAnimationTrigger : MonoBehaviour
         OnAttackTriggerEvent?.Invoke();
     }
 
-    public void StunTrigger(int isStun)
+    public void StunTrigger(float value)
     {
-        _penguin.AttackCompo.StunAttack(isStun == 0 ? false : true, 3f);
+        _penguin.AttackCompo.StunAttack(true, value);
         OnStunTriggerEvent?.Invoke();
     }
 

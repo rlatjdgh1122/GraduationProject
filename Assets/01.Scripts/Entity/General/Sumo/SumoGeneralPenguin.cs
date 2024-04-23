@@ -1,9 +1,5 @@
-using Polyperfect.Common;
-
 public class SumoGeneralPenguin : General
 {
-    private bool _canCalculate = false;
-
     protected override void Awake()
     {
         base.Awake();
@@ -19,12 +15,6 @@ public class SumoGeneralPenguin : General
         base.Update();
 
         StateMachine.CurrentState.UpdateState();
-
-        if (IsInnerMeleeRange && !_canCalculate)
-        {
-            RunSecondPassive();
-            _canCalculate = true;
-        }
     }
 
     public override void StateInit()
@@ -34,7 +24,7 @@ public class SumoGeneralPenguin : General
 
     public override void OnPassiveSecondEvent()
     {
-        StateMachine.ChangeState(PenguinStateType.Stun);
+        StateMachine.ChangeState(PenguinStateType.Throw);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();

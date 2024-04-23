@@ -7,5 +7,4 @@ public enum PenguinStateType
     Attack,
     Dash,
     Throw,
-    Stun
 }

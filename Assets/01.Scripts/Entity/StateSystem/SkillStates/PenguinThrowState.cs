@@ -21,6 +21,7 @@ public class PenguinThrowState : State
         else
         {
             _triggerCalled = false;
+            _penguin.CurrentTarget.transform.position = _penguin.transform.position;
             General.skill.PlaySkill();
         }
     }
@@ -28,8 +29,6 @@ public class PenguinThrowState : State
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _penguin.CurrentTarget.transform.position = _penguin.transform.position;
 
         if (_triggerCalled)
         {

@@ -39,10 +39,11 @@ public class DashSkill : Skill
 
         OnDashEvent?.Invoke();
         _owner.NavAgent.enabled = false;
+        Vector3 dir = new(_owner.transform.forward.x, 0, _owner.transform.forward.z);
 
         while (Time.time < startTime + time)
         {
-            _owner.CharacterCompo.Move(_owner.transform.forward * speed * Time.deltaTime);
+            _owner.CharacterCompo.Move(speed * Time.deltaTime * dir);
             yield return null;
         }
 

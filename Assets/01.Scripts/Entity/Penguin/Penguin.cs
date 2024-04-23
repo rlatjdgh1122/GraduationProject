@@ -111,6 +111,21 @@ public class Penguin : Entity
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
         _liveCompo = GetComponent<ILiveable>();
+
+        passiveData = Instantiate(passiveData);
+    }
+
+    protected override void Update()
+    {
+        if (passiveData.IsSecondEvent && CurrentTarget != null)
+        {
+            passiveData.Update();
+
+            if (CheckSecondPassive())
+            {
+                OnPassiveSecondEvent();
+            }
+        }
     }
 
     #region passive
@@ -120,16 +135,8 @@ public class Penguin : Entity
     public bool CheckStunPassive(float maxHp, float currentHP)
  => passiveData.CheckStunEventPassive(maxHp, currentHP);
 
-    public void RunSecondPassive()
-    {
-        StartCoroutine(CheckSecondCoroutine(passiveData.Second));
-    }
-
-    private IEnumerator CheckSecondCoroutine(float time)
-    {
-        yield return new WaitForSeconds(time);
-        OnPassiveSecondEvent();
-    }
+    public bool CheckSecondPassive()
+=> passiveData.CheckSecondEventPassive();
 
     public virtual void OnPassiveAttackEvent()
     {
