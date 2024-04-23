@@ -21,6 +21,9 @@ public class PassiveDataSO : ScriptableObject
 
     public LayerMask CheckTarget;
 
+    private float _curTime = 0;
+    private bool _isOverTime = false;
+
     /// <summary>
     /// 체력이 50이하 일 때 페시브 활성화 확인 여부
     /// </summary>>
@@ -50,21 +53,45 @@ public class PassiveDataSO : ScriptableObject
         return false;
     }
 
-    /// <summary>
-    /// 몇 초마다 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
+    public bool CheckSecondEventPassive()
+    {
+        bool result = _isOverTime;
+        if (result)
+            _isOverTime = false;
+        return result;
+    }
 
-    /// <summary>
-    /// 뒤치기 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckBackAttackEventPassive() => IsAttackEvent;
+    public void Update()
+    {
+        if (!_isOverTime)
+        {
+            if (_curTime >= Second)
+            {
+                _curTime = 0;
+                _isOverTime = true;
+            }
+            else
+            {
+                _curTime += Time.deltaTime;
+            }
+        }
+    }
 
-    /// <summary>
-    /// 주변의 적 수 비례 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
+    ///// <summary>
+    ///// 몇 초마다 패시브 활성화 확인 여부
+    ///// </summary>
+    ///// <returns> 결과</returns>
+    //public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
+
+    ///// <summary>
+    ///// 뒤치기 패시브 활성화 확인 여부
+    ///// </summary>
+    ///// <returns> 결과</returns>
+    //public bool CheckBackAttackEventPassive() => IsAttackEvent;
+
+    ///// <summary>
+    ///// 주변의 적 수 비례 패시브 활성화 확인 여부
+    ///// </summary>
+    ///// <returns> 결과</returns>
+    //public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
 }
