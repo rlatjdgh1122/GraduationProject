@@ -1,6 +1,6 @@
 public enum PenguinStateType
 {
-    #region ±âº»
+    #region ê¸°ë³¸
 
     Idle,
     Chase,
@@ -9,13 +9,13 @@ public enum PenguinStateType
     Attack,
     #endregion
 
-    #region º´»ç ´É·Â
+    #region íŠ¹ìˆ˜ ëŠ¥ë ¥
 
     Stun,
     AoEAttack,
     #endregion
 
-    #region Àå±º ´É·Â
+    #region ìž¥êµ° ìŠ¤í‚¬
 
     Dash,
     Throw,

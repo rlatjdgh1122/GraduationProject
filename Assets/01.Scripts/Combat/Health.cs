@@ -20,7 +20,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable
     public Action OnDied;
 
     public UnityEvent WaterFallEvent;
-    public UnityEvent OnDeathEvent; //³ªÁß¿¡ Vector3ÀÎÀÚ°ª
+    public UnityEvent OnDeathEvent; //ï¿½ï¿½ï¿½ß¿ï¿½ Vector3ï¿½ï¿½ï¿½Ú°ï¿½
     public UnityEvent OnDashDeathEvent;
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
@@ -159,7 +159,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
         {
-            //³Ë¹éÀ» ÅëÇØ ¹Ù´Ù¿¡ ¶³¾îÁ³´Ù¸é
+            //ë°”ë‹¤ì— ë¹ ì¡Œë‹¤ë©´
             if (!knockbackF.PlayFeedback())
             {
                 feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.WaterFall);
