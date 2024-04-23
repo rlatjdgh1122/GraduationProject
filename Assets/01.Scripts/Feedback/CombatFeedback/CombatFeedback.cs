@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class CombatFeedback : Feedback
 {
-    public abstract float Value { get; set; }
+
 }

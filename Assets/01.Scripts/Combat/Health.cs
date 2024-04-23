@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour, IDamageable, IKnockbackable
+public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable
 {
     public int maxHealth;
     public int currentHealth;
@@ -57,10 +57,10 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable
     {
         GameObject enemy = ray.collider.gameObject;
 
-        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Stun, out var stunF))
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var stunF))
         {
             //OnStunEvent?.Invoke();
-            stunF.StartFeedback();
+            stunF.PlayFeedback();
 
             StartCoroutine(StunCoroutine(enemy, duration));
         }
@@ -118,9 +118,9 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable
         float adjustedEvasion = _evasion * 0.01f;
         if (dice < adjustedEvasion)
         {
-            if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Evasion, out var evasionF))
+            if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Evasion, out var evasionF))
             {
-                evasionF.StartFeedback();
+                evasionF.PlayFeedback();
             }
             return;
         }
@@ -133,11 +133,12 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable
 
         currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
 
-        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Hit, out var hitF))
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
         {
-            OnHit?.Invoke();
+            feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Hit);
 
-            hitF.StartFeedback();
+            OnHit?.Invoke();
+            hitF.PlayFeedback();
         }
 
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
@@ -147,14 +148,21 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable
             Dead();
         }
     }
-    public void ApplyKnockback(float value, Vector3 normal = default)
+    public void Stun(float value)
     {
-        if (feedbackCompo.TryGetFeedback(CombatFeedbackEnum.Knockback, out var evasionF, value))
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
         {
-            //넉백을 통해 바다에 떨어졌다면 
-            if (!evasionF.StartFeedback())
+            knockbackF.PlayFeedback();
+        }
+    }
+    public void Knockback(float value, Vector3 normal = default)
+    {
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
+        {
+            //넉백을 통해 바다에 떨어졌다면
+            if (!knockbackF.PlayFeedback())
             {
-
+                feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.WaterFall);
             }
         }
     }
@@ -169,20 +177,21 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
-        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Heal, out var hitF))
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Heal, out var hitF))
         {
-            hitF.StartFeedback();
+            hitF.PlayFeedback();
             //OnHealedEvent?.Invoke();
         }
     }
 
     private void Dead()
     {
+        feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Dead);
+
         OffUIUpdate?.Invoke();
         _isDead = true;
-        OnDeathEvent?.Invoke();
         OnDied?.Invoke();
     }
 
-
+   
 }

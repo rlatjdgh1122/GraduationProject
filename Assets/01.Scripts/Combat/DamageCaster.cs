@@ -62,7 +62,7 @@ public class DamageCaster : MonoBehaviour
                 int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-                health.ApplyKnockback(knbValue, raycastHit.normal);
+                health.Knockback(knbValue, raycastHit.normal);
 
             }
         }
@@ -275,7 +275,7 @@ public class DamageCaster : MonoBehaviour
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
-                health.ApplyKnockback(knbValue);
+                health.Knockback(knbValue);
 
             }
         }
@@ -301,7 +301,7 @@ public class DamageCaster : MonoBehaviour
             {
                 health.ApplyDamage(damage, position, collider.transform.position, _hitType);
 
-                health.ApplyKnockback(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
+                health.Knockback(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
             }
         }
 

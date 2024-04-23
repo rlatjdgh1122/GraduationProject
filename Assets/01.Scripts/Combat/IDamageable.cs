@@ -31,5 +31,10 @@ public interface IDamageable
 
 public interface IKnockbackable
 {
-    public void ApplyKnockback(float value, Vector3 normal = default);
+    public void Knockback(float value, Vector3 normal = default);
+}
+
+public interface IStunable
+{
+    public void Stun(float value);
 }

@@ -13,7 +13,7 @@ public class CustomFeedbackMakeEditor : Editor
 
     private void OnEnable()
     {
-        _target = (FeedbackController)target; 
+        _target = (FeedbackController)target;
     }
 
 
@@ -41,7 +41,11 @@ public class CustomFeedbackMakeEditor : Editor
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("넉 백", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                _target.SpawnFeedback<KnockbackFeedback>(CombatFeedbackEnum.Knockback);
+                _target.SpawnFeedback<KnockbackFeedback>(FeedbackEnumType.Knockback);
+            }
+            if (GUILayout.Button("스턴", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnFeedback<StunEffectFeedback>(FeedbackEnumType.Stun);
             }
 
             EditorGUILayout.EndHorizontal();
@@ -59,30 +63,51 @@ public class CustomFeedbackMakeEditor : Editor
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("회피", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                _target.SpawnFeedback<EvasionEffectFeedback>(EffectFeedbackEnum.Evasion);
+                _target.SpawnFeedback<EvasionEffectFeedback>(FeedbackEnumType.Evasion);
             }
             if (GUILayout.Button("도발", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                _target.SpawnFeedback<ProvokedEffectFeedback>(EffectFeedbackEnum.Provoked);
+                _target.SpawnFeedback<ProvokedEffectFeedback>(FeedbackEnumType.Provoke);
             }
-            if (GUILayout.Button("스턴", GUILayout.Width(120), GUILayout.Height(30)))
-            {
-                _target.SpawnFeedback<StunEffectFeedback>(EffectFeedbackEnum.Stun);
-            }
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginVertical(); //3개 찼다면 한줄 내리기
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("맞기", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                _target.SpawnFeedback<HitEffectFeedback>(EffectFeedbackEnum.Hit);
+                _target.SpawnFeedback<HitEffectFeedback>(FeedbackEnumType.Hit);
             }
             if (GUILayout.Button("대쉬", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                _target.SpawnFeedback<DashEffectFeedback>(EffectFeedbackEnum.Dash);
+                _target.SpawnFeedback<DashEffectFeedback>(FeedbackEnumType.Dash);
             }
+
+            EditorGUILayout.EndHorizontal();
+            #endregion
+
+            EditorGUILayout.Space(15);
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.Space(3);
+            GUILayout.Label("사운드 관련", EditorStyles.boldLabel);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Space(10);
+
+            #region 사운드 관련
+
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("공격", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.Attack, SoundName.MeleeAttack);
+            }
+            if (GUILayout.Button("맞기", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.Hit, SoundName.PenguinHit);
+            }
+            if (GUILayout.Button("죽음", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.Dead, SoundName.Dead);
+            }
+            if (GUILayout.Button("물에 빠짐", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.WaterFall, SoundName.WaterFall);
+            }
+
             EditorGUILayout.EndHorizontal();
 
             #endregion

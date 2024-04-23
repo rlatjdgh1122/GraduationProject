@@ -32,7 +32,7 @@ public class ThrowSkill : Skill
     {
         yield return new WaitForSeconds(delay);
 
-        _owner.CurrentTarget.HealthCompo.ApplyKnockback(3, transform.forward);
+        _owner.CurrentTarget.HealthCompo.Knockback(3, transform.forward);
     }
 
     //public void Dash(float delay, float time, float speed)

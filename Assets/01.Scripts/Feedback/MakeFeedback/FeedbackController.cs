@@ -1,73 +1,62 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class FeedbackController : MonoBehaviour
 {
-    private readonly string Cashing_EffectFeedback = "EffectFeedback";
-    private Dictionary<EffectFeedbackEnum, EffectFeedback> _effectEnumToFeedbackDic = new();
-    private Dictionary<CombatFeedbackEnum, CombatFeedback> _combatEnumToFeedbackDic = new();
+    private readonly string Cashing_SoundFeedbacks = "SoundFeedbacks";
+    private readonly string Cashing_FeedbackName = "Feedback";
+    private readonly string Cashing_SoundFeedbackName = "Feedback";
 
-    public Feedback CurrentFeedback { get; private set; } = null;
+    private Dictionary<FeedbackEnumType, FeedbackPlayer> _effectEnumToFeedbackDic = new();
+    private Dictionary<SoundFeedbackEnumType, SoundFeedback> _soundEnumToFeedbackDic = new();
+
+    public FeedbackPlayer CurrentFeedback { get; private set; } = null;
+
     private void Awake()
     {
-        EffectFeedback[] effectFeedbacks = GetComponentsInChildren<EffectFeedback>();
+        SetFeedbackPlayer();
+        SetSoundFeedback();
+    }
+    private void SetFeedbackPlayer()
+    {
+        FeedbackPlayer[] effectFeedbacks = GetComponentsInChildren<FeedbackPlayer>();
 
-        //ÀÌ·¸°Ô ÇØµµ ±¦ÂúÀº°Å ¸Â°ÙÁö..
+        //ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ï¿½ï¿½..
         foreach (var effectFeedback in effectFeedbacks)
         {
-            string typeName = effectFeedback.GetType().Name;
-            //½ºÅ©¸³Æ® ÀÌ¸§¿¡¼­ EffectFeedbackºÎºÐ Áö¿ì±â
-            string name = typeName.Substring(0, typeName.Length - Cashing_EffectFeedback.Length);
+            string typeName = effectFeedback.name;
+            //ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ EffectFeedbackï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+            string name = typeName.Substring(0, typeName.Length - Cashing_FeedbackName.Length);
 
-            //EnumÀ» ÀÌ¸§À¸·Î °¡Á®¿À±â (ÀÌ°Å ¾´´Ù´Ï±ñ ¤»¤»)
-            EffectFeedbackEnum effectEnum = (EffectFeedbackEnum)Enum.Parse(typeof(EffectFeedbackEnum), name);
-
-            _effectEnumToFeedbackDic.Add(effectEnum, effectFeedback);
+            //Enumï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½Ù´Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½)
+            if (Enum.TryParse(name, true, out FeedbackEnumType effectEnum))
+                _effectEnumToFeedbackDic.Add(effectEnum, effectFeedback);
         }
 
     }
-    public void SpawnFeedback<T>(EffectFeedbackEnum effectEnum) where T : EffectFeedback
+    private void SetSoundFeedback()
     {
-        if (!_effectEnumToFeedbackDic.ContainsKey(effectEnum))
-        {
-            GameObject obj = new GameObject(typeof(T).Name);
-            obj.AddComponent<FeedbackPlayer>();
-            var feedback = obj.AddComponent<T>();
+        SoundFeedback[] effectFeedbacks = GetComponentsInChildren<SoundFeedback>();
 
-            obj.transform.parent = transform;
-
-            //add Feedback
-            _effectEnumToFeedbackDic.Add(effectEnum, feedback);
-        }
-        else
+        //ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ï¿½ï¿½..
+        foreach (var effectFeedback in effectFeedbacks)
         {
-            Debug.Log("ÀÌ¹Ì Á¸ÀçÁD´Ï´Ù");
-        }
-    }
-    public void SpawnFeedback<T>(CombatFeedbackEnum combatEnum) where T : CombatFeedback
-    {
-        if (!_combatEnumToFeedbackDic.ContainsKey(combatEnum))
-        {
-            GameObject obj = new GameObject(typeof(T).Name);
-            obj.AddComponent<FeedbackPlayer>();
-            var feedback = obj.AddComponent<T>();
+            string typeName = effectFeedback.name;
+            //ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ EffectFeedbackï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+            string name = typeName.Substring(0, typeName.Length - Cashing_SoundFeedbackName.Length);
 
-            obj.transform.parent = transform;
-
-            //add Feedback
-            _combatEnumToFeedbackDic.Add(combatEnum, feedback);
-        }
-        else
-        {
-            Debug.Log("ÀÌ¹Ì Á¸ÀçÁD´Ï´Ù");
+            //Enumï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½Ù´Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½)
+            if (Enum.TryParse(name, true, out SoundFeedbackEnumType effectEnum))
+                _soundEnumToFeedbackDic.Add(effectEnum, effectFeedback);
         }
     }
 
-
-    public bool TryGetFeedback(EffectFeedbackEnum effectEnum, out EffectFeedback feedback)
+    public bool TryGetFeedback(FeedbackEnumType effectEnum, out FeedbackPlayer feedback, float value = 0)
     {
         if (_effectEnumToFeedbackDic.TryGetValue(effectEnum, out feedback))
         {
+            feedback.Value = value;
             CurrentFeedback = feedback;
             return true;
         }
@@ -76,18 +65,47 @@ public class FeedbackController : MonoBehaviour
         return false;
     }
 
-    public bool TryGetFeedback(CombatFeedbackEnum combatEnum, out CombatFeedback feedback, float value)
+    public bool TryPlaySoundFeedback(SoundFeedbackEnumType soundEnum)
     {
-        if (_combatEnumToFeedbackDic.TryGetValue(combatEnum, out feedback))
+        if (_soundEnumToFeedbackDic.TryGetValue(soundEnum, out var soundFeedback))
         {
-            //³Ë¹éÀÌ³ª ½ºÅÏ ¼öÄ¡¸¦ Àû¿ë
-            feedback.Value = value;
-
-            CurrentFeedback = feedback;
+            soundFeedback.StartFeedback();
             return true;
         }
-
-        feedback = null;
         return false;
+    }
+
+    public void SpawnFeedback<T1>(FeedbackEnumType effectEnum) where T1 : Feedback
+    {
+        GameObject obj = new GameObject($"{effectEnum.ToString()}{Cashing_FeedbackName}");
+        obj.AddComponent<FeedbackPlayer>();
+        obj.AddComponent<T1>();
+
+        obj.transform.parent = transform;
+    }
+    public void SpawnFeedback<T1, T2>(FeedbackEnumType effectEnum) where T1 : Feedback where T2 : Feedback
+    {
+        GameObject obj = new GameObject($"{effectEnum.ToString()}{Cashing_FeedbackName}");
+        obj.AddComponent<FeedbackPlayer>();
+        obj.AddComponent<T1>();
+        obj.AddComponent<T2>();
+
+        obj.transform.parent = transform;
+    }
+
+    public void SpawnSoundFeedback(SoundFeedbackEnumType soundName, SoundName setSound = SoundName.MeleeAttack)
+    {
+        var trm = transform.Find(Cashing_SoundFeedbacks);
+        if (trm == null)
+        {
+            GameObject newObj = new GameObject(Cashing_SoundFeedbacks);
+            newObj.transform.parent = transform;
+
+            trm = newObj.transform;
+        }
+        GameObject obj = new GameObject($"{soundName.ToString()}{Cashing_SoundFeedbackName}");
+        obj.AddComponent<SoundFeedback>().soundName = setSound;
+
+        obj.transform.parent = trm;
     }
 }
