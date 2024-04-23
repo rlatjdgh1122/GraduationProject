@@ -11,8 +11,9 @@ public class MortarExplosionEffect : Feedback
         base.Start();
     }
 
-    public override void StartFeedback()
+    public override bool StartFeedback()
     {
+        return true;
     }
 
     public void CreateFeedback(Vector3 pos)
@@ -23,8 +24,8 @@ public class MortarExplosionEffect : Feedback
         effect.StartPlay(_effectEndTime);
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
-
+        return true;
     }
 }

@@ -21,14 +21,13 @@ public class AnimalAttackableEntity : EntityAttackData
     public float LastAttackTime { get; set; } //마지막으로 공격했던 시간
     [field: SerializeField] public float ComboWindow { get; private set; } //초기화 쿨타임
 
-    public override void AoEAttack(bool Knb, float value)
+    public override void AoEAttack(float knbValue = 0)
     {
         DamageCasterCompo.SelectTypeAOECast(
             animalAttackList[ComboCounter].Damage, 
             animalAttackList[ComboCounter].hitType,
             animalAttackList[ComboCounter].SFXSound,
-            Knb,
-            value);
+            knbValue);
     }
 
     public override void MeleeAttack()

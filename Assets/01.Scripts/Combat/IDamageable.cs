@@ -26,5 +26,10 @@ public enum HitType
 
 public interface IDamageable
 {
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, bool isPlayHitEvent = true);
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType);
+}
+
+public interface IKnockbackable
+{
+    public void ApplyKnockback(float value, Vector3 normal = default);
 }

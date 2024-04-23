@@ -41,7 +41,7 @@ public class CustomFeedbackMakeEditor : Editor
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("³Ë ¹é", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                //_target.SpawnFeedback<KnockbackFeedback>(EffectFeedbackEnum.Evasion);
+                _target.SpawnFeedback<KnockbackFeedback>(CombatFeedbackEnum.Knockback);
             }
 
             EditorGUILayout.EndHorizontal();

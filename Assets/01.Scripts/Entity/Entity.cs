@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(FeedbackController))]
 public abstract class Entity : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;

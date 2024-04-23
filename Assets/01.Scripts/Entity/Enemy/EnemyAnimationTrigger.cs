@@ -32,10 +32,10 @@ public class EnemyAnimationTrigger : MonoBehaviour
         OnEndAttackEffectEvent?.Invoke();
     }
 
-    public void AoEAttackTrigger(int isKnb)
+    public void AoEAttackTrigger(float knbValue)
     {
         OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 1.5f);
+        _enemy.AttackCompo.AoEAttack(knbValue);
     }
 
     public void SphereAttackTrigger()

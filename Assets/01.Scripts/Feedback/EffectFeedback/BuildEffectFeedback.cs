@@ -11,16 +11,25 @@ public class BuildEffectFeedback : Feedback
         base.Start();
     }
 
-    public override void StartFeedback()
+    public override bool StartFeedback()
     {
         EffectPlayer effect = PoolManager.Instance.Pop(actionData.HitType.ToString()) as EffectPlayer;
-        effect.transform.position = transform.position;
-        effect.transform.rotation = transform.rotation;
-        effect.StartPlay(_effectEndTime);
+
+        if (effect != null)
+        {
+            effect.transform.position = transform.position;
+            effect.transform.rotation = transform.rotation;
+            effect.StartPlay(_effectEndTime);
+
+            return true;
+        }
+
+        return false;
+
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
-
+        return true;
     }
 }

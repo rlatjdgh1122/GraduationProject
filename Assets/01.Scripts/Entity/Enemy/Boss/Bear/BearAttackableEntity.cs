@@ -22,7 +22,7 @@ public class BearAttackableEntity : AnimalAttackableEntity
         }
     }
 
-    public override void AoEAttack(bool knockback, float value)
+    public override void AoEAttack(float knbValue = 0)
     {
         // 현재 체력을 비율로 계산
         //체력 정규화
@@ -39,6 +39,6 @@ public class BearAttackableEntity : AnimalAttackableEntity
             kncbackIncrease = animalAttackList[ComboCounter].KnbackValue;
         }
         
-        base.AoEAttack(animalAttackList[ComboCounter].KnbackValue > 0, kncbackIncrease);
+        base.AoEAttack(kncbackIncrease);
     }
 }

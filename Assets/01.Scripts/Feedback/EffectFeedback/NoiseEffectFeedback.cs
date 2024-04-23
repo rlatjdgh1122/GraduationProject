@@ -8,12 +8,17 @@ public class NoiseEffectFeedback : EffectFeedback
         _noiseManager = NoiseManager.Instance;
     }
 
-    public override void StartFeedback()
+    public override bool StartFeedback()
     {
+        if (_noiseManager == null)
+            return false;
         _noiseManager.IncreaseNoise(20f);
+
+        return true;
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
+        return true;
     }
 }

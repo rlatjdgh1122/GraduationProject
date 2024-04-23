@@ -86,7 +86,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     {
         _enemy.AnimatorCompo.speed = 1;
         if (_enemy.CurrentTarget != null)
-            _enemy.CurrentTarget.HealthCompo.OnDiedEndEvent -= DeadTarget;
+            _enemy.CurrentTarget.HealthCompo.OnDied -= DeadTarget;
     }
     protected void ReachedExit()
     {

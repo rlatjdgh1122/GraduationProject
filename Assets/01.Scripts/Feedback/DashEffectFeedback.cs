@@ -9,16 +9,23 @@ public class DashEffectFeedback : EffectFeedback
         base.Start();
     }
 
-    public override void StartFeedback()
+    public override bool StartFeedback()
     {
         EffectPlayer effect = PoolManager.Instance.Pop("DashEffect") as EffectPlayer;
-        effect.transform.position = gameObject.transform.position;
-        effect.transform.rotation = gameObject.transform.rotation;
-        effect.StartPlay(_effectEndTime);
+        if (effect != null)
+        {
+            effect.transform.position = gameObject.transform.position;
+            effect.transform.rotation = gameObject.transform.rotation;
+            effect.StartPlay(_effectEndTime);
+
+            return true;
+        }
+
+        return false;
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
-
+        return true;
     }
 }

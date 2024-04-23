@@ -9,16 +9,23 @@ public class HitEffectFeedback : EffectFeedback
         base.Start();
     }
 
-    public override void StartFeedback()
+    public override bool StartFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(actionData.HitType.ToString()) as EffectPlayer;  
-        effect.transform.position = actionData.HitPoint;
-        effect.transform.rotation = Quaternion.LookRotation(actionData.HitNormal * -1);
-        effect.StartPlay(_effectEndTime);
+        EffectPlayer effect = PoolManager.Instance.Pop(actionData.HitType.ToString()) as EffectPlayer;
+        if (effect != null)
+        {
+            effect.transform.position = actionData.HitPoint;
+            effect.transform.rotation = Quaternion.LookRotation(actionData.HitNormal * -1);
+            effect.StartPlay(_effectEndTime);
+
+            return true;
+        }
+        return false;
+
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
-   
+        return true;
     }
 }

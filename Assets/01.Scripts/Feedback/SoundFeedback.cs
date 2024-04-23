@@ -6,12 +6,15 @@ public class SoundFeedback : Feedback
 {
     public SoundName soundName;
 
-    public override void StartFeedback()
+    public override bool StartFeedback()
     {
         SoundManager.Play3DSound(soundName, transform.position);
+
+        return true;
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
+        return true;
     }
 }

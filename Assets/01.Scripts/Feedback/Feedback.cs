@@ -13,8 +13,8 @@ public abstract class Feedback : MonoBehaviour, IFeedback
         owner = transform.parent.GetComponent<Entity>();
     }
 
-    public abstract void StartFeedback(); //피드백 생성
-    public abstract void FinishFeedback(); //피드백 종료
+    public abstract bool StartFeedback(); //피드백 생성
+    public abstract bool FinishFeedback(); //피드백 종료
 
     protected virtual void OnDestroy()
     {

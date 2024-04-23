@@ -18,9 +18,9 @@ public class MeleeAttackableEntity : EntityAttackData
         DamageCasterCompo.CastSpecialDamage(AfewTimes);
     }
 
-    public override void AoEAttack(bool Knb, float value)
+    public override void AoEAttack(float knbValue)
     {
-        DamageCasterCompo.CaseAoEDamage(Knb, value);
+        DamageCasterCompo.CaseAoEDamage(knbValue);
     }
 
     public override void StunAttack(bool Stun, float value)

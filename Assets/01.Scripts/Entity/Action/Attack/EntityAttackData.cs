@@ -17,7 +17,7 @@ public class EntityAttackData : MonoBehaviour
         DamageCasterCompo.SetOwner(owner);
     }
 
-    public virtual void AoEAttack(bool Knb,float value)
+    public virtual void AoEAttack(float knbValue)
     {
 
     }

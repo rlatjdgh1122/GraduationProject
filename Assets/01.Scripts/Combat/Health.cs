@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour, IDamageable
+public class Health : MonoBehaviour, IDamageable, IKnockbackable
 {
     public int maxHealth;
     public int currentHealth;
@@ -18,13 +18,7 @@ public class Health : MonoBehaviour, IDamageable
 
     public Action OnHit;
     public Action OnDied;
-    //OnDied가 실행된다음 실행
-    public Action OnDiedEndEvent;
 
-    public UnityEvent OnHealedEvent;
-    public UnityEvent OnHitEvent;
-    public UnityEvent OnStunEvent;
-    public UnityEvent OnEvasionEvent;
     public UnityEvent WaterFallEvent;
     public UnityEvent OnDeathEvent; //나중에 Vector3인자값
     public UnityEvent OnDashDeathEvent;
@@ -59,40 +53,14 @@ public class Health : MonoBehaviour, IDamageable
         maxHealth = owner.GetMaxHealthValue();
     }
 
-    public bool KnockBack(float value = 1, Vector3 normal = default)
-    {
-        Vector3 currentPosition = transform.position;
-
-        Vector3 knockbackPosition = currentPosition - new Vector3(normal.x, 0f, normal.z) * value;
-
-        transform.DOMove(knockbackPosition, 0.5f);
-
-        if (!IsPositionValid(knockbackPosition))
-        {
-            WaterFallEvent?.Invoke();
-
-            transform.DOMoveY(transform.position.y - 2f, 1.2f);
-
-            Dead();
-            return false;
-        }
-        else
-            return true;
-    }
-
-    bool IsPositionValid(Vector3 position)
-    {
-        return Physics.Raycast(position, new Vector3(0, -1, 0), 5f, groundLayer);
-    }
-
     public bool Stun(RaycastHit ray, float duration)
     {
         GameObject enemy = ray.collider.gameObject;
 
-        //OnStunEvent?.Invoke();
-        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Stun, out var feedback))
+        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Stun, out var stunF))
         {
-            feedback.StartFeedback();
+            //OnStunEvent?.Invoke();
+            stunF.StartFeedback();
 
             StartCoroutine(StunCoroutine(enemy, duration));
         }
@@ -142,7 +110,7 @@ public class Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, bool isPlayHitEvent = true)
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
     {
         if (_isDead) return;
 
@@ -150,11 +118,10 @@ public class Health : MonoBehaviour, IDamageable
         float adjustedEvasion = _evasion * 0.01f;
         if (dice < adjustedEvasion)
         {
-            if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Evasion, out var feedback))
+            if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Evasion, out var evasionF))
             {
-                feedback.StartFeedback();
+                evasionF.StartFeedback();
             }
-            //OnEvasionEvent?.Invoke();
             return;
         }
 
@@ -166,13 +133,29 @@ public class Health : MonoBehaviour, IDamageable
 
         currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
 
-        if (isPlayHitEvent) { OnHitEvent?.Invoke(); }
-        OnHit?.Invoke();
+        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Hit, out var hitF))
+        {
+            OnHit?.Invoke();
+
+            hitF.StartFeedback();
+        }
+
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
             Dead();
+        }
+    }
+    public void ApplyKnockback(float value, Vector3 normal = default)
+    {
+        if (feedbackCompo.TryGetFeedback(CombatFeedbackEnum.Knockback, out var evasionF, value))
+        {
+            //넉백을 통해 바다에 떨어졌다면 
+            if (!evasionF.StartFeedback())
+            {
+
+            }
         }
     }
 
@@ -185,7 +168,12 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
-        OnHealedEvent?.Invoke();
+
+        if (feedbackCompo.TryGetFeedback(EffectFeedbackEnum.Heal, out var hitF))
+        {
+            hitF.StartFeedback();
+            //OnHealedEvent?.Invoke();
+        }
     }
 
     private void Dead()
@@ -194,6 +182,7 @@ public class Health : MonoBehaviour, IDamageable
         _isDead = true;
         OnDeathEvent?.Invoke();
         OnDied?.Invoke();
-        OnDiedEndEvent?.Invoke();
     }
+
+
 }

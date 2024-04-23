@@ -1,11 +1,12 @@
 using UnityEngine;
+
 public class AttackEffectFeedback : Feedback
 {
     [SerializeField] private float _endTime;
 
     private int _calledNum = 0;
 
-    public override void StartFeedback()
+    public override bool StartFeedback()
     {
         _calledNum++;
 
@@ -13,13 +14,20 @@ public class AttackEffectFeedback : Feedback
             _calledNum = 1;
 
         EffectPlayer effect = PoolManager.Instance.Pop($"SlashEffect0{_calledNum}") as EffectPlayer;
-        effect.transform.position = transform.position;
-        effect.transform.rotation = transform.rotation;
-        effect.StartPlay(_endTime);
+        if (effect != null)
+        {
+            effect.transform.position = transform.position;
+            effect.transform.rotation = transform.rotation;
+            effect.StartPlay(_endTime);
+
+            return true;
+        }
+
+        return false;
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
-        
+        return true;
     }
 }

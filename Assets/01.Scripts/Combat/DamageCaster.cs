@@ -43,7 +43,7 @@ public class DamageCaster : MonoBehaviour
     /// <summary>
     /// 광역 데미지
     /// </summary>
-    public void CaseAoEDamage(bool Knb, float value)
+    public void CaseAoEDamage(float knbValue)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -62,9 +62,7 @@ public class DamageCaster : MonoBehaviour
                 int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-
-                if (Knb == true)
-                    health.KnockBack(value, raycastHit.normal);
+                health.ApplyKnockback(knbValue, raycastHit.normal);
 
             }
         }
@@ -89,7 +87,7 @@ public class DamageCaster : MonoBehaviour
     /// 단일 스턴 데미지
     /// </summary>
     /// <returns> 공격 맞았나 여부</returns>
-    public void CastStunDamage(bool Stun, float duration) 
+    public void CastStunDamage(bool Stun, float duration)
     {
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
@@ -258,7 +256,7 @@ public class DamageCaster : MonoBehaviour
         //actionData.HitPoint
     }
 
-    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, bool Knb = false, float value = 0)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -277,9 +275,7 @@ public class DamageCaster : MonoBehaviour
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
-
-                if (Knb == true && col.gameObject.layer != 13) //13은 넥서스 레이어고 임시
-                    health.KnockBack(value, raycastHit.normal);
+                health.ApplyKnockback(knbValue);
 
             }
         }
@@ -297,15 +293,15 @@ public class DamageCaster : MonoBehaviour
             IDamageable damageable = collider.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
+                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType);
                 isHit = true;
             }
 
             if (collider.TryGetComponent(out Health health))
             {
-                health.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
+                health.ApplyDamage(damage, position, collider.transform.position, _hitType);
 
-                health.KnockBack(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
+                health.ApplyKnockback(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
             }
         }
 

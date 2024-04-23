@@ -102,7 +102,7 @@ public class State
     {
         _penguin.AnimatorCompo.speed = 1;
         if (_penguin.CurrentTarget != null)
-            _penguin.CurrentTarget.HealthCompo.OnDiedEndEvent -= DeadTarget;
+            _penguin.CurrentTarget.HealthCompo.OnDied -= DeadTarget;
     }
     #endregion
 
