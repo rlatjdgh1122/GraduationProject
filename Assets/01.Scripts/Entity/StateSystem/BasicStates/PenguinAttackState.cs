@@ -4,6 +4,10 @@ public class PenguinAttackState : State
 {
     private int curAttackCount = 0;
 
+    public PenguinAttackState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
+    {
+    }
+
     public override void EnterState()
     {
         base.EnterState();
@@ -57,7 +61,7 @@ public class PenguinAttackState : State
     {
         base.AnimationTrigger();
          
-        if (_penguin.CheckAttackEventPassive(++curAttackCount))
+        if (_penguin.CheckAttackPassive(++curAttackCount))
         {
             _penguin?.OnPassiveAttackEvent();
         }

@@ -1,8 +1,5 @@
-using UnityEditor;
 using UnityEngine;
 
-
-//[ExecuteInEditMode]
 [CreateAssetMenu(menuName = "SO/PassiveData")]
 public class PassiveDataSO : ScriptableObject
 {
@@ -12,7 +9,7 @@ public class PassiveDataSO : ScriptableObject
 
     //몇 초 마다
     public bool IsSecondEvent = false;
-    public float EverySecond = 10f;
+    public int Second = 10;
 
     //뒤에서 때릴때
     public bool IsBackAttack = false;
@@ -24,50 +21,8 @@ public class PassiveDataSO : ScriptableObject
 
     public LayerMask CheckTarget;
 
-    private General Owner = null;
-
-    private float curTime = 0f;
-
-   /* private void Awake()
-    {
-        EditorUtility.SetDirty(this);
-    }*/
-    public void Start()
-    {
-        
-    }
-    public void Update()
-    {
-        if (IsSecondEvent)
-        {
-            curTime += Time.deltaTime;
-            if (curTime > EverySecond)
-            {
-                Owner.OnPassiveSecondEvent();
-                curTime = 0;
-            }
-        }
-
-        if (IsAroundEnemyCountEventEvent)
-        {
-/*            var colls = Physics.OverlapSphere(Owner.transform.position, AroundRadius, CheckTarget);
-
-            if (colls.Length == AroundEnemyCount)
-            {
-                if (colls.Length == AroundEnemyCount)
-                    Owner.OnPassiveAroundEvent();
-            }
-            else
-            {
-
-            }*/
-        }
-    }
-
-    public void SetOwner(General obj)
-    {
-        Owner = obj;
-    }
+    private float _curTime = 0;
+    private bool _isOverTime = false;
 
     /// <summary>
     /// 체력이 50이하 일 때 페시브 활성화 확인 여부
@@ -98,21 +53,45 @@ public class PassiveDataSO : ScriptableObject
         return false;
     }
 
-    /// <summary>
-    /// 몇 초마다 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
+    public bool CheckSecondEventPassive()
+    {
+        bool result = _isOverTime;
+        if (result)
+            _isOverTime = false;
+        return result;
+    }
 
-    /// <summary>
-    /// 뒤치기 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckBackAttackEventPassive() => IsAttackEvent;
+    public void Update()
+    {
+        if (!_isOverTime)
+        {
+            if (_curTime >= Second)
+            {
+                _curTime = 0;
+                _isOverTime = true;
+            }
+            else
+            {
+                _curTime += Time.deltaTime;
+            }
+        }
+    }
 
-    /// <summary>
-    /// 주변의 적 수 비례 패시브 활성화 확인 여부
-    /// </summary>
-    /// <returns> 결과</returns>
-    public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
+    ///// <summary>
+    ///// 몇 초마다 패시브 활성화 확인 여부
+    ///// </summary>
+    ///// <returns> 결과</returns>
+    //public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
+
+    ///// <summary>
+    ///// 뒤치기 패시브 활성화 확인 여부
+    ///// </summary>
+    ///// <returns> 결과</returns>
+    //public bool CheckBackAttackEventPassive() => IsAttackEvent;
+
+    ///// <summary>
+    ///// 주변의 적 수 비례 패시브 활성화 확인 여부
+    ///// </summary>
+    ///// <returns> 결과</returns>
+    //public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
 }

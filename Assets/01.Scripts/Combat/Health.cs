@@ -56,21 +56,20 @@ public class Health : MonoBehaviour, IDamageable
         maxHealth = owner.GetMaxHealthValue();
     }
 
-    public bool KnockBack(float value = 1, Vector3 normal = default)
+    public bool KnockBack(float value = 1, Vector3 normal = default, float speed = 0.5f)
     {
         Vector3 currentPosition = transform.position;
 
         Vector3 knockbackPosition = currentPosition - new Vector3(normal.x, 0f, normal.z) * value;
 
-        transform.DOMove(knockbackPosition, 0.5f);
+        transform.DOMove(knockbackPosition, speed);
 
         if (!IsPositionValid(knockbackPosition))
         {
+            Dead();
             WaterFallEvent?.Invoke();
-
             transform.DOMoveY(transform.position.y - 2f, 1.2f);
 
-            Dead();
             return false;
         }
         else
@@ -85,13 +84,10 @@ public class Health : MonoBehaviour, IDamageable
     public bool Stun(RaycastHit ray, float duration)
     {
         GameObject enemy = ray.collider.gameObject;
-        //Debug.Log(enemy.name + "이(가) 스턴 상태가 되었습니다.");
 
         OnStunEvent?.Invoke();
         StartCoroutine(StunCoroutine(enemy, duration));
 
-        
-        //Debug.Log(enemy.name + "이(가) 스턴 상태에서 벗어났습니다.");
         return true;
     }
 

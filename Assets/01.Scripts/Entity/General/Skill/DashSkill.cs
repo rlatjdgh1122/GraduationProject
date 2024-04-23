@@ -8,20 +8,17 @@ public class DashSkill : Skill
     [SerializeField] private float _dashTime;
     [SerializeField] private float _dashSpeed;
 
-    public UnityEvent OnDashEvent;
-
-    private General general => _owner as General;
-
     private Coroutine _dashCoroutine;
-
     public bool canDash = false;
 
-    public override void SetOwner(Entity owner)
+    public UnityEvent OnDashEvent;
+
+    public override void SetOwner(General owner)
     {
         base.SetOwner(owner);
     }
 
-    public void DashHandler()
+    public override void PlaySkill()
     {
         Dash(_dashDelay, _dashTime, _dashSpeed);
     }
@@ -41,14 +38,15 @@ public class DashSkill : Skill
         float startTime = Time.time;
 
         OnDashEvent?.Invoke();
-        general.NavAgent.enabled = false;
+        _owner.NavAgent.enabled = false;
+        Vector3 dir = new(_owner.transform.forward.x, 0, _owner.transform.forward.z);
 
         while (Time.time < startTime + time)
         {
-            general.CharacterCompo.Move(general.transform.forward * speed * Time.deltaTime);
+            _owner.CharacterCompo.Move(speed * Time.deltaTime * dir);
             yield return null;
         }
 
-        general.NavAgent.enabled = true;
+        _owner.NavAgent.enabled = true;
     }
 }

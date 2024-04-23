@@ -23,7 +23,7 @@ public class ShieldGeneralPenguin : General
                 return;
             }
             stateScript.SetUp(this, TestStateMachine, state.ToString());
-            TestStateMachine.AddState(state, stateScript);
+            //TestStateMachine.AddState(state, stateScript);
         }
     }
 
