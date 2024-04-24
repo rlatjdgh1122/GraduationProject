@@ -5,6 +5,11 @@ using UnityEngine;
 public class SoundFeedback : Feedback
 {
     public SoundName soundName;
+    public override void Awake()
+    {
+        actionData = transform.parent.parent.GetComponent<EntityActionData>();
+        owner = transform.parent.parent.GetComponent<Entity>();
+    }
 
     public override bool StartFeedback()
     {

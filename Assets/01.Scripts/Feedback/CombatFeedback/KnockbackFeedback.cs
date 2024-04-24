@@ -9,8 +9,9 @@ public class KnockbackFeedback : CombatFeedback
 
     public override float Value { get; set; }
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         groundLayer = 1 << LayerMask.NameToLayer("Ground");
     }
     public override bool StartFeedback()

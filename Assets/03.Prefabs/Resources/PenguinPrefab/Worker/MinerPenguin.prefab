@@ -279,12 +279,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680258937599555484}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1477702119425443068}
+  m_Father: {fileID: 6108607317911470375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4377802419128624911
 MonoBehaviour:
@@ -311,6 +311,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundName: 20
+--- !u!1 &2078224373611594707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6108607317911470375}
+  m_Layer: 0
+  m_Name: SoundFeedbacks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6108607317911470375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078224373611594707}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8961983713670483298}
+  - {fileID: 6891011409477043297}
+  m_Father: {fileID: 1477702119425443068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2124553285589017466
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +566,7 @@ GameObject:
   - component: {fileID: 534289371539752840}
   - component: {fileID: 4212862960406298332}
   - component: {fileID: 6638283895259091045}
+  - component: {fileID: 6161773999422883443}
   m_Layer: 11
   m_Name: MinerPenguin
   m_TagString: Player
@@ -556,8 +590,7 @@ Transform:
   - {fileID: 6019593671985993953}
   - {fileID: 7248171765569714835}
   - {fileID: 1725744590781476508}
-  - {fileID: 6891011409477043297}
-  - {fileID: 8961983713670483298}
+  - {fileID: 6108607317911470375}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6298054857022336640
@@ -642,6 +675,18 @@ NavMeshAgent:
   m_BaseOffset: -0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6161773999422883443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246060547474294284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3356639390848272701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,11 +1254,11 @@ Transform:
   m_GameObject: {fileID: 6601041115483312978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.44, y: 0, z: 0}
+  m_LocalPosition: {x: 1.44, y: 0, z: 2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1477702119425443068}
+  m_Father: {fileID: 6108607317911470375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9217115056690062051
 MonoBehaviour:
@@ -1239,7 +1284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f514919cc5f6bba4d919d6684932e1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noise: {fileID: 3980662465043994461, guid: 596c657f618776c45a5acd21427981a9, type: 3}
 --- !u!1 &6786378972006532014
 GameObject:
   m_ObjectHideFlags: 0

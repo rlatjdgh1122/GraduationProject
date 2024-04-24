@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 8682742403582798853}
   - component: {fileID: 8303770404361828769}
   - component: {fileID: 3812089106538513192}
+  - component: {fileID: 8669519319662747354}
   m_Layer: 11
   m_Name: WoodcutterPenguin
   m_TagString: Player
@@ -947,8 +948,7 @@ Transform:
   - {fileID: 8973768629288628400}
   - {fileID: 2744980530531265068}
   - {fileID: 7321491000244764223}
-  - {fileID: 4128926749727167406}
-  - {fileID: 3895145954102075851}
+  - {fileID: 2855410513140625029}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4644987829161459782
@@ -1031,6 +1031,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0ffbc512ca30d143ba6c3b604bbaccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8669519319662747354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060159250630821954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4279176648412829521
@@ -1177,6 +1189,39 @@ Transform:
   - {fileID: 1154293213653539635}
   m_Father: {fileID: 872781613185007307}
   m_LocalEulerAnglesHint: {x: 85.24836, y: 169.71814, z: 104.87356}
+--- !u!1 &5849518397964619846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2855410513140625029}
+  m_Layer: 0
+  m_Name: SoundFeedbacks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2855410513140625029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5849518397964619846}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.561, y: 0, z: -2.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3895145954102075851}
+  - {fileID: 4128926749727167406}
+  m_Father: {fileID: 1584522112074823443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6561866223024834295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,12 +1343,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7582321480513704825}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.561, y: 0, z: 2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1584522112074823443}
+  m_Father: {fileID: 2855410513140625029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1377015298457436478
 MonoBehaviour:
@@ -1389,11 +1434,11 @@ Transform:
   m_GameObject: {fileID: 7709102480566913370}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.121, y: 0, z: 0}
+  m_LocalPosition: {x: 1.44, y: 0, z: 2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1584522112074823443}
+  m_Father: {fileID: 2855410513140625029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1523354796068953146
 MonoBehaviour:
@@ -1419,7 +1464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f514919cc5f6bba4d919d6684932e1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noise: {fileID: 3980662465043994461, guid: 596c657f618776c45a5acd21427981a9, type: 3}
 --- !u!1 &8054749282457374439
 GameObject:
   m_ObjectHideFlags: 0
