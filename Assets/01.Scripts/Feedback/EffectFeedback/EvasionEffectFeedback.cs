@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EvasionEffectFeedback : EffectFeedback
 {
-    [SerializeField] private float _hudTextEndTime;
+    [SerializeField] private float _hudTextEndTime = 0.5f;
 
     public override bool StartFeedback()
     {

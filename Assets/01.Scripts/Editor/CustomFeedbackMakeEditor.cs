@@ -28,6 +28,24 @@ public class CustomFeedbackMakeEditor : Editor
                 IsClick = !IsClick;
             }
 
+
+            EditorGUILayout.Space(20);
+
+            if (GUILayout.Button("전부 가져오기", GUILayout.Width(500), GUILayout.Height(50)))
+            {
+                _target.SpawnFeedback<KnockbackFeedback>(FeedbackEnumType.Knockback);
+                _target.SpawnFeedback<StunFeedback, StunEffectFeedback>(FeedbackEnumType.Stun);
+
+                _target.SpawnFeedback<EvasionEffectFeedback>(FeedbackEnumType.Evasion);
+                _target.SpawnFeedback<ProvokedEffectFeedback>(FeedbackEnumType.Provoke);
+                _target.SpawnFeedback<HitEffectFeedback>(FeedbackEnumType.Hit);
+                _target.SpawnFeedback<DashEffectFeedback>(FeedbackEnumType.Dash);
+
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.Attack, SoundName.MeleeAttack);
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.Hit, SoundName.PenguinHit);
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.Dead, SoundName.Dead);
+                _target.SpawnSoundFeedback(SoundFeedbackEnumType.WaterFall, SoundName.WaterFall);
+            }
             EditorGUILayout.Space(15);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.Space(3);
@@ -45,7 +63,7 @@ public class CustomFeedbackMakeEditor : Editor
             }
             if (GUILayout.Button("스턴", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                _target.SpawnFeedback<StunEffectFeedback>(FeedbackEnumType.Stun);
+                _target.SpawnFeedback<StunFeedback, StunEffectFeedback>(FeedbackEnumType.Stun);
             }
 
             EditorGUILayout.EndHorizontal();

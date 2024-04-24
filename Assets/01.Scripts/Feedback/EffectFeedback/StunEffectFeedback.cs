@@ -3,7 +3,6 @@ using UnityEngine;
 public class StunEffectFeedback : EffectFeedback
 {
     [SerializeField] private EffectPlayer _stunEffect;
-    [SerializeField] private float _effectEndTime;
 
     public override bool StartFeedback()
     {
@@ -12,7 +11,7 @@ public class StunEffectFeedback : EffectFeedback
         {
             effect.transform.position = new Vector3(actionDataTrm.transform.position.x, actionDataTrm.transform.position.y + 1.5f, actionDataTrm.transform.position.z);
             effect.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
-            effect.StartPlay(_effectEndTime);
+            effect.StartPlay(Value);
 
             return true;
         }

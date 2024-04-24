@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DashEffectFeedback : EffectFeedback
 {
-    [SerializeField] private float _effectEndTime;
+    [SerializeField] private float _effectEndTime = 0.5f;
 
     protected override void Start()
     {
