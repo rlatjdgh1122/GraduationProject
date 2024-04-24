@@ -20,9 +20,7 @@ public abstract class BaseTrap : BaseBuilding
         base.Awake();
         _damageCaster = GetComponent<DamageCaster>();
 
-
         isPlayed = false;                   //나중에 UI로 설치하느게 생기면 지워야함
-        StartCoroutine(RunningCoroutine()); //나중에 UI로 설치하느게 생기면 지워야함
     }
 
     protected override void SetInstalled()
@@ -30,7 +28,6 @@ public abstract class BaseTrap : BaseBuilding
         base.SetInstalled();
 
         isPlayed = false;
-        StartCoroutine(RunningCoroutine());
     }
 
     private (bool iscatched, RaycastHit _raycastHit, Enemy _catchedEnemy) GetCathedEnemy()
@@ -48,37 +45,36 @@ public abstract class BaseTrap : BaseBuilding
 
     protected override void Running() //코루틴으로 해서 암것도 안 함
     {
-
-    }
-
-    private IEnumerator RunningCoroutine()
-    {
-        while (true)
+        if (isRunning)
         {
-            if (isRunning)
-            {
-                var catchedInfo = GetCathedEnemy();
+            var catchedInfo = GetCathedEnemy();
 
-                if (catchedInfo._catchedEnemy != null)
-                {
-                    CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
-                    isPlayed = true;
-                    yield break;
-                }
+            if (catchedInfo._catchedEnemy != null)
+            {
+                SignalHub.OnBattlePhaseEndEvent += RemoveTrap;
+                CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
+                isPlayed = true;
             }
 
-            Debug.Log("실행중");
-            yield return null;
         }
     }
 
     protected abstract void CatchEnemy(Enemy enemy, RaycastHit raycastHit);
 
+    private void RemoveTrap()
+    {
+        PoolManager.Instance.Push(this);
+    }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
 
         Gizmos.DrawWireSphere(transform.position + (transform.up * 0.5f), 0.5f);
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= RemoveTrap;
     }
 }
