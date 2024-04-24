@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.Rendering.DebugUI;
 
 [System.Serializable]
 public class ParameterKnockbackEvent
@@ -32,22 +29,23 @@ public class EnemyAnimationTrigger : MonoBehaviour
         OnEndAttackEffectEvent?.Invoke();
     }
 
-    public void AoEAttackTrigger(float knbValue)
+    public void AoEAttackTrigger(string parmeter = "0 0")
     {
-        OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.AoEAttack(knbValue);
-    }
+        var value = parmeter.Split(' ');
+        float.TryParse(value[0], out float knbValue);
+        float.TryParse(value[1], out float stunValue);
 
-    public void SphereAttackTrigger()
-    {
         OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.MeleeSphereAttack();
+        _enemy.AttackCompo.AoEAttack(knbValue, stunValue);
     }
-
-    public void AttackTrigger()
+    public void AttackTrigger(string parmeter = "0 0")
     {
+        var value = parmeter.Split(' ');
+        float.TryParse(value[0], out float knbValue);
+        float.TryParse(value[1], out float stunValue);
+
         OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.MeleeAttack();
+        _enemy.AttackCompo.MeleeAttack(knbValue,stunValue);
     }
 
     private void RangeAttackTrigger()

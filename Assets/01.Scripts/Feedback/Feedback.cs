@@ -19,15 +19,21 @@ public abstract class Feedback : MonoBehaviour, IFeedback
         get;
         set;
     }
-
-    protected virtual void Start()
+    public virtual void Awake()
     {
         actionData = transform.parent.GetComponent<EntityActionData>();
         owner = transform.parent.GetComponent<Entity>();
+    }
 
-        _animator = owner.AnimatorCompo;
-        _controller = owner.CharacterCompo;
-        _navMeshAgent = owner.NavAgent;
+    protected virtual void Start()
+    {
+        if (owner != null)
+        {
+            _animator = owner.AnimatorCompo;
+            _controller = owner.CharacterCompo;
+            _navMeshAgent = owner.NavAgent;
+        }
+
     }
 
     public abstract bool StartFeedback(); //피드백 생성

@@ -52,29 +52,25 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// <summary>
     /// ±¤¿ª °ø°Ý
     /// </summary>
-    public void AoEAttackTrigger(AnimationEvent animationEvent)
+    public void AoEAttackTrigger(string parmeter = "0 0")
     {
+        var value = parmeter.Split(' ');
+        float.TryParse(value[0], out float knbValue);
+        float.TryParse(value[1], out float stunValue);
 
-        _penguin.AttackCompo.AoEAttack(knbValue);
+        //Debug.Log($"{knbValue} {stunValue}");
+        _penguin.AttackCompo.AoEAttack(knbValue, stunValue);
         OnAoEAttackTriggerEvent?.Invoke();
     }
 
-    public void AttackTrigger()
+    public void AttackTrigger(string parmeter = "0 0")
     {
-        _penguin.AttackCompo.MeleeAttack();
+        var value = parmeter.Split(' ');
+        float.TryParse(value[0], out float knbValue);
+        float.TryParse(value[1], out float stunValue);
+
+        _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
         OnAttackTriggerEvent?.Invoke();
-    }
-
-    public void StunTrigger(float value)
-    {
-        _penguin.AttackCompo.StunAttack(true, value);
-        OnStunTriggerEvent?.Invoke();
-    }
-
-    public void AoEStunTrigger(int isStun)
-    {
-        _penguin.AttackCompo.AoEStunAttack(isStun == 0 ? false : true, 3f);
-        //OnStunTriggerEvent?.Invoke();
     }
 
     public void DashAttackTrigger()

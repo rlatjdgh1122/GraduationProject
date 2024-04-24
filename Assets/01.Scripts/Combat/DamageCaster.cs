@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -201,11 +200,6 @@ public class DamageCaster : MonoBehaviour
         }
 
         return true;
-    }
-
-    public void ShowCritical(EntityActionData actionData)
-    {
-        //actionData.HitPoint
     }
 
     public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0f, float stunValue = 0f)

@@ -112,7 +112,8 @@ public class Penguin : Entity
         _deadCompo = GetComponent<IDeadable>();
         _liveCompo = GetComponent<ILiveable>();
 
-        passiveData = Instantiate(passiveData);
+        if (passiveData != null)
+            passiveData = Instantiate(passiveData);
     }
 
     protected override void Update()
@@ -140,7 +141,7 @@ public class Penguin : Entity
 
     public virtual void OnPassiveAttackEvent()
     {
-    
+
     }
 
     public virtual void OnPassiveStunEvent()
