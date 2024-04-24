@@ -64,18 +64,14 @@ public class MortarBuilding : DefenseBuilding
         {
             _ignitingPenguin.SetGetTourchAnimation();
             float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
-            remainWaitTime = waitTime - Time.deltaTime;
-
+            remainWaitTime = _burningRope.Duration;
             while (elapsedTime < waitTime)
             {
                 elapsedTime += Time.deltaTime;
-
+                remainWaitTime -= Time.deltaTime;
                 if (!isBattlePhase) // 쏘려고 하는데 전투페이즈가 아니면 부채로 호다닥 끔
                 {
-                    CoroutineUtil.CallWaitForSeconds(remainWaitTime,
-                        () => _ignitingPenguin.StartSwingAnimation(),
-                        () => _ignitingPenguin.StopSwingAnimation());
-                    ;
+                    _ignitingPenguin.StartSwingAnimation(remainWaitTime);
                     yield break;
                 }
 

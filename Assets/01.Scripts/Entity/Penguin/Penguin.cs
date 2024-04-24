@@ -85,6 +85,8 @@ public class Penguin : Entity
     private Army owner;
     public Army MyArmy => owner;
 
+    public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
+
     protected override void Awake()
     {
         base.Awake();

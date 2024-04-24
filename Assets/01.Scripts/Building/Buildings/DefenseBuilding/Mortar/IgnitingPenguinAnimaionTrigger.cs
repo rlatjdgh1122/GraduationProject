@@ -1,3 +1,4 @@
+using AssetKits.ParticleImage;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,13 @@ public class IgnitingPenguinAnimaionTrigger : MonoBehaviour
     [SerializeField]
     private UnityEvent GetTorchEvent, UseTorchEvent;
 
+    [SerializeField]
+    private ExclamationMarkParticle _exclamationMarkParticle;
+
     private float animaionLength;
+
+    private bool isSwinging;
+    private float remainWaitTime;
 
     public float AnimaionLength
     {
@@ -32,6 +39,7 @@ public class IgnitingPenguinAnimaionTrigger : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        isSwinging = false;
     }
 
     public void SetGetTourchAnimation()
@@ -51,22 +59,36 @@ public class IgnitingPenguinAnimaionTrigger : MonoBehaviour
         UseTorchEvent?.Invoke();
     }
 
-    public void StartSwingAnimation()
+    public void StartSwingAnimation(float remainTime)
     {
-        for(int i = 0; i < _fans.Length; i++)
+        _animator.SetBool("IsSwinging", true);
+        remainWaitTime = remainTime;
+    }
+
+    public void StartSwingAnimaionEvent()
+    {
+        for (int i = 0; i < _fans.Length; i++)
         {
             _fans[i].SetActive(true);
         }
 
-        _animator.SetBool("IsSwinging", true);
+        if (!isSwinging)
+        {
+            _exclamationMarkParticle.Play(transform.position);
+            isSwinging = true;
+        }
+
+        CoroutineUtil.CallWaitForSeconds(remainWaitTime,
+                null, () => StopSwingAnimation());
     }
 
     public void StopSwingAnimation()
     {
+        _animator.SetBool("IsSwinging", false);
         for (int i = 0; i < _fans.Length; i++)
         {
             _fans[i].SetActive(false);
         }
-        _animator.SetBool("IsSwinging", false);
+        isSwinging = false;
     }
 }

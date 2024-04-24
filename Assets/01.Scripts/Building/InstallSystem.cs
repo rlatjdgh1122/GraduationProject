@@ -104,7 +104,8 @@ public class InstallSystem : MonoBehaviour
     {
         if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            if (_previousGround.IsInstalledBuilding)
+            if (_previousGround.IsInstalledBuilding &&
+                _curBuilding.BuildingItemInfoCompo.BuildingTypeEnum != BuildingType.Trap)
             {
                 UIManager.Instance.ShowWarningUI("이미 설치되어 있습니다");
                 return;
@@ -151,34 +152,57 @@ public class InstallSystem : MonoBehaviour
                 _groundDic.Add(hashCode, hit.transform.GetComponent<Ground>());
             }
 
-            Ground _curGround = _groundDic[hashCode];
+            Ground curGround = _groundDic[hashCode];
 
-            if (_previousGround == null
-             || _curGround != _previousGround)
+            if (_previousGround == null ||
+                curGround != _previousGround)
             {
                 _previousGround?.UpdateOutlineColor(OutlineColorType.None);
-
-                Vector3 buildingPos = new Vector3(_curGround.transform.position.x, 0f, _curGround.transform.position.z);
-                Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
-                //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
-                _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
-                                                              2f,
-                                                              _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
-
-                if (_curGround.IsInstalledBuilding)
-                {
-                    _curGround.UpdateOutlineColor(OutlineColorType.Red);
-                    _curBuilding.ChangeToTransparencyMat(OutlineColorType.Red);
-                }
-                else
-                {
-                    _curGround.UpdateOutlineColor(OutlineColorType.Green);
-                    _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
-
-                }
             }
 
-            _previousGround = _curGround;
+            if (_curBuilding.BuildingItemInfoCompo.BuildingTypeEnum ==
+                BuildingType.Trap)
+            {
+                MoveTrap(hit.point);
+                _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
+            }
+            else
+            {
+                MoveSelectBuilding(curGround);
+                UpdateGroundColor(curGround);
+            }
+
+            _previousGround = curGround;
+        }
+    }
+
+    private void MoveSelectBuilding(Ground curGround)
+    {
+        Vector3 buildingPos = new Vector3(curGround.transform.position.x, 0f, curGround.transform.position.z);
+        Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
+        //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
+        _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
+                                                      2f,
+                                                      _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
+    }
+
+    private void MoveTrap(Vector3 pos)
+    {
+        _curBuilding.transform.position = pos;
+    }
+
+    private void UpdateGroundColor(Ground curGround)
+    {
+        if (curGround.IsInstalledBuilding)
+        {
+            curGround.UpdateOutlineColor(OutlineColorType.Red);
+            _curBuilding.ChangeToTransparencyMat(OutlineColorType.Red);
+        }
+        else
+        {
+            curGround.UpdateOutlineColor(OutlineColorType.Green);   
+            _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
+
         }
     }
 }

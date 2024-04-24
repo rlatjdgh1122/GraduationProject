@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3648991138755353876}
   - component: {fileID: 5634122986696879475}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1171630631569941227}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Cog_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8227353612722908891}
   - component: {fileID: 7371939319857773980}
   - component: {fileID: 5195878968120250698}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Jaw_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6300117734874219919}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Jaw_1_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4436108219142324139}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Jaw_2_Jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 8212842999989129160}
   - component: {fileID: 2634899742441158283}
   - component: {fileID: 4627360708084514381}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +331,8 @@ GameObject:
   - component: {fileID: 1189451463683363279}
   - component: {fileID: 3433982958848302938}
   - component: {fileID: 307612997496340746}
-  m_Layer: 0
+  - component: {fileID: 2490428236020124426}
+  m_Layer: 27
   m_Name: BearTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +348,7 @@ Transform:
   m_GameObject: {fileID: 5213079575761479627}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.806, y: 1.6949167, z: -3.138}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -429,6 +430,25 @@ MonoBehaviour:
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
+--- !u!114 &2490428236020124426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5213079575761479627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7781706952094222912
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +460,7 @@ GameObject:
   - component: {fileID: 8252853207695321118}
   - component: {fileID: 5625603409189939830}
   - component: {fileID: 141476822650349523}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Jaw_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +541,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 551349657360600655}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: ROOT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
