@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public abstract class BaseTrap : BaseBuilding
@@ -14,6 +15,10 @@ public abstract class BaseTrap : BaseBuilding
     private bool isPlayed;
 
     protected DamageCaster _damageCaster;
+
+    [Header("TrapValue")]
+    [SerializeField]
+    private float catchRange;
 
     protected override void Awake()
     {
@@ -32,7 +37,7 @@ public abstract class BaseTrap : BaseBuilding
 
     private (bool iscatched, RaycastHit _raycastHit, Enemy _catchedEnemy) GetCathedEnemy()
     {
-        bool catched = Physics.SphereCast(transform.position, 0.5f, transform.up * 0.5f, out RaycastHit hit, 1f, _enemyLayer);
+        bool catched = Physics.SphereCast(transform.position + (Vector3.down * catchRange), catchRange, transform.up * 0.5f, out RaycastHit hit, 1f, _enemyLayer);
         if (catched)
         {
             if (hit.collider.TryGetComponent(out Enemy enemy))
@@ -43,7 +48,7 @@ public abstract class BaseTrap : BaseBuilding
         return (catched, default, null);
     }
 
-    protected override void Running() //코루틴으로 해서 암것도 안 함
+    protected override void Running()
     {
         if (isRunning)
         {
@@ -51,9 +56,9 @@ public abstract class BaseTrap : BaseBuilding
 
             if (catchedInfo._catchedEnemy != null)
             {
-                SignalHub.OnBattlePhaseEndEvent += RemoveTrap;
                 CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
                 isPlayed = true;
+                RemoveTrap();
             }
 
         }
@@ -61,8 +66,9 @@ public abstract class BaseTrap : BaseBuilding
 
     protected abstract void CatchEnemy(Enemy enemy, RaycastHit raycastHit);
 
-    private void RemoveTrap()
+    protected virtual void RemoveTrap()
     {
+        //일단 이건데 나중에 디졸브로 자연스럽게
         PoolManager.Instance.Push(this);
     }
 
@@ -70,11 +76,6 @@ public abstract class BaseTrap : BaseBuilding
     {
         Gizmos.color = Color.red;
 
-        Gizmos.DrawWireSphere(transform.position + (transform.up * 0.5f), 0.5f);
-    }
-
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseEndEvent -= RemoveTrap;
+        Gizmos.DrawWireSphere(transform.position + (Vector3.down * catchRange) + (transform.up * catchRange), catchRange);
     }
 }

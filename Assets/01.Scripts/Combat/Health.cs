@@ -87,6 +87,7 @@ public class Health : MonoBehaviour, IDamageable
 
         OnStunEvent?.Invoke();
         StartCoroutine(StunCoroutine(enemy, duration));
+        Debug.Log("Stun");
 
         return true;
     }
@@ -113,6 +114,7 @@ public class Health : MonoBehaviour, IDamageable
         if (_navMeshAgent != null)
         {
             _navMeshAgent.speed = 0;
+            Debug.Log("speed zero");
         }
 
         yield return new WaitForSeconds(duration);

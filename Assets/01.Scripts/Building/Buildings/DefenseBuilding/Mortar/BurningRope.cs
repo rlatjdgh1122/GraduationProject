@@ -47,7 +47,6 @@ public class BurningRope : MonoBehaviour
         }
 
         _ropeMat.SetFloat("_CutoffValue", minRopeMatcutoffValue);
-        Debug.Log("_ropeMatEnd");
         StopBurningParticle();
     }
 
@@ -59,7 +58,6 @@ public class BurningRope : MonoBehaviour
 
     private void StopBurningParticle()
     {
-        Debug.Log("StopBurningParticle");
         _burningParticleSystem.Stop();
     }
 
