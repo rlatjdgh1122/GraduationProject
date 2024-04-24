@@ -79,7 +79,7 @@ public class IgnitingPenguinAnimaionTrigger : MonoBehaviour
         }
 
         CoroutineUtil.CallWaitForSeconds(remainWaitTime,
-                null, () => StopSwingAnimation());
+                null, StopSwingAnimation);
     }
 
     public void StopSwingAnimation()
