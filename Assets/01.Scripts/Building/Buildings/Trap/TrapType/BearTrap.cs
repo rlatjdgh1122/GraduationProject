@@ -33,5 +33,6 @@ public class BearTrap : BaseTrap
                                              stunDuration,
                                              _characterStat.damage.GetValue());
         _animator.SetBool("IsCatched", true);
+        SoundManager.Play3DSound(SoundName.BearTrap, transform.position, 10f, 15f);
     }
 }

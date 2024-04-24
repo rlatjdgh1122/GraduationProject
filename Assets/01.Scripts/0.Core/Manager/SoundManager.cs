@@ -54,6 +54,7 @@ public enum SoundName
     MortarFire,
     MortarExplosion,
     RopeBurning,
+    BearTrap,
 
     #endregion
 }
