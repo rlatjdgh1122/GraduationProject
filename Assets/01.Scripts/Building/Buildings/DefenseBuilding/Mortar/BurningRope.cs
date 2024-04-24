@@ -53,7 +53,7 @@ public class BurningRope : MonoBehaviour
     public void PlayBurningParticle()
     {
         _burningParticleSystem.Play();
-        //SoundManager.Play3DSound(SoundName.RopeBurning, transform.position);
+        SoundManager.Play3DSound(SoundName.RopeBurning, transform.position);
         _particleAnimator.SetTrigger("BurningTrigger");
     }
 
