@@ -53,6 +53,7 @@ public enum SoundName
 
     MortarFire,
     MortarExplosion,
+    RopeBurning,
 
     #endregion
 }

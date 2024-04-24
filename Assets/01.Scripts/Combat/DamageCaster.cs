@@ -314,7 +314,6 @@ public class DamageCaster : MonoBehaviour
 
     public void CastBuildingStunDamage(Health enemyHealth, RaycastHit hit, float duration, int damage)
     {
-        Debug.Log("CastBuildingStunDamage");
         enemyHealth.ApplyDamage(damage, hit.point, hit.normal, _hitType);
         enemyHealth.Stun(hit, duration);
     }

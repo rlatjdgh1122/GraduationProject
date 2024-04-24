@@ -6,7 +6,7 @@ using UnityEngine;
 public class BearTrap : BaseTrap
 {
     [SerializeField]
-    private float stunDuration; // ³ªÁß¿¡ ½ºÅÝ So·Î »©½Ã¿À
+    private float stunDuration;
     private Animator _animator;
 
     public override void Init()
@@ -28,7 +28,6 @@ public class BearTrap : BaseTrap
 
     protected override void CatchEnemy(Enemy enemy, RaycastHit raycastHit)
     {
-        Debug.Log("CatchEnemy");
         _damageCaster.CastBuildingStunDamage(enemy.HealthCompo,
                                              raycastHit,
                                              stunDuration,
