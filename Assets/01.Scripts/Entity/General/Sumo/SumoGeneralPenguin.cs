@@ -22,7 +22,7 @@ public class SumoGeneralPenguin : General
         StateMachine.Init(PenguinStateType.Idle);
     }
 
-    public override void OnPassiveSecondEvent()
+    public override void OnPassiveAttackEvent()
     {
         StateMachine.ChangeState(PenguinStateType.Throw);
     }
