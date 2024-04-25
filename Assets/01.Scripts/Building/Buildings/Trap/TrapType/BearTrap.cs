@@ -14,7 +14,7 @@ public class BearTrap : BaseTrap
         base.Init();
     }
 
-    protected override void RemoveTrap()
+    public override void RemoveTrap()
     {
         _animator.SetBool("IsCatched", false);
         CoroutineUtil.CallWaitForOneFrame(base.RemoveTrap);

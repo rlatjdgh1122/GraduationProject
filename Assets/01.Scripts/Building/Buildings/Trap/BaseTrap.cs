@@ -58,7 +58,6 @@ public abstract class BaseTrap : BaseBuilding
             {
                 CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
                 isPlayed = true;
-                RemoveTrap();
             }
 
         }
@@ -66,7 +65,7 @@ public abstract class BaseTrap : BaseBuilding
 
     protected abstract void CatchEnemy(Enemy enemy, RaycastHit raycastHit);
 
-    protected virtual void RemoveTrap()
+    public virtual void RemoveTrap()
     {
         //일단 이건데 나중에 디졸브로 자연스럽게
         PoolManager.Instance.Push(this);
