@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
@@ -19,6 +20,8 @@ public abstract class BaseTrap : BaseBuilding
     [Header("TrapValue")]
     [SerializeField]
     private float catchRange;
+
+    private float dissapearTime = 2f;
 
     protected override void Awake()
     {
@@ -67,7 +70,29 @@ public abstract class BaseTrap : BaseBuilding
 
     public virtual void RemoveTrap()
     {
-        //일단 이건데 나중에 디졸브로 자연스럽게
+        for (int i = 0; i < _meshRenderers.Length; i++)
+        {
+            StartCoroutine(ChangeToTransparentMatCorou(_meshRenderers[i].material));
+        }
+    }
+
+    private IEnumerator ChangeToTransparentMatCorou(Material material)
+    {
+        float current = 0;
+        float percent = 0;
+        while (percent < 1)
+        {
+            current += Time.deltaTime;
+            percent = current / dissapearTime;
+
+            float alpha = Mathf.Lerp(1f, 0f, percent);
+            material.color = new Color(0,0,0, alpha);
+
+            Debug.Log($"{material}: {alpha}");
+
+            yield return new WaitForEndOfFrame();
+        }
+
         PoolManager.Instance.Push(this);
     }
 
