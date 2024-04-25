@@ -1,4 +1,4 @@
-using System.Security.Cryptography.X509Certificates;
+ï»¿using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -40,9 +40,9 @@ public class PenguinAnimationTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸î ¹è ¸¸Å­ ´õ½ê°Ô °ø°İ
+    /// ëª‡ ë°° ë§Œí¼ ë”ì„ê²Œ ê³µê²©
     /// </summary>
-    /// <param name="AfewTimes"> ½ºÅÈÀÇ ¸î ¹è</param>
+    /// <param name="AfewTimes"> ìŠ¤íƒ¯ì˜ ëª‡ ë°°</param>
     public void SpecialAttackTrigger(float AfewTimes)
     {
         _penguin.AttackCompo?.SpecialAttack(AfewTimes);
@@ -50,17 +50,25 @@ public class PenguinAnimationTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// ±¤¿ª °ø°İ
+    /// ê´‘ì—­ ê³µê²©
     /// </summary>
     public void AoEAttackTrigger(string parmeter = "0 0")
     {
         var value = parmeter.Split(' ');
-        float.TryParse(value[0], out float knbValue);
-        float.TryParse(value[1], out float stunValue);
+        try
+        {
+            float.TryParse(value[0], out float knbValue);
+            float.TryParse(value[1], out float stunValue);
 
-        //Debug.Log($"{knbValue} {stunValue}");
-        _penguin.AttackCompo.AoEAttack(knbValue, stunValue);
-        OnAoEAttackTriggerEvent?.Invoke();
+            //Debug.Log($"{knbValue} {stunValue}");
+            _penguin.AttackCompo.AoEAttack(knbValue, stunValue);
+            OnAoEAttackTriggerEvent?.Invoke();
+        }
+        catch
+        {
+            Debug.LogError("Put values â€‹â€‹for the parameters.");
+        }
+       
     }
 
     public void AttackTrigger(string parmeter = "0 0")

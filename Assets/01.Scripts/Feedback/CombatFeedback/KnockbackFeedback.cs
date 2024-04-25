@@ -1,18 +1,17 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KnockbackFeedback : CombatFeedback
 {
-    private int groundLayer = 0;
-
+    private int _groundLayer = 0;
+    private float _knockbackSpeed = 0.5f;
+    private float _fallSpeed = 1.2f;
     public override float Value { get; set; }
 
     public override void Awake()
     {
         base.Awake();
-        groundLayer = 1 << LayerMask.NameToLayer("Ground");
+        _groundLayer = 1 << LayerMask.NameToLayer("Ground");
     }
     public override bool StartFeedback()
     {
@@ -20,12 +19,12 @@ public class KnockbackFeedback : CombatFeedback
         //내 위치에서 맞은 위치로 넉백
         Vector3 knockbackPosition = currentPosition - new Vector3(actionData.HitNormal.x, 0f, actionData.HitNormal.z) * Value;
 
-        ownerTrm.DOMove(knockbackPosition, 0.5f);
+        ownerTrm.DOMove(knockbackPosition, _knockbackSpeed);
 
         //바닥이 땅이 아니라면
         if (!IsPositionValid(knockbackPosition))
         {
-            ownerTrm.DOMoveY(ownerTrm.position.y - 2f, 1.2f);
+            ownerTrm.DOMoveY(ownerTrm.position.y - 2f, _fallSpeed);
 
             return false;
         }
@@ -39,6 +38,6 @@ public class KnockbackFeedback : CombatFeedback
 
     private bool IsPositionValid(Vector3 position)
     {
-        return Physics.Raycast(position, new Vector3(0, -1, 0), 5f, groundLayer);
+        return Physics.Raycast(position, new Vector3(0, -1, 0), 5f, _groundLayer);
     }
 }

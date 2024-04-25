@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class StunFeedback : CombatFeedback
 {
-    public override float Value { get => base.Value; set => base.Value = value; }
 
     private Coroutine StunCoruotine = null;
 
@@ -19,7 +18,6 @@ public class StunFeedback : CombatFeedback
     }
     public override bool FinishFeedback()
     {
-
         return true;
     }
 
