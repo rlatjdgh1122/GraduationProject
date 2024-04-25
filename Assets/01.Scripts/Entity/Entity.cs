@@ -2,65 +2,60 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(FeedbackController))]
-public abstract class Entity : PoolableMono
+public abstract class Entity : Target
 {
-    [SerializeField] protected BaseStat _characterStat;
-    public BaseStat Stat => _characterStat;
-
-    public Entity CurrentTarget;
-
-    public bool IsDead = false;
-
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
+
+    [SerializeField] protected LayerMask TargetLayer;
+
     #region Components 
-    public Health HealthCompo { get; private set; }
     public Animator AnimatorCompo { get; protected set; }
     public NavMeshAgent NavAgent { get; protected set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
-    public CharacterController CharacterCompo { get; private set; }
     #endregion
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
-        HealthCompo = transform?.GetComponent<Health>();
         NavAgent = transform?.GetComponent<NavMeshAgent>();
         OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
-        CharacterCompo = GetComponent<CharacterController>();
-
-        HealthCompo?.SetHealth(_characterStat);
-        _characterStat = Instantiate(_characterStat);
-
-        //_characterStat.Init();
-
-        if (HealthCompo != null)
-        {
-            HealthCompo.OnHit += HandleHit;
-            HealthCompo.OnDied += HandleDie;
-        }
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
 
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
 
     }
-    protected virtual void HandleHit()
+
+    protected override void HandleHit()
     {
 
     }
-    protected abstract void HandleDie();
+
+    protected override void HandleDie()
+    {
+
+    }
+    public void Provoke<T>(int provokeCount, float duration, float radius) where T : Target
+    {
+        T target = null;
+
+        var colliders = new Collider[provokeCount];
+        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, TargetLayer);
+
+    }
 
     #region 움직임 관리
     public void MoveToPosition(Vector3 pos)
@@ -102,23 +97,14 @@ public abstract class Entity : PoolableMono
         }
     }
     #endregion
-    public T ReturnGenericStat<T>() where T : BaseStat
+    public virtual T ReturnGenericStat<T>() where T : BaseStat
     {
         if (_characterStat is T)
         {
             return _characterStat as T;
         }
 
-        Debug.LogError("니가 넣은 스탯 타입이 아니잖아;;");
+        Debug.LogError("Not T type");
         return null;
-    }
-
-    private void OnDestroy()
-    {
-        if (HealthCompo != null)
-        {
-            HealthCompo.OnHit -= HandleHit;
-            HealthCompo.OnDied -= HandleDie;
-        }
     }
 }

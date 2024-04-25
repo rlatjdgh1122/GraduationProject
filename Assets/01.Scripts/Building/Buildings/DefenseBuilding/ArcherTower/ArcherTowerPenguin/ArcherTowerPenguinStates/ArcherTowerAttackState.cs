@@ -14,7 +14,7 @@ public class ArcherTowerAttackState : ArcherTowerBaseState
 
         _triggerCalled = false;
         _penguin.StopImmediately();
-        _penguin.FindFirstNearestEnemy();
+        _penguin.SetTarget();
 
         if(_penguin.CurrentTarget == null)
             _stateMachine.ChangeState(ArcherTowerPenguinStateEnum.Idle);

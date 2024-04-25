@@ -38,11 +38,12 @@ public class Enemy : Entity
     public bool IsReachedNexus =>
                             Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
 
+    
     protected override void Awake()
     {
         base.Awake();
         NavAgent.speed = moveSpeed;
-
+            
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
     }
@@ -59,7 +60,7 @@ public class Enemy : Entity
 
     public void SetTarget()
     {
-        CurrentTarget = FindNearestPenguin<Penguin>();
+        CurrentTarget = FindNearestTarget<Penguin>(TargetLayer);
     }
 
     protected override void HandleDie()
@@ -69,24 +70,9 @@ public class Enemy : Entity
 
     public virtual void AnimationTrigger()
     {
-
+        
     }
-
-    public T FindNearestPenguin<T>() where T : Penguin //OnProvoked bool�� ����
-    {
-        var components = FindObjectsOfType<T>().Where(p => p.enabled);
-
-        var nearestObject = components
-            .OrderBy(obj => Vector3.Distance(obj.transform.position, transform.position))
-            .FirstOrDefault();
-
-        if (nearestObject != null)
-            return nearestObject;
-
-        return default;
-    }
-
-
+   
     public void MoveToNexus()
     {
         if (NavAgent != null)

@@ -52,7 +52,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
-        _penguin.FindFirstNearestEnemy();
+        _penguin.SetTarget();
 
         _penguin.StartImmediately();
 
@@ -124,7 +124,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
         var prevTarget = _penguin.CurrentTarget;
 
-        _penguin.FindFirstNearestEnemy();
+        _penguin.SetTarget();
 
         if (prevTarget != null)
         {
@@ -137,6 +137,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void FindTarget()
     {
-        _penguin.FindFirstNearestEnemy();
+        _penguin.SetTarget();
     }
 }

@@ -37,7 +37,7 @@ public class CustomFeedbackMakeEditor : Editor
                 _target.SpawnFeedback<StunFeedback, StunEffectFeedback>(FeedbackEnumType.Stun);
 
                 _target.SpawnFeedback<EvasionEffectFeedback>(FeedbackEnumType.Evasion);
-                _target.SpawnFeedback<ProvokedEffectFeedback>(FeedbackEnumType.Provoke);
+                _target.SpawnFeedback<ProvokedEffectFeedback>(FeedbackEnumType.Provoked);
                 _target.SpawnFeedback<HitEffectFeedback>(FeedbackEnumType.Hit);
                 _target.SpawnFeedback<DashEffectFeedback>(FeedbackEnumType.Dash);
 
@@ -85,7 +85,7 @@ public class CustomFeedbackMakeEditor : Editor
             }
             if (GUILayout.Button("도발", GUILayout.Width(120), GUILayout.Height(30)))
             {
-                _target.SpawnFeedback<ProvokedEffectFeedback>(FeedbackEnumType.Provoke);
+                _target.SpawnFeedback<ProvokedEffectFeedback>(FeedbackEnumType.Provoked);
             }
             if (GUILayout.Button("맞기", GUILayout.Width(120), GUILayout.Height(30)))
             {

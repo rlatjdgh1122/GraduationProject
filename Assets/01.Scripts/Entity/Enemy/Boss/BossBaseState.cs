@@ -40,7 +40,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     }
     protected void ProvokedEnter()
     {
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<ShieldPenguin>();
+        //_enemy.CurrentTarget = _enemy.FindNearestPenguin<ITar>();
     }
     protected void AttackComboEnter()
     {
@@ -66,7 +66,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     protected void ReachedEnter()
     {
         _triggerCalled = false;
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
+        _enemy.SetTarget();
         _enemy.HealthCompo.OnHit += ChangeStateWhenHitted;
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;

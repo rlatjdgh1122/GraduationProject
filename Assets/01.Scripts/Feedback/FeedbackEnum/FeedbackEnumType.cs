@@ -3,7 +3,7 @@ public enum FeedbackEnumType
     Hit,
     Heal,
     Evasion,
-    Provoke,
+    Provoked,
     Stun,
     Dash,
     Noise,

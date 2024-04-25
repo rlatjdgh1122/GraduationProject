@@ -173,23 +173,10 @@ public class Penguin : Entity
 
     }
 
-    public void FindFirstNearestEnemy()
+    public void SetTarget()
     {
-        CurrentTarget = FindNearestEnemy().FirstOrDefault();
+        CurrentTarget = FindNearestTarget<Enemy>(TargetLayer);
     }
-
-    public List<Enemy> FindNearestEnemy(int count = 1)
-    {
-        Enemy[] objects = FindObjectsOfType<Enemy>().Where(e => e.enabled).ToArray();
-
-        var nearbyEnemies = objects
-            .OrderBy(obj => Vector3.Distance(transform.position, obj.transform.position))
-            .Take(count)
-            .ToList();
-
-        return nearbyEnemies;
-    }
-
 
     public virtual void LookTarget()
     {

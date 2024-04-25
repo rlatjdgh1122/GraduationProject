@@ -9,7 +9,7 @@ public class ShieldGeneralBlockState : ShieldGeneralBaseState
         base.Enter();
 
         _penguin.WaitForCommandToArmyCalled = false;
-        _penguin.FindFirstNearestEnemy();
+        _penguin.SetTarget();
         _penguin.StopImmediately();
 
         _penguin.skill.OnSkillCompleted += SpinAttack;
