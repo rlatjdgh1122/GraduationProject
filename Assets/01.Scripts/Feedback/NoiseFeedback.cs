@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class NoiseFeedback : Feedback
@@ -12,18 +13,15 @@ public class NoiseFeedback : Feedback
 
     public override void CreateFeedback()
     {
-        RaycastHit raycastHit;
-        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, _noiseLayer);
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, _noiseLayer);
 
-        float value = 0;
-        string name = string.Empty;
-
-        if (raycastSuccess)
+        foreach (var col in Colls)
         {
-            Debug.Log(raycastHit);
+            if(col.TryGetComponent<WorkableObject>(out WorkableObject obj))
+            {
+                NoiseManager.Instance.IncreaseNoise(obj.NoiseValue);
+            }
         }
-
-        //NoiseManager.Instance.IncreaseNoise(name, value);
     }
 
     public override void FinishFeedback()

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class NoiseManager : Singleton<NoiseManager>
 {
-    private Dictionary<string, float> _noiseDictionary = new();
     [SerializeField] private float _initMaxNosise = 100f;
     private float _maxNosise;
     public float MaxNoise => _maxNosise; //Max Noise
@@ -21,9 +20,10 @@ public class NoiseManager : Singleton<NoiseManager>
         _maxNosise = _initMaxNosise;
     }
 
-    public void IncreaseNoise(string name, float noise)
+    public void IncreaseNoise(float noise)
     {
-        
+        _currentNoise += noise;
+        Debug.Log(_currentNoise);
     }
 
     public void NoiselimitExceed()

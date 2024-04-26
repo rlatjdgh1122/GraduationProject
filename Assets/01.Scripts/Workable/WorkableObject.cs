@@ -9,8 +9,10 @@ public enum ResourceType
 public class WorkableObject : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;
+    [SerializeField] private float _noiseValue;
 
     public ResourceType resourceType;
+    public float NoiseValue => _noiseValue;
 
     public Health HealthCompo { get; private set; }
     public EntityActionData ActionData { get; private set; }
