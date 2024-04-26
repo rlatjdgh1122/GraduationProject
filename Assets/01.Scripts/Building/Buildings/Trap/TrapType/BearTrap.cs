@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class BearTrap : BaseTrap
 {
     [SerializeField]
-    private float stunDuration; // ³ªÁß¿¡ ½ºÅÝ So·Î »©½Ã¿À
-    Animator _animator;
+    private float stunDuration;
+    private Animator _animator;
 
     public override void Init()
     {
         base.Init();
+    }
+
+    public override void SetSelect()
+    {
         _animator.SetBool("IsCatched", false);
     }
 
@@ -27,5 +32,6 @@ public class BearTrap : BaseTrap
                                              stunDuration,
                                              _characterStat.damage.GetValue());
         _animator.SetBool("IsCatched", true);
+        SoundManager.Play3DSound(SoundName.BearTrap, transform.position, 10f, 15f);
     }
 }

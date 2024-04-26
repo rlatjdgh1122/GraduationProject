@@ -44,10 +44,10 @@ public abstract class BaseBuilding : WorkableObject
     public bool IsInstalled => isInstalled;
 
     private Material[] _meshNormalMats;
-    private MeshRenderer[] _meshRenderers;
+    protected MeshRenderer[] _meshRenderers;
 
     private Material[] _skinNormalMats;
-    private SkinnedMeshRenderer[] _skinRenderers;
+    protected SkinnedMeshRenderer[] _skinRenderers;
 
     private int installedTime = 0;
 
