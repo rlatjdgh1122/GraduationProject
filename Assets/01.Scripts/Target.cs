@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
@@ -16,7 +17,7 @@ public abstract class Target : PoolableMono
 
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _colliders;
-    private Transform nexusTrm = GameManager.Instance.NexusTrm;
+    private Transform nexusTrm;
     protected virtual void Awake()
     {
         _colliders = new Collider[_maxDetectEnemy];
@@ -32,6 +33,8 @@ public abstract class Target : PoolableMono
             HealthCompo.OnHit += HandleHit;
             HealthCompo.OnDied += HandleDie;
         }
+
+        nexusTrm = GameManager.Instance.NexusTrm;
     }
     protected virtual void Start()
     {
@@ -71,7 +74,29 @@ public abstract class Target : PoolableMono
 
         return default;
     }
+    public void AddStat(List<Ability> abilities)
+    {
+        foreach (var incStat in abilities)
+        {
+            AddStat(incStat.value, incStat.statType, incStat.statMode);
+        }
+    }
+    public void RemoveStat(List<Ability> abilities)
+    {
+        foreach (var incStat in abilities)
+        {
+            RemoveStat(incStat.value, incStat.statType, incStat.statMode);
+        }
+    }
 
+    public void AddStat(int value, StatType type, StatMode mode)
+    {
+        Stat.AddStat(value, type, mode);
+    }
+    public void RemoveStat(int value, StatType type, StatMode mode)
+    {
+        Stat.RemoveStat(value, type, mode);
+    }
 
 
     protected abstract void HandleHit();

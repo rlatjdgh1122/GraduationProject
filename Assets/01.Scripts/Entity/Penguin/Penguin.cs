@@ -209,35 +209,6 @@ public class Penguin : Entity
     }
 
     #region ���� ����
-
-    /// <summary>
-    ///  군단 능력치 받기
-    /// </summary>
-    /// <param name="abilities"></param>
-    public void AddStat(List<Ability> abilities)
-    {
-        foreach (var incStat in abilities)
-        {
-            AddStat(incStat.value, incStat.statType, incStat.statMode);
-        }
-    }
-    public void RemoveStat(List<Ability> abilities)
-    {
-        foreach (var incStat in abilities)
-        {
-            RemoveStat(incStat.value, incStat.statType, incStat.statMode);
-        }
-    }
-
-    public void AddStat(int value, StatType type, StatMode mode)
-    {
-        Stat.AddStat(value, type, mode);
-    }
-    public void RemoveStat(int value, StatType type, StatMode mode)
-    {
-        Stat.RemoveStat(value, type, mode);
-    }
-
     public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);
