@@ -32,6 +32,7 @@ public abstract class BaseBuilding : WorkableObject
 
     [SerializeField]
     private BuildingDatabaseSO _buildingDatabaseSO;
+    public BuildingDatabaseSO BuildingDatabaseSO => _buildingDatabaseSO;
 
     [SerializeField]
     private TextMeshProUGUI _installedFinText;

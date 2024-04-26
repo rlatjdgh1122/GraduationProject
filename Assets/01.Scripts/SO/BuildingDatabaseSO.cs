@@ -91,6 +91,8 @@ public class BuildingItemInfo
     public int NecessaryWokerCount { get { return necessaryWokerCount; } }
 
     public bool IsUnlocked = false;
+
+    public float NoiseValue;
 }
 
 [CreateAssetMenu(menuName = "SO/Building/BuildingList")]

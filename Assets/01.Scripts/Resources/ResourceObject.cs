@@ -18,6 +18,7 @@ public class ResourceObject : WorkableObject
     private int _receiveCountWhenCompleted;
 
     #region property
+    public ResourceDataSO ResourceData => _resourceData;
     public Sprite ResourceImage => _resourceIcon;
     public Sprite WorkerIcon => _workerIcon;
     public string ResourceName => _resourceName;
