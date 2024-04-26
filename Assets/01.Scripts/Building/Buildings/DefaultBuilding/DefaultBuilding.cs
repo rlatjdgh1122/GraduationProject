@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Outline))]
 public class DefaultBuilding : BaseBuilding
 {
     [SerializeField] private LayerMask _defaultBuildingLayer;
@@ -23,8 +22,6 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] private Transform _btnTrm;
 
-    protected Outline _outline;
-
     private ConstructionStation _constructionStation;
 
     public override void Init()
@@ -40,7 +37,6 @@ public class DefaultBuilding : BaseBuilding
     protected override void Awake()
     {
         base.Awake();
-        _outline = GetComponent<Outline>();
 
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
 
@@ -99,7 +95,6 @@ public class DefaultBuilding : BaseBuilding
     public virtual void UpdateSpawnUIBool()
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
-        _outline.enabled = isSpawnUIOn;
     }
     private void DisableAllUI()
     {
@@ -108,12 +103,10 @@ public class DefaultBuilding : BaseBuilding
             if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
             {
                 StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
-                _outline.enabled = false;
             }
             else
             {
                 _penguinSpawnUI.OnDisableStorePanel();
-                _outline.enabled = false;
             }
         }
         
