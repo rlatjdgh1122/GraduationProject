@@ -49,16 +49,16 @@ public class Enemy : Entity
     }
     private void OnEnable()
     {
-        SignalHub.OnIceArrivedEvent += SetTarget;
+        SignalHub.OnIceArrivedEvent += FindTarget;
         NexusTarget = GameObject.Find("Nexus").transform;
     }
 
     private void OnDisable()
     {
-        SignalHub.OnIceArrivedEvent -= SetTarget;
+        SignalHub.OnIceArrivedEvent -= FindTarget;
     }
 
-    public void SetTarget()
+    public void FindTarget()
     {
         CurrentTarget = FindNearestTarget<Penguin>(TargetLayer);
     }

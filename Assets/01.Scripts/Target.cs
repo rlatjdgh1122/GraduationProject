@@ -41,6 +41,12 @@ public abstract class Target : PoolableMono
     {
 
     }
+
+    public void SetTarget(Target target)
+    {
+        CurrentTarget = target;
+    }
+
     public T FindNearestTarget<T>(LayerMask mask) where T : Target //OnProvoked bool�� ����
     {
         T target = null;

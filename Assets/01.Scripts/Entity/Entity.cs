@@ -48,12 +48,20 @@ public abstract class Entity : Target
     {
 
     }
-    public void Provoke<T>(int provokeCount, float duration, float radius) where T : Target
+    public void Provoke(int provokeCount, float duration, float radius, LayerMask targetLayer)
     {
-        T target = null;
-
         var colliders = new Collider[provokeCount];
-        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, TargetLayer);
+        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, targetLayer);
+
+        for (int i = 0; i < count; ++i)
+        {
+            var obj = colliders[i].gameObject;
+            if (obj.TryGetComponent<Target>(out var target))
+            {
+                target.SetTarget(this);
+                target.HealthCompo.Provoked(duration);
+            }
+        }
 
     }
 

@@ -31,12 +31,12 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
         _triggerCalled = true;
         _enemy.StopImmediately(); //움직이면서 공격하는거 방지
 
-        _enemy.SetTarget();
+        _enemy.FindTarget();
     }
     protected void MustMoveEnter()
     {
         _triggerCalled = true;
-        _enemy.SetTarget();
+        _enemy.FindTarget();
     }
     protected void ProvokedEnter()
     {
@@ -66,7 +66,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     protected void ReachedEnter()
     {
         _triggerCalled = false;
-        _enemy.SetTarget();
+        _enemy.FindTarget();
         _enemy.HealthCompo.OnHit += ChangeStateWhenHitted;
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
@@ -114,7 +114,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     {
         var prevTarget = _enemy.CurrentTarget;
 
-        _enemy.SetTarget();
+        _enemy.FindTarget();
 
         if (prevTarget != null)
         {

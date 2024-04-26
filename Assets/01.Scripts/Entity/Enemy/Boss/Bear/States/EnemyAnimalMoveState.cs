@@ -12,7 +12,7 @@ public class EnemyAnimalMoveState : EnemyAnimalBaseState
         _enemy.StopImmediately(); //움직이면서 공격하는거 방지
         _triggerCalled = true;
 
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
+        _enemy.FindTarget();
     }
 
     public override void UpdateState()

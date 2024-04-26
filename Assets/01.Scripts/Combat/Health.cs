@@ -1,12 +1,8 @@
-using DG.Tweening;
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
-using static UnityEngine.Rendering.DebugUI;
 
-public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable
+public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IProvokedable
 {
     public int maxHealth;
     public int currentHealth;

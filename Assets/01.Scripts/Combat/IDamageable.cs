@@ -38,3 +38,8 @@ public interface IStunable
 {
     public void Stun(float value);
 }
+
+public interface IProvokedable
+{
+    public void Provoked(float value);
+}

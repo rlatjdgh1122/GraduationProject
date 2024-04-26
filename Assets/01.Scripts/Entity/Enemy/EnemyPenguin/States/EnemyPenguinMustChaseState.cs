@@ -9,7 +9,7 @@ public class EnemyPenguinMustChaseState : EnemyPenguinBaseState
     {
         base.Enter();
         _triggerCalled = true;
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
+        _enemy.FindTarget();
     }
 
     public override void UpdateState()
