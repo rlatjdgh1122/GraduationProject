@@ -14,16 +14,20 @@ public class NoiseManager : Singleton<NoiseManager>
     public float CurrentNoise => _currentNoise; //Current Noise
 
     public Action NoiseLimitExceedEvent = null;
+    public Action NoiseIncreaseEvent = null;
 
     public override void Awake()
     {
         _maxNosise = _initMaxNosise;
+
+        IncreaseNoise(_currentNoise);
     }
 
     public void IncreaseNoise(float noise)
     {
         _currentNoise += noise;
-        Debug.Log(_currentNoise);
+
+        NoiseIncreaseEvent?.Invoke();
     }
 
     public void NoiselimitExceed()
@@ -31,6 +35,8 @@ public class NoiseManager : Singleton<NoiseManager>
         NoiseLimitExceedEvent?.Invoke();
 
         WaveManager.Instance.BattlePhaseStartEventHandler();
+
+        ResetNoise();
     }
 
     public void ResetNoise()
