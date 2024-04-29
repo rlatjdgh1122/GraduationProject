@@ -8,8 +8,8 @@
 🤩 2024 안양시 진로페스티벌 전시 예정  
 
 </aside>
-
-[![IU(아이유) _ Into the I-LAND](http://img.youtube.com/vi/cxYR76_1fW0/0.jpg)](https://youtu.be/QYNwbZHmh8g?t=0s) 
+### 아래 사진을 클릭하신다면 영상을 보실 수 있습니다.
+[![IU(아이유) _ Into the I-LAND](http://img.youtube.com/vi/cxYR76_1fW0/0.jpg)]([https://youtu.be/QYNwbZHmh8g?t=0s](https://www.youtube.com/watch?v=cxYR76_1fW0)) 
 
 | 제목 | 펭덤 |
 | --- | --- |
@@ -57,16 +57,7 @@
 ---
 
 <aside>
-🔗 [*게임 다운로드 (4월에 마지막으로 빌드됨)*](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
-
-</aside>
-
-<aside>
-<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567128822/noticon/osiivsvhnu4nt8doquo0.png" alt="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567128822/noticon/osiivsvhnu4nt8doquo0.png" width="40px" /> ***[깃허브 보기](https://github.com/rlatjdgh1122/GraduationProject)***
-
-</aside>
-
-<aside>
-<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567002882/noticon/ctn6kpoyyaawcggjqmfj.png" alt="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567002882/noticon/ctn6kpoyyaawcggjqmfj.png" width="40px" /> ***[영상 보기](https://youtu.be/cxYR76_1fW0?si=K1xKGE6To7LXHcJV)***
+### 빌드본입니다.
+🔗 [게임 다운로드 (4월에 마지막으로 빌드됨)](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
 
 </aside>
