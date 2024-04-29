@@ -20,7 +20,6 @@
 
 # 🎮 게임 소개
 
----
 
 # **컨셉**
 
@@ -40,9 +39,8 @@
 
 # 링크
 
----
 ]
-### 빌드본입니다.
+### 빌드본
 [게임 다운로드 (4월에 마지막으로 빌드됨)](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
 
 </aside>
