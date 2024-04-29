@@ -35,20 +35,6 @@
 
 또한 넥서스를 통해 여러 디펜스 건물을 설치해 게임을 즐길 수 있습니다.  
 
-
-# 기믹
-
-빙하 이동: 적 빙하가 플레이어의 빙하에 부딪히면 전투가 시작 됩니다.
-
-군단 시스템: 플레이어는 여러 개의 군단을 1번키, 2번키, 3번키…..등  숫자 키를 통해 조작 가능합니다.  
-
-펭귄 집합소에서 구매한 펭귄을 군단에 자유롭게 배치할 수 있습니다.  
-
-펭귄들은 군단에 배치된 포메이션을 따라 이동합니다.  
-
-
-![Untitled](%5B%E1%84%8C%E1%85%A9%E1%86%AF%E1%84%8B%E1%85%A5%E1%86%B8%20%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%91%E1%85%AE%E1%86%B7%5D%20%E1%84%91%E1%85%A6%E1%86%BC%E1%84%83%E1%85%A5%E1%86%B7%20eae6533191974467a06a317164729bd5/Untitled.png)
-
 ## [***텍스트를 클릭하시면 더욱 상세한 정보를 보실 수 있습니다***](https://www.notion.so/Project-PENGDOM-a1f55978fafa498a8f32bfb3dfc7dc6a?pvs=21)
 
 
@@ -58,6 +44,6 @@
 
 <aside>
 ### 빌드본입니다.
-🔗 [게임 다운로드 (4월에 마지막으로 빌드됨)](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
+[게임 다운로드 (4월에 마지막으로 빌드됨)](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
 
 </aside>
