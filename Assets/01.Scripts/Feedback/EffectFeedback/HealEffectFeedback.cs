@@ -1,15 +1,15 @@
+using Define.Resources;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HealEffectFeedback : EffectFeedback  
 {
-    [SerializeField] private EffectPlayer _healEffect;
     [SerializeField] private float _effectEndTime;
 
     public override bool StartFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(_healEffect.name) as EffectPlayer;
+        EffectPlayer effect = PoolManager.Instance.Pop($"HealEffect") as EffectPlayer;
 
         if (effect != null)
         {

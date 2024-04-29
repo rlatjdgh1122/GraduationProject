@@ -105,14 +105,4 @@ public abstract class Entity : Target
         }
     }
     #endregion
-    public virtual T ReturnGenericStat<T>() where T : BaseStat
-    {
-        if (_characterStat is T)
-        {
-            return _characterStat as T;
-        }
-
-        Debug.LogError("Not T type");
-        return null;
-    }
 }

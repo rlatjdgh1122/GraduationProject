@@ -6,6 +6,10 @@ public class EvasionEffectFeedback : EffectFeedback
 {
     [SerializeField] private float _hudTextEndTime = 0.5f;
 
+    protected override void LoadEffect(string name)
+    {
+        base.LoadEffect("HealEffect");
+    }
     public override bool StartFeedback()
     {
         HudTextPlayer effect = PoolManager.Instance.Pop($"EvasionHudText") as HudTextPlayer;

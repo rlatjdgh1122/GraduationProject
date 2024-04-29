@@ -3,18 +3,14 @@ using UnityEngine;
 
 public class StunEffectFeedback : EffectFeedback
 {
-    [SerializeField] private EffectPlayer _stunEffect;
-
     public override void Awake()
     {
         base.Awake();
-
-        _stunEffect = VResources.Load<EffectPlayer>("");
     }
 
     public override bool StartFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(_stunEffect.name) as EffectPlayer;
+        EffectPlayer effect = PoolManager.Instance.Pop($"StunEffect") as EffectPlayer;
         if (effect != null)
         {
             effect.transform.position = new Vector3(actionDataTrm.transform.position.x, actionDataTrm.transform.position.y + 1.5f, actionDataTrm.transform.position.z);

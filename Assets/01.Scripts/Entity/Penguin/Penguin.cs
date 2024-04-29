@@ -133,13 +133,13 @@ public class Penguin : Entity
 
     #region passive
     public bool CheckAttackPassive(int curAttackCount)
-=> passiveData.CheckAttackEventPassive(curAttackCount);
+=> passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
     public bool CheckStunPassive(float maxHp, float currentHP)
- => passiveData.CheckStunEventPassive(maxHp, currentHP);
+ => passiveData?.CheckStunEventPassive(maxHp, currentHP) ?? false;
 
     public bool CheckSecondPassive()
-=> passiveData.CheckSecondEventPassive();
+=> passiveData?.CheckSecondEventPassive() ?? false;
 
     public virtual void OnPassiveAttackEvent()
     {

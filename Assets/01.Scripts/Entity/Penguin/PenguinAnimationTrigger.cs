@@ -54,6 +54,8 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// </summary>
     public void AoEAttackTrigger(string parmeter = "0 0")
     {
+        OnAoEAttackTriggerEvent?.Invoke();
+
         var value = parmeter.Split(' ');
         try
         {
@@ -62,7 +64,6 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
             //Debug.Log($"{knbValue} {stunValue}");
             _penguin.AttackCompo.AoEAttack(knbValue, stunValue);
-            OnAoEAttackTriggerEvent?.Invoke();
         }
         catch
         {
@@ -73,6 +74,8 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     public void AttackTrigger(string parmeter = "0 0")
     {
+        OnAttackTriggerEvent?.Invoke();
+
         var value = parmeter.Split(' ');
         try
         {
@@ -81,11 +84,10 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
             //Debug.Log($"{knbValue} {stunValue}");
             _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
-            OnAttackTriggerEvent?.Invoke();
         }
         catch
         {
-            Debug.LogError($"Put values ​​for the parameters. target : {transform.parent.name}, AoEAttackTrigger");
+            Debug.LogError($"Put values ​​for the parameters. target : {transform.parent.name}, AttackTrigger");
         }
 
     }
