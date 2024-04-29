@@ -31,25 +31,30 @@
 
 ### 군단 시스템 : 펭귄을 구매하고 군단에 배치할 수 있습니다. 
 군단에 들어간 펭귄은 배치된 포메이션으로 움직여 전략이 요구됩니다.  
+![화면 캡처 2024-04-29 120553](https://github.com/rlatjdgh1122/GraduationProject/assets/98933564/b1a6e032-e978-4b23-9af8-8abfee4e26d7)
+
 
 ### 장군 시스템: 플레이어는 배에서 장군을 구매할 수 있습니다. 
 장군은 일반 펭귄들과 다르게 훨씬 크기가 크고 특별한 시너지와 능력을 가지고 있습니다.   
 장군을 구매하면 테크트리가 나타 나는데 이 테크트리 업그레이드를 통해 군단 또는 장군을 강화 시킬 수 있습니다.  
+![화면 캡처 2024-04-29 120830](https://github.com/rlatjdgh1122/GraduationProject/assets/98933564/3c9d9f39-bf96-45d8-99ba-51e32f5a0457)
 
 
 ### 건설 시스템: 플레이어는 넥서스를 업그레이드 해서 지을 수 있는 건물을 늘려 나갈 수 있습니다.  
-그리고 적 빙하에 오는 자원을 일꾼 펭귄을 통해 캐서 건물을 지을 수 있습니다.  
+그리고 적 빙하에 오는 자원을 일꾼 펭귄을 통해 캐서 건물을 지을 수 있습니다.
+![화면 캡처 2024-04-29 121137](https://github.com/rlatjdgh1122/GraduationProject/assets/98933564/5d0dbcce-a910-47ca-9360-893bc8bd60fe)
+
 
 ### 일꾼 펭귄: 일꾼 펭귄은 건물을 짓거나 자원을 캐는데 사용됩니다. 
 넥서스 업그레이드를 통해 수를 늘릴 수 있습니다.  
+![화면 캡처 2024-04-29 121028](https://github.com/rlatjdgh1122/GraduationProject/assets/98933564/4829b18d-6982-49b3-87e0-abf024af897b)
 
 
 ## [***텍스트를 클릭하시면 더욱 상세한 정보를 보실 수 있습니다***](https://www.notion.so/Project-PENGDOM-a1f55978fafa498a8f32bfb3dfc7dc6a?pvs=21)
 
 
-# 링크
-
-### 빌드본
+   
+### 빌드본 입니다
 [게임 다운로드 (4월에 마지막으로 빌드됨)](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
 
 </aside>
