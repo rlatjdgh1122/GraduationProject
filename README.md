@@ -8,7 +8,7 @@
 🤩 2024 안양시 진로페스티벌 전시 예정    
 
 </aside>
-### 아래 사진을 클릭하신다면 영상을 보실 수 있습니다.  
+## 아래 사진을 클릭하신다면 영상을 보실 수 있습니다.  
 
 [![IU(아이유) _ Into the I-LAND](http://img.youtube.com/vi/cxYR76_1fW0/0.jpg)]([https://youtu.be/QYNwbZHmh8g?t=0s](https://youtu.be/cxYR76_1fW0?si=d53z0KIfGfh_qI83)) 
 
