@@ -9,7 +9,7 @@ public class EnemyAnimalMustChaseState : EnemyAnimalBaseState
     {
         base.Enter();
         _triggerCalled = true;  
-        _enemy.FindTarget();
+        _enemy.FindNearestTarget();
     }
 
     public override void UpdateState()

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(FeedbackController))]
 public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IProvokedable
 {
     public int maxHealth;

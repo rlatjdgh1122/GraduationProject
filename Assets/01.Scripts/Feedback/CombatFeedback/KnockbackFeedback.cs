@@ -6,7 +6,6 @@ public class KnockbackFeedback : CombatFeedback
     private int _groundLayer = 0;
     private float _knockbackSpeed = 0.5f;
     private float _fallSpeed = 1.2f;
-    public override float Value { get; set; }
 
     public override void Awake()
     {

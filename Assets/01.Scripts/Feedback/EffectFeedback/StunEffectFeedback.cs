@@ -1,8 +1,16 @@
+using Define.Resources;
 using UnityEngine;
 
 public class StunEffectFeedback : EffectFeedback
 {
     [SerializeField] private EffectPlayer _stunEffect;
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        _stunEffect = VResources.Load<EffectPlayer>("");
+    }
 
     public override bool StartFeedback()
     {

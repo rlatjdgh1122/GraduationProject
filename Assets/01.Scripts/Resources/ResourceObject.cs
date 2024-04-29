@@ -5,7 +5,6 @@ public class ResourceObject : WorkableObject
 {
     [Header("Resource Info")]
     [SerializeField] private ResourceDataSO _resourceData;
-    [SerializeField] private ResourceStat _resourceStat;
     [SerializeField] private UnityEvent OnRecieveResourceEvent = null;
     [SerializeField] private UnityEvent OnReviveInitEvent = null;
 
@@ -17,13 +16,14 @@ public class ResourceObject : WorkableObject
     private int _receiveCountAtOnce;
     private int _receiveCountWhenCompleted;
 
+    private ResourceStat _resourceStat;
     #region property
     public ResourceDataSO ResourceData => _resourceData;
     public Sprite ResourceImage => _resourceIcon;
     public Sprite WorkerIcon => _workerIcon;
     public string ResourceName => _resourceName;
     public int RequiredWorkerCount => _requiredWorkerCount;
-    public int CurrentWorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }   
+    public int CurrentWorkerCount { get { return _currentWorkerCount; } set { _currentWorkerCount = value; } }
     public int ReceiveCountAtOnce => _receiveCountAtOnce;
     public int ReceiveCountWhenCompleted => _receiveCountWhenCompleted;
     #endregion
@@ -31,6 +31,8 @@ public class ResourceObject : WorkableObject
     protected override void Awake()
     {
         base.Awake();
+
+        _resourceStat = ReturnGenericStat<ResourceStat>();
 
         SetCount();
     }
@@ -43,7 +45,7 @@ public class ResourceObject : WorkableObject
         _resourceIcon = _resourceData.resourceIcon;
         _receiveCountAtOnce = _resourceStat.receiveCountAtOnce;
         _receiveCountWhenCompleted = _resourceStat.receiveCountWhenCompleted;
-    }    
+    }
 
     public void ReceiveResourceOnce() //캘 때마다 얻는 자원
     {
@@ -68,7 +70,7 @@ public class ResourceObject : WorkableObject
         ResourceManager.Instance.RemoveResource(_resourceData, count);
     }
 
-    private void OnMouseDown() 
+    private void OnMouseDown()
     {
         if (!WaveManager.Instance.IsBattlePhase)
         {

@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SoundFeedback : Feedback
 {
     public SoundName soundName;
     public override void Awake()
     {
-        actionData = transform.parent.parent.GetComponent<EntityActionData>();
         owner = transform.parent.parent.GetComponent<Entity>();
+        actionData = owner.GetComponent<EntityActionData>();
     }
 
     public override bool StartFeedback()

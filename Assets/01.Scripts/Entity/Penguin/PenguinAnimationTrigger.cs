@@ -66,19 +66,28 @@ public class PenguinAnimationTrigger : MonoBehaviour
         }
         catch
         {
-            Debug.LogError("Put values ​​for the parameters.");
+            Debug.LogError($"Put values ​​for the parameters. target : {transform.parent.name}, AoEAttackTrigger");
         }
-       
+
     }
 
     public void AttackTrigger(string parmeter = "0 0")
     {
         var value = parmeter.Split(' ');
-        float.TryParse(value[0], out float knbValue);
-        float.TryParse(value[1], out float stunValue);
+        try
+        {
+            float.TryParse(value[0], out float knbValue);
+            float.TryParse(value[1], out float stunValue);
 
-        _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
-        OnAttackTriggerEvent?.Invoke();
+            //Debug.Log($"{knbValue} {stunValue}");
+            _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
+            OnAttackTriggerEvent?.Invoke();
+        }
+        catch
+        {
+            Debug.LogError($"Put values ​​for the parameters. target : {transform.parent.name}, AoEAttackTrigger");
+        }
+
     }
 
     public void DashAttackTrigger()

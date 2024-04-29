@@ -19,7 +19,7 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
 
     private void FindTarget()
     {
-        _penguin.SetTarget();
+        _penguin.FindNearestTarget();
     }
 
     public override void UpdateState()

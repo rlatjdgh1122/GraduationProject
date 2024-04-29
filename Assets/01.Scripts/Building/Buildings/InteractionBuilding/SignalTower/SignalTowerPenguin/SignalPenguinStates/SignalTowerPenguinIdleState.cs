@@ -18,7 +18,7 @@ public class SignalTowerPenguinIdleState : SignalTowerPenguinBaseState
 
     private void FindTarget()
     {
-        _penguin.SetTarget();
+        _penguin.FindNearestTarget();
     }
 
     public override void UpdateState()

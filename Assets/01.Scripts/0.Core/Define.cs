@@ -1,8 +1,6 @@
 using Cinemachine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -46,6 +44,20 @@ namespace Define
         {
             public static Ray MousePointRay => CamDefine.Cam.MainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
+        }
+    }
+    namespace Resources
+    {
+        using UnityEngine;
+        public static class VResources
+        {
+            static Dictionary<string, Object> resourceCache = new();
+            public static T Load<T>(string path) where T : Object
+            {
+                if (!resourceCache.ContainsKey(path))
+                    resourceCache[path] = Resources.Load<T>(path);
+                return (T)resourceCache[path];
+            }
         }
     }
 

@@ -752,7 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13da50e34568e6443a7b5c91df3d5cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSoundEvent:
+  OnWorkEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4835253822981293411
@@ -946,6 +946,7 @@ GameObject:
   - component: {fileID: 7784602140742933622}
   - component: {fileID: 5197397325978698940}
   - component: {fileID: 5121196399348769439}
+  - component: {fileID: 358070947170662390}
   m_Layer: 11
   m_Name: WorkerPenguin
   m_TagString: Player
@@ -986,8 +987,12 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 653e880614eb72b4eaea6216831949d7, type: 2}
   CurrentTarget: {fileID: 0}
   IsDead: 0
+  _maxDetectEnemy: 5
   innerDistance: 2
   attackDistance: 1.5
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   Target: {fileID: 0}
   WorkerHomeTrm: {fileID: 0}
   CanWork: 0
@@ -1021,23 +1026,14 @@ MonoBehaviour:
   currentHealth: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls: []
+    m_Bits: 8
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
   OnUIUpdate:
@@ -1094,6 +1090,18 @@ NavMeshAgent:
   m_BaseOffset: -0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &358070947170662390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5716602415672122028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6186424993357302070
 GameObject:
   m_ObjectHideFlags: 0

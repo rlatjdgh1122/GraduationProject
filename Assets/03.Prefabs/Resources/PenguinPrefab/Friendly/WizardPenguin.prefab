@@ -1791,8 +1791,12 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 48b7342830986144ca15ee2520480cc8, type: 2}
   CurrentTarget: {fileID: 0}
   IsDead: 0
+  _maxDetectEnemy: 5
   innerDistance: 7
   attackDistance: 5
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   moveSpeed: 3
   attackSpeed: 1
   maxDetectedCount: 1
@@ -1801,6 +1805,7 @@ MonoBehaviour:
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
+  TargetLock: 0
 --- !u!114 &2333398805960471784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1818,54 +1823,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 652087706525184519}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 137948239127316373}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8004800960038521769}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls:

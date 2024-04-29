@@ -1173,6 +1173,7 @@ GameObject:
   - component: {fileID: 6997479935234560311}
   - component: {fileID: 2030206095074393266}
   - component: {fileID: 2707706033544461591}
+  - component: {fileID: 3170093532850742559}
   m_Layer: 11
   m_Name: ArcherPenguin
   m_TagString: Player
@@ -1218,8 +1219,12 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
   CurrentTarget: {fileID: 0}
   IsDead: 0
+  _maxDetectEnemy: 5
   innerDistance: 7
   attackDistance: 5
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   moveSpeed: 3
   attackSpeed: 1
   maxDetectedCount: 1
@@ -1228,6 +1233,7 @@ MonoBehaviour:
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
+  TargetLock: 0
 --- !u!114 &886979751048114177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,54 +1251,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7263383976220414423}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1643877661654739519}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8929265725770937930}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1323,6 +1281,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnDashDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnUIUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -2134,6 +2095,7 @@ MonoBehaviour:
     - {x: -0.44585338, y: -0.53741634, z: -0.7158201}
     - {x: -0.22979543, y: -0.22698571, z: 0.9463993}
     - {x: 0.23135628, y: -0.2253576, z: 0.94640803}
+  renderers: []
 --- !u!114 &2707706033544461591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2144,6 +2106,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3170093532850742559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5002279329585421089
@@ -2533,6 +2507,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashEndTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
   OnEffectOnTriggerEvent:

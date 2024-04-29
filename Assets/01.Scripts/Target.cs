@@ -8,6 +8,7 @@ public abstract class Target : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;
     public BaseStat Stat => _characterStat;
+    public T ReturnGenericStat<T>() where T : BaseStat => (T)_characterStat;
 
     public Target CurrentTarget;
 
@@ -45,34 +46,38 @@ public abstract class Target : PoolableMono
 
     }
 
+
     public void SetTarget(Target target)
     {
         CurrentTarget = target;
     }
 
-    public T FindNearestTarget<T>(LayerMask mask) where T : Target //OnProvoked bool�� ����
+    public T FindNearestTarget<T>(LayerMask mask) where T : Target
     {
         T target = null;
         float radius = 10f;
-        float distance = 300f;
+        float maxDistance = 300f;
 
-        //넥서스 기준으로 찾음
+        // 넥서스 기준으로 주변 객체 검색
         int count = Physics.OverlapSphereNonAlloc(nexusTrm.position, radius, _colliders, mask);
 
         for (int i = 0; i < count; ++i)
         {
-            var targetObj = _colliders[i].gameObject;
-            if (targetObj is not T) continue;
+            Collider collider = _colliders[i];
 
-            if (distance > Vector3.Distance(targetObj.transform.position, nexusTrm.position))
+            if (collider.TryGetComponent(out T potentialTarget))
             {
-                target = targetObj as T;
+                float distanceToTarget = Vector3.Distance(potentialTarget.transform.position, nexusTrm.position);
+
+                if (distanceToTarget < maxDistance)
+                {
+                    target = potentialTarget;
+                    maxDistance = distanceToTarget;
+                }
             }
         }
-        if (target is not null)
-            return target;
 
-        return default;
+        return target;
     }
     public void AddStat(List<Ability> abilities)
     {
