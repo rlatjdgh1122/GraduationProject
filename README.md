@@ -8,7 +8,7 @@
 
 ##### 아래 사진을 클릭하신다면 영상을 보실 수 있습니다.  
 
-[![IU(아이유) _ Into the I-LAND](http://img.youtube.com/vi/cxYR76_1fW0/0.jpg)]([https://youtu.be/QYNwbZHmh8g?t=0s](https://youtu.be/cxYR76_1fW0?si=d53z0KIfGfh_qI83)) 
+[![IU(아이유) _ Into the I-LAND](http://img.youtube.com/vi/cxYR76_1fW0/3.jpg)](https://youtu.be/cxYR76_1fW0?si=d53z0KIfGfh_qI83) 
 
 | 제목 | 펭덤 |
 | --- | --- |
@@ -20,11 +20,11 @@
 # 🎮 게임 소개
 
 
-# **컨셉**
+### **컨셉**
 
 게임의 컨셉은 “**적들을 처치하며 나만의 왕국을 건설해 나가자” 입니다.**
 
-# 플레이 방식
+### 플레이 방식
 
 플레이어는 3칸의 빙하를 가지고 시작합니다. 
 적들의 빙하가 플레이어의 빙하에 부딪히면 전투를 하게됩니다.  
