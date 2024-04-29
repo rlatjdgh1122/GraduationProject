@@ -53,9 +53,8 @@
 ## [***텍스트를 클릭하시면 더욱 상세한 정보를 보실 수 있습니다***](https://www.notion.so/Project-PENGDOM-a1f55978fafa498a8f32bfb3dfc7dc6a?pvs=21)
 
 
-# 링크
-
-### 빌드본
+   
+### 빌드본 입니다
 [게임 다운로드 (4월에 마지막으로 빌드됨)](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
 
 </aside>
