@@ -54,7 +54,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// </summary>
     public void AoEAttackTrigger(string parmeter)
     {
-        OnAoEAttackTriggerEvent.Invoke();
+        OnAoEAttackTriggerEvent?.Invoke();
 
         var value = parmeter.Split(' ');
         try

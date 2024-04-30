@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class ProvokedEffectFeedback : EffectFeedback
 {
-    [SerializeField] private EffectPlayer _provokedEffect;
-
     public override bool StartFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(_provokedEffect.name) as EffectPlayer;
+        EffectPlayer effect = PoolManager.Instance.Pop($"ProvokeEffect") as EffectPlayer;
 
         if (effect == null)
             return false;

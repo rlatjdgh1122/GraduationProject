@@ -11,7 +11,6 @@ public class SoundFeedback : Feedback
         owner = transform.parent.parent.GetComponent<Entity>();
         actionData = owner.GetComponent<EntityActionData>();
     }
-
     public override bool StartFeedback()
     {
         SoundManager.Play3DSound(soundName, transform.position);

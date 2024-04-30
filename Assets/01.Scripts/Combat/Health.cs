@@ -91,17 +91,19 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     }
     public void Stun(float value)
     {
-        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var knockbackF, value))
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var stunF, value))
         {
-            knockbackF.PlayFeedback();
+            stunF.PlayFeedback();
         }
     }
     public void Knockback(float value, Vector3 normal = default)
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
         {
+            knockbackF.PlayFeedback();
+
             //바다에 빠졌다면
-            if (!knockbackF.PlayFeedback())
+            if (!knockbackF.IsSuccessed)
             {
                 feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.WaterFall);
                 Dead();
