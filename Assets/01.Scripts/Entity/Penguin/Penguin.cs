@@ -175,7 +175,6 @@ public class Penguin : Entity
 
     public void FindNearestEnemy()
     {
-        Debug.Log(1 << TargetLayer);
         CurrentTarget = FindNearestTarget<Target>(TargetLayer);
     }
 

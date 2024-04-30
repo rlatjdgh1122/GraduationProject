@@ -17,8 +17,9 @@ public abstract class Target : PoolableMono
     public CharacterController CharacterCompo { get; private set; }
 
     [SerializeField] private int _maxDetectEnemy = 5;
+    private Transform nexusTrm = null;
+
     private Collider[] _colliders;
-    private Transform nexusTrm;
     protected virtual void Awake()
     {
         _colliders = new Collider[_maxDetectEnemy];
@@ -35,11 +36,10 @@ public abstract class Target : PoolableMono
             HealthCompo.OnDied += HandleDie;
         }
 
-        nexusTrm = GameManager.Instance.NexusTrm;
+        nexusTrm ??= GameManager.Instance.NexusTrm;
     }
     protected virtual void Start()
     {
-
     }
     protected virtual void Update()
     {
@@ -60,7 +60,6 @@ public abstract class Target : PoolableMono
 
         // 넥서스 기준으로 주변 객체 검색
         int count = Physics.OverlapSphereNonAlloc(nexusTrm.position, radius, _colliders, mask);
-
         for (int i = 0; i < count; ++i)
         {
             Collider collider = _colliders[i];

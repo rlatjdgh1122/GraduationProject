@@ -52,9 +52,9 @@ public class PenguinAnimationTrigger : MonoBehaviour
     /// <summary>
     /// 광역 공격
     /// </summary>
-    public void AoEAttackTrigger(string parmeter = "0 0")
+    public void AoEAttackTrigger(string parmeter)
     {
-        OnAoEAttackTriggerEvent?.Invoke();
+        OnAoEAttackTriggerEvent.Invoke();
 
         var value = parmeter.Split(' ');
         try
@@ -72,7 +72,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
-    public void AttackTrigger(string parmeter = "0 0")
+    public void AttackTrigger(string parmeter)
     {
         OnAttackTriggerEvent?.Invoke();
 

@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public float ElapsedTime => Time.time;
-    public Transform NexusTrm { get; private set; } = null;
+    public Transform NexusTrm = null;
     public Transform TentTrm { get; private set; } = null;
     public Transform WorkerSpawnPoint { get; private set; } = null;
 
@@ -69,9 +69,9 @@ public class GameManager : Singleton<GameManager>
 
     public override void Awake()
     {
-        TentTrm = FindObjectOfType<TentInitPos>().transform;
-        NexusTrm = GameObject.Find("Nexus").transform;
-        WorkerSpawnPoint = GameObject.Find("WorkerSpawnPoint").transform;
+        TentTrm ??= FindObjectOfType<TentInitPos>().transform;
+        NexusTrm ??= GameObject.Find("Nexus").transform;
+        WorkerSpawnPoint ??= GameObject.Find("WorkerSpawnPoint").transform;
 
         if (_soldierRegisterSO != null)
         {
