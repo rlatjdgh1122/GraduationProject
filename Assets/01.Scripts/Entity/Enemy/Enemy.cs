@@ -35,12 +35,12 @@ public class Enemy : Entity
     public bool IsReachedNexus =>
                             Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
 
-    
+
     protected override void Awake()
     {
         base.Awake();
         NavAgent.speed = moveSpeed;
-            
+
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
     }
@@ -57,7 +57,7 @@ public class Enemy : Entity
 
     public void FindNearestPenguin()
     {
-        CurrentTarget = FindNearestTarget(TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(TargetLayer);
     }
 
     protected override void HandleDie()
@@ -67,9 +67,9 @@ public class Enemy : Entity
 
     public virtual void AnimationTrigger()
     {
-        
+
     }
-   
+
     public void MoveToNexus()
     {
         if (NavAgent != null)
