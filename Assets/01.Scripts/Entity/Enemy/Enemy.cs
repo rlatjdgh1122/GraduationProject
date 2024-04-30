@@ -16,10 +16,6 @@ public class Enemy : Entity
     [Range(0.1f, 6f)]
     protected float nexusDistance;
 
-    [Header("Action & Events")]
-    public Action OnProvoked = null;
-    public UnityEvent OnProvokedEvent;
-
     public PassiveDataSO passiveData = null;
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
@@ -50,19 +46,18 @@ public class Enemy : Entity
     }
     private void OnEnable()
     {
-        SignalHub.OnIceArrivedEvent += FindNearestTarget;
+        SignalHub.OnIceArrivedEvent += FindNearestPenguin;
         NexusTarget = GameObject.Find("Nexus").transform;
     }
 
     private void OnDisable()
     {
-        SignalHub.OnIceArrivedEvent -= FindNearestTarget;
+        SignalHub.OnIceArrivedEvent -= FindNearestPenguin;
     }
 
-    public void FindNearestTarget()
+    public void FindNearestPenguin()
     {
-        Debug.Log("Æë±Ï Ã£±â");
-        CurrentTarget = FindNearestTarget<Penguin>(TargetLayer);
+        CurrentTarget = FindNearestTarget<Target>(TargetLayer);
     }
 
     protected override void HandleDie()

@@ -16,7 +16,7 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
-        _penguin.FindNearestTarget();
+        _penguin.FindNearestEnemy();
 
         if (_penguin.CurrentTarget != null)
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;

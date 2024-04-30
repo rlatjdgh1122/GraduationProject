@@ -9,17 +9,15 @@ public class EnemyPenguinProvokedState : EnemyPenguinBaseState
     {
         base.Enter();
 
-        _enemy.FindNearestTarget();
+        _enemy.FindNearestPenguin();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _enemy.OnProvokedEvent?.Invoke();
-
         if (_enemy.CurrentTarget != null)
-            _enemy.FindNearestTarget();
+            _enemy.FindNearestPenguin();
         else
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
 
