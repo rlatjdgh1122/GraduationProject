@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(FeedbackController))]
-public class CustomFeedbackMakeEditor : Editor
+public class CustomFeedbackEditor : Editor
 {
     private readonly string AddFeedback = "Add Feedback";
     private readonly string Off = "Off";

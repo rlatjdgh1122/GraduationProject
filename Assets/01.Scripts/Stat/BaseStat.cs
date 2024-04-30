@@ -240,28 +240,6 @@ public abstract class BaseStat : ScriptableObject
     {
         switch (type)
         {
-            /*case StatType.MoveSpeed:
-                if (mode == StatMode.Increase)
-                {
-                    moveSpeed.AddIncrease(value);
-                }
-                else if (mode == StatMode.Decrease)
-                {
-                    moveSpeed.AddDecrease(value);
-                }
-                break;
-
-            case StatType.AttackSpeed:
-                if (mode == StatMode.Increase)
-                {
-                    attackSpeed.AddIncrease(value);
-                }
-                else if (mode == StatMode.Decrease)
-                {
-                    attackSpeed.AddDecrease(value);
-                }
-                break;*/
-
             case StatType.Strength:
                 if (mode == StatMode.Increase)
                 {
@@ -377,28 +355,6 @@ public abstract class BaseStat : ScriptableObject
     {
         switch (type)
         {
-            /* case StatType.MoveSpeed:
-                 if (mode == StatMode.Increase)
-                 {
-                     moveSpeed.RemoveIncrease(value);
-                 }
-                 else if (mode == StatMode.Decrease)
-                 {
-                     moveSpeed.RemoveDecrease(value);
-                 }
-                 break;
-
-             case StatType.AttackSpeed:
-                 if (mode == StatMode.Increase)
-                 {
-                     attackSpeed.RemoveIncrease(value);
-                 }
-                 else if (mode == StatMode.Decrease)
-                 {
-                     attackSpeed.RemoveDecrease(value);
-                 }
-                 break;*/
-
             case StatType.Strength:
                 if (mode == StatMode.Increase)
                 {
