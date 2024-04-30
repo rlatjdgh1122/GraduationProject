@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CharacterController))]
-public abstract class Target : PoolableMono
+public abstract class TargetObject : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;
     public BaseStat Stat => _characterStat;
     public T ReturnGenericStat<T>() where T : BaseStat => (T)_characterStat;
 
-    public Target CurrentTarget;
+    public TargetObject CurrentTarget;
 
     public bool IsDead = false;
     public Health HealthCompo { get; private set; }
@@ -47,12 +47,12 @@ public abstract class Target : PoolableMono
     }
 
 
-    public void SetTarget(Target target)
+    public void SetTarget(TargetObject target)
     {
         CurrentTarget = target;
     }
 
-    public T FindNearestTarget<T>(LayerMask mask) where T : Target
+    public T FindNearestTarget<T>(LayerMask mask) where T : TargetObject
     {
         T target = null;
         float radius = 10f;

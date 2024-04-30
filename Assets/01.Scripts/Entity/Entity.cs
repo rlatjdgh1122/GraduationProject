@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(FeedbackController))]
-public abstract class Entity : Target
+public abstract class Entity : TargetObject
 {
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
@@ -13,6 +14,7 @@ public abstract class Entity : Target
 
     #region Components 
     public Animator AnimatorCompo { get; protected set; }
+    public DamageCaster DamageCasterCompo { get; protected set; }
     public NavMeshAgent NavAgent { get; protected set; }
     public EntityActionData ActionData { get; private set; }
     public Outline OutlineCompo { get; private set; }
@@ -24,9 +26,12 @@ public abstract class Entity : Target
 
         Transform visualTrm = transform.Find("Visual");
         AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
+        DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
         NavAgent = transform?.GetComponent<NavMeshAgent>();
         OutlineCompo = transform?.GetComponent<Outline>(); //이것도 따로 컴포넌트로 빼야함
         ActionData = GetComponent<EntityActionData>();
+
+        DamageCasterCompo?.SetOwner(this);
     }
 
     protected override void Start()
@@ -56,7 +61,7 @@ public abstract class Entity : Target
         for (int i = 0; i < count; ++i)
         {
             var obj = colliders[i].gameObject;
-            if (obj.TryGetComponent<Target>(out var target))
+            if (obj.TryGetComponent<TargetObject>(out var target))
             {
                 target.SetTarget(this);
                 target.HealthCompo.Provoked(duration);

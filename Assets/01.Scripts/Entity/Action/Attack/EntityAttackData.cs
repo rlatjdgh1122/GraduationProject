@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EntityAttackData : MonoBehaviour
 {
-    public DamageCaster DamageCasterCompo { get; protected set; }
+    public DamageCaster DamageCasterCompo => owner.DamageCasterCompo;
 
     protected Entity owner;
 
     protected virtual void Awake()
     {
-        
-        DamageCasterCompo = transform.GetComponentInChildren<DamageCaster>();
         owner = GetComponent<Entity>();
-        DamageCasterCompo.SetOwner(owner);
     }
 
     public virtual void AoEAttack(float knbValue, float stunValue)

@@ -6,7 +6,7 @@ public enum ResourceType
     Wood,
 }
 
-public class WorkableObject : Target
+public class WorkableObject : TargetObject
 {
     public ResourceType resourceType;
     [SerializeField] private float _noiseValue;
