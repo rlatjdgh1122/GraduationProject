@@ -11,6 +11,7 @@ public class AnimalAttack
     public SoundName SFXSound;
     public int Damage;
     public float KnbackValue;
+    public float stunValue;
 }
 
 public class AnimalAttackableEntity : EntityAttackData
@@ -20,19 +21,17 @@ public class AnimalAttackableEntity : EntityAttackData
     public int ComboCounter { get; set; } //현재 콤보 수치
     public float LastAttackTime { get; set; } //마지막으로 공격했던 시간
     [field: SerializeField] public float ComboWindow { get; private set; } //초기화 쿨타임
-
-    public override void AoEAttack(bool Knb, float value)
+    public override void AoEAttack(float knbValue, float stunValue)
     {
         DamageCasterCompo.SelectTypeAOECast(
-            animalAttackList[ComboCounter].Damage, 
-            animalAttackList[ComboCounter].hitType,
-            animalAttackList[ComboCounter].SFXSound,
-            Knb,
-            value);
+             animalAttackList[ComboCounter].Damage,
+             animalAttackList[ComboCounter].hitType,
+             animalAttackList[ComboCounter].SFXSound,
+             knbValue,
+             stunValue);
     }
-
-    public override void MeleeAttack()
+    public override void MeleeAttack(float knbValue, float stunValue)
     {
-        DamageCasterCompo.CastDamage();
+        DamageCasterCompo.CastDamage(knbValue, stunValue);
     }
 }

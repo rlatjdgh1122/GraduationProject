@@ -28,7 +28,7 @@ public class ThrowSkill : Skill
     private IEnumerator ThrowCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
-
-        _owner.CurrentTarget.HealthCompo.KnockBack(4, -transform.forward);
+        
+        _owner.CurrentTarget.HealthCompo.Knockback(4, -transform.forward);
     }
 }

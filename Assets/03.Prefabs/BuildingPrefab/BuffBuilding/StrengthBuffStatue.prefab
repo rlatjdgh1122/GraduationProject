@@ -1162,66 +1162,21 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6039224750023550795}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls: []
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnDashDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnUIUpdate:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
-        m_MethodName: UpdateHpbarUI
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OffUIUpdate:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
-        m_MethodName: FadeOutImmediately
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!65 &5282128203786667868
 BoxCollider:
   m_ObjectHideFlags: 0

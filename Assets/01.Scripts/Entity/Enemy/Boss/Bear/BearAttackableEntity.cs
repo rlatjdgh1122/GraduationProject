@@ -21,8 +21,7 @@ public class BearAttackableEntity : AnimalAttackableEntity
             _leftHandEffectTransform.Play();
         }
     }
-
-    public override void AoEAttack(bool knockback, float value)
+    public override void AoEAttack(float knbValue, float stunValue)
     {
         // 현재 체력을 비율로 계산
         //체력 정규화
@@ -34,11 +33,11 @@ public class BearAttackableEntity : AnimalAttackableEntity
 
         float kncbackIncrease = animalAttackList[ComboCounter].KnbackValue * currentHealthPercentage;
 
-        if(owner.HealthCompo.maxHealth / 2 >= owner.HealthCompo.currentHealth)
+        if (owner.HealthCompo.maxHealth / 2 >= owner.HealthCompo.currentHealth)
         {
             kncbackIncrease = animalAttackList[ComboCounter].KnbackValue;
         }
-        
-        base.AoEAttack(animalAttackList[ComboCounter].KnbackValue > 0, kncbackIncrease);
+
+        base.AoEAttack(kncbackIncrease, stunValue);
     }
 }

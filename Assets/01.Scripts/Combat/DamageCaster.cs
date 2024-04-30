@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -43,7 +42,7 @@ public class DamageCaster : MonoBehaviour
     /// <summary>
     /// 광역 데미지
     /// </summary>
-    public void CaseAoEDamage(bool Knb, float value)
+    public void CaseAoEDamage(float knbValue = 0f, float stunValue = 0f)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -62,12 +61,48 @@ public class DamageCaster : MonoBehaviour
                 int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-
-                if (Knb == true)
-                    health.KnockBack(value, raycastHit.normal);
+                health.Knockback(knbValue, raycastHit.normal);
+                health.Stun(stunValue);
 
             }
         }
+    }
+    /// <summary>
+    /// 단일 데미지
+    /// </summary>
+    /// <returns> 공격 맞았나 여부</returns>
+    public bool CastDamage(float knbValue = 0f, float stunValue = 0f)
+    {
+        RaycastHit raycastHit;
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
+
+        if (raycastSuccess
+            && raycastHit.collider.TryGetComponent<Health>(out Health health))
+        {
+            int damage = _owner.Stat.damage.GetValue();
+
+            float critical = _owner.Stat.criticalChance.GetValue() * 0.01f;
+            int criticalValue = _owner.Stat.criticalValue.GetValue();
+            float adjustedDamage;
+            float dice = UnityEngine.Random.value;
+            HitType originType = _hitType;
+
+            if (dice < critical)
+            {
+                _hitType = HitType.CriticalHit;
+                adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
+                damage = (int)adjustedDamage;
+            }
+
+            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            health.Knockback(knbValue, raycastHit.normal);
+            health.Stun(stunValue);
+
+            _hitType = originType;
+            return true;
+        }
+
+        return false;
     }
 
     public void CastOverlap()
@@ -81,55 +116,6 @@ public class DamageCaster : MonoBehaviour
                 int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 단일 스턴 데미지
-    /// </summary>
-    /// <returns> 공격 맞았나 여부</returns>
-    public void CastStunDamage(bool Stun, float duration) 
-    {
-        RaycastHit raycastHit;
-        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
-        if (raycastSuccess
-            && raycastHit.collider.TryGetComponent<Health>(out Health health))
-        {
-            int damage = _owner.Stat.damage.GetValue();
-
-            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-
-            if (Stun == true)
-                health.Stun(raycastHit, duration);
-        }
-
-    }
-
-    public void CastAoEStunDamage(bool Stun, float duration)
-    {
-        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
-
-        foreach (var col in Colls)
-        {
-            RaycastHit raycastHit;
-
-            var dir = (col.transform.position - transform.position).normalized;
-            dir.y = 0;
-
-            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
-
-            if (raycastSuccess
-                && raycastHit.collider.TryGetComponent<Health>(out Health health))
-            {
-                int damage = _owner.Stat.damage.GetValue();
-
-                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-
-                if (Stun == true)
-                    health.Stun(raycastHit, duration);
-
             }
         }
     }
@@ -171,43 +157,6 @@ public class DamageCaster : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// 단일 데미지
-    /// </summary>
-    /// <returns> 공격 맞았나 여부</returns>
-    public bool CastDamage()
-    {
-        RaycastHit raycastHit;
-        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
-        if (raycastSuccess
-            && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
-        {
-            int damage = _owner.Stat.damage.GetValue();
-
-            float critical = _owner.Stat.criticalChance.GetValue() * 0.01f;
-            int criticalValue = _owner.Stat.criticalValue.GetValue();
-            float adjustedDamage;
-            float dice = UnityEngine.Random.value;
-            HitType originType = _hitType;
-
-            if (dice < critical)
-            {
-                _hitType = HitType.CriticalHit;
-                adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
-                damage = (int)adjustedDamage;
-            }
-
-            raycastHealth?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
-            _hitType = originType;
-
-            return true;
-        }
-
-        return false;
-    }
-
     public bool CastArrowDamage(Collider coll, LayerMask targetLayer)
     {
         if (coll.TryGetComponent<IDamageable>(out IDamageable raycastHealth) && ((1 << coll.gameObject.layer) & targetLayer) != 0)
@@ -253,12 +202,7 @@ public class DamageCaster : MonoBehaviour
         return true;
     }
 
-    public void ShowCritical(EntityActionData actionData)
-    {
-        //actionData.HitPoint
-    }
-
-    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, bool Knb = false, float value = 0)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0f, float stunValue = 0f)
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
@@ -277,9 +221,8 @@ public class DamageCaster : MonoBehaviour
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
-
-                if (Knb == true && col.gameObject.layer != 13) //13은 넥서스 레이어고 임시
-                    health.KnockBack(value, raycastHit.normal);
+                health.Knockback(knbValue);
+                health.Stun(stunValue);
 
             }
         }
@@ -297,15 +240,15 @@ public class DamageCaster : MonoBehaviour
             IDamageable damageable = collider.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
+                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType);
                 isHit = true;
             }
 
             if (collider.TryGetComponent(out Health health))
             {
-                health.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
+                health.ApplyDamage(damage, position, collider.transform.position, _hitType);
 
-                health.KnockBack(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
+                health.Knockback(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
             }
         }
 
@@ -315,7 +258,7 @@ public class DamageCaster : MonoBehaviour
     public void CastBuildingStunDamage(Health enemyHealth, RaycastHit hit, float duration, int damage)
     {
         enemyHealth.ApplyDamage(damage, hit.point, hit.normal, _hitType);
-        enemyHealth.Stun(hit, duration);
+        enemyHealth.Stun(duration);
     }
 
     #endregion

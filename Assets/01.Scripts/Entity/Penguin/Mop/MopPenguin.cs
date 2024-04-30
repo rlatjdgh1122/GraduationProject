@@ -13,23 +13,9 @@ public enum MopPenguinStateEnum
 
 public class MopPenguin : Penguin
 {
-    public EntityStateMachine<MopPenguinStateEnum, Penguin> StateMachine { get; private set; }
-
     protected override void Awake()
     {
         base.Awake();
-
-        StateMachine = new EntityStateMachine<MopPenguinStateEnum, Penguin>();
-
-        foreach (MopPenguinStateEnum state in Enum.GetValues(typeof(MopPenguinStateEnum)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"Mop{typeName}State");
-            //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<MopPenguinStateEnum, Penguin>;
-
-            StateMachine.AddState(state, newState);
-        }
     }
 
     protected override void Start()
@@ -42,13 +28,13 @@ public class MopPenguin : Penguin
     }
     public override void StateInit()
     {
-        StateMachine.Init(MopPenguinStateEnum.Idle);
+        StateMachine.Init(PenguinStateType.Idle);
     }
 
     public override void OnPassiveAttackEvent()
     {
-        StateMachine.ChangeState(MopPenguinStateEnum.AoEAttack);
+        StateMachine.ChangeState(PenguinStateType.AoEAttack);
     }
 
-    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -38,28 +39,30 @@ public class Enemy : Entity
     public bool IsReachedNexus =>
                             Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
 
+    
     protected override void Awake()
     {
         base.Awake();
         NavAgent.speed = moveSpeed;
-
+            
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
     }
     private void OnEnable()
     {
-        SignalHub.OnIceArrivedEvent += SetTarget;
+        SignalHub.OnIceArrivedEvent += FindNearestTarget;
         NexusTarget = GameObject.Find("Nexus").transform;
     }
 
     private void OnDisable()
     {
-        SignalHub.OnIceArrivedEvent -= SetTarget;
+        SignalHub.OnIceArrivedEvent -= FindNearestTarget;
     }
 
-    public void SetTarget()
+    public void FindNearestTarget()
     {
-        CurrentTarget = FindNearestPenguin<Penguin>();
+        Debug.Log("Æë±Ï Ã£±â");
+        CurrentTarget = FindNearestTarget<Penguin>(TargetLayer);
     }
 
     protected override void HandleDie()
@@ -69,24 +72,9 @@ public class Enemy : Entity
 
     public virtual void AnimationTrigger()
     {
-
+        
     }
-
-    public T FindNearestPenguin<T>() where T : Penguin //OnProvoked boolï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-    {
-        var components = FindObjectsOfType<T>().Where(p => p.enabled);
-
-        var nearestObject = components
-            .OrderBy(obj => Vector3.Distance(obj.transform.position, transform.position))
-            .FirstOrDefault();
-
-        if (nearestObject != null)
-            return nearestObject;
-
-        return default;
-    }
-
-
+   
     public void MoveToNexus()
     {
         if (NavAgent != null)
@@ -122,7 +110,6 @@ public class Enemy : Entity
             }
         }
     }
-
     private void FriendlyPenguinDeadHandler()
     {
         WaveManager.Instance.CheckIsEndBattlePhase();

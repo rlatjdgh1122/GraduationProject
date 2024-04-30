@@ -17,22 +17,12 @@ public class EntityAttackData : MonoBehaviour
         DamageCasterCompo.SetOwner(owner);
     }
 
-    public virtual void AoEAttack(bool Knb,float value)
+    public virtual void AoEAttack(float knbValue, float stunValue)
     {
 
     }
 
-    public virtual void StunAttack(bool Stun, float value)
-    {
-
-    }
-
-    public virtual void AoEStunAttack(bool Stun, float value)
-    {
-
-    }
-
-    public virtual void MeleeAttack()
+    public virtual void MeleeAttack(float knbValue, float stunValue)
     {
 
     }

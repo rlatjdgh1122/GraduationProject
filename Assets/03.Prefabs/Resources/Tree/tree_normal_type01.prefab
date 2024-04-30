@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: d07a36bd508dc0e4db3f72a36f777bcb, type: 2}
+  _noiseValue: 10
   resourceType: 1
   _resourceData: {fileID: 11400000, guid: 69e8f6c1734148a48b9b5075f83f64c4, type: 2}
   _resourceStat: {fileID: 11400000, guid: d07a36bd508dc0e4db3f72a36f777bcb, type: 2}
@@ -165,6 +166,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
   OnUIUpdate:

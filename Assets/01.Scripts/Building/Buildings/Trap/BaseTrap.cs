@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public abstract class BaseTrap : BaseBuilding
@@ -15,14 +17,18 @@ public abstract class BaseTrap : BaseBuilding
 
     protected DamageCaster _damageCaster;
 
+    [Header("TrapValue")]
+    [SerializeField]
+    private float catchRange;
+
+    private float dissapearTime = 2f;
+
     protected override void Awake()
     {
         base.Awake();
         _damageCaster = GetComponent<DamageCaster>();
 
-
         isPlayed = false;                   //나중에 UI로 설치하느게 생기면 지워야함
-        StartCoroutine(RunningCoroutine()); //나중에 UI로 설치하느게 생기면 지워야함
     }
 
     protected override void SetInstalled()
@@ -30,44 +36,71 @@ public abstract class BaseTrap : BaseBuilding
         base.SetInstalled();
 
         isPlayed = false;
-        StartCoroutine(RunningCoroutine());
     }
 
     private (bool iscatched, RaycastHit _raycastHit, Enemy _catchedEnemy) GetCathedEnemy()
     {
-        bool catched = Physics.Raycast(transform.position, transform.up, out RaycastHit hit, 3f, _enemyLayer);
+        bool catched = Physics.SphereCast(transform.position + (Vector3.down * catchRange), catchRange, transform.up * 0.5f, out RaycastHit hit, 1f, _enemyLayer);
         if (catched)
         {
-            return (catched, hit, hit.collider.GetComponent<Enemy>());
+            if (hit.collider.TryGetComponent(out Enemy enemy))
+            {
+                return (catched, hit, enemy);
+            }
         }
         return (catched, default, null);
     }
 
-    protected override void Running() //코루틴으로 해서 암것도 안 함
+    protected override void Running()
     {
-
-    }
-
-    private IEnumerator RunningCoroutine()
-    {
-        while (true)
+        if (isRunning)
         {
-            if (isRunning)
-            {
-                var catchedInfo = GetCathedEnemy();
+            var catchedInfo = GetCathedEnemy();
 
-                if (catchedInfo._catchedEnemy != null)
-                {
-                    CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
-                    isPlayed = true;
-                    yield break;
-                }
+            if (catchedInfo._catchedEnemy != null)
+            {
+                CatchEnemy(catchedInfo._catchedEnemy, catchedInfo._raycastHit);
+                isPlayed = true;
             }
 
-            Debug.Log("실행중");
-            yield return null;
         }
     }
 
     protected abstract void CatchEnemy(Enemy enemy, RaycastHit raycastHit);
+
+    public virtual void RemoveTrap()
+    {
+        for (int i = 0; i < _meshRenderers.Length; i++)
+        {
+            StartCoroutine(ChangeToTransparentMatCorou(_meshRenderers[i].material));
+        }
+    }
+
+    private IEnumerator ChangeToTransparentMatCorou(Material material)
+    {
+        float current = 0;
+        float percent = 0;
+        while (percent < 1)
+        {
+            current += Time.deltaTime;
+            percent = current / dissapearTime;
+
+            float alpha = Mathf.Lerp(1f, 0f, percent);
+            material.color = new Color(0,0,0, alpha);
+
+            Debug.Log($"{material}: {alpha}");
+            Debug.Log($"Color {material.color}");
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        PoolManager.Instance.Push(this);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position + (Vector3.down * catchRange) + (transform.up * catchRange), catchRange);
+    }
 }

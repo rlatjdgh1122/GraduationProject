@@ -63,12 +63,12 @@ public class State
         //가장 가까운 타겟을 찾음
         if (!_penguin.TargetLock)
         {
-            _penguin.FindFirstNearestEnemy();
+            _penguin.FindNearestTarget();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindFirstNearestEnemy();
+                _penguin.FindNearestTarget();
         }
 
         _penguin.StartImmediately();
@@ -110,7 +110,7 @@ public class State
     {
         _penguin.AnimatorCompo.speed = 1;
         if (_penguin.CurrentTarget != null)
-            _penguin.CurrentTarget.HealthCompo.OnDiedEndEvent -= DeadTarget;
+            _penguin.CurrentTarget.HealthCompo.OnDied -= DeadTarget;
     }
     #endregion
 
@@ -141,7 +141,7 @@ public class State
     {
         var prevTarget = _penguin.CurrentTarget;
 
-        _penguin.FindFirstNearestEnemy();
+        _penguin.FindNearestTarget();
 
         if (prevTarget != null)
         {
@@ -154,7 +154,7 @@ public class State
     }
     protected void FindTarget()
     {
-        _penguin.FindFirstNearestEnemy();
+        _penguin.FindNearestTarget();
     }
 
     public virtual void EnterState()

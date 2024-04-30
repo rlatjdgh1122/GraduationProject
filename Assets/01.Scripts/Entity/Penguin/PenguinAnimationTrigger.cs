@@ -1,4 +1,4 @@
-using System.Security.Cryptography.X509Certificates;
+Ôªøusing System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -40,9 +40,9 @@ public class PenguinAnimationTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// ∏Ó πË ∏∏≈≠ ¥ıΩÍ∞‘ ∞¯∞›
+    /// Î™á Î∞∞ ÎßåÌÅº ÎçîÏéÑÍ≤å Í≥µÍ≤©
     /// </summary>
-    /// <param name="AfewTimes"> Ω∫≈»¿« ∏Ó πË</param>
+    /// <param name="AfewTimes"> Ïä§ÌÉØÏùò Î™á Î∞∞</param>
     public void SpecialAttackTrigger(float AfewTimes)
     {
         _penguin.AttackCompo?.SpecialAttack(AfewTimes);
@@ -50,30 +50,46 @@ public class PenguinAnimationTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// ±§ø™ ∞¯∞›
+    /// Í¥ëÏó≠ Í≥µÍ≤©
     /// </summary>
-    public void AoEAttackTrigger(int isKnb)
+    public void AoEAttackTrigger(string parmeter = "0 0")
     {
-        _penguin.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 150f);
         OnAoEAttackTriggerEvent?.Invoke();
+
+        var value = parmeter.Split(' ');
+        try
+        {
+            float.TryParse(value[0], out float knbValue);
+            float.TryParse(value[1], out float stunValue);
+
+            //Debug.Log($"{knbValue} {stunValue}");
+            _penguin.AttackCompo.AoEAttack(knbValue, stunValue);
+        }
+        catch
+        {
+            Debug.LogError($"Put values ‚Äã‚Äãfor the parameters. target : {transform.parent.name}, AoEAttackTrigger");
+        }
+
     }
 
-    public void AttackTrigger()
+    public void AttackTrigger(string parmeter = "0 0")
     {
-        _penguin.AttackCompo.MeleeAttack();
         OnAttackTriggerEvent?.Invoke();
-    }
 
-    public void StunTrigger(float value)
-    {
-        _penguin.AttackCompo.StunAttack(true, value);
-        OnStunTriggerEvent?.Invoke();
-    }
+        var value = parmeter.Split(' ');
+        try
+        {
+            float.TryParse(value[0], out float knbValue);
+            float.TryParse(value[1], out float stunValue);
 
-    public void AoEStunTrigger(int isStun)
-    {
-        _penguin.AttackCompo.AoEStunAttack(isStun == 0 ? false : true, 3f);
-        //OnStunTriggerEvent?.Invoke();
+            //Debug.Log($"{knbValue} {stunValue}");
+            _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
+        }
+        catch
+        {
+            Debug.LogError($"Put values ‚Äã‚Äãfor the parameters. target : {transform.parent.name}, AttackTrigger");
+        }
+
     }
 
     public void DashAttackTrigger()
