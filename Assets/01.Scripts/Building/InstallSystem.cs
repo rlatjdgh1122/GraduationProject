@@ -102,7 +102,7 @@ public class InstallSystem : MonoBehaviour
 
     private void PlaceStructure()
     {
-        if (Physics.Raycast(_mousePointRay, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        if (Physics.Raycast(_mousePointRay, Mathf.Infinity, _groundLayer))
         {
             if (_previousGround.IsInstalledBuilding &&
                 _curBuilding.BuildingItemInfoCompo.BuildingTypeEnum != BuildingType.Trap)
