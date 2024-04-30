@@ -175,7 +175,7 @@ public class Penguin : Entity
 
     public void FindNearestEnemy()
     {
-        CurrentTarget = FindNearestTarget<Target>(TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(TargetLayer);
     }
 
     public virtual void LookTarget()

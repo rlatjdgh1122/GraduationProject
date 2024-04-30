@@ -57,7 +57,7 @@ public class Enemy : Entity
 
     public void FindNearestPenguin()
     {
-        CurrentTarget = FindNearestTarget<Target>(TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(TargetLayer);
     }
 
     protected override void HandleDie()

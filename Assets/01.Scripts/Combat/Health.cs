@@ -104,6 +104,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
             if (!knockbackF.PlayFeedback())
             {
                 feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.WaterFall);
+                Dead();
             }
         }
     }
