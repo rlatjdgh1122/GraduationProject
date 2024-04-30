@@ -16,13 +16,13 @@ public class ShieldGeneralPenguin : General
 
         foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
         {
-            IState stateScript = stateTrm.GetComponent($"Penguin{state}State") as IState;
-            if (stateScript == null)
-            {
-                Debug.LogError($"There is no script : {state}");
-                return;
-            }
-            stateScript.SetUp(this, TestStateMachine, state.ToString());
+            //IState stateScript = stateTrm.GetComponent($"Penguin{state}State") as IState;
+            //if (stateScript == null)
+            //{
+            //    Debug.LogError($"There is no script : {state}");
+            //    return;
+            //}
+            //stateScript.SetUp(this, TestStateMachine, state.ToString());
             //TestStateMachine.AddState(state, stateScript);
         }
     }
