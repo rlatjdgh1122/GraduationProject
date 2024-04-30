@@ -27,8 +27,8 @@ public class MortarBuilding : DefenseBuilding
     private float chargingMoveValue = -1f;
     private float fireMoveValue = 1f;
 
-    private Vector3 _originScale = Vector3.one;
-    private Vector3 _chargingScale = new Vector3(1.2f, 1.0f, 1.2f);
+    private Vector3 _originScale;
+    private Vector3 _chargingScale => _originScale + new Vector3(0.005f, 0.005f, 0.0f);
 
     private bool isBattlePhase => WaveManager.Instance.IsBattlePhase;
 
@@ -40,12 +40,13 @@ public class MortarBuilding : DefenseBuilding
         _burningRope = transform.Find("Rope").GetComponent<BurningRope>();
 
         _cannonTransform = transform.Find("Visual/Cannon").transform;
+        _originScale = _cannonTransform.localScale;
     }
 
 
     protected override void Running()
     {
-        if (isBattlePhase) // 이것을 Running으로 옮길 것 입니다.
+        if (isBattlePhase)
         {
             if (_currentTarget != null && !isFired)
             {

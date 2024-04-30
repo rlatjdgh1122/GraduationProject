@@ -1,49 +1,53 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public enum SignalTowerPenguinStateEnum
+public class SignalTowerPenguin : MonoBehaviour
 {
-    Idle,
-    Watch,
-    Dead
-}
+    [SerializeField] private GameObject _findEnemyParticle;
+    [SerializeField] private GameObject Target;
 
-public class SignalTowerPenguin : Penguin
-{
-    public EntityStateMachine<SignalTowerPenguinStateEnum, Penguin> StateMachine {  get; private set; }
+    private Animator _anim;
+    private int _stageCount = 0;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
-        StateMachine = new EntityStateMachine<SignalTowerPenguinStateEnum, Penguin>();
-
-        foreach (SignalTowerPenguinStateEnum state in Enum.GetValues(typeof(SignalTowerPenguinStateEnum)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"SignalTower{typeName}State");
-            //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<SignalTowerPenguinStateEnum, Penguin>;
-
-            StateMachine.AddState(state, newState);
-        }
-    }
-    protected override void Start()
-    {
-        StateMachine.Init(SignalTowerPenguinStateEnum.Idle);
+        _anim = GetComponentInChildren<Animator>();
     }
 
-    protected override void Update()
+    private void OnEnable()
     {
-        StateMachine.CurrentState.UpdateState();
+        SignalHub.OnBattlePhaseStartEvent += WatchAni;
+        SignalHub.OnBattlePhaseEndEvent += IdleAni;
     }
 
-    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-
-    protected override void HandleDie()
+    private void WatchAni()
     {
+        _anim.SetBool("Idle", false);
+        _anim.SetBool("Watch", true);
+        _findEnemyParticle.SetActive(true);
+        LookTarget();
+    }
 
+    private void IdleAni()
+    {
+        _anim.SetBool("Idle", true);
+        _anim.SetBool("Watch", false);
+        _findEnemyParticle.SetActive(false);
+    }
+    private void LookTarget()
+    {
+        Vector3 target = Target.transform.position - transform.position;
+
+        Quaternion targetRotation = Quaternion.LookRotation(target);
+
+        transform.rotation = targetRotation;
+    }
+
+    public void AnimationEndTrigger()
+    {
+        _anim.SetBool("Watch", false);
+        _anim.SetBool("Idle", true);
     }
 }

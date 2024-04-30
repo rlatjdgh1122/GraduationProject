@@ -89,6 +89,7 @@ public abstract class BaseTrap : BaseBuilding
             material.color = new Color(0,0,0, alpha);
 
             Debug.Log($"{material}: {alpha}");
+            Debug.Log($"Color {material.color}");
 
             yield return new WaitForEndOfFrame();
         }
