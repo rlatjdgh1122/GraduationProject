@@ -19,8 +19,6 @@ public class EnemyGorillaProvokedState : EnemyGorillaBaseState
     {
         base.UpdateState();
 
-        _enemy.OnProvokedEvent?.Invoke();
-
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();
         else

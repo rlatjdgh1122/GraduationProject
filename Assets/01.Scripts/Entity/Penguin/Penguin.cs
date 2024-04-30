@@ -173,10 +173,10 @@ public class Penguin : Entity
 
     }
 
-    public void FindNearestTarget()
+    public void FindNearestEnemy()
     {
-        Debug.Log("적 찾기");
-        CurrentTarget = FindNearestTarget<Enemy>(TargetLayer);
+        Debug.Log(1 << TargetLayer);
+        CurrentTarget = FindNearestTarget<Target>(TargetLayer);
     }
 
     public virtual void LookTarget()
