@@ -287,29 +287,26 @@ public class DamageCaster : MonoBehaviour
 
     #region BuildingDamageCast
 
-    public bool CastBuildingAoEDamage(Vector3 position, LayerMask targetLayer, int damage) // 건물은 Entity 상속 안 받아서 매개변수로 데미지 받음
+    public void CastBuildingAoEDamage(Vector3 position, LayerMask targetLayer, int damage) // 건물은 Entity 상속 안 받아서 매개변수로 데미지 받음
     {
-        bool isHit = false;
-        Collider[] colliders = Physics.OverlapSphere(position, _detectRange * 3, targetLayer);
+        RaycastHit[] hits = Physics.SphereCastAll(position, _detectRange * 3, Vector3.forward, Mathf.Infinity, targetLayer);
 
-        foreach (Collider collider in colliders)
+        foreach (RaycastHit hit in hits)
         {
-            IDamageable damageable = collider.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
-                isHit = true;
-            }
+            //IDamageable damageable = collider.GetComponent<IDamageable>();
+            //if (damageable != null)
+            //{
+            //    damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
+            //    isHit = true;
+            //}
 
-            if (collider.TryGetComponent(out Health health))
+            if (hit.collider.TryGetComponent(out Health health))
             {
-                health.ApplyDamage(damage, position, collider.transform.position, _hitType, false);
+                health.ApplyDamage(damage, hit.point, hit.normal, _hitType, false);
 
-                health.KnockBack(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
+                health.KnockBack(0.05f, hit.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
             }
         }
-
-        return isHit;
     }
 
     public void CastBuildingStunDamage(Health enemyHealth, RaycastHit hit, float duration, int damage)
