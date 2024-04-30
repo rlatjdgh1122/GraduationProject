@@ -12,11 +12,17 @@ public class DamageCaster : MonoBehaviour
     public LayerMask TargetLayer;
 
     private Entity _owner;
-    private General _general => _owner as General;
+    private General General => _owner as General;
 
     public void SetOwner(Entity owner)
     {
         _owner = owner;
+        SetPosition();
+    }
+
+    public void SetPosition()
+    {
+        transform.position = new Vector3(_owner.transform.position.x, 2f, _owner.transform.position.z);
     }
 
     /// <summary>
@@ -143,14 +149,14 @@ public class DamageCaster : MonoBehaviour
                     {
                         health.ApplyHitType(HitType.DashHit);
                         health.OnDashDeathEvent?.Invoke();
-                        _general.skill.CanUseSkill = true;
+                        General.skill.CanUseSkill = true;
                         _hitType = HitType.KatanaHit;
                         return;
                     }
                 }
                 else
                 {
-                    _general.skill.CanUseSkill = false;
+                    General.skill.CanUseSkill = false;
                     int damage = _owner.Stat.damage.GetValue() * 2;
                     health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
                 }
@@ -223,7 +229,6 @@ public class DamageCaster : MonoBehaviour
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
                 health.Knockback(knbValue);
                 health.Stun(stunValue);
-
             }
         }
     }
