@@ -43,11 +43,12 @@ public class Enemy : Entity
 
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
+
     }
     private void OnEnable()
     {
         SignalHub.OnIceArrivedEvent += FindNearestPenguin;
-        NexusTarget = GameObject.Find("Nexus").transform;
+        NexusTarget ??= GameManager.Instance.NexusTrm;
     }
 
     private void OnDisable()

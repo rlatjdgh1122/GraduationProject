@@ -994,7 +994,7 @@ GameObject:
   - component: {fileID: 3269615323076441166}
   - component: {fileID: -2927568241276885064}
   m_Layer: 12
-  m_Name: EnemyMeleePenguin
+  m_Name: EnemyBasicPenguin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2073,7 +2073,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6355041949799411607}
   - component: {fileID: 109833600341600561}
-  - component: {fileID: 684573733115026910}
+  - component: {fileID: 4216240844758678191}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -2119,7 +2119,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &684573733115026910
+--- !u!114 &4216240844758678191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8619062186414335046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f41c3fa95d8d5a44ac80358b7ca68ad, type: 3}
+  m_Script: {fileID: 11500000, guid: a19ec9b25afd0cb4f9ac66bf27411a18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnPrevAttackEffectEvent:
@@ -2137,10 +2137,7 @@ MonoBehaviour:
   OnEndAttackEffectEvent:
     m_PersistentCalls:
       m_Calls: []
-  OnSpecialAttackTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAttackTriggerEvent:
+  OnAttackSoundEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1414566827939341791}
@@ -2155,30 +2152,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnAoEAttackTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStunTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnRangeAttackTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeadCompleteTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAnimationEndTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDashEndTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEffectOnTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEffectOffTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &8885627956174701333
 GameObject:
   m_ObjectHideFlags: 0
