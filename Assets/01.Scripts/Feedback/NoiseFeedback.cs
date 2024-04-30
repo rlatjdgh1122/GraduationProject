@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class NoiseFeedback : Feedback
 {
-    private NoiseManager _noiseManager;
+    [SerializeField]
+    private LayerMask _noiseLayer;
 
-    protected override void Start()
-    {
-        base.Start();
-        _noiseManager = NoiseManager.Instance;
-    }
+    [SerializeField]
+    private float _detectRange;
 
     public override void CreateFeedback()
     {
-        _noiseManager.IncreaseNoise(20f);
+        var Colls = Physics.OverlapSphere(transform.position, _detectRange, _noiseLayer);
+
+        foreach (var col in Colls)
+        {
+            if(col.TryGetComponent<WorkableObject>(out WorkableObject obj))
+            {
+                NoiseManager.Instance.IncreaseNoise(obj.NoiseValue);
+            }
+        }
     }
 
     public override void FinishFeedback()

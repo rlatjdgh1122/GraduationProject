@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class WorkerPenguinAnimationTrigger : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnSoundEvent = null;
+    [SerializeField] private UnityEvent OnWorkEvent = null;
 
     private Worker _worker;
 
@@ -17,7 +17,7 @@ public class WorkerPenguinAnimationTrigger : MonoBehaviour
     private void WorkTrigger()
     {
         _worker.AnimationTrigger();
-        OnSoundEvent?.Invoke();
+        OnWorkEvent?.Invoke();
         _worker.DamageCasterCompo.CastOverlap();
     }
 }
