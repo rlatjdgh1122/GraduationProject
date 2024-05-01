@@ -13,6 +13,8 @@ public class NoiseManager : Singleton<NoiseManager>
     private float _currentNoise = 0f;
     public float CurrentNoise => _currentNoise; //Current Noise
 
+    public float NoisePercent => _currentNoise / _maxNosise;
+
     public Action NoiseLimitExceedEvent = null;
     public Action NoiseIncreaseEvent = null;
 
