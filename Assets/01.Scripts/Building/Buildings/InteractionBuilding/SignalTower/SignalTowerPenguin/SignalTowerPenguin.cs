@@ -9,7 +9,7 @@ public class SignalTowerPenguin : MonoBehaviour
     //[SerializeField] public GameObject Target;
     public List<GameObject> Target = new List<GameObject>();
     
-    public int targetCnt = 1;
+    public int _targetCnt = 1;
 
     private Animator _anim;
 
@@ -30,7 +30,7 @@ public class SignalTowerPenguin : MonoBehaviour
         _anim.SetBool("Watch", true);
         _findEnemyParticle.SetActive(true);
         LookTarget();
-        targetCnt++;
+        _targetCnt++;
     }
 
     private void IdleAni()
@@ -41,7 +41,7 @@ public class SignalTowerPenguin : MonoBehaviour
     }
     private void LookTarget()
     {
-        Vector3 target = Target[targetCnt].transform.position - transform.position;
+        Vector3 target = Target[_targetCnt].transform.position - transform.position;
 
         Quaternion targetRotation = Quaternion.LookRotation(target);
 
