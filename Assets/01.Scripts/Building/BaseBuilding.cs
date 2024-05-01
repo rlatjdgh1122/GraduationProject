@@ -76,6 +76,8 @@ public abstract class BaseBuilding : WorkableObject
 
     protected override void Awake()
     {
+        base.Awake();
+
         try
         {
             _buildingItemInfo= _buildingDatabaseSO.BuildingItems.Find(idx => idx.ID == BuildingInfoCompo.ID);

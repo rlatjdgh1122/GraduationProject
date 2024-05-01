@@ -27,11 +27,11 @@ public class Enemy : Entity
     public bool IsProvoked = false;
 
     public bool IsTargetPlayerInsideWhenNexus => CurrentTarget != null &&
-                           Vector3.Distance(transform.position, CurrentTarget.transform.position) <= 500;
+                           Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= 500;
     public bool IsTargetPlayerInside => CurrentTarget != null &&
-                            Vector3.Distance(transform.position, CurrentTarget.transform.position) <= innerDistance;
+                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= innerDistance;
     public bool CanAttack => CurrentTarget != null &&
-                            Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
+                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= attackDistance;
     public bool IsReachedNexus =>
                             Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
 

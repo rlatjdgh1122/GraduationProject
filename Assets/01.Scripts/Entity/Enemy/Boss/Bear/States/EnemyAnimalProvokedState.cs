@@ -23,8 +23,6 @@ public class EnemyAnimalProvokedState : EnemyAnimalBaseState
 
         if (_enemy.CanAttack)
             _stateMachine.ChangeState(EnemyPenguinStateEnum.Attack); //공격 사거리 내에 들어왔다 -> Attack
-        else
-            _stateMachine.ChangeState(EnemyPenguinStateEnum.Provoked); //공격 사거리 밖이면 계속 쉴드한테만 따라가
     }
 
     public override void Exit()

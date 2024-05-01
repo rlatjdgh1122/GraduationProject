@@ -60,10 +60,12 @@ public class PenguinAttackState : State
     public override void AnimationTrigger()
     {
         base.AnimationTrigger();
-         
+
         if (_penguin.CheckAttackPassive(++curAttackCount))
         {
             _penguin?.OnPassiveAttackEvent();
+
+            curAttackCount = 0;
         }
     }
 }
