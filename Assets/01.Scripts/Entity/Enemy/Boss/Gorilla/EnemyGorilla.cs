@@ -20,16 +20,13 @@ public class EnemyGorilla : Enemy
     [SerializeField] private int _vigilanceMaxLevel = 5;
     public EnemyStateMachine<EnemyGorillaStateEnum> StateMachine { get; private set; }
 
-    private GorillaVigilance _gorillaVigilance;
-    public GorillaVigilance GorillaVigilance => _gorillaVigilance;
+    public Skill VigilanceSkill { get; private set; }
 
     private int _currentLevel = 0; 
 
     protected override void Awake()
     {
         base.Awake();
-
-        _gorillaVigilance = GetComponent<GorillaVigilance>();
 
         StateMachine = new EnemyStateMachine<EnemyGorillaStateEnum>();
 
@@ -41,12 +38,13 @@ public class EnemyGorilla : Enemy
             var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyGorillaStateEnum>;
             StateMachine.AddState(state, newState);
         }
+
+        VigilanceSkill = transform.Find("SkillManager").GetComponent<Skill>();
+        VigilanceSkill.SetOwner(this);
     }
 
     protected override void Start()
     {
-        _gorillaVigilance.SetTarget(this);
-
         StateMachine.Init(EnemyGorillaStateEnum.Idle);
     }
 

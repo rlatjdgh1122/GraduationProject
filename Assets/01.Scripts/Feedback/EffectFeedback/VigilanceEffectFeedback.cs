@@ -2,10 +2,6 @@ using UnityEngine;
 
 public class VigilanceEffectFeedback : EffectFeedback
 {
-    protected override void LoadEffect(string name)
-    {
-        base.LoadEffect("VigilanceEffect");
-    }
 
     public override void Awake()
     {
@@ -19,13 +15,12 @@ public class VigilanceEffectFeedback : EffectFeedback
 
     public override bool StartFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(_effect.ToString()) as EffectPlayer;
+        EffectPlayer effect = PoolManager.Instance.Pop($"VigilanceEffect") as EffectPlayer;
         if (effect != null)
         {
-            effect.transform.position = gameObject.transform.position;
-            effect.transform.rotation = gameObject.transform.rotation;
-            effect.transform.localScale = 
-                new Vector3(effect.transform.localScale.x + 0.1f, effect.transform.localScale.y + 0.1f, effect.transform.localScale.z + 0.1f);
+            effect.transform.position = ownerTrm.position;
+            effect.transform.rotation = ownerTrm.rotation;
+            effect.transform.localScale = ownerTrm.lossyScale;
             effect.StartPlay(_effectEndTime);
 
             return true;

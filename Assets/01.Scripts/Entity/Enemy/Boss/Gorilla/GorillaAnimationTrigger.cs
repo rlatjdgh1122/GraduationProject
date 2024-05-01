@@ -8,6 +8,6 @@ public class GorillaAnimationTrigger : EnemyAnimationTrigger
 
     private void VigilanceTrigger()
     {
-        Gorilla.GorillaVigilance.OnVigilance();
+        Gorilla.VigilanceSkill.PlaySkill();
     }
 }

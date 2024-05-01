@@ -1,11 +1,7 @@
 public class EnemyGorillaChestHitState : EnemyGorillaBaseState
 {
-    private Skill skill;
-
     public EnemyGorillaChestHitState(Enemy enemyBase, EnemyStateMachine<EnemyGorillaStateEnum> stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
-        skill = enemyBase.transform.Find("SkillManager").GetComponent<Skill>();
-        skill.SetOwner(_enemy);
     }
 
     public override void Enter()
@@ -13,7 +9,6 @@ public class EnemyGorillaChestHitState : EnemyGorillaBaseState
         base.Enter();
 
         _enemy.StopImmediately();
-        skill.PlaySkill();
         _triggerCalled = false;
     }
 
