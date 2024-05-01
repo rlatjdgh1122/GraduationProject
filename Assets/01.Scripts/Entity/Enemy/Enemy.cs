@@ -21,7 +21,7 @@ public class Enemy : Entity
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
     #endregion
-    public Transform NexusTarget;
+    public Transform NexusTarget = null;
 
     public bool IsMove = false;
     public bool IsProvoked = false;
@@ -48,7 +48,7 @@ public class Enemy : Entity
     private void OnEnable()
     {
         SignalHub.OnIceArrivedEvent += FindNearestPenguin;
-        NexusTarget ??= GameManager.Instance.NexusTrm;
+        NexusTarget = GameManager.Instance.NexusTrm;
     }
 
     private void OnDisable()
