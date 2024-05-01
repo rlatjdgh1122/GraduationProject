@@ -274,9 +274,9 @@ public class DamageCaster : MonoBehaviour
     {
         if (UnityEditor.Selection.activeObject == gameObject)
         {
-            //Gizmos.color = Color.red;
-            //Gizmos.DrawWireSphere(transform.position, _detectRange);
-            //Gizmos.color = Color.white;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _detectRange);
+            Gizmos.color = Color.white;
 
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.forward);

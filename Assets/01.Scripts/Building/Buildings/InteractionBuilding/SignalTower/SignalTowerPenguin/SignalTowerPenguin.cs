@@ -6,7 +6,7 @@ using UnityEngine;
 public class SignalTowerPenguin : MonoBehaviour
 {
     [SerializeField] private GameObject _findEnemyParticle;
-    [SerializeField] private GameObject Target;
+    [SerializeField] public GameObject Target;
 
     private Animator _anim;
     private int _stageCount = 0;

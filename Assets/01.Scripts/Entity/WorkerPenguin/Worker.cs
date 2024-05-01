@@ -6,9 +6,7 @@ using UnityEngine.AI;
 public class Worker : Entity
 {
     #region components
-    public WorkableObject Target;
     public EntityAttackData AttackCompo { get; private set; }
-    public DamageCaster DamageCasterCompo { get; private set; }
     public Transform WorkerHomeTrm;
     #endregion
 
@@ -35,12 +33,12 @@ public class Worker : Entity
     #region 이동 관련
     public void MoveToTarget()
     {
-        NavAgent.SetDestination(Target.transform.position);
+        NavAgent.SetDestination(CurrentTarget.transform.position);
     }
 
     public float CheckDistance()
     {
-        Collider targetCollider = Target.gameObject.GetComponent<Collider>();
+        Collider targetCollider = CurrentTarget.gameObject.GetComponent<Collider>();
         Vector3 workerPosition = transform.position;
         return Vector3.Distance(workerPosition, targetCollider.ClosestPoint(workerPosition));
     }
@@ -71,7 +69,7 @@ public class Worker : Entity
     #region 작업 관련
     public void StartWork(WorkableObject target)
     {
-        Target = target;
+        CurrentTarget = target;
         CanWork = true;
     }
 
@@ -84,7 +82,7 @@ public class Worker : Entity
 
     public void LookTaget()
     {
-        Vector3 directionToTarget = Target.transform.position - transform.position;
+        Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
