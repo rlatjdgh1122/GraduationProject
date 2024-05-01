@@ -6,6 +6,7 @@ public class VigilanceSkill : Skill
 {
     [SerializeField] private float _sizeUpValue = 0.5f;
     [SerializeField] private float _sizeUpDuration = 0.5f;
+    [SerializeField] private int _sizeUpDamage = 15;
     //private Vector3 _defaultSize = Vector3.one;
 
     private EnemyGorilla Gorilla => _owner as EnemyGorilla;
@@ -26,9 +27,9 @@ public class VigilanceSkill : Skill
         Gorilla.DamageCasterCompo.SetPosition();
         OnVigilanceEvent?.Invoke();
         Gorilla.DamageCasterCompo.SetPosition();
+        Gorilla.Stat.AddStat(_sizeUpDamage, StatType.Damage, StatMode.Increase);
+        //Gorilla.AttackCompo.AoEAttack(0, 0.5f, 5f);
         Vector3 targetSize = (Gorilla.transform.localScale) * _sizeUpValue;
         Gorilla.transform.DOScale(targetSize, _sizeUpDuration);
-        //Vector3 targetSize = (_owner.transform.localScale) * _sizeUpValue;
-        //_owner.transform.DOScale(targetSize, _sizeUpDuration);
     }
 }

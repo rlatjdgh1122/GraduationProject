@@ -21,7 +21,8 @@ public class BearAttackableEntity : AnimalAttackableEntity
             _leftHandEffectTransform.Play();
         }
     }
-    public override void AoEAttack(float knbValue, float stunValue)
+
+    public override void AoEAttack(float knbValue, float stunValue, float range = 0)
     {
         // 현재 체력을 비율로 계산
         //체력 정규화

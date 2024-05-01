@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BingaPositionUI : MonoBehaviour
 {
     private Transform _bingaPos;
     private SignalTowerPenguin _penguin;
     private Image _bingaimage;
+    private Image _bingaimage2;
 
     private void Awake()
     {
         _penguin = GameObject.FindObjectOfType<SignalTowerPenguin>();
         _bingaimage = transform.GetChild(0).GetComponent<Image>();
+        _bingaimage2 = transform.GetChild(1).GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -23,14 +26,22 @@ public class BingaPositionUI : MonoBehaviour
 
     private void BattleStart()
     {
-        _bingaimage.gameObject.SetActive(true);
-        StartCoroutine(ActiveTrue());
+        StartCoroutine(FadeIn());
     }
 
-    IEnumerator ActiveTrue()
+    IEnumerator FadeIn()
     {
-        yield return new WaitForSeconds(5f);
-        _bingaimage.gameObject.SetActive(false);
+        _bingaimage.DOFade(1f, 2f);
+        _bingaimage2.DOFade(1f, 2f);
+        yield return new WaitForSeconds(4f);
+        StartCoroutine(FadeOut());
+    }
+
+    IEnumerator FadeOut()
+    {
+        _bingaimage.DOFade(0f, 2f);
+        _bingaimage2.DOFade(0f, 2f);
+        yield return new WaitForSeconds(2f);
     }
 
     private Vector3 _bingaScreenPos
@@ -40,7 +51,7 @@ public class BingaPositionUI : MonoBehaviour
             if (_bingaPos == null)
             {
                 // SignalPenguin이 탐지한 빙하의 위치를 가져옴
-                _bingaPos = _penguin.Target.transform;
+                _bingaPos = _penguin.Target[_penguin._targetCnt].transform;
             }
 
             // 빙하의 위치를 화면 좌표로 변환
@@ -54,7 +65,8 @@ public class BingaPositionUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        //UI상에 빙하 위치 설정
+        //빙하 UI를 빙하위치로 설정
         _bingaimage.gameObject.rectTransform().position = _bingaScreenPos;
+        _bingaimage2.gameObject.rectTransform().position = _bingaScreenPos;
     }
 }

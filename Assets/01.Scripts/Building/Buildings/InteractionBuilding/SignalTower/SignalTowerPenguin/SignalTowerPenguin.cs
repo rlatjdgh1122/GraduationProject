@@ -6,10 +6,12 @@ using UnityEngine;
 public class SignalTowerPenguin : MonoBehaviour
 {
     [SerializeField] private GameObject _findEnemyParticle;
-    [SerializeField] public GameObject Target;
+    //[SerializeField] public GameObject Target;
+    public List<GameObject> Target = new List<GameObject>();
+    
+    public int _targetCnt = 1;
 
     private Animator _anim;
-    private int _stageCount = 0;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class SignalTowerPenguin : MonoBehaviour
         _anim.SetBool("Watch", true);
         _findEnemyParticle.SetActive(true);
         LookTarget();
+        _targetCnt++;
     }
 
     private void IdleAni()
@@ -38,7 +41,7 @@ public class SignalTowerPenguin : MonoBehaviour
     }
     private void LookTarget()
     {
-        Vector3 target = Target.transform.position - transform.position;
+        Vector3 target = Target[_targetCnt].transform.position - transform.position;
 
         Quaternion targetRotation = Quaternion.LookRotation(target);
 
