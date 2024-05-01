@@ -61,7 +61,10 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         curground.SetGroundInfo(roataeVec);
         curground.transform.SetParent(transform);
+        curground.transform.localPosition = new Vector3(0f, 0f, 10f);
+
         transform.Rotate(Vector3.up * GetCurAngleBetweenGlacier());
+        curground.transform.SetParent(null);
     }
 
 

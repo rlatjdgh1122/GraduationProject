@@ -32,12 +32,12 @@ public class GroundMove : MonoBehaviour
         _enemies = GetComponentsInChildren<Enemy>();
 
         _waveEffect = transform.Find("WaterWave").gameObject;
+        _moveDir = transform.parent.localPosition;
     }
 
     private void Start()
     {
         //_surface.enabled = false;
-        _moveDir = transform.parent.localPosition;
 
         foreach (Enemy enemy in _enemies)
         {
