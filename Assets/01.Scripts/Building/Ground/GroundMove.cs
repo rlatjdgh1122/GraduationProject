@@ -14,8 +14,8 @@ public class GroundMove : MonoBehaviour
     [SerializeField] private Color endColor;
 
     #region 프로퍼티
-    private NavMeshSurface _parentSurface;
-    private NavMeshSurface _surface;
+    //private NavMeshSurface _parentSurface;
+    //private NavMeshSurface _surface;
     private Outline _outline;
     #endregion
 
@@ -25,8 +25,8 @@ public class GroundMove : MonoBehaviour
 
     private void Awake()
     {
-        _parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
-        _surface = transform.parent.GetComponent<NavMeshSurface>();
+        //_parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
+        //_surface = transform.parent.GetComponent<NavMeshSurface>();
         _outline = GetComponent<Outline>();
 
         _enemies = GetComponentsInChildren<Enemy>();
@@ -36,7 +36,7 @@ public class GroundMove : MonoBehaviour
 
     private void Start()
     {
-        _surface.enabled = false;
+        //_surface.enabled = false;
         _moveDir = transform.parent.localPosition;
 
         foreach (Enemy enemy in _enemies)
@@ -53,7 +53,7 @@ public class GroundMove : MonoBehaviour
 
     private void GroundMoveHandle()
     {
-        if (WaveManager.Instance.CurrentWaveCount == _enableStage)
+        if (WaveManager.Instance.CurrentWaveCount == _enableStage) // 나중에 랜덤으로 바꾸면 걍 없애기 
         {
             foreach (Enemy enemy in _enemies)
             {
@@ -67,9 +67,9 @@ public class GroundMove : MonoBehaviour
                 OnComplete(() =>
                 {
                     SoundManager.Play2DSound(SoundName.GroundHit);
-                    _surface.enabled = true;
-                    _surface.transform.SetParent(_parentSurface.transform);
-                    _parentSurface.BuildNavMesh();
+                    //_surface.enabled = true;
+                    //_surface.transform.SetParent(_parentSurface.transform);
+                    //_parentSurface.BuildNavMesh();
 
                     // 부딪힐 때 이펙트 / 카메라 쉐이크 + 사운드
                     CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
@@ -92,6 +92,8 @@ public class GroundMove : MonoBehaviour
                     });
                 });
         }
+
+        
     }
 
     private void SetOutline()
@@ -114,5 +116,11 @@ public class GroundMove : MonoBehaviour
         }
 
         SignalHub.OnBattlePhaseEndEvent -= DisableDeadBodys;
+    }
+
+    public void SetGroundInfo(Vector3 rotation)
+    {
+        //여기다가 적이나 보상 같은 것 설정
+        _enableStage = WaveManager.Instance.CurrentWaveCount; // 나중에 랜덤으로 바꾸면 걍 없애기 
     }
 }
