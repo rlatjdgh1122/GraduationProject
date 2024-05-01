@@ -37,11 +37,10 @@ public class RandomGlacierGenerator : MonoBehaviour
         for(int i = 0; i < 50; i++)
         {
             GroundMove ground = Instantiate(_glacierPrefab, transform.position, Quaternion.identity)
-                .transform.Find("TopArea").Find("GlacierModel").GetComponent<GroundMove>(); // 반드시 바꿀 것
+                .transform.Find("TopArea").Find("GlacierModel").GetComponent<GroundMove>();
             _allGrounds.Enqueue(ground);
             ground.gameObject.SetActive(false);
         }
-        Debug.Log(_allGrounds.Count);
     }
 
     private void AddGlacierToCurHexagon()
@@ -55,10 +54,10 @@ public class RandomGlacierGenerator : MonoBehaviour
             _curHexagon_Grounds.Enqueue(ground);
         }
 
-        var array = _rotateValues.ToArray();
-        System.Random rnd = new System.Random();
-        array = array.OrderBy(x => rnd.Next()).ToArray();
-        _rotateValues = new Queue<float>(array);
+        var array = _rotateValues.ToArray();                // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
+        System.Random rnd = new System.Random();            // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
+        array = array.OrderBy(x => rnd.Next()).ToArray();   // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
+        _rotateValues = new Queue<float>(array);            // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
     }
 
     private void GlacierSetPos()
@@ -72,7 +71,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         curground.SetGroundInfo(roataeVec);
         curground.transform.SetParent(transform);
-        curground.transform.localPosition = new Vector3(0f, 0f, 10f);
+        curground.transform.localPosition = new Vector3(0f, 0f, 10f * (makedHexagonCount + 1)); // 일단은 만든 육각형 비례해서 멀리서 나오도록
 
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
@@ -85,14 +84,14 @@ public class RandomGlacierGenerator : MonoBehaviour
     private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
     {
         if (makedHexagonCount == 0) { return 60; } // 근데 처음에는 3개 깔린 상태로 시작하니까 60 반환
-        return 360 / _curHexagon_Grounds.Count;
+        return 360 / GetCurHexagonGroundsGoalCount();
     }
 
     
     private int GetCurHexagonGroundsGoalCount()  // 지금 만들 육각형에 필요한 빙하의 개수
     {
         if (makedHexagonCount == 0) { return 4; } // 근데 처음에는 3개 깔린 상태로 시작하니까 4 반환
-        return 6 * (int)Mathf.Pow(2, makedHexagonCount + 1);
+        return 6 * (int)Mathf.Pow(2, makedHexagonCount);
     }
 
     private void Update()
@@ -106,12 +105,5 @@ public class RandomGlacierGenerator : MonoBehaviour
         {
             GlacierSetPos();
         }
-        // 만약에 GetCurHexagonGroundsGoalCount(지금 만들 육각형에 필요한 빙하의 갯수)만큼 다 왔다면
-        // makedHexagonCount++ 하고
-        // curHexagon_GroundsGoalCount 만큼 땅을 새로 만들어 주고
-        // 랜덤으로 하나 보냄
-
-
-        // 생각할점: 땅을 생성할때 랜덤 순서를 정해줄 것 인가 or 땅을 일단 순서대로 생성하고 나갈때 랜덤한 놈이 나갈 것인가
     }
 }
