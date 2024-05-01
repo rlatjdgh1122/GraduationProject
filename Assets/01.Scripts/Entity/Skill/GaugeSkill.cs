@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GaugeSkill : Skill
 {
-    [SerializeField] private float _targetValue;
+    [SerializeField] private float _targetValue;  
     public float _hitValue = 0;
 
     private General General => _owner as General;

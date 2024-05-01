@@ -35,6 +35,7 @@ public class EnemyBasicPenguin : Enemy
     protected override void Start()
     {
         HealthCompo.OnHit += FindTarget;
+
         StateMachine.Init(EnemyPenguinStateEnum.Idle);
     }
 
@@ -46,7 +47,6 @@ public class EnemyBasicPenguin : Enemy
     {
         base.OnDestroy();
         HealthCompo.OnHit -= FindTarget;
-
     }
 
     protected override void Update()
