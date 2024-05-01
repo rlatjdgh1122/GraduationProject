@@ -31,16 +31,16 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
         _triggerCalled = true;
         _enemy.StopImmediately(); //움직이면서 공격하는거 방지
 
-        _enemy.SetTarget();
+        _enemy.FindNearestPenguin();
     }
     protected void MustMoveEnter()
     {
         _triggerCalled = true;
-        _enemy.SetTarget();
+        _enemy.FindNearestPenguin();
     }
     protected void ProvokedEnter()
     {
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<ShieldPenguin>();
+        //_enemy.CurrentTarget = _enemy.FindNearestPenguin<ITar>();
     }
     protected void AttackComboEnter()
     {
@@ -66,7 +66,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     protected void ReachedEnter()
     {
         _triggerCalled = false;
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
+        _enemy.FindNearestPenguin();
         _enemy.HealthCompo.OnHit += ChangeStateWhenHitted;
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
@@ -86,7 +86,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     {
         _enemy.AnimatorCompo.speed = 1;
         if (_enemy.CurrentTarget != null)
-            _enemy.CurrentTarget.HealthCompo.OnDiedEndEvent -= DeadTarget;
+            _enemy.CurrentTarget.HealthCompo.OnDied -= DeadTarget;
     }
     protected void ReachedExit()
     {
@@ -114,7 +114,7 @@ public class BossBaseState<T> : EnemyState<T> where T : Enum
     {
         var prevTarget = _enemy.CurrentTarget;
 
-        _enemy.SetTarget();
+        _enemy.FindNearestPenguin();
 
         if (prevTarget != null)
         {

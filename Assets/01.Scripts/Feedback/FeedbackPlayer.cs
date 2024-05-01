@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class FeedbackPlayer : MonoBehaviour
 {
+    public float Value { get; set; } = 0f;
+    public bool IsSuccessed { get; set; } = true;
+
     private List<Feedback> _feedbackToPlay = null;
     public List<Feedback> FeedbackToPlay => _feedbackToPlay;
     private void Awake()
@@ -21,7 +24,10 @@ public class FeedbackPlayer : MonoBehaviour
         FinishFeedback();
         foreach (Feedback f in _feedbackToPlay)
         {
-            f.CreateFeedback();
+            f.Value = Value;
+
+            //하나라도 False면 false를 리턴
+            IsSuccessed = f.StartFeedback();
         }
     }
 
@@ -29,6 +35,7 @@ public class FeedbackPlayer : MonoBehaviour
     {
         foreach (Feedback f in _feedbackToPlay)
         {
+            f.Value = 0f;
             f.FinishFeedback();
         }
     }

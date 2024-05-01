@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class NoiseFeedback : Feedback
     [SerializeField]
     private float _detectRange;
 
-    public override void CreateFeedback()
+    public override bool StartFeedback()
     {
         var Colls = Physics.OverlapSphere(transform.position, _detectRange, _noiseLayer);
 
@@ -19,12 +20,15 @@ public class NoiseFeedback : Feedback
         {
             if(col.TryGetComponent<WorkableObject>(out WorkableObject obj))
             {
-                NoiseManager.Instance.IncreaseNoise(obj.NoiseValue);
+                NoiseManager.Instance.AddNoise(obj.NoiseValue);
             }
         }
+
+        return true;
     }
 
-    public override void FinishFeedback()
+    public override bool FinishFeedback()
     {
+        return true;
     }
 }

@@ -114,7 +114,8 @@ public class Penguin : Entity
         _deadCompo = GetComponent<IDeadable>();
         _liveCompo = GetComponent<ILiveable>();
 
-        passiveData = Instantiate(passiveData);
+        if (passiveData != null)
+            passiveData = Instantiate(passiveData);
     }
 
     protected override void Update()
@@ -132,17 +133,17 @@ public class Penguin : Entity
 
     #region passive
     public bool CheckAttackPassive(int curAttackCount)
-=> passiveData.CheckAttackEventPassive(curAttackCount);
+=> passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
     public bool CheckStunPassive(float maxHp, float currentHP)
- => passiveData.CheckStunEventPassive(maxHp, currentHP);
+ => passiveData?.CheckStunEventPassive(maxHp, currentHP) ?? false;
 
     public bool CheckSecondPassive()
-=> passiveData.CheckSecondEventPassive();
+=> passiveData?.CheckSecondEventPassive() ?? false;
 
     public virtual void OnPassiveAttackEvent()
     {
-    
+
     }
 
     public virtual void OnPassiveStunEvent()
@@ -172,23 +173,10 @@ public class Penguin : Entity
 
     }
 
-    public void FindFirstNearestEnemy()
+    public void FindNearestEnemy()
     {
-        CurrentTarget = FindNearestEnemy().FirstOrDefault();
+        CurrentTarget = FindNearestTarget<Enemy>(TargetLayer);
     }
-
-    public List<Enemy> FindNearestEnemy(int count = 1)
-    {
-        Enemy[] objects = FindObjectsOfType<Enemy>().Where(e => e.enabled).ToArray();
-
-        var nearbyEnemies = objects
-            .OrderBy(obj => Vector3.Distance(transform.position, obj.transform.position))
-            .Take(count)
-            .ToList();
-
-        return nearbyEnemies;
-    }
-
 
     public virtual void LookTarget()
     {
@@ -221,35 +209,6 @@ public class Penguin : Entity
     }
 
     #region ���� ����
-
-    /// <summary>
-    ///  군단 능력치 받기
-    /// </summary>
-    /// <param name="abilities"></param>
-    public void AddStat(List<Ability> abilities)
-    {
-        foreach (var incStat in abilities)
-        {
-            AddStat(incStat.value, incStat.statType, incStat.statMode);
-        }
-    }
-    public void RemoveStat(List<Ability> abilities)
-    {
-        foreach (var incStat in abilities)
-        {
-            RemoveStat(incStat.value, incStat.statType, incStat.statMode);
-        }
-    }
-
-    public void AddStat(int value, StatType type, StatMode mode)
-    {
-        Stat.AddStat(value, type, mode);
-    }
-    public void RemoveStat(int value, StatType type, StatMode mode)
-    {
-        Stat.RemoveStat(value, type, mode);
-    }
-
     public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);

@@ -924,6 +924,8 @@ GameObject:
   - component: {fileID: 8682742403582798853}
   - component: {fileID: 8303770404361828769}
   - component: {fileID: 3812089106538513192}
+  - component: {fileID: 8669519319662747354}
+  - component: {fileID: 3486859772933137063}
   m_Layer: 11
   m_Name: WoodcutterPenguin
   m_TagString: Player
@@ -947,8 +949,8 @@ Transform:
   - {fileID: 8973768629288628400}
   - {fileID: 2744980530531265068}
   - {fileID: 7321491000244764223}
-  - {fileID: 4128926749727167406}
   - {fileID: 3895145954102075851}
+  - {fileID: 2495562516676535379}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4644987829161459782
@@ -966,9 +968,12 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 509c2b8f29ce00e46a82c0b693537cb6, type: 2}
   CurrentTarget: {fileID: 0}
   IsDead: 0
+  _maxDetectEnemy: 5
   innerDistance: 1
   attackDistance: 1
-  Target: {fileID: 0}
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 131072
   WorkerHomeTrm: {fileID: 0}
   CanWork: 1
   EndWork: 1
@@ -1033,6 +1038,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ffbc512ca30d143ba6c3b604bbaccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8669519319662747354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060159250630821954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3486859772933137063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060159250630821954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d59ff96f7e14443b783782b3cde1a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  WaterFallEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OffUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4279176648412829521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,7 +1158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 0.8
+  _detectRange: 1
   _hitType: 6
   TargetLayer:
     serializedVersion: 2
@@ -1299,12 +1348,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7582321480513704825}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.561, y: 0, z: 2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1584522112074823443}
+  m_Father: {fileID: 2495562516676535379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1377015298457436478
 MonoBehaviour:
@@ -1390,7 +1439,7 @@ Transform:
   m_GameObject: {fileID: 7709102480566913370}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.121, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1420,10 +1469,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f514919cc5f6bba4d919d6684932e1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noiseLayer:
+  _detectRange: 1
+  _targetLayer:
     serializedVersion: 2
     m_Bits: 131072
-  _detectRange: 5
+--- !u!1 &7948008951151117766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2495562516676535379}
+  m_Layer: 0
+  m_Name: SoundFeedbacks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2495562516676535379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7948008951151117766}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.561, y: 0, z: -2.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4128926749727167406}
+  m_Father: {fileID: 1584522112074823443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8040215318217300514
 GameObject:
   m_ObjectHideFlags: 0

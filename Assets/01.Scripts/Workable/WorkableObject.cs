@@ -6,33 +6,18 @@ public enum ResourceType
     Wood,
 }
 
-public class WorkableObject : PoolableMono
+public class WorkableObject : TargetObject
 {
-    [SerializeField] protected BaseStat _characterStat;
-    [SerializeField] private float _noiseValue;
-
     public ResourceType resourceType;
+    [SerializeField] private float _noiseValue;
     public float NoiseValue => _noiseValue;
-
-    public Health HealthCompo { get; private set; }
     public EntityActionData ActionData { get; private set; }
 
-    protected virtual void Awake()
+    protected override void HandleHit()
     {
-        HealthCompo = GetComponent<Health>();
-        ActionData = GetComponent<EntityActionData>();
 
-        HealthCompo.SetHealth(_characterStat);
-        _characterStat = Instantiate(_characterStat);
-
-        HealthCompo.OnDied += HandleDie;
     }
-    private void OnDestroy()
-    {
-        if (HealthCompo != null)
-            HealthCompo.OnDied -= HandleDie;
-    }
-    protected virtual void HandleDie()
+    protected override void HandleDie()
     {
 
     }

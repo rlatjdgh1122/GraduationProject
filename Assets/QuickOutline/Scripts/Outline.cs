@@ -87,7 +87,7 @@ public class Outline : MonoBehaviour
     [SerializeField, HideInInspector]
     private List<ListVector3> bakeValues = new List<ListVector3>();
 
-    private Renderer[] renderers;
+    public Renderer[] renderers;
     private Renderer ren;
     private Material outlineMaskMaterial;
     private Material outlineFillMaterial;

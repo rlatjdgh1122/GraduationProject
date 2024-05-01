@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.Rendering.DebugUI;
 
 [System.Serializable]
 public class ParameterKnockbackEvent
@@ -13,61 +10,65 @@ public class ParameterKnockbackEvent
 
 public class EnemyAnimationTrigger : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnPrevAttackEffectEvent = null;
-    [SerializeField] private UnityEvent OnEndAttackEffectEvent = null;
-    [SerializeField] private UnityEvent OnAttackSoundEvent = null;
-    private Enemy _enemy;
+    public UnityEvent OnPrevAttackEffectEvent = null;
+    public UnityEvent OnEndAttackEffectEvent = null;
+    public UnityEvent OnAttackSoundEvent = null;
 
-    private void Awake()
+    protected Enemy _enemy;
+
+    protected virtual void Awake()
     {
         _enemy = transform.parent.GetComponent<Enemy>();
     }
-    public void PrevAttackEffectTrigger()
+
+    protected virtual void PrevAttackEffectTrigger()
     {
         OnPrevAttackEffectEvent?.Invoke();
     }
 
-    public void EndAttackEffectEventTrigger()
+    protected virtual void EndAttackEffectEventTrigger()
     {
         OnEndAttackEffectEvent?.Invoke();
     }
 
-    public void AoEAttackTrigger(int isKnb)
+    protected virtual void AoEAttackTrigger(string parmeter = "0 0")
     {
+        var value = parmeter.Split(' ');
+        float.TryParse(value[0], out float knbValue);
+        float.TryParse(value[1], out float stunValue);
+
         OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.AoEAttack(isKnb == 0 ? false : true, 1.5f);
+        _enemy.AttackCompo.AoEAttack(knbValue, stunValue);
     }
 
-    public void SphereAttackTrigger()
+    protected virtual void AttackTrigger(string parmeter = "0 0")
     {
+        var value = parmeter.Split(' ');
+        float.TryParse(value[0], out float knbValue);
+        float.TryParse(value[1], out float stunValue);
+
         OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.MeleeSphereAttack();
+        _enemy.AttackCompo.MeleeAttack(knbValue,stunValue);
     }
 
-    public void AttackTrigger()
-    {
-        OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.MeleeAttack();
-    }
-
-    private void RangeAttackTrigger()
+    protected virtual void RangeAttackTrigger()
     {
         OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.RangeAttack(transform.forward);
     }
 
-    private void MagicAttackTrigger()
+    protected virtual void MagicAttackTrigger()
     {
         OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.MagicAttack(transform.forward);
     }
 
-    public void DeadCompleteTrigger()
+    protected virtual void DeadCompleteTrigger()
     {
         _enemy.enabled = false;
     }
 
-    public void AnimationEndTrigger()
+    protected virtual void AnimationEndTrigger()
     {
         _enemy.AnimationTrigger();
     }

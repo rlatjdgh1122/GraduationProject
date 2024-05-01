@@ -14,7 +14,7 @@ public class EnemyAnimalReachedState : EnemyAnimalBaseState
     {
         base.Enter();
         _triggerCalled = false;
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<Penguin>();
+        _enemy.FindNearestPenguin();
         _enemy.HealthCompo.OnHit += ChangeStateWhenHitted;
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;

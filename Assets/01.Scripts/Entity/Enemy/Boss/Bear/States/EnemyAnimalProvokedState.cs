@@ -8,15 +8,13 @@ public class EnemyAnimalProvokedState : EnemyAnimalBaseState
     public override void Enter()
     {
         base.Enter();
-
-        _enemy.CurrentTarget = _enemy.FindNearestPenguin<ShieldPenguin>();
+        //필요없을듯
+        //_enemy.CurrentTarget = _enemy.FindNearestPenguin<ShieldPenguin>();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _enemy.OnProvokedEvent?.Invoke();
 
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();

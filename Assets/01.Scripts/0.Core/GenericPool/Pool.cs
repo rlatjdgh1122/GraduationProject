@@ -13,6 +13,8 @@ public class Pool<T> where T : PoolableMono
         _prefab = prefab;
         _parent = parent;
 
+        //Debug.Log(prefab.name);
+
         for (int i = 0; i < count; i++)
         {
             T obj = GameObject.Instantiate(prefab, _parent.position, _parent.rotation);

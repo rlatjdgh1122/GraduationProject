@@ -1,11 +1,9 @@
-using DG.Tweening;
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour, IDamageable
+[RequireComponent(typeof(FeedbackController))]
+public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IProvokedable
 {
     public int maxHealth;
     public int currentHealth;
@@ -18,18 +16,14 @@ public class Health : MonoBehaviour, IDamageable
 
     public Action OnHit;
     public Action OnDied;
-    //OnDied°¡ ½ÇÇàµÈ´ÙÀ½ ½ÇÇà
-    public Action OnDiedEndEvent;
 
-    public UnityEvent OnHealedEvent;
-    public UnityEvent OnHitEvent;
-    public UnityEvent OnStunEvent;
-    public UnityEvent OnEvasionEvent;
     public UnityEvent WaterFallEvent;
-    public UnityEvent OnDeathEvent; //³ªÁß¿¡ Vector3ÀÎÀÚ°ª
+    public UnityEvent OnDeathEvent;
     public UnityEvent OnDashDeathEvent;
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
+
+    private FeedbackController feedbackCompo = null;
     #endregion
 
     private EntityActionData _actionData;
@@ -42,6 +36,7 @@ public class Health : MonoBehaviour, IDamageable
     {
         _isDead = false;
         _actionData = GetComponent<EntityActionData>();
+        feedbackCompo = GetComponent<FeedbackController>();
     }
 
     public void SetHealth(BaseStat owner)
@@ -56,84 +51,7 @@ public class Health : MonoBehaviour, IDamageable
         maxHealth = owner.GetMaxHealthValue();
     }
 
-    public bool KnockBack(float value = 1, Vector3 normal = default, float speed = 0.5f)
-    {
-        Vector3 currentPosition = transform.position;
-
-        Vector3 knockbackPosition = currentPosition - new Vector3(normal.x, 0f, normal.z) * value;
-
-        transform.DOMove(knockbackPosition, speed);
-
-        if (!IsPositionValid(knockbackPosition))
-        {
-            Dead();
-            WaterFallEvent?.Invoke();
-            transform.DOMoveY(transform.position.y - 2f, 1.2f);
-
-            return false;
-        }
-        else
-            return true;
-    }
-
-    bool IsPositionValid(Vector3 position)
-    {
-        return Physics.Raycast(position, new Vector3(0, -1, 0), 5f, groundLayer);
-    }
-
-    public bool Stun(RaycastHit ray, float duration)
-    {
-        GameObject enemy = ray.collider.gameObject;
-
-        OnStunEvent?.Invoke();
-        StartCoroutine(StunCoroutine(enemy, duration));
-
-        return true;
-    }
-
-    private IEnumerator StunCoroutine(GameObject enemy ,float duration)
-    {
-        Animator animator = enemy.GetComponentInChildren<Animator>();
-
-        if (animator != null)
-        {
-            animator.speed = 0f;
-        }
-
-        CharacterController controller = enemy.GetComponent<CharacterController>();
-
-        if (controller != null)
-        {
-            controller.enabled = false;
-        }
-
-        NavMeshAgent _navMeshAgent = enemy.GetComponent<NavMeshAgent>();
-        float speed = _navMeshAgent.speed;
-
-        if (_navMeshAgent != null)
-        {
-            _navMeshAgent.speed = 0;
-        }
-
-        yield return new WaitForSeconds(duration);
-
-        if (animator != null)
-        {
-            animator.speed = 1f; 
-        }
-
-        if (controller != null)
-        {
-            controller.enabled = true; 
-        }
-
-        if (_navMeshAgent != null)
-        {
-            _navMeshAgent.speed = speed;
-        }
-    }
-
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, bool isPlayHitEvent = true)
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
     {
         if (_isDead) return;
 
@@ -141,7 +59,10 @@ public class Health : MonoBehaviour, IDamageable
         float adjustedEvasion = _evasion * 0.01f;
         if (dice < adjustedEvasion)
         {
-            OnEvasionEvent?.Invoke();
+            if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Evasion, out var evasionF))
+            {
+                evasionF.PlayFeedback();
+            }
             return;
         }
 
@@ -153,8 +74,14 @@ public class Health : MonoBehaviour, IDamageable
 
         currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
 
-        if (isPlayHitEvent) { OnHitEvent?.Invoke(); }
-        OnHit?.Invoke();
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
+        {
+            feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Hit);
+
+            OnHit?.Invoke();
+            hitF.PlayFeedback();
+        }
+
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
@@ -162,7 +89,35 @@ public class Health : MonoBehaviour, IDamageable
             Dead();
         }
     }
+    public void Stun(float value)
+    {
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var stunF, value))
+        {
+            stunF.PlayFeedback();
+        }
+    }
+    public void Knockback(float value, Vector3 normal = default)
+    {
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
+        {
+            knockbackF.PlayFeedback();
 
+            //ë°”ë‹¤ì— ë¹ ì¡Œë‹¤ë©´
+            if (!knockbackF.IsSuccessed)
+            {
+                feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.WaterFall);
+                Dead();
+            }
+        }
+    }
+
+    public void Provoked(float value)
+    {
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Provoked, out var ProvokedF, value))
+        {
+            ProvokedF.PlayFeedback();
+        }
+    }
     public void ApplyHitType(HitType hitType)
     {
         _actionData.HitType = hitType;
@@ -172,15 +127,22 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
-        OnHealedEvent?.Invoke();
+
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Heal, out var hitF))
+        {
+            hitF.PlayFeedback();
+            //OnHealedEvent?.Invoke();
+        }
     }
 
     private void Dead()
     {
+        feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Dead);
+
         OffUIUpdate?.Invoke();
         _isDead = true;
-        OnDeathEvent?.Invoke();
         OnDied?.Invoke();
-        OnDiedEndEvent?.Invoke();
     }
+
+
 }

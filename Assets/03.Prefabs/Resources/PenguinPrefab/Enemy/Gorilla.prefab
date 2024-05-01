@@ -121,9 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a6085bc4213ab4ebd8ff64a7364d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stunEffect: {fileID: 7482618537965365184, guid: d23841bd11392414c8e2b8f64d4fae5e,
-    type: 3}
-  _effectEndTime: 3
 --- !u!1 &167298441649133085
 GameObject:
   m_ObjectHideFlags: 0
@@ -3487,7 +3484,8 @@ GameObject:
   - component: {fileID: 8786998820281678438}
   - component: {fileID: 4801262836571917899}
   - component: {fileID: 7179972798852521056}
-  m_Layer: 0
+  - component: {fileID: 917364211668144344}
+  m_Layer: 12
   m_Name: Gorilla
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3592,19 +3590,21 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 7b8ed1951d0ebe94eb6c3624b679848f, type: 2}
   CurrentTarget: {fileID: 0}
   IsDead: 0
+  _maxDetectEnemy: 5
   innerDistance: 4
   attackDistance: 1.5
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 526336
   moveSpeed: 2
   attackSpeed: 1.5
   rotationSpeed: 2
   nexusDistance: 4
-  OnProvokedEvent:
-    m_PersistentCalls:
-      m_Calls: []
   passiveData: {fileID: 11400000, guid: 93ddcb9f472c4f041a241849214c9023, type: 2}
   NexusTarget: {fileID: 0}
   IsMove: 1
   IsProvoked: 0
+  _vigilanceMaxLevel: 5
 --- !u!114 &8786998820281678438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3622,18 +3622,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls: []
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -3678,6 +3666,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalAttackList: []
   <ComboWindow>k__BackingField: 0
+--- !u!114 &917364211668144344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7413661433421501184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7472113065486190009
 GameObject:
   m_ObjectHideFlags: 0
@@ -4228,9 +4228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c596b5941ad781d4cb8ec08c2857cdbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _provokedEffect: {fileID: 6060938240861186850, guid: 352304b7fbe11f445970df6ae36e6227,
-    type: 3}
-  _effectEndTime: 2
 --- !u!1 &8858875935418019453
 GameObject:
   m_ObjectHideFlags: 0
