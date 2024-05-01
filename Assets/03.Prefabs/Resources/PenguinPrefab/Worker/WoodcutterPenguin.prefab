@@ -973,8 +973,7 @@ MonoBehaviour:
   attackDistance: 1
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  Target: {fileID: 0}
+    m_Bits: 131072
   WorkerHomeTrm: {fileID: 0}
   CanWork: 1
   EndWork: 1
@@ -1159,7 +1158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 0.8
+  _detectRange: 1
   _hitType: 6
   TargetLayer:
     serializedVersion: 2
@@ -1440,7 +1439,7 @@ Transform:
   m_GameObject: {fileID: 7709102480566913370}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.121, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1470,6 +1469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f514919cc5f6bba4d919d6684932e1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _detectRange: 1
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 131072
 --- !u!1 &7948008951151117766
 GameObject:
   m_ObjectHideFlags: 0
