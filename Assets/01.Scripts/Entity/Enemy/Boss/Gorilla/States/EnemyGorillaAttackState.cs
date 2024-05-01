@@ -38,6 +38,7 @@ public class EnemyGorillaAttackState : EnemyGorillaBaseState
 
         AttackComboExit();
     }
+
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
