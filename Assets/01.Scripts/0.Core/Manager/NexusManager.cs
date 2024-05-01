@@ -32,6 +32,7 @@ public class NexusManager : Singleton<NexusManager>
     {
         _nexusBase.HealthCompo.SetMaxHealth(_nexusStat); //최대 체력 올려주고
         int healValue = (int)(_nexusStat.maxHealth.GetValue() * 0.2f);
+        Debug.Log(healValue);
         _nexusBase.HealthCompo.ApplyHeal(healValue); //최대 체력의 20%만큼 힐
     }
 

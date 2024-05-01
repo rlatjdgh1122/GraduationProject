@@ -24,11 +24,6 @@ public class MopPenguin : Penguin
     }
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            CurrentTarget.SetTarget(this);
-        }
-
         StateMachine.CurrentState.UpdateState();
     }
     public override void StateInit()

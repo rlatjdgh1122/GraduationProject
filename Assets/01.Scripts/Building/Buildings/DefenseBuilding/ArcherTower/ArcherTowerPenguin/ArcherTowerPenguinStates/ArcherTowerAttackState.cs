@@ -13,6 +13,7 @@ public class ArcherTowerAttackState : ArcherTowerBaseState
         base.Enter();
 
         _triggerCalled = false;
+        _penguin.StopImmediately();
         _penguin.FindNearestEnemy();
 
         if(_penguin.CurrentTarget == null)
