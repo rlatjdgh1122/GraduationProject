@@ -17,7 +17,6 @@ public class DamageCaster : MonoBehaviour
     public void SetOwner(Entity owner)
     {
         _owner = owner;
-        SetPosition();
     }
 
     public void SetPosition()

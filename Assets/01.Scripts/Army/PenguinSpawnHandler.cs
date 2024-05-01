@@ -28,6 +28,9 @@ public class PenguinSpawnHandler : MonoBehaviour
             penguin.MousePos = GameManager.Instance.TentTrm.position;
             penguin.StateInit();
 
+
+            penguin.DamageCasterCompo.SetPosition();
+
             //¥ıπÃ ∆Î±œ¿∫ ≤®¡‹
             dummy.gameObject.SetActive(false);
         }
