@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -23,6 +24,8 @@ public class RandomGlacierGenerator : MonoBehaviour
 
     private float randomDistance => Random.Range(10, 30f); // 이 수치는 나중에 적당히 찾아서 넣어주자
 
+    private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
+
     private GroundMove SpawnGlaciers()
     {
         GroundMove ground = _allGrounds.Dequeue();
@@ -34,7 +37,7 @@ public class RandomGlacierGenerator : MonoBehaviour
         for(int i = 0; i < 50; i++)
         {
             GroundMove ground = Instantiate(_glacierPrefab, transform.position, Quaternion.identity)
-                .transform.GetChild(0).GetChild(0).GetComponent<GroundMove>(); // 반드시 바꿀 것
+                .transform.Find("TopArea").Find("GlacierModel").GetComponent<GroundMove>(); // 반드시 바꿀 것
             _allGrounds.Enqueue(ground);
             ground.gameObject.SetActive(false);
         }
@@ -43,14 +46,22 @@ public class RandomGlacierGenerator : MonoBehaviour
 
     private void AddGlacierToCurHexagon()
     {
-        for (int i = 0; i < GetCurHexagonGroundsGoalCount(); i++)
+        _rotateValues.Clear();
+
+        for (int i = 1; i <= GetCurHexagonGroundsGoalCount(); i++)
         {
+            _rotateValues.Enqueue(GetCurAngleBetweenGlacier() * i);
             GroundMove ground = SpawnGlaciers();
             _curHexagon_Grounds.Enqueue(ground);
         }
+
+        var array = _rotateValues.ToArray();
+        System.Random rnd = new System.Random();
+        array = array.OrderBy(x => rnd.Next()).ToArray();
+        _rotateValues = new Queue<float>(array);
     }
 
-    private void GenarateGlacier()
+    private void GlacierSetPos()
     {
         // position는 randomDistance로 랜덤한 거리에 있는 위치로
         // rotation은 GetCurAngleBetweenGlacier으로 조절
@@ -63,8 +74,11 @@ public class RandomGlacierGenerator : MonoBehaviour
         curground.transform.SetParent(transform);
         curground.transform.localPosition = new Vector3(0f, 0f, 10f);
 
-        transform.Rotate(Vector3.up * GetCurAngleBetweenGlacier());
+        float rotateValue = _rotateValues.Dequeue();
+        transform.Rotate(Vector3.up * rotateValue);
+
         curground.transform.SetParent(null);
+        transform.rotation = Quaternion.Euler(0.0f, 30.0f, 0.0f);
     }
 
 
@@ -90,7 +104,7 @@ public class RandomGlacierGenerator : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J)) // 디버그 용
         {
-            GenarateGlacier();
+            GlacierSetPos();
         }
         // 만약에 GetCurHexagonGroundsGoalCount(지금 만들 육각형에 필요한 빙하의 갯수)만큼 다 왔다면
         // makedHexagonCount++ 하고

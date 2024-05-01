@@ -14,8 +14,8 @@ public class GroundMove : MonoBehaviour
     [SerializeField] private Color endColor;
 
     #region ÇÁ·ÎÆÛÆ¼
-    //private NavMeshSurface _parentSurface;
-    //private NavMeshSurface _surface;
+    private NavMeshSurface _parentSurface;
+    private NavMeshSurface _surface;
     private Outline _outline;
     #endregion
 
@@ -25,14 +25,14 @@ public class GroundMove : MonoBehaviour
 
     private void Awake()
     {
-        //_parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
-        //_surface = transform.parent.GetComponent<NavMeshSurface>();
+        _parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
+        _surface = transform.parent.GetComponent<NavMeshSurface>();
         _outline = GetComponent<Outline>();
 
         _enemies = GetComponentsInChildren<Enemy>();
 
         _waveEffect = transform.Find("WaterWave").gameObject;
-        _moveDir = transform.parent.localPosition;
+        _moveDir = transform.parent.position;
     }
 
     private void Start()
@@ -67,9 +67,9 @@ public class GroundMove : MonoBehaviour
                 OnComplete(() =>
                 {
                     SoundManager.Play2DSound(SoundName.GroundHit);
-                    //_surface.enabled = true;
-                    //_surface.transform.SetParent(_parentSurface.transform);
-                    //_parentSurface.BuildNavMesh();
+                    _surface.enabled = true;
+                    _surface.transform.SetParent(_parentSurface.transform);
+                    _parentSurface.BuildNavMesh();
 
                     // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
                     CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
