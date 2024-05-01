@@ -113,7 +113,7 @@ public class WorkerManager : Singleton<WorkerManager>
 
             foreach (MinerPenguin worker in list)
             {
-                if (worker.CanWork && worker.Target == workableObject)
+                if (worker.CanWork && worker.CurrentTarget == workableObject)
                 {
                     worker.FinishWork();
                     _spawnedMinerList.Remove(worker);
@@ -126,7 +126,7 @@ public class WorkerManager : Singleton<WorkerManager>
 
             foreach (WoodCutterPenguin worker in list)
             {
-                if (worker.CanWork && worker.Target == workableObject)
+                if (worker.CanWork && worker.CurrentTarget == workableObject)
                 {
                     worker.FinishWork();
                     _spawnedWoodCutterList.Remove(worker);
@@ -161,7 +161,7 @@ public class WorkerManager : Singleton<WorkerManager>
 
         foreach (BuilderPenguin builder in list)
         {
-            if (builder.CanWork && builder.Target == workableObject)
+            if (builder.CanWork && builder.CurrentTarget == workableObject)
             {
                 builder.FinishWork();
                 _spawnedBuilderList.Remove(builder);
