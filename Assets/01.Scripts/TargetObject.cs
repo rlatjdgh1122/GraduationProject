@@ -17,7 +17,7 @@ public abstract class TargetObject : PoolableMono
     public Health HealthCompo { get; private set; }
 
     private Transform nexusTrm = null;
-    private Collider _collider = null;
+    protected Collider _collider = null;
 
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _targetColliders;
@@ -42,6 +42,7 @@ public abstract class TargetObject : PoolableMono
     protected virtual void Start()
     {
     }
+
     protected virtual void Update()
     {
     }
@@ -51,7 +52,7 @@ public abstract class TargetObject : PoolableMono
         //내 위치와 Vector3.zero에서 가장 가까운 포인트의 거리를 비교 => 내 크기의 반지름(원형모형 기준)
         float radius = Vector3.Distance(transform.position, _collider.ClosestPoint(Vector3.zero));
         Vector3 dir = (targetTrm.position - transform.position).normalized;
-        Vector3 result = dir * radius + transform.position;
+        Vector3 result = dir * radius+ transform.position;
         result.y = transform.position.y;
 
         return result;
@@ -118,6 +119,7 @@ public abstract class TargetObject : PoolableMono
 
 
     protected abstract void HandleHit();
+
     protected abstract void HandleDie();
 
     protected virtual void OnDestroy()
