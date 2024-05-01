@@ -78,6 +78,8 @@ public abstract class TargetObject : PoolableMono
 
         return target;
     }
+
+    #region Stat
     public void AddStat(List<Ability> abilities)
     {
         foreach (var incStat in abilities)
@@ -101,6 +103,8 @@ public abstract class TargetObject : PoolableMono
     {
         Stat.RemoveStat(value, type, mode);
     }
+
+    #endregion
 
 
     protected abstract void HandleHit();
