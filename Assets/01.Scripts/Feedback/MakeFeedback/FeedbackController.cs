@@ -22,14 +22,11 @@ public class FeedbackController : MonoBehaviour
     {
         FeedbackPlayer[] effectFeedbacks = GetComponentsInChildren<FeedbackPlayer>();
 
-        //�̷��� �ص� �������� �°���..
         foreach (var effectFeedback in effectFeedbacks)
         {
             string typeName = effectFeedback.name;
-            //��ũ��Ʈ �̸����� EffectFeedback�κ� �����
             string name = typeName.Substring(0, typeName.Length - Cashing_FeedbackName.Length);
 
-            //Enum�� �̸����� �������� (�̰� ���ٴϱ� ����)
             if (Enum.TryParse(name, true, out FeedbackEnumType effectEnum))
                 _effectEnumToFeedbackDic.Add(effectEnum, effectFeedback);
         }
@@ -39,14 +36,11 @@ public class FeedbackController : MonoBehaviour
     {
         SoundFeedback[] effectFeedbacks = GetComponentsInChildren<SoundFeedback>();
 
-        //�̷��� �ص� �������� �°���..
         foreach (var effectFeedback in effectFeedbacks)
         {
             string typeName = effectFeedback.name;
-            //��ũ��Ʈ �̸����� EffectFeedback�κ� �����
             string name = typeName.Substring(0, typeName.Length - Cashing_SoundFeedbackName.Length);
 
-            //Enum�� �̸����� �������� (�̰� ���ٴϱ� ����)
             if (Enum.TryParse(name, true, out SoundFeedbackEnumType effectEnum))
                 _soundEnumToFeedbackDic.Add(effectEnum, effectFeedback);
         }
