@@ -17,7 +17,7 @@ public abstract class TargetObject : PoolableMono
     public Health HealthCompo { get; private set; }
 
     private Transform nexusTrm = null;
-    private Collider _collider = null;
+    protected Collider _collider = null;
 
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _targetColliders;
