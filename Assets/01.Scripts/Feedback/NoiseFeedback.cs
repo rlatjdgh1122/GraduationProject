@@ -20,7 +20,7 @@ public class NoiseFeedback : Feedback
         {
             if(col.TryGetComponent<WorkableObject>(out WorkableObject obj))
             {
-                NoiseManager.Instance.IncreaseNoise(obj.NoiseValue);
+                NoiseManager.Instance.AddNoise(obj.NoiseValue);
             }
         }
 

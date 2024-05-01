@@ -27,7 +27,7 @@ public class NoiseEffectFeedback : EffectFeedback
         {
             if (col.TryGetComponent<WorkableObject>(out WorkableObject obj))
             {
-                _noiseManager.IncreaseNoise(obj.NoiseValue);
+                _noiseManager.AddNoise(obj.NoiseValue);
             }
         }
 

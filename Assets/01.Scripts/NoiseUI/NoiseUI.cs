@@ -70,7 +70,6 @@ public class NoiseUI : MonoBehaviour
 
     public void ResetUI()
     {
-        _noiseManager.ResetNoise();
         _noiseFillImage.fillAmount = 0;
     }
 }

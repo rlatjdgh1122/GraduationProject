@@ -6,12 +6,17 @@ using UnityEngine.UI;
 
 public class NoiseManager : Singleton<NoiseManager>
 {
-    [SerializeField] private float _initMaxNosise = 100f;
+    [SerializeField] 
+    private float _initMaxNosise = 100f;
+
+    [SerializeField]
+    private float _increaseMaxNoise = 1.2f;
+
     private float _maxNosise;
-    public float MaxNoise => _maxNosise; //Max Noise
+    public float MaxNoise => _maxNosise;
 
     private float _currentNoise = 0f;
-    public float CurrentNoise => _currentNoise; //Current Noise
+    public float CurrentNoise => _currentNoise;
 
     public float NoisePercent => _currentNoise / _maxNosise;
 
@@ -22,16 +27,37 @@ public class NoiseManager : Singleton<NoiseManager>
     {
         _maxNosise = _initMaxNosise;
 
-        IncreaseNoise(_currentNoise);
+        AddNoise(_currentNoise);
     }
 
-    public void IncreaseNoise(float noise)
+    /// <summary>
+    /// 레벨에 따라 소음 최대치 변경
+    /// </summary>
+    /// <param name="level">현재 레벨(넥서스)</param>
+    public void IncreaseMaxNoise(int level)
+    {
+        float geometricSequence = Mathf.Pow(_increaseMaxNoise, level - 1);
+
+        _maxNosise = _initMaxNosise * geometricSequence;
+    }
+
+    /// <summary>
+    /// 현재 소음에 값 더하기
+    /// </summary>
+    /// <param name="noise">더해질 소음 값</param>
+    public void AddNoise(float noise)
     {
         _currentNoise += noise;
 
         NoiseIncreaseEvent?.Invoke();
+
+        if (_currentNoise >= _maxNosise)
+            NoiselimitExceed();
     }
 
+    /// <summary>
+    /// 소음 값이 최대치를 넘으면
+    /// </summary>
     public void NoiselimitExceed()
     {
         NoiseLimitExceedEvent?.Invoke();
