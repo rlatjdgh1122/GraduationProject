@@ -208,9 +208,9 @@ public class DamageCaster : MonoBehaviour
         return true;
     }
 
-    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0f, float stunValue = 0f)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float range = 0, float knbValue = 0f, float stunValue = 0f)
     {
-        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+        var Colls = Physics.OverlapSphere(transform.position, range, TargetLayer);
 
         SoundManager.Play3DSound(sound, transform.position);
 
