@@ -2,11 +2,6 @@ using UnityEngine;
 
 public class DashEffectFeedback : EffectFeedback
 {
-    protected override void LoadEffect(string name)
-    {
-        base.LoadEffect("DashEffect");
-    }
-
     public override void Awake()
     {
         base.Awake();
@@ -19,7 +14,7 @@ public class DashEffectFeedback : EffectFeedback
 
     public override bool StartFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(_effect.ToString()) as EffectPlayer;
+        EffectPlayer effect = PoolManager.Instance.Pop("DashEffect") as EffectPlayer;
         if (effect != null)
         {
             effect.transform.position = gameObject.transform.position;
