@@ -542,8 +542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b24ce834742d47b4a862ec3ced7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healEffect: {fileID: -198098653787150809, guid: 880628dabbf32df439f61db0b7a24c20,
-    type: 3}
   _effectEndTime: 2
 --- !u!1 &2903152396677494555
 GameObject:
@@ -764,34 +762,10 @@ MonoBehaviour:
     m_Bits: 8
   WaterFallEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5964887719992933439}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5443818928504674120}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []

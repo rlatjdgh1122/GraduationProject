@@ -1,7 +1,5 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.UI.GridLayoutGroup;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(FeedbackController))]

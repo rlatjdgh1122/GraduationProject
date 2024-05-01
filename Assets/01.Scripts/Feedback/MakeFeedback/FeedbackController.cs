@@ -71,6 +71,7 @@ public class FeedbackController : MonoBehaviour
         return false;
     }
 
+    #region 스폰 함수 (에디터용)
     public void SpawnFeedback<T1>(FeedbackEnumType effectEnum) where T1 : Feedback
     {
         GameObject obj = new GameObject($"{effectEnum.ToString()}{Cashing_FeedbackName}");
@@ -105,4 +106,6 @@ public class FeedbackController : MonoBehaviour
 
         obj.transform.parent = trm;
     }
+    #endregion
+
 }

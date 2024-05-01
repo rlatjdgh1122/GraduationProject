@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class FeedbackPlayer : MonoBehaviour
 {
-
     public float Value { get; set; } = 0f;
+    public bool IsSuccessed { get; set; } = true;
 
     private List<Feedback> _feedbackToPlay = null;
     public List<Feedback> FeedbackToPlay => _feedbackToPlay;
@@ -19,19 +19,16 @@ public class FeedbackPlayer : MonoBehaviour
         GetComponents<Feedback>(_feedbackToPlay);
     }
 
-    public bool PlayFeedback()
+    public void PlayFeedback()
     {
-        bool result = true;
-
-        //하나라도 False면 false를 리턴
         FinishFeedback();
         foreach (Feedback f in _feedbackToPlay)
         {
             f.Value = Value;
-            result = f.StartFeedback();
-        }
 
-        return result;
+            //하나라도 False면 false를 리턴
+            IsSuccessed = f.StartFeedback();
+        }
     }
 
     public void FinishFeedback()
