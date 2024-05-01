@@ -8,8 +8,8 @@ public class FeedbackController : MonoBehaviour
     private readonly string Cashing_FeedbackName = "Feedback";
     private readonly string Cashing_SoundFeedbackName = "Feedback";
 
-    private Dictionary<FeedbackEnumType, FeedbackPlayer> _effectEnumToFeedbackDic = new();
-    private Dictionary<SoundFeedbackEnumType, SoundFeedback> _soundEnumToFeedbackDic = new();
+    private readonly Dictionary<FeedbackEnumType, FeedbackPlayer> _effectEnumToFeedbackDic = new();
+    private readonly Dictionary<SoundFeedbackEnumType, SoundFeedback> _soundEnumToFeedbackDic = new();
 
     public FeedbackPlayer CurrentFeedback { get; private set; } = null;
 
@@ -18,35 +18,31 @@ public class FeedbackController : MonoBehaviour
         SetFeedbackPlayer();
         SetSoundFeedback();
     }
+
     private void SetFeedbackPlayer()
     {
         FeedbackPlayer[] effectFeedbacks = GetComponentsInChildren<FeedbackPlayer>();
 
-        //�̷��� �ص� �������� �°���..
         foreach (var effectFeedback in effectFeedbacks)
         {
             string typeName = effectFeedback.name;
-            //��ũ��Ʈ �̸����� EffectFeedback�κ� �����
             string name = typeName.Substring(0, typeName.Length - Cashing_FeedbackName.Length);
 
-            //Enum�� �̸����� �������� (�̰� ���ٴϱ� ����)
             if (Enum.TryParse(name, true, out FeedbackEnumType effectEnum))
                 _effectEnumToFeedbackDic.Add(effectEnum, effectFeedback);
         }
 
     }
+
     private void SetSoundFeedback()
     {
         SoundFeedback[] effectFeedbacks = GetComponentsInChildren<SoundFeedback>();
 
-        //�̷��� �ص� �������� �°���..
         foreach (var effectFeedback in effectFeedbacks)
         {
             string typeName = effectFeedback.name;
-            //��ũ��Ʈ �̸����� EffectFeedback�κ� �����
             string name = typeName.Substring(0, typeName.Length - Cashing_SoundFeedbackName.Length);
 
-            //Enum�� �̸����� �������� (�̰� ���ٴϱ� ����)
             if (Enum.TryParse(name, true, out SoundFeedbackEnumType effectEnum))
                 _soundEnumToFeedbackDic.Add(effectEnum, effectFeedback);
         }
@@ -83,6 +79,7 @@ public class FeedbackController : MonoBehaviour
 
         obj.transform.parent = transform;
     }
+
     public void SpawnFeedback<T1, T2>(FeedbackEnumType effectEnum) where T1 : Feedback where T2 : Feedback
     {
         GameObject obj = new GameObject($"{effectEnum.ToString()}{Cashing_FeedbackName}");

@@ -10,6 +10,7 @@ public class EvasionEffectFeedback : EffectFeedback
     {
         base.LoadEffect("HealEffect");
     }
+
     public override bool StartFeedback()
     {
         HudTextPlayer effect = PoolManager.Instance.Pop($"EvasionHudText") as HudTextPlayer;

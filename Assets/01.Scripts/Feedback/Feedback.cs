@@ -19,6 +19,7 @@ public abstract class Feedback : MonoBehaviour, IFeedback
         get;
         set;
     }
+
     public virtual void Awake()
     {
         actionData = transform.parent.GetComponent<EntityActionData>();

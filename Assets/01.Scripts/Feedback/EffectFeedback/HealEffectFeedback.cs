@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class HealEffectFeedback : EffectFeedback  
 {
-    [SerializeField] private float _effectEndTime;
-
     public override bool StartFeedback()
     {
         EffectPlayer effect = PoolManager.Instance.Pop($"HealEffect") as EffectPlayer;

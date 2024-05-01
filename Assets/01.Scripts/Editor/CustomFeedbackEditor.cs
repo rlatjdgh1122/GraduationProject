@@ -39,7 +39,8 @@ public class CustomFeedbackEditor : Editor
                 _target.SpawnFeedback<EvasionEffectFeedback>(FeedbackEnumType.Evasion);
                 _target.SpawnFeedback<ProvokedEffectFeedback>(FeedbackEnumType.Provoked);
                 _target.SpawnFeedback<HitEffectFeedback>(FeedbackEnumType.Hit);
-                _target.SpawnFeedback<DashEffectFeedback>(FeedbackEnumType.Dash);
+                _target.SpawnFeedback<EffectFeedback>(FeedbackEnumType.Dash);
+                _target.SpawnFeedback<EffectFeedback>(FeedbackEnumType.Vigilance);
 
                 _target.SpawnSoundFeedback(SoundFeedbackEnumType.Attack, SoundName.MeleeAttack);
                 _target.SpawnSoundFeedback(SoundFeedbackEnumType.Hit, SoundName.PenguinHit);
@@ -94,6 +95,10 @@ public class CustomFeedbackEditor : Editor
             if (GUILayout.Button("대쉬", GUILayout.Width(120), GUILayout.Height(30)))
             {
                 _target.SpawnFeedback<DashEffectFeedback>(FeedbackEnumType.Dash);
+            }
+            if (GUILayout.Button("각성", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnFeedback<VigilanceEffectFeedback>(FeedbackEnumType.Vigilance);
             }
 
             EditorGUILayout.EndHorizontal();

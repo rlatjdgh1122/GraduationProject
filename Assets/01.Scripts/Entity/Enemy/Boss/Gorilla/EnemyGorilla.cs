@@ -21,7 +21,10 @@ public class EnemyGorilla : Enemy
     public EnemyStateMachine<EnemyGorillaStateEnum> StateMachine { get; private set; }
 
     private GorillaVigilance _gorillaVigilance;
+    public GorillaVigilance GorillaVigilance => _gorillaVigilance;
+
     private int _currentLevel = 0; 
+
     protected override void Awake()
     {
         base.Awake();
@@ -56,7 +59,6 @@ public class EnemyGorilla : Enemy
     {
         if (++_currentLevel > _vigilanceMaxLevel) return;
 
-        _gorillaVigilance.OnVigilance();
         StateMachine.ChangeState(EnemyGorillaStateEnum.ChestHit);
     }
 

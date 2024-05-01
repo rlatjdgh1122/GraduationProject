@@ -10,26 +10,28 @@ public class ParameterKnockbackEvent
 
 public class EnemyAnimationTrigger : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnPrevAttackEffectEvent = null;
-    [SerializeField] private UnityEvent OnEndAttackEffectEvent = null;
-    [SerializeField] private UnityEvent OnAttackSoundEvent = null;
-    private Enemy _enemy;
+    public UnityEvent OnPrevAttackEffectEvent = null;
+    public UnityEvent OnEndAttackEffectEvent = null;
+    public UnityEvent OnAttackSoundEvent = null;
 
-    private void Awake()
+    protected Enemy _enemy;
+
+    protected virtual void Awake()
     {
         _enemy = transform.parent.GetComponent<Enemy>();
     }
-    public void PrevAttackEffectTrigger()
+
+    protected virtual void PrevAttackEffectTrigger()
     {
         OnPrevAttackEffectEvent?.Invoke();
     }
 
-    public void EndAttackEffectEventTrigger()
+    protected virtual void EndAttackEffectEventTrigger()
     {
         OnEndAttackEffectEvent?.Invoke();
     }
 
-    public void AoEAttackTrigger(string parmeter = "0 0")
+    protected virtual void AoEAttackTrigger(string parmeter = "0 0")
     {
         var value = parmeter.Split(' ');
         float.TryParse(value[0], out float knbValue);
@@ -38,7 +40,8 @@ public class EnemyAnimationTrigger : MonoBehaviour
         OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.AoEAttack(knbValue, stunValue);
     }
-    public void AttackTrigger(string parmeter = "0 0")
+
+    protected virtual void AttackTrigger(string parmeter = "0 0")
     {
         var value = parmeter.Split(' ');
         float.TryParse(value[0], out float knbValue);
@@ -48,24 +51,24 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy.AttackCompo.MeleeAttack(knbValue,stunValue);
     }
 
-    private void RangeAttackTrigger()
+    protected virtual void RangeAttackTrigger()
     {
         OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.RangeAttack(transform.forward);
     }
 
-    private void MagicAttackTrigger()
+    protected virtual void MagicAttackTrigger()
     {
         OnAttackSoundEvent?.Invoke();
         _enemy.AttackCompo.MagicAttack(transform.forward);
     }
 
-    public void DeadCompleteTrigger()
+    protected virtual void DeadCompleteTrigger()
     {
         _enemy.enabled = false;
     }
 
-    public void AnimationEndTrigger()
+    protected virtual void AnimationEndTrigger()
     {
         _enemy.AnimationTrigger();
     }
