@@ -51,7 +51,7 @@ public class BingaPositionUI : MonoBehaviour
             if (_bingaPos == null)
             {
                 // SignalPenguin이 탐지한 빙하의 위치를 가져옴
-                _bingaPos = _penguin.Target.transform;
+                _bingaPos = _penguin.Target[_penguin.targetCnt].transform;
             }
 
             // 빙하의 위치를 화면 좌표로 변환
