@@ -21,7 +21,7 @@ public class Enemy : Entity
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
     #endregion
-    public Transform NexusTarget;
+    public Transform NexusTarget = null;
 
     public bool IsMove = false;
     public bool IsProvoked = false;
@@ -35,19 +35,20 @@ public class Enemy : Entity
     public bool IsReachedNexus =>
                             Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
 
-    
+
     protected override void Awake()
     {
         base.Awake();
         NavAgent.speed = moveSpeed;
-            
+
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
+
     }
     private void OnEnable()
     {
         SignalHub.OnIceArrivedEvent += FindNearestPenguin;
-        NexusTarget = GameObject.Find("Nexus").transform;
+        NexusTarget = GameManager.Instance.NexusTrm;
     }
 
     private void OnDisable()
@@ -57,7 +58,7 @@ public class Enemy : Entity
 
     public void FindNearestPenguin()
     {
-        CurrentTarget = FindNearestTarget(TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(TargetLayer);
     }
 
     protected override void HandleDie()
@@ -67,9 +68,9 @@ public class Enemy : Entity
 
     public virtual void AnimationTrigger()
     {
-        
+
     }
-   
+
     public void MoveToNexus()
     {
         if (NavAgent != null)

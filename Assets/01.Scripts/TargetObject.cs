@@ -52,9 +52,9 @@ public abstract class TargetObject : PoolableMono
         CurrentTarget = target;
     }
 
-    public TargetObject FindNearestTarget(LayerMask mask)
+    public T FindNearestTarget<T>(LayerMask mask) where T : TargetObject
     {
-        TargetObject target = null;
+        T target = null;
         float radius = 10f;
         float maxDistance = 300f;
 
@@ -64,7 +64,7 @@ public abstract class TargetObject : PoolableMono
         {
             Collider collider = _colliders[i];
 
-            if (collider.TryGetComponent(out TargetObject potentialTarget))
+            if (collider.TryGetComponent(out T potentialTarget))
             {
                 float distanceToTarget = Vector3.Distance(potentialTarget.transform.position, nexusTrm.position);
 
