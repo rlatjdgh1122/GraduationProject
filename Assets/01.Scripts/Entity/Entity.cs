@@ -11,6 +11,7 @@ public abstract class Entity : TargetObject
     [SerializeField] protected LayerMask TargetLayer;
 
     #region Components 
+    public CharacterController CharacterCompo { get; private set; }
     public Animator AnimatorCompo { get; protected set; }
     public DamageCaster DamageCasterCompo { get; protected set; }
     public NavMeshAgent NavAgent { get; protected set; }
@@ -23,6 +24,7 @@ public abstract class Entity : TargetObject
         base.Awake();
 
         Transform visualTrm = transform.Find("Visual");
+        CharacterCompo = GetComponent<CharacterController>();
         AnimatorCompo = visualTrm?.GetComponent<Animator>(); //이건일단 모르겠어서 ?. 이렇게 해놈
         DamageCasterCompo = transform.Find("DamageCaster").GetComponent<DamageCaster>();
         NavAgent = transform?.GetComponent<NavMeshAgent>();

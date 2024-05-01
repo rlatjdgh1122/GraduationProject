@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -38,9 +39,8 @@ public class Worker : Entity
 
     public float CheckDistance()
     {
-        Collider targetCollider = CurrentTarget.gameObject.GetComponent<Collider>();
-        Vector3 workerPosition = transform.position;
-        return Vector3.Distance(workerPosition, targetCollider.ClosestPoint(workerPosition));
+        Debug.Log(Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)));
+        return Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform));
     }
 
     public void MoveToNexus()
