@@ -201,64 +201,6 @@ Transform:
   - {fileID: 1807503690080951864}
   m_Father: {fileID: 8094178621949301857}
   m_LocalEulerAnglesHint: {x: -15.429132, y: 22.34893, z: -141.2713}
---- !u!1 &347415695572146646
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2482484100617376051}
-  - component: {fileID: 1674145064177589896}
-  - component: {fileID: 6390468507954333202}
-  m_Layer: 11
-  m_Name: AttackEffect_BlockFeedback
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2482484100617376051
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347415695572146646}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1092907574927182595}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1674145064177589896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347415695572146646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada02887f1b371b448dabef21b4fab2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6390468507954333202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347415695572146646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 334f101940de0ef469d9f50c3e12d3d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectObj: {fileID: 6315354982417150636}
 --- !u!1 &481074842572994420
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +218,7 @@ GameObject:
   - component: {fileID: 5356758749202779514}
   - component: {fileID: 2605820723455482566}
   - component: {fileID: 584862454562745349}
+  - component: {fileID: 4242523500608636143}
   m_Layer: 11
   m_Name: ShieldGeneralPenguin
   m_TagString: Untagged
@@ -303,7 +246,6 @@ Transform:
   - {fileID: 5838933379830730431}
   - {fileID: 5565665718999431757}
   - {fileID: 4893514795568629557}
-  - {fileID: 1092907574927182595}
   - {fileID: 725994748091809556}
   - {fileID: 2241829474838952932}
   m_Father: {fileID: 0}
@@ -323,26 +265,22 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 64e0587224e8a5a41abef5e27cabfcc4, type: 2}
   CurrentTarget: {fileID: 0}
   IsDead: 0
+  _maxDetectEnemy: 5
   innerDistance: 7
   attackDistance: 2
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 4096
   moveSpeed: 4.5
   attackSpeed: 0.8
   maxDetectedCount: 0
   provokeRange: 25
-  passiveData: {fileID: 0}
+  passiveData: {fileID: 11400000, guid: 12baf0d3bce42c3439b2983478774eaf, type: 2}
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
-  ligeonStat:
-    IncStat:
-    - type: 256
-      value: 20
-    - type: 128
-      value: 50
-    DecStat:
-    - type: 1024
-      value: 25
-  skill: {fileID: 0}
+  TargetLock: 0
+  skill: {fileID: 6756343767113240760}
   canSpinAttack: 0
 --- !u!114 &8035068806920498670
 MonoBehaviour:
@@ -361,72 +299,15 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2133558695396372476}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4832490365486339992}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7123544993613262149}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5748503428550977860}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  OnDashDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnUIUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -1235,6 +1116,7 @@ MonoBehaviour:
     - {x: -0.44585338, y: -0.53741634, z: -0.7158201}
     - {x: -0.22979543, y: -0.22698571, z: 0.9463993}
     - {x: 0.23135628, y: -0.2253576, z: 0.94640803}
+  renderers: []
 --- !u!114 &584862454562745349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,6 +1127,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4242523500608636143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481074842572994420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &931202984007076352
@@ -1497,64 +1391,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 62794630576868994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1984947218783596714
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3827528359861301867}
-  - component: {fileID: 7285725353383911218}
-  - component: {fileID: 7598687872052748419}
-  m_Layer: 11
-  m_Name: AttackEffect_SlashFeedback
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3827528359861301867
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984947218783596714}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1092907574927182595}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7285725353383911218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984947218783596714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada02887f1b371b448dabef21b4fab2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7598687872052748419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984947218783596714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 334f101940de0ef469d9f50c3e12d3d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectObj: {fileID: 64152643301928811}
 --- !u!1 &2618980621664243416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,8 +1480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b24ce834742d47b4a862ec3ced7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healEffect: {fileID: -198098653787150809, guid: 880628dabbf32df439f61db0b7a24c20,
-    type: 3}
   _effectEndTime: 2
 --- !u!1 &3035851783404174377
 GameObject:
@@ -2062,7 +1896,7 @@ MonoBehaviour:
   OnSpecialAttackTriggerEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1674145064177589896}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
         m_MethodName: PlayFeedback
         m_Mode: 1
@@ -2113,7 +1947,7 @@ MonoBehaviour:
   OnDeadCompleteTriggerEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7598687872052748419}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AttackEffectFeedback, Assembly-CSharp
         m_MethodName: FinishFeedback
         m_Mode: 1
@@ -2125,7 +1959,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6390468507954333202}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AttackEffectFeedback, Assembly-CSharp
         m_MethodName: FinishFeedback
         m_Mode: 1
@@ -2140,10 +1974,13 @@ MonoBehaviour:
   OnAnimationEndTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnDashEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnEffectOnTriggerEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7285725353383911218}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
         m_MethodName: PlayFeedback
         m_Mode: 1
@@ -2155,7 +1992,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1674145064177589896}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
         m_MethodName: FinishFeedback
         m_Mode: 1
@@ -2170,7 +2007,7 @@ MonoBehaviour:
   OnEffectOffTriggerEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7285725353383911218}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
         m_MethodName: FinishFeedback
         m_Mode: 1
@@ -2714,6 +2551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAvaliable: 1
+  CanUseSkill: 0
   _targetValue: 10
   _hitValue: 0
 --- !u!1 &6416181801471521789
@@ -2805,6 +2643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed406f63ca42e504d9d60b28a470a979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectEndTime: 0.5
   _hudTextEndTime: 0.8
 --- !u!1 &6729056737420026610
 GameObject:
@@ -3118,39 +2957,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &7893183368195422417
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1092907574927182595}
-  m_Layer: 11
-  m_Name: AttackEffectFeedback
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1092907574927182595
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7893183368195422417}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3827528359861301867}
-  - {fileID: 2482484100617376051}
-  m_Father: {fileID: 62794630576868994}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8071123743904115231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3704,12 +3510,6 @@ PrefabInstance:
 --- !u!4 &6315354982416658060 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: c8faca98322b46a42ba35ad947c68ddc,
-    type: 3}
-  m_PrefabInstance: {fileID: 6315354982417052680}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6315354982417150636 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100004, guid: c8faca98322b46a42ba35ad947c68ddc,
     type: 3}
   m_PrefabInstance: {fileID: 6315354982417052680}
   m_PrefabAsset: {fileID: 0}

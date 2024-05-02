@@ -27,7 +27,6 @@ public class Worker : Entity
         WorkerHomeTrm = GameManager.Instance.WorkerSpawnPoint;
 
         DamageCasterCompo.SetOwner(this);
-
         Init();
     }
 

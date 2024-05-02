@@ -33,6 +33,10 @@ public abstract class Entity : TargetObject
 
         DamageCasterCompo?.SetOwner(this);
     }
+    private void OnEnable()
+    {
+        DamageCasterCompo.SetPosition();
+    }
 
     protected override void Start()
     {

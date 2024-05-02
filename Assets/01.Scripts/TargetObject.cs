@@ -17,7 +17,7 @@ public abstract class TargetObject : PoolableMono
     public Health HealthCompo { get; private set; }
 
     private Transform nexusTrm = null;
-    private Collider _collider = null;
+    protected Collider _collider = null;
 
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _targetColliders;
@@ -73,10 +73,9 @@ public abstract class TargetObject : PoolableMono
         for (int i = 0; i < count; ++i)
         {
             Collider collider = _targetColliders[i];
-
             if (collider.TryGetComponent(out T potentialTarget))
             {
-                float distanceToTarget = Vector3.Distance(potentialTarget.transform.position, nexusTrm.position);
+                float distanceToTarget = Vector3.Distance(transform.position, potentialTarget.transform.position);
 
                 if (distanceToTarget < maxDistance)
                 {
@@ -85,7 +84,6 @@ public abstract class TargetObject : PoolableMono
                 }
             }
         }
-
         return target;
     }
 

@@ -5,7 +5,7 @@ public class ThrowSkill : Skill
 {
     [SerializeField] private float _throwDelay;
 
-    private Coroutine _throwCoroutine;
+    private Coroutine _throwCoroutine; 
 
     public override void SetOwner(Entity owner)
     {

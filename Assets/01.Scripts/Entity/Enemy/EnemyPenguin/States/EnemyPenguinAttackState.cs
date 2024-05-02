@@ -10,6 +10,7 @@ public class EnemyPenguinAttackState : EnemyPenguinBaseState
         base.Enter();
         _triggerCalled = false;
         _enemy.StopImmediately();
+        _enemy.FindNearestPenguin();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
