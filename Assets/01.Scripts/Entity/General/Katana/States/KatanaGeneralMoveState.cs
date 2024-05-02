@@ -20,7 +20,7 @@ public class KatanaGeneralMoveState : KatanaGeneralBaseState
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(KatanaGeneralStateEnum.Idle);
 
-        if (_penguin.IsInnerTargetRange
+        if (_penguin.IsTargetInInnerRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
             _stateMachine.ChangeState(KatanaGeneralStateEnum.Chase);
     }

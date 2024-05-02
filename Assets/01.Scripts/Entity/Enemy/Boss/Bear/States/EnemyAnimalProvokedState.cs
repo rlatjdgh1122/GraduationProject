@@ -1,4 +1,4 @@
-public class EnemyAnimalProvokedState : EnemyAnimalBaseState
+/*public class EnemyAnimalProvokedState : EnemyAnimalBaseState
 {
     public EnemyAnimalProvokedState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName) 
         : base(enemyBase, stateMachine, animBoolName)
@@ -30,3 +30,4 @@ public class EnemyAnimalProvokedState : EnemyAnimalBaseState
         base.Exit();
     }
 }
+*/

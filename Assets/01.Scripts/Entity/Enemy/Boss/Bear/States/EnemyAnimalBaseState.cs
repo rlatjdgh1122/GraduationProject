@@ -2,26 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAnimalBaseState : EnemyState<EnemyPenguinStateEnum>
+public class EnemyAnimalBaseState : EnemyBaseState
 {
-    public EnemyAnimalBaseState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName) 
-        : base(enemyBase, stateMachine, animBoolName)
-    {
 
+    public EnemyAnimalBaseState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
+    {
+       // _animalAttack = enemy.GetComponent<AnimalAttackableEntity>();
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
+    
 
-    public override void UpdateState()
+    /*protected void AttackComboExit()
     {
-        base.UpdateState();
-    }
+        ++_animalAttack.ComboCounter;
+        _animalAttack.LastAttackTime = Time.time;
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
+        _enemy.AnimatorCompo.speed = 1;
+    }*/
 }

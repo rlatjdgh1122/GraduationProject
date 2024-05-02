@@ -26,7 +26,7 @@ public class WizardMustMoveState : WizardBaseState
             }
         }
 
-        else if (_penguin.IsInnerTargetRange
+        else if (_penguin.IsTargetInInnerRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);

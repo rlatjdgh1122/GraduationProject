@@ -20,7 +20,7 @@ public class BasicIdleState : BasicBaseState
         //적사거리가 들어오고 /*-군사들이 위치로 이동했다면-*/ 주석
         if (_penguin.NavAgent.desiredVelocity.magnitude > 0.05f)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Move);
-        if (_penguin.IsInnerTargetRange)
+        if (_penguin.IsTargetInInnerRange)
             _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
     }
 

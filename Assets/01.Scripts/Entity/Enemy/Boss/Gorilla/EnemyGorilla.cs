@@ -18,8 +18,7 @@ public enum EnemyGorillaStateEnum
 public class EnemyGorilla : Enemy
 {
     [SerializeField] private int _vigilanceMaxLevel = 5;
-    public EnemyStateMachine<EnemyGorillaStateEnum> StateMachine { get; private set; }
-
+   
     public Skill VigilanceSkill { get; private set; }
 
     private int _currentLevel = 0; 
@@ -28,24 +27,14 @@ public class EnemyGorilla : Enemy
     {
         base.Awake();
 
-        StateMachine = new EnemyStateMachine<EnemyGorillaStateEnum>();
-
-        foreach (EnemyGorillaStateEnum state in Enum.GetValues(typeof(EnemyGorillaStateEnum)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"EnemyGorilla{typeName}State");
-            //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState<EnemyGorillaStateEnum>;
-            StateMachine.AddState(state, newState);
-        }
-
-        VigilanceSkill = transform.Find("SkillManager").GetComponent<Skill>();
-        VigilanceSkill.SetOwner(this);
+       
     }
 
     protected override void Start()
     {
-        StateMachine.Init(EnemyGorillaStateEnum.Idle);
+        base.Start();
+
+        StateMachine.Init(EnemyStateType.Idle);
     }
 
     protected override void Update()
@@ -57,8 +46,8 @@ public class EnemyGorilla : Enemy
     {
         if (++_currentLevel > _vigilanceMaxLevel) return;
 
-        StateMachine.ChangeState(EnemyGorillaStateEnum.ChestHit);
+        StateMachine.ChangeState(EnemyStateType.ChestHit);
     }
 
-    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }

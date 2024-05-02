@@ -22,7 +22,7 @@ public class ShieldGeneralIdleState : ShieldGeneralBaseState
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(ShieldGeneralPenguinStateEnum.Move);
 
-        if (_penguin.IsInnerTargetRange)
+        if (_penguin.IsTargetInInnerRange)
             _stateMachine.ChangeState(ShieldGeneralPenguinStateEnum.Chase);
     }
 

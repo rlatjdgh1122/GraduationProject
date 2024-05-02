@@ -62,14 +62,13 @@ public abstract class TargetObject : PoolableMono
         CurrentTarget = target;
     }
 
-    public T FindNearestTarget<T>(LayerMask mask) where T : TargetObject
+    public T FindNearestTarget<T>(float checkRange, LayerMask mask) where T : TargetObject
     {
         T target = null;
-        float radius = 10f;
         float maxDistance = 300f;
 
         // 넥서스 기준으로 주변 객체 검색
-        int count = Physics.OverlapSphereNonAlloc(nexusTrm.position, radius, _targetColliders, mask);
+        int count = Physics.OverlapSphereNonAlloc(nexusTrm.position, checkRange, _targetColliders, mask);
         for (int i = 0; i < count; ++i)
         {
             Collider collider = _targetColliders[i];

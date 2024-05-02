@@ -2561,11 +2561,12 @@ MonoBehaviour:
   moveSpeed: 2
   attackSpeed: 1
   rotationSpeed: 2
-  nexusDistance: 4
   passiveData: {fileID: 11400000, guid: 93ddcb9f472c4f041a241849214c9023, type: 2}
   NexusTarget: {fileID: 0}
   IsMove: 1
   IsProvoked: 0
+  IsTargetNexus: 0
+  UseAttackCombo: 0
   _vigilanceMaxLevel: 5
 --- !u!114 &6434532562155687745
 MonoBehaviour:
@@ -2705,6 +2706,7 @@ MonoBehaviour:
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
+  HitTarget: {fileID: 0}
 --- !u!114 &2686473476319964849
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,7 +22,7 @@ public class State
     {
         SignalHub.OnIceArrivedEvent += FindTarget;
 
-        if (_navAgent != null)
+        if (_navAgent.isOnNavMesh)
         {
             _navAgent?.ResetPath();
             //_navAgent.isStopped = false;
