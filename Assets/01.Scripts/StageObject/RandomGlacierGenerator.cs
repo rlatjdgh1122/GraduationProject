@@ -75,6 +75,8 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
+        curground.transform.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+
 
         curground.transform.SetParent(null);
         transform.rotation = Quaternion.Euler(0.0f, 30.0f, 0.0f);
