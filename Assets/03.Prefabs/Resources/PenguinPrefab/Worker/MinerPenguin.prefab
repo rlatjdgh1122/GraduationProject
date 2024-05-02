@@ -615,7 +615,6 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 0
-  Target: {fileID: 0}
   WorkerHomeTrm: {fileID: 0}
   CanWork: 1
   EndWork: 1
@@ -1281,7 +1280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8961983713670483298
 Transform:
   m_ObjectHideFlags: 0
@@ -1321,6 +1320,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f514919cc5f6bba4d919d6684932e1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectEndTime: 0.5
+  _detectRange: 1
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 131072
 --- !u!1 &6786378972006532014
 GameObject:
   m_ObjectHideFlags: 0
