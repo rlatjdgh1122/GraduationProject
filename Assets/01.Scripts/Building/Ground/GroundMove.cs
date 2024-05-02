@@ -14,8 +14,8 @@ public class GroundMove : MonoBehaviour
     [SerializeField] private Color endColor;
 
     #region 프로퍼티
-    private NavMeshSurface _parentSurface;
-    private NavMeshSurface _surface;
+    //private NavMeshSurface _parentSurface;
+    //private NavMeshSurface _surface;
     private Outline _outline;
     #endregion
 
@@ -25,14 +25,13 @@ public class GroundMove : MonoBehaviour
 
     private void Awake()
     {
-        _parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
-        _surface = transform.parent.GetComponent<NavMeshSurface>();
+        //_parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
+        //_surface = transform.parent.GetComponent<NavMeshSurface>();
         _outline = GetComponent<Outline>();
 
         _enemies = GetComponentsInChildren<Enemy>();
 
-        _waveEffect = transform.Find("WaterWave").gameObject;
-        _moveDir = transform.parent.position;
+        _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
     }
 
     private void Start()
@@ -67,9 +66,9 @@ public class GroundMove : MonoBehaviour
                 OnComplete(() =>
                 {
                     SoundManager.Play2DSound(SoundName.GroundHit);
-                    _surface.enabled = true;
-                    _surface.transform.SetParent(_parentSurface.transform);
-                    _parentSurface.BuildNavMesh();
+                    //_surface.enabled = true;
+                    //_surface.transform.SetParent(_parentSurface.transform);
+                    //_parentSurface.BuildNavMesh();
 
                     // 부딪힐 때 이펙트 / 카메라 쉐이크 + 사운드
                     CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
@@ -122,5 +121,12 @@ public class GroundMove : MonoBehaviour
     {
         //여기다가 적이나 보상 같은 것 설정
         _enableStage = WaveManager.Instance.CurrentWaveCount; // 나중에 랜덤으로 바꾸면 걍 없애기 
+    }
+
+    public void SetMoveDir(Transform trm)
+    {
+        transform.SetParent(trm);
+        _moveDir = trm.position;
+
     }
 }

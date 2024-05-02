@@ -37,8 +37,11 @@ public class RandomGlacierGenerator : MonoBehaviour
         for(int i = 0; i < 50; i++)
         {
             GroundMove ground = Instantiate(_glacierPrefab, transform.position, Quaternion.identity)
-                .transform.Find("TopArea").Find("GlacierModel").GetComponent<GroundMove>();
+                .GetComponent<GroundMove>();
             _allGrounds.Enqueue(ground);
+
+            ground.SetMoveDir(transform);
+
             ground.gameObject.SetActive(false);
         }
     }
@@ -75,7 +78,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
-        curground.transform.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+        curground.transform.rotation = Quaternion.identity;
 
 
         curground.transform.SetParent(null);

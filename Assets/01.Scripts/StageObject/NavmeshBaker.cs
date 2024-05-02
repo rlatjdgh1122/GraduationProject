@@ -17,4 +17,12 @@ public class NavmeshBaker : MonoBehaviour
     {
         _navMeshSurface.BuildNavMesh();
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            NavmeshBake();
+        }
+    }
 }
