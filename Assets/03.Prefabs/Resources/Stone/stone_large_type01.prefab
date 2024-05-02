@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6445395609531217449}
   - component: {fileID: 6200619383348400053}
   - component: {fileID: 6878600836757446653}
+  - component: {fileID: 1022333976211639829}
   m_Layer: 0
   m_Name: stone_large_type01
   m_TagString: Untagged
@@ -49,9 +50,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 5697cc85cf4f49245b54481cab6a47a3, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
+  _maxDetectEnemy: 5
   resourceType: 0
+  _noiseValue: 12
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
-  _resourceStat: {fileID: 11400000, guid: 5697cc85cf4f49245b54481cab6a47a3, type: 2}
   OnRecieveResourceEvent:
     m_PersistentCalls:
       m_Calls:
@@ -123,22 +127,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls: []
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
   OnUIUpdate:
@@ -219,3 +214,15 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 3be0096aee5f549eca5ff3432ff02572, type: 3}
+--- !u!114 &1022333976211639829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4379172729860633078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
