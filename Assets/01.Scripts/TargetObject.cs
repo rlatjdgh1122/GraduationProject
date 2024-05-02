@@ -65,6 +65,7 @@ public abstract class TargetObject : PoolableMono
     public T FindNearestTarget<T>(float checkRange, LayerMask mask) where T : TargetObject
     {
         T target = null;
+        
         float maxDistance = 300f;
 
         // 넥서스 기준으로 주변 객체 검색

@@ -29,6 +29,6 @@ public class ThrowSkill : Skill
     {
         yield return new WaitForSeconds(delay);
         
-        _owner.CurrentTarget.HealthCompo.Knockback(4, -transform.forward);
+        _owner.CurrentTarget.HealthCompo.Knockback(6, -transform.forward);
     }
 }

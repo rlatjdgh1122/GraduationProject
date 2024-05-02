@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class NoiseManager : Singleton<NoiseManager>
 {
+    [SerializeField]
+    private PhaseChangeButton _btn;
+
+
     [SerializeField] 
     private float _initMaxNosise = 100f;
 
@@ -62,7 +66,8 @@ public class NoiseManager : Singleton<NoiseManager>
     {
         NoiseLimitExceedEvent?.Invoke();
 
-        WaveManager.Instance.BattlePhaseStartEventHandler();
+        _btn.ChangePhase();
+        //WaveManager.Instance.BattlePhaseStartEventHandler();
 
         ResetNoise();
     }
