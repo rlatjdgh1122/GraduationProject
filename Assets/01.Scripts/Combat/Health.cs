@@ -90,6 +90,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
             Dead();
         }
     }
+
     public void Stun(float value)
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var stunF, value))
@@ -97,6 +98,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
             stunF.PlayFeedback();
         }
     }
+
     public void Knockback(float value, Vector3 normal = default)
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))

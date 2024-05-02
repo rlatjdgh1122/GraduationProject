@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class PenguinAnimationTrigger : MonoBehaviour
 {
-    private Penguin _penguin;
+    protected Penguin _penguin;
 
     [SerializeField] private UnityEvent OnPrevAttackEffectEvent = null;
     [SerializeField] private UnityEvent OnEndAttackEffectEvent = null;
