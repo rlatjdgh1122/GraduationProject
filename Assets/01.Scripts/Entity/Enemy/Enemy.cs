@@ -77,6 +77,13 @@ public class Enemy : Entity
 
         HealthCompo.OnHit += FindTarget;
     }
+    protected override void Update()
+    {
+        base.Update();
+
+        if(Input.GetKeyDown(KeyCode.P))
+            FindNearestTarget();
+    }
 
     protected override void OnDestroy()
     {
