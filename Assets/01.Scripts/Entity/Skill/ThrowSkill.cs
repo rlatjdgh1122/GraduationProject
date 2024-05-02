@@ -1,11 +1,10 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
 public class ThrowSkill : Skill
 {
     [SerializeField] private float _throwDelay;
-
-    private Coroutine _throwCoroutine;
 
     public override void SetOwner(Entity owner)
     {
@@ -14,21 +13,33 @@ public class ThrowSkill : Skill
 
     public override void PlaySkill()
     {
-        Throw();
+        if (CanUseSkill)
+        {
+            Throw();
+            CanUseSkill = false;
+        }
+        else
+        {
+            Grab();
+            CanUseSkill = true;
+        } 
+    }
+
+    public void Grab()
+    {
+        _owner.CurrentTarget.transform.DORotate(new Vector3(0, 0, 90), 1.1f);
+        _owner.CurrentTarget.transform.DOMoveY(2.8f, 1.2f).SetEase(Ease.OutQuint);
     }
 
     public void Throw()
     {
-        if (_throwCoroutine != null)
-            StopCoroutine(ThrowCoroutine(0));
-
-        _throwCoroutine = StartCoroutine(ThrowCoroutine(_throwDelay)); 
+        _owner.CurrentTarget.HealthCompo.Knockback(4, -transform.forward);
     }
 
-    private IEnumerator ThrowCoroutine(float delay)
+    private IEnumerator ThrowCoroutine()
     {
-        yield return new WaitForSeconds(delay);
         
-        _owner.CurrentTarget.HealthCompo.Knockback(4, -transform.forward);
+        yield return new WaitForSeconds(0.9f);
+        
     }
 }
