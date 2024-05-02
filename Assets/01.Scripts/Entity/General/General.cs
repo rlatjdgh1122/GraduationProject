@@ -1,10 +1,3 @@
-using Bitgem.Core;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
 public class General : Penguin
 {
     public Skill skill;
