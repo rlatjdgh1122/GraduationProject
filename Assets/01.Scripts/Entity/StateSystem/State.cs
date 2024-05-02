@@ -42,6 +42,17 @@ public class State
 
         _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
+
+        if (!_penguin.TargetLock)
+        {
+            _penguin.FindNearestEnemy();
+        }
+        else
+        {
+            if (_penguin.CurrentTarget == null)
+                _penguin.FindNearestEnemy();
+        }
+
         _penguin.StopImmediately();
 
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
