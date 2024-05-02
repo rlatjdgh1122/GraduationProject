@@ -9,6 +9,7 @@ public class PenguinDeadController : EntityDeadController<Penguin>, ILiveable
 
         ArmyManager.Instance.RemovePenguin(_owner.MyArmy.LegionName, _owner);
         var infoData = PenguinManager.Instance.GetInfoDataByPenguin(_owner);
+        PenguinManager.Instance.RemoveSoliderPenguin(_owner);
         LegionInventoryManager.Instance.DeadLegionPenguin(infoData.LegionName,infoData.SlotIdx);
 
         SignalHub.OnModifyCurArmy?.Invoke();

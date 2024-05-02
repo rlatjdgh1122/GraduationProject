@@ -180,7 +180,7 @@ public class Penguin : Entity
 
     public void FindNearestEnemy()
     {
-        CurrentTarget = FindNearestTarget<Enemy>(innerDistance, TargetLayer);
+        CurrentTarget = FindNearestTarget<Enemy>(20f, TargetLayer);
     }
 
     public virtual void LookTarget()

@@ -26,10 +26,15 @@ public class EnemyBaseState : EnemyState
     }
     protected void AttackEnter()
     {
+        if (_enemy.CurrentTarget != null)
+            _enemy.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+
         _triggerCalled = false;
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
+
+  
 
     protected void AttackComboEnter()
     {
@@ -41,9 +46,7 @@ public class EnemyBaseState : EnemyState
         }
         _enemy.AnimatorCompo.SetInteger(_comboCounterHash, _animalAttack.ComboCounter);
 
-        _enemy.StopImmediately();
-
-        _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
+        AttackEnter();
     }
 
     protected void ChaseEnter()
@@ -117,6 +120,21 @@ public class EnemyBaseState : EnemyState
     private void FindTarget()
     {
         _enemy.FindNearestTarget();
+    }
+    private void DeadTarget()
+    {
+        var prevTarget = _enemy.CurrentTarget;
+
+        _enemy.FindNearestTarget();
+
+        if (prevTarget != null)
+        {
+            prevTarget.HealthCompo.OnDied -= DeadTarget;
+        }
+        if (_enemy.CurrentTarget != null)
+        {
+            _enemy.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+        }
     }
     #endregion
 }
