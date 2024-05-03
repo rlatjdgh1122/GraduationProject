@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,12 @@ public class RandomGlacierGenerator : MonoBehaviour
     private Queue<GroundMove> _curHexagon_Grounds = new Queue<GroundMove>(); // 나중에 Queue나 stack으로 할 수도
     private Queue<GroundMove> _allGrounds = new Queue<GroundMove>(); // 나중에 Queue나 stack으로 할 수도
 
-    private float randomDistance => Random.Range(10, 30f); // 이 수치는 나중에 적당히 찾아서 넣어주자
-
     private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
+
+    private readonly float glacierDiameter = 10.400405f;
+
+
+    // 김성호: 비율 어쩌고로 하기
 
     private GroundMove SpawnGlaciers()
     {
@@ -42,7 +46,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
             ground.SetMoveDir(transform);
 
-            ground.gameObject.SetActive(false);
+            ground.gameObject.SetActive(false); 
         }
     }
 
@@ -67,6 +71,9 @@ public class RandomGlacierGenerator : MonoBehaviour
     {
         // position는 randomDistance로 랜덤한 거리에 있는 위치로
         // rotation은 GetCurAngleBetweenGlacier으로 조절
+        int realMakedHexagonCount = makedHexagonCount + 1;
+
+
         GroundMove curground = _curHexagon_Grounds.Dequeue();
 
         Vector3 roataeVec = new Vector3(0,  0f);
@@ -74,14 +81,19 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         curground.SetGroundInfo(roataeVec);
         curground.transform.SetParent(transform);
-        curground.transform.localPosition = new Vector3(0f, 0f, 10f * (makedHexagonCount + 1)); // 일단은 만든 육각형 비례해서 멀리서 나오도록
+        curground.transform.localPosition = new Vector3(0f, 0f, 50f * realMakedHexagonCount); // 일단은 만든 육각형 비례해서 멀리서 나오도록
 
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
         curground.transform.rotation = Quaternion.identity;
 
-
         curground.transform.SetParent(null);
+
+
+        GameObject obj = new GameObject();
+        obj.transform.forward = curground.transform.position;
+        obj.transform.position = transform.forward * glacierDiameter * realMakedHexagonCount; // 소발임
+         
         transform.rotation = Quaternion.Euler(0.0f, 30.0f, 0.0f);
     }
 
@@ -101,6 +113,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.K)) // 디버그 용
         {
             makedHexagonCount++;
