@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ArmySystem;
 
 public class ArmyManager : Singleton<ArmyManager>
 {

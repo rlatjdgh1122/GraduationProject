@@ -2,19 +2,8 @@ using Define.RayCast;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ArmySystem;
 
-[System.Serializable]
-public class PenguinMovementInfo
-{
-    public PenguinMovementInfo(bool isCheck, Penguin obj)
-    {
-        IsCheck = isCheck;
-        Obj = obj;
-    }
-
-    public bool IsCheck;
-    public Penguin Obj;
-}
 public class ArmyMovement : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
