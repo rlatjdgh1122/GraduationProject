@@ -2,23 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using ArmySystem;
 
-[System.Serializable]
-public struct ArrangementInfo
-{
-    public int Legion;
-    public int SlotIdx;
-    public PenguinJobType JobType;
-    public PenguinTypeEnum PenguinType;
-}
 
-[System.Serializable]
-public enum MovefocusMode
-{
-    Command = 0, //내말을 잘들음
-    Battle, //전투광이 됨
 
-}
 
 public delegate void ChangedArmy(Army prevArmy, Army newArmy);
 public delegate void ChangedArmyScreen(Army prevArmy, Army newArmy);

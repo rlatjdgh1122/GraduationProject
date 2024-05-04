@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+[System.Serializable]
+public enum MovefocusMode
+{
+    Command = 0, //내말을 잘들음
+    Battle, //전투광이 됨
 
+}
 public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Penguin
 {
     public PenguinState(G penguin, EntityStateMachine<T, G> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
