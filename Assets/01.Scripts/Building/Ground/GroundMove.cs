@@ -32,10 +32,7 @@ public class GroundMove : MonoBehaviour
     {
         get
         {
-            GameObject obj = new GameObject();
-            obj.transform.SetParent(_col.transform.parent);
-            obj.transform.localPosition = _col.ClosestPoint(_centerPos);
-            return _col.ClosestPointOnBounds(obj.transform.localPosition);
+            return _col.ClosestPointOnBounds(_centerPos);
         }
         //get
         //{
@@ -156,7 +153,7 @@ public class GroundMove : MonoBehaviour
         transform.rotation = Quaternion.identity;
         transform.SetParent(null);
 
-        CoroutineUtil.CallWaitForSeconds(1f, null, () => Debug.Log(_closestPointDirToCenter));
+        CoroutineUtil.CallWaitForOneFrame(() => Debug.Log(_closestPointDirToCenter));
 
         #endregion
 
