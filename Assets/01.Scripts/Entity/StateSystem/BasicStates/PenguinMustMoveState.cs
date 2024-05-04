@@ -1,7 +1,7 @@
 using UnityEngine;
-
+using ArmySystem;
 public class PenguinMustMoveState : State
-{
+{ 
     public PenguinMustMoveState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }

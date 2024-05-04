@@ -1,4 +1,7 @@
+using ArmySystem;
+
 public class PenguinMoveState : State
+
 {
     public PenguinMoveState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {

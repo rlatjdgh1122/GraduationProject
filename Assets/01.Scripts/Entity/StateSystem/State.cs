@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using ArmySystem;
 
 public class State
 {

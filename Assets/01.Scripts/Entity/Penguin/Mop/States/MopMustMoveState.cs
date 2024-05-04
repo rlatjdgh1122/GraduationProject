@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using ArmySystem;
 public class MopMustMoveState : MopBaseState
 {
     public MopMustMoveState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
