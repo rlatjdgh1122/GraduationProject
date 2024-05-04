@@ -41,7 +41,7 @@ public abstract class TargetObject : PoolableMono
         nexusTrm = GameManager.Instance.NexusTrm;
 
         //내 위치와 transform.forward * 5에서 가장 가까운 포인트의 거리를 비교 => 내 크기의 반지름(원형모형 기준)
-        radius = Vector3.Magnitude(transform.position - _collider.ClosestPoint(transform.right * 5));
+        radius = Vector3.Magnitude(transform.position - _collider.ClosestPoint(transform.right * 20));
     }
     protected virtual void Start()
     {
