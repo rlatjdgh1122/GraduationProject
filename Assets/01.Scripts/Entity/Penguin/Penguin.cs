@@ -78,8 +78,8 @@ public class Penguin : Entity
     private IDeadable _deadCompo = null;
     private ILiveable _liveCompo = null;
     #endregion
-    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
-    public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
+    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
+    public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
 
 
     private Army owner;
