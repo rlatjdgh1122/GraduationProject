@@ -15,6 +15,9 @@ public class PenguinThrowState : State
     {
         base.EnterState();
 
+        if (_penguin.CurrentTarget != null)
+            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+
         if (_penguin.CurrentTarget == null)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);

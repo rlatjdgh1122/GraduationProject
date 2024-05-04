@@ -5,6 +5,6 @@ using UnityEngine;
 public class GeneralInfoDataSO : PenguinInfoDataSO
 {
     [Header("장군 패시브 설명")]
-    [TextArea()] public string Type;
-    [TextArea()] public string Characteristic;
+    [TextArea()] public string Description;
+    [TextArea()] public string Synergy;
 }
