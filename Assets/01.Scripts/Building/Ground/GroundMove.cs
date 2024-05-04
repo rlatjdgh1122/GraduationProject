@@ -36,14 +36,15 @@ public class GroundMove : MonoBehaviour
         {
             if (Physics.Raycast(_closestPointDirToCenter, (_centerPos - _closestPointDirToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
             {
-                Debug.Log(hit.collider.gameObject);
                 return hit.point;
             }
             return Vector3.zero;
         }
     }
 
-private void Awake()
+    private Vector3 _targetPos;
+
+    private void Awake()
     {
         //_parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
         //_surface = transform.parent.GetComponent<NavMeshSurface>();
@@ -73,45 +74,45 @@ private void Awake()
 
     private void GroundMoveHandle()
     {
-        //if (WaveManager.Instance.CurrentWaveCount == _enableStage) // ³ªÁß¿¡ ·£´ýÀ¸·Î ¹Ù²Ù¸é °Á ¾ø¾Ö±â 
-        //{
-        //    foreach (Enemy enemy in _enemies)
-        //    {
-        //        enemy.enabled = true;
-        //    }
+        if (WaveManager.Instance.CurrentWaveCount == _enableStage) // ³ªÁß¿¡ ·£´ýÀ¸·Î ¹Ù²Ù¸é °Á ¾ø¾Ö±â 
+        {
+            foreach (Enemy enemy in _enemies)
+            {
+                enemy.enabled = true;
+            }
 
-        //    //ºùÇÏ ¿Ã ¶§ ÀÌÆåÆ®
-        //    _waveEffect.gameObject.SetActive(true);
+            //ºùÇÏ ¿Ã ¶§ ÀÌÆåÆ®
+            _waveEffect.gameObject.SetActive(true);
 
-        //    transform.DOMove(new Vector3(targetPos.x, transform.position.y, targetPos.z), _moveDuration).
-        //        OnComplete(() =>
-        //        {
-        //            SoundManager.Play2DSound(SoundName.GroundHit);
-        //            //_surface.enabled = true;
-        //            //_surface.transform.SetParent(_parentSurface.transform);
-        //            //_parentSurface.BuildNavMesh();
+            transform.DOMove(new Vector3(_targetPos.x, transform.position.y, _targetPos.z), _moveDuration).
+                OnComplete(() =>
+                {
+                    SoundManager.Play2DSound(SoundName.GroundHit);
+                    //_surface.enabled = true;
+                    //_surface.transform.SetParent(_parentSurface.transform);
+                    //_parentSurface.BuildNavMesh();
 
-        //            // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
-        //            CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
-        //                                                 () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+                    // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
+                    CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
+                                                         () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
-        //            SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;
+                    SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;
 
-        //            _waveEffect.gameObject.SetActive(false);
+                    _waveEffect.gameObject.SetActive(false);
 
-        //            DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
-        //            {
-        //                WaveManager.Instance.OnIceArrivedEventHanlder();
+                    DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
+                    {
+                        WaveManager.Instance.OnIceArrivedEventHanlder();
 
-        //                foreach (Enemy enemy in _enemies)
-        //                {
-        //                    enemy.IsMove = true;
-        //                    enemy.NavAgent.enabled = true;
-        //                }
-        //                SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
-        //            });
-        //        });
-        //}
+                        foreach (Enemy enemy in _enemies)
+                        {
+                            enemy.IsMove = true;
+                            enemy.NavAgent.enabled = true;
+                        }
+                        SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
+                    });
+                });
+        }
 
         
     }
@@ -157,19 +158,35 @@ private void Awake()
             float CenterToHitPointX = Mathf.Abs(_col.transform.position.x - RaycastHit_ToCenterPos.x);
             float CenterToHitPointZ = Mathf.Abs(_col.transform.position.z - RaycastHit_ToCenterPos.z);
 
-
             float ClosestPointToHitPointX = Mathf.Abs(_closestPointDirToCenter.x - RaycastHit_ToCenterPos.x);
             float ClosestPointToHitPointZ = Mathf.Abs(_closestPointDirToCenter.z - RaycastHit_ToCenterPos.z);
 
             float XDistance = CenterToHitPointX - ClosestPointToHitPointX;
             float ZDistance = CenterToHitPointZ - ClosestPointToHitPointZ;
 
-            Vector3 distanceVec = new Vector3(XDistance, 0f, ZDistance);
-            Debug.Log($"¼öÁ¦ Á¦ÀÛÀÔ´Ï´Ù: {distanceVec}");
+            Vector3 targetVec = RaycastHit_ToCenterPos;
 
-            float CenterToHitPoint = Vector3.Distance(_col.transform.position, RaycastHit_ToCenterPos);
-            float ClosestPointToHitPoint = Vector3.Distance(_closestPointDirToCenter, RaycastHit_ToCenterPos);
-            Debug.Log($"ÀÚµ¿ÀÔ´Ï´Ù: {CenterToHitPoint - ClosestPointToHitPoint}");
+            if (transform.position.x + _centerPos.y > 0)
+            {
+                targetVec += new Vector3(XDistance, 0, 0);
+            }
+            else if(transform.position.x + _centerPos.y < 0)
+            {
+                targetVec -= new Vector3(XDistance, 0, 0);
+            }
+
+            if (transform.position.z + _centerPos.x > 0)
+            {
+                targetVec += new Vector3(0, 0, ZDistance);
+            }
+            else if(transform.position.z + _centerPos.x < 0)
+            {
+                targetVec -= new Vector3(0, 0, ZDistance);
+            }
+
+            Debug.Log(targetVec);
+
+            _targetPos = targetVec;
         });
 
         #endregion
