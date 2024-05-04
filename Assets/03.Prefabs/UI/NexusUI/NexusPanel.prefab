@@ -4397,10 +4397,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panelFadeTime: 0
+  _panelDelayTime: 0
+  soundName: 16
   currentLevel: {fileID: 0}
   nextLevel: {fileID: 0}
   currentHp: {fileID: 0}
   nextHp: {fileID: 0}
+  currentWorkerCount: {fileID: 0}
+  nextWorkerCount: {fileID: 0}
+  buildingIcon: {fileID: 0}
   upgradePrice: {fileID: 0}
 --- !u!222 &8174028209412601146
 CanvasRenderer:
@@ -4448,7 +4453,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6840555620331991997}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

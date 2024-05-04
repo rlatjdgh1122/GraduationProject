@@ -1,10 +1,11 @@
 public class EnemyAttackState : EnemyBaseState
 {
-
     private int curAttackCount = 0;
+
     public EnemyAttackState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
     }
+
     public override void EnterState()
     {
         base.EnterState();
@@ -29,8 +30,6 @@ public class EnemyAttackState : EnemyBaseState
         {
             if (_enemy.IsTargetInInnerRange)
                 _stateMachine.ChangeState(EnemyStateType.Chase); //사거리 안에 타겟 플레이어가 있다 -> 따라가
-           /* else
-                _stateMachine.ChangeState(EnemyStateType.Move); //없다 -> 넥서스로 Move*/
         }
     }
 
@@ -47,6 +46,7 @@ public class EnemyAttackState : EnemyBaseState
             AttackExit();
         }
     }
+
     public override void AnimationTrigger()
     {
         base.AnimationTrigger();

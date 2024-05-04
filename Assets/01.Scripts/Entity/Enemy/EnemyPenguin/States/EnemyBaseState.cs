@@ -53,10 +53,13 @@ public class EnemyBaseState : EnemyState
     {
         _triggerCalled = true;
 
+        _enemy.FindNearestTarget();
+
         //follow target
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();
     }
+
     protected void MustChaseEnter()
     {
         _triggerCalled = true;
@@ -65,6 +68,7 @@ public class EnemyBaseState : EnemyState
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();
     }
+
     protected void MoveEnter()
     {
         _triggerCalled = true;
@@ -88,6 +92,7 @@ public class EnemyBaseState : EnemyState
     {
         _enemy.AnimatorCompo.speed = 1;
     }
+
     protected void AttackComboExit()
     {
         ++_animalAttack.ComboCounter;
@@ -95,10 +100,12 @@ public class EnemyBaseState : EnemyState
 
         _enemy.AnimatorCompo.speed = 1;
     }
+
     protected void ChaseExit()
     {
 
     }
+
     protected void MustChaseExit()
     {
 
