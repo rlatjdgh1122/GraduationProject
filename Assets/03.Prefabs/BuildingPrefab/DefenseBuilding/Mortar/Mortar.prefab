@@ -18762,6 +18762,8 @@ GameObject:
   - component: {fileID: 6047378740931729938}
   - component: {fileID: 8840118088703615064}
   - component: {fileID: 2784336708232331575}
+  - component: {fileID: 4301404278305045225}
+  - component: {fileID: 3988667966935956856}
   m_Layer: 0
   m_Name: Mortar
   m_TagString: Untagged
@@ -18809,18 +18811,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls: []
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -18881,7 +18871,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 7d120fb5ecb1fd74ead29a93667d830e, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
+  _maxDetectEnemy: 5
   resourceType: 0
+  _noiseValue: 0
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
     type: 2}
@@ -18914,6 +18908,40 @@ MonoBehaviour:
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
+  HitTarget: {fileID: 0}
+--- !u!114 &4301404278305045225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841486384569458009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &3988667966935956856
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841486384569458009}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.166693, y: 1, z: 2.216033}
+  m_Center: {x: 0.28224355, y: 0, z: -0.60801625}
 --- !u!1 &6892617321503786158
 GameObject:
   m_ObjectHideFlags: 0

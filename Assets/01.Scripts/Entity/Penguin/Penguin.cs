@@ -245,11 +245,11 @@ public class Penguin : Entity
 
             movingCoroutine = StartCoroutine(Moving());
 
-            /* if (prevMousePos != Vector3.zero)
-             {
-             }
-             else
-                 MoveToMouseClick(mousePos + SeatPos);*/
+            if (prevMousePos != Vector3.zero)
+            {
+            }  
+            else
+                MoveToMouseClick(mousePos + SeatPos);
         }
     }
     private IEnumerator Moving()

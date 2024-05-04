@@ -35,12 +35,13 @@ public class ArmyManager : Singleton<ArmyManager>
              {KeyCode.Alpha7, ()=> ChangeArmy(7) },
              {KeyCode.Alpha8, ()=> ChangeArmy(8) },
              {KeyCode.Alpha9, ()=> ChangeArmy(9) },
-             /*{KeyCode.A,      ()=>
+
+             {KeyCode.A,      ()=>
              {
                  curFocusMode = curFocusMode == MovefocusMode.Command ?
                  MovefocusMode.Battle :  MovefocusMode.Command;
              SignalHub.OnBattleModeChanged?.Invoke(curFocusMode); }
-            },*/
+            },
         };
     }
 
