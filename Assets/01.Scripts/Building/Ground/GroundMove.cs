@@ -154,10 +154,22 @@ private void Awake()
 
         CoroutineUtil.CallWaitForOneFrame(() =>
         {
+            float CenterToHitPointX = Mathf.Abs(_col.transform.position.x - RaycastHit_ToCenterPos.x);
+            float CenterToHitPointZ = Mathf.Abs(_col.transform.position.z - RaycastHit_ToCenterPos.z);
+
+
+            float ClosestPointToHitPointX = Mathf.Abs(_closestPointDirToCenter.x - RaycastHit_ToCenterPos.x);
+            float ClosestPointToHitPointZ = Mathf.Abs(_closestPointDirToCenter.z - RaycastHit_ToCenterPos.z);
+
+            float XDistance = CenterToHitPointX - ClosestPointToHitPointX;
+            float ZDistance = CenterToHitPointZ - ClosestPointToHitPointZ;
+
+            Vector3 distanceVec = new Vector3(XDistance, 0f, ZDistance);
+            Debug.Log($"수제 제작입니다: {distanceVec}");
+
             float CenterToHitPoint = Vector3.Distance(_col.transform.position, RaycastHit_ToCenterPos);
             float ClosestPointToHitPoint = Vector3.Distance(_closestPointDirToCenter, RaycastHit_ToCenterPos);
-
-            Debug.Log(CenterToHitPoint - ClosestPointToHitPoint);
+            Debug.Log($"자동입니다: {CenterToHitPoint - ClosestPointToHitPoint}");
         });
 
         #endregion
