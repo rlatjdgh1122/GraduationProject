@@ -7,6 +7,7 @@ public class CrazyPenguin : MonoBehaviour
 {
     [SerializeField] Transform _targetPos;
     [SerializeField] Transform _nexusPos;
+    [SerializeField] private SoundName _fallDownSound = SoundName.FallDown;
 
     NavMeshAgent _agent;
     Animator _anim;
@@ -31,6 +32,7 @@ public class CrazyPenguin : MonoBehaviour
         {
             _anim.SetBool("Run", false);
             _anim.SetBool("FallDown", true);
+            SoundManager.Play3DSound(_fallDownSound, transform.position);
             IsFirst = false;
             CanIn = true;
         }
