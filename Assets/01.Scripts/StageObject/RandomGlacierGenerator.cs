@@ -44,7 +44,7 @@ public class RandomGlacierGenerator : MonoBehaviour
                 .GetComponent<GroundMove>();
             _allGrounds.Enqueue(ground);
 
-           // ground.SetMoveTarget(transform, );
+            ground.SetMoveTarget(transform);
 
             ground.gameObject.SetActive(false); 
         }
@@ -76,27 +76,18 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         GroundMove curground = _curHexagon_Grounds.Dequeue();
 
-        Vector3 roataeVec = new Vector3(0,  0f);
-        curground.gameObject.SetActive(true);
-
-        curground.SetGroundInfo(roataeVec);
-        curground.transform.SetParent(transform);
-        curground.transform.localPosition = new Vector3(0f, 0f, 50f * realMakedHexagonCount); // 일단은 만든 육각형 비례해서 멀리서 나오도록
-
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
-        curground.transform.rotation = Quaternion.identity;
 
-        curground.transform.SetParent(null);
+        curground.gameObject.SetActive(true);
 
+        curground.SetGroundInfo(transform, new Vector3(0f, 0f, 50f * realMakedHexagonCount));
 
-        GameObject obj = new GameObject();
-        obj.transform.forward = curground.transform.position;
-        obj.transform.position = transform.forward * glacierDiameter * realMakedHexagonCount; // 소발임
-         
-        transform.rotation = Quaternion.Euler(0.0f, 30.0f, 0.0f);
+        CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
+        {
+            transform.rotation = Quaternion.Euler(0.0f, 30.0f, 0.0f);
+        });
     }
-
 
     private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
     {
