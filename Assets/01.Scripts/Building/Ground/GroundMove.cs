@@ -30,7 +30,7 @@ public class GroundMove : MonoBehaviour
     private Vector3 _centerPos;
     private Vector3 _closestPointDirToCenter => _col.ClosestPointOnBounds(_centerPos);
 
-    private Vector3 RaycastHit_TocenterPos
+    private Vector3 RaycastHit_ToCenterPos
     {
         get
         {
@@ -151,7 +151,14 @@ private void Awake()
         transform.rotation = Quaternion.identity;
         transform.SetParent(null);
 
-        CoroutineUtil.CallWaitForOneFrame(() => Debug.Log(RaycastHit_TocenterPos));
+
+        CoroutineUtil.CallWaitForOneFrame(() =>
+        {
+            float CenterToHitPoint = Vector3.Distance(_col.transform.position, RaycastHit_ToCenterPos);
+            float ClosestPointToHitPoint = Vector3.Distance(_closestPointDirToCenter, RaycastHit_ToCenterPos);
+
+            Debug.Log(CenterToHitPoint - ClosestPointToHitPoint);
+        });
 
         #endregion
 
@@ -162,6 +169,5 @@ private void Awake()
     {
         transform.SetParent(trm);
         _centerPos = trm.position;
-        Debug.Log(_centerPos);
     }
 }
