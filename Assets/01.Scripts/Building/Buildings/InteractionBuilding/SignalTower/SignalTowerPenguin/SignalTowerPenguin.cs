@@ -7,9 +7,10 @@ public class SignalTowerPenguin : MonoBehaviour
 {
     [SerializeField] private GameObject _findEnemyParticle;
     //[SerializeField] public GameObject Target;
+    //지금은 설정되어 있는 빙하를 타겟에 할당해줌, 근데 나중에 랜덤 빙하 만들면 수정
     public List<GameObject> Target = new List<GameObject>();
     
-    public int _targetCnt = 1;
+    public int _targetCnt = 0;
 
     private Animator _anim;
 

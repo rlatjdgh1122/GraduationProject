@@ -16,7 +16,7 @@ public class PenguinMoveState : State
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Idle);
 
-        if (_penguin.IsInnerTargetRange
+        if (_penguin.IsTargetInInnerRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
             _stateMachine.ChangeState(PenguinStateType.Chase);
     }

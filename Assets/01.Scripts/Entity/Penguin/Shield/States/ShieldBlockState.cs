@@ -39,7 +39,7 @@ public class ShieldBlockState : ShieldBaseState
         else
         {
             //사거리가 멀어지면 맞으러 감
-            if (!_penguin.IsInnerMeleeRange)
+            if (!_penguin.IsTargetInAttackRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
 
             IsTargetNull(ShieldPenguinStateEnum.Idle);

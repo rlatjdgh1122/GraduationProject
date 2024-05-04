@@ -22,7 +22,7 @@ public class WizardMoveState : WizardBaseState
             _stateMachine.ChangeState(WizardPenguinStateEnum.Idle);
         }
 
-        else if (_penguin.IsInnerTargetRange)
+        else if (_penguin.IsTargetInInnerRange)
             _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
     }
 

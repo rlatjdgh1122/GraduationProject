@@ -5,6 +5,8 @@ public enum SynergyType
 {
     Will,
     Bless,
+    Wind,
+    Revolt,
 }
 
 [Serializable]

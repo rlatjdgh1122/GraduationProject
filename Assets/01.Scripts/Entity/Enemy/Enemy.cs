@@ -12,10 +12,6 @@ public class Enemy : Entity
     public float attackSpeed = 1f;
     public float rotationSpeed = 2f;
 
-    [SerializeField]
-    [Range(0.1f, 6f)]
-    protected float nexusDistance;
-
     public PassiveDataSO passiveData = null;
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
@@ -25,40 +21,105 @@ public class Enemy : Entity
 
     public bool IsMove = false;
     public bool IsProvoked = false;
+    public bool IsTargetNexus = false;
+    public bool UseAttackCombo = false;
 
-    public bool IsTargetPlayerInsideWhenNexus => CurrentTarget != null &&
-                           Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= 500;
-    public bool IsTargetPlayerInside => CurrentTarget != null &&
-                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= innerDistance;
-    public bool CanAttack => CurrentTarget != null &&
-                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= attackDistance;
-    public bool IsReachedNexus =>
-                            Vector3.Distance(transform.position, NexusTarget.position) <= nexusDistance;
+    public bool IsTargetInInnerRange => CurrentTarget != null &&
+                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
+    public bool IsTargetInAttackRange => CurrentTarget != null &&
+                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
 
+    public EnemyStateMachine StateMachine { get; private set; }
 
+    private void OnEnable()
+    {
+        NexusTarget = GameManager.Instance.NexusTrm;
+    }
     protected override void Awake()
     {
         base.Awake();
-        NavAgent.speed = moveSpeed;
+
+        StateMachine = new EnemyStateMachine();
+
+        foreach (EnemyStateType state in Enum.GetValues(typeof(EnemyStateType)))
+        {
+            string typeName = state.ToString();
+            Type t = Type.GetType($"Enemy{typeName}State");
+            try
+            {
+                EnemyState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState;
+
+                StateMachine.AddState(state, newState);
+
+            }
+            catch
+            {
+                Debug.LogError($"There is no script : {state}");
+
+            }
+        }
+
+        if (NavAgent != null)
+        {
+            NavAgent.speed = moveSpeed;
+        }
 
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
 
-    }
-    private void OnEnable()
-    {
-        SignalHub.OnIceArrivedEvent += FindNearestPenguin;
-        NexusTarget = GameManager.Instance.NexusTrm;
+        if (passiveData != null)
+            passiveData = Instantiate(passiveData);
     }
 
-    private void OnDisable()
+    protected override void Start()
     {
-        SignalHub.OnIceArrivedEvent -= FindNearestPenguin;
+        base.Start();
+
+        HealthCompo.OnHit += FindTarget;
+    }
+    protected override void Update()
+    {
+        base.Update();
+
+        if(Input.GetKeyDown(KeyCode.P))
+            FindNearestTarget();
     }
 
-    public void FindNearestPenguin()
+    protected override void OnDestroy()
     {
-        CurrentTarget = FindNearestTarget<TargetObject>(TargetLayer);
+        base.OnDestroy();
+
+        HealthCompo.OnHit -= FindTarget;
+    }
+
+    private void FindTarget()
+    {
+        if (IsTargetNexus)
+        {
+            //³ª ¶§¸°³ðÀÌ Å¸°Ù
+            SetTarget(ActionData.HitTarget);
+        }
+        else
+        {
+            FindNearestTarget();
+        }
+    }
+
+   
+
+
+    public void FindNearestTarget()
+    {
+        CurrentTarget = FindNearestTarget<TargetObject>(innerDistance, TargetLayer);
+        IsTargetNexus = false;
+
+        //target is not Nexus
+        if (CurrentTarget != null && CurrentTarget is not Nexus) return;
+
+        //set target to Nexus
+        CurrentTarget = FindNearestTarget<Nexus>(50f, TargetLayer);
+        IsTargetNexus = true;
+
     }
 
     protected override void HandleDie()
@@ -120,14 +181,14 @@ public class Enemy : Entity
 
     #region passive
     public bool CheckAttackEventPassive(int curAttackCount)
-=> passiveData.CheckAttackEventPassive(curAttackCount);
+    => passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
     public virtual void OnPassiveAttackEvent()
     {
 
     }
     public bool CheckStunEventPassive(float maxHp, float currentHP)
- => passiveData.CheckStunEventPassive(maxHp, currentHP);
+    => passiveData?.CheckStunEventPassive(maxHp, currentHP) ?? false;
 
     public virtual void OnPassiveStunEvent()
     {

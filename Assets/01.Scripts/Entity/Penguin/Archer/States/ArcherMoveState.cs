@@ -22,7 +22,7 @@ public class ArcherMoveState : ArcherBaseState
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Idle);
         }
 
-        else if (_penguin.IsInnerTargetRange)
+        else if (_penguin.IsTargetInInnerRange)
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);
     }
 

@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using UnityEngine;
 
 public enum EnemyWolfStateEnum
@@ -53,3 +53,4 @@ public class EnemyBasicWolf : Enemy
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }
+*/

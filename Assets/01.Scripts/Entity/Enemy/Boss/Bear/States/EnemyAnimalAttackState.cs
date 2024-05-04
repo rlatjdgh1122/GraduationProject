@@ -1,30 +1,17 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class EnemyAnimalAttackState : EnemyAnimalBaseState
 {
-    private AnimalAttackableEntity _animalAttack;
-    private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
-
-    public EnemyAnimalAttackState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
-        : base(enemyBase, stateMachine, animBoolName)
+    public EnemyAnimalAttackState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
-        _animalAttack = enemyBase.GetComponent<AnimalAttackableEntity>();
+
     }
 
-    public override void Enter()
+    public override void EnterState()
     {
-        base.Enter();
+        base.EnterState();
 
-        if (_animalAttack.ComboCounter > _animalAttack.animalAttackList.Count - 1
-            || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
-        {
-            _animalAttack.ComboCounter = 0; //콤보 초기화 조건에 따라 콤보 초기화
-        }
-        _enemy.AnimatorCompo.SetInteger(_comboCounterHash, _animalAttack.ComboCounter);
-
-        _enemy.StopImmediately();
-
-        _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
+        AttackComboEnter();
     }
 
     public override void UpdateState()
@@ -60,3 +47,4 @@ public class EnemyAnimalAttackState : EnemyAnimalBaseState
         base.Exit();
     }
 }
+*/

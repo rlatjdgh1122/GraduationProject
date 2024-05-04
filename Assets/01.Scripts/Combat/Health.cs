@@ -51,7 +51,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         maxHealth = owner.GetMaxHealthValue();
     }
 
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType)
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, TargetObject hitTarget)
     {
         if (_isDead) return;
 
@@ -69,6 +69,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         _actionData.HitPoint = point;
         _actionData.HitNormal = normal;
         _actionData.HitType = hitType;
+        _actionData.HitTarget = hitTarget;
 
         float adjustedDamage = damage * (1.0f - (_armor * 0.01f));
 
@@ -89,6 +90,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
             Dead();
         }
     }
+
     public void Stun(float value)
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var stunF, value))
@@ -96,6 +98,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
             stunF.PlayFeedback();
         }
     }
+
     public void Knockback(float value, Vector3 normal = default)
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
