@@ -59,9 +59,15 @@ public class LegionInventory : LegionUI
             list.ExitSlot(null);
         }
 
-        currentDictionary = new();
-        currentRemovePenguinList = new();
-        currentLegionList = new();
+        if (currentDictionary.Count > 0)
+            currentDictionary.Clear();
+
+        if (currentRemovePenguinList.Count > 0)
+            currentRemovePenguinList.Clear();
+
+        if (currentLegionList.Count > 0)
+            currentLegionList.Clear();
+
         currentPenguinCnt = 0;
         currentRemovePenguinCnt = 0;
         currentGeneral = 0;
@@ -114,7 +120,7 @@ public class LegionInventory : LegionUI
         data.SlotIdx = idx;
 
         int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
-        
+
         if (data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0)
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
@@ -153,7 +159,7 @@ public class LegionInventory : LegionUI
             {
                 savedLegionList.Remove(saveData);
 
-                if(retire) currentLegionList.Remove(saveData);
+                if (retire) currentLegionList.Remove(saveData);
 
                 slotList[saveData.SlotIdx].ExitSlot(null);
             }

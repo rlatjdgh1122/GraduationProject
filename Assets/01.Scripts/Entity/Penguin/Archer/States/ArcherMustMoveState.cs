@@ -26,7 +26,7 @@ public class ArcherMustMoveState : ArcherBaseState
             }
         }
 
-        else if (_penguin.IsInnerTargetRange
+        else if (_penguin.IsTargetInInnerRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);

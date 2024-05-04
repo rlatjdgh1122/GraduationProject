@@ -101,6 +101,12 @@ public class PenguinManager
         DummyPenguinList.Add(obj);
     }
 
+   
+    public void AddSoliderPenguin(Penguin obj)
+    {
+        SoldierPenguinList.Add(obj);
+    }
+
     /// <summary>
     /// 퇴출할 때 사용
     /// </summary>
@@ -108,18 +114,29 @@ public class PenguinManager
     public void RemoveDummyPenguin(DummyPenguin obj)
     {
         DummyPenguinList.Remove(obj);
+
+        var penguin = dummyToPenguinDic[obj];
+
+        BelongDummyPenguinList.Remove(obj);
+        SoldierPenguinList.Remove(penguin);
+        dummyToPenguinDic.Remove(obj);
+        penguinToDummyDic.Remove(penguin);
     }
-    public void AddSoliderPenguin(Penguin obj)
-    {
-        SoldierPenguinList.Add(obj);
-    }
+
     /// <summary>
-    /// 퇴출할 때 사용
+    /// 사망할 때 사용
     /// </summary>
     /// <param name="obj"></param>
     public void RemoveSoliderPenguin(Penguin obj)
     {
         SoldierPenguinList.Remove(obj);
+
+        var dummy = penguinToDummyDic[obj];
+
+        BelongDummyPenguinList.Remove(dummy);
+        DummyPenguinList.Remove(dummy);
+        penguinToDummyDic.Remove(obj);
+        dummyToPenguinDic.Remove(dummy);
     }
     public void AddInfoDataMapping(EntityInfoDataSO data, Penguin penguin)
     {

@@ -1,4 +1,4 @@
-
+/*
 using System;
 using UnityEngine;
 
@@ -31,3 +31,4 @@ public class EnemyAnimalIdleState : EnemyAnimalBaseState
         base.Exit();
     }
 }
+*/

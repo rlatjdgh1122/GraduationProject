@@ -25,7 +25,7 @@ public class ShieldMustMoveState : ShieldBaseState
             }
         }
 
-        if (_penguin.IsInnerTargetRange
+        if (_penguin.IsTargetInInnerRange
              && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);

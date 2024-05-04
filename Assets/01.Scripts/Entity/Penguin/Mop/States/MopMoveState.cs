@@ -25,7 +25,7 @@ public class MopMoveState : MopBaseState
             _stateMachine.ChangeState(MopPenguinStateEnum.Idle);
         }
 
-        else if (_penguin.IsInnerTargetRange)
+        else if (_penguin.IsTargetInInnerRange)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
     }
 

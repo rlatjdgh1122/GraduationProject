@@ -24,7 +24,7 @@ public class PenguinAoEAttackState : State
         {
             if (_triggerCalled)
             {
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(PenguinStateType.Chase);
 
                 //다죽였다면 이동
@@ -42,7 +42,7 @@ public class PenguinAoEAttackState : State
         {
             if (_triggerCalled) //공격
             {
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(PenguinStateType.Chase);
 
                 IsTargetNull(PenguinStateType.Idle);

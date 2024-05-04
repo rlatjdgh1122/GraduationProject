@@ -2,27 +2,25 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyState<T> where T : Enum
+public class EnemyState
 {
-    protected EnemyStateMachine<T> _stateMachine;
+    protected EnemyStateMachine _stateMachine;
 
     protected Enemy _enemy;
+    protected NavMeshAgent _navAgent;
     protected int _animBoolHash;
-
-    protected Rigidbody2D _rigidbody;
-    protected NavMeshAgent _navAgent; //편의를 위해서 여기에도 NavAgent 선언
-
     protected bool _triggerCalled = true;
 
-
-    public EnemyState(Enemy enemyBase, EnemyStateMachine<T> stateMachine, string animBoolName)
+    public EnemyState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName)
     {
-        _enemy = enemyBase;
+        _enemy = enemy;
         _stateMachine = stateMachine;
         _animBoolHash = Animator.StringToHash(animBoolName);
+        _navAgent = _enemy.NavAgent;
     }
 
-    public virtual void Enter()
+    #region Base
+    public virtual void EnterState()
     {
         _enemy.AnimatorCompo.SetBool(_animBoolHash, true); //들어오면 내 애니메이션을 활성화 해주는 것
         _navAgent = _enemy.NavAgent;
@@ -33,13 +31,18 @@ public class EnemyState<T> where T : Enum
 
     }
 
-    public virtual void Exit()
+    public virtual void ExitState()
     {
         _enemy.AnimatorCompo.SetBool(_animBoolHash, false); //나갈땐 꺼줌
     }
 
-    public virtual void AnimationFinishTrigger()
+    public virtual void AnimationTrigger()
     {
         _triggerCalled = true;
     }
+    #endregion
+
+
+
+   
 }

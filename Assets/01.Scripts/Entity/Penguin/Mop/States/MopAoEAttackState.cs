@@ -22,7 +22,7 @@ public class MopAoEAttackState : MopBaseState
         {
             if (_triggerCalled)
             {
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
 
                 //다죽였다면 이동
@@ -40,7 +40,7 @@ public class MopAoEAttackState : MopBaseState
         {
             if (_triggerCalled) //공격
             {
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
 
                 IsTargetNull(MopPenguinStateEnum.Idle);

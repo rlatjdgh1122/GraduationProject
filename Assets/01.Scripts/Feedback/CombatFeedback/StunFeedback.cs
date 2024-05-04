@@ -26,14 +26,14 @@ public class StunFeedback : CombatFeedback
         var navSpeed = _navMeshAgent.speed;
         var animSpeed = _animator.speed;
 
-        _controller.enabled = false;
+        //_controller.enabled = false;
         _navMeshAgent.speed = 0f;
         _animator.speed = 0f;
 
         yield return new WaitForSeconds(duration);
 
         _animator.speed = navSpeed;
-        _controller.enabled = true;
+        //_controller.enabled = true;
         _navMeshAgent.speed = animSpeed;
     }
 }

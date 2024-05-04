@@ -26,7 +26,7 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
     {
         base.UpdateState();
 
-        if (_penguin.IsInnerMeleeRange)
+        if (_penguin.IsTargetInAttackRange)
             _stateMachine.ChangeState(ArcherTowerPenguinStateEnum.Attack);
     }
 

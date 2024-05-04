@@ -25,7 +25,7 @@ public class WizardAttackState : WizardBaseState
         {
             if (_triggerCalled)
             {
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
 
                 //다죽였다면 이동
@@ -43,7 +43,7 @@ public class WizardAttackState : WizardBaseState
         {
             if (_triggerCalled) //공격
             {
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(WizardPenguinStateEnum.Chase);
             }
         }

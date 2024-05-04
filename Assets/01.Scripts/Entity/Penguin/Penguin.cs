@@ -78,9 +78,9 @@ public class Penguin : Entity
     private IDeadable _deadCompo = null;
     private ILiveable _liveCompo = null;
     #endregion
+    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.transform.position) <= innerDistance;
+    public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.transform.position) <= attackDistance;
 
-    public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.GetClosetPostion(transform)) <= innerDistance;
-    public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= attackDistance;
 
     private Army owner;
     public Army MyArmy => owner;
@@ -180,7 +180,7 @@ public class Penguin : Entity
 
     public void FindNearestEnemy()
     {
-        CurrentTarget = FindNearestTarget<Enemy>(TargetLayer);
+        CurrentTarget = FindNearestTarget<Enemy>(20f, TargetLayer);
     }
 
     public virtual void LookTarget()

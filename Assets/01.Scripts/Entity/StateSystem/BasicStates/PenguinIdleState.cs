@@ -22,7 +22,7 @@ public class PenguinIdleState : State
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Move);
 
-        if (_penguin.IsInnerTargetRange)
+        if (_penguin.IsTargetInInnerRange)
             _stateMachine.ChangeState(PenguinStateType.Chase);
     }
 

@@ -27,7 +27,7 @@ public class BasicAttackState : BasicBaseState
         {
             if (_triggerCalled)
             {
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
                 //다죽였다면 이동
@@ -48,7 +48,7 @@ public class BasicAttackState : BasicBaseState
             if (_triggerCalled)
             {
                 //한놈만 노리기
-                if (!_penguin.IsInnerMeleeRange)
+                if (!_penguin.IsTargetInAttackRange)
                     _stateMachine.ChangeState(BasicPenguinStateEnum.Chase);
 
                 IsTargetNull(BasicPenguinStateEnum.Idle);

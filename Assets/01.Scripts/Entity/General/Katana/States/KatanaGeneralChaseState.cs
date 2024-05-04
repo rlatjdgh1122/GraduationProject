@@ -28,7 +28,7 @@ public class KatanaGeneralChaseState : KatanaGeneralBaseState
             if (_penguin.CurrentTarget != null)
                 _penguin.MoveToCurrentTarget();
 
-            if (_penguin.IsInnerMeleeRange)
+            if (_penguin.IsTargetInAttackRange)
             {
                 _stateMachine.ChangeState(KatanaGeneralStateEnum.Attack);
             }
