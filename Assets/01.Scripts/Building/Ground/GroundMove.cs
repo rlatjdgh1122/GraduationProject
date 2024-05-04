@@ -8,10 +8,12 @@ public class GroundMove : MonoBehaviour
     [SerializeField] private int _enableStage;
     [SerializeField] private float _moveDuration = 5f;
 
-    private Vector3 _moveDir;
     [SerializeField] private Color startColor;
     [SerializeField] private Color targetColor;
     [SerializeField] private Color endColor;
+
+    [SerializeField]
+    private LayerMask _groundLayer;
 
     #region 프로퍼티
     //private NavMeshSurface _parentSurface;
@@ -22,6 +24,8 @@ public class GroundMove : MonoBehaviour
     public Enemy[] _enemies;
 
     private GameObject _waveEffect;
+
+    private Vector3 _centerPos;
 
     private void Awake()
     {
@@ -62,7 +66,9 @@ public class GroundMove : MonoBehaviour
             //빙하 올 때 이펙트
             _waveEffect.gameObject.SetActive(true);
 
-            transform.DOMove(new Vector3(_moveDir.x, transform.position.y, _moveDir.z), _moveDuration).
+            Vector3 targetPos = GetFarthestGroundPoint();
+
+            transform.DOMove(new Vector3(targetPos.x, transform.position.y, targetPos.z), _moveDuration).
                 OnComplete(() =>
                 {
                     SoundManager.Play2DSound(SoundName.GroundHit);
@@ -123,10 +129,18 @@ public class GroundMove : MonoBehaviour
         _enableStage = WaveManager.Instance.CurrentWaveCount; // 나중에 랜덤으로 바꾸면 걍 없애기 
     }
 
-    public void SetMoveDir(Transform trm)
+    public void SetMoveTarget(Transform trm, Vector3 targetVec)
     {
         transform.SetParent(trm);
-        _moveDir = trm.position;
+        _centerPos = targetVec;
+    }
 
+    private Vector3 GetFarthestGroundPoint()
+    {
+        if (Physics.Raycast(transform.position, _centerPos.normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        {
+            return hit.point;
+        }
+        return Vector3.zero;
     }
 }

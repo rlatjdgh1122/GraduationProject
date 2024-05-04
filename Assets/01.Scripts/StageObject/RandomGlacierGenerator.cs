@@ -44,7 +44,7 @@ public class RandomGlacierGenerator : MonoBehaviour
                 .GetComponent<GroundMove>();
             _allGrounds.Enqueue(ground);
 
-            ground.SetMoveDir(transform);
+           // ground.SetMoveTarget(transform, );
 
             ground.gameObject.SetActive(false); 
         }
