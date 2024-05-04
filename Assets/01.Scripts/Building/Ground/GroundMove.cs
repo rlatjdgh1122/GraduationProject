@@ -28,24 +28,22 @@ public class GroundMove : MonoBehaviour
     private Collider _col;
 
     private Vector3 _centerPos;
-    private Vector3 _closestPointDirToCenter
+    private Vector3 _closestPointDirToCenter => _col.ClosestPointOnBounds(_centerPos);
+
+    private Vector3 RaycastHit_TocenterPos
     {
         get
         {
-            return _col.ClosestPointOnBounds(_centerPos);
+            if (Physics.Raycast(_closestPointDirToCenter, (_centerPos - _closestPointDirToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+            {
+                Debug.Log(hit.collider.gameObject);
+                return hit.point;
+            }
+            return Vector3.zero;
         }
-        //get
-        //{
-        //    if (Physics.Raycast(transform.position, _centerPos.normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
-        //    {
-        //        Debug.Log(hit.collider.gameObject);
-        //        return hit.point;
-        //    }
-        //    return Vector3.zero;
-        //}
     }
 
-    private void Awake()
+private void Awake()
     {
         //_parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
         //_surface = transform.parent.GetComponent<NavMeshSurface>();
@@ -153,7 +151,7 @@ public class GroundMove : MonoBehaviour
         transform.rotation = Quaternion.identity;
         transform.SetParent(null);
 
-        CoroutineUtil.CallWaitForOneFrame(() => Debug.Log(_closestPointDirToCenter));
+        CoroutineUtil.CallWaitForOneFrame(() => Debug.Log(RaycastHit_TocenterPos));
 
         #endregion
 
@@ -164,5 +162,6 @@ public class GroundMove : MonoBehaviour
     {
         transform.SetParent(trm);
         _centerPos = trm.position;
+        Debug.Log(_centerPos);
     }
 }
