@@ -1,9 +1,6 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UnitInformationUI : MonoBehaviour
@@ -19,7 +16,7 @@ public class UnitInformationUI : MonoBehaviour
 
     private CanvasGroup _generalInfo;
     private TextMeshProUGUI _synergyText;
-    private TextMeshProUGUI _passiveText;
+    private TextMeshProUGUI _descriptionText;
 
     private CanvasGroup _detailInfoButton;
 
@@ -34,7 +31,7 @@ public class UnitInformationUI : MonoBehaviour
 
         _generalInfo = transform.Find("GeneralInfo").GetComponent<CanvasGroup>();
         _synergyText = _generalInfo.transform.Find("Synergy").GetComponent<TextMeshProUGUI>();
-        _passiveText = _generalInfo.transform.Find("Passive").GetComponent<TextMeshProUGUI>();
+        _descriptionText = _generalInfo.transform.Find("Type").GetComponent<TextMeshProUGUI>();
 
         _detailInfoButton = transform.Find("DetailInfoButton").GetComponent<CanvasGroup>();
     }
@@ -76,8 +73,8 @@ public class UnitInformationUI : MonoBehaviour
     private void ShowGeneralInfo(GeneralInfoDataSO generalData)
     {
         _generalInfo.DOFade(1, 0.5f);
-        _synergyText.text = generalData.Characteristic;
-        _passiveText.text = generalData.Type;
+        _synergyText.text = generalData.Synergy;
+        _descriptionText.text = generalData.Description;
 
         return;
     }
@@ -94,7 +91,7 @@ public class UnitInformationUI : MonoBehaviour
 
         _generalInfo.DOFade(0, 0.2f);
         _synergyText.text = string.Empty;
-        _passiveText.text = string.Empty;
+        _descriptionText.text = string.Empty;
 
         _detailInfoButton.DOFade(0, 0.5f);
         _detailInfoButton.blocksRaycasts = false;
