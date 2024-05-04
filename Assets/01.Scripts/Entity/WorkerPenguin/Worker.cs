@@ -38,8 +38,8 @@ public class Worker : Entity
 
     public float CheckDistance()
     {
-        Debug.Log(Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)));
-        return Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform));
+        Debug.Log(Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)));
+        return Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position));
     }
 
     public void MoveToNexus()

@@ -25,9 +25,9 @@ public class Enemy : Entity
     public bool UseAttackCombo = false;
 
     public bool IsTargetInInnerRange => CurrentTarget != null &&
-                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= innerDistance;
+                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
     public bool IsTargetInAttackRange => CurrentTarget != null &&
-                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= attackDistance;
+                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
 
     public EnemyStateMachine StateMachine { get; private set; }
 

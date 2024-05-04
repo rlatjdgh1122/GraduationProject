@@ -22,6 +22,7 @@ public abstract class TargetObject : PoolableMono
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _targetColliders;
 
+    private float radius = 0f;
     protected virtual void Awake()
     {
         _targetColliders = new Collider[_maxDetectEnemy];
@@ -38,6 +39,9 @@ public abstract class TargetObject : PoolableMono
         }
 
         nexusTrm = GameManager.Instance.NexusTrm;
+
+        //내 위치와 transform.forward * 5에서 가장 가까운 포인트의 거리를 비교 => 내 크기의 반지름(원형모형 기준)
+        radius = Vector3.Magnitude(transform.position - _collider.ClosestPoint(transform.right * 5));
     }
     protected virtual void Start()
     {
@@ -46,14 +50,13 @@ public abstract class TargetObject : PoolableMono
     {
     }
 
-    public virtual Vector3 GetClosetPostion(Transform targetTrm)
+    public virtual Vector3 GetClosetPostion(Vector3 targetPos)
     {
-        //내 위치와 Vector3.zero에서 가장 가까운 포인트의 거리를 비교 => 내 크기의 반지름(원형모형 기준)
-        float radius = Vector3.Distance(transform.position, _collider.ClosestPoint(Vector3.zero));
-        Vector3 dir = (targetTrm.position - transform.position).normalized;
-        Vector3 result = dir * radius + transform.position;
+        Vector3 dir = (targetPos - transform.position).normalized;
+        Vector3 result = (dir * radius) + transform.position;
         result.y = transform.position.y;
 
+        Debug.Log($"{gameObject.name} : {result}");
         return result;
     }
 
@@ -65,7 +68,7 @@ public abstract class TargetObject : PoolableMono
     public T FindNearestTarget<T>(float checkRange, LayerMask mask) where T : TargetObject
     {
         T target = null;
-        
+
         float maxDistance = 300f;
 
         // 넥서스 기준으로 주변 객체 검색
