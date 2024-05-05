@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
-
+using ArmySystem;
 public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Penguin
 {
     public PenguinState(G penguin, EntityStateMachine<T, G> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)

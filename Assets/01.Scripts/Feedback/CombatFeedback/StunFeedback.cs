@@ -8,6 +8,8 @@ public class StunFeedback : CombatFeedback
 
     public override bool StartFeedback()
     {
+        if (owner.IsDead) return false;
+
         if (StunCoruotine != null)
             StopCoroutine(StunCoruotine);
 
@@ -20,20 +22,17 @@ public class StunFeedback : CombatFeedback
     }
 
 
-
     private IEnumerator StunCoroutine(float duration)
     {
-        var navSpeed = _navMeshAgent.speed;
-        var animSpeed = _animator.speed;
+        if (owner.IsDead) yield break;
 
-        //_controller.enabled = false;
-        _navMeshAgent.speed = 0f;
-        _animator.speed = 0f;
+        _animator.enabled = false;
+        _navMeshAgent.enabled = false;
 
         yield return new WaitForSeconds(duration);
 
-        _animator.speed = navSpeed;
-        //_controller.enabled = true;
-        _navMeshAgent.speed = animSpeed;
+        _animator.enabled = true;
+        _navMeshAgent.enabled = true;
+
     }
 }

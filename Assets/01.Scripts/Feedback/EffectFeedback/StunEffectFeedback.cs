@@ -13,6 +13,8 @@ public class StunEffectFeedback : EffectFeedback
         EffectPlayer effect = PoolManager.Instance.Pop($"StunEffect") as EffectPlayer;
         if (effect != null)
         {
+            effect.transform.SetParent(ownerTrm);
+
             effect.transform.position = new Vector3(actionDataTrm.transform.position.x, actionDataTrm.transform.position.y + 1.5f, actionDataTrm.transform.position.z);
             effect.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
             effect.StartPlay(Value);

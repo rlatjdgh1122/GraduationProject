@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using ArmySystem;
 public class KatanaGeneralMustMoveState : KatanaGeneralBaseState
 {
     public KatanaGeneralMustMoveState(General penguin, EntityStateMachine<KatanaGeneralStateEnum, General> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)

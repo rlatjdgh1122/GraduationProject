@@ -2,7 +2,7 @@ using Polyperfect.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using ArmySystem;
 public class ShieldMoveState : ShieldBaseState
 {
     public ShieldMoveState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName)

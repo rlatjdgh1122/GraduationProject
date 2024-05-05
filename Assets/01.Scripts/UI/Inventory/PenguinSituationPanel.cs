@@ -76,7 +76,9 @@ public class PenguinSituationPanel : PopupUI
 
         var penguin = PenguinManager.Instance.GetPenguinByInfoData(data);
 
-        penguin.HealthCompo.currentHealth = penguin.HealthCompo.maxHealth; //일단 임시완
+        //penguin.HealthCompo.currentHealth = penguin.HealthCompo.maxHealth; //일단 임시완
+        int applyHP = penguin.HealthCompo.maxHealth - penguin.HealthCompo.currentHealth;
+        penguin.HealthCompo.ApplyHeal(applyHP); //일단 임시완
 
         UIManager.Instance.ShowWarningUI($"{data.PenguinName}의 체력이 회복되었습니다!");
 

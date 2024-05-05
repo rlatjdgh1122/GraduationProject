@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using ArmySystem;
+using System.Net.NetworkInformation;
 
 [RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
@@ -20,10 +22,11 @@ public class Penguin : Entity
     public PassiveDataSO passiveData = null;
 
     #region ���� ������ ����
+
     public bool ArmyTriggerCalled = false;
-    public bool WaitForCommandToArmyCalled = true; 
-    public bool SuccessfulToArmyCalled = false; 
-    public MovefocusMode MoveFocusMode => ArmyManager.Instance.CurFocusMode;
+    public bool WaitForCommandToArmyCalled = true; //������ ������ ���� �� ���������� ���
+    public bool SuccessfulToArmyCalled = false; //������ ������ ���������� �ذ��ߴ°�
+
 
     private Coroutine movingCoroutine = null;
     private Vector3 curMousePos = Vector3.zero;
@@ -50,7 +53,7 @@ public class Penguin : Entity
                 value = (value > 180f) ? value - 360f : value; // ��ȯ
                 return value; // -180 ~ 180
             }
-            else
+            else //ó�� �������� ��
             {
                 Vector3 v = (curMousePos - transform.position);
 
@@ -77,33 +80,19 @@ public class Penguin : Entity
     private IDeadable _deadCompo = null;
     private ILiveable _liveCompo = null;
     #endregion
-
     public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
     public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
 
+
     private Army owner;
     public Army MyArmy => owner;
+    public MovefocusMode MoveFocusMode => owner.MoveFocusMode;
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
     protected override void Awake()
     {
         base.Awake();
-
-        StateMachine = new PenguinStateMachine();
-
-        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"Penguin{typeName}State");
-            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
-            if (newState == null)
-            {
-                Debug.LogError($"There is no script : {state}");
-                return;
-            }
-            StateMachine.AddState(state, newState);
-        }
 
         if (NavAgent != null)
         {
@@ -128,10 +117,23 @@ public class Penguin : Entity
                 OnPassiveSecondEvent();
             }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.P))
+    protected void SetBaseState()
+    {
+        StateMachine = new PenguinStateMachine();
+
+        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
         {
-            FindNearestEnemy();
+            string typeName = state.ToString();
+            Type t = Type.GetType($"Penguin{typeName}State");
+            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
+            if (newState == null)
+            {
+                Debug.LogError($"There is no script : {state}");
+                return;
+            }
+            StateMachine.AddState(state, newState);
         }
     }
 
@@ -166,7 +168,7 @@ public class Penguin : Entity
         owner = army;
     }
 
-    #region AI
+    #region AI ����
     public virtual void AnimationTrigger()
     {
 
@@ -205,27 +207,34 @@ public class Penguin : Entity
             transform.rotation = targetRotation;
         }
     }
-    #endregion
 
+    #endregion
     protected override void HandleDie()
     {
         _deadCompo.OnDied();
     }
 
-    #region StatCoroutine
+    #region ���� ����
     public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);
         Stat.AddStat(value, type, mode);
     }
-
     public IEnumerator RemoveStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);
         Stat.RemoveStat(value, type, mode);
     }
+
     #endregion
 
+    #region ������ ����
+    //��Ʋ����϶� �����̰� ������ ���콺 ��ġ�� �̵� �ڵ�
+
+    /// <summary>
+    /// ��ġ�� ��ġ�� �̵�
+    /// </summary>
+    /// <param name="mousePos"></param>
     public void MoveToMySeat(Vector3 mousePos)
     {
         if (NavAgent.isActiveAndEnabled)
@@ -233,18 +242,18 @@ public class Penguin : Entity
             NavAgent.isStopped = false;
 
             if (movingCoroutine != null)
+            {
                 StopCoroutine(movingCoroutine);
-
-            movingCoroutine = StartCoroutine(Moving());
+            }
 
             if (prevMousePos != Vector3.zero)
             {
-            }  
+                movingCoroutine = StartCoroutine(Moving());
+            }
             else
                 MoveToMouseClick(mousePos + SeatPos);
         }
     }
-
     private IEnumerator Moving()
     {
         float currentTime = 0f;
@@ -260,7 +269,6 @@ public class Penguin : Entity
             t = currentTime / totalTime;
 
             Vector3 frameMousePos = Vector3.Lerp(prevMousePos, curMousePos, t);
-
             Vector3 finalPos = frameMousePos + movePos;
 
             MoveToMouseClick(finalPos);
@@ -268,14 +276,13 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        //Vector3 pos = MousePos + movePos; 
-        //MoveToMouseClick(pos);
     }
-
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)
         {
+            if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) return;
+
             NavAgent.SetDestination(pos);
         }
     }
@@ -288,8 +295,13 @@ public class Penguin : Entity
             NavAgent?.SetDestination(MousePos + SeatPos);
         }
     }
+    #endregion
+
+    #region ���� ��� ���� ����
 
     public virtual void StateInit() { }
+
+    #endregion
 
     public void SetNavmeshPriority(PriorityType type)
     {

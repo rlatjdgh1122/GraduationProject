@@ -9,6 +9,8 @@ public class ProvokedEffectFeedback : EffectFeedback
         if (effect == null)
             return false;
 
+        effect.transform.SetParent(ownerTrm);
+
         effect.transform.position = new Vector3(actionDataTrm.transform.position.x, actionDataTrm.transform.position.y + 1.5f, actionDataTrm.transform.position.z);
         effect.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
         effect.StartPlay(Value);
