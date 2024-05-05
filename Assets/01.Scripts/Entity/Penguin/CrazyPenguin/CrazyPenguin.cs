@@ -23,7 +23,7 @@ public class CrazyPenguin : MonoBehaviour
 
     private void OnEnable()
     {
-        MoveToTarget();
+        SignalHub.OnBattlePhaseStartEvent += MoveToTarget;
     }
 
     private void Update()
