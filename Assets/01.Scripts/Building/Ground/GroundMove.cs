@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundMove : MonoBehaviour
@@ -8,14 +9,16 @@ public class GroundMove : MonoBehaviour
     [SerializeField] private int _enableStage;
     [SerializeField] private float _moveDuration = 5f;
 
-    private Vector3 _moveDir;
     [SerializeField] private Color startColor;
     [SerializeField] private Color targetColor;
     [SerializeField] private Color endColor;
 
+    [SerializeField]
+    private LayerMask _groundLayer;
+
     #region 프로퍼티
-    private NavMeshSurface _parentSurface;
-    private NavMeshSurface _surface;
+    //private NavMeshSurface _parentSurface;
+    //private NavMeshSurface _surface;
     private Outline _outline;
     #endregion
 
@@ -23,21 +26,40 @@ public class GroundMove : MonoBehaviour
 
     private GameObject _waveEffect;
 
+    private MeshCollider _meshCollider;
+
+    private Vector3 _centerPos;
+    private Vector3 _closestPointDirToCenter => _meshCollider.ClosestPoint(_centerPos); // 반드시 _meshCollider의 convex를 켜줘야함
+
+    private Vector3 RaycastHit_ToCenterPos
+    {
+        get
+        {
+            if (Physics.Raycast(_closestPointDirToCenter, (_centerPos - _closestPointDirToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+            {
+                return hit.point;
+            }
+            return Vector3.zero;
+        }
+    }
+
+    private Vector3 _targetPos;
+
     private void Awake()
     {
-        _parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
-        _surface = transform.parent.GetComponent<NavMeshSurface>();
+        //_parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
+        //_surface = transform.parent.GetComponent<NavMeshSurface>();
         _outline = GetComponent<Outline>();
 
         _enemies = GetComponentsInChildren<Enemy>();
 
-        _waveEffect = transform.Find("WaterWave").gameObject;
+        _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
+        _meshCollider = transform.Find("TopArea").GetComponent<MeshCollider>();
     }
 
     private void Start()
     {
-        _surface.enabled = false;
-        _moveDir = transform.parent.localPosition;
+        //_surface.enabled = false;
 
         foreach (Enemy enemy in _enemies)
         {
@@ -53,7 +75,7 @@ public class GroundMove : MonoBehaviour
 
     private void GroundMoveHandle()
     {
-        if (WaveManager.Instance.CurrentWaveCount == _enableStage)
+        if (WaveManager.Instance.CurrentWaveCount == _enableStage) // 나중에 랜덤으로 바꾸면 걍 없애기 
         {
             foreach (Enemy enemy in _enemies)
             {
@@ -63,13 +85,13 @@ public class GroundMove : MonoBehaviour
             //빙하 올 때 이펙트
             _waveEffect.gameObject.SetActive(true);
 
-            transform.DOMove(new Vector3(_moveDir.x, transform.position.y, _moveDir.z), _moveDuration).
+            transform.DOMove(_targetPos, _moveDuration).
                 OnComplete(() =>
                 {
                     SoundManager.Play2DSound(SoundName.GroundHit);
-                    _surface.enabled = true;
-                    _surface.transform.SetParent(_parentSurface.transform);
-                    _parentSurface.BuildNavMesh();
+                    //_surface.enabled = true;
+                    //_surface.transform.SetParent(_parentSurface.transform);
+                    //_parentSurface.BuildNavMesh();
 
                     // 부딪힐 때 이펙트 / 카메라 쉐이크 + 사운드
                     CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
@@ -92,6 +114,8 @@ public class GroundMove : MonoBehaviour
                     });
                 });
         }
+
+        
     }
 
     private void SetOutline()
@@ -114,5 +138,53 @@ public class GroundMove : MonoBehaviour
         }
 
         SignalHub.OnBattlePhaseEndEvent -= DisableDeadBodys;
+    }
+
+    public void SetGroundInfo(Transform parentTransform, Vector3 position)
+    {
+        // 위치 설정 관련 주석 추가
+        // 나중에 생성할 때 위치 설정하도록 변경해야 함
+        
+        transform.SetParent(parentTransform); // 부모 설정
+        transform.localPosition = position; // 빙하의 위치 설정
+
+        // 회전 및 부모 해제
+        transform.rotation = Quaternion.identity;
+        transform.SetParent(null);
+
+
+        // 중앙과 히트 포인트 사이의 거리 계산
+        float centerToHitPointX = Mathf.Abs(_meshCollider.transform.position.x - RaycastHit_ToCenterPos.x);
+        float centerToHitPointZ = Mathf.Abs(_meshCollider.transform.position.z - RaycastHit_ToCenterPos.z);
+
+        // 가장 가까운 포인트와 히트 포인트 사이의 거리 계산
+        float closestPointToHitPointX = Mathf.Abs(_closestPointDirToCenter.x - RaycastHit_ToCenterPos.x);
+        float closestPointToHitPointZ = Mathf.Abs(_closestPointDirToCenter.z - RaycastHit_ToCenterPos.z);
+
+        // X와 Z 거리 계산
+        float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
+        float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
+
+        // 타겟 벡터 계산
+        Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
+
+        //// X 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
+        targetVec.x += Mathf.Sign(transform.position.x) * xDistance;
+        //
+        //// Z 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
+        targetVec.z += Mathf.Sign(transform.position.z) * zDistance;
+
+        // 타겟 위치 설정
+        _targetPos = targetVec;
+
+
+        // 스테이지 활성화
+        _enableStage = WaveManager.Instance.CurrentWaveCount; // 나중에 지우자
+    }
+
+    public void SetMoveTarget(Transform trm)
+    {
+        transform.SetParent(trm);
+        _centerPos = trm.position;
     }
 }
