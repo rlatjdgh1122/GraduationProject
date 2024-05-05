@@ -144,7 +144,6 @@ public class GroundMove : MonoBehaviour
     {
         // 위치 설정 관련 주석 추가
         // 나중에 생성할 때 위치 설정하도록 변경해야 함
-
         
         transform.SetParent(parentTransform); // 부모 설정
         transform.localPosition = position; // 빙하의 위치 설정
@@ -165,9 +164,6 @@ public class GroundMove : MonoBehaviour
         // X와 Z 거리 계산
         float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
         float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
-
-        Debug.Log($"xDistance: {xDistance}");
-        Debug.Log($"zDistance: {zDistance}");
 
         // 타겟 벡터 계산
         Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);

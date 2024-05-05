@@ -16,14 +16,14 @@ public class RandomGlacierGenerator : MonoBehaviour
 
     private int makedHexagonCount = -1; // 만들어진 육각형의 개수
 
-    private Queue<GroundMove> _curHexagon_Grounds = new Queue<GroundMove>(); // 나중에 Queue나 stack으로 할 수도
-    private Queue<GroundMove> _allGrounds = new Queue<GroundMove>(); // 나중에 Queue나 stack으로 할 수도
+    private Queue<Ground> _curHexagon_Grounds = new Queue<Ground>(); // 나중에 Queue나 stack으로 할 수도
+    private Queue<Ground> _allGrounds = new Queue<Ground>(); // 나중에 Queue나 stack으로 할 수도
 
     private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
 
-    private GroundMove SpawnGlaciers()
+    private Ground SpawnGlaciers()
     {
-        GroundMove ground = _allGrounds.Dequeue();
+        Ground ground = _allGrounds.Dequeue();
         return ground;
     }
 
@@ -31,8 +31,8 @@ public class RandomGlacierGenerator : MonoBehaviour
     {
         for(int i = 0; i < 50; i++)
         {
-            GroundMove ground = Instantiate(_glacierPrefab, transform.position, Quaternion.identity)
-                .GetComponent<GroundMove>();
+            Ground ground = Instantiate(_glacierPrefab, transform.position, Quaternion.identity)
+                .GetComponent<Ground>();
             _allGrounds.Enqueue(ground);
 
             ground.SetMoveTarget(transform.parent);
@@ -48,7 +48,7 @@ public class RandomGlacierGenerator : MonoBehaviour
         for (int i = 1; i <= GetCurHexagonGroundsGoalCount(); i++)
         {
             _rotateValues.Enqueue(GetCurAngleBetweenGlacier() * i);
-            GroundMove ground = SpawnGlaciers();
+            Ground ground = SpawnGlaciers();
             _curHexagon_Grounds.Enqueue(ground);
         }
 
@@ -65,7 +65,7 @@ public class RandomGlacierGenerator : MonoBehaviour
         int realMakedHexagonCount = makedHexagonCount + 1;
 
 
-        GroundMove curground = _curHexagon_Grounds.Dequeue();
+        Ground curground = _curHexagon_Grounds.Dequeue();
 
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
