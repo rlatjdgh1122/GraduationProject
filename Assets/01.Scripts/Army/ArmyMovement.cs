@@ -39,11 +39,13 @@ public class ArmyMovement : MonoBehaviour
     {
         ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
     }
+
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
         curArmy = newArmy;
         SetArmyNumber();
     }
+
     private void OnModifyCurArmyHnadler()
     {
         curArmy = ArmyManager.Instance.GetCurArmy();
