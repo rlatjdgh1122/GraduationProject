@@ -14,10 +14,6 @@ public class RandomGlacierGenerator : MonoBehaviour
     [SerializeField]
     private GameObject _glacierPrefab; // 빙하 프리펩
 
-    [SerializeField]
-    private Transform _secondGroundParent; // 빙하 2개 올 때 쓸 것
-
-    private float baseAngle = 60f;
     private int makedHexagonCount = -1; // 만들어진 육각형의 개수
 
     private Queue<GroundMove> _curHexagon_Grounds = new Queue<GroundMove>(); // 나중에 Queue나 stack으로 할 수도

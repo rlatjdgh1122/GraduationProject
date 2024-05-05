@@ -84,7 +84,7 @@ public class GroundMove : MonoBehaviour
             //ºùÇÏ ¿Ã ¶§ ÀÌÆåÆ®
             _waveEffect.gameObject.SetActive(true);
 
-            transform.DOMove(new Vector3(_targetPos.x, transform.position.y, _targetPos.z), _moveDuration).
+            transform.DOMove(_targetPos, _moveDuration).
                 OnComplete(() =>
                 {
                     SoundManager.Play2DSound(SoundName.GroundHit);
@@ -164,7 +164,7 @@ public class GroundMove : MonoBehaviour
             float XDistance = CenterToHitPointX - ClosestPointToHitPointX;
             float ZDistance = CenterToHitPointZ - ClosestPointToHitPointZ;
 
-            Vector3 targetVec = RaycastHit_ToCenterPos;
+            Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
 
             if (transform.position.x + _centerPos.y > 0)
             {
@@ -183,6 +183,7 @@ public class GroundMove : MonoBehaviour
             {
                 targetVec -= new Vector3(0, 0, ZDistance);
             }
+
 
             Debug.Log(targetVec);
 
