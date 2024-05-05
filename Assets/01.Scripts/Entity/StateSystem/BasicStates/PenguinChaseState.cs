@@ -15,9 +15,9 @@ public class PenguinChaseState : State
     {
         base.UpdateState();
 
-        if (IsArmyCalledIn_CommandMode())
+        if(_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
         {
-            _stateMachine.ChangeState(PenguinStateType.MustMove);
+            _stateMachine.ChangeState(PenguinStateType.Idle);
         }
         else
         {

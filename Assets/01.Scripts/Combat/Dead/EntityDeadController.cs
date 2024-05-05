@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
     where T : Entity
 {
-   protected readonly int HASH_DEAD = Animator.StringToHash("Dead");
+    protected readonly int HASH_DEAD = Animator.StringToHash("Dead");
 
     protected T _owner;
 
@@ -28,6 +28,8 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
         var parameters = _anim.parameters;
         foreach (var param in parameters)
             _anim.SetBool(param.name, false);
+
+        _anim.speed = 1f;
 
         //죽는 애니메이션 처리
         _anim.SetBool(HASH_DEAD, true);
