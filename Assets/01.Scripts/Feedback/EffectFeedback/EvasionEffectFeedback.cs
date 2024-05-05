@@ -17,6 +17,8 @@ public class EvasionEffectFeedback : EffectFeedback
 
         if( effect != null)
         {
+            effect.transform.SetParent(ownerTrm);
+
             effect.transform.position = transform.parent.position;
             effect.StartPlay(_hudTextEndTime);
 

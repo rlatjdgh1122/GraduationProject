@@ -11,6 +11,8 @@ public class HealEffectFeedback : EffectFeedback
 
         if (effect != null)
         {
+            effect.transform.SetParent(ownerTrm);
+
             effect.transform.position = actionDataTrm.transform.position;
             effect.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
             effect.StartPlay(_effectEndTime);
