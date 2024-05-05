@@ -70,7 +70,7 @@ public abstract class DefenseBuilding : BaseBuilding
 
                 if (!_groundOutlines.TryGetValue(id, out Ground ground))
                 {
-                    ground = coll.GetComponent<Ground>();
+                    ground = coll.transform.parent.GetComponent<Ground>();
                     _groundOutlines.Add(id, ground);
                 }
 

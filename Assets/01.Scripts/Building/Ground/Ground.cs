@@ -111,8 +111,6 @@ public class Ground : MonoBehaviour
 
             spawnResource.transform.localPosition = resourcePos;
             spawnResource.transform.localScale =  Vector3.one;
-
-            Debug.Log($"{resourceName}자원 생성");
         }
     }
 
@@ -139,8 +137,6 @@ public class Ground : MonoBehaviour
             spawnEnemy.IsMove = false;
             spawnEnemy.NavAgent.enabled = false;
 
-            Debug.Log($"{enemy}적 생성");
-
             enemies[i] = spawnEnemy;
         }
 
@@ -159,8 +155,6 @@ public class Ground : MonoBehaviour
             rewardPos.y = 1.9f;
 
             spawnReward.transform.localPosition = rewardPos;
-            
-            Debug.Log("거시기 보상박스 생성");
         }
     }
 

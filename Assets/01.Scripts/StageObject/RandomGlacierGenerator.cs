@@ -39,6 +39,8 @@ public class RandomGlacierGenerator : MonoBehaviour
 
             ground.gameObject.SetActive(false); 
         }
+
+        SignalHub.OnBattlePhaseStartPriorityEvent += GenerateGlacier;
     }
 
     private void AddGlacierToCurHexagon()
@@ -92,22 +94,19 @@ public class RandomGlacierGenerator : MonoBehaviour
         return 6 * (int)Mathf.Pow(2, makedHexagonCount);
     }
 
-    private void Update()
+    private void GenerateGlacier()
     {
-
-        if (Input.GetKeyDown(KeyCode.K)) // 디버그 용
+        if (_curHexagon_Grounds.Count == 0)
         {
             makedHexagonCount++;
             AddGlacierToCurHexagon();
         }
-        if (Input.GetKeyDown(KeyCode.J)) // 디버그 용
-        {
-            GlacierSetPos();
-        }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            SignalHub.OnBattlePhaseEndEvent?.Invoke();
-        }
+        GlacierSetPos();
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartPriorityEvent -= GenerateGlacier;
     }
 }

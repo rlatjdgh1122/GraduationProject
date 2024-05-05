@@ -149,7 +149,7 @@ public class InstallSystem : MonoBehaviour
             int hashCode = hit.transform.gameObject.GetHashCode();
             if (!_groundDic.ContainsKey(hashCode)) // 캐싱
             {
-                _groundDic.Add(hashCode, hit.transform.GetComponent<Ground>());
+                _groundDic.Add(hashCode, hit.transform.parent.GetComponent<Ground>());
             }
 
             Ground curGround = _groundDic[hashCode];
@@ -182,7 +182,7 @@ public class InstallSystem : MonoBehaviour
         Vector3Int gridPosition = _curBuilding.BuildingInfoCompo.GridCompo.WorldToCell(buildingPos);
         //_curBuilding.transform.position = _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition); // 그리드로 이동
         _curBuilding.transform.position = new Vector3(_curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).x,
-                                                      2f,
+                                                      1.5f,
                                                       _curBuilding.BuildingInfoCompo.GridCompo.CellToWorld(gridPosition).z);
     }
 
