@@ -93,7 +93,7 @@ public class Ground : MonoBehaviour
     private void SetResource()
     {
         float resourceCountProportion = 0.5f;
-        int minResourceCount = 0;
+        int minResourceCount = 1;
         int maxResourceCount = 3;
 
         int resourceCount = Mathf.RoundToInt(WaveManager.Instance.CurrentWaveCount * resourceCountProportion);
@@ -105,7 +105,13 @@ public class Ground : MonoBehaviour
             GameObject resourceName = _resourcePrefabs[randomIdx];
             GameObject spawnResource = PoolManager.Instance.Pop(resourceName.name).gameObject;
             spawnResource.transform.SetParent(transform);
-            spawnResource.transform.position = Random.insideUnitCircle * transform.position;
+
+            Vector3 resourcePos = Random.insideUnitCircle * transform.position;
+            resourcePos.y = 1.9f;
+
+            spawnResource.transform.localPosition = resourcePos;
+            spawnResource.transform.localScale =  Vector3.one;
+
             Debug.Log($"{resourceName}자원 생성");
         }
     }
@@ -118,7 +124,7 @@ public class Ground : MonoBehaviour
 
         int enemyCount = Mathf.RoundToInt(WaveManager.Instance.CurrentWaveCount * enemyCountProportion);
         enemyCount = Mathf.Clamp(enemyCount, minEnemyCount, maxEnemyCount);
-
+        Enemy[] enemies = new Enemy[enemyCount];
         for(int i = 0; i < enemyCount; i++)
         {
             int randomIdx = Random.Range(0, _enemyPrefabs.Count);
@@ -134,8 +140,11 @@ public class Ground : MonoBehaviour
             spawnEnemy.NavAgent.enabled = false;
 
             Debug.Log($"{enemy}적 생성");
+
+            enemies[i] = spawnEnemy;
         }
 
+        _groundMove.SetEnemies(enemies);
     }
 
     private void SetReward()
@@ -145,7 +154,12 @@ public class Ground : MonoBehaviour
             // 무언가가 발생한 경우, 원하는 작업을 수행
             GameObject spawnReward = PoolManager.Instance.Pop(_rewardPrefabs.name).gameObject;
             spawnReward.transform.SetParent(transform);
-            spawnReward.transform.position = Random.insideUnitCircle * transform.position;
+
+            Vector3 rewardPos = Random.insideUnitCircle * transform.position;
+            rewardPos.y = 1.9f;
+
+            spawnReward.transform.localPosition = rewardPos;
+            
             Debug.Log("거시기 보상박스 생성");
         }
     }

@@ -64,7 +64,6 @@ public class RandomGlacierGenerator : MonoBehaviour
         // rotation은 GetCurAngleBetweenGlacier으로 조절
         int realMakedHexagonCount = makedHexagonCount + 1;
 
-
         Ground curground = _curHexagon_Grounds.Dequeue();
 
         float rotateValue = _rotateValues.Dequeue();
