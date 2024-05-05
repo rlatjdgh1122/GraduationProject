@@ -12,8 +12,9 @@ public class CrazyPenguin : MonoBehaviour
     NavMeshAgent _agent;
     Animator _anim;
 
-    private bool IsFirst = true;
-    private bool CanIn = false;
+    private bool _isFirst = true;
+    private bool _canIn = false;
+    private bool _soundOn = false;
 
     private void Awake()
     {
@@ -28,20 +29,22 @@ public class CrazyPenguin : MonoBehaviour
 
     private void Update()
     {
-        if(Vector3.Distance(transform.position, _targetPos.transform.position) <= 0.5f && IsFirst)
+        if (Vector3.Distance(transform.position, _targetPos.transform.position) <= 0.5f)
         {
-            _anim.SetBool("Run", false);
-            _anim.SetBool("FallDown", true);
-            SoundManager.Play3DSound(_fallDownSound, transform.position);
-            IsFirst = false;
-            CanIn = true;
+            _canIn = true;
+            ReturnToNexus();
         }
 
-        if(Vector3.Distance(transform.position,_nexusPos.transform.position) <= 0.5f && CanIn)
+        if (Vector3.Distance(transform.position,_nexusPos.transform.position) <= 0.5f && _canIn)
         {
             gameObject.SetActive(false);
-            IsFirst = true;
-            CanIn = false;
+            _canIn = false;
+        }
+
+        if(_soundOn)
+        {
+            SoundManager.Play3DSound(_fallDownSound, transform.position);
+            _soundOn = false;
         }
     }
 
@@ -57,8 +60,6 @@ public class CrazyPenguin : MonoBehaviour
 
     public void AnimationEndTrigger()
     {
-        _anim.SetBool("FallDown", false);
-        _anim.SetBool("Run", true);
-        ReturnToNexus();
+        _soundOn = true;
     }
 }
