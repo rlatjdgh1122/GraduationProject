@@ -19,8 +19,7 @@ public class ShieldImpactState : ShieldBaseState
 
         if (_triggerCalled)
         {
-            //if (_penguin.IsInnerMeleeRange)
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
         }
     }
 

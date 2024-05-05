@@ -1,6 +1,3 @@
-using System.Diagnostics;
-using UnityEngine;
-
 public class ShieldChaseState : ShieldBaseState
 {
     public ShieldChaseState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName)
@@ -19,9 +16,9 @@ public class ShieldChaseState : ShieldBaseState
     {
         base.UpdateState();
 
-        if (IsArmyCalledIn_CommandMode())
+        if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
         {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
         }
         else
         {

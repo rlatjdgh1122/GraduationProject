@@ -81,7 +81,7 @@ public class Enemy : Entity
     {
         base.Update();
 
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
             FindNearestTarget();
     }
 
@@ -105,7 +105,7 @@ public class Enemy : Entity
         }
     }
 
-   
+
 
 
     public void FindNearestTarget()
@@ -188,7 +188,7 @@ public class Enemy : Entity
 
     }
     public bool CheckStunEventPassive(float maxHp, float currentHP)
-    => passiveData?.CheckStunEventPassive(maxHp, currentHP) ?? false;
+    => passiveData?.CheckHealthRatioEventPassive(maxHp, currentHP) ?? false;
 
     public virtual void OnPassiveStunEvent()
     {
