@@ -1,9 +1,6 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem.iOS;
 
 public class MortarBuilding : DefenseBuilding
 {
@@ -12,6 +9,8 @@ public class MortarBuilding : DefenseBuilding
 
     [SerializeField]
     private Transform _firePos;
+    [SerializeField]
+    private LayerMask _layer;
 
     private readonly string prefabName = "MortarRock";
 
@@ -93,6 +92,7 @@ public class MortarBuilding : DefenseBuilding
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
         rock.transform.position = _firePos.position;
+        rock.Setting(this, _layer); //¹Ù²ã¾ß´ï
 
         StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
 

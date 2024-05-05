@@ -8,7 +8,7 @@ public class Arrow : PoolableMono
     [SerializeField] private float _bulletPower;
 
     private Rigidbody _rigid;
-    private DamageCaster _damageCaster;
+    protected DamageCaster _damageCaster;
 
     private void OnEnable()
     {  
@@ -17,7 +17,7 @@ public class Arrow : PoolableMono
         StartCoroutine(WaitForDestroy());
     }
 
-    public void Setting(Entity owner, LayerMask layer)
+    public virtual void Setting(TargetObject owner, LayerMask layer)
     {  
         _damageCaster.SetOwner(owner);
         _damageCaster.TargetLayer = layer; 

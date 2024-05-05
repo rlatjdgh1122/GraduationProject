@@ -1,13 +1,9 @@
-using DG.Tweening;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MortarRock : PoolableMono
+public class MortarRock : Arrow
 {
     private float timer;
-    private DamageCaster _damageCaster;
     private MortarExplosionEffect _attackFeedback;
 
     [SerializeField] // 일단 여기다가 넣음
@@ -22,8 +18,13 @@ public class MortarRock : PoolableMono
 
     private void Awake()
     {
-        _damageCaster = GetComponent<DamageCaster>();
+        //_damageCaster = GetComponent<DamageCaster>();
         _attackFeedback = transform.GetChild(0).GetComponent<MortarExplosionEffect>();
+    }
+
+    public override void Setting(TargetObject owner, LayerMask layer)
+    {
+        base.Setting(owner, layer);
     }
 
     private Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)

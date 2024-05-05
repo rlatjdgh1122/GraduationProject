@@ -11,10 +11,10 @@ public class DamageCaster : MonoBehaviour
 
     public LayerMask TargetLayer;
 
-    private Entity _owner;
+    private TargetObject _owner;
     private General General => _owner as General;
 
-    public void SetOwner(Entity owner)
+    public void SetOwner(TargetObject owner)
     {
         _owner = owner;
     }

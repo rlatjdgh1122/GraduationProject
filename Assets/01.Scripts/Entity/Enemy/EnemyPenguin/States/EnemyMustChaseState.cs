@@ -7,13 +7,16 @@ public class EnemyMustChaseState : EnemyBaseState
     public override void EnterState()
     {
         base.EnterState();
-
-        MustChaseEnter();
+        _triggerCalled = true;
+        _enemy.FindNearestTarget();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        if (_enemy.CurrentTarget != null)
+            _enemy.MoveToCurrentTarget();
 
         if (_enemy.IsTargetInInnerRange)
             _stateMachine.ChangeState(EnemyStateType.Chase);
@@ -22,7 +25,5 @@ public class EnemyMustChaseState : EnemyBaseState
     public override void ExitState()
     {
         base.ExitState();
-
-        MustChaseExit();
     }
 }

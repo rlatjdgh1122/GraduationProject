@@ -19,9 +19,9 @@ public class EnemyIdleState : EnemyBaseState
     {
         base.UpdateState();
 
-        /* if (_enemy.IsMove)  
-             _stateMachine.ChangeState(EnemyStateType.Move); //IsMove 불 변수가 True이면 넥서스로 Move
- */
+        if (_enemy.IsMove)
+            _stateMachine.ChangeState(EnemyStateType.Move); //IsMove 불 변수가 True이면 넥서스로 Move
+
         if (isChase)
             _stateMachine.ChangeState(EnemyStateType.Chase); //감지 사거리 안에 타겟 플레이어가 있다 -> 쫓아가  
     }

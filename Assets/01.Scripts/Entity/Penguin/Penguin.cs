@@ -20,10 +20,9 @@ public class Penguin : Entity
     public PassiveDataSO passiveData = null;
 
     #region ���� ������ ����
-
     public bool ArmyTriggerCalled = false;
-    public bool WaitForCommandToArmyCalled = true; //������ ������ ���� �� ���������� ���
-    public bool SuccessfulToArmyCalled = false; //������ ������ ���������� �ذ��ߴ°�
+    public bool WaitForCommandToArmyCalled = true; 
+    public bool SuccessfulToArmyCalled = false; 
     public MovefocusMode MoveFocusMode => ArmyManager.Instance.CurFocusMode;
 
     private Coroutine movingCoroutine = null;
@@ -51,7 +50,7 @@ public class Penguin : Entity
                 value = (value > 180f) ? value - 360f : value; // ��ȯ
                 return value; // -180 ~ 180
             }
-            else //ó�� �������� ��
+            else
             {
                 Vector3 v = (curMousePos - transform.position);
 
@@ -78,9 +77,9 @@ public class Penguin : Entity
     private IDeadable _deadCompo = null;
     private ILiveable _liveCompo = null;
     #endregion
+
     public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
     public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
-
 
     private Army owner;
     public Army MyArmy => owner;
@@ -167,7 +166,7 @@ public class Penguin : Entity
         owner = army;
     }
 
-    #region AI ����
+    #region AI
     public virtual void AnimationTrigger()
     {
 
@@ -206,34 +205,27 @@ public class Penguin : Entity
             transform.rotation = targetRotation;
         }
     }
-
     #endregion
+
     protected override void HandleDie()
     {
         _deadCompo.OnDied();
     }
 
-    #region ���� ����
+    #region StatCoroutine
     public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);
         Stat.AddStat(value, type, mode);
     }
+
     public IEnumerator RemoveStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);
         Stat.RemoveStat(value, type, mode);
     }
-
     #endregion
 
-    #region ������ ����
-    //��Ʋ����϶� �����̰� ������ ���콺 ��ġ�� �̵� �ڵ�
-
-    /// <summary>
-    /// ��ġ�� ��ġ�� �̵�
-    /// </summary>
-    /// <param name="mousePos"></param>
     public void MoveToMySeat(Vector3 mousePos)
     {
         if (NavAgent.isActiveAndEnabled)
@@ -252,6 +244,7 @@ public class Penguin : Entity
                 MoveToMouseClick(mousePos + SeatPos);
         }
     }
+
     private IEnumerator Moving()
     {
         float currentTime = 0f;
@@ -275,9 +268,10 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        //Vector3 pos = MousePos + movePos; // �̸� ���� ȸ�� ��ġ�� ���⿡�� ���
+        //Vector3 pos = MousePos + movePos; 
         //MoveToMouseClick(pos);
     }
+
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)
@@ -294,13 +288,8 @@ public class Penguin : Entity
             NavAgent?.SetDestination(MousePos + SeatPos);
         }
     }
-    #endregion
-
-    #region ���� ��� ���� ����
 
     public virtual void StateInit() { }
-
-    #endregion
 
     public void SetNavmeshPriority(PriorityType type)
     {
