@@ -23,4 +23,24 @@ public class UnitInventory : InitialUnitInventory
             slot.ExitSlot(so);
         }
     }
+
+    public void LockSlot(PenguinTypeEnum type)
+    {
+        if (penguinDictionary == null) return;
+
+        if(lockButtonDicntionary.TryGetValue(type, out UnitSlotUI slot))
+        {
+            slot.LockSlot();
+        }
+    }
+
+    public void UnLockSlot(PenguinTypeEnum type)
+    {
+        if (penguinDictionary == null) return;
+
+        if (lockButtonDicntionary.TryGetValue(type, out UnitSlotUI slot))
+        {
+            slot.UnLockSlot();
+        }
+    }
 }

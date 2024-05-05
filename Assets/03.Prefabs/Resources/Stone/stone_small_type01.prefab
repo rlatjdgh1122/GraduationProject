@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2898363214188944000}
   - component: {fileID: 5127376568444225430}
   - component: {fileID: 5724402229629723787}
+  - component: {fileID: 1643327837244869603}
   m_Layer: 17
   m_Name: stone_small_type01
   m_TagString: Untagged
@@ -51,9 +52,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 5931134bf3f441247849b17b20e32131, type: 2}
+  CurrentTarget: {fileID: 0}
+  IsDead: 0
+  _maxDetectEnemy: 5
   resourceType: 0
+  _noiseValue: 10
+  _workMotionCount: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
-  _resourceStat: {fileID: 11400000, guid: 5931134bf3f441247849b17b20e32131, type: 2}
   OnRecieveResourceEvent:
     m_PersistentCalls:
       m_Calls:
@@ -125,46 +130,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4395971550075744897}
-        m_TargetAssemblyTypeName: ResourceObject, Assembly-CSharp
-        m_MethodName: ReceiveResourceOnce
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7485922346794440368}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls: []
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
   OnUIUpdate:
@@ -188,6 +160,7 @@ MonoBehaviour:
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
+  HitTarget: {fileID: 0}
 --- !u!33 &2898363214188944000
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -260,6 +233,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: c675f2960be724e7f91ec27c09aa2db2, type: 3}
+--- !u!114 &1643327837244869603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982481754406261133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6851348977035575149
 GameObject:
   m_ObjectHideFlags: 0

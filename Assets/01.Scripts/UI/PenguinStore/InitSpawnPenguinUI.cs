@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class InitSpawnPenguinUI : PopupUI
+public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
 {
     #region Component
 
@@ -24,7 +24,11 @@ public class InitSpawnPenguinUI : PopupUI
     [SerializeField] protected List<PenguinTypeEnum> _slotLockType;
 
     protected Dictionary<PenguinTypeEnum, SpawnPenguinButton> lockButtonDicntionary = new();
-    protected Dictionary<PenguinTypeEnum, PenguinInfoDataSO> penguinInfODictionary = new();
+    protected Dictionary<PenguinTypeEnum, PenguinInfoDataSO> penguinInfoDictionary = new();
+
+    private List<DummyPenguin> _soliderPenguinList = new();
+
+    protected UnitInventory unitInventory;
 
     public override void Awake()
     {
@@ -34,13 +38,23 @@ public class InitSpawnPenguinUI : PopupUI
         BuyPanel = transform.Find("BuyPanel").GetComponent<BuyPanel>();
         infoPanel = transform.Find("DetailInfoPanel").GetComponent<InfoPanel>();
         unlockedPenguinPanel = transform.Find("UnLockedPenguin").GetComponent<UnLockedPenguinPanel>();
-        penguins = Resources.LoadAll<DummyPenguin>("PenguinPrefab/Dummy");
+        unitInventory = FindObjectOfType<UnitInventory>();
 
-        CreateSlot();
+        LoadPenguinSO();
     }
 
-    private void CreateSlot()
+    private void Start()
     {
+        foreach(var locked in lockButtonDicntionary)
+        {
+            unitInventory.LockSlot(locked.Key);
+        }
+    }
+
+    private void LoadPenguinSO()
+    {
+        penguins = Resources.LoadAll<DummyPenguin>("PenguinPrefab/Dummy");
+
         foreach (var spawnObj in penguins) //Make Penguin Slot
         {
             if (spawnObj.GetType() == typeof(GeneralDummyPengiun))
@@ -48,6 +62,18 @@ public class InitSpawnPenguinUI : PopupUI
                 continue;
             }
 
+            _soliderPenguinList.Add(spawnObj);
+        }
+
+        _soliderPenguinList.Sort((a, b) => a.NotCloneInfo.Price.CompareTo(b.NotCloneInfo.Price));
+
+        CreateSlot();
+    }
+
+    public void CreateSlot()
+    {
+        foreach (var spawnObj in _soliderPenguinList)
+        {
             var dummyPenguin = spawnObj;
             var UIinfo = spawnObj.NotCloneInfo;
 
@@ -56,7 +82,7 @@ public class InitSpawnPenguinUI : PopupUI
 
             if (CheckSlotLock(UIinfo.PenguinType))
             {
-                penguinInfODictionary.Add(UIinfo.PenguinType, UIinfo);
+                penguinInfoDictionary.Add(UIinfo.PenguinType, UIinfo);
                 lockButtonDicntionary.Add(UIinfo.PenguinType, btn);
             }
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InitLegionChange : PopupUI
+public class InitLegionChange : PopupUI, ICreateSlotUI
 {
     [SerializeField]
     private float _changeTime;
@@ -22,10 +22,10 @@ public class InitLegionChange : PopupUI
         _buttonParent = transform.Find("LegionNumber").GetComponent<Transform>();
         legion = LegionInventoryManager.Instance;
 
-        CreateChangeButton();
+        CreateSlot();
     }
 
-    public void CreateChangeButton()
+    public void CreateSlot()
     {
         for (int i = 0; i < legion.LegionCount; i++)
         {

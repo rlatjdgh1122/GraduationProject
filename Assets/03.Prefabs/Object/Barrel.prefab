@@ -424,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397936658275053486}
-  - component: {fileID: 5114140898637916234}
+  - component: {fileID: 8659746862805243506}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -452,7 +452,7 @@ Transform:
   - {fileID: 5935246275982872420}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5114140898637916234
+--- !u!114 &8659746862805243506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -461,14 +461,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8705233836455499173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d5ac9593b59d4847815e4528b52a6d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 75215afeb99f1fc48aacad291a415f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buoyancyType: 0
-  density: 0
-  volume: 0
-  voxelResolution: 0
-  centerOfMass: {x: 0, y: 0, z: 0}
-  waterLevelOffset: -1.1
-  colliders:
-  - {fileID: 0}
+  waterObject: {fileID: 0}
+  autoFind: 0
+  dynamicMaterial: 0
+  waterLevelSource: 1
+  waterLevel: 0
+  childTransform: {fileID: 0}
+  heightOffset: 0
+  rollAmount: 0.1
+  samples: []
