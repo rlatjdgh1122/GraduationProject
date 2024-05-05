@@ -95,6 +95,11 @@ public class Enemy : Entity
         CurrentTarget = FindNearestTarget<TargetObject>(innerDistance, TargetLayer);
     }
 
+    public void FindHitTarget()
+    {
+        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
+    }
+
     public void FindNexusTarget()
     {
         CurrentTarget = FindNearestTarget<TargetObject>(500, NexusLayer);
