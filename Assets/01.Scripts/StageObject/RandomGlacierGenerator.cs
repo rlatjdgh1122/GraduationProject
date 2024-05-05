@@ -72,7 +72,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         curground.gameObject.SetActive(true);
 
-        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, 50f * realMakedHexagonCount));
+        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, 75f * realMakedHexagonCount));
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {
