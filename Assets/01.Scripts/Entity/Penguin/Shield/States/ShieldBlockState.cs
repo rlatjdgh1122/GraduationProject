@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class ShieldBlockState : ShieldBaseState
 {
+    int StunCount = 1;
     public ShieldBlockState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
     }
-
-    int StunAtk = 1;
 
     public override void Enter()
     {
@@ -32,30 +31,32 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if (IsArmyCalledIn_CommandMode())
+        if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
         {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
         }
         else
         {
             //사거리가 멀어지면 맞으러 감
-            if (!_penguin.IsInnerMeleeRange)
+            if (!_penguin.IsTargetInAttackRange)
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
 
             IsTargetNull(ShieldPenguinStateEnum.Idle);
-        }
-
-
-        if (StunAtk > 0 && _penguin.CheckStunPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
-        {
-            _penguin?.OnPassiveStunEvent();
-            StunAtk--;
         }
     }
 
     private void ImpactShield()
     {
-        _stateMachine.ChangeState(ShieldPenguinStateEnum.Impact);
+        if (StunCount > 0 && _penguin.CheckHealthRatioPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
+        {
+            _penguin?.OnPassiveStunEvent();
+            StunCount--;
+        }
+        else
+        {
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Impact);
+        }
+
     }
 
     public override void Exit()

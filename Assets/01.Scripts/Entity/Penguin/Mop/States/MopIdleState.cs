@@ -22,7 +22,7 @@ public class MopIdleState : MopBaseState
             _stateMachine.ChangeState(MopPenguinStateEnum.Move);
         }
 
-        else if (_penguin.IsInnerTargetRange)
+        else if (_penguin.IsTargetInInnerRange)
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);
     }
 

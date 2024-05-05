@@ -1,4 +1,4 @@
-
+/*
 #region 필요하면 제작할 것
 using System;
 using System.Collections.Generic;
@@ -85,4 +85,4 @@ public class MultiStateMachine<T> where T : Enum
     }
 }
 
-#endregion
+#endregion*/

@@ -1,4 +1,4 @@
-public class EnemyAnimalMustChaseState : EnemyAnimalBaseState
+/*public class EnemyAnimalMustChaseState : EnemyAnimalBaseState
 {
     public EnemyAnimalMustChaseState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName) 
         : base(enemyBase, stateMachine, animBoolName)
@@ -33,3 +33,4 @@ public class EnemyAnimalMustChaseState : EnemyAnimalBaseState
         base.Exit();
     }
 }
+*/

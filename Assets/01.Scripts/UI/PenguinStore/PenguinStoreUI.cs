@@ -12,18 +12,19 @@ public class PenguinStoreUI : InitSpawnPenguinUI
         infoPanel.PenguinInformataion(infoData);
     }
 
-    public void UnlockSlot(PenguinTypeEnum unLockType)
+    public void UnlockSlot(PenguinTypeEnum unLockType) //∆Î±œ ¿·±› «ÿ¡¶
     {
         if (lockButtonDicntionary.TryGetValue(unLockType, out SpawnPenguinButton btn))
         {
             btn.UnLockedButton();
+            unitInventory.UnLockSlot(unLockType);
             UnLockedPenguin(unLockType);
         }
     }
 
-    public void UnLockedPenguin(PenguinTypeEnum unLockType)
+    private void UnLockedPenguin(PenguinTypeEnum unLockType)
     {
-        if (penguinInfODictionary.TryGetValue(unLockType, out PenguinInfoDataSO data))
+        if (penguinInfoDictionary.TryGetValue(unLockType, out PenguinInfoDataSO data))
         {
             unlockedPenguinPanel.UnLocked(data);
         }

@@ -1,4 +1,4 @@
-
+/*
 using UnityEngine;
 
 public class EnemyAnimalChaseState : EnemyAnimalBaseState
@@ -33,3 +33,4 @@ public class EnemyAnimalChaseState : EnemyAnimalBaseState
         base.Exit();
     }
 }
+*/

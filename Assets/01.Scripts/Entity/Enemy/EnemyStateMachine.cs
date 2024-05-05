@@ -2,38 +2,29 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine<T> where T : Enum
+public class EnemyStateMachine
 {
-    public EnemyState<T> PrevState { get; private set; }
-    public EnemyState<T> CurrentState { get; private set; }
-    public Dictionary<T, EnemyState<T>> StateDictionary = new Dictionary<T, EnemyState<T>>();
+    public EnemyState PrevState { get; private set; }
+    public EnemyState CurrentState { get; private set; }
+    public Dictionary<EnemyStateType, EnemyState> StateDictionary { get; private set; } = new();
 
-    public void Init(T startState)
+    public void Init(EnemyStateType state)
     {
         PrevState = CurrentState;
-        CurrentState = StateDictionary[startState];
-        CurrentState.Enter();
+        CurrentState = StateDictionary[state];
+        CurrentState.EnterState();
     }
 
-    public void ChangeState(T newState)
+    public void ChangeState(EnemyStateType newState)
     {
-
         PrevState = CurrentState;
-        PrevState.Exit();
+        CurrentState.ExitState();
         CurrentState = StateDictionary[newState];
-        CurrentState.Enter();
-
-        // Debug.Log("이 전 : " + PrevState + " , 이 후 : " + CurrentState);
+        CurrentState.EnterState();
     }
 
-    public bool IsEqualPrevState(T state)
+    public void AddState(EnemyStateType stateType, EnemyState playerState)
     {
-        if (state == null) return false;
-        return PrevState.Equals(state);
-    }
-
-    public void AddState(T state, EnemyState<T> playerState)
-    {
-        StateDictionary.Add(state, playerState);
+        StateDictionary.Add(stateType, playerState);
     }
 }

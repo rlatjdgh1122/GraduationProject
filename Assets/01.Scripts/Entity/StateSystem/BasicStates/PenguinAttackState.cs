@@ -1,3 +1,4 @@
+using ArmySystem;
 using UnityEngine;
 
 public class PenguinAttackState : State
@@ -21,33 +22,13 @@ public class PenguinAttackState : State
 
         _penguin.LookTarget();
 
-        if (IsArmyCalledIn_BattleMode())
+        if (_triggerCalled) //공격
         {
-            if (_triggerCalled)
-            {
-                if (_penguin.CurrentTarget.IsDead)
-                    _stateMachine.ChangeState(PenguinStateType.Chase);
+            _stateMachine.ChangeState(PenguinStateType.Chase);
 
-                IsTargetNull(PenguinStateType.MustMove);
-            }
+            IsTargetNull(PenguinStateType.Idle);
         }
 
-        else if (IsArmyCalledIn_CommandMode())
-        {
-            if (_penguin.WaitForCommandToArmyCalled)
-            {
-                _stateMachine.ChangeState(PenguinStateType.MustMove);
-            }
-        }
-        else
-        {
-            if (_triggerCalled) //공격
-            {
-                _stateMachine.ChangeState(PenguinStateType.Chase);
-
-                IsTargetNull(PenguinStateType.Idle);
-            }
-        }
     }
 
     public override void ExitState()
@@ -60,6 +41,11 @@ public class PenguinAttackState : State
     public override void AnimationTrigger()
     {
         base.AnimationTrigger();
+
+        if (_penguin.MoveFocusMode == MovefocusMode.Command)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }
 
         if (_penguin.CheckAttackPassive(++curAttackCount))
         {

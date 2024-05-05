@@ -1,3 +1,4 @@
+using ArmySystem;
 using System.Linq;
 using Unity.VisualScripting;
 
@@ -22,31 +23,21 @@ public class ShieldStunState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if (IsArmyCalledIn_BattleMode())
+        if(_penguin.MoveFocusMode == MovefocusMode.Command)
+        {
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
+        }
+        else
         {
             if (_triggerCalled)
             {
                 _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
-                //다죽였다면 이동
-                IsTargetNull(ShieldPenguinStateEnum.MustMove);
+
+                if (_penguin.CurrentTarget == null)
+                    _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
             }
         }
 
-        if (IsArmyCalledIn_CommandMode())
-        {
-            if (_penguin.WaitForCommandToArmyCalled)
-            {
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
-            }
-        }
-
-        if (_triggerCalled)
-        {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
-
-            if (_penguin.CurrentTarget == null)
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-        }
     }
 
     public override void Exit()

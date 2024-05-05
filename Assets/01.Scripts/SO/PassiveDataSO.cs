@@ -15,11 +15,16 @@ public class PassiveDataSO : ScriptableObject
     public bool IsBackAttack = false;
 
     //범위 안에 주변의 적이 몇명인가
-    public bool IsAroundEnemyCountEventEvent = false; 
+    public bool IsAroundEnemyCountEventEvent = false;
     public float AroundRadius = 3;
     public int AroundEnemyCount = 3;
-
     public LayerMask CheckTarget;
+
+    //현재체력이 몇퍼센트 이하일 경우
+    public bool IsHealthRatioEventEvent = false;
+    [Range(10f, 90f)]
+    public float Ratio = 50f;
+
 
     private float _curTime = 0;
     private bool _isOverTime = false;
@@ -28,9 +33,15 @@ public class PassiveDataSO : ScriptableObject
     /// 체력이 50이하 일 때 페시브 활성화 확인 여부
     /// </summary>>
     /// <returns> 결과</returns>
-    public bool CheckStunEventPassive(float maxHp, float currentHP)
+
+    /// ratio가 50일경우 현재체력 50% 이하일때 발동
+    public bool CheckHealthRatioEventPassive(float maxHp, float currentHP)
     {
-        if(maxHp / 2 > currentHP)
+        // 현재 체력의 퍼센트 계산
+        float healthPercent = (currentHP / maxHp) * 100f;
+
+        // 현재 체력이 지정된 비율보다 낮으면 true 반환
+        if (healthPercent <= Ratio)
         {
             return true;
         }
@@ -76,22 +87,4 @@ public class PassiveDataSO : ScriptableObject
             }
         }
     }
-
-    ///// <summary>
-    ///// 몇 초마다 패시브 활성화 확인 여부
-    ///// </summary>
-    ///// <returns> 결과</returns>
-    //public bool CheckSecondEventPassive(float curTime) => IsSecondEvent;
-
-    ///// <summary>
-    ///// 뒤치기 패시브 활성화 확인 여부
-    ///// </summary>
-    ///// <returns> 결과</returns>
-    //public bool CheckBackAttackEventPassive() => IsAttackEvent;
-
-    ///// <summary>
-    ///// 주변의 적 수 비례 패시브 활성화 확인 여부
-    ///// </summary>
-    ///// <returns> 결과</returns>
-    //public bool CheckAroundEnemyCountEventPassive() => IsAttackEvent;
 }

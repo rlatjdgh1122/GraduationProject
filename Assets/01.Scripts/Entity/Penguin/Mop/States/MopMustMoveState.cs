@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using ArmySystem;
 public class MopMustMoveState : MopBaseState
 {
     public MopMustMoveState(Penguin penguin, EntityStateMachine<MopPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
@@ -24,7 +24,7 @@ public class MopMustMoveState : MopBaseState
             }
         }
 
-        else if (_penguin.IsInnerTargetRange
+        else if (_penguin.IsTargetInInnerRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(MopPenguinStateEnum.Chase);

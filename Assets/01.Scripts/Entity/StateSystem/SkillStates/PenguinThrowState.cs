@@ -1,3 +1,4 @@
+using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class PenguinThrowState : State
     {
         base.EnterState();
 
+        if (_penguin.CurrentTarget != null)
+            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+
         if (_penguin.CurrentTarget == null)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
@@ -21,8 +25,6 @@ public class PenguinThrowState : State
         else
         {
             _triggerCalled = false;
-            _penguin.CurrentTarget.transform.position = _penguin.transform.position;
-            General.skill.PlaySkill();
         }
     }
 

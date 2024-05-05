@@ -15,22 +15,22 @@ public enum ShieldPenguinStateEnum
 
 public class ShieldPenguin : Penguin
 {
-    public EntityStateMachine<ShieldPenguinStateEnum, Penguin> StateMachine { get; private set; }
+    public EntityStateMachine<ShieldPenguinStateEnum, Penguin> _stateMachine { get; private set; }
       
     protected override void Awake()
     {
         base.Awake();
 
-        StateMachine = new EntityStateMachine<ShieldPenguinStateEnum, Penguin>();
+        _stateMachine = new EntityStateMachine<ShieldPenguinStateEnum, Penguin>();
 
         foreach (ShieldPenguinStateEnum state in Enum.GetValues(typeof(ShieldPenguinStateEnum)))
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Shield{typeName}State");
             //리플렉션
-            var newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EntityState<ShieldPenguinStateEnum, Penguin>;
+            var newState = Activator.CreateInstance(t, this, _stateMachine, typeName) as EntityState<ShieldPenguinStateEnum, Penguin>;
 
-            StateMachine.AddState(state, newState);
+            _stateMachine.AddState(state, newState);
         }
     }
 
@@ -40,18 +40,18 @@ public class ShieldPenguin : Penguin
     }
     protected override void Update()
     {
-        StateMachine.CurrentState.UpdateState();
+        _stateMachine.CurrentState.UpdateState();
     }
 
     public override void StateInit()
     {
-        StateMachine.Init(ShieldPenguinStateEnum.Idle);
+        _stateMachine.Init(ShieldPenguinStateEnum.Idle);
     }
 
     public override void OnPassiveStunEvent()
     {
-        StateMachine.ChangeState(ShieldPenguinStateEnum.Stun);
+        _stateMachine.ChangeState(ShieldPenguinStateEnum.Stun);
     }
 
-    public override void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+    public override void AnimationTrigger() => _stateMachine.CurrentState.AnimationFinishTrigger();
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -12,10 +11,10 @@ public class DamageCaster : MonoBehaviour
 
     public LayerMask TargetLayer;
 
-    private Entity _owner;
-    private General _general => _owner as General;
+    private TargetObject _owner;
+    private General General => _owner as General;
 
-    public void SetOwner(Entity owner)
+    public void SetOwner(TargetObject owner)
     {
         _owner = owner;
     }
@@ -37,7 +36,7 @@ public class DamageCaster : MonoBehaviour
             && raycastHit.collider.TryGetComponent<IDamageable>(out IDamageable raycastHealth))
         {
             int damage = (int)(_owner.Stat.damage.GetValue() * AfewTimes);
-            raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            raycastHealth.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
             return true;
         }
 
@@ -66,7 +65,7 @@ public class DamageCaster : MonoBehaviour
             {
                 int damage = _owner.Stat.damage.GetValue();
 
-                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
                 health.Knockback(knbValue, raycastHit.normal);
                 health.Stun(stunValue);
 
@@ -100,7 +99,7 @@ public class DamageCaster : MonoBehaviour
                 damage = (int)adjustedDamage;
             }
 
-            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
             health.Knockback(knbValue, raycastHit.normal);
             health.Stun(stunValue);
 
@@ -121,7 +120,7 @@ public class DamageCaster : MonoBehaviour
             {
                 int damage = _owner.Stat.damage.GetValue();
 
-                health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType);
+                health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType, _owner);
             }
         }
     }
@@ -144,21 +143,21 @@ public class DamageCaster : MonoBehaviour
             {
                 if (health.currentHealth < health.maxHealth * 0.5f)
                 {
-                    health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType);
+                    health.ApplyDamage(100, raycastHit.point, raycastHit.normal, _hitType, _owner);
                     if (health.IsDead)
                     {
                         health.ApplyHitType(HitType.DashHit);
                         health.OnDashDeathEvent?.Invoke();
-                        _general.skill.CanUseSkill = true;
+                        General.skill.CanUseSkill = true;
                         _hitType = HitType.KatanaHit;
                         return;
                     }
                 }
                 else
                 {
-                    _general.skill.CanUseSkill = false;
+                    General.skill.CanUseSkill = false;
                     int damage = _owner.Stat.damage.GetValue() * 2;
-                    health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType);
+                    health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
                 }
             }
         }
@@ -182,7 +181,7 @@ public class DamageCaster : MonoBehaviour
                 damage = (int)adjustedDamage;
             }
 
-            raycastHealth?.ApplyDamage(damage, coll.transform.position, coll.transform.position, _hitType);
+            raycastHealth?.ApplyDamage(damage, coll.transform.position, coll.transform.position, _hitType, _owner);
             _hitType = originType;
 
             return true;
@@ -201,7 +200,7 @@ public class DamageCaster : MonoBehaviour
             if (damageable != null)
             {
                 int damage = _owner.Stat.damage.GetValue();
-                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType);
+                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, _owner);
             }
         }
 
@@ -226,7 +225,7 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
-                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType);
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, hitType, _owner);
                 health.Knockback(knbValue);
                 health.Stun(stunValue);
             }
@@ -245,13 +244,13 @@ public class DamageCaster : MonoBehaviour
             IDamageable damageable = collider.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType);
+                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, _owner);
                 isHit = true;
             }
 
             if (collider.TryGetComponent(out Health health))
             {
-                health.ApplyDamage(damage, position, collider.transform.position, _hitType);
+                health.ApplyDamage(damage, position, collider.transform.position, _hitType,_owner);
 
                 health.Knockback(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
             }
@@ -262,7 +261,7 @@ public class DamageCaster : MonoBehaviour
 
     public void CastBuildingStunDamage(Health enemyHealth, RaycastHit hit, float duration, int damage)
     {
-        enemyHealth.ApplyDamage(damage, hit.point, hit.normal, _hitType);
+        enemyHealth.ApplyDamage(damage, hit.point, hit.normal, _hitType, _owner);
         enemyHealth.Stun(duration);
     }
 

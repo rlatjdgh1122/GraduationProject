@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using ArmySystem;
 public class ShieldMustMoveState : ShieldBaseState
 {
     public ShieldMustMoveState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
@@ -25,7 +25,7 @@ public class ShieldMustMoveState : ShieldBaseState
             }
         }
 
-        if (_penguin.IsInnerTargetRange
+        if (_penguin.IsTargetInInnerRange
              && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);

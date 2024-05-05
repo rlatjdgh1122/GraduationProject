@@ -4,7 +4,7 @@ using UnityEngine;
 public class KnockbackFeedback : CombatFeedback
 {
     private int _groundLayer = 0;
-    private float _knockbackSpeed = 0.5f;
+    private float _knockbackSpeed = 0.2f;
     private float _fallSpeed = 1.2f;
 
     public override void Awake()
@@ -23,7 +23,7 @@ public class KnockbackFeedback : CombatFeedback
         //πŸ¥⁄¿Ã ∂•¿Ã æ∆¥œ∂Û∏È
         if (!IsPositionValid(knockbackPosition))
         {
-            ownerTrm.DOMoveY(ownerTrm.position.y - 2f, _fallSpeed);
+            ownerTrm.DOMoveY(ownerTrm.position.y - 3f, _fallSpeed);
 
             return false;
         }

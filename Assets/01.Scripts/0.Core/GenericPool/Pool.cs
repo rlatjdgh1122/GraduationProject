@@ -13,7 +13,7 @@ public class Pool<T> where T : PoolableMono
         _prefab = prefab;
         _parent = parent;
 
-        Debug.Log(prefab.name);
+        //Debug.Log(prefab.name);
 
         for (int i = 0; i < count; i++)
         {

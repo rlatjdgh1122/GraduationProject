@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using ArmySystem;
 public class ArcherMustMoveState : ArcherBaseState
 {
     public ArcherMustMoveState(Penguin penguin, EntityStateMachine<ArcherPenguinStateEnum, Penguin> stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
@@ -26,7 +26,7 @@ public class ArcherMustMoveState : ArcherBaseState
             }
         }
 
-        else if (_penguin.IsInnerTargetRange
+        else if (_penguin.IsTargetInInnerRange
             && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(ArcherPenguinStateEnum.Chase);

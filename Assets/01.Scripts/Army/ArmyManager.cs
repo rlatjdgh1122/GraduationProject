@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ArmySystem;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
@@ -18,10 +19,11 @@ public class ArmyManager : Singleton<ArmyManager>
     private void Start()
     {
         CreateArmy();
-        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
-
         KeySetting();
+
+        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
     }
+
     private void KeySetting()
     {
         keyDictionary = new Dictionary<KeyCode, Action>()
@@ -35,12 +37,7 @@ public class ArmyManager : Singleton<ArmyManager>
              {KeyCode.Alpha7, ()=> ChangeArmy(7) },
              {KeyCode.Alpha8, ()=> ChangeArmy(8) },
              {KeyCode.Alpha9, ()=> ChangeArmy(9) },
-             /*{KeyCode.A,      ()=>
-             {
-                 curFocusMode = curFocusMode == MovefocusMode.Command ?
-                 MovefocusMode.Battle :  MovefocusMode.Command;
-             SignalHub.OnBattleModeChanged?.Invoke(curFocusMode); }
-            },*/
+             {KeyCode.A,      ()=> OnBattleModeChanged() },
         };
     }
 
@@ -58,20 +55,27 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
-    /// <summary>
-    /// 현재 선택된 Army를 리던
-    /// </summary>
-    /// <returns> Army를 리던</returns>
-    public Army GetCurArmy() //현재 army 리턴
+    private void OnBattleModeChanged()
     {
-        var idx = curArmyIdx < 0 ? 0 : curArmyIdx;
-        return armies[idx];
+        curFocusMode = curFocusMode == MovefocusMode.Command ? MovefocusMode.Battle : MovefocusMode.Command;
+        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
+
+        var curArmy = GetCurArmy();
+        curArmy.MoveFocusMode = curFocusMode;
+
+        if (curFocusMode == MovefocusMode.Battle)
+        {
+            curArmy.Soldiers.ForEach(s =>
+            {
+                s.FindNearestEnemy();
+            });
+        }
+        if (curArmy.General)
+        {
+            curArmy.General.FindNearestEnemy();
+        }
     }
 
-    public Army GetArmy(int legion)
-    {
-        return armies[legion - 1];
-    }
 
     /// <summary>
     /// 군단 변경
@@ -81,6 +85,7 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         //전투 라운드가 아니면 실행안해줌
         if (!WaveManager.Instance.IsBattlePhase) return;
+
         //아직 생성되지 않은 군단에 접근하면 리턴해줌
         if (armies.Count < legion) return;
 
@@ -109,29 +114,62 @@ public class ArmyManager : Singleton<ArmyManager>
         if (curArmyIdx == Idx) return;
 
         var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
-
         curArmyIdx = Idx;
-        //SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
+
+        SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
         SignalHub.OnModifyCurArmy?.Invoke();
 
-        armies.IdxExcept(
+        armies.IdxExcept
+            (
             Idx,
-            p =>
-            p.Soldiers.ForEach(s =>
+
+            p => //선택된 군단은 아웃라인을 켜줌
             {
-                CoroutineUtil.CallWaitForSeconds(1f,
+                //curArmy set battleMode
+                p.MoveFocusMode = curFocusMode;
+
+
+                p.Soldiers.ForEach(s =>
+                {
+                    if (CurFocusMode == MovefocusMode.Battle)
+                    {
+                        s.FindNearestEnemy();
+                    }
+
+                    CoroutineUtil.CallWaitForSeconds(1f,
                     () => s.OutlineCompo.enabled = true,
                     () => s.OutlineCompo.enabled = false);
 
-                s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
+                    s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
 
-            })
-           , p =>
-           p.Soldiers.ForEach(s =>
+                });
+            },
+
+           p => //선택되지 않은 나머지 군단은 아웃라인을 켜줌
            {
-               s.OutlineCompo.enabled = false;
-               s.HealthCompo.OffUIUpdate?.Invoke();
-           }));
+               p.Soldiers.ForEach(s =>
+               {
+                   s.OutlineCompo.enabled = false;
+                   s.HealthCompo.OffUIUpdate?.Invoke();
+               });
+           }); //end IdxExcept
+
+
+    } //end method
+
+    /// <summary>
+    /// 현재 선택된 Army를 리던
+    /// </summary>
+    /// <returns> Army를 리던</returns>
+    public Army GetCurArmy()
+    {
+        var idx = curArmyIdx < 0 ? 0 : curArmyIdx;
+        return armies[idx];
+    }
+
+    public Army GetArmy(int legion)
+    {
+        return armies[legion - 1];
     }
 
     #region 스탯 부분

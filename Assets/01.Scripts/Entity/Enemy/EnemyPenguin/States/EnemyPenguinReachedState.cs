@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class EnemyPenguinReachedState : EnemyPenguinBaseState
+/*public class EnemyPenguinReachedState : EnemyPenguinBaseState
 {
-    public EnemyPenguinReachedState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName) 
+    public EnemyPenguinReachedState(Enemy enemyBase, EnemyStateMachine<EnemyPenguinStateEnum> stateMachine, string animBoolName)
         : base(enemyBase, stateMachine, animBoolName)
     {
     }
@@ -29,15 +29,15 @@ public class EnemyPenguinReachedState : EnemyPenguinBaseState
         if (_triggerCalled)
         {
             if (_enemy.IsTargetPlayerInside)
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Chase);
+                _stateMachine.ChangeState(EnemyStateType.Chase);
             else
-                _stateMachine.ChangeState(EnemyPenguinStateEnum.Move);
+                _stateMachine.ChangeState(EnemyStateType.Move);
         }
     }
 
     public void ChangeStateWhenHitted()
     {
-        _stateMachine.ChangeState(EnemyPenguinStateEnum.MustChase);
+        _stateMachine.ChangeState(EnemyStateType.MustChase);
     }
 
     public override void Exit()
@@ -46,4 +46,4 @@ public class EnemyPenguinReachedState : EnemyPenguinBaseState
         _enemy.AnimatorCompo.speed = 1;
         base.Exit();
     }
-}
+}*/

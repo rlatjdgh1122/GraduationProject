@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using ArmySystem;
 
 public class State
 {
@@ -22,13 +23,14 @@ public class State
     {
         SignalHub.OnIceArrivedEvent += FindTarget;
 
-        if (_navAgent != null)
+        if (_navAgent.isOnNavMesh)
         {
             _navAgent?.ResetPath();
             //_navAgent.isStopped = false;
             //_penguin.SetNavmeshPriority(Penguin.PriorityType.High);
         }
 
+        _penguin.StopImmediately();
         _penguin.CurrentTarget = null;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
@@ -42,7 +44,28 @@ public class State
 
         _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
+
+        if (!_penguin.TargetLock)
+        {
+            _penguin.FindNearestEnemy();
+        }
+        else
+        {
+            if (_penguin.CurrentTarget == null)
+                _penguin.FindNearestEnemy();
+        }
+
         _penguin.StopImmediately();
+
+        if (!_penguin.TargetLock)
+        {
+            _penguin.FindNearestEnemy();
+        }
+        else
+        {
+            if (_penguin.CurrentTarget == null)
+                _penguin.FindNearestEnemy();
+        }
 
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
         //그래서 애니메이션에서 속도를 줄엿음
@@ -61,15 +84,16 @@ public class State
 
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
-            _penguin.FindNearestEnemy();
-       /* if (!_penguin.TargetLock)
+            
+        if (!_penguin.TargetLock)
         {
+            _penguin.FindNearestEnemy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
                 _penguin.FindNearestEnemy();
-        }*/
+        }
 
         _penguin.StartImmediately();
 

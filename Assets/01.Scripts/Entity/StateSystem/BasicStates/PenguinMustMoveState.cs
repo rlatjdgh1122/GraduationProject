@@ -1,7 +1,7 @@
 using UnityEngine;
-
+using ArmySystem;
 public class PenguinMustMoveState : State
-{
+{ 
     public PenguinMustMoveState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -23,7 +23,7 @@ public class PenguinMustMoveState : State
             }
         }
 
-        if (_penguin.IsInnerTargetRange
+        if (_penguin.IsTargetInInnerRange
              && _penguin.MoveFocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(PenguinStateType.Chase);

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using ArmySystem;
+using System.Net.NetworkInformation;
 
 [RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
@@ -24,7 +26,7 @@ public class Penguin : Entity
     public bool ArmyTriggerCalled = false;
     public bool WaitForCommandToArmyCalled = true; //������ ������ ���� �� ���������� ���
     public bool SuccessfulToArmyCalled = false; //������ ������ ���������� �ذ��ߴ°�
-    public MovefocusMode MoveFocusMode => ArmyManager.Instance.CurFocusMode;
+
 
     private Coroutine movingCoroutine = null;
     private Vector3 curMousePos = Vector3.zero;
@@ -78,33 +80,19 @@ public class Penguin : Entity
     private IDeadable _deadCompo = null;
     private ILiveable _liveCompo = null;
     #endregion
+    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
+    public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
 
-    public bool IsInnerTargetRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.GetClosetPostion(transform)) <= innerDistance;
-    public bool IsInnerMeleeRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform)) <= attackDistance;
 
     private Army owner;
     public Army MyArmy => owner;
+    public MovefocusMode MoveFocusMode => owner.MoveFocusMode;
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
     protected override void Awake()
     {
         base.Awake();
-
-        StateMachine = new PenguinStateMachine();
-
-        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"Penguin{typeName}State");
-            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
-            if (newState == null)
-            {
-                Debug.LogError($"There is no script : {state}");
-                return;
-            }
-            StateMachine.AddState(state, newState);
-        }
 
         if (NavAgent != null)
         {
@@ -129,10 +117,23 @@ public class Penguin : Entity
                 OnPassiveSecondEvent();
             }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.P))
+    protected void SetBaseState()
+    {
+        StateMachine = new PenguinStateMachine();
+
+        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
         {
-            FindNearestEnemy();
+            string typeName = state.ToString();
+            Type t = Type.GetType($"Penguin{typeName}State");
+            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
+            if (newState == null)
+            {
+                Debug.LogError($"There is no script : {state}");
+                return;
+            }
+            StateMachine.AddState(state, newState);
         }
     }
 
@@ -140,8 +141,8 @@ public class Penguin : Entity
     public bool CheckAttackPassive(int curAttackCount)
 => passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
-    public bool CheckStunPassive(float maxHp, float currentHP)
- => passiveData?.CheckStunEventPassive(maxHp, currentHP) ?? false;
+    public bool CheckHealthRatioPassive(float maxHp, float currentHP)
+ => passiveData?.CheckHealthRatioEventPassive(maxHp, currentHP) ?? false;
 
     public bool CheckSecondPassive()
 => passiveData?.CheckSecondEventPassive() ?? false;
@@ -180,7 +181,7 @@ public class Penguin : Entity
 
     public void FindNearestEnemy()
     {
-        CurrentTarget = FindNearestTarget<Enemy>(TargetLayer);
+        CurrentTarget = FindNearestTarget<Enemy>(20f, TargetLayer);
     }
 
     public virtual void LookTarget()
@@ -241,15 +242,16 @@ public class Penguin : Entity
             NavAgent.isStopped = false;
 
             if (movingCoroutine != null)
+            {
                 StopCoroutine(movingCoroutine);
+            }
 
-            movingCoroutine = StartCoroutine(Moving());
-
-            /* if (prevMousePos != Vector3.zero)
-             {
-             }
-             else
-                 MoveToMouseClick(mousePos + SeatPos);*/
+            if (prevMousePos != Vector3.zero)
+            {
+                movingCoroutine = StartCoroutine(Moving());
+            }
+            else
+                MoveToMouseClick(mousePos + SeatPos);
         }
     }
     private IEnumerator Moving()
@@ -267,7 +269,6 @@ public class Penguin : Entity
             t = currentTime / totalTime;
 
             Vector3 frameMousePos = Vector3.Lerp(prevMousePos, curMousePos, t);
-
             Vector3 finalPos = frameMousePos + movePos;
 
             MoveToMouseClick(finalPos);
@@ -275,13 +276,13 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        //Vector3 pos = MousePos + movePos; // �̸� ���� ȸ�� ��ġ�� ���⿡�� ���
-        //MoveToMouseClick(pos);
     }
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)
         {
+            if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) return;
+
             NavAgent.SetDestination(pos);
         }
     }
