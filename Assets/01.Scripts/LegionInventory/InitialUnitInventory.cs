@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class InitialUnitInventory : MonoBehaviour
+public class InitialUnitInventory : MonoBehaviour, ICreateSlotUI
 {
     protected Dictionary<EntityInfoDataSO, UnitSlotUI> penguinDictionary = new();
+    protected Dictionary<PenguinTypeEnum, UnitSlotUI> lockButtonDicntionary = new();
+
+    public List<DummyPenguin> _infoDataSOList = new();
 
     [SerializeField]
     private UnitSlotUI _slotPrefab;
@@ -23,30 +27,41 @@ public class InitialUnitInventory : MonoBehaviour
     /// Penguin 폴더 안에 있는 모든 EntityInfoDataSO 불러오기
     private void LoadPenguinSO()
     {
-        EntityInfoDataSO[] infoDatas = Resources.LoadAll<EntityInfoDataSO>("Penguin");
+        DummyPenguin[] infoDatas = Resources.LoadAll<DummyPenguin>("PenguinPrefab/Dummy");
 
         foreach (var so in infoDatas)
         {
-            CreateUnitSlot(so);
+            _infoDataSOList.Add(so);
         }
+
+        _infoDataSOList.Sort((a, b) => a.NotCloneInfo.Price.CompareTo(b.NotCloneInfo.Price));
+
+        CreateSlot();
     }
 
     /// 개수만큼 유닛 슬롯 추가
-    private void CreateUnitSlot(EntityInfoDataSO so)
+    public void CreateSlot()
     {
-        UnitSlotUI slot = Instantiate(_slotPrefab);
-
-        slot.Create(so);
-        
-        if (so is GeneralInfoDataSO)
+        foreach (var so in _infoDataSOList)
         {
-            slot.transform.SetParent(spawnGeneralSlotParent);
-        }
-        else
-        {
-            slot.transform.SetParent(spawnPenguinSlotParent);
-        }
+            UnitSlotUI slot = Instantiate(_slotPrefab);
 
-        penguinDictionary.Add(so, slot);
+            var UIinfo = so.NotCloneInfo;
+
+            lockButtonDicntionary.Add(UIinfo.PenguinType, slot);
+
+            slot.Create(UIinfo);
+
+            if (UIinfo is GeneralInfoDataSO)
+            {
+                slot.transform.SetParent(spawnGeneralSlotParent);
+            }
+            else
+            {
+                slot.transform.SetParent(spawnPenguinSlotParent);
+            }
+
+            penguinDictionary.Add(UIinfo, slot);
+        }
     }
 }

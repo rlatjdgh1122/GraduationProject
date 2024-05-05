@@ -180,7 +180,7 @@ public abstract class BaseBuilding : WorkableObject
         }
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
         if(isInstalled)
         {

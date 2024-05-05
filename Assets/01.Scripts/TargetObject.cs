@@ -23,6 +23,7 @@ public abstract class TargetObject : PoolableMono
     private Collider[] _targetColliders;
 
     private float radius = 0f;
+
     protected virtual void Awake()
     {
         _targetColliders = new Collider[_maxDetectEnemy];

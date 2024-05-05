@@ -12,29 +12,32 @@ public class Enemy : Entity
     public float attackSpeed = 1f;
     public float rotationSpeed = 2f;
 
+    [SerializeField]
+    [Range(0.1f, 6f)]
+    protected float nexusDistance;
+
     public PassiveDataSO passiveData = null;
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
     private IDeadable _deadCompo = null;
     #endregion
-    public Transform NexusTarget = null;
+    public Nexus NexusTarget = null;
 
     public bool IsMove = false;
     public bool IsProvoked = false;
-    public bool IsTargetNexus = false;
     public bool UseAttackCombo = false;
+
+    public LayerMask NexusLayer;
 
     public bool IsTargetInInnerRange => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
     public bool IsTargetInAttackRange => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
+    public bool IsReachedNexus =>
+                            Vector3.Distance(transform.position, NexusTarget.GetClosetPostion(transform.position)) <= nexusDistance;
 
     public EnemyStateMachine StateMachine { get; private set; }
 
-    private void OnEnable()
-    {
-        NexusTarget = GameManager.Instance.NexusTrm;
-    }
     protected override void Awake()
     {
         base.Awake();
@@ -66,6 +69,7 @@ public class Enemy : Entity
 
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
+        NexusTarget = GameManager.Instance.NexusTrm.GetComponent<Nexus>();
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
@@ -74,52 +78,44 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
-
-        HealthCompo.OnHit += FindTarget;
     }
+
     protected override void Update()
     {
         base.Update();
-
-        if (Input.GetKeyDown(KeyCode.P))
-            FindNearestTarget();
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-
-        HealthCompo.OnHit -= FindTarget;
     }
 
-    private void FindTarget()
+    /*private void FindTarget()
     {
         if (IsTargetNexus)
         {
-            //³ª ¶§¸°³ðÀÌ Å¸°Ù
+            //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
             SetTarget(ActionData.HitTarget);
         }
         else
         {
             FindNearestTarget();
         }
-    }
-
-
-
+    }*/
 
     public void FindNearestTarget()
     {
         CurrentTarget = FindNearestTarget<TargetObject>(innerDistance, TargetLayer);
-        IsTargetNexus = false;
+    }
 
-        //target is not Nexus
-        if (CurrentTarget != null && CurrentTarget is not Nexus) return;
+    public void FindHitTarget()
+    {
+        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
+    }
 
-        //set target to Nexus
-        CurrentTarget = FindNearestTarget<Nexus>(50f, TargetLayer);
-        IsTargetNexus = true;
-
+    public void FindNexusTarget()
+    {
+        CurrentTarget = FindNearestTarget<TargetObject>(500, NexusLayer);
     }
 
     protected override void HandleDie()
@@ -137,7 +133,7 @@ public class Enemy : Entity
         if (NavAgent != null)
         {
             NavAgent.ResetPath();
-            NavAgent.SetDestination(NexusTarget.position);
+            NavAgent.SetDestination(NexusTarget.transform.position);
         }
     }
 

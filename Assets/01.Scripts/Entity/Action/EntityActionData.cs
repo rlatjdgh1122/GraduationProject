@@ -10,5 +10,5 @@ public class EntityActionData : MonoBehaviour
     [HideInInspector] public HitType HitType;
 
     //³ª ¶§¸°³ð
-    [HideInInspector] public TargetObject HitTarget;
+    public TargetObject HitTarget;
 }

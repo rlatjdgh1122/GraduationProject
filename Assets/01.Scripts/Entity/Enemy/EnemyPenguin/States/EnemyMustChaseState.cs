@@ -7,22 +7,23 @@ public class EnemyMustChaseState : EnemyBaseState
     public override void EnterState()
     {
         base.EnterState();
-
-        MustChaseEnter();
+        _triggerCalled = true;
+        _enemy.FindHitTarget();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_enemy.IsTargetInInnerRange)
-            _stateMachine.ChangeState(EnemyStateType.Chase);
+        if (_enemy.CurrentTarget != null)
+            _enemy.MoveToCurrentTarget();
+
+        if (_enemy.IsTargetInAttackRange)
+            _stateMachine.ChangeState(EnemyStateType.Attack);
     }
 
     public override void ExitState()
     {
         base.ExitState();
-
-        MustChaseExit();
     }
 }

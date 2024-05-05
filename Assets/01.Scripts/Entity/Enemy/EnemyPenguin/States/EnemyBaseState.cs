@@ -18,12 +18,12 @@ public class EnemyBaseState : EnemyState
     }
 
     #region Enter
-
     protected void IdleEnter()
     {
         _triggerCalled = true;
         SignalHub.OnIceArrivedEvent += FindTarget;
     }
+
     protected void AttackEnter()
     {
         if (_enemy.CurrentTarget != null)
@@ -33,8 +33,6 @@ public class EnemyBaseState : EnemyState
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
-
-  
 
     protected void AttackComboEnter()
     {
@@ -55,7 +53,6 @@ public class EnemyBaseState : EnemyState
 
         _enemy.FindNearestTarget();
 
-        //follow target
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();
     }
@@ -64,7 +61,6 @@ public class EnemyBaseState : EnemyState
     {
         _triggerCalled = true;
 
-        //follow target
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();
     }
@@ -80,7 +76,6 @@ public class EnemyBaseState : EnemyState
         _enemy.StopImmediately();
         _triggerCalled = false;
     }
-
     #endregion
 
     #region Exit
@@ -120,14 +115,14 @@ public class EnemyBaseState : EnemyState
     {
         _triggerCalled = false;
     }
-
     #endregion
 
     #region Method
     private void FindTarget()
     {
-        _enemy.FindNearestTarget();
+        _enemy.FindNexusTarget();
     }
+
     private void DeadTarget()
     {
         var prevTarget = _enemy.CurrentTarget;

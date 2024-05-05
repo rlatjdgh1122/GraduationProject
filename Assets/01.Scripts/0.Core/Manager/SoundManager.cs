@@ -48,6 +48,7 @@ public enum SoundName
     None,
     WoodCut,
     FallDown,
+    GorillaPunch,
 
 
     #region Buildings

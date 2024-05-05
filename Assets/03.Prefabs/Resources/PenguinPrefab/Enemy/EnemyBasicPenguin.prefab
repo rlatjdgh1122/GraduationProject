@@ -1041,20 +1041,23 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   IsDead: 0
   _maxDetectEnemy: 5
-  innerDistance: 50
-  attackDistance: 1
+  innerDistance: 7
+  attackDistance: 1.25
   TargetLayer:
     serializedVersion: 2
     m_Bits: 534528
   moveSpeed: 3
   attackSpeed: 1
   rotationSpeed: 2
+  nexusDistance: 1
   passiveData: {fileID: 0}
   NexusTarget: {fileID: 0}
   IsMove: 0
   IsProvoked: 0
-  IsTargetNexus: 0
   UseAttackCombo: 0
+  NexusLayer:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &144058993645124523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1544,7 +1547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 1
+  _detectRange: 2
   _hitType: 11
   TargetLayer:
     serializedVersion: 2

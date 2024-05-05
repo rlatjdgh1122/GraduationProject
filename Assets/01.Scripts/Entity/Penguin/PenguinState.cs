@@ -28,6 +28,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
     }
+
     protected void AttackEnter()
     {
         //적이 죽을때 이벤트를 연결
@@ -63,6 +64,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         //그래서 애니메이션에서 속도를 줄엿음
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
+
     protected void ChaseEnter()
     {
         //굳이 필요한가?
@@ -93,6 +95,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         if (_penguin.CurrentTarget != null)
             _penguin.MoveToCurrentTarget();
     }
+
     protected void MoveEnter()
     {
         //if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
@@ -103,10 +106,12 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         if (_penguin.WaitForCommandToArmyCalled)
             _penguin.MoveToMouseClickPositon();
     }
+
     protected void MustMoveEnter()
     {
         _penguin.MoveToMouseClickPositon();
     }
+
     protected void DeadEnter()
     {
         _triggerCalled = true;

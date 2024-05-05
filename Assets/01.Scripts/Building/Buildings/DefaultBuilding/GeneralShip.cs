@@ -35,6 +35,9 @@ public class GeneralShip : MonoBehaviour
 
     private void OnMouseDown()
     {
-        UIManager.Instance.ShowPanel("GeneralUI");
+        if(!WaveManager.Instance.IsBattlePhase)
+        {
+            UIManager.Instance.ShowPanel("GeneralUI");
+        }
     }
 }

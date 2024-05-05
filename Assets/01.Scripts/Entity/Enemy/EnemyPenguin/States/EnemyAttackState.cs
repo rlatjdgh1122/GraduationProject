@@ -30,6 +30,8 @@ public class EnemyAttackState : EnemyBaseState
         {
             if (_enemy.IsTargetInInnerRange)
                 _stateMachine.ChangeState(EnemyStateType.Chase); //사거리 안에 타겟 플레이어가 있다 -> 따라가
+            else
+                _stateMachine.ChangeState(EnemyStateType.Move);
         }
     }
 
