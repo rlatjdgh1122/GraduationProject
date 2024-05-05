@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundMove : MonoBehaviour
@@ -25,10 +26,10 @@ public class GroundMove : MonoBehaviour
 
     private GameObject _waveEffect;
 
-    private Collider _col;
+    private MeshCollider _meshCollider;
 
     private Vector3 _centerPos;
-    private Vector3 _closestPointDirToCenter => _col.ClosestPointOnBounds(_centerPos);
+    private Vector3 _closestPointDirToCenter => _meshCollider.ClosestPoint(_centerPos); // 반드시 _meshCollider의 convex를 켜줘야함
 
     private Vector3 RaycastHit_ToCenterPos
     {
@@ -53,7 +54,7 @@ public class GroundMove : MonoBehaviour
         _enemies = GetComponentsInChildren<Enemy>();
 
         _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
-        _col = transform.Find("TopArea").GetComponent<Collider>();
+        _meshCollider = transform.Find("TopArea").GetComponent<MeshCollider>();
     }
 
     private void Start()
@@ -139,60 +140,50 @@ public class GroundMove : MonoBehaviour
         SignalHub.OnBattlePhaseEndEvent -= DisableDeadBodys;
     }
 
-    public void SetGroundInfo(Transform parentTrm, Vector3 position)
+    public void SetGroundInfo(Transform parentTransform, Vector3 position)
     {
-        // 여기다가 적이나 보상 같은 것 설정
-        // 나중에는 이거 그냥 생성할때 하도록 바꾸자
+        // 위치 설정 관련 주석 추가
+        // 나중에 생성할 때 위치 설정하도록 변경해야 함
 
-        #region 위치 관련
+        
+        transform.SetParent(parentTransform); // 부모 설정
+        transform.localPosition = position; // 빙하의 위치 설정
 
-        transform.transform.SetParent(parentTrm);
-        transform.transform.localPosition = position; // 일단은 만든 육각형 비례해서 멀리서 나오도록
-
+        // 회전 및 부모 해제
         transform.rotation = Quaternion.identity;
         transform.SetParent(null);
 
 
-        CoroutineUtil.CallWaitForOneFrame(() =>
-        {
-            float CenterToHitPointX = Mathf.Abs(_col.transform.position.x - RaycastHit_ToCenterPos.x);
-            float CenterToHitPointZ = Mathf.Abs(_col.transform.position.z - RaycastHit_ToCenterPos.z);
+        // 중앙과 히트 포인트 사이의 거리 계산
+        float centerToHitPointX = Mathf.Abs(_meshCollider.transform.position.x - RaycastHit_ToCenterPos.x);
+        float centerToHitPointZ = Mathf.Abs(_meshCollider.transform.position.z - RaycastHit_ToCenterPos.z);
 
-            float ClosestPointToHitPointX = Mathf.Abs(_closestPointDirToCenter.x - RaycastHit_ToCenterPos.x);
-            float ClosestPointToHitPointZ = Mathf.Abs(_closestPointDirToCenter.z - RaycastHit_ToCenterPos.z);
+        // 가장 가까운 포인트와 히트 포인트 사이의 거리 계산
+        float closestPointToHitPointX = Mathf.Abs(_closestPointDirToCenter.x - RaycastHit_ToCenterPos.x);
+        float closestPointToHitPointZ = Mathf.Abs(_closestPointDirToCenter.z - RaycastHit_ToCenterPos.z);
 
-            float XDistance = CenterToHitPointX - ClosestPointToHitPointX;
-            float ZDistance = CenterToHitPointZ - ClosestPointToHitPointZ;
+        // X와 Z 거리 계산
+        float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
+        float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
 
-            Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
+        Debug.Log($"xDistance: {xDistance}");
+        Debug.Log($"zDistance: {zDistance}");
 
-            if (transform.position.x + _centerPos.y > 0)
-            {
-                targetVec += new Vector3(XDistance, 0, 0);
-            }
-            else if(transform.position.x + _centerPos.y < 0)
-            {
-                targetVec -= new Vector3(XDistance, 0, 0);
-            }
+        // 타겟 벡터 계산
+        Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
 
-            if (transform.position.z + _centerPos.x > 0)
-            {
-                targetVec += new Vector3(0, 0, ZDistance);
-            }
-            else if(transform.position.z + _centerPos.x < 0)
-            {
-                targetVec -= new Vector3(0, 0, ZDistance);
-            }
+        //// X 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
+        targetVec.x += Mathf.Sign(transform.position.x) * xDistance;
+        //
+        //// Z 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
+        targetVec.z += Mathf.Sign(transform.position.z) * zDistance;
+
+        // 타겟 위치 설정
+        _targetPos = targetVec;
 
 
-            Debug.Log(targetVec);
-
-            _targetPos = targetVec;
-        });
-
-        #endregion
-
-        _enableStage = WaveManager.Instance.CurrentWaveCount; // 나중에 랜덤으로 바꾸면 걍 없애기 
+        // 스테이지 활성화
+        _enableStage = WaveManager.Instance.CurrentWaveCount; // 나중에 지우자
     }
 
     public void SetMoveTarget(Transform trm)

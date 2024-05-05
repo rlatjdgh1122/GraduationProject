@@ -21,11 +21,6 @@ public class RandomGlacierGenerator : MonoBehaviour
 
     private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
 
-    private readonly float glacierDiameter = 10.400405f;
-
-
-    // 김성호: 비율 어쩌고로 하기
-
     private GroundMove SpawnGlaciers()
     {
         GroundMove ground = _allGrounds.Dequeue();
@@ -77,7 +72,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         curground.gameObject.SetActive(true);
 
-        curground.SetGroundInfo(transform, new Vector3(0f, 0f, 50f * realMakedHexagonCount));
+        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, 50f * realMakedHexagonCount));
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {
@@ -109,6 +104,11 @@ public class RandomGlacierGenerator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J)) // 디버그 용
         {
             GlacierSetPos();
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SignalHub.OnBattlePhaseEndEvent?.Invoke();
         }
     }
 }
