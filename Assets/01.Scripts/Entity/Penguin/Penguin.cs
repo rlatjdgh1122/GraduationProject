@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using ArmySystem;
+using System.Net.NetworkInformation;
 
 [RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
@@ -248,7 +249,7 @@ public class Penguin : Entity
 
             if (prevMousePos != Vector3.zero)
             {
-            }  
+            }
             else
                 MoveToMouseClick(mousePos + SeatPos);
         }
@@ -283,6 +284,8 @@ public class Penguin : Entity
     {
         if (NavAgent.isActiveAndEnabled)
         {
+            if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) return;
+
             NavAgent.SetDestination(pos);
         }
     }

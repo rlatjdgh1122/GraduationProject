@@ -67,7 +67,7 @@ public abstract class TargetObject : PoolableMono
 
     public T FindNearestTarget<T>(float checkRange, LayerMask mask) where T : TargetObject
     {
-        T target = null;
+        T target = null;    
 
         float maxDistance = 300f;
 
