@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using static UnityEngine.EventSystems.EventTrigger;
 using Random = UnityEngine.Random;
 
 public enum OutlineColorType
@@ -16,14 +17,26 @@ public enum OutlineColorType
 [RequireComponent(typeof(Outline))]
 public class Ground : MonoBehaviour
 {
+    [Header("Settings")]
     [SerializeField]
     private List<GameObject> _resourcePrefabs = new List<GameObject>();
+    
+    [Space]
 
     [SerializeField]
     private List<GameObject> _enemyPrefabs = new List<GameObject>();
 
+    [Space]
+
     [SerializeField]
-    private List<GameObject> _rewardPrefabs = new List<GameObject>();
+    private List<GameObject> _bossPrefabs = new List<GameObject>();
+
+    [Space]
+
+    [SerializeField]
+    private GameObject _rewardPrefabs;
+
+
 
     private bool isInstalledBuilding;
 
@@ -87,12 +100,10 @@ public class Ground : MonoBehaviour
 
         for (int i = 0; i < resourceCount; i++)
         {
-            Debug.Log("자원 생성");
-        }
-
-        if (resourceCount == 0)
-        {
-            Debug.Log("자원 생성X");
+            int randomIdx = Random.Range(0, _resourcePrefabs.Count);
+            GameObject resource = _resourcePrefabs[randomIdx];
+            PoolManager.Instance.Pop(resource.name);
+            Debug.Log($"{resource}자원 생성");
         }
     }
 
@@ -107,7 +118,10 @@ public class Ground : MonoBehaviour
 
         for(int i = 0; i < enemyCount; i++)
         {
-            Debug.Log("적 생성");
+            int randomIdx = Random.Range(0, _enemyPrefabs.Count);
+            GameObject enemy = _enemyPrefabs[randomIdx];
+            PoolManager.Instance.Pop(enemy.name);
+            Debug.Log($"{enemy}적 생성");
         }
 
     }
@@ -117,11 +131,8 @@ public class Ground : MonoBehaviour
         if (Random.Range(0, 5) == 0)
         {
             // 무언가가 발생한 경우, 원하는 작업을 수행
+            PoolManager.Instance.Pop(_rewardPrefabs.name);
             Debug.Log("거시기 보상박스 생성");
-        }
-        else
-        {
-            Debug.Log("보상박스 생성X");
         }
     }
 
