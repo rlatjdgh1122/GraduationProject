@@ -26,7 +26,7 @@ public class Penguin : Entity
     public bool ArmyTriggerCalled = false;
     public bool WaitForCommandToArmyCalled = true; //������ ������ ���� �� ���������� ���
     public bool SuccessfulToArmyCalled = false; //������ ������ ���������� �ذ��ߴ°�
-    public MovefocusMode MoveFocusMode => ArmyManager.Instance.CurFocusMode;
+
 
     private Coroutine movingCoroutine = null;
     private Vector3 curMousePos = Vector3.zero;
@@ -86,6 +86,7 @@ public class Penguin : Entity
 
     private Army owner;
     public Army MyArmy => owner;
+    public MovefocusMode MoveFocusMode => owner.MoveFocusMode;
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
@@ -243,12 +244,13 @@ public class Penguin : Entity
             NavAgent.isStopped = false;
 
             if (movingCoroutine != null)
+            {
                 StopCoroutine(movingCoroutine);
-
-            movingCoroutine = StartCoroutine(Moving());
+            }
 
             if (prevMousePos != Vector3.zero)
             {
+                movingCoroutine = StartCoroutine(Moving());
             }
             else
                 MoveToMouseClick(mousePos + SeatPos);
@@ -269,7 +271,6 @@ public class Penguin : Entity
             t = currentTime / totalTime;
 
             Vector3 frameMousePos = Vector3.Lerp(prevMousePos, curMousePos, t);
-
             Vector3 finalPos = frameMousePos + movePos;
 
             MoveToMouseClick(finalPos);
@@ -277,8 +278,6 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        //Vector3 pos = MousePos + movePos; // �̸� ���� ȸ�� ��ġ�� ���⿡�� ���
-        //MoveToMouseClick(pos);
     }
     private void MoveToMouseClick(Vector3 pos)
     {

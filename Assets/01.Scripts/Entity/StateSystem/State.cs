@@ -30,6 +30,7 @@ public class State
             //_penguin.SetNavmeshPriority(Penguin.PriorityType.High);
         }
 
+        _penguin.StopImmediately();
         _penguin.CurrentTarget = null;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;

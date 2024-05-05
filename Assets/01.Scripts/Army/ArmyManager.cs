@@ -60,7 +60,20 @@ public class ArmyManager : Singleton<ArmyManager>
         curFocusMode = curFocusMode == MovefocusMode.Command ? MovefocusMode.Battle : MovefocusMode.Command;
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
 
-        GetCurArmy().MoveFocusMode = curFocusMode;
+        var curArmy = GetCurArmy();
+        curArmy.MoveFocusMode = curFocusMode;
+
+        if (curFocusMode == MovefocusMode.Battle)
+        {
+            curArmy.Soldiers.ForEach(s =>
+            {
+                s.FindNearestEnemy();
+            });
+        }
+        if (curArmy.General)
+        {
+            curArmy.General.FindNearestEnemy();
+        }
     }
 
 
@@ -115,17 +128,23 @@ public class ArmyManager : Singleton<ArmyManager>
                 //curArmy set battleMode
                 p.MoveFocusMode = curFocusMode;
 
+
                 p.Soldiers.ForEach(s =>
                 {
+                    if (CurFocusMode == MovefocusMode.Battle)
+                    {
+                        s.FindNearestEnemy();
+                    }
+
                     CoroutineUtil.CallWaitForSeconds(1f,
-                        () => s.OutlineCompo.enabled = true,
-                        () => s.OutlineCompo.enabled = false);
+                    () => s.OutlineCompo.enabled = true,
+                    () => s.OutlineCompo.enabled = false);
 
                     s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
 
                 });
             },
-           
+
            p => //선택되지 않은 나머지 군단은 아웃라인을 켜줌
            {
                p.Soldiers.ForEach(s =>

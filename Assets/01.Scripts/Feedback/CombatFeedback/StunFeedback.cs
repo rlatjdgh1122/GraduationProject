@@ -24,26 +24,15 @@ public class StunFeedback : CombatFeedback
 
     private IEnumerator StunCoroutine(float duration)
     {
-        //var navSpeed = _navMeshAgent.speed;
-        //var animSpeed = _animator.speed;
-        //_navMeshAgent.speed = 0f;
-        //_animator.speed = 0f;
+        if (owner.IsDead) yield break;
 
         _animator.enabled = false;
         _navMeshAgent.enabled = false;
 
         yield return new WaitForSeconds(duration);
 
-        if (!owner.IsDead)
-        {
-            _animator.enabled = true;
-            _navMeshAgent.enabled = true;
+        _animator.enabled = true;
+        _navMeshAgent.enabled = true;
 
-            owner.MoveToCurrentTarget();
-        }
-
-
-        //_animator.speed = navSpeed;
-        //_navMeshAgent.speed = animSpeed;
     }
 }
