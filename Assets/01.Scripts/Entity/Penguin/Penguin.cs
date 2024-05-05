@@ -94,21 +94,6 @@ public class Penguin : Entity
     {
         base.Awake();
 
-        StateMachine = new PenguinStateMachine();
-
-        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"Penguin{typeName}State");
-            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
-            if (newState == null)
-            {
-                Debug.LogError($"There is no script : {state}");
-                return;
-            }
-            StateMachine.AddState(state, newState);
-        }
-
         if (NavAgent != null)
         {
             NavAgent.speed = moveSpeed;
@@ -132,10 +117,23 @@ public class Penguin : Entity
                 OnPassiveSecondEvent();
             }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.P))
+    protected void SetBaseState()
+    {
+        StateMachine = new PenguinStateMachine();
+
+        foreach (PenguinStateType state in Enum.GetValues(typeof(PenguinStateType)))
         {
-            FindNearestEnemy();
+            string typeName = state.ToString();
+            Type t = Type.GetType($"Penguin{typeName}State");
+            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
+            if (newState == null)
+            {
+                Debug.LogError($"There is no script : {state}");
+                return;
+            }
+            StateMachine.AddState(state, newState);
         }
     }
 

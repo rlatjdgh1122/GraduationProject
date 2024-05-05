@@ -16,6 +16,8 @@ public class MopPenguin : Penguin
     protected override void Awake()
     {
         base.Awake();
+        SetBaseState();
+
     }
 
     protected override void Start()

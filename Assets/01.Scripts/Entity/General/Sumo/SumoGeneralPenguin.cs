@@ -3,6 +3,8 @@ public class SumoGeneralPenguin : General
     protected override void Awake()
     {
         base.Awake();
+        SetBaseState();
+
     }
 
     protected override void Start()
