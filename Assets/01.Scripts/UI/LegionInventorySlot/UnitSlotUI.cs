@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -6,9 +7,12 @@ public class UnitSlotUI : SlotUI
 {
     private TextMeshProUGUI _countText;
     private Image _lockImg;
-    private int _stackSize = 0;
-    public EntityInfoDataSO _keyData;
+    private Image _lockIconImg;
+
     private bool _locked => _stackSize <= 0;
+    private int _stackSize = 0;
+
+    public EntityInfoDataSO _keyData;
 
     protected override void Awake()  
     {
@@ -17,6 +21,7 @@ public class UnitSlotUI : SlotUI
         unitImage = transform.Find("Penguin").GetComponent<Image>();
         _countText = transform.Find("CountBK/Count").GetComponent<TextMeshProUGUI>();
         _lockImg = transform.Find("Lock").GetComponent<Image>();
+        _lockIconImg = transform.Find("Icon").GetComponent<Image>();
     }
 
     public void Create(EntityInfoDataSO data)
@@ -51,6 +56,21 @@ public class UnitSlotUI : SlotUI
         _lockImg.gameObject.SetActive(_locked);
 
         _countText.text = $"{_stackSize} ¸¶¸®";
+    }
+
+    public void LockSlot()
+    {
+        unitImage.color = Color.black;
+        _countText.text = string.Empty;
+        _lockIconImg.gameObject.SetActive(true);
+    }
+
+    public void UnLockSlot()
+    {
+        unitImage.color = Color.white;
+        _lockIconImg.gameObject.SetActive(false);
+
+        UpdateSlot();
     }
 
     public override void OnPointerDown(PointerEventData eventData)

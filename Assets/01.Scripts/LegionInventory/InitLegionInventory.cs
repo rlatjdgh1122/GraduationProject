@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InitLegionInventory : MonoBehaviour
+public class InitLegionInventory : MonoBehaviour, ICreateSlotUI
 {
     [SerializeField]
     private int _legionSlotCount;
@@ -34,10 +34,10 @@ public class InitLegionInventory : MonoBehaviour
         legionInventoryParent = transform.Find("LegionInventory/LegionPanel");
         legion = LegionInventoryManager.Instance;
 
-        CreateLegionSlot();
+        CreateSlot();
     }
 
-    private void CreateLegionSlot()
+    public void CreateSlot()
     {
         for (int i = 0; i < _legionSlotCount; i++)
         {

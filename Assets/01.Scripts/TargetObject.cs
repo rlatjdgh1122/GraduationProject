@@ -56,7 +56,7 @@ public abstract class TargetObject : PoolableMono
         Vector3 result = (dir * radius) + transform.position;
         result.y = transform.position.y;
 
-        Debug.Log($"{gameObject.name} : {result}");
+        //Debug.Log($"{gameObject.name} : {result}");
         return result;
     }
 

@@ -29,8 +29,10 @@ public class DefaultBuilding : BaseBuilding
         isSpawnUIOn = false;
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
+
         Installed();
     }
 
