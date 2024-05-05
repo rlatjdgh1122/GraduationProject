@@ -1,4 +1,5 @@
 using Define.CamDefine;
+using Define.Resources;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -15,9 +16,9 @@ public enum SoundType
     BGM
 }
 
-public enum SoundName
+public enum SoundName : uint
 {
-    MeleeAttack,
+    MeleeAttack = 0,
     ArrowAttack,
     ArrowReload,
     StartFight,
@@ -45,11 +46,9 @@ public enum SoundName
     Lose,
     CostBox,
     LevelUp,
-    None,
     WoodCut,
     FallDown,
     GorillaPunch,
-
 
     #region Buildings
 
@@ -59,15 +58,17 @@ public enum SoundName
     BearTrap,
 
     #endregion
+
+    None = uint.MaxValue,
 }
 
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance;
-            
+
     private Dictionary<SoundName, AudioSource> bgmContainer = new();
     private AudioMixerGroup bgmMixer;
-    private AudioMixerGroup sfxMixer; 
+    private AudioMixerGroup sfxMixer;
     private AudioMixer mainMixer;
 
     private Camera mainCamera;
@@ -103,7 +104,7 @@ public class SoundManager : MonoBehaviour
 
         if (instance == null) return;
 
-        if(name == SoundName.None) return;
+        if (name == SoundName.None) return;
 
         instance.Play2D(name, type);
 
@@ -138,7 +139,7 @@ public class SoundManager : MonoBehaviour
         GameObject obj = new GameObject();
         var source = obj.AddComponent<AudioSource>();
 
-        AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName.ToString()}");
+        AudioClip clip = VResources.Load<AudioClip>($"Sound/{clipName.ToString()}");
 
         source.clip = clip;
         source.spatialBlend = 0;
@@ -243,7 +244,7 @@ public class SoundManager : MonoBehaviour
     private void StopBGMSound(SoundName clipName)
     {
 
-        if(bgmContainer.TryGetValue(clipName, out AudioSource so))
+        if (bgmContainer.TryGetValue(clipName, out AudioSource so))
         {
             StartCoroutine(FadeInVolume(so, 0, 0.7f));
             bgmContainer.Remove(clipName);

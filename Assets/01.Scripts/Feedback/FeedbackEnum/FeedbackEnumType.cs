@@ -6,7 +6,6 @@ public enum FeedbackEnumType
     Provoked,
     Stun,
     Dash,
-    Noise,
     Knockback,
     Vigilance,
 }
