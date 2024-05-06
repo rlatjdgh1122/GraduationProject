@@ -145,7 +145,7 @@ public class Ground : MonoBehaviour
 
     private void SetReward()
     {
-        if (Random.Range(0, 5) == 0)
+        if (Random.Range(0, 1) == 0)
         {
             // 무언가가 발생한 경우, 원하는 작업을 수행
             GameObject spawnReward = PoolManager.Instance.Pop(_rewardPrefabs.name).gameObject;

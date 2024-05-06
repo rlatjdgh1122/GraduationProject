@@ -89,7 +89,8 @@ public abstract class BaseBuilding : WorkableObject
 
         if (_buildingItemInfo != null)
         {
-            if (_buildingItemInfo.BuildingTypeEnum != BuildingType.Trap)
+            if (_buildingItemInfo.BuildingTypeEnum != BuildingType.Trap ||
+                _buildingItemInfo.InstalledTime != 0)
             {
                 _remainTimeUI = transform.Find("TimeRemainCanvas").GetComponent<TimeRemain>();
             }
