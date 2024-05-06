@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using static UnityEngine.EventSystems.EventTrigger;
 using Random = UnityEngine.Random;
 
 public enum OutlineColorType
@@ -18,10 +12,14 @@ public enum OutlineColorType
 [RequireComponent(typeof(Outline))]
 public class Ground : MonoBehaviour
 {
+    private readonly float D_setposY = 1.9f;
+    private readonly float D_groundRadius = 5f;
+    private readonly float D_checkDistance = 1.5f;
+
     [Header("Settings")]
     [SerializeField]
     private List<GameObject> _resourcePrefabs = new List<GameObject>();
-    
+
     [Space]
 
     [SerializeField]
@@ -38,16 +36,14 @@ public class Ground : MonoBehaviour
     private GameObject _rewardPrefabs;
 
 
-
     private bool isInstalledBuilding;
 
     public bool IsInstalledBuilding => isInstalledBuilding;
 
     private Outline _outline;
-    public Outline OutlineCompo =>_outline;
+    public Outline OutlineCompo => _outline;
 
     private GroundMove _groundMove;
-
     private void Awake()
     {
         _outline = GetComponent<Outline>();
@@ -106,11 +102,10 @@ public class Ground : MonoBehaviour
             GameObject spawnResource = PoolManager.Instance.Pop(resourceName.name).gameObject;
             spawnResource.transform.SetParent(transform);
 
-            Vector3 resourcePos = Random.insideUnitCircle * transform.position;
-            resourcePos.y = 1.9f;
+            Vector3 resourcePos = GetRandomPosition();
 
             spawnResource.transform.localPosition = resourcePos;
-            spawnResource.transform.localScale =  Vector3.one;
+            spawnResource.transform.localScale = Vector3.one;
         }
     }
 
@@ -125,8 +120,7 @@ public class Ground : MonoBehaviour
             Enemy spawnBoss = PoolManager.Instance.Pop(_bossPrefabs[0].name) as Enemy;
             spawnBoss.transform.SetParent(transform);
 
-            Vector3 enemyPos = Random.insideUnitCircle * transform.position;
-            enemyPos.y = 1.9f;
+            Vector3 enemyPos = GetRandomPosition();
             spawnBoss.transform.localPosition = enemyPos;
 
             spawnBoss.IsMove = false;
@@ -137,21 +131,20 @@ public class Ground : MonoBehaviour
             enemyCountProportion = 0.25f;
             spawnedEnemies.Add(spawnBoss);
         }
-        
+
         int minEnemyCount = 1;
         int maxEnemyCount = 5;
 
         int enemyCount = Mathf.RoundToInt(WaveManager.Instance.CurrentWaveCount * enemyCountProportion);
         enemyCount = Mathf.Clamp(enemyCount, minEnemyCount, maxEnemyCount);
-        for(int i = 0; i < enemyCount; i++)
+        for (int i = 0; i < enemyCount; i++)
         {
             int randomIdx = Random.Range(0, _enemyPrefabs.Count);
             GameObject enemy = _enemyPrefabs[randomIdx];
             Enemy spawnEnemy = PoolManager.Instance.Pop(enemy.name) as Enemy;
             spawnEnemy.transform.SetParent(transform);
 
-            Vector3 enemyPos = Random.insideUnitCircle * transform.position;
-            enemyPos.y = 1.9f;
+            Vector3 enemyPos = GetRandomPosition();
             spawnEnemy.transform.localPosition = enemyPos;
 
             spawnEnemy.IsMove = false;
@@ -171,11 +164,29 @@ public class Ground : MonoBehaviour
             GameObject spawnReward = PoolManager.Instance.Pop(_rewardPrefabs.name).gameObject;
             spawnReward.transform.SetParent(transform);
 
-            Vector3 rewardPos = Random.insideUnitCircle * transform.position;
-            rewardPos.y = 1.9f;
+            Vector3 rewardPos = GetRandomPosition();
 
             spawnReward.transform.localPosition = rewardPos;
         }
+    }
+
+    private List<Vector3> previousRewardPositions = new List<Vector3>();
+
+    private Vector3 GetRandomPosition()
+    {
+        Vector3 randomPos = (Vector3)Random.insideUnitCircle * D_groundRadius;
+        randomPos.y = D_setposY;
+
+        foreach (Vector3 prevPos in previousRewardPositions)
+        {
+            if (Vector3.Distance(randomPos, prevPos) < D_checkDistance)
+            {
+                return GetRandomPosition();
+            }
+        }
+
+        previousRewardPositions.Add(randomPos);
+        return randomPos;
     }
 
     public void SetMoveTarget(Transform trm)
