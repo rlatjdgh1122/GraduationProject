@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class RangeAttackableEntity : EntityAttackData
 {
@@ -15,8 +16,23 @@ public class RangeAttackableEntity : EntityAttackData
 
     public override void RangeAttack(Vector3 targetPos)
     {
-        _firePos.LookAt(new Vector3(owner.CurrentTarget.transform.position.x,
-            owner.CurrentTarget.transform.position.y + 0.5f, owner.CurrentTarget.transform.position.z));
+        TargetObject curtarget = null;
+
+        if (owner.CurrentTarget != null)
+        {
+            curtarget = owner.CurrentTarget;
+        }
+        else
+        {
+            if (owner is Enemy)
+            {
+                curtarget = (owner as Enemy).NexusTarget;
+            }
+        }
+
+
+        _firePos.LookAt(new Vector3(curtarget.transform.position.x,
+            curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
 
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
         //Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
