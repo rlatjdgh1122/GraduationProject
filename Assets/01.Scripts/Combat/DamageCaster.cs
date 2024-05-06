@@ -241,17 +241,17 @@ public class DamageCaster : MonoBehaviour
 
         foreach (Collider collider in colliders)
         {
-            IDamageable damageable = collider.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, _owner);
-                isHit = true;
-            }
+            //IDamageable damageable = collider.GetComponent<IDamageable>();
+            //if (damageable != null)
+            //{
+            //    damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, _owner);
+            //    isHit = true;
+            //}
 
             if (collider.TryGetComponent(out Health health))
             {
-                health.ApplyDamage(damage, position, collider.transform.position, _hitType,_owner);
-
+                health.ApplyDamage(damage, position, collider.transform.position, _hitType,_owner, false); // 이펙트 2개 나가서 여기서 bool로 처리. ApplyDamage에서 이펙트 하면 사라지는 것도 이상함
+                isHit = true;
                 health.Knockback(0.05f, collider.transform.position); // 내 생각에 넉백 있어야 할 것 같아서 그냥 하드코딩한 값으로 넣었음
             }
         }
