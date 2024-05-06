@@ -142,7 +142,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     private void Dead()
     {
         feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Dead);
-
+        OnDeathEvent?.Invoke();
         OffUIUpdate?.Invoke();
         _isDead = true;
         OnDied?.Invoke();

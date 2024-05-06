@@ -8,7 +8,7 @@ public class ResourceObjectClickTrigger : MonoBehaviour
 
     private void Awake()
     {
-        _resourceObject = transform.parent.GetComponent<ResourceObject>();
+        _resourceObject = transform.GetComponent<ResourceObject>();
     }
     private void OnMouseDown()
     {

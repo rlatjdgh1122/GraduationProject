@@ -22,7 +22,7 @@ public class WorkerReturnState : WorkerState<WorkerPenguinStateEnum>
         base.UpdateState();
         if (_worker.CanWork == false
             && _worker.EndWork == true
-            && _worker.CheckNexusDistance() < .5f)
+            && _worker.CheckNexusDistance() < 1.2f)
             _worker.MoveEndToNexus();
     }
 
