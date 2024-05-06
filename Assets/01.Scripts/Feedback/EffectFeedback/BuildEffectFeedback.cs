@@ -17,7 +17,6 @@ public class BuildEffectFeedback : Feedback
 
         if (effect != null)
         {
-            effect.transform.SetParent(ownerTrm);
 
             effect.transform.position = transform.position;
             effect.transform.rotation = transform.rotation;
