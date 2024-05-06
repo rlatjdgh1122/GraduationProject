@@ -12,7 +12,6 @@ public class HitEffectFeedback : EffectFeedback
         EffectPlayer effect = PoolManager.Instance.Pop(actionData.HitType.ToString()) as EffectPlayer;
         if (effect != null)
         {
-            effect.transform.SetParent(ownerTrm);
 
             effect.transform.position = actionData.HitPoint;
             effect.transform.rotation = Quaternion.LookRotation(actionData.HitNormal * -1);
