@@ -71,6 +71,10 @@ public class MortarBuilding : DefenseBuilding
                 remainWaitTime -= Time.deltaTime;
                 if (!isBattlePhase) // 쏘려고 하는데 전투페이즈가 아니면 부채로 호다닥 끔
                 {
+                    isFired = false;
+                    float endYValuee = _cannonTransform.localPosition.y + fireMoveValue;
+                    _cannonTransform.DOLocalMoveY(endYValuee, 1f).SetEase(Ease.OutBack);
+                    _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
                     _ignitingPenguin.StartSwingAnimation(remainWaitTime);
                     yield break;
                 }
@@ -81,6 +85,11 @@ public class MortarBuilding : DefenseBuilding
             Fire();
             elapsedTime = 0.0f; // 시간 초기화
         }
+
+        isFired = false;
+        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
+        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
+        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
     }
 
     private void Fire()

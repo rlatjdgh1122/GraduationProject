@@ -117,12 +117,32 @@ public class Ground : MonoBehaviour
     private void SetEnemy()
     {
         float enemyCountProportion = 0.5f;
+
+        List<Enemy> spawnedEnemies = new List<Enemy>();
+
+        if (WaveManager.Instance.CurrentWaveCount == 5) // 일단 보스
+        {
+            Enemy spawnBoss = PoolManager.Instance.Pop(_bossPrefabs[0].name) as Enemy;
+            spawnBoss.transform.SetParent(transform);
+
+            Vector3 enemyPos = Random.insideUnitCircle * transform.position;
+            enemyPos.y = 1.9f;
+            spawnBoss.transform.localPosition = enemyPos;
+
+            spawnBoss.IsMove = false;
+            spawnBoss.NavAgent.enabled = false;
+
+            spawnBoss.transform.localScale = Vector3.one; // 고릴라는 0.7임
+
+            enemyCountProportion = 0.25f;
+            spawnedEnemies.Add(spawnBoss);
+        }
+        
         int minEnemyCount = 1;
         int maxEnemyCount = 5;
 
         int enemyCount = Mathf.RoundToInt(WaveManager.Instance.CurrentWaveCount * enemyCountProportion);
         enemyCount = Mathf.Clamp(enemyCount, minEnemyCount, maxEnemyCount);
-        Enemy[] enemies = new Enemy[enemyCount];
         for(int i = 0; i < enemyCount; i++)
         {
             int randomIdx = Random.Range(0, _enemyPrefabs.Count);
@@ -137,10 +157,10 @@ public class Ground : MonoBehaviour
             spawnEnemy.IsMove = false;
             spawnEnemy.NavAgent.enabled = false;
 
-            enemies[i] = spawnEnemy;
+            spawnedEnemies.Add(spawnEnemy);
         }
 
-        _groundMove.SetEnemies(enemies);
+        _groundMove.SetEnemies(spawnedEnemies.ToArray());
     }
 
     private void SetReward()
