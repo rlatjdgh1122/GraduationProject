@@ -62,9 +62,8 @@ public class CrazyPenguin : MonoBehaviour
     {
         _soundOn = true;
     }
-    
-    //이것은 내가 멍청해서 그냥 직접 전투 시작 버튼 눌렀을 때 활성화 되서 움직이게 했음
-    public void Btn_Click()
+
+    public void Start_Btn()
     {
         gameObject.SetActive(true);
     }
