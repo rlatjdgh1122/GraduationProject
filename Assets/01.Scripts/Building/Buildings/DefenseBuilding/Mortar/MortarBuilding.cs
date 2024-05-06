@@ -81,6 +81,8 @@ public class MortarBuilding : DefenseBuilding
             Fire();
             elapsedTime = 0.0f; // 시간 초기화
         }
+
+        isFired = false;
     }
 
     private void Fire()

@@ -117,6 +117,24 @@ public class Ground : MonoBehaviour
     private void SetEnemy()
     {
         float enemyCountProportion = 0.5f;
+
+        if (WaveManager.Instance.CurrentWaveCount == 5) // 일단 보스
+        {
+            Enemy spawnBoss = PoolManager.Instance.Pop(_bossPrefabs[0].name) as Enemy;
+            spawnBoss.transform.SetParent(transform);
+
+            Vector3 enemyPos = Random.insideUnitCircle * transform.position;
+            enemyPos.y = 1.9f;
+            spawnBoss.transform.localPosition = enemyPos;
+
+            spawnBoss.IsMove = false;
+            spawnBoss.NavAgent.enabled = false;
+
+            spawnBoss.transform.localScale = Vector3.one; // 고릴라는 0.7임
+
+            enemyCountProportion = 0.25f;
+        }
+        
         int minEnemyCount = 1;
         int maxEnemyCount = 5;
 
