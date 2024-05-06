@@ -113,11 +113,6 @@ public class Enemy : Entity
         CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
     }
 
-    public void FindNexusTarget()
-    {
-        CurrentTarget = FindNearestTarget<TargetObject>(500, NexusLayer);
-    }
-
     protected override void HandleDie()
     {
         _deadCompo.OnDied();

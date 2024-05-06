@@ -67,8 +67,8 @@ public class EnemyBaseState : EnemyState
 
     protected void MoveEnter()
     {
-        _triggerCalled = true;
         _enemy.FindNearestTarget();
+        _triggerCalled = true;
     }
 
     protected void ChestHitEnter()
@@ -120,7 +120,7 @@ public class EnemyBaseState : EnemyState
     #region Method
     private void FindTarget()
     {
-        _enemy.FindNexusTarget();
+        _enemy.FindNearestTarget();
     }
 
     private void DeadTarget()
