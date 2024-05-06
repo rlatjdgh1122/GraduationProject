@@ -378,7 +378,7 @@ Transform:
   m_GameObject: {fileID: 1611359978508626956}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1103,20 +1103,23 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   IsDead: 0
   _maxDetectEnemy: 5
-  innerDistance: 50
+  innerDistance: 7
   attackDistance: 5.9
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 534528
+    m_Bits: 526336
   moveSpeed: 3
   attackSpeed: 0.6
   rotationSpeed: 4.5
+  nexusDistance: 5
   passiveData: {fileID: 0}
   NexusTarget: {fileID: 0}
   IsMove: 1
   IsProvoked: 0
-  IsTargetNexus: 0
   UseAttackCombo: 0
+  NexusLayer:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &4534826737116297947
 MonoBehaviour:
   m_ObjectHideFlags: 0

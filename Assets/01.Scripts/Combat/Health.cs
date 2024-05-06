@@ -49,7 +49,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     public void SetMaxHealth(BaseStat owner)
     {
         maxHealth = owner.GetMaxHealthValue();
-    }
+    }  
 
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, TargetObject hitTarget)
     {

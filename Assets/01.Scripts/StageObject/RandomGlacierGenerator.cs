@@ -1,11 +1,6 @@
-using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 public class RandomGlacierGenerator : MonoBehaviour
 {
@@ -13,6 +8,8 @@ public class RandomGlacierGenerator : MonoBehaviour
 
     [SerializeField]
     private GameObject _glacierPrefab; // 빙하 프리펩
+    [SerializeField]
+    private float _spawnDistance;
 
     private int makedHexagonCount = -1; // 만들어진 육각형의 개수
 
@@ -73,7 +70,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         curground.gameObject.SetActive(true);
 
-        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, 75f * realMakedHexagonCount));
+        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, _spawnDistance * realMakedHexagonCount));
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {
