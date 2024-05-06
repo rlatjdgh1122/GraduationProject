@@ -118,6 +118,8 @@ public class Ground : MonoBehaviour
     {
         float enemyCountProportion = 0.5f;
 
+        List<Enemy> spawnedEnemies = new List<Enemy>();
+
         if (WaveManager.Instance.CurrentWaveCount == 5) // 일단 보스
         {
             Enemy spawnBoss = PoolManager.Instance.Pop(_bossPrefabs[0].name) as Enemy;
@@ -133,6 +135,7 @@ public class Ground : MonoBehaviour
             spawnBoss.transform.localScale = Vector3.one; // 고릴라는 0.7임
 
             enemyCountProportion = 0.25f;
+            spawnedEnemies.Add(spawnBoss);
         }
         
         int minEnemyCount = 1;
@@ -140,7 +143,6 @@ public class Ground : MonoBehaviour
 
         int enemyCount = Mathf.RoundToInt(WaveManager.Instance.CurrentWaveCount * enemyCountProportion);
         enemyCount = Mathf.Clamp(enemyCount, minEnemyCount, maxEnemyCount);
-        Enemy[] enemies = new Enemy[enemyCount];
         for(int i = 0; i < enemyCount; i++)
         {
             int randomIdx = Random.Range(0, _enemyPrefabs.Count);
@@ -155,10 +157,10 @@ public class Ground : MonoBehaviour
             spawnEnemy.IsMove = false;
             spawnEnemy.NavAgent.enabled = false;
 
-            enemies[i] = spawnEnemy;
+            spawnedEnemies.Add(spawnEnemy);
         }
 
-        _groundMove.SetEnemies(enemies);
+        _groundMove.SetEnemies(spawnedEnemies.ToArray());
     }
 
     private void SetReward()
