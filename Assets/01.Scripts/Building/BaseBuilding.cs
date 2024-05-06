@@ -68,7 +68,7 @@ public abstract class BaseBuilding : WorkableObject
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            return hit.collider.GetComponent<Ground>();
+            return hit.collider.transform.parent.GetComponent<Ground>();
         }
         return null;
     }
