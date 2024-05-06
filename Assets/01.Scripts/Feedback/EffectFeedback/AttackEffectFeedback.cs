@@ -16,8 +16,6 @@ public class AttackEffectFeedback : Feedback
         EffectPlayer effect = PoolManager.Instance.Pop($"SlashEffect0{_calledNum}") as EffectPlayer;
         if (effect != null)
         {
-            effect.transform.SetParent(ownerTrm);
-
             effect.transform.position = transform.position;
             effect.transform.rotation = transform.rotation;
             effect.StartPlay(_endTime);

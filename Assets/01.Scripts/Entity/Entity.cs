@@ -102,6 +102,7 @@ public abstract class Entity : TargetObject
             }
         }
     }
+
     public void StartImmediately()
     {
         if (NavAgent != null)
