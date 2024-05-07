@@ -18,7 +18,10 @@ public class NoiseManager : Singleton<NoiseManager>
     private float _currentNoise = 0f;
     public float CurrentNoise => _currentNoise;
 
-    public float NoisePercent => _currentNoise / _maxNosise;
+    private float _currentViewNoise = 0f;
+    public float CurrentViewNoise => _currentViewNoise;
+
+    public float NoisePercent => _currentViewNoise / _maxNosise;
 
     public Action NoiseLimitExceedEvent = null;
     public Action NoiseIncreaseEvent = null;
@@ -30,7 +33,7 @@ public class NoiseManager : Singleton<NoiseManager>
         _maxNosise = _initMaxNosise;
         _btn = FindObjectOfType<PhaseChangeButton>();
 
-        AddNoise(_currentNoise);
+        AddViewNoise(_currentViewNoise);
     }
 
     /// <summary>
@@ -48,11 +51,19 @@ public class NoiseManager : Singleton<NoiseManager>
     /// 현재 소음에 값 더하기
     /// </summary>
     /// <param name="noise">더해질 소음 값</param>
-    public void AddNoise(float noise)
+    public void AddViewNoise(float noise)
     {
-        _currentNoise += noise;
+        _currentViewNoise += noise;
 
         NoiseIncreaseEvent?.Invoke();
+
+        if (_currentViewNoise >= _maxNosise)
+            NoiselimitExceed();
+    }
+
+    public void AddNoise(float nosie)
+    {
+        _currentNoise += nosie;
 
         if (_currentNoise >= _maxNosise)
             NoiselimitExceed();
@@ -72,6 +83,7 @@ public class NoiseManager : Singleton<NoiseManager>
 
     private void ResetNoise()
     {
+        _currentViewNoise = 0;
         _currentNoise = 0;
     }
 }

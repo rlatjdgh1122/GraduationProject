@@ -121,20 +121,10 @@ public abstract class BaseBuilding : WorkableObject
 
     public void Installed()
     {
-        if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
+        if (_buildingItemInfo != null)
         {
             ChangeToTransparencyMat(OutlineColorType.None);
             WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
-
-            _phaseStartSubscriptionAction = () => WorkerManager.Instance.ReturnBuilders(this);
-            SignalHub.OnBattlePhaseStartEvent += _phaseStartSubscriptionAction;
-            SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
-            _remainTimeUI.OnRemainUI();
-            _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
-        }
-        else
-        {
-            SetInstalled();
         }
 
         isInstalling = true;

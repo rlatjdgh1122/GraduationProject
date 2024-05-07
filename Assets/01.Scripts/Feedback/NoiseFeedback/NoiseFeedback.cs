@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NoiseEffectFeedback : EffectFeedback
+public class NoiseFeedback : Feedback
 {
     [SerializeField]
     private float _detectRange;
@@ -26,7 +26,7 @@ public class NoiseEffectFeedback : EffectFeedback
         {
             if (col.TryGetComponent<WorkableObject>(out WorkableObject obj))
             {
-                _noiseManager.AddNoise(obj.NoiseValue);
+                _noiseManager.AddViewNoise(obj.NoiseValue);
             }
         }
 
