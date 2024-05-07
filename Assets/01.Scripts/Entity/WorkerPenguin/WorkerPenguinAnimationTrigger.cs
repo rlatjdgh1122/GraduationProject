@@ -18,6 +18,6 @@ public class WorkerPenguinAnimationTrigger : MonoBehaviour
     {
         _worker.AnimationTrigger();
         OnWorkEvent.Invoke();
-        _worker.DamageCasterCompo.CastOverlap();
+        _worker.DamageCasterCompo.CastWork();
     }
 }
