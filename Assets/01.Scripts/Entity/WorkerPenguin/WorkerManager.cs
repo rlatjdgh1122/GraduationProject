@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum WorkerType
+{
+    Builder,
+    ResourceAcquirer
+}
+
 public class WorkerManager : Singleton<WorkerManager>
 {
     [SerializeField]
