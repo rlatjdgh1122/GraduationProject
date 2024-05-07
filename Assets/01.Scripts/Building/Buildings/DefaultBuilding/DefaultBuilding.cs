@@ -57,11 +57,11 @@ public class DefaultBuilding : BaseBuilding
     {
         if (isSpawnUIOn)
         {
-            _penguinSpawnUI.OnDisableStorePanel();
+            UIManager.Instance.HidePanel("StorePanel");
         }
         else
         {
-            _penguinSpawnUI.OnEnableStorePanel();
+            UIManager.Instance.ShowPanel("StorePanel");
         }
 
         UpdateSpawnUIBool();

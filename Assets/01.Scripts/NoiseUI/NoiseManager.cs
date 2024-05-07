@@ -21,9 +21,11 @@ public class NoiseManager : Singleton<NoiseManager>
     private float _currentViewNoise = 0f;
     public float CurrentViewNoise => _currentViewNoise;
 
-    public float NoisePercent => _currentViewNoise / _maxNosise;
+    public float ViewNoisePercent => _currentViewNoise / _maxNosise;
+    public float NoisePercent => _currentNoise / _maxNosise;
 
     public Action NoiseLimitExceedEvent = null;
+    public Action ViewNoiseIncreaseEvent = null;
     public Action NoiseIncreaseEvent = null;
 
     private PhaseChangeButton _btn;
@@ -55,7 +57,7 @@ public class NoiseManager : Singleton<NoiseManager>
     {
         _currentViewNoise += noise;
 
-        NoiseIncreaseEvent?.Invoke();
+        ViewNoiseIncreaseEvent?.Invoke();
 
         if (_currentViewNoise >= _maxNosise)
             NoiselimitExceed();
@@ -64,6 +66,8 @@ public class NoiseManager : Singleton<NoiseManager>
     public void AddNoise(float nosie)
     {
         _currentNoise += nosie;
+
+        NoiseIncreaseEvent?.Invoke();
 
         if (_currentNoise >= _maxNosise)
             NoiselimitExceed();

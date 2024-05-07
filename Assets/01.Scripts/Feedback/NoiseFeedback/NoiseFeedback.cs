@@ -26,7 +26,7 @@ public class NoiseFeedback : Feedback
         {
             if (col.TryGetComponent<WorkableObject>(out WorkableObject obj))
             {
-                _noiseManager.AddViewNoise(obj.NoiseValue);
+                obj.IncreaseCurrentNoise();
             }
         }
 

@@ -157,7 +157,7 @@ public class WorkerManager : Singleton<WorkerManager>
 
     public void ReturnBuilders(WorkableObject workableObject)
     {
-        List<BuilderPenguin> list = new List<BuilderPenguin>(_builderList);
+        List<BuilderPenguin> list = new List<BuilderPenguin>(_spawnedBuilderList);
 
         foreach (BuilderPenguin builder in list)
         {

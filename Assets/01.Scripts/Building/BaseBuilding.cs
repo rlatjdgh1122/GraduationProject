@@ -126,28 +126,22 @@ public abstract class BaseBuilding : WorkableObject
         {
             ChangeToTransparencyMat(OutlineColorType.None);
             WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
-        }
+            NoiseManager.Instance.AddNoise(MaxNoiseValue);
 
-        isInstalling = true;
-        StopInstall();
-        InstalledGround()?.InstallBuilding();
+            OnNoiseExcessEvent += InstallEnd;
+        }
     }
 
-    private void PlusInstalledTime()
+    public void InstallEnd()
     {
-        installedTime++;
-        _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime - installedTime);
+        OnNoiseExcessEvent -= InstallEnd;
+        WorkerManager.Instance.ReturnBuilders(this);
 
-        if (installedTime >= _buildingItemInfo.InstalledTime)
-        {
-            SignalHub.OnBattlePhaseEndEvent -= PlusInstalledTime;
-            SetInstalled();
-            _remainTimeUI.OffRemainUI();
-        }
-        else
-        {
-            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
-        }
+        isInstalling = true;
+
+        SetInstalled();
+        StopInstall();
+        InstalledGround()?.InstallBuilding();
     }
 
     public virtual void SetSelect()
@@ -164,7 +158,7 @@ public abstract class BaseBuilding : WorkableObject
 
         if (_buildingItemInfo != null)
         {
-            //_installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
+            _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
             //UIManager.Instance.SpawnHudText(_installedFinText);
 
             SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
