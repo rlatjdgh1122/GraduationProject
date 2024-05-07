@@ -31,12 +31,12 @@ public class ArcherTowerBuilding : DefenseBuilding
 
     protected override void SetInstalled()
     {
-        base.SetInstalled();
-
         for (int i = 0; i < _archerPenguins.Length; i++)
         {
             _archerPenguins[i].gameObject.SetActive(true);
         }
+
+        base.SetInstalled();
     }
 
     protected override void Running()

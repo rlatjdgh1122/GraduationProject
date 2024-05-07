@@ -62,7 +62,7 @@ public abstract class BaseBuilding : WorkableObject
 
     protected LayerMask _groundLayer = 1 << 3;
 
-    private BattlePhaseStartEvent _phaseStartSubscriptionAction;
+    //private BattlePhaseStartEvent _phaseStartSubscriptionAction;
 
     protected Ground InstalledGround()
     {
@@ -129,6 +129,10 @@ public abstract class BaseBuilding : WorkableObject
             NoiseManager.Instance.AddNoise(MaxNoiseValue);
 
             OnNoiseExcessEvent += InstallEnd;
+
+            isInstalling = true; 
+            StopInstall();
+            InstalledGround()?.InstallBuilding();
         }
     }
 
@@ -137,11 +141,7 @@ public abstract class BaseBuilding : WorkableObject
         OnNoiseExcessEvent -= InstallEnd;
         WorkerManager.Instance.ReturnBuilders(this);
 
-        isInstalling = true;
-
-        SetInstalled();
-        StopInstall();
-        InstalledGround()?.InstallBuilding();
+        SetInstalled();        
     }
 
     public virtual void SetSelect()
@@ -158,10 +158,11 @@ public abstract class BaseBuilding : WorkableObject
 
         if (_buildingItemInfo != null)
         {
-            _installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
+            //_installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
+            UIManager.Instance.ShowWarningUI($"{_buildingItemInfo.Name: 설치 완료!}");
             //UIManager.Instance.SpawnHudText(_installedFinText);
 
-            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
+            //SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
     }
 
@@ -236,10 +237,10 @@ public abstract class BaseBuilding : WorkableObject
 
     private void OnEnable()
     {
-        if (_phaseStartSubscriptionAction != null)
-        {
-            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
-        }
+        //if (_phaseStartSubscriptionAction != null)
+        //{
+        //    SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
+        //}
     }
 
 }
