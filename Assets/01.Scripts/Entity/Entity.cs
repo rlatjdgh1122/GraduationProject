@@ -50,13 +50,12 @@ public abstract class Entity : TargetObject
 
     protected override void HandleHit()
     {
-
     }
 
     protected override void HandleDie()
     {
-
     }
+
     public void Provoke(int provokeCount, float duration, float radius, LayerMask targetLayer)
     {
         var colliders = new Collider[provokeCount];

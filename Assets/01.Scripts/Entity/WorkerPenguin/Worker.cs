@@ -110,6 +110,7 @@ public class Worker : Entity
 
     public override void Init()
     {
+
         CanWork = false;
         EndWork = false;
     }

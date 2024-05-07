@@ -20,7 +20,6 @@ public class Penguin : Entity
     public float provokeRange = 25f;
 
     public PassiveDataSO passiveData = null;
-
     #region ���� ������ ����
 
     public bool ArmyTriggerCalled = false;
@@ -77,8 +76,6 @@ public class Penguin : Entity
     #region components
     public EntityAttackData AttackCompo { get; private set; }
     public PenguinStateMachine StateMachine { get; private set; }
-    private IDeadable _deadCompo = null;
-    private ILiveable _liveCompo = null;
     #endregion
     public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
     public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
@@ -90,6 +87,7 @@ public class Penguin : Entity
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
+    private IDeadable _deadCompo = null;
     protected override void Awake()
     {
         base.Awake();
@@ -100,7 +98,6 @@ public class Penguin : Entity
         }
         AttackCompo = GetComponent<EntityAttackData>();
         _deadCompo = GetComponent<IDeadable>();
-        _liveCompo = GetComponent<ILiveable>();
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
@@ -310,6 +307,6 @@ public class Penguin : Entity
     public override void Init()
     {
         owner = null;
-        _liveCompo.OnResurrected();
+        _deadCompo.OnResurrected();
     }
 }
