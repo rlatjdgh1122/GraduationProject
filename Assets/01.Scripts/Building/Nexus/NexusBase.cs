@@ -17,7 +17,7 @@ public class NexusBase : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            hit.collider.GetComponent<Ground>().InstallBuilding();
+            hit.collider.transform.parent.GetComponent<Ground>().InstallBuilding();
         }
     }
 

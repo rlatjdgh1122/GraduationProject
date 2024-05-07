@@ -70,15 +70,6 @@ public class ResourceObject : WorkableObject
         ResourceManager.Instance.RemoveResource(_resourceData, count);
     }
 
-    private void OnMouseDown()
-    {
-        if (!WaveManager.Instance.IsBattlePhase)
-        {
-            ResourceManager.Instance.SelectedResource = this;
-            UIManager.Instance.ShowPanel("ResourceUI");
-        }
-    }
-
     protected override void HandleDie()
     {
         RecieveResourceComplete();

@@ -17,8 +17,8 @@ Material:
   - _CAUSTICS
   - _DISTANCE_NORMALS
   - _FOAM
-  - _NORMALMAP
   - _SHARP_INERSECTION
+  - _SPECULARHIGHLIGHTS_OFF
   - _TRANSLUCENCY
   - _WAVES
   m_InvalidKeywords:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 88908a7c7a1f0ed418d1048378c17411, type: 3}
+        m_Texture: {fileID: 2800000, guid: ec6f0adef15b52448a82f3f183525d84, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMapLarge:
@@ -168,7 +168,7 @@ Material:
     - _FlatShadingOn: 0
     - _FlowSpeed: 1
     - _FoamBaseAmount: 0.373
-    - _FoamClipping: 0.999
+    - _FoamClipping: 0.934
     - _FoamDistortion: 0.1
     - _FoamOn: 1
     - _FoamOpacity: 1
@@ -191,7 +191,7 @@ Material:
     - _IntersectionClipping: 0.496
     - _IntersectionDistortion: 0.79
     - _IntersectionFalloff: 0.85
-    - _IntersectionLength: 2.14
+    - _IntersectionLength: 2.04
     - _IntersectionRippleDist: 20
     - _IntersectionRippleStrength: 1
     - _IntersectionSize: 0.944
@@ -206,11 +206,11 @@ Material:
     - _Metallicness: 0.1
     - _NORMALMAPOn: 1
     - _NormalMap: 1
-    - _NormalMapOn: 1
+    - _NormalMapOn: 0
     - _NormalSpeed: 0.13000005
     - _NormalStrength: 0.389
-    - _NormalSubSpeed: 0.5
-    - _NormalSubTiling: 0.5
+    - _NormalSubSpeed: 0.120000176
+    - _NormalSubTiling: 0.020000193
     - _NormalTiling: 0.11000009
     - _OcclusionStrength: 1
     - _PlanarReflectionsEnabled: 0
@@ -218,7 +218,7 @@ Material:
     - _PointSpotLightReflectionDistortion: 0.5
     - _PointSpotLightReflectionExp: 64
     - _PointSpotLightReflectionSize: 0
-    - _PointSpotLightReflectionStrength: 10
+    - _PointSpotLightReflectionStrength: 0.74
     - _QueueOffset: 0
     - _ReceiveDynamicEffects: 1
     - _ReceiveShadows: 1
@@ -253,13 +253,13 @@ Material:
     - _SparkleIntensity: 0
     - _SparkleSize: 0.155
     - _SpecularHighlights: 1
-    - _SpecularReflectionsOn: 1
+    - _SpecularReflectionsOn: 0
     - _Speed: 1
     - _SrcBlend: 1
     - _SunReflectionDistortion: 0
     - _SunReflectionPerturbance: 1
     - _SunReflectionSize: 0
-    - _SunReflectionStrength: 1.44
+    - _SunReflectionStrength: 0
     - _Surface: 0
     - _TEXTURE_INTERSECTIONOn: 0
     - _TessMax: 38.37
@@ -281,7 +281,7 @@ Material:
     - _VertexColorWaveFlattening: 0
     - _WaveCount: 5
     - _WaveDistance: 0.896
-    - _WaveHeight: 1.28
+    - _WaveHeight: 0.5
     - _WaveNormalStr: 0
     - _WaveSpeed: 1.75
     - _WaveSteepness: 5

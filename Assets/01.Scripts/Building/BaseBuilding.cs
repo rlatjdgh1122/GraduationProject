@@ -68,7 +68,7 @@ public abstract class BaseBuilding : WorkableObject
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            return hit.collider.GetComponent<Ground>();
+            return hit.collider.transform.parent.GetComponent<Ground>();
         }
         return null;
     }
@@ -89,7 +89,8 @@ public abstract class BaseBuilding : WorkableObject
 
         if (_buildingItemInfo != null)
         {
-            if (_buildingItemInfo.BuildingTypeEnum != BuildingType.Trap)
+            if (_buildingItemInfo.BuildingTypeEnum != BuildingType.Trap ||
+                _buildingItemInfo.InstalledTime != 0)
             {
                 _remainTimeUI = transform.Find("TimeRemainCanvas").GetComponent<TimeRemain>();
             }

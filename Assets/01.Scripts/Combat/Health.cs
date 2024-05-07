@@ -49,9 +49,9 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     public void SetMaxHealth(BaseStat owner)
     {
         maxHealth = owner.GetMaxHealthValue();
-    }
+    }  
 
-    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, TargetObject hitTarget)
+    public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, TargetObject hitTarget, bool isFeedback = true)
     {
         if (_isDead) return;
 
@@ -80,7 +80,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
             feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Hit);
 
             OnHit?.Invoke();
-            hitF.PlayFeedback();
+            
+            if (isFeedback) { hitF.PlayFeedback(); }
         }
 
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
@@ -141,7 +142,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     private void Dead()
     {
         feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Dead);
-
+        OnDeathEvent?.Invoke();
         OffUIUpdate?.Invoke();
         _isDead = true;
         OnDied?.Invoke();

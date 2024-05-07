@@ -1,11 +1,6 @@
-using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 public class RandomGlacierGenerator : MonoBehaviour
 {
@@ -13,6 +8,8 @@ public class RandomGlacierGenerator : MonoBehaviour
 
     [SerializeField]
     private GameObject _glacierPrefab; // 빙하 프리펩
+    [SerializeField]
+    private float _spawnDistance;
 
     private int makedHexagonCount = -1; // 만들어진 육각형의 개수
 
@@ -39,6 +36,8 @@ public class RandomGlacierGenerator : MonoBehaviour
 
             ground.gameObject.SetActive(false); 
         }
+
+        SignalHub.OnBattlePhaseStartPriorityEvent += GenerateGlacier;
     }
 
     private void AddGlacierToCurHexagon()
@@ -64,7 +63,6 @@ public class RandomGlacierGenerator : MonoBehaviour
         // rotation은 GetCurAngleBetweenGlacier으로 조절
         int realMakedHexagonCount = makedHexagonCount + 1;
 
-
         Ground curground = _curHexagon_Grounds.Dequeue();
 
         float rotateValue = _rotateValues.Dequeue();
@@ -72,7 +70,7 @@ public class RandomGlacierGenerator : MonoBehaviour
 
         curground.gameObject.SetActive(true);
 
-        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, 75f * realMakedHexagonCount));
+        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, _spawnDistance * realMakedHexagonCount));
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {
@@ -93,22 +91,19 @@ public class RandomGlacierGenerator : MonoBehaviour
         return 6 * (int)Mathf.Pow(2, makedHexagonCount);
     }
 
-    private void Update()
+    private void GenerateGlacier()
     {
-
-        if (Input.GetKeyDown(KeyCode.K)) // 디버그 용
+        if (_curHexagon_Grounds.Count == 0)
         {
             makedHexagonCount++;
             AddGlacierToCurHexagon();
         }
-        if (Input.GetKeyDown(KeyCode.J)) // 디버그 용
-        {
-            GlacierSetPos();
-        }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            SignalHub.OnBattlePhaseEndEvent?.Invoke();
-        }
+        GlacierSetPos();
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartPriorityEvent -= GenerateGlacier;
     }
 }

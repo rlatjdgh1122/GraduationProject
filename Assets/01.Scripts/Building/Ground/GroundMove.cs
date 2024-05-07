@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class GroundMove : MonoBehaviour
 {
-    [SerializeField] private int _enableStage;
     [SerializeField] private float _moveDuration = 5f;
 
     [SerializeField] private Color startColor;
@@ -17,8 +16,6 @@ public class GroundMove : MonoBehaviour
     private LayerMask _groundLayer;
 
     #region 프로퍼티
-    //private NavMeshSurface _parentSurface;
-    //private NavMeshSurface _surface;
     private Outline _outline;
     #endregion
 
@@ -47,11 +44,7 @@ public class GroundMove : MonoBehaviour
 
     private void Awake()
     {
-        //_parentSurface = GameObject.Find("IcePlateParent").GetComponent<NavMeshSurface>();
-        //_surface = transform.parent.GetComponent<NavMeshSurface>();
         _outline = GetComponent<Outline>();
-
-        _enemies = GetComponentsInChildren<Enemy>();
 
         _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
         _meshCollider = transform.Find("TopArea").GetComponent<MeshCollider>();
@@ -75,47 +68,54 @@ public class GroundMove : MonoBehaviour
 
     private void GroundMoveHandle()
     {
-        if (WaveManager.Instance.CurrentWaveCount == _enableStage) // 나중에 랜덤으로 바꾸면 걍 없애기 
+        foreach (Enemy enemy in _enemies)
         {
-            foreach (Enemy enemy in _enemies)
-            {
-                enemy.enabled = true;
-            }
-
-            //빙하 올 때 이펙트
-            _waveEffect.gameObject.SetActive(true);
-
-            transform.DOMove(_targetPos, _moveDuration).
-                OnComplete(() =>
-                {
-                    SoundManager.Play2DSound(SoundName.GroundHit);
-                    //_surface.enabled = true;
-                    //_surface.transform.SetParent(_parentSurface.transform);
-                    //_parentSurface.BuildNavMesh();
-
-                    // 부딪힐 때 이펙트 / 카메라 쉐이크 + 사운드
-                    CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
-                                                         () => Define.CamDefine.Cam.ShakeCam.enabled = false);
-
-                    SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;
-
-                    _waveEffect.gameObject.SetActive(false);
-
-                    DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
-                    {
-                        WaveManager.Instance.OnIceArrivedEventHanlder();
-
-                        foreach (Enemy enemy in _enemies)
-                        {
-                            enemy.IsMove = true;
-                            enemy.NavAgent.enabled = true;
-                        }
-                        SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
-                    });
-                });
+            enemy.enabled = true;
         }
 
-        
+        //빙하 올 때 이펙트
+        _waveEffect.gameObject.SetActive(true);
+
+        transform.DOMove(_targetPos, _moveDuration).
+            OnComplete(() =>
+            {
+                SoundManager.Play2DSound(SoundName.GroundHit);
+
+                // 부딪힐 때 이펙트 / 카메라 쉐이크 + 사운드
+                CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
+                                                     () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+
+                SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;
+
+                _waveEffect.gameObject.SetActive(false);
+
+                WaveManager.Instance.OnIceArrivedEventHanlder();
+                SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
+
+                CoroutineUtil.CallWaitForOneFrame(() =>
+                {
+                    foreach (Enemy enemy in _enemies)
+                    {
+                        enemy.IsMove = true;
+                        enemy.NavAgent.enabled = true;
+                    }
+                });
+
+                //DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
+                //{
+                //    WaveManager.Instance.OnIceArrivedEventHanlder();
+
+                //    Debug.Log(_enemies.Length);
+                //    foreach (Enemy enemy in _enemies)
+                //    {
+                //        enemy.IsMove = true;
+                //        enemy.NavAgent.enabled = true;
+                //    }
+                //    SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
+                //});
+            });
+
+
     }
 
     private void SetOutline()
@@ -176,15 +176,16 @@ public class GroundMove : MonoBehaviour
 
         // 타겟 위치 설정
         _targetPos = targetVec;
-
-
-        // 스테이지 활성화
-        _enableStage = WaveManager.Instance.CurrentWaveCount; // 나중에 지우자
     }
 
     public void SetMoveTarget(Transform trm)
     {
         transform.SetParent(trm);
         _centerPos = trm.position;
+    }
+
+    public void SetEnemies(Enemy[] enemies) // 나중에 Ground로 옮겨서 해야됨
+    {
+        _enemies = enemies;
     }
 }

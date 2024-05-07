@@ -11,10 +11,16 @@ public class NavmeshBaker : MonoBehaviour
     {
         _navMeshSurface = GetComponent<NavMeshSurface>();
         NavmeshBake();
+        SignalHub.OnIceArrivedEvent += NavmeshBake;
     }
 
     private void NavmeshBake()
     {
         _navMeshSurface.BuildNavMesh();
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnIceArrivedEvent -= NavmeshBake;
     }
 }
