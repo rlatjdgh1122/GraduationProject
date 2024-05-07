@@ -23,7 +23,7 @@ public class DummyStateMachine
         CurrentState = StateDictionary[newState];
         CurrentState.Enter();
 
-        //Debug.Log($"이전 : {PrevState}, 이후 : {CurrentState}");
+        Debug.Log($"이전 : {PrevState}, 이후 : {CurrentState}");
     }
 
     public void AddState(DummyPenguinStateEnum state, DummyState playerState)

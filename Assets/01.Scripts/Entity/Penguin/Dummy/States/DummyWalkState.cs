@@ -21,7 +21,11 @@ public class DummyWalkState : DummyBaseState
         base.UpdateState();
 
         //목적지에 도달하거나 앞에 뭐가 있다면 Random모션으로
-        if (IsSomethingInFront() || _navAgent.remainingDistance < 0.05f)
+        if (IsSomethingInFront())
+        {
+            _stateMachine.ChangeState(DummyPenguinStateEnum.FreelyIdle);
+        }
+        if (_navAgent.remainingDistance < 0.05f)
         {
             _stateMachine.ChangeState(RandomState());
         }
