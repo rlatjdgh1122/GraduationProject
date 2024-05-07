@@ -105,7 +105,7 @@ public class Ground : MonoBehaviour
             Vector3 resourcePos = GetRandomPosition();
 
             spawnResource.transform.localPosition = resourcePos;
-            spawnResource.transform.localScale = Vector3.one;
+            //spawnResource.transform.localScale = Vector3.one;
         }
     }
 
