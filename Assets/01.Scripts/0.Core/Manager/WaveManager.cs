@@ -221,7 +221,7 @@ public class WaveManager : Singleton<WaveManager>
     {
         // 빙하 랜덤 생성 땜에 우선순위 이벤트 먼저 하고 함
         SignalHub.OnBattlePhaseStartPriorityEvent?.Invoke();
-        CoroutineUtil.CallWaitForOneFrame(() => SignalHub.OnBattlePhaseStartEvent?.Invoke());
+        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnBattlePhaseStartEvent?.Invoke());
     }
 
     public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
