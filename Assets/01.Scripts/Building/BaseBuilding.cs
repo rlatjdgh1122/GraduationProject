@@ -62,7 +62,7 @@ public abstract class BaseBuilding : WorkableObject
 
     protected LayerMask _groundLayer = 1 << 3;
 
-    private BattlePhaseStartEvent _phaseStartSubscriptionAction;
+    //private BattlePhaseStartEvent _phaseStartSubscriptionAction;
 
     protected Ground InstalledGround()
     {
@@ -122,42 +122,26 @@ public abstract class BaseBuilding : WorkableObject
 
     public void Installed()
     {
-        if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
+        if (_buildingItemInfo != null)
         {
             ChangeToTransparencyMat(OutlineColorType.None);
             WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
+            NoiseManager.Instance.AddNoise(MaxNoiseValue);
 
-            _phaseStartSubscriptionAction = () => WorkerManager.Instance.ReturnBuilders(this);
-            SignalHub.OnBattlePhaseStartEvent += _phaseStartSubscriptionAction;
-            SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
-            _remainTimeUI.OnRemainUI();
-            _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
-        }
-        else
-        {
-            SetInstalled();
-        }
+            OnNoiseExcessEvent += InstallEnd;
 
-        isInstalling = true;
-        StopInstall();
-        InstalledGround()?.InstallBuilding();
+            isInstalling = true; 
+            StopInstall();
+            InstalledGround()?.InstallBuilding();
+        }
     }
 
-    private void PlusInstalledTime()
+    public void InstallEnd()
     {
-        installedTime++;
-        _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime - installedTime);
+        OnNoiseExcessEvent -= InstallEnd;
+        WorkerManager.Instance.ReturnBuilders(this);
 
-        if (installedTime >= _buildingItemInfo.InstalledTime)
-        {
-            SignalHub.OnBattlePhaseEndEvent -= PlusInstalledTime;
-            SetInstalled();
-            _remainTimeUI.OffRemainUI();
-        }
-        else
-        {
-            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
-        }
+        SetInstalled();        
     }
 
     public virtual void SetSelect()
@@ -175,9 +159,10 @@ public abstract class BaseBuilding : WorkableObject
         if (_buildingItemInfo != null)
         {
             //_installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
+            UIManager.Instance.ShowWarningUI($"{_buildingItemInfo.Name: 설치 완료!}");
             //UIManager.Instance.SpawnHudText(_installedFinText);
 
-            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
+            //SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
     }
 
@@ -252,10 +237,10 @@ public abstract class BaseBuilding : WorkableObject
 
     private void OnEnable()
     {
-        if (_phaseStartSubscriptionAction != null)
-        {
-            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
-        }
+        //if (_phaseStartSubscriptionAction != null)
+        //{
+        //    SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
+        //}
     }
 
 }

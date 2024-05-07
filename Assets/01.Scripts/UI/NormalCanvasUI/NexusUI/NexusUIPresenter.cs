@@ -73,16 +73,18 @@ public class NexusUIPresenter : NexusPopupUI
     #region buildingUI
     public void PurchaseBuilding(BuildingView view)
     {
-        if (CostManager.Instance.Cost >= view.building.Price)
+        if(CostManager.Instance.Cost < view.building.Price)
         {
-            if (view.building.IsUnlocked)
-            {
-                view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
-            }
+            UIManager.Instance.ShowWarningUI("생선이 부족합니다");
+            return;
+        }
+        if (view.building.IsUnlocked)
+        {
+            view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
         }
         else
         {
-            UIManager.Instance.ShowWarningUI("생선이 부족합니다");
+            UIManager.Instance.ShowWarningUI("잠겨있습니다!");
         }
     }
     #endregion
