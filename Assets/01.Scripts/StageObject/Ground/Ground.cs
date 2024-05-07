@@ -52,7 +52,7 @@ public class Ground : MonoBehaviour
 
     private void GroundMoveHandler()
     {
-        SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;
+        SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
         _groundMove.GroundMove();
     }
 
@@ -94,7 +94,7 @@ public class Ground : MonoBehaviour
     public void ActivateGround()
     {
         SignalHub.OnBattlePhaseStartEvent += GroundMoveHandler;
-        SignalHub.OnBattlePhaseEndEvent += DisableDeadBodys;
+        SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
         SignalHub.OnIceArrivedEvent += ActivateEnemies;
     }
 
@@ -106,35 +106,31 @@ public class Ground : MonoBehaviour
         SetEnemies(_groundConfigurer.SetGroundElements().Enemies);
     }
 
-    public void SetEnemies(Enemy[] enemies) // 나중에 Ground로 옮겨서 해야됨
+    public void SetEnemies(Enemy[] enemies)
     {
         _enemies = enemies;
     }
 
-    private void DisableDeadBodys()
+    private void OnBattleEnd()
     {
         foreach (var enemy in _enemies)
         {
-            //PoolManager.Instance.Push(enemy); // 아니 이거 풀매니저 SO에 넣으면 오류 150개뜸 내가 보았을 때 이거는 씬에는 이미 있는데 풀매니저로 개지랄 하려고 해서 그러는듯. 나중에 빙판 자동 생성할때 같이 수정
+            Debug.Log(enemy);
+
+            PoolManager.Instance.Push(enemy); // 아니 이거 풀매니저 SO에 넣으면 오류 150개뜸 내가 보았을 때 이거는 씬에는 이미 있는데 풀매니저로 개지랄 하려고 해서 그러는듯. 나중에 빙판 자동 생성할때 같이 수정
             // 다시 생각해보니까 이거 펭귄 크기가 이상해서 그런듯. 근데 걍 나중에 합세
 
-            enemy.gameObject.SetActive(false); // 그래서 임시로 이렇게 함
         }
-    }
 
-    private void OnBattleEnd()
-    {
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
         SignalHub.OnIceArrivedEvent -= ActivateEnemies;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
-
-        DisableDeadBodys();
     }
 
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
-        SignalHub.OnBattlePhaseEndEvent -= DisableDeadBodys;
+        SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
         SignalHub.OnIceArrivedEvent -= ActivateEnemies;
     }
 }

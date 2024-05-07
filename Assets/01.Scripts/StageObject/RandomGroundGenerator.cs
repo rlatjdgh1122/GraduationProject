@@ -48,7 +48,6 @@ public class RandomGroundGenerator : MonoBehaviour
         {
             _rotateValues.Enqueue(GetCurAngleBetweenGlacier() * i);
             Ground ground = SpawnGlaciers();
-            ground.ActivateGround();
             _curHexagon_Grounds.Enqueue(ground);
         }
 
@@ -65,6 +64,7 @@ public class RandomGroundGenerator : MonoBehaviour
         int realMakedHexagonCount = makedHexagonCount + 1;
 
         Ground curground = _curHexagon_Grounds.Dequeue();
+        curground.ActivateGround();
 
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
