@@ -61,7 +61,7 @@ public class Worker : Entity
     {
         CanWork = false;
         PoolManager.Instance.Push(this);
-        //gameObject.SetActive(false);
+        WorkerManager.Instance.PopWorker(this);
     }
     #endregion
 
@@ -70,12 +70,14 @@ public class Worker : Entity
     {
         CurrentTarget = target;
         CanWork = true;
+        WorkerStateCheck = true;
     }
 
     public void FinishWork()
     {
         CanWork = false;
         EndWork = true;
+
     }
     #endregion
 

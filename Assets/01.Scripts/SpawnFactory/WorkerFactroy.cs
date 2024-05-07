@@ -26,6 +26,13 @@ public class WorkerFactroy : EntityFactory<Worker>
 
         return spawnPenguin;
     }
+    public T SpawnPenguinHandler<T>(string prefabName) where T : Worker
+    {
+        T spawnPenguin = PoolManager.Instance.Pop(prefabName) as T;
+        spawnPenguin.transform.position = spawnPoint.position;
+
+        return spawnPenguin;
+    }
 
     protected override PoolableMono Create(Worker type)
     {
