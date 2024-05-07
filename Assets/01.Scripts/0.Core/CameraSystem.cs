@@ -257,6 +257,7 @@ public class CameraSystem : MonoBehaviour
         transposer.m_FollowOffset.z = -24.5f;
 
         _cinemachineCam.Follow = targetTrm;
+        //_cinemachineCam.LookAt = targetTrm;
     }
 
 
