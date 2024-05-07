@@ -57,7 +57,7 @@ public class WorkerManager : Singleton<WorkerManager>
         {
             for (int i = 0; i < count; ++i)
             {
-                var penguin = _workerFactory.SpawnPenguinHandler<MinerPenguin>(WoodCutter);
+                var penguin = _workerFactory.SpawnPenguinHandler<WoodCutterPenguin>(WoodCutter);
                 _spawnedWorkerList.Add(penguin);
                 penguin.StartWork(workableObject);
             }
@@ -78,17 +78,11 @@ public class WorkerManager : Singleton<WorkerManager>
         }
     }
 
-    public void PopWorker(Worker worker)
-    {
-        _spawnedWorkerList.Remove(worker);
-    }
-
-
     public void SendBuilders(int count, WorkableObject workableObject)
     {
         for (int i = 0; i < count; ++i)
         {
-            var penguin = _workerFactory.SpawnPenguinHandler<MinerPenguin>(Builder);
+            var penguin = _workerFactory.SpawnPenguinHandler<BuilderPenguin>(Builder);
             _spawnedWorkerList.Add(penguin);
             penguin.StartWork(workableObject);
         }
@@ -106,5 +100,10 @@ public class WorkerManager : Singleton<WorkerManager>
                 //_spawnedWorkerList.Remove(worker);
             }
         }
+    }
+
+    public void PopWorker(Worker worker)
+    {
+        _spawnedWorkerList.Remove(worker);
     }
 }

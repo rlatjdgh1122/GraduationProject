@@ -41,6 +41,7 @@ public class MinerPenguin : Worker
             StateMachine.Init(WorkerPenguinStateEnum.Idle);
             WorkerStateCheck = false;
         }
+
         StateMachine.CurrentState.UpdateState();
     }
 
