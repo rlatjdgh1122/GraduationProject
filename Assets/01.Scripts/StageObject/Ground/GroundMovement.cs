@@ -105,7 +105,6 @@ public class GroundMovement : MonoBehaviour
         transform.rotation = Quaternion.identity;
         transform.SetParent(null);
 
-
         // 중앙과 히트 포인트 사이의 거리 계산
         float centerToHitPointX = Mathf.Abs(_meshCollider.transform.position.x - RaycastHit_ToCenterPos.x);
         float centerToHitPointZ = Mathf.Abs(_meshCollider.transform.position.z - RaycastHit_ToCenterPos.z);

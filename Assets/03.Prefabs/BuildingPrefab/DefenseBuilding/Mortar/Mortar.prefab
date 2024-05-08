@@ -861,7 +861,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805567381860836178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.59}
+  m_LocalPosition: {x: 0, y: 0, z: -16.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -870,7 +870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.59, y: 17.52}
+  m_AnchoredPosition: {x: 12.59, y: 13.33}
   m_SizeDelta: {x: 15, y: 3.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8745751806506706148
@@ -18822,10 +18822,34 @@ MonoBehaviour:
       m_Calls: []
   OnUIUpdate:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8917569967486930978}
+        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
+        m_MethodName: UpdateHpbarUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OffUIUpdate:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8917569967486930978}
+        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
+        m_MethodName: FadeOutImmediately
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7523030673536527664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18876,6 +18900,7 @@ MonoBehaviour:
   _maxDetectEnemy: 5
   resourceType: 0
   _noiseValue: 0
+  _workMotionCount: 0
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
     type: 2}
@@ -18943,8 +18968,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.166693, y: 1, z: 2.216033}
-  m_Center: {x: 0.28224355, y: 0, z: -0.60801625}
+  m_Size: {x: 2.166693, y: 1.6621112, z: 2.216033}
+  m_Center: {x: 0.28224355, y: 0.33105537, z: -0.60801625}
 --- !u!1 &6892617321503786158
 GameObject:
   m_ObjectHideFlags: 0

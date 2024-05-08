@@ -43,6 +43,7 @@ public class Ground : MonoBehaviour
 
     private void ActivateEnemies()
     {
+        Debug.Log("아킨다고");
         foreach (Enemy enemy in _enemies)
         {
             enemy.IsMove = true;
@@ -101,7 +102,7 @@ public class Ground : MonoBehaviour
     public void SetGroundInfo(Transform parentTransform, Vector3 position)
     {
         _groundMove.SetGroundPos(parentTransform,
-                                  position);
+                                 position);
 
         SetEnemies(_groundConfigurer.SetGroundElements().Enemies);
     }

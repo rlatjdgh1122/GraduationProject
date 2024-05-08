@@ -72,9 +72,9 @@ public class MortarBuilding : DefenseBuilding
                 if (!isBattlePhase) // 쏘려고 하는데 전투페이즈가 아니면 부채로 호다닥 끔
                 {
                     isFired = false;
-                    float endYValuee = _cannonTransform.localPosition.y + fireMoveValue;
-                    _cannonTransform.DOLocalMoveY(endYValuee, 1f).SetEase(Ease.OutBack);
-                    _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
+                    //float endYValuee = _cannonTransform.localPosition.y + fireMoveValue;
+                    //_cannonTransform.DOLocalMoveY(endYValuee, 1f).SetEase(Ease.OutBack);
+                    //_cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
                     _ignitingPenguin.StartSwingAnimation(remainWaitTime);
                     yield break;
                 }
@@ -99,11 +99,16 @@ public class MortarBuilding : DefenseBuilding
         _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
+        Debug.Log(rock.GetInstanceID());
         _mortarFireParticle.Play();
         rock.transform.position = _firePos.position;
         rock.Setting(this, _layer); //바꿔야댐
 
-        StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
+        if (_currentTarget != null)
+        {
+            StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
+        }
+
 
         SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
     }
