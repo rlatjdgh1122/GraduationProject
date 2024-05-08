@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public class LegionInventory : LegionUI
@@ -88,14 +89,14 @@ public class LegionInventory : LegionUI
             {
                 currentDictionary.Add(list.SlotIdx, list);
 
-                var penguin = PenguinManager.Instance.GetPenguinByInfoData(list);
+                //var penguin = PenguinManager.Instance.GetPenguinByInfoData(list);
 
-                float curHp = penguin.HealthCompo.currentHealth;
-                float maxHp = penguin.HealthCompo.maxHealth;
+                //float curHp = penguin.HealthCompo.currentHealth ;
+                //float maxHp = penguin.HealthCompo.maxHealth;
 
-                float hpPercent = curHp / maxHp;
+                //float hpPercent = curHp / maxHp;
 
-                PenguinTakeDamage(list.SlotIdx, hpPercent);
+                //PenguinTakeDamage(list.SlotIdx, hpPercent);
             }
             else break;
 
@@ -105,7 +106,7 @@ public class LegionInventory : LegionUI
         LegionCountTextSetting();
     }
 
-    private void PenguinTakeDamage(int idx, float hp) => slotList[idx].HpValue(hp);
+    //private void PenguinTakeDamage(int idx, float hp) => slotList[idx].HpValue(hp);
 
     public void LegionRegistration(int idx, EntityInfoDataSO data)
     {
