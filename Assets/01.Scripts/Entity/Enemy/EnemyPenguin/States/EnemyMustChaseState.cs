@@ -8,7 +8,7 @@ public class EnemyMustChaseState : EnemyBaseState
     {
         base.EnterState();
         _triggerCalled = true;
-        _enemy.FindHitTarget();
+        _enemy.FindWideTarget();
     }
 
     public override void UpdateState()
