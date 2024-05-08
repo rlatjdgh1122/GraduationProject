@@ -73,18 +73,13 @@ public class NexusUIPresenter : NexusPopupUI
     #region buildingUI
     public void PurchaseBuilding(BuildingView view)
     {
-        if(CostManager.Instance.Cost < view.building.Price)
-        {
-            UIManager.Instance.ShowWarningUI("생선이 부족합니다");
-            return;
-        }
-        if (view.building.IsUnlocked)
+        if (view.building.IsUnlocked && CostManager.Instance.CheckRemainingCost(view.building.Price))
         {
             view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
         }
         else
         {
-            UIManager.Instance.ShowWarningUI("잠겨있습니다!");
+            UIManager.Instance.ShowWarningUI("생선이 부족합니다");
         }
     }
     #endregion
@@ -92,6 +87,11 @@ public class NexusUIPresenter : NexusPopupUI
     public override void ShowPanel()
     {
         base.ShowPanel();
+    }
+
+    public void HideNexusPanel()
+    {
+        UIManager.Instance.HidePanel("NexusUI");
     }
 
     public override void HidePanel()

@@ -40,7 +40,7 @@ public class WorkableObject : TargetObject
 
         NoiseManager.Instance.AddViewNoise(_noiseValue);
 
-        if (_currentNoiseValue >= _maxNoiseValue)
+        if (_currentNoiseValue > _maxNoiseValue)
         {
             OnNoiseExcessEvent?.Invoke();
         }

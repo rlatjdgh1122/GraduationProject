@@ -34,6 +34,7 @@ public class PhaseChangeButton : MonoBehaviour
     {
         WaveManager.Instance.BattlePhaseStartEventHandler();
         SoundManager.Play2DSound(SoundName.StartFight);
+        NoiseManager.Instance.SaveNoise();
         OnOffButton();
     }
 
