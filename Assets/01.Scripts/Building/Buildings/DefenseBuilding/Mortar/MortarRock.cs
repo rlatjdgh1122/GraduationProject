@@ -57,7 +57,7 @@ public class MortarRock : Arrow
 
         while (!isDestoried)
         {
-            if (transform.localPosition.y <= -1f) // -1보다 작아지면 바다에 빠진 것
+            if (transform.position.y <= -3f) // -1보다 작아지면 바다에 빠진 것
             {
                 break;
             } 
@@ -68,11 +68,13 @@ public class MortarRock : Arrow
             yield return new WaitForEndOfFrame();
         }
 
-        isDestoried = true;
-        _mortarAttackRangeSprite.transform.SetParent(transform);
-        _mortarAttackRangeSprite.SetActive(false);
-        PoolManager.Instance.Push(this);
-
+        if (!isDestoried)
+        {
+            isDestoried = true;
+            _mortarAttackRangeSprite.transform.SetParent(transform);
+            _mortarAttackRangeSprite.SetActive(false);
+            PoolManager.Instance.Push(this);
+        }
         yield return null;
     }
 
@@ -85,6 +87,7 @@ public class MortarRock : Arrow
     {
         if (!isDestoried)
         {
+            Debug.Log("닿아서 부서짐");
             isDestoried = true;
             _mortarAttackRangeSprite.transform.SetParent(transform);
             _mortarAttackRangeSprite.SetActive(false);
@@ -97,5 +100,9 @@ public class MortarRock : Arrow
                 PoolManager.Instance.Push(this);
             });
         }
+    }
+
+    private void OnDisable()
+    {
     }
 }
