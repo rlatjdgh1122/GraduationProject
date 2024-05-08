@@ -8,7 +8,6 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
-        _worker.ChangeNavqualityToNone();
         _triggerCalled = true;
 
         _worker.MoveToTarget();
@@ -18,7 +17,7 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
     {
         base.UpdateState();
         
-        if (_worker.CheckDistance() < _worker.innerDistance)
+        if (_worker.IsTargetInAttackRange)
             _stateMachine.ChangeState(WorkerPenguinStateEnum.Work);
     }
 

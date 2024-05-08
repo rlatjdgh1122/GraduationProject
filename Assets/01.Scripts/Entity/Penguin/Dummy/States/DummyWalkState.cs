@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DummyWalkState : DummyBaseState
 {
@@ -14,7 +15,8 @@ public class DummyWalkState : DummyBaseState
 
         _navAgent.speed = 1f;
         MoveToPosition(GetRandomPoint());
-        _penguin.SetNavmeshPriority(2);
+
+        ChangedAgentQuality(ObstacleAvoidanceType.HighQualityObstacleAvoidance);
     }
     public override void UpdateState()
     {

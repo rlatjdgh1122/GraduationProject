@@ -85,13 +85,13 @@ public class DummyPenguin : PoolableMono
         PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
     }
 
-    #region ���� ����
-    public void ChangeNavqualityToNone() //Nave Quality None���� ����) ���� ����
+    #region AgentQuality
+    public void ChangeNavqualityToNone() //Nave Quality None
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
-    public void ChangeNavqualityToHigh() //Nave Quality HighQuality�� ����) ���� ������
+    public void ChangeNavqualityToHigh() //Nave Quality High
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DummyRunningState : DummyBaseState
 {
@@ -15,7 +16,8 @@ public class DummyRunningState : DummyBaseState
         //스피드는 좀 빠르게
         _navAgent.speed = 3f;
         MoveToPosition(GetRandomPoint());
-        _penguin.SetNavmeshPriority(2);
+
+        ChangedAgentQuality(ObstacleAvoidanceType.HighQualityObstacleAvoidance);
     }
     public override void UpdateState()
     {
@@ -35,7 +37,6 @@ public class DummyRunningState : DummyBaseState
     public override void Exit()
     {
         base.Exit();
-        _penguin.SetNavmeshPriority(1);
     }
 
 }
