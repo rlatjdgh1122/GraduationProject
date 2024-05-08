@@ -8,15 +8,12 @@ public class EnemyBaseState : EnemyState
     private AnimalAttackableEntity _animalAttack;
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-
     public EnemyBaseState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
         if(enemy.TryGetComponent<AnimalAttackableEntity>(out var component))
         {
             _animalAttack = component;
         }
-
-        SignalHub.OnIceArrivedEvent += FindTarget;
     }
 
     #region Enter
@@ -37,7 +34,6 @@ public class EnemyBaseState : EnemyState
 
     protected void AttackComboEnter()
     {
-
         if (_animalAttack.ComboCounter > _animalAttack.animalAttackList.Count - 1
             || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
         {
@@ -53,9 +49,6 @@ public class EnemyBaseState : EnemyState
         _triggerCalled = true;
 
         _enemy.FindNearestTarget();
-
-        if (_enemy.CurrentTarget != null)
-            _enemy.MoveToCurrentTarget();
     }
 
     protected void MustChaseEnter()
@@ -118,11 +111,6 @@ public class EnemyBaseState : EnemyState
     #endregion
 
     #region Method
-    private void FindTarget()
-    {
-        _enemy.FindWideTarget();
-    }
-
     private void DeadTarget()
     {
         var prevTarget = _enemy.CurrentTarget;

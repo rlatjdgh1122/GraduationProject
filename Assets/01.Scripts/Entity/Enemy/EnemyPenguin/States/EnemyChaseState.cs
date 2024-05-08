@@ -11,6 +11,9 @@ public class EnemyChaseState : EnemyBaseState
         base.EnterState();
 
         ChaseEnter();
+
+        if (_enemy.CurrentTarget != null)
+            _enemy.MoveToCurrentTarget();
     }
 
     public override void UpdateState()
@@ -19,8 +22,7 @@ public class EnemyChaseState : EnemyBaseState
 
         if (_enemy.IsTargetInAttackRange)
             _stateMachine.ChangeState(EnemyStateType.Attack); //공격 사거리 내에 들어왔다 -> Attack
-
-        if (!_enemy.IsTargetInInnerRange)
+        else if (!_enemy.IsTargetInInnerRange)
             _stateMachine.ChangeState(EnemyStateType.Move);
     }
 

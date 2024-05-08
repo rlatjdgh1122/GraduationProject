@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class EnemyStateMachine
 {
@@ -21,6 +22,8 @@ public class EnemyStateMachine
         CurrentState.ExitState();
         CurrentState = StateDictionary[newState];
         CurrentState.EnterState();
+
+        Debug.Log($"{PrevState} -> {CurrentState}");
     }
 
     public void AddState(EnemyStateType stateType, EnemyState playerState)

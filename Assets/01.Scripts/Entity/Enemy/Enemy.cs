@@ -27,8 +27,6 @@ public class Enemy : Entity
     public bool IsProvoked = false;
     public bool UseAttackCombo = false;
 
-    public LayerMask NexusLayer;
-
     public bool IsTargetInInnerRange => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
     public bool IsTargetInAttackRange => CurrentTarget != null &&
@@ -90,27 +88,15 @@ public class Enemy : Entity
         base.OnDestroy();
     }
 
-    /*private void FindTarget()
-    {
-        if (IsTargetNexus)
-        {
-            //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
-            SetTarget(ActionData.HitTarget);
-        }
-        else
-        {
-            FindNearestTarget();
-        }
-    }*/
-
     public void FindNearestTarget()
     {
-        CurrentTarget = FindNearestTarget<TargetObject>(innerDistance, TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
     }
 
-    public void FindWideTarget()
+    public void FindWideRangeTarget()
     {
-        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
+        Debug.Log("Ã£ÀÚ");
+        CurrentTarget = FindNearestTarget<TargetObject>(2500, TargetLayer);
     }
 
     protected override void HandleDie()

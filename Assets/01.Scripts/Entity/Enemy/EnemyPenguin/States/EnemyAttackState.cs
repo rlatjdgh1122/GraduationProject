@@ -53,7 +53,7 @@ public class EnemyAttackState : EnemyBaseState
 
         if (_enemy.CheckAttackEventPassive(++curAttackCount))
         {
-            _enemy?.OnPassiveAttackEvent();
+            _enemy.OnPassiveAttackEvent();
 
             curAttackCount = 0;
         }

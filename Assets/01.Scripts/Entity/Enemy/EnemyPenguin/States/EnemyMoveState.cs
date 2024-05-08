@@ -9,9 +9,7 @@ public class EnemyMoveState : EnemyBaseState
         base.EnterState();
 
         MoveEnter();
-
-        if (_enemy.NexusTarget != null)
-            _enemy.MoveToNexus();
+        _enemy.MoveToNexus();
     }
    
     public override void UpdateState()

@@ -89,17 +89,17 @@ public class GroundMove : MonoBehaviour
 
                 _waveEffect.gameObject.SetActive(false);
 
+                //CoroutineUtil.CallWaitForOneFrame(() =>
+                //{
+                //    foreach (Enemy enemy in _enemies)
+                //    {
+                //        enemy.IsMove = true;
+                //        enemy.NavAgent.enabled = true;
+                //    }
+                //});
+
                 WaveManager.Instance.OnIceArrivedEventHanlder();
                 SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
-
-                CoroutineUtil.CallWaitForOneFrame(() =>
-                {
-                    foreach (Enemy enemy in _enemies)
-                    {
-                        enemy.IsMove = true;
-                        enemy.NavAgent.enabled = true;
-                    }
-                });
 
                 //DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
                 //{
