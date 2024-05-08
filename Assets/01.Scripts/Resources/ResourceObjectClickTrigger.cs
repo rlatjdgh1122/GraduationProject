@@ -12,7 +12,7 @@ public class ResourceObjectClickTrigger : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && LegionInventoryManager.Instance.CanShowPanel)
         {
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI");

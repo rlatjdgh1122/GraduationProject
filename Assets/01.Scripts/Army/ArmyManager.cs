@@ -297,7 +297,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var Army = armies[idx];
         var Abilities = Army.Abilities;
 
-        obj.SetOwner(null);
+        obj.owner = (null);
 
         //장군이라면
         if (obj is General)
