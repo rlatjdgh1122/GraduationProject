@@ -93,7 +93,7 @@ public class PenguinSpawnHandler : MonoBehaviour
             dummy.IsGoToHouse = false;
 
             dummy.gameObject.SetActive(true);
-            dummy.DummyStateMachine.ChangeState(DummyPenguinStateEnum.FreelyIdle);
+            dummy.DummyStateMachine.ChangeState(DummyPenguinStateEnum.Running);
 
             yield return Heartbeat;
         }

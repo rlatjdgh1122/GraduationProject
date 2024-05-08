@@ -85,7 +85,7 @@ public class DummyBaseState : DummyState
                 return hit.position;
             }
         }
-        return _penguin.transform.position;
+        return GetRandomPoint();
     }
 
     protected bool IsSomethingInFront()

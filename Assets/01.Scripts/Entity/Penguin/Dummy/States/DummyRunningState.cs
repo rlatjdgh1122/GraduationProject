@@ -17,17 +17,13 @@ public class DummyRunningState : DummyBaseState
         _navAgent.speed = 3f;
         MoveToPosition(GetRandomPoint());
 
-        ChangedAgentQuality(ObstacleAvoidanceType.HighQualityObstacleAvoidance);
+        ChangedAgentQuality(ObstacleAvoidanceType.NoObstacleAvoidance, 1);
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
         //목적지에 도달하면 Random모션으로
-        if (IsSomethingInFront())
-        {
-            _stateMachine.ChangeState(DummyPenguinStateEnum.FreelyIdle);
-        }
         if (_navAgent.remainingDistance < 0.05f)
         {
             _stateMachine.ChangeState(RandomState());
