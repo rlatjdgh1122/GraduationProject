@@ -130,13 +130,14 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     public void ApplyHeal(int amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
-        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Heal, out var hitF))
-        {
-            hitF.PlayFeedback();
-            //OnHealedEvent?.Invoke();
-        }
+        //나중에 바꾸기
+        //OnUIUpdate?.Invoke(currentHealth, maxHealth);
+        //if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Heal, out var hitF))
+        //{
+        //    hitF.PlayFeedback();
+        //    OnHealedEvent?.Invoke();
+        //}
     }
 
     private void Dead()

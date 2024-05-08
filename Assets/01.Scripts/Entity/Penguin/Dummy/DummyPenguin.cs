@@ -83,7 +83,8 @@ public class DummyPenguin : PoolableMono
 
     private void OnMouseDown()
     {
-        PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
+        if(LegionInventoryManager.Instance.CanShowPanel)
+            PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
     }
 
     #region AgentQuality

@@ -52,8 +52,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bdd202b1fbd1f4449dc6ade682cf54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0.9
-  soundName: 16
+  _panelFadeTime: 1.1
+  _panelDelayTime: 0.75
+  _soundName: 16
+  _uiGroup: 0
+  CanShowAnotherUI: 0
   _eliminatedEnemy: {fileID: 8989177996701393050}
   _deadPenguin: {fileID: 5782358947574410716}
   _reward: {fileID: 7450653550336770621}
@@ -82,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

@@ -10,7 +10,13 @@ public class PopupUI : MonoBehaviour
     private float _panelDelayTime;
 
     [SerializeField]
-    private SoundName soundName = SoundName.UI;
+    private SoundName _soundName = SoundName.UI;
+
+    [SerializeField]
+    private UIType _uiGroup;
+    public UIType UIGroup => _uiGroup;
+
+    public bool CanShowAnotherUI = false;
 
     protected CanvasGroup _panel;
     protected RectTransform _rectTransform;
@@ -42,8 +48,9 @@ public class PopupUI : MonoBehaviour
     private IEnumerator ShowPanelCoroutine(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
+        Debug.Log($"{_panel} Show");
         UIManager.Instance.currentPopupUI.Push(this);
-        SoundManager.Play2DSound(soundName);
+        SoundManager.Play2DSound(_soundName);
         _panel.blocksRaycasts = true;
         _panel.DOFade(1, _panelFadeTime);
     }
@@ -53,7 +60,10 @@ public class PopupUI : MonoBehaviour
         SignalHub.OnOffPopUiEvent?.Invoke();
 
         UIManager.Instance.currentPopupUI.TryPop(out var popupUI);
-        SoundManager.Play2DSound(soundName);
+
+        Debug.Log($"{_panel} Hide");
+
+        SoundManager.Play2DSound(_soundName);
 
         _panel.blocksRaycasts = false;
         _panel.DOFade(0, _panelFadeTime);

@@ -28,6 +28,9 @@ public delegate void ProgressQuestEvent();
 
 public delegate void OffPopUiEvent();
 
+public delegate void ViewNoiseIncreaseEvent();
+public delegate void NoiseIncreaseEvent();
+
 public static class SignalHub
 {
     /// <summary>
@@ -82,5 +85,10 @@ public static class SignalHub
 
     #endregion
 
+    #region Noise
 
+    public static ViewNoiseIncreaseEvent OnViewNoiseIncreaseEvent;
+    public static NoiseIncreaseEvent OnNoiseIncreaseEvent;
+
+    #endregion
 }

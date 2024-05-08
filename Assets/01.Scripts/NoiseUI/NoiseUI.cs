@@ -36,18 +36,18 @@ public class NoiseUI : MonoBehaviour
 
     private void OnEnable()
     {
-        NoiseManager.Instance.ViewNoiseIncreaseEvent += IncreaseViewNoiseUI;
-        NoiseManager.Instance.NoiseIncreaseEvent += IncreaseNoiseUI;
-        NoiseManager.Instance.ViewNoiseIncreaseEvent += WarningNoiseUI;
+        SignalHub.OnViewNoiseIncreaseEvent += IncreaseViewNoiseUI;
+        SignalHub.OnViewNoiseIncreaseEvent += WarningNoiseUI;
+        SignalHub.OnNoiseIncreaseEvent += IncreaseNoiseUI;
         SignalHub.OnBattlePhaseStartEvent += HideNoiseUI;
         SignalHub.OnBattlePhaseEndEvent += ShowNoiseUI;
     }
 
     private void OnDisable()
     {
-        NoiseManager.Instance.ViewNoiseIncreaseEvent -= IncreaseViewNoiseUI;
-        NoiseManager.Instance.NoiseIncreaseEvent -= IncreaseNoiseUI;
-        NoiseManager.Instance.ViewNoiseIncreaseEvent -= WarningNoiseUI;
+        SignalHub.OnViewNoiseIncreaseEvent -= IncreaseViewNoiseUI;
+        SignalHub.OnViewNoiseIncreaseEvent -= WarningNoiseUI;
+        SignalHub.OnNoiseIncreaseEvent -= IncreaseNoiseUI;
         SignalHub.OnBattlePhaseStartEvent -= HideNoiseUI;
         SignalHub.OnBattlePhaseEndEvent -= ShowNoiseUI;
     }
