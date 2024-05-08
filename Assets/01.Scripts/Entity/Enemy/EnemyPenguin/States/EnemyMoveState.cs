@@ -10,7 +10,7 @@ public class EnemyMoveState : EnemyBaseState
 
         MoveEnter();
 
-        if (_enemy.NexusTarget != null)
+        if (_enemy.NexusTarget != null && !_enemy.IsTargetInInnerRange)
             _enemy.MoveToNexus();
     }
    

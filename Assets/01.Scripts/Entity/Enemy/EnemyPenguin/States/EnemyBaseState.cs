@@ -15,8 +15,6 @@ public class EnemyBaseState : EnemyState
         {
             _animalAttack = component;
         }
-
-        SignalHub.OnIceArrivedEvent += FindTarget;
     }
 
     #region Enter
@@ -31,13 +29,13 @@ public class EnemyBaseState : EnemyState
             _enemy.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
+        _enemy.FindNearestTarget();
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
 
     protected void AttackComboEnter()
     {
-
         if (_animalAttack.ComboCounter > _animalAttack.animalAttackList.Count - 1
             || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
         {
@@ -68,6 +66,7 @@ public class EnemyBaseState : EnemyState
 
     protected void MoveEnter()
     {
+        _enemy.FindWideRangeTarget();
         _triggerCalled = true;
     }
 
@@ -85,7 +84,7 @@ public class EnemyBaseState : EnemyState
 
     protected void AttackExit()
     {
-        _enemy.AnimatorCompo.speed = 1;
+        //_enemy.AnimatorCompo.speed = 1;
     }
 
     protected void AttackComboExit()
@@ -118,11 +117,6 @@ public class EnemyBaseState : EnemyState
     #endregion
 
     #region Method
-    private void FindTarget()
-    {
-        _enemy.FindWideTarget();
-    }
-
     private void DeadTarget()
     {
         var prevTarget = _enemy.CurrentTarget;
