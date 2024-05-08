@@ -91,8 +91,8 @@ public class SoundManager : MonoBehaviour
 
     private void InitInstance()
     {
+        mainMixer = VResources.Load<AudioMixer>("Audio/MainMixer");
 
-        mainMixer = Resources.Load<AudioMixer>("Audio/MainMixer");
         sfxMixer = mainMixer.FindMatchingGroups("SFX")[0];
         bgmMixer = mainMixer.FindMatchingGroups("BGM")[0];
 
@@ -193,7 +193,7 @@ public class SoundManager : MonoBehaviour
         obj.transform.position = position;
         var source = obj.AddComponent<AudioSource>();
 
-        AudioClip clip = Resources.Load<AudioClip>($"Sound/{clipName.ToString()}");
+        AudioClip clip = VResources.Load<AudioClip>($"Sound/{clipName.ToString()}");
 
         source.clip = clip;
         source.spatialBlend = .8f;
@@ -294,6 +294,11 @@ public class SoundManager : MonoBehaviour
 
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        VResources.UnloadAssetsAll();
     }
 
 }
