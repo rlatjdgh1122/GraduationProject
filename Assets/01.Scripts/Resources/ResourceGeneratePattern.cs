@@ -10,8 +10,8 @@ public enum ResourceName
     stone_small_type01,
     stone_small_type02,
 
-    tree_normal_type01,
-    tree_normal_type02
+    tree_medium_type01,
+    tree_small_type01
 }
 
 [Serializable]
