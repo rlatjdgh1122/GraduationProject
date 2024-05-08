@@ -16,6 +16,8 @@ public class LegionInventoryUI : PopupUI
     {
         UIManager.Instance.ShowPanel(this.gameObject.name);
 
+        LegionInventoryManager.Instance.ChangeCanShowPanel(false);
+
         LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
@@ -23,6 +25,8 @@ public class LegionInventoryUI : PopupUI
     public override void HidePanel()
     {
         base.HidePanel();
+
+        LegionInventoryManager.Instance.ChangeCanShowPanel(true);
 
         if (LegionInventoryManager.Instance.ChangedInCurrentLegion())
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DummyDumbToDoState : DummyBaseState
 {
@@ -17,6 +18,8 @@ public class DummyDumbToDoState : DummyBaseState
         StopImmediately();
 
         _penguin.AnimatorCompo.SetFloat(AnimID, _penguin.RandomValue);
+
+        ChangedAgentQuality(ObstacleAvoidanceType.NoObstacleAvoidance);
     }
     public override void UpdateState()
     {

@@ -49,6 +49,7 @@ public enum SoundName : uint
     WoodCut,
     FallDown,
     GorillaPunch,
+    MeleeHit,
 
     #region Buildings
 

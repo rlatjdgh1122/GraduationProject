@@ -61,6 +61,13 @@ public class DummyBaseState : DummyState
         }
 
     }
+
+    protected void ChangedAgentQuality(ObstacleAvoidanceType type, int priority = 5)
+    {
+        _navAgent.obstacleAvoidanceType = type;
+        _navAgent.avoidancePriority = priority;
+    }
+
     protected Vector3 GetRandomPoint()
     {
         NavMeshHit hit;
@@ -69,16 +76,16 @@ public class DummyBaseState : DummyState
 
         if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
         {
-            /* Vector3 dir = (hit.position - _penguin.transform.position).normalized;
-             Vector3 checkPos = _penguin.transform.position + (dir * 1f);
+            Vector3 dir = (hit.position - _penguin.transform.position).normalized;
+            Vector3 checkPos = _penguin.transform.position + (dir * 2f);
 
-             bool isGround = Physics.Raycast(checkPos, Vector3.down, 10f, m_layerMask);
-             if (isGround)
-             {
-             }*/
-            return hit.position;
+            bool isGround = Physics.Raycast(checkPos, Vector3.down, 10f, m_layerMask);
+            if (!isGround)
+            {
+                return hit.position;
+            }
         }
-        return _penguin.transform.position;
+        return GetRandomPoint();
     }
 
     protected bool IsSomethingInFront()

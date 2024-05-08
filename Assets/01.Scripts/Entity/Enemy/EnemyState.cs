@@ -40,9 +40,5 @@ public class EnemyState
     {
         _triggerCalled = true;
     }
-    #endregion
-
-
-
-   
+    #endregion 
 }

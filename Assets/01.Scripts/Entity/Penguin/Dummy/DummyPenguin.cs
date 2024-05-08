@@ -44,7 +44,7 @@ public class DummyPenguin : PoolableMono
         HouseTrm = FindObjectOfType<TentInitPos>().transform;
 
         NavAgent = GetComponent<NavMeshAgent>();
-        AnimatorCompo = visualTrm?.GetComponent<Animator>();
+        AnimatorCompo = visualTrm.GetComponent<Animator>();
 
         Setting();
     }
@@ -63,35 +63,41 @@ public class DummyPenguin : PoolableMono
             DummyStateMachine.AddState(state, newState);
         }
     }
+
     private void Start()
     {
         StateInit();
     }
+
     public void StateInit()
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
     }
+
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
     }
+
     public void GoToHouse()
     {
-        PoolManager.Instance.Push(this);
+        //PoolManager.Instance.Push(this);
+        gameObject.SetActive(false);
     }
 
     private void OnMouseDown()
     {
-        PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
+        if(LegionInventoryManager.Instance.CanShowPanel)
+            PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
     }
 
-    #region ���� ����
-    public void ChangeNavqualityToNone() //Nave Quality None���� ����) ���� ����
+    #region AgentQuality
+    public void ChangeNavqualityToNone() //Nave Quality None
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
-    public void ChangeNavqualityToHigh() //Nave Quality HighQuality�� ����) ���� ������
+    public void ChangeNavqualityToHigh() //Nave Quality High
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }

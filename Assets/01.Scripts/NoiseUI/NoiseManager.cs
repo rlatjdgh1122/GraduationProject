@@ -26,9 +26,6 @@ public class NoiseManager : Singleton<NoiseManager>
 
     private float _saveNoiseValue = 0;
 
-    public Action ViewNoiseIncreaseEvent = null;
-    public Action NoiseIncreaseEvent = null;
-
     private PhaseChangeButton _btn;
 
     public override void Awake()
@@ -44,6 +41,11 @@ public class NoiseManager : Singleton<NoiseManager>
         SignalHub.OnBattlePhaseEndEvent += PhaseStartAddSaveNoise;
     }
 
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= PhaseStartAddSaveNoise;
+    }
+
     /// <summary>
     /// 레벨에 따라 소음 최대치 변경
     /// </summary>
@@ -57,10 +59,7 @@ public class NoiseManager : Singleton<NoiseManager>
 
     public void PhaseStartAddSaveNoise()
     {
-        SignalHub.OnBattlePhaseEndEvent -= PhaseStartAddSaveNoise;
-
         AddNoise(_saveNoiseValue);
-        Debug.Log(_saveNoiseValue);
 
         if (_currentNoise >= _maxNosise)
         {
@@ -83,22 +82,22 @@ public class NoiseManager : Singleton<NoiseManager>
         if(_currentViewNoise > _currentNoise)
             _currentViewNoise = _currentNoise;
 
-        ViewNoiseIncreaseEvent?.Invoke();
-
         if (_currentViewNoise >= _maxNosise)
             NoiselimitExceed();
+
+        SignalHub.OnViewNoiseIncreaseEvent?.Invoke();
     }
 
     public void AddNoise(float noise)
     { 
         _currentNoise += noise;
 
-        NoiseIncreaseEvent?.Invoke();
-
         if (_currentNoise >= _maxNosise)
         {
             _saveNoiseValue = _currentNoise - _maxNosise;
         }
+
+        SignalHub.OnNoiseIncreaseEvent?.Invoke();
     }
 
     public void SaveNoise()
@@ -120,8 +119,6 @@ public class NoiseManager : Singleton<NoiseManager>
 
     private void ResetNoise()
     {
-        SignalHub.OnBattlePhaseEndEvent += PhaseStartAddSaveNoise;
-
         _currentViewNoise = 0;
         _currentNoise = 0;
     }

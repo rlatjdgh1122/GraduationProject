@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 {
@@ -15,7 +16,8 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
         _triggerCalled = false;
 
         _worker.StopImmediately();
-        Debug.Log("∏ÿ√Á");
+
+        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
     public override void UpdateState()

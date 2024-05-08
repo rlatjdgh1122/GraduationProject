@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DummyGoToHouseState : DummyBaseState
 {
@@ -16,6 +17,8 @@ public class DummyGoToHouseState : DummyBaseState
         _navAgent.isStopped = false;
 
         _navAgent.SetDestination(_penguin.HouseTrm.position);
+
+        ChangedAgentQuality(ObstacleAvoidanceType.NoObstacleAvoidance, 0);
 
     }
     public override void UpdateState()

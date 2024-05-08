@@ -11,6 +11,7 @@ public class Worker : Entity
     public Transform WorkerHomeTrm;
     #endregion
 
+    public bool IsTargetInAttackRange => Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) < attackDistance;
     public bool CanWork = false;
     public bool EndWork;
 
@@ -27,6 +28,9 @@ public class Worker : Entity
         WorkerHomeTrm = GameManager.Instance.WorkerSpawnPoint;
 
         DamageCasterCompo.SetOwner(this);
+
+
+
         Init();
     }
 
@@ -36,11 +40,6 @@ public class Worker : Entity
         NavAgent.SetDestination(CurrentTarget.transform.position);
     }
 
-    public float CheckDistance()
-    {
-        //Debug.Log(Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)));
-        return Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position));
-    }
 
     public void MoveToNexus()
     {
@@ -90,16 +89,6 @@ public class Worker : Entity
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
     }
 
-    public void ChangeNavqualityToNone() //Nave Quality None으로 변경
-    {
-        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-    }
-
-    public void ChangeNavqualityToHigh() //Nave Quality HighQuality로 변경
-    {
-        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
-    }
-
     public virtual void AnimationTrigger()
     {
 
@@ -107,12 +96,16 @@ public class Worker : Entity
 
     protected override void HandleDie()
     {
-        
+
     }
 
     public override void Init()
     {
+        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+        NavAgent.avoidancePriority = 0;
+
         CanWork = false;
         EndWork = false;
+
     }
 }

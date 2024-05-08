@@ -12,7 +12,6 @@ public class WorkerReturnState : WorkerState<WorkerPenguinStateEnum>
     public override void Enter()
     {
         base.Enter();
-        _worker.ChangeNavqualityToNone();
         _triggerCalled = true;
         _worker.MoveToNexus();
     }

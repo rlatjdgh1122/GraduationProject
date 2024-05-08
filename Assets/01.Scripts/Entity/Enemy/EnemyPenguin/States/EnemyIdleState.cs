@@ -1,29 +1,40 @@
 
 public class EnemyIdleState : EnemyBaseState
 {
-    private bool isChase => _enemy.IsMove && _enemy.IsTargetInInnerRange;
-
     public EnemyIdleState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
     }
-
 
     public override void EnterState()
     {
         base.EnterState();
 
         IdleEnter();
+
+        SignalHub.OnIceArrivedEvent += ChangeState;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (_enemy.IsMove)
-            _stateMachine.ChangeState(EnemyStateType.Move); //IsMove 불 변수가 True이면 넥서스로 Move
+       /* if (_enemy.IsTargetInInnerRange)
+        {
+            _stateMachine.ChangeState(EnemyStateType.Chase);
+        }
+        else
+            _stateMachine.ChangeState(EnemyStateType.Move);*/
 
-        if (isChase)
-            _stateMachine.ChangeState(EnemyStateType.Chase); //감지 사거리 안에 타겟 플레이어가 있다 -> 쫓아가  
+        //if (_enemy.IsMove)
+        //    _stateMachine.ChangeState(EnemyStateType.Move); //IsMove 불 변수가 True이면 넥서스로 Move
+    }
+
+    private void ChangeState()
+    {
+        _enemy.NavAgent.enabled = true;
+        _enemy.FindNearestTarget();
+
+        _stateMachine.ChangeState(EnemyStateType.Move);
     }
 
     public override void ExitState()
@@ -31,5 +42,7 @@ public class EnemyIdleState : EnemyBaseState
         base.ExitState();
 
         IdleExit();
+
+        SignalHub.OnIceArrivedEvent -= ChangeState;
     }
 }

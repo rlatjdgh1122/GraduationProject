@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DummyFreelyIdleState : DummyBaseState
 {
@@ -20,6 +21,8 @@ public class DummyFreelyIdleState : DummyBaseState
         randomTime = Random.Range(1.0f, 5.0f);
 
         StopImmediately();
+
+        ChangedAgentQuality(ObstacleAvoidanceType.NoObstacleAvoidance);
     }
     public override void UpdateState()
     {
