@@ -76,7 +76,7 @@ public class UIManager : Singleton<UIManager>
         if (popupUI != null)
         {
             popupUI.ShowPanel();
-        }    
+        }
     }
 
     public void HidePanel(string uiName)

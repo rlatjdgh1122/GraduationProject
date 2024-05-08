@@ -62,7 +62,7 @@ public abstract class BaseBuilding : WorkableObject
 
     protected LayerMask _groundLayer = 1 << 3;
 
-    //private BattlePhaseStartEvent _phaseStartSubscriptionAction;
+    private BattlePhaseStartEvent _phaseStartSubscriptionAction;
 
     protected Ground InstalledGround()
     {
@@ -125,7 +125,12 @@ public abstract class BaseBuilding : WorkableObject
         if (_buildingItemInfo != null)
         {
             ChangeToTransparencyMat(OutlineColorType.None);
-            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
+            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryWokerCount, this);
+
+            _phaseStartSubscriptionAction = () => WorkerManager.Instance.ReturnBuilders(this);
+            SignalHub.OnBattlePhaseStartEvent += _phaseStartSubscriptionAction;
+            SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
+
             NoiseManager.Instance.AddNoise(MaxNoiseValue);
 
             OnNoiseExcessEvent += InstallEnd;
@@ -133,6 +138,17 @@ public abstract class BaseBuilding : WorkableObject
             isInstalling = true; 
             StopInstall();
             InstalledGround()?.InstallBuilding();
+        }
+    }
+    private void PlusInstalledTime()
+    {
+        if (CurrentNoiseValue > MaxNoiseValue)
+        {
+            SignalHub.OnBattlePhaseEndEvent -= PlusInstalledTime;
+        }
+        else
+        {
+            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryWokerCount, this);
         }
     }
 
@@ -237,10 +253,10 @@ public abstract class BaseBuilding : WorkableObject
 
     private void OnEnable()
     {
-        //if (_phaseStartSubscriptionAction != null)
-        //{
-        //    SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
-        //}
+        if (_phaseStartSubscriptionAction != null)
+        {
+            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
+        }
     }
 
 }

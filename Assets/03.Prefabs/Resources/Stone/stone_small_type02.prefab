@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5329133455402529317}
   - component: {fileID: 8575336286193702253}
   - component: {fileID: 7333368369015919739}
-  - component: {fileID: 3756979730487860866}
   m_Layer: 17
   m_Name: stone_small_type02
   m_TagString: Untagged
@@ -58,7 +57,7 @@ MonoBehaviour:
   IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
-  _noiseValue: 10
+  _noiseValue: 5
   _maxNoiseValue: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   OnRecieveResourceEvent:
@@ -89,7 +88,19 @@ MonoBehaviour:
       m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1742759593484844144}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -171,7 +182,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.81406516
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.31406516, z: 0}
 --- !u!114 &7333368369015919739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,18 +193,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609e9fe99e6186842b7b5e40d96bc939, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3756979730487860866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1742759593484844144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 449b8e14f6aa582459133b2351b3c58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4526044261340439524

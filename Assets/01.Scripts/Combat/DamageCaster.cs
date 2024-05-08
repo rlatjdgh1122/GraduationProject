@@ -17,11 +17,12 @@ public class DamageCaster : MonoBehaviour
     public void SetOwner(TargetObject owner)
     {
         _owner = owner;
+        SetPosition();
     }
 
     public void SetPosition()
     {
-        transform.position = new Vector3(_owner.transform.position.x, 2f, _owner.transform.position.z);
+        transform.localPosition = new Vector3(0, 0.5f, 0);
     }
 
     /// <summary>

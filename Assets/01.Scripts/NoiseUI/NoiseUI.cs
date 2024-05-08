@@ -80,5 +80,6 @@ public class NoiseUI : MonoBehaviour
     public void ResetUI()
     {
         _viewNoiseFillImage.fillAmount = 0;
+        _noiseFillImage.fillAmount = 0;
     }
 }

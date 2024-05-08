@@ -5,7 +5,6 @@
     Move,
     Chase,
     Attack,
-    MustChase,
     Reached,
     #endregion
 

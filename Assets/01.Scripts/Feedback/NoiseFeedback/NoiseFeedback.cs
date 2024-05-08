@@ -8,6 +8,9 @@ public class NoiseFeedback : Feedback
     [SerializeField]
     private LayerMask _targetLayer;
 
+    [SerializeField]
+    private WorkerType _workerType;
+
     private NoiseManager _noiseManager;
 
     protected override void Start()
@@ -26,7 +29,13 @@ public class NoiseFeedback : Feedback
         {
             if (col.TryGetComponent<WorkableObject>(out WorkableObject obj))
             {
-                obj.IncreaseCurrentNoise();
+                if(_workerType == WorkerType.Builder)
+                    obj.IncreaseCurrentNoise();
+                else
+                {
+                    _noiseManager.AddNoise(obj.NoiseValue);
+                    _noiseManager.AddViewNoise(obj.NoiseValue);
+                }
             }
         }
 

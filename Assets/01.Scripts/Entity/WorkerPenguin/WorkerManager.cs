@@ -6,6 +6,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
+public enum WorkerType
+{
+    Builder,
+    ResourceAcquirer
+}
+
 public class WorkerManager : Singleton<WorkerManager>
 {
     private readonly string WoodCutter = "WoodcutterPenguin";

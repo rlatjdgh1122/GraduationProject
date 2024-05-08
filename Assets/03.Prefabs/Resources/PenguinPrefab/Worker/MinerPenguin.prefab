@@ -678,7 +678,7 @@ NavMeshAgent:
   m_Height: 1.33
   m_BaseOffset: -0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &6161773999422883443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,10 +1320,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f514919cc5f6bba4d919d6684932e1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 1
+  _detectRange: 2
   _targetLayer:
     serializedVersion: 2
     m_Bits: 131072
+  _workerType: 1
 --- !u!1 &6786378972006532014
 GameObject:
   m_ObjectHideFlags: 0
