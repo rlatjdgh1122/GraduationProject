@@ -21,7 +21,7 @@ public class PhaseChangeButton : MonoBehaviour
 
     private void Start()
     {
-        SignalHub.OnBattlePhaseEndEvent += () => OnOffButton();
+        SignalHub.OnBattlePhaseEndEvent += () => OnOffButton(); // 반드시 바꾸소
     }
 
     private void Awake()

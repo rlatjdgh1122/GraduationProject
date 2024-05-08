@@ -5,9 +5,6 @@ using UnityEngine;
 public class MortarBuilding : DefenseBuilding
 {
     [SerializeField]
-    private MortarRock _rockPrefab;
-
-    [SerializeField]
     private Transform _firePos;
     [SerializeField]
     private LayerMask _layer;
@@ -60,15 +57,17 @@ public class MortarBuilding : DefenseBuilding
         float elapsedTime = 0.0f;
         float remainWaitTime = 0.0f;
 
-        while (isBattlePhase && _currentTarget != null)
+        do
         {
             _ignitingPenguin.SetGetTourchAnimation();
             float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
             remainWaitTime = _burningRope.Duration;
+
             while (elapsedTime < waitTime)
             {
                 elapsedTime += Time.deltaTime;
                 remainWaitTime -= Time.deltaTime;
+
                 if (!isBattlePhase) // 쏘려고 하는데 전투페이즈가 아니면 부채로 호다닥 끔
                 {
                     isFired = false;
@@ -84,7 +83,8 @@ public class MortarBuilding : DefenseBuilding
 
             Fire();
             elapsedTime = 0.0f; // 시간 초기화
-        }
+
+        } while (isBattlePhase && _currentTarget != null);
 
         isFired = false;
         float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
@@ -99,7 +99,6 @@ public class MortarBuilding : DefenseBuilding
         _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
-        Debug.Log(rock.GetInstanceID());
         _mortarFireParticle.Play();
         rock.transform.position = _firePos.position;
         rock.Setting(this, _layer); //바꿔야댐

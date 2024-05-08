@@ -82,7 +82,7 @@ public class GroundConfigurer : MonoBehaviour
             SetPosition(spawnBoss.gameObject);
             SetEnemyNav(spawnBoss);
 
-            enemyCountProportion = 0.25f; // 보스 나오면 짜바리들은 좀 조금 나오게
+            enemyCountProportion = 0.25f; // 보스 나오면 짜바리들은 조금만 나오게
             spawnedEnemies.Add(spawnBoss);
         }
 
