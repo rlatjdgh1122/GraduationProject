@@ -53,6 +53,7 @@ public class CameraSystem : MonoBehaviour
 
     private Vector3 prevPos = Vector3.zero;
     private float prevTargetFieldOfView = 0f;
+
     private void Awake()
     {
         isMoving = true;
@@ -245,35 +246,5 @@ public class CameraSystem : MonoBehaviour
 
         Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
         transform.DOMove(vec, 0.5f);
-    }
-    public void SetFollowTarget(Transform targetTrm, float zoomValue = 30f, float pivotX = 5f)
-    {
-        prevPos = transform.position;
-        prevTargetFieldOfView = targetFieldOfView;
-
-        targetFieldOfView = zoomValue;
-        transposer.m_FollowOffset.x = pivotX;
-        transposer.m_FollowOffset.y = 35f;
-        transposer.m_FollowOffset.z = -24.5f;
-
-        _cinemachineCam.Follow = targetTrm;
-        //_cinemachineCam.LookAt = targetTrm;
-    }
-
-
-    public void RollbackCameraTarget()
-    {
-        if (prevPos != Vector3.zero)
-        {
-            _cinemachineCam.Follow = this.transform;
-
-            targetFieldOfView = prevTargetFieldOfView;
-
-            transposer.m_FollowOffset.x = 0f;
-            transposer.m_FollowOffset.y = 0f;
-            transposer.m_FollowOffset.z = -24.5f;
-
-            transform.DOMove(prevPos, 0.2f);
-        }
     }
 }
