@@ -67,13 +67,20 @@ public class PenguinManager
     #endregion
 
     public CameraSystem CameraCompo { get; set; }
+    public DummyPenguinCamera DummyPenguinCameraCompo { get; set; }
 
     #region  GetComponent
     public void GetComponent_CameraSystem(CameraSystem compo)
     {
         CameraCompo = compo;
     }
+    
+    public void GetComponent_DummyCameraSystem(DummyPenguinCamera compo)
+    {
+        DummyPenguinCameraCompo = compo;
+    }
     #endregion
+
     //게임 매니저에서 등록
     public void Setting(SoldierRegisterSO soldierTypeListSO)
     {
@@ -426,7 +433,8 @@ public void ShowInfoUI<T1, T2>(DummyPenguin dummy) where T1 : EntityInfoDataSO w
     GetCurrentStat = statData;
 
     UIManager.Instance.HidePanel("PenguinInfoUI");
-    PenguinManager.Instance.CameraCompo.SetFollowTarget(dummy.transform, 10f, 5f);
+    //PenguinManager.Instance.CameraCompo.SetFollowTarget(dummy.transform, 10f, 5f);
+    DummyPenguinCameraCompo.SetCamera(dummy.transform);
 
     // 장군 정보와 펭귄 정보는 따로
     //if (stat is PenguinStat && infoData is EntityInfoDataSO)

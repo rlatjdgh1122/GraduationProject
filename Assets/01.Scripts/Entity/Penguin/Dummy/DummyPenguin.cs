@@ -44,7 +44,7 @@ public class DummyPenguin : PoolableMono
         HouseTrm = FindObjectOfType<TentInitPos>().transform;
 
         NavAgent = GetComponent<NavMeshAgent>();
-        AnimatorCompo = visualTrm?.GetComponent<Animator>();
+        AnimatorCompo = visualTrm.GetComponent<Animator>();
 
         Setting();
     }
@@ -63,18 +63,22 @@ public class DummyPenguin : PoolableMono
             DummyStateMachine.AddState(state, newState);
         }
     }
+
     private void Start()
     {
         StateInit();
     }
+
     public void StateInit()
     {
         DummyStateMachine.Init(DummyPenguinStateEnum.FreelyIdle);
     }
+
     private void Update()
     {
         DummyStateMachine.CurrentState.UpdateState();
     }
+
     public void GoToHouse()
     {
         //PoolManager.Instance.Push(this);

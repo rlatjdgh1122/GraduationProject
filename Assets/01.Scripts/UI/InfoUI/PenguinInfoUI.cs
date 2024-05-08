@@ -59,7 +59,7 @@ public class PenguinInfoUI : PopupUI
         base.HidePanel();
         Init();
 
-        PenguinManager.Instance.CameraCompo.RollbackCameraTarget();
+        PenguinManager.Instance.DummyPenguinCameraCompo.DisableCamera();
     }
     public override void ShowPanel()
     {
