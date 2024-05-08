@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class PenguinSpawnHandler : MonoBehaviour
 {
+    private Coroutine _spawnDummyPenguinCorouine = null;
 
-    private Coroutine _c;
     private void Awake()
     {
         SignalHub.OnBattlePhaseStartEvent += DummyToPenguinSwapHandler;
@@ -15,6 +15,9 @@ public class PenguinSpawnHandler : MonoBehaviour
     /// </summary>
     private void DummyToPenguinSwapHandler()
     {
+        if (_spawnDummyPenguinCorouine != null)
+            StopCoroutine(_spawnDummyPenguinCorouine);
+
         var belongDummyPenguinList = PenguinManager.Instance.BelongDummyPenguinList;
         var notBelongDummyPenguinList = PenguinManager.Instance.NotBelongDummyPenguinList;
 
@@ -73,15 +76,15 @@ public class PenguinSpawnHandler : MonoBehaviour
 
 
         //군단에 소속되지 않았던 애들은 여기서 처리 (순차적으로 생성)
-        if (_c != null)
-            StopCoroutine(_c);
-        _c = StartCoroutine(GGG());
+        if (_spawnDummyPenguinCorouine != null)
+            StopCoroutine(_spawnDummyPenguinCorouine);
+        _spawnDummyPenguinCorouine = StartCoroutine(SpawnCorou());
 
 
     }
 
     private WaitForSeconds Heartbeat = new WaitForSeconds(0.2f);
-    private IEnumerator GGG()
+    private IEnumerator SpawnCorou()
     {
         var dummyPenguinList = PenguinManager.Instance.NotBelongDummyPenguinList;
         int count = dummyPenguinList.Count;
