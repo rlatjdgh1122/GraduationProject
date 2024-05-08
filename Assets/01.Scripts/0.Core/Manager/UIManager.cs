@@ -13,7 +13,8 @@ public enum UIType
     Nexus,
     General,
     Legion,
-    Store
+    Store,
+    Info
 }
 
 public class UIManager : Singleton<UIManager>

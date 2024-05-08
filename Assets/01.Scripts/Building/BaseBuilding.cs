@@ -122,7 +122,9 @@ public abstract class BaseBuilding : WorkableObject
 
     public void Installed()
     {
-        if (_buildingItemInfo != null)
+        if (_buildingItemInfo == null) return;
+
+        if (MaxNoiseValue > 0)
         {
             ChangeToTransparencyMat(OutlineColorType.None);
             WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryWokerCount, this);
@@ -134,12 +136,17 @@ public abstract class BaseBuilding : WorkableObject
             NoiseManager.Instance.AddNoise(MaxNoiseValue);
 
             OnNoiseExcessEvent += InstallEnd;
-
-            isInstalling = true; 
-            StopInstall();
-            InstalledGround()?.InstallBuilding();
         }
+        else
+        {
+            SetInstalled();
+        }
+
+        isInstalling = true;
+        StopInstall();
+        InstalledGround()?.InstallBuilding();
     }
+
     private void PlusInstalledTime()
     {
         if (CurrentNoiseValue > MaxNoiseValue)
