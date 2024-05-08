@@ -42,13 +42,6 @@ public class NoiseManager : Singleton<NoiseManager>
     private void OnEnable()
     {
         SignalHub.OnBattlePhaseEndEvent += PhaseStartAddSaveNoise;
-        SignalHub.OnBattlePhaseStartEvent += ResetNoise;
-    }
-
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseEndEvent -= PhaseStartAddSaveNoise;
-        SignalHub.OnBattlePhaseStartEvent -= ResetNoise;
     }
 
     /// <summary>
@@ -64,7 +57,11 @@ public class NoiseManager : Singleton<NoiseManager>
 
     public void PhaseStartAddSaveNoise()
     {
+        SignalHub.OnBattlePhaseEndEvent -= PhaseStartAddSaveNoise;
+
         AddNoise(_saveNoiseValue);
+        Debug.Log(_saveNoiseValue);
+
         if (_currentNoise >= _maxNosise)
         {
             _saveNoiseValue = _currentNoise - _maxNosise;
@@ -81,7 +78,6 @@ public class NoiseManager : Singleton<NoiseManager>
     /// <param name="noise">더해질 소음 값</param>
     public void AddViewNoise(float noise)
     {
-        Debug.Log(noise);
         _currentViewNoise += noise;
 
         if(_currentViewNoise > _currentNoise)
@@ -105,6 +101,13 @@ public class NoiseManager : Singleton<NoiseManager>
         }
     }
 
+    public void SaveNoise()
+    {
+        _saveNoiseValue = _currentNoise - _currentViewNoise;
+
+        ResetNoise();
+    }
+
     /// <summary>
     /// 소음 값이 최대치를 넘으면
     /// </summary>
@@ -117,6 +120,8 @@ public class NoiseManager : Singleton<NoiseManager>
 
     private void ResetNoise()
     {
+        SignalHub.OnBattlePhaseEndEvent += PhaseStartAddSaveNoise;
+
         _currentViewNoise = 0;
         _currentNoise = 0;
     }
