@@ -1,36 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResourceConfigurer : BaseConfigurer
 {
     private readonly string[] _resourceNames;
+    private readonly ResourceGeneratePattern[] _resourceGeneratePattern;
 
-    public ResourceConfigurer(Transform transform, string[] resourceNames) : base(transform)
+    public ResourceConfigurer(Transform transform, string[] resourceNames, ResourceGeneratePattern[] resourceGeneratePattern) : base(transform)
     {
         _resourceNames = resourceNames;
+        _resourceGeneratePattern = resourceGeneratePattern;
     }
 
     public ResourceObject[] SetResource(List<Vector3> previousElementsPositions)
     {
-        float resourceCountProportion = 0.5f;
-        int minResourceCount = 1;
-        int maxResourceCount = 3;
+        int randIdx = Random.Range(0, _resourceGeneratePattern.Length);
+        ResourceGeneratePattern spawnResourcePattern = _resourceGeneratePattern[randIdx];
 
-        int resourceCount = GetRandomElementsCount(minResourceCount, maxResourceCount, resourceCountProportion);
+        int spawnResourcesCount = spawnResourcePattern.resourceCounts.Sum();
 
-        ResourceObject[] resources = new ResourceObject[resourceCount];
+        ResourceObject[] resources = new ResourceObject[spawnResourcesCount];
 
-        for (int i = 0; i < resourceCount; i++)
+        for (int i = 0; i < spawnResourcePattern.resourceTypes.Length; i++)
         {
-            int randomIdx = Random.Range(0, _resourceNames.Length);
-            string resourceName = _resourceNames[randomIdx];
-            ResourceObject spawnResource = PoolManager.Instance.Pop(resourceName) as ResourceObject;
-            resources[i] = spawnResource;
+            ResourceName spawnResourceType = spawnResourcePattern.resourceTypes[i];
 
-            SetPosition(spawnResource.gameObject, transform, previousElementsPositions);
+            for (int j = 0; j < spawnResourcePattern.resourceCounts[i]; j++)
+            {
+                ResourceObject spawnResource = PoolManager.Instance.Pop(spawnResourceType.ToString()) as ResourceObject;
+                SetPosition(spawnResource.gameObject, transform, previousElementsPositions);
+                resources[i] = spawnResource;
+                Debug.Log(spawnResource);
+            }
         }
 
         return resources;
+
+        //float resourceCountProportion = 0.5f;
+        //int minResourceCount = 1;
+        //int maxResourceCount = 3;
+
+        //int resourceCount = GetRandomElementsCount(minResourceCount, maxResourceCount, resourceCountProportion);
+
+        //ResourceObject[] resources = new ResourceObject[resourceCount];
+
+        //for (int i = 0; i < resourceCount; i++)
+        //{
+        //    int randomIdx = Random.Range(0, _resourceNames.Length);
+        //    string resourceName = _resourceNames[randomIdx];
+        //    ResourceObject spawnResource = PoolManager.Instance.Pop(resourceName) as ResourceObject;
+        //    resources[i] = spawnResource;
+
+        //    SetPosition(spawnResource.gameObject, transform, previousElementsPositions);
+        //}
+
+        //return resources;
     }
 }

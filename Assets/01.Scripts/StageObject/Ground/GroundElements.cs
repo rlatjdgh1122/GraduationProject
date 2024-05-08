@@ -8,10 +8,10 @@ public struct GroundElements
     public ResourceObject[] Resources { get; private set; }
     public CostBox Reward { get; private set; }
 
-    public GroundElements(Enemy[] enemies, ResourceObject[] resources, CostBox costBox)
+    public GroundElements(ResourceObject[] resources, CostBox costBox, Enemy[] enemies)
     {
-        Enemies = enemies;
         Resources = resources;
         Reward = costBox;
+        Enemies = enemies;
     }
 }

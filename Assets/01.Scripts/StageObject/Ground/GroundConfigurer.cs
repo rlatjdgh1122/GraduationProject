@@ -33,7 +33,10 @@ public class GroundConfigurer : MonoBehaviour
     [SerializeField]
     private GameObject _normalRewardPrefabs, _bossRewardPrefabs;
 
-    private Vector3 _groundPos;
+    [Space]
+
+    [SerializeField]
+    private ResourceGeneratePatternDataSO _resourceGeneratePatternDataSO;
 
     private List<Vector3> _previousElementsPositions = new List<Vector3>();
     private Dictionary<GroundElementsType, BaseConfigurer> _elementsConfigurers = new Dictionary<GroundElementsType, BaseConfigurer>();
@@ -47,7 +50,8 @@ public class GroundConfigurer : MonoBehaviour
 
         _elementsConfigurers.Add(GroundElementsType.Resource,
                                 new ResourceConfigurer(transform,
-                                                       _resourcePrefabs.Select(prefab => prefab.name).ToArray()));
+                                                       _resourcePrefabs.Select(prefab => prefab.name).ToArray(),
+                                                       _resourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray()));
 
         _elementsConfigurers.Add(GroundElementsType.Reward,
                                 new RewardConfigurer(transform,
@@ -65,8 +69,8 @@ public class GroundConfigurer : MonoBehaviour
         ResourceConfigurer resourceConfigurer = _elementsConfigurers[GroundElementsType.Resource] as ResourceConfigurer;
         RewardConfigurer rewardConfigurer = _elementsConfigurers[GroundElementsType.Reward] as RewardConfigurer;
 
-        return new GroundElements(enemyConfigurer.SetEnemy(_previousElementsPositions),
-                                  resourceConfigurer.SetResource(_previousElementsPositions),
-                                  rewardConfigurer.SetReward(_previousElementsPositions));
+        return new GroundElements(resourceConfigurer.SetResource(_previousElementsPositions),
+                                  rewardConfigurer.SetReward(_previousElementsPositions),
+                                  enemyConfigurer.SetEnemy(_previousElementsPositions));
     }
 }
