@@ -87,16 +87,12 @@ public class MortarBuilding : DefenseBuilding
         } while (isBattlePhase && _currentTarget != null);
 
         isFired = false;
-        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
-        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
-        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
+        ReturnOriginScale();
     }
 
     private void Fire()
     {
-        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
-        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
-        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
+        ReturnOriginScale();
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
@@ -127,5 +123,12 @@ public class MortarBuilding : DefenseBuilding
 
         _cannonTransform.transform.localScale = _originScale;
         isFired = false;
+    }
+
+    private void ReturnOriginScale()
+    {
+        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
+        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
+        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
     }
 }
