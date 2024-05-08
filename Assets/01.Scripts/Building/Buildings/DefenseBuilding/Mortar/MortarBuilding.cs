@@ -5,9 +5,6 @@ using UnityEngine;
 public class MortarBuilding : DefenseBuilding
 {
     [SerializeField]
-    private MortarRock _rockPrefab;
-
-    [SerializeField]
     private Transform _firePos;
     [SerializeField]
     private LayerMask _layer;
@@ -60,21 +57,23 @@ public class MortarBuilding : DefenseBuilding
         float elapsedTime = 0.0f;
         float remainWaitTime = 0.0f;
 
-        while (isBattlePhase && _currentTarget != null)
+        do
         {
             _ignitingPenguin.SetGetTourchAnimation();
             float waitTime = _ignitingPenguin.AnimaionLength + _burningRope.Duration;
             remainWaitTime = _burningRope.Duration;
+
             while (elapsedTime < waitTime)
             {
                 elapsedTime += Time.deltaTime;
                 remainWaitTime -= Time.deltaTime;
+
                 if (!isBattlePhase) // 쏘려고 하는데 전투페이즈가 아니면 부채로 호다닥 끔
                 {
                     isFired = false;
-                    float endYValuee = _cannonTransform.localPosition.y + fireMoveValue;
-                    _cannonTransform.DOLocalMoveY(endYValuee, 1f).SetEase(Ease.OutBack);
-                    _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
+                    //float endYValuee = _cannonTransform.localPosition.y + fireMoveValue;
+                    //_cannonTransform.DOLocalMoveY(endYValuee, 1f).SetEase(Ease.OutBack);
+                    //_cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
                     _ignitingPenguin.StartSwingAnimation(remainWaitTime);
                     yield break;
                 }
@@ -84,26 +83,29 @@ public class MortarBuilding : DefenseBuilding
 
             Fire();
             elapsedTime = 0.0f; // 시간 초기화
-        }
+
+        } while (isBattlePhase && _currentTarget != null);
 
         isFired = false;
-        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
-        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
-        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
+        ReturnOriginScale();
     }
 
     private void Fire()
     {
-        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
-        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
-        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
+        ReturnOriginScale();
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
+
         rock.transform.position = _firePos.position;
+
         rock.Setting(this, _layer); //바꿔야댐
 
-        StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
+        if (_currentTarget != null)
+        {
+            StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
+        }
+
 
         SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
     }
@@ -123,5 +125,12 @@ public class MortarBuilding : DefenseBuilding
 
         _cannonTransform.transform.localScale = _originScale;
         isFired = false;
+    }
+
+    private void ReturnOriginScale()
+    {
+        float endYValue = _cannonTransform.localPosition.y + fireMoveValue;
+        _cannonTransform.DOLocalMoveY(endYValue, 1f).SetEase(Ease.OutBack);
+        _cannonTransform.DOScale(_originScale, 1f).SetEase(Ease.OutBack);
     }
 }

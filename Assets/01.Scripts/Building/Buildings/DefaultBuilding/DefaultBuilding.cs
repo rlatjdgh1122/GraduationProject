@@ -29,13 +29,6 @@ public class DefaultBuilding : BaseBuilding
         isSpawnUIOn = false;
     }
 
-    protected override void Start()
-    {
-        base.Start();
-
-        Installed();
-    }
-
     protected override void Awake()
     {
         base.Awake();
@@ -43,6 +36,8 @@ public class DefaultBuilding : BaseBuilding
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
 
         SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
+        Installed();
+
     }
 
     private void OnMouseDown()

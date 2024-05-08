@@ -861,7 +861,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805567381860836178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.59}
+  m_LocalPosition: {x: 0, y: 0, z: -16.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -870,7 +870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.59, y: 17.52}
+  m_AnchoredPosition: {x: 12.59, y: 13.33}
   m_SizeDelta: {x: 15, y: 3.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8745751806506706148
@@ -7307,64 +7307,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1707246110114250184
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 432794843087387436}
-  - component: {fileID: 9164340593189494182}
-  - component: {fileID: 8326935204445643637}
-  m_Layer: 0
-  m_Name: HitFeedback
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &432794843087387436
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707246110114250184}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.25}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 187358286627756631}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9164340593189494182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707246110114250184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada02887f1b371b448dabef21b4fab2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8326935204445643637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707246110114250184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01786a36b2409f64ba1abca25291ed97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _effectEndTime: 0.5
 --- !u!1 &1710012487105828671
 GameObject:
   m_ObjectHideFlags: 0
@@ -18842,7 +18784,6 @@ Transform:
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 432794843087387436}
   - {fileID: 3575438766868278543}
   - {fileID: 1193364125117914120}
   - {fileID: 6934865485489971799}
@@ -18881,10 +18822,34 @@ MonoBehaviour:
       m_Calls: []
   OnUIUpdate:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8917569967486930978}
+        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
+        m_MethodName: UpdateHpbarUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OffUIUpdate:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8917569967486930978}
+        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
+        m_MethodName: FadeOutImmediately
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7523030673536527664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18934,8 +18899,8 @@ MonoBehaviour:
   IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
-  _noiseValue: 7
-  _maxNoiseValue: 70
+  _noiseValue: 5
+  _maxNoiseValue: 10
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
     type: 2}
@@ -18950,8 +18915,6 @@ MonoBehaviour:
     <RedTransparencyMat>k__BackingField: {fileID: 2100000, guid: 4de9e48b9ee9c9f449077b90a716a0d9,
       type: 2}
   groundCheckRange: 10
-  _rockPrefab: {fileID: 7645319714232041733, guid: 771e1aaee1283c7419ee973aaee3801a,
-    type: 3}
   _firePos: {fileID: 4461641753949342917}
   _layer:
     serializedVersion: 2
@@ -19003,8 +18966,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.166693, y: 1, z: 2.216033}
-  m_Center: {x: 0.28224355, y: 0, z: -0.60801625}
+  m_Size: {x: 2.166693, y: 1.6621112, z: 2.216033}
+  m_Center: {x: 0.28224355, y: 0.33105537, z: -0.60801625}
 --- !u!1 &6892617321503786158
 GameObject:
   m_ObjectHideFlags: 0
@@ -21984,7 +21947,7 @@ Transform:
   m_GameObject: {fileID: 8953432557800030331}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.59, z: 0}
+  m_LocalPosition: {x: 0, y: 8.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
