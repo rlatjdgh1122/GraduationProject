@@ -28,9 +28,14 @@ public class EnemyAttackState : EnemyBaseState
 
         if (_triggerCalled) //공격이 한 차례 끝났을 때,
         {
+
             if (_enemy.IsTargetInInnerRange)
                 _stateMachine.ChangeState(EnemyStateType.Chase); //사거리 안에 타겟 플레이어가 있다 -> 따라가
+
+            if (!_enemy.IsTargetInInnerRange) // 감지 사거리 내에서 벗어났다 -> Move (넥서스쪽으로)
+                _stateMachine.ChangeState(EnemyStateType.Move);
         }
+
     }
 
     public override void ExitState()

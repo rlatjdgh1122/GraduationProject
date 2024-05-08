@@ -93,12 +93,6 @@ public class Enemy : Entity
         CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
     }
 
-    public void FindWideRangeTarget()
-    {
-        Debug.Log("Ã£ÀÚ");
-        CurrentTarget = FindNearestTarget<TargetObject>(2500, TargetLayer);
-    }
-
     protected override void HandleDie()
     {
         _deadCompo.OnDied();

@@ -18,6 +18,13 @@ public class EnemyIdleState : EnemyBaseState
     {
         base.UpdateState();
 
+       /* if (_enemy.IsTargetInInnerRange)
+        {
+            _stateMachine.ChangeState(EnemyStateType.Chase);
+        }
+        else
+            _stateMachine.ChangeState(EnemyStateType.Move);*/
+
         //if (_enemy.IsMove)
         //    _stateMachine.ChangeState(EnemyStateType.Move); //IsMove 불 변수가 True이면 넥서스로 Move
     }
@@ -25,14 +32,17 @@ public class EnemyIdleState : EnemyBaseState
     private void ChangeState()
     {
         _enemy.NavAgent.enabled = true;
-        _enemy.FindWideRangeTarget();
+        _enemy.FindNearestTarget();
+
         _stateMachine.ChangeState(EnemyStateType.Move);
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        SignalHub.OnIceArrivedEvent -= ChangeState;
+
         IdleExit();
+
+        SignalHub.OnIceArrivedEvent -= ChangeState;
     }
 }

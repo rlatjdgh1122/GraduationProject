@@ -22,7 +22,8 @@ public class EnemyChaseState : EnemyBaseState
 
         if (_enemy.IsTargetInAttackRange)
             _stateMachine.ChangeState(EnemyStateType.Attack); //공격 사거리 내에 들어왔다 -> Attack
-        else if (!_enemy.IsTargetInInnerRange)
+
+        if (!_enemy.IsTargetInInnerRange) // 감지 사거리 내에서 벗어났다 -> Move (넥서스쪽으로)
             _stateMachine.ChangeState(EnemyStateType.Move);
     }
 

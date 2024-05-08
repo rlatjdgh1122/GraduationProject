@@ -13,8 +13,8 @@ public class EnemyReachedState : EnemyBaseState
         base.EnterState();
 
         _triggerCalled = false;
-        _enemy.HealthCompo.OnHit += ChangeStateWhenHitted;
         _enemy.StopImmediately();
+
     }
 
     public override void UpdateState()
@@ -30,15 +30,15 @@ public class EnemyReachedState : EnemyBaseState
         }
     }
 
-    public void ChangeStateWhenHitted()
-    {
-        _enemy.FindNearestTarget();
-        _stateMachine.ChangeState(EnemyStateType.Chase);
-    }
-
     public override void ExitState()
     {
-        _enemy.HealthCompo.OnHit -= ChangeStateWhenHitted;
         base.ExitState();
+    }
+
+    public override void AnimationTrigger()
+    {
+        base.AnimationTrigger();
+
+        _enemy.FindNearestTarget();
     }
 }
