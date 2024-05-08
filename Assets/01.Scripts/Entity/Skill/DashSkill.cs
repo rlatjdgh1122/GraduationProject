@@ -6,7 +6,7 @@ public class DashSkill : Skill
 {
     [SerializeField] private float _dashDelay;
     [SerializeField] private float _dashTime;
-    [SerializeField] private float _dashSpeed;
+    [SerializeField] private float _dashSpeed;  
 
     private Coroutine _dashCoroutine;
     public bool canDash = false;

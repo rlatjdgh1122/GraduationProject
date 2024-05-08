@@ -17,6 +17,7 @@ public class ResourceObject : WorkableObject
     private int _receiveCountWhenCompleted;
 
     private ResourceStat _resourceStat;
+    private IDeadable _deadCompo = null;
     #region property
     public ResourceDataSO ResourceData => _resourceData;
     public Sprite ResourceImage => _resourceIcon;
@@ -33,7 +34,7 @@ public class ResourceObject : WorkableObject
         base.Awake();
 
         _resourceStat = ReturnGenericStat<ResourceStat>();
-
+        _deadCompo = GetComponent<IDeadable>();    
         SetCount();
     }
 
@@ -73,10 +74,12 @@ public class ResourceObject : WorkableObject
     protected override void HandleDie()
     {
         RecieveResourceComplete();
+        _deadCompo.OnDied();
     }
 
     public override void Init()
     {
         OnReviveInitEvent?.Invoke();
+        _deadCompo.OnResurrected();
     }
 }

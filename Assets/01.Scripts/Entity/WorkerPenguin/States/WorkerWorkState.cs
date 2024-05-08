@@ -15,6 +15,7 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
         _triggerCalled = false;
 
         _worker.StopImmediately();
+        Debug.Log("∏ÿ√Á");
     }
 
     public override void UpdateState()

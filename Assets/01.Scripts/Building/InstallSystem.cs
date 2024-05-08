@@ -111,13 +111,14 @@ public class InstallSystem : MonoBehaviour
                 return;
             }
 
-            CostManager.Instance.Cost -= _info.Price;
+            CostManager.Instance.SubtractFromCurrentCost(_info.Price);
             _info.CurrentInstallCount++;
 
             UIManager.Instance.ShowWarningUI("설치 완료!");
 
             _curBuilding?.Installed();
             _curBuilding?.transform.SetParent(_previousGround.transform);
+
             _previousGround?.InstallBuilding();
             StopInstall();
 
@@ -126,7 +127,6 @@ public class InstallSystem : MonoBehaviour
             {
                 TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
             }
-
             isInstalling = false;
         }
     }

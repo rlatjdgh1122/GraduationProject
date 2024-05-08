@@ -14,12 +14,17 @@ public class DummyWalkState : DummyBaseState
 
         _navAgent.speed = 1f;
         MoveToPosition(GetRandomPoint());
+        _penguin.SetNavmeshPriority(2);
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
-        //목적지에 도달하면 Random모션으로
+        //목적지에 도달하거나 앞에 뭐가 있다면 Random모션으로
+        if (IsSomethingInFront())
+        {
+            _stateMachine.ChangeState(DummyPenguinStateEnum.FreelyIdle);
+        }
         if (_navAgent.remainingDistance < 0.05f)
         {
             _stateMachine.ChangeState(RandomState());
@@ -28,6 +33,7 @@ public class DummyWalkState : DummyBaseState
     public override void Exit()
     {
         base.Exit();
+        _penguin.SetNavmeshPriority(1);
     }
 
 

@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class DummyBaseState : DummyState
 {
+    private LayerMask m_layerMask;
     public DummyBaseState(DummyPenguin penguin, DummyStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
-
+        m_layerMask = LayerMask.NameToLayer("Ground");
     }
     public override void Enter()
     {
@@ -56,20 +55,37 @@ public class DummyBaseState : DummyState
         {
             case 0: return DummyPenguinStateEnum.FreelyIdle;
             case 1: return DummyPenguinStateEnum.Walk;
-            case 2: return DummyPenguinStateEnum.Running;
-            case 3: return DummyPenguinStateEnum.DumbToDo;
-            default: return DummyPenguinStateEnum.FreelyIdle;
+            case 2: return DummyPenguinStateEnum.DumbToDo;
+            case 3: return DummyPenguinStateEnum.Running;
+            default: return DummyPenguinStateEnum.Walk;
         }
 
     }
     protected Vector3 GetRandomPoint()
     {
-        Vector3 randomPos = Random.insideUnitSphere * 10.0f + _penguin.transform.position;
-
         NavMeshHit hit;
+        Vector3 randomPoint = Random.insideUnitSphere * 10f;
+        randomPoint.y = 1.9f;
 
-        NavMesh.SamplePosition(randomPos, out hit, 10.0f, NavMesh.AllAreas);
-        return hit.position; // NavMesh 위의 랜덤 위치를 반환
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            /* Vector3 dir = (hit.position - _penguin.transform.position).normalized;
+             Vector3 checkPos = _penguin.transform.position + (dir * 1f);
+
+             bool isGround = Physics.Raycast(checkPos, Vector3.down, 10f, m_layerMask);
+             if (isGround)
+             {
+             }*/
+            return hit.position;
+        }
+        return _penguin.transform.position;
+    }
+
+    protected bool IsSomethingInFront()
+    {
+        RaycastHit hit;
+        bool hitSomething = Physics.Raycast(_penguin.transform.position, _penguin.transform.forward, out hit, 2f);
+        return hitSomething;
     }
 
 }

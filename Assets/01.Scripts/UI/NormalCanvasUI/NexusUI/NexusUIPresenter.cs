@@ -73,12 +73,9 @@ public class NexusUIPresenter : NexusPopupUI
     #region buildingUI
     public void PurchaseBuilding(BuildingView view)
     {
-        if (CostManager.Instance.Cost >= view.building.Price)
+        if (view.building.IsUnlocked && CostManager.Instance.CheckRemainingCost(view.building.Price))
         {
-            if (view.building.IsUnlocked)
-            {
-                view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
-            }
+            view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
         }
         else
         {
@@ -90,6 +87,11 @@ public class NexusUIPresenter : NexusPopupUI
     public override void ShowPanel()
     {
         base.ShowPanel();
+    }
+
+    public void HideNexusPanel()
+    {
+        UIManager.Instance.HidePanel("NexusUI");
     }
 
     public override void HidePanel()

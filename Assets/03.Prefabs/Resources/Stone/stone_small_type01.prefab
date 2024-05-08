@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 1643327837244869603}
   - component: {fileID: 5194040255617476732}
   - component: {fileID: 5368352867414651831}
+  - component: {fileID: -3779424185048249640}
   m_Layer: 17
   m_Name: stone_small_type01
   m_TagString: Untagged
@@ -140,8 +141,8 @@ MonoBehaviour:
   IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
-  _noiseValue: 10
-  _workMotionCount: 0
+  _noiseValue: 5
+  _maxNoiseValue: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   OnRecieveResourceEvent:
     m_PersistentCalls:
@@ -171,19 +172,7 @@ MonoBehaviour:
       m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 982481754406261133}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -276,6 +265,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609e9fe99e6186842b7b5e40d96bc939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3779424185048249640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982481754406261133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449b8e14f6aa582459133b2351b3c58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6851348977035575149

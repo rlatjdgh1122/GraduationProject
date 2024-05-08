@@ -15,13 +15,14 @@ public class EnemyBaseState : EnemyState
         {
             _animalAttack = component;
         }
+
+        SignalHub.OnIceArrivedEvent += FindTarget;
     }
 
     #region Enter
     protected void IdleEnter()
     {
         _triggerCalled = true;
-        SignalHub.OnIceArrivedEvent += FindTarget;
     }
 
     protected void AttackEnter()
@@ -67,7 +68,6 @@ public class EnemyBaseState : EnemyState
 
     protected void MoveEnter()
     {
-        _enemy.FindNearestTarget();
         _triggerCalled = true;
     }
 
@@ -120,7 +120,7 @@ public class EnemyBaseState : EnemyState
     #region Method
     private void FindTarget()
     {
-        _enemy.FindNearestTarget();
+        _enemy.FindWideTarget();
     }
 
     private void DeadTarget()

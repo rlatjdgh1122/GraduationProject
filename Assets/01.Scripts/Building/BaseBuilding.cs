@@ -122,42 +122,42 @@ public abstract class BaseBuilding : WorkableObject
 
     public void Installed()
     {
-        if (_buildingItemInfo != null && _buildingItemInfo.InstalledTime > 0)
+        if (_buildingItemInfo != null)
         {
             ChangeToTransparencyMat(OutlineColorType.None);
-            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
+            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryWokerCount, this);
 
             _phaseStartSubscriptionAction = () => WorkerManager.Instance.ReturnBuilders(this);
             SignalHub.OnBattlePhaseStartEvent += _phaseStartSubscriptionAction;
             SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
-            _remainTimeUI.OnRemainUI();
-            _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime);
-        }
-        else
-        {
-            SetInstalled();
-        }
 
-        isInstalling = true;
-        StopInstall();
-        InstalledGround()?.InstallBuilding();
+            NoiseManager.Instance.AddNoise(MaxNoiseValue);
+
+            OnNoiseExcessEvent += InstallEnd;
+
+            isInstalling = true; 
+            StopInstall();
+            InstalledGround()?.InstallBuilding();
+        }
     }
-
     private void PlusInstalledTime()
     {
-        installedTime++;
-        _remainTimeUI.SetText((int)_buildingItemInfo.InstalledTime - installedTime);
-
-        if (installedTime >= _buildingItemInfo.InstalledTime)
+        if (CurrentNoiseValue > MaxNoiseValue)
         {
             SignalHub.OnBattlePhaseEndEvent -= PlusInstalledTime;
-            SetInstalled();
-            _remainTimeUI.OffRemainUI();
         }
         else
         {
-            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryResourceCount, this);
+            WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryWokerCount, this);
         }
+    }
+
+    public void InstallEnd()
+    {
+        OnNoiseExcessEvent -= InstallEnd;
+        WorkerManager.Instance.ReturnBuilders(this);
+
+        SetInstalled();        
     }
 
     public virtual void SetSelect()
@@ -175,9 +175,10 @@ public abstract class BaseBuilding : WorkableObject
         if (_buildingItemInfo != null)
         {
             //_installedFinText.SetText($"{_buildingItemInfo.Name: 설치 완료!}");
+            UIManager.Instance.ShowWarningUI($"{_buildingItemInfo.Name: 설치 완료!}");
             //UIManager.Instance.SpawnHudText(_installedFinText);
 
-            SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
+            //SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
     }
 

@@ -33,10 +33,10 @@ public abstract class Entity : TargetObject
 
         DamageCasterCompo?.SetOwner(this);
     }
-    private void OnEnable()
+    /*private void OnEnable()
     {
         DamageCasterCompo.SetPosition();
-    }
+    }*/
 
     protected override void Start()
     {
@@ -50,13 +50,12 @@ public abstract class Entity : TargetObject
 
     protected override void HandleHit()
     {
-
     }
 
     protected override void HandleDie()
     {
-
     }
+
     public void Provoke(int provokeCount, float duration, float radius, LayerMask targetLayer)
     {
         var colliders = new Collider[provokeCount];

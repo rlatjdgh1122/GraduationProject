@@ -18,6 +18,7 @@ public class NoiseUI : MonoBehaviour
     [SerializeField]
     private float _noiseShakeIncrease;
 
+    private Image _viewNoiseFillImage;
     private Image _noiseFillImage;
     private CanvasGroup _canvasGroup;
     private Transform _noisePanel;
@@ -27,25 +28,33 @@ public class NoiseUI : MonoBehaviour
     private void Awake()
     {
         Transform trm = transform.Find("MainPanel/FillAmountPanel");
-        _noiseFillImage = trm.Find("FillAmount").GetComponent<Image>();
+        _viewNoiseFillImage = trm.Find("ViewNoiseFillAmount").GetComponent<Image>();
+        _noiseFillImage = trm.Find("NoiseFillAmount").GetComponent<Image>();
         _canvasGroup = GetComponent<CanvasGroup>();
         _noisePanel = transform.Find("MainPanel").GetComponent<Transform>();
     }
 
     private void OnEnable()
     {
+        NoiseManager.Instance.ViewNoiseIncreaseEvent += IncreaseViewNoiseUI;
         NoiseManager.Instance.NoiseIncreaseEvent += IncreaseNoiseUI;
-        NoiseManager.Instance.NoiseIncreaseEvent += WarningNoiseUI;
+        NoiseManager.Instance.ViewNoiseIncreaseEvent += WarningNoiseUI;
         SignalHub.OnBattlePhaseStartEvent += HideNoiseUI;
         SignalHub.OnBattlePhaseEndEvent += ShowNoiseUI;
     }
 
     private void OnDisable()
     {
+        NoiseManager.Instance.ViewNoiseIncreaseEvent -= IncreaseViewNoiseUI;
         NoiseManager.Instance.NoiseIncreaseEvent -= IncreaseNoiseUI;
-        NoiseManager.Instance.NoiseIncreaseEvent -= WarningNoiseUI;
+        NoiseManager.Instance.ViewNoiseIncreaseEvent -= WarningNoiseUI;
         SignalHub.OnBattlePhaseStartEvent -= HideNoiseUI;
         SignalHub.OnBattlePhaseEndEvent -= ShowNoiseUI;
+    }
+
+    private void IncreaseViewNoiseUI()
+    {
+        _viewNoiseFillImage.DOFillAmount(_noiseManager.ViewNoisePercent, _fillamountFadeDuration);
     }
 
     private void IncreaseNoiseUI()
@@ -55,7 +64,7 @@ public class NoiseUI : MonoBehaviour
 
     private void WarningNoiseUI()
     {
-        _noisePanel.DOShakePosition(_noiseShakeDuration, _noiseManager.NoisePercent * _noiseShakeIncrease);
+        _noisePanel.DOShakePosition(_noiseShakeDuration, _noiseManager.ViewNoisePercent * _noiseShakeIncrease);
     }
 
     public void ShowNoiseUI()
@@ -70,6 +79,7 @@ public class NoiseUI : MonoBehaviour
 
     public void ResetUI()
     {
+        _viewNoiseFillImage.fillAmount = 0;
         _noiseFillImage.fillAmount = 0;
     }
 }

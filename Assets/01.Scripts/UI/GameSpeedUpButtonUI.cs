@@ -17,7 +17,7 @@ public class GameSpeedUpButtonUI : MonoBehaviour
     private void Awake()
     {
         _btn = GetComponent<Button>();
-        _txt = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        //_txt = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()

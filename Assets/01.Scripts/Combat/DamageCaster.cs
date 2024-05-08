@@ -14,20 +14,15 @@ public class DamageCaster : MonoBehaviour
     private TargetObject _owner;
     private General General => _owner as General;
 
-    private void OnEnable()
-    {
-        if (_owner)
-            SetPosition();
-    }
-
     public void SetOwner(TargetObject owner)
     {
         _owner = owner;
+        SetPosition();
     }
 
     public void SetPosition()
     {
-        transform.position = new Vector3(_owner.transform.position.x, 2f, _owner.transform.position.z);
+        transform.localPosition = new Vector3(0, 0.5f, 0);
     }
 
     /// <summary>
@@ -116,9 +111,35 @@ public class DamageCaster : MonoBehaviour
         return false;
     }
 
-    public void CastOverlap()
+    public void CastWork()
     {
-        var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+        RaycastHit raycastHit;
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
+
+        if (raycastSuccess
+            && raycastHit.collider.TryGetComponent<Health>(out Health health))
+        {
+            int damage = _owner.Stat.damage.GetValue();
+
+            float critical = _owner.Stat.criticalChance.GetValue() * 0.01f;
+            int criticalValue = _owner.Stat.criticalValue.GetValue();
+            float adjustedDamage;
+            float dice = UnityEngine.Random.value;
+            HitType originType = _hitType;
+
+            if (dice < critical)
+            {
+                _hitType = HitType.CriticalHit;
+                adjustedDamage = damage * (1.0f + (criticalValue * 0.01f));
+                damage = (int)adjustedDamage;
+            }
+
+            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
+
+            _hitType = originType;
+        }
+
+       /* var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
         foreach (var col in Colls)
         {
@@ -128,7 +149,7 @@ public class DamageCaster : MonoBehaviour
 
                 health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType, _owner);
             }
-        }
+        }*/
     }
 
     public void CastDashDamage()

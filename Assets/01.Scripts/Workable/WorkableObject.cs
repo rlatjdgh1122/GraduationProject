@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum ResourceType
@@ -14,10 +15,15 @@ public class WorkableObject : TargetObject
     [SerializeField] private float _noiseValue;
     public float NoiseValue => _noiseValue;
 
-    [SerializeField] private int _workMotionCount;
-    public int WorkMotionCount => _workMotionCount;
+    [SerializeField] private float _maxNoiseValue;
+    public float MaxNoiseValue => _maxNoiseValue;
+
+    private float _currentNoiseValue = 0;
+    public float CurrentNoiseValue => _currentNoiseValue;
 
     public EntityActionData ActionData { get; private set; }
+
+    public Action OnNoiseExcessEvent = null;
 
     protected override void HandleHit()
     {
@@ -26,5 +32,17 @@ public class WorkableObject : TargetObject
     protected override void HandleDie()
     {
 
+    }
+
+    public void IncreaseCurrentNoise()
+    {
+        _currentNoiseValue += _noiseValue; 
+
+        NoiseManager.Instance.AddViewNoise(_noiseValue);
+
+        if (_currentNoiseValue > _maxNoiseValue)
+        {
+            OnNoiseExcessEvent?.Invoke();
+        }
     }
 }

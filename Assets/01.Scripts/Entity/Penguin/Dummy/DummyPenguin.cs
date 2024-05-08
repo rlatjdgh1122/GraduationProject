@@ -95,6 +95,11 @@ public class DummyPenguin : PoolableMono
     {
         NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
+
+    public void SetNavmeshPriority(int priority)
+    {
+        NavAgent.avoidancePriority = priority;
+    }
     #endregion
 
     public void AnimationFinishTrigger() => DummyStateMachine.CurrentState.AnimationFinishTrigger();

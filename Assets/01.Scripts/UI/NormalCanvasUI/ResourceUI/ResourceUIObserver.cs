@@ -33,11 +33,11 @@ public class ResourceUIObserver : PopupUI
 
     public void IncreaseWorkerCount()
     {
-        if (WorkerManager.Instance.WorkerCount < resource.RequiredWorkerCount)
+        if (WorkerManager.Instance.MaxWorkerCount < resource.RequiredWorkerCount)
         {
             ShowAndSettingWarningUI("최소 필요 일꾼이 부족합니다");
         }
-        else if (resource.CurrentWorkerCount < WorkerManager.Instance.WorkerCount)
+        else if (resource.CurrentWorkerCount < WorkerManager.Instance.MaxWorkerCount)
         {
             resource.CurrentWorkerCount++;
             _subject.Notify(resource);
@@ -60,13 +60,13 @@ public class ResourceUIObserver : PopupUI
     public void SendWorkers()
     {
         if (resource.resourceType == ResourceType.Stone && 
-            WorkerManager.Instance.AvailiableMinerCount < resource.CurrentWorkerCount)
+            WorkerManager.Instance.AvailiableWorkerCount < resource.CurrentWorkerCount)
         {
             ShowAndSettingWarningUI("일꾼이 부족하여 보낼 수 없습니다.");
             return;
         }
         else if (resource.resourceType == ResourceType.Wood &&
-            WorkerManager.Instance.AvailiableWoodCutterCount < resource.CurrentWorkerCount)
+            WorkerManager.Instance.AvailiableWorkerCount < resource.CurrentWorkerCount)
         {
             ShowAndSettingWarningUI("일꾼이 부족하여 보낼 수 없습니다.");
             return;

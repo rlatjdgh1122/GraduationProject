@@ -99,6 +99,7 @@ public class PenguinManager
             dummyPenguin = obj
         });
         DummyPenguinList.Add(obj);
+        NotBelongDummyPenguinList.Add(obj);
     }
 
    
