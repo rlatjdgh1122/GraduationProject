@@ -8,7 +8,6 @@ public class EnemyBaseState : EnemyState
     private AnimalAttackableEntity _animalAttack;
     private readonly int _comboCounterHash = Animator.StringToHash("ComboCounter");
 
-
     public EnemyBaseState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
         if(enemy.TryGetComponent<AnimalAttackableEntity>(out var component))
@@ -29,7 +28,6 @@ public class EnemyBaseState : EnemyState
             _enemy.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
-        _enemy.FindNearestTarget();
         _enemy.StopImmediately();
         _enemy.AnimatorCompo.speed = _enemy.attackSpeed;
     }
@@ -51,9 +49,6 @@ public class EnemyBaseState : EnemyState
         _triggerCalled = true;
 
         _enemy.FindNearestTarget();
-
-        if (_enemy.CurrentTarget != null)
-            _enemy.MoveToCurrentTarget();
     }
 
     protected void MustChaseEnter()
@@ -66,7 +61,6 @@ public class EnemyBaseState : EnemyState
 
     protected void MoveEnter()
     {
-        _enemy.FindWideRangeTarget();
         _triggerCalled = true;
     }
 
@@ -84,7 +78,7 @@ public class EnemyBaseState : EnemyState
 
     protected void AttackExit()
     {
-        //_enemy.AnimatorCompo.speed = 1;
+        _enemy.AnimatorCompo.speed = 1;
     }
 
     protected void AttackComboExit()

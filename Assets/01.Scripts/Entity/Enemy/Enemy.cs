@@ -90,12 +90,13 @@ public class Enemy : Entity
 
     public void FindNearestTarget()
     {
-        CurrentTarget = FindNearestTarget<TargetObject>(innerDistance, TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
     }
 
     public void FindWideRangeTarget()
     {
-        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
+        Debug.Log("Ã£ÀÚ");
+        CurrentTarget = FindNearestTarget<TargetObject>(2500, TargetLayer);
     }
 
     protected override void HandleDie()
