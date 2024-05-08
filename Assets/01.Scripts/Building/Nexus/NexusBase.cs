@@ -8,6 +8,7 @@ public class NexusBase : MonoBehaviour
 
     private LayerMask _groundLayer = 1 << 3;
 
+
     private void Start()
     {
         _nexusStat = NexusManager.Instance.NexusStat;
@@ -23,7 +24,7 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && LegionInventoryManager.Instance.CanShowPanel)
         {
             UIManager.Instance.ShowPanel("NexusUI");
         }

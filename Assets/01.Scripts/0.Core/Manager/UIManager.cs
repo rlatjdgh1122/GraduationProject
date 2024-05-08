@@ -11,7 +11,9 @@ public enum UIType
     Defeat,
     Resource,
     Nexus,
-    General
+    General,
+    Legion,
+    Store
 }
 
 public class UIManager : Singleton<UIManager>
@@ -20,13 +22,15 @@ public class UIManager : Singleton<UIManager>
 
     private WarningUI _warningUI;
 
-    public Dictionary<string, PopupUI> popupUIDictionary = new Dictionary<string, PopupUI>(); 
-    public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
+    public Dictionary<string, PopupUI> popupUIDictionary = new();
+    //public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
     
     public Stack<PopupUI> currentPopupUI = new Stack<PopupUI>();
 
     //public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     //public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
+
+    private PopupUI _currentUI;
 
     public Sequence HudTextSequence;
 
@@ -73,9 +77,20 @@ public class UIManager : Singleton<UIManager>
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
+        for (int i = 0; i < currentPopupUI.Count; i++)
+        {
+            PopupUI ui = currentPopupUI.Pop();
+
+            if (ui.UIGroup != popupUI.UIGroup)
+            {
+                ui.HidePanel();
+            }
+        }
+
         if (popupUI != null)
         {
             popupUI.ShowPanel();
+            _currentUI = popupUI;
         }
     }
 
@@ -84,6 +99,8 @@ public class UIManager : Singleton<UIManager>
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
         popupUI.HidePanel();
+
+        _currentUI = null;
     }
 
     public void MovePanel(string uiName, float x, float y, float fadeTime)
@@ -97,6 +114,15 @@ public class UIManager : Singleton<UIManager>
         _warningUI.SetValue(text);
         _warningUI.ShowAndHidePanel(_warningUI.IntervalTime);
     }
+
+    public bool ContainUI(string uiName)
+    {
+        if (_currentUI != null && _currentUI.name == uiName)
+        {
+            return true;
+        }
+        else return false;
+    }
     #endregion
 
     #region UI Function
@@ -107,7 +133,10 @@ public class UIManager : Singleton<UIManager>
             if (currentPopupUI.Count > 0)
             {
                 if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+                {
                     currentPopupUI.Peek().HidePanel();
+                    _currentUI = null;
+                }
             }
         }
     }

@@ -26,6 +26,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public List<LegionInfo> _legionList = new();
     public int LegionCount => _legionList.Count;
 
+    private bool _canShowPanel = true;
+    public bool CanShowPanel => _canShowPanel;
+
 
     public override void Awake()
     {
@@ -180,4 +183,6 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     {
         _penguinSituation.SetPenguinSituation(so, percent, (so as PenguinInfoDataSO).Price);
     }
+
+    public void ChangeCanShowPanel(bool value) => _canShowPanel = value;
 }
