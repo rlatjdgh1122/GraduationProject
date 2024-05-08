@@ -27,14 +27,13 @@ public class EnemyReachedState : EnemyBaseState
         {
             if (_enemy.IsTargetInInnerRange)
                 _stateMachine.ChangeState(EnemyStateType.Chase);
-            else
-                _stateMachine.ChangeState(EnemyStateType.Move);
         }
     }
 
     public void ChangeStateWhenHitted()
     {
-        _stateMachine.ChangeState(EnemyStateType.MustChase);
+        if (_triggerCalled)
+            _stateMachine.ChangeState(EnemyStateType.Chase);
     }
 
     public override void ExitState()

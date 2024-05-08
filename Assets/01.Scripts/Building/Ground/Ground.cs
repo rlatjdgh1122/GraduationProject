@@ -113,7 +113,7 @@ public class Ground : MonoBehaviour
     {
         float enemyCountProportion = 0.5f;
 
-        List<Enemy> spawnedEnemies = new List<Enemy>();
+        List<Enemy> spawnedEnemies = new();
 
         if (WaveManager.Instance.CurrentWaveCount == 5) // 일단 보스
         {
