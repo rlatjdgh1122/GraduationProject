@@ -96,7 +96,9 @@ public class MortarBuilding : DefenseBuilding
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
         _mortarFireParticle.Play();
+
         rock.transform.position = _firePos.position;
+
         rock.Setting(this, _layer); //¹Ù²ã¾ß´ï
 
         if (_currentTarget != null)

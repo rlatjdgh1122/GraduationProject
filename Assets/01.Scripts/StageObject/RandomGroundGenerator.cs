@@ -18,10 +18,17 @@ public class RandomGroundGenerator : MonoBehaviour
 
     private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
 
+    private GroundConfigurer _groundConfigurer;
+
     private Ground SpawnGlaciers()
     {
         Ground ground = _allGrounds.Dequeue();
         return ground;
+    }
+
+    private void Awake()
+    {
+        _groundConfigurer = transform.Find("GroundConfigurer").GetComponent<GroundConfigurer>();
     }
 
     private void Start()
@@ -71,7 +78,11 @@ public class RandomGroundGenerator : MonoBehaviour
 
         curground.gameObject.SetActive(true);
 
-        curground.SetGroundInfo(transform, new Vector3(transform.localPosition.x, 0f, _spawnDistance * realMakedHexagonCount));
+        Vector3 groundPos = new Vector3(transform.localPosition.x, 0f, _spawnDistance * realMakedHexagonCount);
+
+        curground.SetGroundInfo(transform,
+                                groundPos,
+                                _groundConfigurer.SetGroundElements(curground.transform).Enemies);
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {

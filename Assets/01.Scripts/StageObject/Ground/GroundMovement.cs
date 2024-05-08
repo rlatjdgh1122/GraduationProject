@@ -95,9 +95,6 @@ public class GroundMovement : MonoBehaviour
 
     public void SetGroundPos(Transform parentTransform, Vector3 position)
     {
-        // 위치 설정 관련 주석 추가
-        // 나중에 생성할 때 위치 설정하도록 변경해야 함
-        
         transform.SetParent(parentTransform); // 부모 설정
         transform.localPosition = position; // 빙하의 위치 설정
 

@@ -21,7 +21,6 @@ public class Ground : MonoBehaviour
     public Outline OutlineCompo => _outline;
 
     private GroundMovement _groundMove;
-    private GroundConfigurer _groundConfigurer;
 
     private Enemy[] _enemies;
 
@@ -32,7 +31,6 @@ public class Ground : MonoBehaviour
         try
         {
             _groundMove = GetComponent<GroundMovement>();
-            _groundConfigurer = GetComponent<GroundConfigurer>();
         }
         catch
         {
@@ -97,12 +95,12 @@ public class Ground : MonoBehaviour
         SignalHub.OnIceArrivedEvent += ActivateEnemies;
     }
 
-    public void SetGroundInfo(Transform parentTransform, Vector3 position)
+    public void SetGroundInfo(Transform parentTransform, Vector3 position, Enemy[] enemies)
     {
         _groundMove.SetGroundPos(parentTransform,
                                  position);
 
-        SetEnemies(_groundConfigurer.SetGroundElements().Enemies);
+        SetEnemies(enemies);
     }
 
     public void SetEnemies(Enemy[] enemies)

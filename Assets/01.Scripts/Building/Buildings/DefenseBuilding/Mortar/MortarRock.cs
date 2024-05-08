@@ -17,14 +17,15 @@ public class MortarRock : Arrow
     private Vector3 _endPos;
 
     private void Awake()
-    {
+    { 
         //_damageCaster = GetComponent<DamageCaster>();
         _attackFeedback = transform.GetChild(0).GetComponent<MortarExplosionEffect>();
     }
 
     public override void Setting(TargetObject owner, LayerMask layer)
     {
-        base.Setting(owner, layer);
+        _damageCaster.SetOwner(owner, false);
+        _damageCaster.TargetLayer = layer;
     }
 
     private Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
