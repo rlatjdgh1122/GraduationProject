@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PenguinDeadController : EntityDeadController<Penguin>
+public class PenguinDeadController : EntityDeadController<Penguin>  
 {
     //»ç¸ÁÇÒ¶§
     public override void OnDied()
