@@ -77,7 +77,8 @@ public class DummyPenguin : PoolableMono
     }
     public void GoToHouse()
     {
-        PoolManager.Instance.Push(this);
+        //PoolManager.Instance.Push(this);
+        gameObject.SetActive(false);
     }
 
     private void OnMouseDown()
