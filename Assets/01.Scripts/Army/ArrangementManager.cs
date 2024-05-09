@@ -42,7 +42,6 @@ public class ArrangementManager : Singleton<ArrangementManager>
     {
         //이전 데이터와 현재 데이터를 비교
         CompareDataList(dataList);
-        Debug.Log("저장");
 
         //추가된 정보에 따라 생성
         foreach (var item in addDataList)

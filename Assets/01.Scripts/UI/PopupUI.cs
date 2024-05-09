@@ -48,7 +48,6 @@ public class PopupUI : MonoBehaviour
     private IEnumerator ShowPanelCoroutine(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-        Debug.Log($"{_panel} Show");
         UIManager.Instance.currentPopupUI.Push(this);
         SoundManager.Play2DSound(_soundName);
         _panel.blocksRaycasts = true;
@@ -60,8 +59,6 @@ public class PopupUI : MonoBehaviour
         SignalHub.OnOffPopUiEvent?.Invoke();
 
         UIManager.Instance.currentPopupUI.TryPop(out var popupUI);
-
-        Debug.Log($"{_panel} Hide");
 
         SoundManager.Play2DSound(_soundName);
 

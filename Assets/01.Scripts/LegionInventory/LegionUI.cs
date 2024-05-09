@@ -25,7 +25,7 @@ public class LegionUI : InitLegionInventory
         {
             if (ChangedInCurrentLegion())
             {
-                UIManager.Instance.ShowWarningUI("�������ּ���");
+                UIManager.Instance.ShowWarningUI($"저장해주세요");
                 return;
             }
 
