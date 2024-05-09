@@ -17,16 +17,6 @@ public class EnemyIdleState : EnemyBaseState
     public override void UpdateState()
     {
         base.UpdateState();
-
-       /* if (_enemy.IsTargetInInnerRange)
-        {
-            _stateMachine.ChangeState(EnemyStateType.Chase);
-        }
-        else
-            _stateMachine.ChangeState(EnemyStateType.Move);*/
-
-        //if (_enemy.IsMove)
-        //    _stateMachine.ChangeState(EnemyStateType.Move); //IsMove 불 변수가 True이면 넥서스로 Move
     }
 
     private void ChangeState()

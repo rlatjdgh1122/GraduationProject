@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBaseState : EnemyState
@@ -62,6 +59,7 @@ public class EnemyBaseState : EnemyState
     protected void MoveEnter()
     {
         _triggerCalled = true;
+        _enemy.MoveToNexus();
     }
 
     protected void ChestHitEnter()
