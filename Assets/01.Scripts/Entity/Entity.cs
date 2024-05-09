@@ -84,6 +84,7 @@ public abstract class Entity : TargetObject
         {
             if (NavAgent.isActiveAndEnabled)
             {
+                NavAgent.velocity = Vector3.zero;
                 NavAgent.isStopped = true;
             }
         }

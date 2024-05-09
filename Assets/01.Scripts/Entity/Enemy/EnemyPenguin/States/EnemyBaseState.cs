@@ -83,6 +83,7 @@ public class EnemyBaseState : EnemyState
 
     protected void AttackExit()
     {
+        _enemy.StartImmediately();
         _enemy.AnimatorCompo.speed = 1;
     }
 

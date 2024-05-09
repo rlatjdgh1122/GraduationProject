@@ -25,7 +25,7 @@ public class EnemyMoveState : EnemyBaseState
         else
             _stateMachine.ChangeState(EnemyStateType.Chase); 
             */
-
+        _enemy.MoveToNexus();
 
         if (_enemy.NavAgent.isOnOffMeshLink)
             _stateMachine.ChangeState(EnemyStateType.Jump);
