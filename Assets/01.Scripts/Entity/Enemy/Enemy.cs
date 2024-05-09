@@ -93,7 +93,7 @@ public class Enemy : Entity
 
     public void FindNearestTarget()
     {
-        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(100, TargetLayer);
     }
 
     public virtual void AnimationTrigger()
