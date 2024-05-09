@@ -68,6 +68,17 @@ public class SpawnBuildingButton : MonoBehaviour
         //    cantSpawnBuilding = true;
         //}
 
+        foreach (var resource in buildinginfo.NecessaryResource)
+        {
+            ResourceManager.Instance.resourceDictionary.TryGetValue(resource.NecessaryResource.resourceData, out var saveResource);
+
+            if (saveResource == null || saveResource.stackSize < resource.NecessaryResourceCount)
+            {
+                UIManager.Instance.ShowWarningUI("자원이 부족합니다!");
+                return;
+            }
+        }
+
         #endregion
 
         #region 일꾼 수 비교

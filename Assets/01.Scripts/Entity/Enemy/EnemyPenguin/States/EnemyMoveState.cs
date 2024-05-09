@@ -15,20 +15,26 @@ public class EnemyMoveState : EnemyBaseState
     {
         base.UpdateState();
 
-        if (!_enemy.IsTargetInInnerRange) //°ø°Ý »ç°Å¸® ³»¿¡ µé¾î¿Ô´Ù -> Reached (³Ø¼­½º °ø°Ý)
+        /* prev
+        if (!_enemy.IsTargetInInnerRange)
         {
             if (_enemy.IsReachedNexus)
                 _stateMachine.ChangeState(EnemyStateType.Reached); 
         }
 
-        else //°¨½Ã »ç°Å¸® ³»¿¡ µé¾î¿Ô´Ù -> chase (ÇÃ·¹ÀÌ¾î ÂÊÀ¸·Î)
+        else
             _stateMachine.ChangeState(EnemyStateType.Chase); 
+            */
 
-        /*  if (_enemy.IsTargetInInnerRange)    
-              _stateMachine.ChangeState(EnemyStateType.Chase); //°¡´Â µµÁß¿¡ °¨Áö »ç°Å¸® ³»¿¡ Å¸°Ù ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ¸¸é Chase·Î
 
-          if (_enemy.IsReachedNexus)
-              _stateMachine.ChangeState(EnemyStateType.Reached);*/
+        if (_enemy.NavAgent.isOnOffMeshLink)
+            _stateMachine.ChangeState(EnemyStateType.Jump);
+
+        if (_enemy.IsReachedNexus)
+            _stateMachine.ChangeState(EnemyStateType.Reached); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´ï¿½ -> Reached (ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+
+        if (_enemy.IsTargetInInnerRange)
+            _stateMachine.ChangeState(EnemyStateType.Chase); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´ï¿½ -> chase (ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
     }
 
     public override void ExitState()
