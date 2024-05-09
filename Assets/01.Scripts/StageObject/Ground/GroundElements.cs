@@ -32,8 +32,5 @@ public struct GroundElements
         {
             Elements.Add(element.transform);
         }
-
-
-
     }
 }

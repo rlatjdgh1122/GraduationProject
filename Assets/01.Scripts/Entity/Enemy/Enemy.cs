@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(EnemyDeadController))]
 public class Enemy : Entity
 {
-    [Header("Setting Values")]
+    [Header("Setting Values")]  
     public float moveSpeed = 3f;
     public float attackSpeed = 1f;
     public float rotationSpeed = 2f;
