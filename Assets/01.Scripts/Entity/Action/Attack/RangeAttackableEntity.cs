@@ -31,14 +31,17 @@ public class RangeAttackableEntity : EntityAttackData
         }
 
 
-        _firePos.LookAt(new Vector3(curtarget.transform.position.x,
+        if(curtarget != null)
+        {
+            _firePos.LookAt(new Vector3(curtarget.transform.position.x,
             curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
 
-        Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
-        //Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
-        //arrow.transform.position = _firePos.position;
-        //arrow.transform.rotation = Quaternion.Euler(_firePos.transform.forward);
-        arrow.Setting(owner, DamageCasterCompo.TargetLayer);
-        arrow.Fire(_firePos.forward);
+            Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+            //Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
+            //arrow.transform.position = _firePos.position;
+            //arrow.transform.rotation = Quaternion.Euler(_firePos.transform.forward);
+            arrow.Setting(owner, DamageCasterCompo.TargetLayer);
+            arrow.Fire(_firePos.forward);
+        }// end if
     }
 }

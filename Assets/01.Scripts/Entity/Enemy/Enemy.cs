@@ -105,9 +105,9 @@ public class Enemy : Entity
 
     public void MoveToNexus()
     {
-        if (NavAgent != null)
+        if (NavAgent.isActiveAndEnabled)
         {
-            NavAgent.ResetPath();
+            //NavAgent.ResetPath();
             NavAgent.SetDestination(NexusTarget.transform.position);
         }
     }

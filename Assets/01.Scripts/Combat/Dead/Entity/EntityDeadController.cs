@@ -46,7 +46,9 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
 
     public virtual void OnResurrected()
     {
+        //체력 다시 채움
         _owner.HealthCompo.SetHealth(_owner.Stat);
+
         //죽는 애니메이션 꺼줌
         _anim.SetBool(HASH_DEAD, false);
         //엔티티 네브메쉬와 콜라이더 켜줌

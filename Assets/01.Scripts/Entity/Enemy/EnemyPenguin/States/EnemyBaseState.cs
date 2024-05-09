@@ -49,6 +49,12 @@ public class EnemyBaseState : EnemyState
         _triggerCalled = true;
 
         _enemy.FindNearestTarget();
+
+        if (_enemy.CurrentTarget != null)
+        {
+            _navAgent.ResetPath();
+            _enemy.MoveToCurrentTarget();
+        }
     }
 
     protected void MustChaseEnter()
@@ -61,7 +67,7 @@ public class EnemyBaseState : EnemyState
 
     protected void MoveEnter()
     {
-        _triggerCalled = true;
+        _enemy.MoveToNexus();
     }
 
     protected void ChestHitEnter()
