@@ -50,6 +50,7 @@ public enum SoundName : uint
     FallDown,
     GorillaPunch,
     MeleeHit,
+    ArrowHit,
 
     #region Buildings
 
