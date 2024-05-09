@@ -16,8 +16,6 @@ public class PopupUI : MonoBehaviour
     private UIType _uiGroup;
     public UIType UIGroup => _uiGroup;
 
-    public bool CanShowAnotherUI = false;
-
     protected CanvasGroup _panel;
     protected RectTransform _rectTransform;
 

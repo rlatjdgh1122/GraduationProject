@@ -12,17 +12,28 @@ public class NexusUIPresenter : NexusPopupUI
     private BuildingFactory _buildingFactory;
     private List<NexusPopupUI> _receiverList;
 
+    private NexusUpgradePanel _nexusUpgradePanel;
+
     public override void Awake()
     {
         base.Awake();
 
         _buildingFactory = FindAnyObjectByType<BuildingFactory>();
+        _nexusUpgradePanel = FindObjectOfType<NexusUpgradePanel>();
         _receiverList = GetComponentsInChildren<NexusPopupUI>().ToList();
     }
 
     #region NexusUI
     public void LevelUp()
     {
+        if (!CostManager.Instance.CheckRemainingCost(_nexusStat.upgradePrice))
+        {
+            UIManager.Instance.ShowWarningUI($"재화가 부족합니다!");
+            return;
+        }
+
+        _nexusUpgradePanel.ShowPanel();
+
         _nexusStat.maxHealth.AddSum
             (_nexusStat.maxHealth.GetValue(), _nexusStat.level, _nexusStat.levelupIncreaseValue);
         _nexusStat.level++;
@@ -36,6 +47,8 @@ public class NexusUIPresenter : NexusPopupUI
                 building.IsUnlocked = true;
             }
         }
+
+        CostManager.Instance.SubtractFromCurrentCost(_nexusStat.upgradePrice);
 
         _nexusStat.upgradePrice *= 2; // <-이건 임시
         WorkerManager.Instance.MaxWorkerCount++; //이것도 임시수식
