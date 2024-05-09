@@ -67,7 +67,7 @@ public class GeneralUIPresenter : PopupUI
         }
         else
         {
-            Debug.Log("통화량이 부족하여 아이템을 구매할 수 없습니다.");
+            UIManager.Instance.ShowWarningUI($"재화가 부족합니다!");
         }
     }
 
