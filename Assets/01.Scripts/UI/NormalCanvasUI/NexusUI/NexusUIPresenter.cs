@@ -73,13 +73,24 @@ public class NexusUIPresenter : NexusPopupUI
     #region buildingUI
     public void PurchaseBuilding(BuildingView view)
     {
-        if (view.building.IsUnlocked && CostManager.Instance.CheckRemainingCost(view.building.Price))
+        foreach (var resource in view.building.NecessaryResource)
+        {
+            ResourceManager.Instance.resourceDictionary.TryGetValue(resource.NecessaryResource.resourceData, out var saveResource);
+
+            if (saveResource == null || saveResource.stackSize < resource.NecessaryResourceCount)
+            {
+                UIManager.Instance.ShowWarningUI("자원이 부족합니다!");
+                return;
+            }
+        }
+
+        if (view.building.IsUnlocked)
         {
             view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
         }
         else
         {
-            UIManager.Instance.ShowWarningUI("생선이 부족합니다");
+            UIManager.Instance.ShowWarningUI($"자원이 부족합니다");
         }
     }
     #endregion
