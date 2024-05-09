@@ -32,7 +32,7 @@ public class QuestUI : PopupUI
 
         _questInfoUI = transform.Find("QuestList/ContentPopUp").GetComponent<QuestInfoUI>();
 
-        Transform questButton = transform.parent.Find("MainInterfaceUI/QuestButton");
+        Transform questButton = transform.parent.Find("MainInterfaceUI/ButtonUI/QuestButton");
         questButton.GetComponent<Button>().onClick.AddListener(() => UIManager.Instance.ShowPanel("QuestUI"));
 
         _questStateIcon = questButton.Find("CautionBox").GetChild(0).GetComponent<Image>();

@@ -25,6 +25,7 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
 
     public virtual void OnDied()
     {
+
         // 모든 bool 변수를 순회하며 비활성화하기
         var parameters = _anim.parameters;
         foreach (var param in parameters)
@@ -45,6 +46,7 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
 
     public virtual void OnResurrected()
     {
+        _owner.HealthCompo.SetHealth(_owner.Stat);
         //죽는 애니메이션 꺼줌
         _anim.SetBool(HASH_DEAD, false);
         //엔티티 네브메쉬와 콜라이더 켜줌

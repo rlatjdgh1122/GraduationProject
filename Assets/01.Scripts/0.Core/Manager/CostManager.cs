@@ -25,7 +25,7 @@ public class CostManager : Singleton<CostManager>
 
     [SerializeField] private SoundName _buySound = SoundName.Buy;
 
-    [SerializeField] private CostUI _costUI;
+    private CostUI _costUI;
 
     [Header("Default Cost Value")]
     [SerializeField] private int _defaultCost;
@@ -33,6 +33,8 @@ public class CostManager : Singleton<CostManager>
     public override void Awake()
     {
         base.Awake();
+
+        _costUI = FindObjectOfType<CostUI>();
 
         Cost = _defaultCost;
         _costUI.OnlyCurrentCostView(Cost);

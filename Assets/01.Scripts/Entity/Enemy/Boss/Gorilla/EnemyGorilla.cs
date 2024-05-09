@@ -49,5 +49,12 @@ public class EnemyGorilla : Enemy
         StateMachine.ChangeState(EnemyStateType.ChestHit);
     }
 
+    public override void Init()
+    {
+        base.Init();
+
+        StateMachine.Init(EnemyStateType.Idle);
+    }
+
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }

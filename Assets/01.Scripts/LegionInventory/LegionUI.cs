@@ -23,6 +23,12 @@ public class LegionUI : InitLegionInventory
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            if (ChangedInCurrentLegion())
+            {
+                UIManager.Instance.ShowWarningUI("�������ּ���");
+                return;
+            }
+
             _showHP = !_showHP;
 
             ShowHP();
@@ -36,17 +42,11 @@ public class LegionUI : InitLegionInventory
             foreach (var hp in currentLegionList)
             {
                 var penguin = PenguinManager.Instance.GetPenguinByInfoData(hp);
-
-                if (hp == null)
-                {
-                    Debug.Log("dkd");
-                }
+                
                 float curHp = penguin.HealthCompo.currentHealth;
                 float maxHp = penguin.HealthCompo.maxHealth;
 
                 float hpPercent = curHp / maxHp;
-
-                Debug.Log($"HP : {hp},  Current HP : {curHp}, Max HP : {maxHp}, HP Percent : {hpPercent}");
 
                 slotList[hp.SlotIdx].HpValue(hpPercent);
             }

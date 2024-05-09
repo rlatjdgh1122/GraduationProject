@@ -25,5 +25,12 @@ public class EnemyArcherPenguin : Enemy
         StateMachine.CurrentState.UpdateState();
     }
 
+    public override void Init()
+    {
+        base.Init();
+
+        StateMachine.Init(EnemyStateType.Idle);
+    }
+
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }
