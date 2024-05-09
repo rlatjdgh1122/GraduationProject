@@ -19,15 +19,17 @@ public class PhaseChangeButton : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        SignalHub.OnBattlePhaseEndEvent += () => OnOffButton(); // 반드시 바꾸소
-    }
-
     private void Awake()
     {
         _button = GetComponent<Button>();
-        _button.onClick.AddListener(() => ChangePhase());
+        _button.onClick.AddListener(ChangePhase);
+
+        SignalHub.OnBattlePhaseEndEvent += OnOffButton;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent += OnOffButton;
     }
 
     public void ChangePhase()
@@ -38,9 +40,14 @@ public class PhaseChangeButton : MonoBehaviour
         OnOffButton();
     }
 
+
     private void OnOffButton()
     {
         isOn = !isOn;
+
+        if (isOn) _button.interactable = false;
+        else _button.interactable = true;
+
         gameObject.DOAnchorPos(gameObject.rectTransform().anchoredPosition + new Vector2(moveXValue, 0f), 0.5f).SetEase(Ease.InOutBack);
     }
 }
