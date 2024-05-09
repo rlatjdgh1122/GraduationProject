@@ -103,7 +103,7 @@ public class DefaultBuilding : BaseBuilding
             }
             else
             {
-                _penguinSpawnUI.OnDisableStorePanel();
+                //_penguinSpawnUI.OnDisableStorePanel();
             }
         }
         

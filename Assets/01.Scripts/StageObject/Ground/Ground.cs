@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Rendering.FilterWindow;
 
 public enum OutlineColorType
 {
@@ -24,6 +26,8 @@ public class Ground : MonoBehaviour
 
     private Enemy[] _enemies;
 
+    private Transform _elementsParent;
+
     private void Awake()
     {
         _outline = GetComponent<Outline>();
@@ -36,6 +40,8 @@ public class Ground : MonoBehaviour
         {
 
         }
+
+        _elementsParent = transform.Find("TopArea").transform;
     }
 
     private void ActivateEnemies()
@@ -95,15 +101,24 @@ public class Ground : MonoBehaviour
         SignalHub.OnIceArrivedEvent += ActivateEnemies;
     }
 
-    public void SetGroundInfo(Transform parentTransform, Vector3 position, Enemy[] enemies)
+    public void SetGroundInfo(Transform parentTransform, Vector3 position, GroundElements groundElements)
     {
         _groundMove.SetGroundPos(parentTransform,
                                  position);
 
-        SetEnemies(enemies);
+        SetEnemies(groundElements.Enemies);
+        SetElementsParent(groundElements);
     }
 
-    public void SetEnemies(Enemy[] enemies)
+    private void SetElementsParent(GroundElements elements)
+    {
+        foreach (var element in elements.Elements)
+        {
+            element.SetParent(_elementsParent);
+        }
+    }
+
+    private void SetEnemies(Enemy[] enemies)
     {
         _enemies = enemies;
     }
