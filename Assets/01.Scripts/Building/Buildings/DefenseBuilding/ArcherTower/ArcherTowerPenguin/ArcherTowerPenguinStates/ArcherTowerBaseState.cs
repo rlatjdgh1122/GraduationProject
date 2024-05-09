@@ -16,9 +16,6 @@ public class ArcherTowerBaseState : EntityState<ArcherTowerPenguinStateEnum, Pen
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.IsDead)
-            _stateMachine.ChangeState(ArcherTowerPenguinStateEnum.Dead);
     }
 
     public override void Exit()
