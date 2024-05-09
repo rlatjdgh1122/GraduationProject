@@ -81,7 +81,7 @@ public class Penguin : Entity
     public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
 
 
-    private Army owner;
+    public Army owner { get; set; }
     public Army MyArmy => owner;
 
     public MovefocusMode MoveFocusMode
