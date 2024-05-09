@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBaseState : EnemyState
@@ -37,7 +34,7 @@ public class EnemyBaseState : EnemyState
         if (_animalAttack.ComboCounter > _animalAttack.animalAttackList.Count - 1
             || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
         {
-            _animalAttack.ComboCounter = 0; //ÄÞº¸ ÃÊ±âÈ­ Á¶°Ç¿¡ µû¶ó ÄÞº¸ ÃÊ±âÈ­
+            _animalAttack.ComboCounter = 0; //ï¿½Þºï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þºï¿½ ï¿½Ê±ï¿½È­
         }
         _enemy.AnimatorCompo.SetInteger(_comboCounterHash, _animalAttack.ComboCounter);
 
@@ -49,11 +46,19 @@ public class EnemyBaseState : EnemyState
         _triggerCalled = true;
 
         _enemy.FindNearestTarget();
+
+        if (_enemy.CurrentTarget != null)
+        {
+            _navAgent.ResetPath();
+            _enemy.MoveToCurrentTarget();
+        }
     }
 
     protected void MustChaseEnter()
     {
         _triggerCalled = true;
+
+        _enemy.FindNearestTarget();
 
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();
@@ -61,7 +66,7 @@ public class EnemyBaseState : EnemyState
 
     protected void MoveEnter()
     {
-        _triggerCalled = true;
+        _enemy.MoveToNexus();
     }
 
     protected void ChestHitEnter()
@@ -78,6 +83,7 @@ public class EnemyBaseState : EnemyState
 
     protected void AttackExit()
     {
+        _enemy.StartImmediately();
         _enemy.AnimatorCompo.speed = 1;
     }
 

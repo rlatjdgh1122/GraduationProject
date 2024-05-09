@@ -28,10 +28,6 @@ public class Worker : Entity
         WorkerHomeTrm = GameManager.Instance.WorkerSpawnPoint;
 
         DamageCasterCompo.SetOwner(this);
-
-
-
-        Init();
     }
 
     #region 이동 관련
@@ -94,18 +90,8 @@ public class Worker : Entity
 
     }
 
-    protected override void HandleDie()
+    protected override void HandleHit()
     {
-
-    }
-
-    public override void Init()
-    {
-        NavAgent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
-        NavAgent.avoidancePriority = 0;
-
-        CanWork = false;
-        EndWork = false;
 
     }
 }

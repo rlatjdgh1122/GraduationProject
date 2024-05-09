@@ -27,6 +27,11 @@ public class CrazyPenguin : MonoBehaviour
         SignalHub.OnBattlePhaseStartEvent += MoveToTarget;
     }
 
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartEvent -= MoveToTarget;
+    }
+
     private void Update()
     {
         if (Vector3.Distance(transform.position, _targetPos.transform.position) <= 0.5f)

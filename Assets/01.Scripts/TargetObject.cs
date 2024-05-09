@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(FeedbackController))]
 public abstract class TargetObject : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;
@@ -27,6 +28,7 @@ public abstract class TargetObject : PoolableMono
         }
     }
     public Health HealthCompo { get; private set; }
+    private IDeadable _deadCompo = null;
 
     private Transform nexusTrm = null;
     protected Collider _collider = null;
@@ -36,15 +38,18 @@ public abstract class TargetObject : PoolableMono
 
     private float radius = 0f;
 
+    
     protected virtual void Awake()
     {
         _targetColliders = new Collider[_maxDetectEnemy];
 
         HealthCompo = transform?.GetComponent<Health>();
         _collider = GetComponent<Collider>();
+        _deadCompo = GetComponent<IDeadable>();
 
         HealthCompo?.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
+
         if (HealthCompo != null)
         {
             HealthCompo.OnHit += HandleHit;
@@ -132,7 +137,16 @@ public abstract class TargetObject : PoolableMono
 
 
     protected abstract void HandleHit();
-    protected abstract void HandleDie();
+
+    protected virtual void HandleDie()
+    {
+        _deadCompo.OnDied();
+    }
+
+    public override void Init()
+    {
+        _deadCompo.OnResurrected();
+    }
 
     protected virtual void OnDestroy()
     {

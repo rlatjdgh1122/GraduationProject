@@ -34,6 +34,13 @@ public class InstallSystem : MonoBehaviour
 
     private BuildingItemInfo _info;
 
+    private NexusUIPresenter _nexusUIPresenter;
+
+    private void Awake()
+    {
+        _nexusUIPresenter = FindObjectOfType<NexusUIPresenter>();
+    }
+
     private void Start()
     {
         StopInstall();
@@ -111,8 +118,19 @@ public class InstallSystem : MonoBehaviour
                 return;
             }
 
-            CostManager.Instance.SubtractFromCurrentCost(_info.Price);
+            foreach (var resource in _info.NecessaryResource)
+            {
+                ResourceManager.Instance.resourceDictionary.TryGetValue(resource.NecessaryResource.resourceData, out var saveResource);
+
+                if (saveResource != null && saveResource.stackSize >= resource.NecessaryResourceCount)
+                {
+                    ResourceManager.Instance.RemoveResource(resource.NecessaryResource.resourceData, resource.NecessaryResourceCount);
+                }
+            }
+
+
             _info.CurrentInstallCount++;
+            _nexusUIPresenter.UpdateRecieverUI();
 
             UIManager.Instance.ShowWarningUI("설치 완료!");
 

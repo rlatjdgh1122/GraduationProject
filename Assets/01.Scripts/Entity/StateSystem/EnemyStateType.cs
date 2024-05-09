@@ -4,8 +4,10 @@
     Idle,
     Move,
     Chase,
+    MustChase,
     Attack,
     Reached,
+    Jump,
     #endregion
 
     #region gorilla

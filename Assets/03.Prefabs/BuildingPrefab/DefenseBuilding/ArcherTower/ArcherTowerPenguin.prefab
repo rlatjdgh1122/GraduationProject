@@ -823,6 +823,9 @@ MonoBehaviour:
   OnAnimationEndTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnDashEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnEffectOnTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1253,6 +1256,9 @@ GameObject:
   - component: {fileID: 2030206095074393266}
   - component: {fileID: 8721236801684161815}
   - component: {fileID: 6097800464092270967}
+  - component: {fileID: 1692377265151070789}
+  - component: {fileID: 3515857164637395661}
+  - component: {fileID: 3170093532850742559}
   m_Layer: 11
   m_Name: ArcherTowerPenguin
   m_TagString: Player
@@ -1294,9 +1300,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 8df715c0c4adac647872ce3d5ae7c4aa, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
+  _maxDetectEnemy: 5
   innerDistance: 4
   attackDistance: 1.5
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   moveSpeed: 4.5
   attackSpeed: 1
   maxDetectedCount: 0
@@ -1305,6 +1314,7 @@ MonoBehaviour:
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
+  TargetLock: 0
 --- !u!114 &7922328068077974963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,7 +1329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
     type: 3}
-  _firePos: {fileID: 7060097859151106643}
+  _firePos: {fileID: 4419340657776218540}
 --- !u!114 &3642781213715931106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1335,6 +1345,7 @@ MonoBehaviour:
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
+  HitTarget: {fileID: 0}
 --- !u!143 &3496813715336790843
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1380,6 +1391,7 @@ MonoBehaviour:
   IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
+  renderers: []
 --- !u!114 &8721236801684161815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,22 +1409,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  OnHealedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStunEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEvasionEvent:
-    m_PersistentCalls:
-      m_Calls: []
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
   OnUIUpdate:
@@ -1421,6 +1424,7 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
 --- !u!156049354 &6097800464092270967
 Grid:
   m_ObjectHideFlags: 0
@@ -1433,6 +1437,52 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &1692377265151070789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!195 &3515857164637395661
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &3170093532850742559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4862602252113058120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5058070544052810271
 GameObject:
   m_ObjectHideFlags: 0

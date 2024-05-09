@@ -126,6 +126,7 @@ public class Penguin : Entity
         }
     }
 
+
     protected void SetBaseState()
     {
         StateMachine = new PenguinStateMachine();
@@ -216,10 +217,6 @@ public class Penguin : Entity
     }
 
     #endregion
-    protected override void HandleDie()
-    {
-        _deadCompo.OnDied();
-    }
 
     #region ���� ����
     public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
@@ -314,9 +311,17 @@ public class Penguin : Entity
     {
         NavAgent.avoidancePriority = (int)type;
     }
+
+    protected override void HandleHit()
+    {
+    }
+
     public override void Init()
     {
+        base.Init();
+
         owner = null;
-        _deadCompo.OnResurrected();
     }
+
+  
 }

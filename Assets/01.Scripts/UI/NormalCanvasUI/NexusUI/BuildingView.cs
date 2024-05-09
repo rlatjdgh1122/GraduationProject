@@ -1,10 +1,15 @@
+using AssetKits.ParticleImage.Editor;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildingView : NexusPopupUI
 {
+    [SerializeField]
+    private BuildingPriceUI _priceUI;
+
     [HideInInspector]
     public SpawnBuildingButton spawn;
     [HideInInspector]
@@ -13,7 +18,7 @@ public class BuildingView : NexusPopupUI
     public Button purchaseButton;
     public TextMeshProUGUI buildingName;
     public Image buildingIcon;
-    public TextMeshProUGUI buildingPrice;
+    public Transform buildingPriceTrm;
     public TextMeshProUGUI maxInstallableCount;
     public Image lockedPanel;
 
@@ -30,6 +35,13 @@ public class BuildingView : NexusPopupUI
         purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
 
         UpdateUI();
+
+        foreach(var ui in building.NecessaryResource)
+        {
+            BuildingPriceUI priceUI = Instantiate(_priceUI);
+            priceUI.UpdateUI(ui.NecessaryResource.resourceData.resourceIcon, ui.NecessaryResourceCount);
+            priceUI.transform.SetParent(buildingPriceTrm.transform);
+        }
     }
 
     public void OnPurchase()
@@ -42,7 +54,6 @@ public class BuildingView : NexusPopupUI
         lockedPanel.gameObject.SetActive(!building.IsUnlocked);
         buildingName.text = building.Name;
         buildingIcon.sprite = building.UISprite;
-        buildingPrice.text = $"{building.Price}";
         maxInstallableCount.text = $"{building.CurrentInstallCount}/{building.MaxInstallableCount}";
     }
 
