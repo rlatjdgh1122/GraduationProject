@@ -72,6 +72,8 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void GlacierSetPos()
     {
+        // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨
+
         int realMakedHexagonCount = makedHexagonCount + 1;
 
         Ground curground = _curHexagon_Grounds.Dequeue();
@@ -129,17 +131,20 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
     {
-        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
+        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingBoatCount; i++)
         {
-            GlacierSetPos();
+            Vector3 randomPos = UnityEngine.Random.insideUnitSphere.normalized * _spawnDistance;
+            randomPos.y = 0f;
+            GameObject obj = new GameObject();
+            obj.transform.position = randomPos;
         }
     }
 
     private void TutorialGlacierSetPos()
     {
-        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingBoatCount; i++)
+        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
         {
-            Debug.Log("배 생성");
+            GlacierSetPos();
         }
     }
 
