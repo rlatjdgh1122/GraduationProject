@@ -86,17 +86,20 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         //HitType에 따라 맞는 소리를 다르게
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
         {
-            if(HitType.IceHit == hitType)
+            switch (hitType)
             {
-                feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.MeleeHit);
-            }
-            else if(HitType.MopHit == hitType) 
-            {
-                feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.MopHit);
-            }
-            else if (HitType.ArrowHit == hitType)
-            {
-                feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.ArrowHit);
+                case HitType.IceHit:
+                    feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.MeleeHit);
+                    break;
+                case HitType.MopHit:
+                    feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.MopHit);
+                    break;
+                case HitType.ArrowHit:
+                    feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.ArrowHit);
+                    break;
+                default:
+                    //일단 비워
+                    break;
             }
 
             OnHit?.Invoke();
