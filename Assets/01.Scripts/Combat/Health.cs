@@ -75,12 +75,33 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
         currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
 
-        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
+        /*if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
         {
             feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Hit);
 
             OnHit?.Invoke();
-            
+
+            if (isFeedback) { hitF.PlayFeedback(); }
+        }*/
+
+        //HitType에 따라 맞는 소리를 다르게
+        if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
+        {
+            if(HitType.IceHit == hitType)
+            {
+                feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.MeleeHit);
+            }
+            else if(HitType.MopHit == hitType) 
+            {
+                feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.MopHit);
+            }
+            else if (HitType.ArrowHit == hitType)
+            {
+                feedbackCompo.TryPlayHitSoundFeedback(HitSoundFeedbackEnumType.ArrowHit);
+            }
+
+            OnHit?.Invoke();
+
             if (isFeedback) { hitF.PlayFeedback(); }
         }
 

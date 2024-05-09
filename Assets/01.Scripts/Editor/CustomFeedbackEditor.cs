@@ -46,6 +46,10 @@ public class CustomFeedbackEditor : Editor
                 _target.SpawnSoundFeedback(SoundFeedbackEnumType.Hit, SoundName.PenguinHit);
                 _target.SpawnSoundFeedback(SoundFeedbackEnumType.Dead, SoundName.Dead);
                 _target.SpawnSoundFeedback(SoundFeedbackEnumType.WaterFall, SoundName.WaterFall);
+
+                _target.SpawnHitSoundFeedback(HitSoundFeedbackEnumType.MeleeHit, SoundName.MeleeHit);
+                _target.SpawnHitSoundFeedback(HitSoundFeedbackEnumType.MopHit, SoundName.MeleeHit);
+                _target.SpawnHitSoundFeedback(HitSoundFeedbackEnumType.ArrowHit, SoundName.MeleeHit);
             }
             EditorGUILayout.Space(15);
             EditorGUILayout.BeginHorizontal();
@@ -129,6 +133,33 @@ public class CustomFeedbackEditor : Editor
             if (GUILayout.Button("물에 빠짐", GUILayout.Width(120), GUILayout.Height(30)))
             {
                 _target.SpawnSoundFeedback(SoundFeedbackEnumType.WaterFall, SoundName.WaterFall);
+            }
+
+            EditorGUILayout.EndHorizontal();
+
+            #endregion
+
+            EditorGUILayout.Space(15);
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.Space(3);
+            GUILayout.Label("맞는 소리 관련", EditorStyles.boldLabel);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Space(10);
+
+            #region 맞는 소리 관련
+
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("일반 공격", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnHitSoundFeedback(HitSoundFeedbackEnumType.MeleeHit, SoundName.MeleeHit);
+            }
+            if (GUILayout.Button("활 공격", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnHitSoundFeedback(HitSoundFeedbackEnumType.ArrowHit, SoundName.MeleeHit);
+            }
+            if (GUILayout.Button("대걸레 공격", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                _target.SpawnHitSoundFeedback(HitSoundFeedbackEnumType.MopHit, SoundName.Dead);
             }
 
             EditorGUILayout.EndHorizontal();
