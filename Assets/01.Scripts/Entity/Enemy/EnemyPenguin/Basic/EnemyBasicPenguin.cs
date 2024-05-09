@@ -36,6 +36,7 @@ public class EnemyBasicPenguin : Enemy
     {
         StateMachine.CurrentState.UpdateState();
     }
+
     public override void Init()
     {
         base.Init();

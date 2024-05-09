@@ -6,6 +6,7 @@
     Chase,
     Attack,
     Reached,
+    Jump,
     #endregion
 
     #region gorilla
