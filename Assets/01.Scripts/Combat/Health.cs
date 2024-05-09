@@ -28,13 +28,12 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
     private EntityActionData _actionData;
 
-    private bool _isDead = false;
-    public bool IsDead => _isDead;
+    public bool IsDead = false;
     public bool IsMaxHP => currentHealth == maxHealth;
 
     private void Awake()
     {
-        _isDead = false;
+        IsDead = false;
         _actionData = GetComponent<EntityActionData>();
         feedbackCompo = GetComponent<FeedbackController>();
     }
@@ -53,7 +52,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, TargetObject hitTarget, bool isFeedback = true)
     {
-        if (_isDead) return;
+        if (IsDead) return;
 
         float dice = UnityEngine.Random.value;
         float adjustedEvasion = _evasion * 0.01f;
@@ -143,10 +142,10 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     private void Dead()
     {
         feedbackCompo.TryPlaySoundFeedback(SoundFeedbackEnumType.Dead);
+        OnDied?.Invoke();
         OnDeathEvent?.Invoke();
         OffUIUpdate?.Invoke();
-        _isDead = true;
-        OnDied?.Invoke();
+        IsDead = true;
     }
 
 
