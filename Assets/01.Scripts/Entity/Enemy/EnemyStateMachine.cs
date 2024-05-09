@@ -23,7 +23,7 @@ public class EnemyStateMachine
         CurrentState = StateDictionary[newState];
         CurrentState.EnterState();
 
-        Debug.Log($"{PrevState} -> {CurrentState}");
+        //Debug.Log($"{PrevState} -> {CurrentState}");
     }
 
     public void AddState(EnemyStateType stateType, EnemyState playerState)

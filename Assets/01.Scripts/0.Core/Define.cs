@@ -59,6 +59,20 @@ namespace Define
                     resourceCache[path] = Resources.Load<T>(path);
                 return (T)resourceCache[path];
             }
+
+            public static void UnloadAsset(Object @object)
+            {
+                Resources.UnloadAsset(@object);
+            }
+
+            public static void UnloadAssetsAll()
+            {
+                if (resourceCache.Count > 0)
+                {
+                    resourceCache.Clear();
+                    Resources.UnloadUnusedAssets();
+                }
+            }
         }
     }
 

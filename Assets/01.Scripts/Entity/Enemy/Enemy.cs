@@ -166,4 +166,12 @@ public class Enemy : Entity
 
     }
     #endregion
+
+    public override void Init()
+    {
+        base.Init();
+
+
+        _deadCompo.OnResurrected();
+    }
 }

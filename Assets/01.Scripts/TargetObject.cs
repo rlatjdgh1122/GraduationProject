@@ -13,7 +13,19 @@ public abstract class TargetObject : PoolableMono
 
     public TargetObject CurrentTarget;
 
-    public bool IsDead = false;
+    public bool IsDead
+    {
+        get
+        {
+            if (HealthCompo != null)
+                return HealthCompo.IsDead;
+            return false;
+        }
+        set
+        {
+            HealthCompo.IsDead = value;
+        }
+    }
     public Health HealthCompo { get; private set; }
 
     private Transform nexusTrm = null;

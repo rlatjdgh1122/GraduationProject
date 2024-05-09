@@ -15,6 +15,7 @@ public class ResourceDeadController : MonoBehaviour, IDeadable
         _collider = GetComponent<Collider>();
         _visual = transform.Find("Visual").gameObject;
     }
+
     public virtual void OnDied()
     {
         _owner.IsDead = true;
