@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArrangementManager : Singleton<ArrangementManager>
@@ -53,8 +54,8 @@ public class ArrangementManager : Singleton<ArrangementManager>
         foreach (var item in removeDataList)
         {
             var legionName = item.LegionName;
-            var penguin = PenguinManager.Instance.GetPenguinByInfoData(item);
 
+            var penguin = PenguinManager.Instance.GetPenguinByInfoData(item);
             RemovePenguin(legionName, penguin);
         }
 
@@ -75,30 +76,54 @@ public class ArrangementManager : Singleton<ArrangementManager>
         var highDataList = prevSaveDataList.Count >= dataList.Count ? prevSaveDataList : dataList;
         var lowDataList = prevSaveDataList.Count >= dataList.Count ? dataList : prevSaveDataList;
 
-        bool isDataListIncreased = prevSaveDataList.SequenceEqual(highDataList);
+        bool isCountEqual = prevSaveDataList.Count == dataList.Count;
+        bool isDataListIncreased = prevSaveDataList.Equals(highDataList);
 
-        // highDataList를 반복
-        foreach (var data1 in highDataList)
+
+        if (isCountEqual) //만약 이전 데이터와 현재 데이터의 개수가 같다면
         {
-            bool found = false;
-            // lowDataList를 반복
-            foreach (var data2 in lowDataList)
+            //이런 느낌
+            //1 1 2->이전
+            //1 1 3->현재
+            //remove-> 2
+            //add-> 3
+
+            for (int i = 0; i < dataList.Count; ++i)
             {
-                if (data1.Equals(data2))
+                //데이터가 서로 다르다면
+                if (!prevSaveDataList[i].Equals(dataList[i])) 
                 {
-                    found = true;
-                    break;
+                    removeDataList.Add(prevSaveDataList[i]);
+                    addDataList.Add(dataList[i]);
                 }
             }
 
-            if (!found)
+        }//end if
+
+        else
+        {
+            foreach (var data1 in highDataList)
             {
-                if (isDataListIncreased)
-                    removeDataList.Add(data1);
-                else
-                    addDataList.Add(data1);
+                bool found = false;
+                // lowDataList를 반복
+                foreach (var data2 in lowDataList)
+                {
+                    if (data1.Equals(data2))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    if (isDataListIncreased) //이전 데이터가 더 많다면
+                        removeDataList.Add(data1);
+                    else
+                        addDataList.Add(data1);
+                }
             }
-        }
+        }//end else
 
         //초기화
         prevSaveDataList = dataList.ToList();

@@ -1,9 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
-using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 
 public class LegionInventory : LegionUI
@@ -15,6 +10,7 @@ public class LegionInventory : LegionUI
     {
         foreach (var data in currentRemovePenguinList) //군단에서 지웠는데 저장 취소하면
         {
+
             //인벤에 들어간 펭귄을 빼줘
             legion.RemovePenguin(PenguinManager.Instance.GetDefaultInfoDataByType(data.PenguinType));
         }
