@@ -82,7 +82,7 @@ public class RandomGroundGenerator : MonoBehaviour
 
         curground.SetGroundInfo(transform,
                                 groundPos,
-                                _groundConfigurer.SetGroundElements(curground.transform).Enemies);
+                                _groundConfigurer.SetGroundElements(curground.transform));
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {

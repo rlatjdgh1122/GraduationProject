@@ -79,12 +79,8 @@ public class BuildingItemInfo
     public int MaxInstallableCount { get { return _maxInstallableCount; } }
 
     [SerializeField]
-    private Resource _necessaryResources; //이거 여러개로 나중에
-    public Resource NecessaryResource { get { return _necessaryResources; } }
-
-    [SerializeField]
-    private int necessaryResourceCount;
-    public int NecessaryResourceCount { get { return necessaryResourceCount; } }
+    private BuildingNecessaryResourceData[] _necessaryResources; //이거 여러개로 나중에
+    public BuildingNecessaryResourceData[] NecessaryResource { get { return _necessaryResources; } }
 
     [SerializeField]
     private int necessaryWokerCount;

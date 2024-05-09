@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnemyDeadController : EntityDeadController<Enemy>
+public class EnemyDeadController : EntityDeadController<Enemy>  
 {
     public override void OnDied()
     {

@@ -80,7 +80,7 @@ public abstract class BaseBuilding : WorkableObject
 
         try
         {
-            _buildingItemInfo= _buildingDatabaseSO.BuildingItems.Find(idx => idx.ID == BuildingInfoCompo.ID);
+            _buildingItemInfo = _buildingDatabaseSO.BuildingItems.Find(idx => idx.ID == BuildingInfoCompo.ID);
         }
         catch
         {

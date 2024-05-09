@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class BaseConfigurer
 {
-    private readonly float D_setposY = 1.9f;
-    private readonly float D_groundRadius = 5f;
-    private readonly float D_checkDistance = 1.5f;
+    private readonly float setposY = 1.9f;
+    private readonly float groundRadius = 5f;
+    private readonly float checkDistance = 1.5f;
 
     protected bool isBossWave => WaveManager.Instance.CurrentWaveCount % 5 == 0; // 보스 나올 웨이브인지
 
@@ -29,13 +29,13 @@ public abstract class BaseConfigurer
 
         do
         {
-            randomPos = (Vector3)Random.insideUnitCircle * D_groundRadius;
-            randomPos.y = D_setposY;
+            randomPos = (Vector3)Random.insideUnitCircle * groundRadius;
+            randomPos.y = setposY;
 
             positionFound = true;
             foreach (Vector3 prevPos in previousElementsPositions)
             {
-                if (Vector3.Distance(randomPos, prevPos) < D_checkDistance)
+                if (Vector3.Distance(randomPos, prevPos) < checkDistance)
                 {
                     positionFound = false;
                     break;

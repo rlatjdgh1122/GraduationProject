@@ -37,7 +37,7 @@ public class BuildingUpgradePanel : NexusPopupUI
         buildingName.text = $"{_building.Name}";
         buildingIcon.sprite = _building.UISprite;
         buildingDescription.text = _building.Description;
-        needResource.text = $"{_building.NecessaryResourceCount}";
+        //needResource.text = $"{_building.NecessaryResourceCount}";
     }
 
     public override void ShowPanel()

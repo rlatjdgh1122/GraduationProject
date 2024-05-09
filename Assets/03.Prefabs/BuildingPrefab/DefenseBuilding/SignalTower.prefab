@@ -1878,6 +1878,7 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
 --- !u!114 &-2356955855008387440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1892,11 +1893,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: e69cc9216a0563343811438b7b2f637b, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
-  _noiseValue: 0
-  _workMotionCount: 0
+  _noiseValue: 10
+  _maxNoiseValue: 30
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
     type: 2}
