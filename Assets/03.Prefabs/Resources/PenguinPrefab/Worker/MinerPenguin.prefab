@@ -567,6 +567,7 @@ GameObject:
   - component: {fileID: 6638283895259091045}
   - component: {fileID: 6161773999422883443}
   - component: {fileID: 2113119573920546667}
+  - component: {fileID: -533090356303984962}
   m_Layer: 11
   m_Name: MinerPenguin
   m_TagString: Player
@@ -608,7 +609,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 653e880614eb72b4eaea6216831949d7, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   innerDistance: 0.6
   attackDistance: 0.6
@@ -723,6 +723,19 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
+--- !u!114 &-533090356303984962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246060547474294284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b301e4122abcb40aa320446e03ccd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3356639390848272701
 GameObject:
   m_ObjectHideFlags: 0

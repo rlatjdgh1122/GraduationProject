@@ -4,6 +4,7 @@ public class EnemyAttackState : EnemyBaseState
 
     public EnemyAttackState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
+
     }
 
     public override void EnterState()

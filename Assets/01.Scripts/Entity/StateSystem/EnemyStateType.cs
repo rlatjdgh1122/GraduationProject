@@ -4,6 +4,7 @@
     Idle,
     Move,
     Chase,
+    MustChase,
     Attack,
     Reached,
     #endregion

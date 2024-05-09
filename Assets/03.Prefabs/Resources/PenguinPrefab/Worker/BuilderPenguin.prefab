@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 6862465046669073606}
   - component: {fileID: 2903813738742699797}
   - component: {fileID: 624789098691894468}
+  - component: {fileID: -6961816874575762487}
   m_Layer: 11
   m_Name: BuilderPenguin
   m_TagString: Player
@@ -395,7 +396,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 14ca9786062de834b945d3035fb74bf9, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   innerDistance: 1.5
   attackDistance: 1.5
@@ -510,6 +510,19 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
+--- !u!114 &-6961816874575762487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201609750135565740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b301e4122abcb40aa320446e03ccd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2410999649083284830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,6 +1062,7 @@ MonoBehaviour:
   _targetLayer:
     serializedVersion: 2
     m_Bits: 524288
+  _workerType: 0
 --- !u!1 &5259133823558789827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1567,7 @@ MonoBehaviour:
   _targetLayer:
     serializedVersion: 2
     m_Bits: 0
+  _workerType: 0
 --- !u!1 &8013478831731988371
 GameObject:
   m_ObjectHideFlags: 0

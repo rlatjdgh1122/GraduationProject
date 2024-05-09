@@ -61,6 +61,8 @@ public class EnemyBaseState : EnemyState
     {
         _triggerCalled = true;
 
+        _enemy.FindNearestTarget();
+
         if (_enemy.CurrentTarget != null)
             _enemy.MoveToCurrentTarget();
     }

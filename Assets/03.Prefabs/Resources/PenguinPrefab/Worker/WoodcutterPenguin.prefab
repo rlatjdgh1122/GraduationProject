@@ -926,6 +926,7 @@ GameObject:
   - component: {fileID: 3812089106538513192}
   - component: {fileID: 8669519319662747354}
   - component: {fileID: 3486859772933137063}
+  - component: {fileID: 8449351305717132051}
   m_Layer: 11
   m_Name: WoodcutterPenguin
   m_TagString: Player
@@ -967,7 +968,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 509c2b8f29ce00e46a82c0b693537cb6, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   innerDistance: 1
   attackDistance: 1
@@ -1082,6 +1082,19 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
+--- !u!114 &8449351305717132051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060159250630821954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b301e4122abcb40aa320446e03ccd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4279176648412829521
 GameObject:
   m_ObjectHideFlags: 0

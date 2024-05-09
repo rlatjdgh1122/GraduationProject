@@ -3023,6 +3023,7 @@ GameObject:
   - component: {fileID: 3154745532205694356}
   - component: {fileID: 5651710013477756690}
   - component: {fileID: 810055416098890755}
+  - component: {fileID: -9035185120275507805}
   m_Layer: 19
   m_Name: ArcherTower
   m_TagString: Untagged
@@ -3086,7 +3087,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 8fc08aac16ec9e847a6008f8199dba34, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
   _noiseValue: 5
@@ -3177,6 +3177,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
 --- !u!156049354 &4819009244482005
 Grid:
   m_ObjectHideFlags: 0
@@ -3236,6 +3237,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-9035185120275507805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540469605114991844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d72ec85a9e013f43874730541dadba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6588380504112972365
@@ -3772,6 +3785,7 @@ GameObject:
   - component: {fileID: 129024818522644526}
   - component: {fileID: 5381207105396026729}
   - component: {fileID: 5671312330621396606}
+  - component: {fileID: 1375320442018182776}
   m_Layer: 0
   m_Name: ArcherTowerPenguin
   m_TagString: Player
@@ -3813,7 +3827,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 8df715c0c4adac647872ce3d5ae7c4aa, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   innerDistance: 4
   attackDistance: 1.5
@@ -3938,6 +3951,7 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
 --- !u!156049354 &129024818522644526
 Grid:
   m_ObjectHideFlags: 0
@@ -3982,6 +3996,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1375320442018182776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7942364164716095772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8011740571656895044

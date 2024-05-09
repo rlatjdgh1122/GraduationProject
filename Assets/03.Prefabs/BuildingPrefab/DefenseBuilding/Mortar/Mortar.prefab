@@ -18764,6 +18764,7 @@ GameObject:
   - component: {fileID: 2784336708232331575}
   - component: {fileID: 4301404278305045225}
   - component: {fileID: 3988667966935956856}
+  - component: {fileID: 3660120355349940761}
   m_Layer: 19
   m_Name: Mortar
   m_TagString: Untagged
@@ -18850,6 +18851,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
 --- !u!114 &7523030673536527664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18896,7 +18898,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 7d120fb5ecb1fd74ead29a93667d830e, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
   _noiseValue: 5
@@ -18968,6 +18969,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.166693, y: 1.6621112, z: 2.216033}
   m_Center: {x: 0.28224355, y: 0.33105537, z: -0.60801625}
+--- !u!114 &3660120355349940761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841486384569458009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa29ad058effdc94d899542b4dd785a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6892617321503786158
 GameObject:
   m_ObjectHideFlags: 0

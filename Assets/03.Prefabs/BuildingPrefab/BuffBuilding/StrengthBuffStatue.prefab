@@ -1130,6 +1130,7 @@ GameObject:
   - component: {fileID: 5282128203786667868}
   - component: {fileID: 8219931268960883709}
   - component: {fileID: 4725740827886887584}
+  - component: {fileID: 4030283614382440730}
   m_Layer: 19
   m_Name: StrengthBuffStatue
   m_TagString: Untagged
@@ -1186,7 +1187,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 8fc08aac16ec9e847a6008f8199dba34, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
   _noiseValue: 5
@@ -1242,6 +1242,7 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls: []
+  IsDead: 0
 --- !u!65 &5282128203786667868
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1289,6 +1290,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4030283614382440730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626319666108112526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5723f61385494e94b98fe624c8ab747d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5645419006487348993
