@@ -21,8 +21,14 @@ public class LegionUI : InitLegionInventory
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
+            if (ChangedInCurrentLegion())
+            {
+                UIManager.Instance.ShowWarningUI("�������ּ���");
+                return;
+            }
+
             _showHP = !_showHP;
 
             ShowHP();
@@ -31,28 +37,22 @@ public class LegionUI : InitLegionInventory
 
     private void ShowHP()
     {
-        if(_showHP)
+        if (_showHP)
         {
-            foreach(var hp in currentLegionList)
+            foreach (var hp in currentLegionList)
             {
                 var penguin = PenguinManager.Instance.GetPenguinByInfoData(hp);
-
-                if (penguin == null)
-                {
-                    Debug.Log("dkd");
-                }
+                
                 float curHp = penguin.HealthCompo.currentHealth;
                 float maxHp = penguin.HealthCompo.maxHealth;
 
                 float hpPercent = curHp / maxHp;
 
-                Debug.Log($"HP : {hp},  Current HP : {curHp}, Max HP : {maxHp}, HP Percent : {hpPercent}");
-
                 slotList[hp.SlotIdx].HpValue(hpPercent);
             }
-            foreach(var slot in slotList)
+            foreach (var slot in slotList)
             {
-                if(slot.Data != null)
+                if (slot.Data != null)
                     slot.ShowHP();
             }
         }
@@ -74,13 +74,13 @@ public class LegionUI : InitLegionInventory
         _generalCountText.text = $"{currentGeneral} / 1";
 
         ColorBoolean(currentPenguinCnt >= maxLegion, _soliderCountText);
-        _soliderCountText.text 
+        _soliderCountText.text
             = $"{currentPenguinCnt} / {maxLegion}";
     }
 
     private void ColorBoolean(bool value, TextMeshProUGUI text)
     {
-        if(value)
+        if (value)
         {
             text.color = Color.red;
         }

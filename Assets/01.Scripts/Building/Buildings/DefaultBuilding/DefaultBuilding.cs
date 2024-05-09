@@ -10,7 +10,7 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
-    [SerializeField] private PenguinStoreUI _penguinSpawnUI;
+    private PenguinStoreUI _penguinSpawnUI;
     [SerializeField] private RectTransform _constructionStationUI;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
@@ -34,6 +34,8 @@ public class DefaultBuilding : BaseBuilding
         base.Awake();
 
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
+
+        _penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
 
         SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
         Installed();
