@@ -18,6 +18,20 @@ public class ResourceManager : Singleton<ResourceManager>
         resourceDictionary = new Dictionary<ResourceDataSO, Resource>();
     }
 
+    public ResourceDataSO[] resourceArray;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            AddResource(resourceArray[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            AddResource(resourceArray[1]);
+        }
+    }
+
     public void AddResource(ResourceDataSO resourceData, int count = 1)
     {
         if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
@@ -42,10 +56,12 @@ public class ResourceManager : Singleton<ResourceManager>
             {
                 resourceStack.Remove(resource);
                 resourceDictionary.Remove(resourceData);
+                OnUIUpdate(null, 0);
             }
             else //그게 아니라면 그냥 Stack값 count만큼 감소시킴
             {
                 resource.RemoveStack(count);
+                OnUIUpdate(resource, count);
             }
         }
     }
