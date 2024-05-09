@@ -1,3 +1,4 @@
+using AssetKits.ParticleImage;
 using DG.Tweening;
 using System.Collections;
 using TMPro;
@@ -14,6 +15,7 @@ public class NexusUpgradePanel : NexusPopupUI
     [SerializeField] private Image _unlockedImage;
     [SerializeField] private TextMeshProUGUI _unlockedName;
     [SerializeField] private RectTransform _element;
+    [SerializeField] private ParticleImage _particleImage;
 
     private Coroutine _panelCoroutine;
 
@@ -65,6 +67,7 @@ public class NexusUpgradePanel : NexusPopupUI
     {
         base.ShowPanel();
 
+        _particleImage.Play();
         PanelLogic();
         UpdateUI();
     }
