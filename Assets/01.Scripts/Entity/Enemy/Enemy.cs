@@ -17,15 +17,19 @@ public class Enemy : Entity
     protected float nexusDistance;
 
     public PassiveDataSO passiveData = null;
+
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
-    private IDeadable _deadCompo = null;
     #endregion
+
     public Nexus NexusTarget = null;
 
     public bool IsMove = false;
     public bool IsProvoked = false;
     public bool UseAttackCombo = false;
+
+    public bool IsTargetInInnerRangeWhenTargetNexus => CurrentTarget != null &&
+                           Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= 100;
 
     public bool IsTargetInInnerRange => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
@@ -66,7 +70,6 @@ public class Enemy : Entity
         }
 
         AttackCompo = GetComponent<EntityAttackData>();
-        _deadCompo = GetComponent<IDeadable>();
         NexusTarget = GameManager.Instance.NexusTrm.GetComponent<Nexus>();
 
         if (passiveData != null)
@@ -93,15 +96,16 @@ public class Enemy : Entity
         CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
     }
 
-    protected override void HandleDie()
-    {
-        _deadCompo.OnDied();
-    }
-
     public virtual void AnimationTrigger()
     {
 
     }
+
+     protected override void HandleHit()
+    {
+
+    }
+
 
     public void MoveToNexus()
     {
@@ -165,13 +169,7 @@ public class Enemy : Entity
     {
 
     }
+
+   
     #endregion
-
-    public override void Init()
-    {
-        base.Init();
-
-
-        _deadCompo.OnResurrected();
-    }
 }

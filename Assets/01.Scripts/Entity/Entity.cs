@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(FeedbackController))]
 public abstract class Entity : TargetObject
 {
     public float innerDistance = 4f;
@@ -33,10 +32,6 @@ public abstract class Entity : TargetObject
 
         DamageCasterCompo?.SetOwner(this);
     }
-    /*private void OnEnable()
-    {
-        DamageCasterCompo.SetPosition();
-    }*/
 
     protected override void Start()
     {
@@ -46,14 +41,6 @@ public abstract class Entity : TargetObject
     protected override void Update()
     {
 
-    }
-
-    protected override void HandleHit()
-    {
-    }
-
-    protected override void HandleDie()
-    {
     }
 
     public void Provoke(int provokeCount, float duration, float radius, LayerMask targetLayer)
