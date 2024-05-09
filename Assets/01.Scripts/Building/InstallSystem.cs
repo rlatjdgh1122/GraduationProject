@@ -34,6 +34,13 @@ public class InstallSystem : MonoBehaviour
 
     private BuildingItemInfo _info;
 
+    private NexusUIPresenter _nexusUIPresenter;
+
+    private void Awake()
+    {
+        _nexusUIPresenter = FindObjectOfType<NexusUIPresenter>();
+    }
+
     private void Start()
     {
         StopInstall();
@@ -123,6 +130,7 @@ public class InstallSystem : MonoBehaviour
 
 
             _info.CurrentInstallCount++;
+            _nexusUIPresenter.UpdateRecieverUI();
 
             UIManager.Instance.ShowWarningUI("설치 완료!");
 
