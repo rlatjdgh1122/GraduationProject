@@ -83,7 +83,17 @@ public class Penguin : Entity
 
     public Army owner { get; set; }
     public Army MyArmy => owner;
-    public MovefocusMode MoveFocusMode => owner.MoveFocusMode;
+
+    public MovefocusMode MoveFocusMode
+    {
+        get
+        {
+            if (owner != null)
+                return owner.MoveFocusMode;
+
+            return MovefocusMode.Battle;
+        }
+    }
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 

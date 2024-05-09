@@ -11,21 +11,21 @@ public class Arrow : PoolableMono
     protected DamageCaster _damageCaster;
 
     private void OnEnable()
-    {  
+    {
         _rigid = GetComponent<Rigidbody>();
         _damageCaster = GetComponent<DamageCaster>();
         StartCoroutine(WaitForDestroy());
     }
 
     public virtual void Setting(TargetObject owner, LayerMask layer)
-    {  
-        _damageCaster.SetOwner(owner);
-        _damageCaster.TargetLayer = layer; 
+    {
+        _damageCaster.SetOwner(owner, false);
+        _damageCaster.TargetLayer = layer;
     }
 
     public void Fire(Vector3 dir)
     {
-        _rigid.AddForce(dir * _bulletPower, ForceMode.Impulse);  
+        _rigid.AddForce(dir * _bulletPower, ForceMode.Impulse);
     }
 
     private IEnumerator WaitForDestroy()
