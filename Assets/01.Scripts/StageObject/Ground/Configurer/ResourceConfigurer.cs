@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class ResourceConfigurer : BaseConfigurer
 {
-    private readonly string[] _resourceNames;
     private readonly ResourceGeneratePattern[] _resourceGeneratePattern;
 
-    public ResourceConfigurer(Transform transform, string[] resourceNames, ResourceGeneratePattern[] resourceGeneratePattern) : base(transform)
+    public ResourceConfigurer(Transform transform, ResourceGeneratePattern[] resourceGeneratePattern) : base(transform)
     {
-        _resourceNames = resourceNames;
         _resourceGeneratePattern = resourceGeneratePattern;
     }
 
@@ -32,7 +30,6 @@ public class ResourceConfigurer : BaseConfigurer
                 ResourceObject spawnResource = PoolManager.Instance.Pop(spawnResourceType.ToString()) as ResourceObject;
                 SetPosition(spawnResource.gameObject, transform, previousElementsPositions);
                 resources[i] = spawnResource;
-                Debug.Log(spawnResource);
             }
         }
 

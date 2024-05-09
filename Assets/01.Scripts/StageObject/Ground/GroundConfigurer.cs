@@ -16,11 +16,6 @@ public class GroundConfigurer : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField]
-    private GameObject[] _resourcePrefabs;
-
-    [Space]
-
-    [SerializeField]
     private List<GameObject> _enemyPrefabs = new List<GameObject>();
 
     [Space]
@@ -49,7 +44,6 @@ public class GroundConfigurer : MonoBehaviour
                                                               _bossPrefabs.Select(prefab => prefab.name).ToArray());
 
         ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
-                                                                       _resourcePrefabs.Select(prefab => prefab.name).ToArray(),
                                                                        _resourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
 
         RewardConfigurer rewardConfigurer = new RewardConfigurer(groundTrm,
