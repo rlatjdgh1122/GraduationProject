@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RandomGroundGenerator : MonoBehaviour
+public class RandomComingEnemiesGenerator : MonoBehaviour  
 {
     // 빙하와 육각형은 다른 것이다. 빙하들이 모여서 육각형을 만드는 거임
 
@@ -19,6 +20,11 @@ public class RandomGroundGenerator : MonoBehaviour
     private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
 
     private GroundConfigurer _groundConfigurer;
+
+    [SerializeField]
+    private TutorialGroundInfoDataSO _tutorialGroundInfoDataSO;
+
+    private int curWave => WaveManager.Instance.CurrentWaveCount;
 
     private Ground SpawnGlaciers()
     {
@@ -66,8 +72,6 @@ public class RandomGroundGenerator : MonoBehaviour
 
     private void GlacierSetPos()
     {
-        // position는 randomDistance로 랜덤한 거리에 있는 위치로
-        // rotation은 GetCurAngleBetweenGlacier으로 조절
         int realMakedHexagonCount = makedHexagonCount + 1;
 
         Ground curground = _curHexagon_Grounds.Dequeue();
@@ -111,7 +115,32 @@ public class RandomGroundGenerator : MonoBehaviour
             AddGlacierToCurHexagon();
         }
 
-        GlacierSetPos();
+        if(curWave < 10) // 튜토리얼이면 정해진대로
+        {
+            TutorialGenerateRaft();
+            TutorialGlacierSetPos();
+        }
+        else // 아니면 랜덤으로
+        {
+            GlacierSetPos();
+            //GenerateRaft(); // 일단 걍 안 할게
+        }
+    }
+
+    private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
+    {
+        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
+        {
+            GlacierSetPos();
+        }
+    }
+
+    private void TutorialGlacierSetPos()
+    {
+        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingBoatCount; i++)
+        {
+            Debug.Log("배 생성");
+        }
     }
 
     private void OnDisable()
