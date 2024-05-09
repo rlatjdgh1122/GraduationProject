@@ -31,8 +31,8 @@ public class RangeAttackableEntity : EntityAttackData
         }
 
 
-        /*_firePos.LookAt(new Vector3(curtarget.transform.position.x,
-            curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));*/
+        _firePos.LookAt(new Vector3(curtarget.transform.position.x,
+            curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
 
         Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
         //Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
