@@ -9,6 +9,7 @@ public class StorePanel : PopupUI
 {
     private Button _legionChangeButton;
     private LegionInventoryUI _legionUI;
+    private PenguinSpawner _spawner;
 
     public override void Awake()
     {
@@ -16,6 +17,7 @@ public class StorePanel : PopupUI
 
         _legionChangeButton = transform.Find("LegionBtn").GetComponent<Button>();
         _legionUI = FindObjectOfType<LegionInventoryUI>();
+        _spawner  = FindObjectOfType<PenguinSpawner>();
 
         _legionChangeButton.onClick.RemoveAllListeners();
         _legionChangeButton.onClick.AddListener(() =>
@@ -28,6 +30,8 @@ public class StorePanel : PopupUI
     public override void HidePanel()
     {
         base.HidePanel();
+
+        _spawner.ChangeSpawnUIBool(false);
     }
 
     public override void ShowPanel()
