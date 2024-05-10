@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6621659390814758508}
   - component: {fileID: 3455670932353543958}
   m_Layer: 5
-  m_Name: Weapon_Panel
+  m_Name: PenguinTypePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 1035335611706526310}
   - component: {fileID: 569284264908398548}
   m_Layer: 5
-  m_Name: WeaponName_Txt
+  m_Name: PenguinType_Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1255,81 +1255,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &2662580561574797375
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5862723148631943958}
-  - component: {fileID: 9039126326420553033}
-  - component: {fileID: 1394387018493735165}
-  m_Layer: 5
-  m_Name: ---------Line---------
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &5862723148631943958
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2662580561574797375}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1195040682722288973}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -899}
-  m_SizeDelta: {x: 0, y: 3}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &9039126326420553033
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2662580561574797375}
-  m_CullTransparentMesh: 0
---- !u!114 &1394387018493735165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2662580561574797375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2d3ad7539b766c9479ec07409de19d03, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2819853169715816490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,7 +2298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.2}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2418,11 +2343,10 @@ MonoBehaviour:
   _panelDelayTime: 0
   _soundName: 16
   _uiGroup: 7
-  CanShowAnotherUI: 0
   _statItemObject: {fileID: 4543051452280786580, guid: 6423b0f4b7af2254ea0cb95dc92b0ea1,
     type: 3}
   _statItemCount: 3
-  _penguinTypeTxt: {fileID: 0}
+  _penguinTypeTxt: {fileID: 569284264908398548}
   _penguinNameTxt: {fileID: 3772967333066037875}
   _penguinIcon: {fileID: 2770328346552838290}
   _legionNameTxt: {fileID: 8468944584868319156}
@@ -2871,7 +2795,6 @@ RectTransform:
   - {fileID: 7425095210369198204}
   - {fileID: 6940870015042663520}
   - {fileID: 1358235535851022086}
-  - {fileID: 5862723148631943958}
   - {fileID: 5374079487208761705}
   - {fileID: 2024715047924556446}
   - {fileID: 3017663957757834993}
