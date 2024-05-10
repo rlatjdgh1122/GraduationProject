@@ -1101,7 +1101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: ee1ec43b8b4d82d4c927d68871bb5d47, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   innerDistance: 5.1
   attackDistance: 5
@@ -1173,6 +1172,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
 --- !u!114 &2295223863668456905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2786,6 +2786,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0165
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0165
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2827,7 +2842,7 @@ PrefabInstance:
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.2
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
