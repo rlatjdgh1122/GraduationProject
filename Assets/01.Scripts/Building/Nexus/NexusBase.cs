@@ -24,7 +24,7 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && LegionInventoryManager.Instance.CanShowPanel)
+        if (!WaveManager.Instance.IsBattlePhase)
         {
             UIManager.Instance.ShowPanel("NexusUI");
         }

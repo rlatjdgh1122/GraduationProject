@@ -54,6 +54,12 @@ public class PenguinInfoUI : PopupUI
         _penguinIcon.sprite = _ownerInfoData.PenguinIcon;
         _legionNameTxt.text = _ownerInfoData.LegionName;
     }
+
+    public void HidePenguinInfoUI()
+    {
+        UIManager.Instance.HidePanel("PenguinInfoUI");
+    }
+
     public override void HidePanel()
     {
         base.HidePanel();
@@ -65,6 +71,7 @@ public class PenguinInfoUI : PopupUI
     {
         base.ShowPanel();
 
+        UIManager.Instance.HidePanel("StorePanel");
         ShowStat();
         ShowInfo();
     }

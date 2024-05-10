@@ -145,13 +145,8 @@ public class GeneralUIPresenter : PopupUI
     }
     #endregion
 
-    public override void ShowPanel()
+    public void HideGeneralUI()
     {
-        base.ShowPanel();
-    }
-
-    public override void HidePanel()
-    {
-        base.HidePanel();
+        UIManager.Instance.HidePanel("GeneralUI");
     }
 }
