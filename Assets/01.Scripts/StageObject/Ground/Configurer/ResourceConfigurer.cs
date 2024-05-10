@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ResourceConfigurer : BaseConfigurer
+public class ResourceConfigurer : BaseElementsConfigurer
 {
     private readonly ResourceGeneratePattern[] _resourceGeneratePattern;
 

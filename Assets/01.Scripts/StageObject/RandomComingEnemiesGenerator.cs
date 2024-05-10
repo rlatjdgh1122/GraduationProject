@@ -26,7 +26,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
-    private readonly string raft = "raft";
+    private readonly string raftName = "raft";
 
     private Ground SpawnGlaciers()
     {
@@ -88,9 +88,9 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         Vector3 groundPos = new Vector3(transform.localPosition.x, 0f, _spawnDistance * realMakedHexagonCount);
 
-        curground.SetGroundInfo(transform,
-                                groundPos,
-                                _groundConfigurer.SetGroundElements(curground.transform));
+        curground.SetComingObjectInfo(transform,
+                                      groundPos,
+                                      _groundConfigurer.SetComingObjectElements(curground.transform));
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {
@@ -133,14 +133,17 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
     {
-        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingBoatCount; i++)
+        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
         {
-            Boat boat = PoolManager.Instance.Pop(raft) as Boat;
-            Vector3 randomPos = UnityEngine.Random.insideUnitSphere.normalized * _spawnDistance;
-            randomPos.y = 0f;
+            Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
+            Vector3 randomRaftPos = UnityEngine.Random.insideUnitSphere.normalized * _spawnDistance;
+            randomRaftPos.y = 0f;
 
-            boat.transform.position = randomPos;
+            raft.transform.position = randomRaftPos;
 
+            raft.SetComingObjectInfo(transform,
+                                    randomRaftPos,
+                                   _groundConfigurer.SetComingObjectElements(raft.transform));
         }
     }
 

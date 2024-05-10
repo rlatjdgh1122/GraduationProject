@@ -8,5 +8,5 @@ public struct ComingEnemiesInfo
 {
     public int ComingGroundsCount;
 
-    public int ComingBoatCount;
+    public int ComingRaftCount;
 }

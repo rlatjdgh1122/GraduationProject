@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RewardConfigurer : BaseConfigurer
+public class RewardConfigurer : BaseElementsConfigurer
 {
     private readonly string _normalRewardNames, _bossRewardNames;
 

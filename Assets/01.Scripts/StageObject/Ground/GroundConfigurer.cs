@@ -5,53 +5,25 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum GroundElementsType
+public class GroundConfigurer : ComingObjectConfigurer
 {
-    Enemy,
-    Resource,
-    Reward
-}
-
-public class GroundConfigurer : MonoBehaviour
-{
-    [Header("Settings")]
-    [SerializeField]
-    private List<GameObject> _enemyPrefabs = new List<GameObject>();
-
-    [Space]
-
-    [SerializeField]
-    private List<GameObject> _bossPrefabs = new List<GameObject>();
-
-    [Space]
-
-    [SerializeField]
-    private GameObject _normalRewardPrefab, _bossRewardPrefab;
-
-    [Space]
-
-    [SerializeField]
-    private ResourceGeneratePatternDataSO _resourceGeneratePatternDataSO;
-
-    private List<Vector3> _previousElementsPositions = new List<Vector3>();
-
-    public GroundElements SetGroundElements(Transform groundTrm)
+    public override ComingElements SetComingObjectElements(Transform groundTrm)
     {
         _previousElementsPositions.Clear();
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
-                                                              _enemyPrefabs.Select(prefab => prefab.name).ToArray(),
-                                                              _bossPrefabs.Select(prefab => prefab.name).ToArray());
+                                                              _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
+                                                              _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray());
 
         ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
-                                                                       _resourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
+                                                                       _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
 
         RewardConfigurer rewardConfigurer = new RewardConfigurer(groundTrm,
-                                                                 _normalRewardPrefab.name,
-                                                                 _bossRewardPrefab.name);
+                                                                 _comingElementsDataSO.NormalRewardPrefab.name,
+                                                                 _comingElementsDataSO.BossRewardPrefab.name);
 
-        return new GroundElements(resourceConfigurer.SetResource(_previousElementsPositions),
-                                  rewardConfigurer.SetReward(_previousElementsPositions),
-                                  enemyConfigurer.SetEnemy(_previousElementsPositions));
+        return new GroundElements(enemyConfigurer.SetEnemy(_previousElementsPositions),
+                                  resourceConfigurer.SetResource(_previousElementsPositions),
+                                  rewardConfigurer.SetReward(_previousElementsPositions));
     }
 }

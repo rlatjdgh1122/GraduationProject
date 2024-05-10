@@ -13,7 +13,7 @@ public enum OutlineColorType
 }
 
 [RequireComponent(typeof(Outline))]
-public class Ground : MonoBehaviour
+public class Ground : MonoBehaviour, IComingObject
 {
     private bool isInstalledBuilding;
 
@@ -101,13 +101,13 @@ public class Ground : MonoBehaviour
         SignalHub.OnIceArrivedEvent += ActivateEnemies;
     }
 
-    public void SetGroundInfo(Transform parentTransform, Vector3 position, GroundElements groundElements)
+    public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
     {
         _groundMove.SetGroundPos(parentTransform,
                                  position);
 
         SetEnemies(groundElements.Enemies);
-        SetElementsParent(groundElements);
+        SetElementsParent(groundElements as GroundElements);
     }
 
     private void SetElementsParent(GroundElements elements)
@@ -118,7 +118,7 @@ public class Ground : MonoBehaviour
         }
     }
 
-    private void SetEnemies(Enemy[] enemies)
+    public void SetEnemies(Enemy[] enemies)
     {
         _enemies = enemies;
     }
