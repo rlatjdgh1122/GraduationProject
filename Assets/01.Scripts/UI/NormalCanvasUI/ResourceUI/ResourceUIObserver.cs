@@ -75,7 +75,7 @@ public class ResourceUIObserver : PopupUI
         if (resource.CurrentWorkerCount >= resource.RequiredWorkerCount)
         {
             WorkerManager.Instance.SendWorkers(resource.CurrentWorkerCount, resource);
-            HidePanel();
+            HideResourceUI();
         }
         else
         {

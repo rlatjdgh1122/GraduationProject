@@ -20,10 +20,10 @@ public class StorePanel : PopupUI
         _spawner  = FindObjectOfType<PenguinSpawner>();
 
         _legionChangeButton.onClick.RemoveAllListeners();
-        _legionChangeButton.onClick.AddListener(() =>
+        _legionChangeButton.onClick.AddListener(() => 
         {
             _legionUI.ShowLegionUIPanel();
-            HidePanel();
+            UIManager.Instance.HidePanel("StorePanel");
         });
     }
 
