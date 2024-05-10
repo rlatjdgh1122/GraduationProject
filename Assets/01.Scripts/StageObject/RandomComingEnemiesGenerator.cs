@@ -26,6 +26,8 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
+    private readonly string raft = "raft";
+
     private Ground SpawnGlaciers()
     {
         Ground ground = _allGrounds.Dequeue();
@@ -133,10 +135,12 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingBoatCount; i++)
         {
+            Boat boat = PoolManager.Instance.Pop(raft) as Boat;
             Vector3 randomPos = UnityEngine.Random.insideUnitSphere.normalized * _spawnDistance;
             randomPos.y = 0f;
-            GameObject obj = new GameObject();
-            obj.transform.position = randomPos;
+
+            boat.transform.position = randomPos;
+
         }
     }
 
