@@ -135,7 +135,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
     {
-        Debug.Log(_tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount);
         for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
         {
             Raft raft = PoolManager.Instance.Pop(raftName) as Raft;

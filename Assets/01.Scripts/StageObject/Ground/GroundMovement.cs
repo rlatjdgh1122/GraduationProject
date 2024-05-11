@@ -32,8 +32,11 @@ public class GroundMovement : MonoBehaviour
         {
             if (Physics.Raycast(_closestPointDirToCenter, (_centerPos - _closestPointDirToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
             {
+                Debug.Log(hit.transform.position);
                 return hit.point;
             }
+
+            Debug.Log("?!");
             return Vector3.zero;
         }
     }
