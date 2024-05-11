@@ -52,7 +52,6 @@ public class CameraSystem : MonoBehaviour
     private Quaternion _vCamstartRotation;
 
     private Vector3 prevPos = Vector3.zero;
-    private float prevTargetFieldOfView = 0f;
 
     private void Awake()
     {
@@ -67,29 +66,10 @@ public class CameraSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        //if (UIManager.Instance.currentPopupUI.Count != 0)
-        //{
-        //    if (IsMoving == true)
-        //    {
-        //        IsMoving = false;
-        //    }
-        //    if (isRotating == true)
-        //    {
-        //        isRotating = false;
-        //    }
-        //}
-        //else
-        //{
-        //    if (IsMoving == false)
-        //    {
-        //        IsMoving = true;
-        //    }
-        //}
         CameraControl();
-        CameraMove();
-        //Move();
-        CameraZoomHandle();
         CameraRotate();
+        CameraZoomHandle();
+        CameraMove();
     }
 
     private void CameraControl()
@@ -160,36 +140,6 @@ public class CameraSystem : MonoBehaviour
 
             transform.position += moveDir * _moveSpeed * Time.unscaledDeltaTime;
         }
-    }
-
-    private void Move()
-    {
-        Vector3 inputDir = new Vector3(0, 0, 0);
-
-        if (Input.GetMouseButtonDown(2))
-        {
-            _dragPanMoveActive = true;
-            _lastMousePosition = Input.mousePosition;
-        }
-
-        if (Input.GetMouseButtonUp(2))
-        {
-            _dragPanMoveActive = false;
-        }
-
-        if (_dragPanMoveActive)
-        {
-            Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
-
-            inputDir.x = mouseMovementDelta.x * _dragSpeed;
-            inputDir.z = mouseMovementDelta.y * _dragSpeed;
-
-            _lastMousePosition = Input.mousePosition;
-        }
-
-        Vector3 moveDir = transform.forward * inputDir.x + transform.right * inputDir.z;
-
-        transform.position += moveDir * _moveSpeed * Time.unscaledDeltaTime;
     }
 
     private void CameraZoomHandle()

@@ -11,21 +11,20 @@ public class PenguinInfoUI : PopupUI
     private EntityInfoDataSO _ownerInfoData => PenguinManager.Instance.GetCurrentInfoData;
     private BaseStat _ownerStat => PenguinManager.Instance.GetCurrentStat;
 
-    #region Á¤º¸Ã¢ º¯¼ö
+    #region ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½
 
-    [Header("Á¤º¸Ã¢ º¯¼ö")]
+    [Header("ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private TextMeshProUGUI _penguinTypeTxt = null;
     [SerializeField] private TextMeshProUGUI _penguinNameTxt = null;
+    [SerializeField] private TextMeshProUGUI _penguinDescriptionTxt = null;
+    [SerializeField] private TextMeshProUGUI _penguinPersonalityTxt = null;
     [SerializeField] private Image _penguinIcon = null;
     [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
-    [SerializeField] private Image _atkSlider = null;
-    [SerializeField] private Image _defSlider = null;
-    [SerializeField] private Image _rngSlider = null;
 
     #endregion
 
-    #region ½ºÅÈ¾ÆÀÌÅÛ º¯¼ö
-    [Header("½ºÅÈÃ¢ º¯¼ö")]
+    #region ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [Header("ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private Transform Attack_StatItemTrm = null;
     [SerializeField] private Transform Armor_StatItemTrm = null;
 
@@ -46,7 +45,6 @@ public class PenguinInfoUI : PopupUI
     {
         ShowAttackStat(_ownerStat.damage);
         ShowAttackStat(_ownerStat.criticalChance);
-        ShowAttackStat(_ownerStat.criticalValue);
 
         ShowAromorStat(_ownerStat.armor);
         ShowAromorStat(_ownerStat.maxHealth);
@@ -55,10 +53,8 @@ public class PenguinInfoUI : PopupUI
 
     protected virtual void ShowInfo()
     {
-        _atkSlider.DOFillAmount(_ownerInfoData.atk, 0.5f);
-        _defSlider.DOFillAmount(_ownerInfoData.hp, 0.5f);
-        _rngSlider.DOFillAmount(_ownerInfoData.range, 0.5f);
-
+        _penguinPersonalityTxt.text = _ownerInfoData.PenguinPersonality;
+        _penguinDescriptionTxt.text = _ownerInfoData.PenguinDescription;
         _penguinTypeTxt.text = _ownerInfoData.PenguinTypeName;
         _penguinNameTxt.text = _ownerInfoData.PenguinName;
         _penguinIcon.sprite = _ownerInfoData.PenguinIcon;
@@ -74,7 +70,8 @@ public class PenguinInfoUI : PopupUI
     {
         base.HidePanel();
         Init();
-
+        _rectTransform.DOScale(Vector3.zero, 0.5f);
+        PenguinManager.Instance.DummyPenguinList.ForEach(p => p.OutlineCompo.enabled = false);
         PenguinManager.Instance.DummyPenguinCameraCompo.DisableCamera();
     }
 
@@ -83,6 +80,8 @@ public class PenguinInfoUI : PopupUI
         base.ShowPanel();
 
         UIManager.Instance.HidePanel("StorePanel");
+
+        _rectTransform.DOScale(Vector3.one, 0.9f);
         ShowStat();
         ShowInfo();
     }
@@ -95,6 +94,7 @@ public class PenguinInfoUI : PopupUI
             _attackStatItemList.Add(statItem);
         }
     }
+
     private void SpawnArmorSlotItem(int count)
     {
         for (int i = 0; i < count; ++i)
@@ -103,15 +103,17 @@ public class PenguinInfoUI : PopupUI
             _armorStatItemList.Add(statItem);
         }
     }
+
     private void ShowAttackStat(Stat stat)
     {
         string statName = _ownerStat.GetStatNameByStat(stat);
 
-        //Á¤º¸Ã¢ÀÌ ¶ç¿öÁ®ÀÖ´Â »óÈ²¿¡¼­ ¶Ç ¶ç¿ï¶§ ¿¹¿ÜÃ³¸®ÇØ¾ßµÊ
+        //ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½È²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¶§ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ï¿½Ø¾ßµï¿½
         _attackStatItemList[_attackStatCount].Modify(stat, statName);
 
         ++_attackStatCount;
     }
+
     private void ShowAromorStat(Stat stat)
     {
         string statName = _ownerStat.GetStatNameByStat(stat);
@@ -119,6 +121,7 @@ public class PenguinInfoUI : PopupUI
 
         ++_armorStatCount;
     }
+
     private void Init()
     {
         _attackStatCount = 0;

@@ -35,13 +35,11 @@ public abstract class BaseStat : ScriptableObject
             { maxHealth,         "최대체력"},
             { armor,             "방어력"},
             { evasion,           "회피 확률"},
-
             { damage,            "공격력"},
             { criticalChance,    "크리티컬 확률"},
-            { criticalValue,     "크리티컬 데미지"},
-
         };
     }
+
     public string GetStatNameByStat(Stat stat)
     {
         if (statTypeToNameDic.TryGetValue(stat, out string name))
@@ -52,10 +50,12 @@ public abstract class BaseStat : ScriptableObject
 
         return "등록되지 않은 스탯";
     }
+
     public virtual int GetMaxHealthValue()
     {
         return maxHealth.GetValue() + (vitality.GetValue() * 5);
     }
+
     public int GetDamage()
     {
         return damage.GetValue() + strength.GetValue();
