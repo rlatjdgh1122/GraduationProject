@@ -4,97 +4,27 @@ using Unity.AI.Navigation;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GroundMovement : MonoBehaviour
+public class GroundMovement : ComingObjetMovement
 {
-    [SerializeField] private float _moveDuration = 5f;
-
-    [SerializeField] private Color startColor;
-    [SerializeField] private Color targetColor;
-    [SerializeField] private Color endColor;
-
-    [SerializeField]
-    private LayerMask _groundLayer;
-
-    #region ÇÁ·ÎÆÛÆ¼
-    private Outline _outline;
-    #endregion
-
     private GameObject _waveEffect;
 
-    private MeshCollider _meshCollider;
 
-    private Vector3 _centerPos;
-    private Vector3 _closestPointDirToCenter => _meshCollider.ClosestPoint(_centerPos); // ¹Ýµå½Ã _meshColliderÀÇ convex¸¦ ÄÑÁà¾ßÇÔ
-
-    private Vector3 RaycastHit_ToCenterPos
+    protected override void Awake()
     {
-        get
-        {
-            if (Physics.Raycast(_closestPointDirToCenter, (_centerPos - _closestPointDirToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
-            {
-                Debug.Log(hit.transform.position);
-                return hit.point;
-            }
-
-            Debug.Log("?!");
-            return Vector3.zero;
-        }
-    }
-
-    private Vector3 _targetPos;
-
-    private void Awake()
-    {
-        _outline = GetComponent<Outline>();
+        base.Awake();
 
         _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
-        _meshCollider = transform.Find("TopArea").GetComponent<MeshCollider>();
+
+        SignalHub.OnIceArrivedEvent += DisableWaveEffect;
     }
 
-    public void GroundMove()
+    public override void Move()
     {
         //ºùÇÏ ¿Ã ¶§ ÀÌÆåÆ®
         _waveEffect.gameObject.SetActive(true);
 
-        transform.DOMove(_targetPos, _moveDuration).
-            OnComplete(() =>
-            {
-                SoundManager.Play2DSound(SoundName.GroundHit);
-
-                // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
-                CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
-                                                     () => Define.CamDefine.Cam.ShakeCam.enabled = false);
-
-                _waveEffect.gameObject.SetActive(false);
-
-                WaveManager.Instance.OnIceArrivedEventHanlder();
-                SignalHub.OnBattlePhaseStartEvent -= GroundMove;
-
-                //DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, targetColor, 0.7f).OnComplete(() =>
-                //{
-                //    WaveManager.Instance.OnIceArrivedEventHanlder();
-
-                //    Debug.Log(_enemies.Length);
-                //    foreach (Enemy enemy in _enemies)
-                //    {
-                //        enemy.IsMove = true;
-                //        enemy.NavAgent.enabled = true;
-                //    }
-                //    SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandle;
-                //});
-            });
-
-
+        base.Move();
     }
-
-    //private void SetOutline()
-    //{
-    //    DOTween.To(() => _outline.OutlineColor, color => _outline.OutlineColor = color, endColor, 0.7f).OnComplete(() =>
-    //    {
-    //        _outline.enabled = false;
-    //        SignalHub.OnBattlePhaseEndEvent -= GroundMove;
-    //    });
-    //}
 
     public void SetGroundPos(Transform parentTransform, Vector3 position)
     {
@@ -130,9 +60,22 @@ public class GroundMovement : MonoBehaviour
         _targetPos = targetVec;
     }
 
-    public void SetMoveTarget(Transform trm)
+    private void DisableWaveEffect()
     {
-        transform.SetParent(trm);
-        _centerPos = trm.position;
+        _waveEffect.gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnIceArrivedEvent -= DisableWaveEffect;
+    }
+
+    protected override void Arrived()
+    {
+        SoundManager.Play2DSound(SoundName.GroundHit);
+
+        // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
+        CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
+                                             () => Define.CamDefine.Cam.ShakeCam.enabled = false);
     }
 }

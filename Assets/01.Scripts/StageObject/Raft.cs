@@ -7,8 +7,6 @@ public class Raft : PoolableMono, IComingObject
 {
     private Enemy[] _enemies;
 
-    private Transform _elementsParent;
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -17,7 +15,7 @@ public class Raft : PoolableMono, IComingObject
         }
     }
 
-    public void OnSink()
+    private void OnSink()
     {
         transform.DOMoveY(-15f, 10f).OnComplete(() => gameObject.SetActive(false));
     }
@@ -40,4 +38,5 @@ public class Raft : PoolableMono, IComingObject
     {
         _enemies = enemies;
     }
+
 }

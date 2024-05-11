@@ -26,8 +26,6 @@ public class Ground : MonoBehaviour, IComingObject
 
     private Enemy[] _enemies;
 
-    private Transform _elementsParent;
-
     private void Awake()
     {
         _outline = GetComponent<Outline>();
@@ -40,8 +38,6 @@ public class Ground : MonoBehaviour, IComingObject
         {
 
         }
-
-        _elementsParent = transform.Find("TopArea").transform;
     }
 
     private void ActivateEnemies()
@@ -56,7 +52,7 @@ public class Ground : MonoBehaviour, IComingObject
     private void GroundMoveHandler()
     {
         SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
-        _groundMove.GroundMove();
+        _groundMove.Move();
     }
 
     public void InstallBuilding() //땅에 설치되었다고 처리
