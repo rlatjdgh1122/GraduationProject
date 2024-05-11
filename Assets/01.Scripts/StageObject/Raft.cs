@@ -24,8 +24,7 @@ public class Raft : PoolableMono, IComingObject
 
     public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
     {
-        //SetEnemies(groundElements.Enemies);
-        //SetElementsParent(groundElements as GroundElements);
+        SetEnemies(groundElements.Enemies);
     }
 
     private void ActivateEnemies()
@@ -34,14 +33,6 @@ public class Raft : PoolableMono, IComingObject
         {
             enemy.NavAgent.enabled = true;
             enemy.IsMove = true;
-        }
-    }
-
-    private void SetElementsParent(GroundElements elements)
-    {
-        foreach (var element in elements.Elements)
-        {
-            element.SetParent(_elementsParent);
         }
     }
 

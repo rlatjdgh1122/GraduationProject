@@ -139,7 +139,9 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
         {
             Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
-            Vector3 randomRaftPos = UnityEngine.Random.insideUnitSphere.normalized * _spawnDistance;
+            Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * _spawnDistance;
+            float raftZ = randomRaftPos.y;
+            randomRaftPos.z = raftZ;
             randomRaftPos.y = 0f;
 
             raft.transform.position = randomRaftPos;

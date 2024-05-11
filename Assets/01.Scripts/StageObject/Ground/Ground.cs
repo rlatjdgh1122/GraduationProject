@@ -107,15 +107,6 @@ public class Ground : MonoBehaviour, IComingObject
                                  position);
 
         SetEnemies(groundElements.Enemies);
-        SetElementsParent(groundElements as GroundElements);
-    }
-
-    private void SetElementsParent(GroundElements elements)
-    {
-        foreach (var element in elements.Elements)
-        {
-            element.SetParent(_elementsParent);
-        }
     }
 
     public void SetEnemies(Enemy[] enemies)
