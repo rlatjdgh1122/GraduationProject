@@ -59,7 +59,15 @@ public class UnitInformationUI : MonoBehaviour
 
         _penguinIcon.gameObject.SetActive(true);
         _penguinIcon.sprite = so.PenguinIcon;
-        _classNameText.text = so.JobType.ToString();
+
+        string jobTypeStr;
+
+        if (so.JobType == PenguinJobType.General)
+            jobTypeStr = $"군단장";
+        else
+            jobTypeStr = $"병사";
+
+        _classNameText.text = jobTypeStr;
         _nameText.text = so.PenguinName;
 
         _atkSlide.DOFillAmount(so.atk, 0.5f);

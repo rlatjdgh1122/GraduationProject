@@ -10,8 +10,8 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
-    private PenguinStoreUI _penguinSpawnUI;
-    [SerializeField] private RectTransform _constructionStationUI;
+    //private PenguinStoreUI _penguinSpawnUI;
+    //[SerializeField] private RectTransform _constructionStationUI;
 
     [SerializeField] private float onSpawnUIYPosValue = 320;
 
@@ -35,9 +35,9 @@ public class DefaultBuilding : BaseBuilding
 
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
 
-        _penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
+        //_penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
 
-        SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
+        //SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
         Installed();
 
     }
@@ -63,7 +63,7 @@ public class DefaultBuilding : BaseBuilding
             ChangeSpawnUIBool(true);
         }
 
-        StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+        //StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
 
         if (_constructionStation.isSpawnUIOn)
         {
@@ -98,21 +98,21 @@ public class DefaultBuilding : BaseBuilding
 
     public void ChangeSpawnUIBool(bool value) => isSpawnUIOn = value;
 
-    private void DisableAllUI()
-    {
-        if (isSpawnUIOn)
-        {
-            if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
-            {
-                StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
-            }
-            else
-            {
-                //_penguinSpawnUI.OnDisableStorePanel();
-            }
-        }
+    //private void DisableAllUI()
+    //{
+    //    if (isSpawnUIOn)
+    //    {
+    //        if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
+    //        {
+    //            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+    //        }
+    //        else
+    //        {
+    //            //_penguinSpawnUI.OnDisableStorePanel();
+    //        }
+    //    }
         
-    }
+    //}
 
     protected override void Running()
     {
