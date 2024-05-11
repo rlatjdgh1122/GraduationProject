@@ -30,12 +30,13 @@ public class DummyPenguin : PoolableMono
             return value;
         }
     }
+
     #region Components
     public Animator AnimatorCompo { get; protected set; }
     public NavMeshAgent NavAgent { get; protected set; }
     public Outline OutlineCompo { get; private set; }
-
     #endregion
+
     public DummyStateMachine DummyStateMachine { get; private set; }
 
     private void Awake()
@@ -45,6 +46,7 @@ public class DummyPenguin : PoolableMono
 
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm.GetComponent<Animator>();
+        OutlineCompo = GetComponent<Outline>();
 
         Setting();
     }
@@ -88,7 +90,10 @@ public class DummyPenguin : PoolableMono
     private void OnMouseDown()
     {
         if(UIManager.Instance.CheckShowAble(UIType.Info))
+        {
             PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
+            OutlineCompo.enabled = true;
+        }
     }
 
     #region AgentQuality

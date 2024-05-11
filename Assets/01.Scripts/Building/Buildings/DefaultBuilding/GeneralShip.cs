@@ -8,8 +8,6 @@ public class GeneralShip : MonoBehaviour
     [SerializeField] private Transform innerTrm;
     [SerializeField] private Transform outTrm;
 
-    bool isArrived = false;
-
     private void Awake()
     {
         SignalHub.OnBattlePhaseStartEvent += MoveShip;

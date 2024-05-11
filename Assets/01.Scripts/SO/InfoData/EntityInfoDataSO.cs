@@ -18,6 +18,8 @@ public class EntityInfoDataSO : ScriptableObject
     public string PenguinName;
     public string Weapon;
     public string PenguinTypeName;
+    public string PenguinDescription;
+    public string PenguinPersonality;
 
     [Range(0f, 1f)] public float hp;
     [Range(0f, 1f)] public float atk;

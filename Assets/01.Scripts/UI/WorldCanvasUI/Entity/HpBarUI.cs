@@ -8,14 +8,6 @@ public class HpBarUI : WorldUI
     [SerializeField] private float _waitToDisappear;
     [SerializeField] private Image _hpbar;
     private Coroutine _fadeOutCoroutine;
-    private Sequence _fadeSequence;
-
-    public override void Awake()
-    {
-        base.Awake();
-
-        _fadeSequence = DOTween.Sequence();
-    }
 
     public override void Update()
     {
@@ -36,8 +28,10 @@ public class HpBarUI : WorldUI
 
     public void UpdateHpbarUI(float current, float max)
     {
-        _fadeSequence.Append(canvas.DOFade(1, 0.5f));
-        _fadeSequence.Append(_hpbar.DOFillAmount(current / max, 0.5f));
+        UIManager.Instance.InitializHudTextSequence();
+
+        UIManager.Instance.HudTextSequence.Append(canvas.DOFade(1, 0.5f))
+        .Join(_hpbar.DOFillAmount(current / max, 0.5f));
 
         if (_fadeOutCoroutine != null)
         {
@@ -48,8 +42,9 @@ public class HpBarUI : WorldUI
 
     public void FadeOutImmediately()
     {
-        _fadeSequence.Kill();
-        _fadeSequence.Append(canvas.DOFade(0, 0.3f));
+        UIManager.Instance.InitializHudTextSequence();
+
+        UIManager.Instance.HudTextSequence.Append(canvas.DOFade(0, 0.3f));
     }
 
     private IEnumerator FadeOutTime()

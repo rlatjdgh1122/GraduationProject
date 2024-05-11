@@ -25,7 +25,7 @@ public class StatItem : IStatable
         string value = stat.GetValue().ToString();
         string percentTxt = SetPercentText(percent);
 
-        _value.text = $"{percentTxt} {value}";
+        _value.text = $"{value}{percentTxt}";
         _statName.text = statName;
     }
 
@@ -48,6 +48,6 @@ public class StatItem : IStatable
         else
             return string.Empty;
 
-        return $"<size=30><color={color}>(<size=20>{arrow}</size> {percent}%)</color></size>";
+        return $"<size=30><color={color}>(<size=20>{arrow}</size>{percent}%)</color></size>";
     }
 }
