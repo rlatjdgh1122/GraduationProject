@@ -24,12 +24,15 @@ public class PhaseChangeButton : MonoBehaviour
         _button = GetComponent<Button>();
         _button.onClick.AddListener(ChangePhase);
 
+    }
+    private void OnEnable()
+    {
         SignalHub.OnBattlePhaseEndEvent += OnOffButton;
     }
 
     private void OnDisable()
     {
-        SignalHub.OnBattlePhaseEndEvent += OnOffButton;
+        SignalHub.OnBattlePhaseEndEvent -= OnOffButton;
     }
 
     public void ChangePhase()
