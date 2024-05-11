@@ -1,21 +1,25 @@
+using ArmySystem;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using ArmySystem;
-using System.Net.NetworkInformation;
 
 [RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
 {
-    public enum PriorityType
+
+    public float moveSpeed
     {
-        High = 50,
-        Low = 51,
+        get
+        {
+            if (owner is not null)
+            {
+                return owner.MoveSpeed;
+            }
+
+            return 4f;
+        }
     }
 
-    public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
 
     public PassiveDataSO passiveData = null;
@@ -24,7 +28,7 @@ public class Penguin : Entity
 
     public bool ArmyTriggerCalled = false;
     public bool WaitForCommandToArmyCalled = true;
-    public bool SuccessfulToArmyCalled = false; 
+    public bool SuccessfulToArmyCalled = false;
 
 
     private Coroutine movingCoroutine = null;
@@ -114,6 +118,7 @@ public class Penguin : Entity
         {
             NavAgent.speed = moveSpeed;
         }
+
         AttackCompo = GetComponent<EntityAttackData>();
 
         if (passiveData != null)
@@ -186,9 +191,15 @@ public class Penguin : Entity
     public void SetOwner(Army army)
     {
         owner = army;
+
+        if (NavAgent != null)
+        {
+            NavAgent.speed = moveSpeed;
+        }
+
     }
 
-    #region AI ����
+    #region State Method
     public virtual void AnimationTrigger()
     {
 
@@ -227,10 +238,11 @@ public class Penguin : Entity
             transform.rotation = targetRotation;
         }
     }
+    public virtual void StateInit() { }
 
     #endregion
 
-    #region ���� ����
+    #region Set Stat
     public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);
@@ -244,13 +256,8 @@ public class Penguin : Entity
 
     #endregion
 
-    #region ������ ����
-    //��Ʋ����϶� �����̰� ������ ���콺 ��ġ�� �̵� �ڵ�
+    #region Move Method
 
-    /// <summary>
-    /// ��ġ�� ��ġ�� �̵�
-    /// </summary>
-    /// <param name="mousePos"></param>
     public void MoveToMySeat(Vector3 mousePos)
     {
         if (NavAgent.isActiveAndEnabled)
@@ -313,17 +320,6 @@ public class Penguin : Entity
     }
     #endregion
 
-    #region ���� ��� ���� ����
-
-    public virtual void StateInit() { }
-
-    #endregion
-
-    public void SetNavmeshPriority(PriorityType type)
-    {
-        NavAgent.avoidancePriority = (int)type;
-    }
-
     protected override void HandleHit()
     {
     }
@@ -335,5 +331,5 @@ public class Penguin : Entity
         owner = null;
     }
 
-  
+
 }

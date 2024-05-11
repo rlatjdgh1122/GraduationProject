@@ -104,7 +104,7 @@ public class ArmyMovement : MonoBehaviour
         isCanMove = false;
         successfulSeatMyPos = false;
 
-        curArmy.IsCanReadyAttackInCurArmySoldiersList = false;
+        //curArmy.IsCanReadyAttackInCurArmySoldiersList = false;
 
         foreach (var item in armySoldierList)
         {
@@ -125,7 +125,7 @@ public class ArmyMovement : MonoBehaviour
 
         yield return new WaitUntil(() => result == true);
 
-        curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+        //curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
     }
 
     /// <summary>
