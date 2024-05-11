@@ -28,7 +28,7 @@ public class ResourceConfigurer : BaseElementsConfigurer
             for (int j = 0; j < spawnResourcePattern.resourceCounts[i]; j++)
             {
                 ResourceObject spawnResource = PoolManager.Instance.Pop(spawnResourceType.ToString()) as ResourceObject;
-                SetPosition(spawnResource.gameObject, transform, previousElementsPositions);
+                SetElementsPosition(spawnResource.gameObject, transform, previousElementsPositions);
                 resources[i] = spawnResource;
             }
         }

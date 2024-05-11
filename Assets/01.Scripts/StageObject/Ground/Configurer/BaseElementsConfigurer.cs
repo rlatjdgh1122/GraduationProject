@@ -17,11 +17,6 @@ public abstract class BaseElementsConfigurer
         this.transform = transform;
     }
 
-    public void SetElements()
-    {
-
-    }
-
     protected Vector3 GetRandomPosition(List<Vector3> previousElementsPositions)
     {
         Vector3 randomPos;
@@ -48,7 +43,7 @@ public abstract class BaseElementsConfigurer
         return randomPos;
     }
 
-    protected void SetPosition(GameObject spawnedElement, Transform transform, List<Vector3> previousElementsPositions)
+    protected void SetElementsPosition(GameObject spawnedElement, Transform transform, List<Vector3> previousElementsPositions)
     {
         spawnedElement.transform.SetParent(transform);
 

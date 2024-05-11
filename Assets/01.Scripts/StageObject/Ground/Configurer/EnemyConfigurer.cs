@@ -28,7 +28,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         {
             Enemy spawnBoss = PoolManager.Instance.Pop(_bossQueue.Dequeue()) as Enemy;
 
-            SetPosition(spawnBoss.gameObject, transform, previousElementsPositions);
+            SetElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
             SetEnemyNav(spawnBoss);
 
             enemyCountProportion = 0.25f; // 보스 나오면 짜바리들은 조금만 나오게
@@ -47,7 +47,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
             Enemy spawnEnemy = PoolManager.Instance.Pop(enemyName) as Enemy;
 
             SetEnemyNav(spawnEnemy);
-            SetPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
+            SetElementsPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
 
             spawnedEnemies.Add(spawnEnemy);
         }

@@ -20,6 +20,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
 
     private GroundConfigurer _groundConfigurer;
+    private RaftConfigurer _raftConfigurer;
 
     [SerializeField]
     private TutorialGroundInfoDataSO _tutorialGroundInfoDataSO;
@@ -37,6 +38,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private void Awake()
     {
         _groundConfigurer = transform.Find("GroundConfigurer").GetComponent<GroundConfigurer>();
+        _raftConfigurer = transform.Find("RaftConfigurer").GetComponent<RaftConfigurer>();
     }
 
     private void Start()
@@ -133,6 +135,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
     {
+        Debug.Log(_tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount);
         for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
         {
             Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
@@ -142,8 +145,8 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             raft.transform.position = randomRaftPos;
 
             raft.SetComingObjectInfo(transform,
-                                    randomRaftPos,
-                                   _groundConfigurer.SetComingObjectElements(raft.transform));
+                                     randomRaftPos,
+                                     _raftConfigurer.SetComingObjectElements(raft.transform));
         }
     }
 
