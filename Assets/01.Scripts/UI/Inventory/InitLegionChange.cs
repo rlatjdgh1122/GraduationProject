@@ -32,8 +32,8 @@ public class InitLegionChange : PopupUI, ICreateSlotUI
             LegionChangeButton btn = Instantiate(_buttonPrefab);
             btn.transform.SetParent(_buttonParent);
 
-            btn.CreateBtn(i + 1, legion.LegionList()[i].Price);
-            if (!LegionInventoryManager.Instance.LegionList()[i].Locked)
+            btn.CreateBtn(i + 1, legion.LegionList[i].Price);
+            if (!LegionInventoryManager.Instance.LegionList[i].Locked)
                 btn.UnLocked();
 
             _buttonList.Add(btn);

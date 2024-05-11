@@ -22,8 +22,8 @@ public class StorePanel : PopupUI
         _legionChangeButton.onClick.RemoveAllListeners();
         _legionChangeButton.onClick.AddListener(() => 
         {
-            _legionUI.ShowLegionUIPanel();
             UIManager.Instance.HidePanel("StorePanel");
+            _legionUI.ShowLegionUIPanel();
         });
     }
 
