@@ -36,5 +36,7 @@ public class PenguinChaseState : State
     public override void ExitState()
     {
         base.ExitState();
+
+        ChaseExit();
     }
 }

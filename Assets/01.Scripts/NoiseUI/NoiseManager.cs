@@ -31,6 +31,8 @@ public class NoiseManager : Singleton<NoiseManager>
     public override void Awake()
     {
         _maxNosise = _initMaxNosise;
+        
+        //이거그냥 인슥페터로 하자 0.6 먹음
         _btn = FindObjectOfType<PhaseChangeButton>();
 
         AddViewNoise(_currentViewNoise);

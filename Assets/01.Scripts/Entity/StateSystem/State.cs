@@ -21,8 +21,6 @@ public class State
     #region Enter
     protected void IdleEnter()
     {
-        SignalHub.OnIceArrivedEvent += FindTarget;
-
         if (_navAgent.isOnNavMesh)
         {
             _navAgent?.ResetPath();
@@ -31,7 +29,7 @@ public class State
         }
 
         _penguin.StopImmediately();
-        _penguin.CurrentTarget = null;
+        //_penguin.CurrentTarget = null;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
@@ -68,7 +66,6 @@ public class State
         }
 
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
-        //그래서 애니메이션에서 속도를 줄엿음
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
     protected void ChaseEnter()
@@ -84,7 +81,7 @@ public class State
 
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
-            
+
         if (!_penguin.TargetLock)
         {
             _penguin.FindNearestEnemy();
@@ -117,10 +114,10 @@ public class State
     }
     protected void DeadEnter()
     {
-        _triggerCalled = true;
+        /*_triggerCalled = true;
         _penguin.CurrentTarget = null;
         _penguin.enabled = false;
-        _penguin.NavAgent.enabled = false;
+        _penguin.NavAgent.enabled = false;*/
     }
     #endregion
 
@@ -128,13 +125,23 @@ public class State
     protected void IdleExit()
     {
         //_penguin.SetNavmeshPriority(Penguin.PriorityType.Low);
-        SignalHub.OnIceArrivedEvent -= FindTarget;
+        //SignalHub.OnIceArrivedEvent -= FindTarget;
     }
     protected void AttackExit()
     {
         _penguin.AnimatorCompo.speed = 1;
+
         if (_penguin.CurrentTarget != null)
             _penguin.CurrentTarget.HealthCompo.OnDied -= DeadTarget;
+    }
+
+    protected void ChaseExit()
+    {
+
+    }
+    protected void MoveExit()
+    {
+
     }
     #endregion
 
@@ -176,10 +183,6 @@ public class State
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
         }
     }
-    protected void FindTarget()
-    {
-        _penguin.FindNearestEnemy();
-    }
 
     public virtual void EnterState()
     {
@@ -189,7 +192,7 @@ public class State
 
     public virtual void UpdateState()
     {
-        
+
     }
 
     public virtual void ExitState()

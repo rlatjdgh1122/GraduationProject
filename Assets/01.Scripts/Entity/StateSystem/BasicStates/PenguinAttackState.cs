@@ -33,9 +33,9 @@ public class PenguinAttackState : State
 
     public override void ExitState()
     {
-        AttackExit();
-
         base.ExitState();
+
+        AttackExit();
     }
 
     public override void AnimationTrigger()
