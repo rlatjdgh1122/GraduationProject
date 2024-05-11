@@ -7,49 +7,10 @@ using UnityEngine;
 
 public class WaveManager : Singleton<WaveManager>  
 {
-    #region 타이머 변수
-    [Header("Timer Settings")]
-    [SerializeField]
-    private float _startTime; // 웨이브 시작 시간
-    private bool _timerRunning; // 타이머 동작 여부
-
-    private void StartTimer()
-    {
-        _startTime = Time.time; // 시작 시간 기록
-        _timerRunning = true; // 타이머 시작
-    }
-
-    private void UpdateTimer()
-    {
-        if (_timerRunning)
-        {
-            float elapsedTime = Time.time - _startTime; // 경과 시간 계산
-
-            // MM:SS 형식으로 변환하여 텍스트로 표시
-            string minutes = Mathf.Floor(elapsedTime / 60).ToString("00");
-            string seconds = Mathf.Floor(elapsedTime % 60).ToString("00");
-            _timeText.SetText($"{minutes} : {seconds}");
-        }
-    }
-
-    private void ResetTimer()
-    {
-        _timeText.SetText("00 : 00"); // 타이머 초기화
-        _timerRunning = false; // 타이머 중지
-    }
-    #endregion
-
     #region 사용 변수들
 
     [Header("Wave Settings")]
     private Transform _tentTrm;
-
-
-    [Header("UI References")] //일단 임시로 여기에
-    [SerializeField]
-    private RectTransform _clockHandImgTrm;
-    [SerializeField]
-    private TextMeshProUGUI _timeText, _waveCntText, _enemyCntText;
 
     [Header("테스트 용")]
     public bool isWin;
@@ -61,11 +22,8 @@ public class WaveManager : Singleton<WaveManager>
 
     public bool IsBattlePhase = false;
     public bool IsArrived = false;
-    public bool CanTimer = true;
 
     //public event Action OnDummyPenguinInitTentFinEvent = null;
-
-    private int maxEnemyCnt;
 
     #endregion
 
@@ -114,32 +72,6 @@ public class WaveManager : Singleton<WaveManager>
         SignalHub.OnIceArrivedEvent += OnIceArrivedHandle;
     }
 
-    private void Start()
-    {
-        maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount(); // 테스트용
-    }
-
-    private void Update()
-    {
-        UpdateTimer(); // 타이머 업데이트
-
-        //if (IsBattlePhase)
-        //{
-            
-
-        //    //if (IsArrived)
-        //    //{
-        //    //    if (GameManager.Instance.GetCurrentPenguinCount() <= 0)
-        //    //        ShowDefeatUI();
-        //    //}
-        //}
-
-        if (Input.GetKeyDown(KeyCode.U)) //디버그
-        {
-            BattlePhaseStartEventHandler();
-        }
-    }
-
     private void OnIceArrivedHandle()
     {
         IsArrived = true;
@@ -147,11 +79,7 @@ public class WaveManager : Singleton<WaveManager>
 
     private void OnBattlePhaseStartHandle() // 전투페이즈 시작
     {
-        StartTimer(); //타이머를 시작
-
         IsBattlePhase = true;
-        maxEnemyCnt = GameManager.Instance.GetCurrentEnemyCount();
-        _waveCntText.SetText($"{CurrentWaveCount} 웨이브");
     }
 
     private void OnBattlePhaseEndHandle() // 전투페이즈 종료
@@ -162,20 +90,16 @@ public class WaveManager : Singleton<WaveManager>
         if (isWin)
         {
             currentWaveCount++;
-            List<Penguin> penguins = FindObjectsOfType<Penguin>().Where(p => p.enabled).ToList();
+            List<Penguin> penguins = FindObjectsOfType<Penguin>().Where(p => p.enabled).ToList(); // 이거 나중에 바꿔야함
             foreach (Penguin penguin in penguins)
             {
                 penguin.CurrentTarget = null;
             }
-            //_waveCntText.SetText($"Next Wave: {CurrentWaveCount}");
         }
         else
         {
             ShowDefeatUI();
         }
-
-        ResetTimer(); // 타이머 00:00으로 초기화
-        //_currentEnemyGround = null;
     }
 
     public void ShowDefeatUI()
@@ -185,7 +109,6 @@ public class WaveManager : Singleton<WaveManager>
 
     private void GetReward() // 보상 획득 함수
     {
-        ShowEffect();
         UIManager.Instance.ShowPanel("VictoryUI");
     }
 
@@ -194,27 +117,6 @@ public class WaveManager : Singleton<WaveManager>
         BattlePhaseEndEventHandler(true);
 
         UIManager.Instance.HidePanel("VictoryUI");
-    }
-
-    private void ShowEffect() // 이펙트
-    {
-        //try // 전투에서 이겼다면 적의 땅을 흡수한다. (색을 바꿈)
-        //{
-        //    _currentEnemyGround?.EndWave();
-
-        //    var mr = _currentEnemyGround.GetComponent<MeshRenderer>();
-        //    Color color = mr.material.color;
-
-        //    DOTween.To(() => color, c => color = c, targetColor, 3f).OnUpdate(() =>
-        //    {
-        //        mr.material.color = color;
-        //    });
-
-        //}
-        //catch
-        //{
-        //    Debug.Log("MeshRenderer is Missing Or Current Wave is First Wave");
-        //}
     }
 
     public void BattlePhaseStartEventHandler() // 전투페이즈 시작 이벤트 실행용 함수
