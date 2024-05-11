@@ -7,6 +7,8 @@ public class ArcherTowerDeadController : BuildingDeadController<ArcherTowerBuild
     public override void OnDied()
     {
         base.OnDied();
+
+        Debug.Log("Broken ArcherTower");
     }
 
     public override void OnResurrected()
