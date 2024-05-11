@@ -172,7 +172,7 @@ public class Penguin : Entity
 
     }
 
-    public virtual void OnPassiveStunEvent()
+    public virtual void OnPassiveHealthRatioEvent()
     {
 
     }

@@ -103,8 +103,8 @@ public class CustomPassiveInspectorEditor : Editor
        EditorGUILayout.BeginFoldoutHeaderGroup(HealthRatioEventGroup, "현재 체력의 몇 퍼센트 일 경우");
         if (HealthRatioEventGroup)
         {
-            EditorGUILayout.PropertyField(Passive_Ratio_Prop);
-            if (Passive_Ratio_Prop.boolValue)
+            EditorGUILayout.PropertyField(Passive_IsHealthRatioEventEvent_Prop);
+            if (Passive_IsHealthRatioEventEvent_Prop.boolValue)
             {
                 EditorGUILayout.PropertyField(Passive_Ratio_Prop);
             }

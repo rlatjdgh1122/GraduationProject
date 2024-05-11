@@ -48,7 +48,7 @@ public class ShieldPenguin : Penguin
         _stateMachine.Init(ShieldPenguinStateEnum.Idle);
     }
 
-    public override void OnPassiveStunEvent()
+    public override void OnPassiveHealthRatioEvent()
     {
         _stateMachine.ChangeState(ShieldPenguinStateEnum.Stun);
     }

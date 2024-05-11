@@ -49,7 +49,7 @@ public class ShieldBlockState : ShieldBaseState
     {
         if (StunCount > 0 && _penguin.CheckHealthRatioPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
         {
-            _penguin?.OnPassiveStunEvent();
+            _penguin?.OnPassiveHealthRatioEvent();
             StunCount--;
         }
         else
