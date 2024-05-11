@@ -14,9 +14,8 @@ public class DescriptionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField]
     private float _fadeTime;
 
-    public TextMeshProUGUI DescriptText;
 
-    public bool _canShowAll;
+    public TextMeshProUGUI DescriptText;
 
     private void Awake()
     {
@@ -27,21 +26,11 @@ public class DescriptionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        DescriptText.DOFade(1, _fadeTime);
+        DescriptText.alpha = 1;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        DescriptText.DOFade(0, _fadeTime);
-    }
-
-    public void ShowAllDescript(bool value)
-    {
-        _canShowAll = value;
-
-        if(_canShowAll)
-            DescriptText.DOFade(1, _fadeTime);
-        else
-            DescriptText.DOFade(0, _fadeTime);
+        DescriptText.alpha = 0;
     }
 }

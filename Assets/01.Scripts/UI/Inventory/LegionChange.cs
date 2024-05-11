@@ -50,11 +50,11 @@ public class LegionChange : InitLegionChange
 
     public void ChangeLegion(int legionNumber)
     {
-        if (legion.LegionList()[legionNumber].Locked) //군단이 잠겨있다면
+        if (legion.LegionList[legionNumber].Locked) //군단이 잠겨있다면
         {
             _buyPanel.ShowPanel(); //군단 사는 창 띄우기
             //군단을 살 수 있는지 체크하기
-            _buyPanel.CheckCanBuy(CostManager.Instance.Cost, legion.LegionList()[legionNumber].Price, legionNumber);
+            _buyPanel.CheckCanBuy(CostManager.Instance.Cost, legion.LegionList[legionNumber].Price, legionNumber);
         }
         else //안잠겨있다면
         {

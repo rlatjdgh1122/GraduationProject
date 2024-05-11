@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 [Serializable]
@@ -23,7 +24,8 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     private UnitInventoryData _selectData;
     public UnitInventoryData SelectData => _selectData;
 
-    public List<LegionInfo> _legionList = new();
+    [SerializeField] private List<LegionInfo> _legionList = new();
+    public List<LegionInfo> LegionList => _legionList;
     public int LegionCount => _legionList.Count;
 
     public override void Awake()
@@ -168,11 +170,6 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public bool ExcedLimitOfLegion()
     {
         return _legionInven.ExcedLimitOfLegion(CurrentLegion);
-    }
-
-    public List<LegionInfo> LegionList()
-    {
-        return _legionList;
     }
 
     public void ShowPenguinSituation(EntityInfoDataSO so, float percent)
