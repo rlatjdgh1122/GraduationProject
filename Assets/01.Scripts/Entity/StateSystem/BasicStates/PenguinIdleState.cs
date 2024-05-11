@@ -28,8 +28,8 @@ public class PenguinIdleState : State
 
     public override void ExitState()
     {
-        IdleExit();
-
         base.ExitState();
+
+        IdleExit();
     }
 }

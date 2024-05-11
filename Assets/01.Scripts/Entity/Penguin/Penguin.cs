@@ -14,17 +14,17 @@ public class Penguin : Entity
         High = 50,
         Low = 51,
     }
+
     public float moveSpeed = 4.5f;
     public float attackSpeed = 1f;
-    public int maxDetectedCount;
-    public float provokeRange = 25f;
 
     public PassiveDataSO passiveData = null;
-    #region ���� ������ ����
+
+    #region property
 
     public bool ArmyTriggerCalled = false;
-    public bool WaitForCommandToArmyCalled = true; //������ ������ ���� �� ���������� ���
-    public bool SuccessfulToArmyCalled = false; //������ ������ ���������� �ذ��ߴ°�
+    public bool WaitForCommandToArmyCalled = true;
+    public bool SuccessfulToArmyCalled = false; 
 
 
     private Coroutine movingCoroutine = null;
@@ -97,7 +97,15 @@ public class Penguin : Entity
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
-    private IDeadable _deadCompo = null;
+    private void OnEnable()
+    {
+        SignalHub.OnIceArrivedEvent += FindTarget;
+    }
+    private void OnDisable()
+    {
+        SignalHub.OnIceArrivedEvent -= FindTarget;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -107,7 +115,6 @@ public class Penguin : Entity
             NavAgent.speed = moveSpeed;
         }
         AttackCompo = GetComponent<EntityAttackData>();
-        _deadCompo = GetComponent<IDeadable>();
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
@@ -171,6 +178,11 @@ public class Penguin : Entity
     }
     #endregion
 
+    protected void FindTarget()
+    {
+        FindNearestEnemy();
+    }
+
     public void SetOwner(Army army)
     {
         owner = army;
@@ -189,7 +201,7 @@ public class Penguin : Entity
 
     public void FindNearestEnemy()
     {
-        CurrentTarget = FindNearestTarget<Enemy>(20f, TargetLayer);
+        CurrentTarget = FindNearestTarget<Enemy>(50f, TargetLayer);
     }
 
     public virtual void LookTarget()
