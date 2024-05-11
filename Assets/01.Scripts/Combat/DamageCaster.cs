@@ -110,6 +110,7 @@ public class DamageCaster : MonoBehaviour
     public bool CastDamage(float knbValue = 0f, float stunValue = 0f)
     {
         RaycastHit raycastHit;
+        //var dir = (_owner.CurrentTarget.transform.position - transform.position).normalized;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
 
         if (raycastSuccess
@@ -264,7 +265,7 @@ public class DamageCaster : MonoBehaviour
         return true;
     }
 
-    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float range = 0, float knbValue = 0f, float stunValue = 0f)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0f, float stunValue = 0f, float range = 2)
     {
         var Colls = Physics.OverlapSphere(transform.position, range, TargetLayer);
 
@@ -277,7 +278,7 @@ public class DamageCaster : MonoBehaviour
             var dir = (col.transform.position - transform.position).normalized;
             dir.y = 0;
 
-            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, range, TargetLayer);
 
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))

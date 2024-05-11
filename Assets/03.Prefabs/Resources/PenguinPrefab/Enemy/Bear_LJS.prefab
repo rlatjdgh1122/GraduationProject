@@ -1337,7 +1337,7 @@ Transform:
   m_GameObject: {fileID: 4743903598225806780}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1359,7 +1359,7 @@ MonoBehaviour:
   _hitType: 1
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 10240
+    m_Bits: 534528
 --- !u!1 &4791101812806097163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1769,10 +1769,10 @@ GameObject:
   - component: {fileID: 8774250041756432437}
   - component: {fileID: 4727469769408345316}
   - component: {fileID: 437750768202099827}
-  - component: {fileID: 1822430018049317374}
   - component: {fileID: 4248819816302077476}
   - component: {fileID: 213502241397231819}
   - component: {fileID: 1807684455055304711}
+  - component: {fileID: 8495907083747960534}
   m_Layer: 12
   m_Name: Bear_LJS
   m_TagString: Untagged
@@ -1790,8 +1790,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.93, y: 2.14, z: -9.42}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4213202519416074522}
   - {fileID: 7304590403432088105}
@@ -1818,22 +1818,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: d228f5d46cd24324aafce18405e4f8d1, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
-  innerDistance: 5
+  innerDistance: 10
   attackDistance: 2
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 526336
   moveSpeed: 3
   attackSpeed: 1
   rotationSpeed: 2
+  nexusDistance: 2
   passiveData: {fileID: 0}
   NexusTarget: {fileID: 0}
-  IsMove: 0
+  IsMove: 1
   IsProvoked: 0
-  IsTargetNexus: 0
-  UseAttackCombo: 0
+  UseAttackCombo: 1
 --- !u!114 &8774250041756432437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1853,46 +1852,10 @@ MonoBehaviour:
     m_Bits: 8
   WaterFallEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 406583729383344673}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2057805364948334985}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1822430018049317374}
-        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1926,6 +1889,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
 --- !u!114 &4727469769408345316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1959,51 +1923,29 @@ MonoBehaviour:
     SFXSound: 9
     Damage: 10
     KnbackValue: 1
-    stunValue: 0
+    StunValue: 0
+    Range: 3
   - hitType: 4
     SFXSound: 9
     Damage: 10
     KnbackValue: 1
-    stunValue: 0
+    StunValue: 0
+    Range: 3
   - hitType: 10
     SFXSound: 7
     Damage: 5
     KnbackValue: 0
-    stunValue: 0
+    StunValue: 0
+    Range: 3
   - hitType: 8
     SFXSound: 8
     Damage: 20
     KnbackValue: 2.5
-    stunValue: 0
+    StunValue: 0
+    Range: 3
   <ComboWindow>k__BackingField: 0.6
   _leftHandEffectTransform: {fileID: 6569985662893827367}
   _rightHandEffectTransform: {fileID: 6366179889654084239}
---- !u!143 &1822430018049317374
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6186144316036918896}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2.03
-  m_Radius: 0.4
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.55, z: 0}
 --- !u!195 &4248819816302077476
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2013,7 +1955,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6186144316036918896}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 15
   avoidancePriority: 50
@@ -2050,6 +1992,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &8495907083747960534
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6186144316036918896}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.62788594
+  m_Height: 1.796149
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.18979102, z: 0}
 --- !u!1 &6288274593364168463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2696,7 +2661,7 @@ GameObject:
   - component: {fileID: 406583729383344673}
   - component: {fileID: 4086947488554950655}
   m_Layer: 12
-  m_Name: WaterFeedback
+  m_Name: WaterFallFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

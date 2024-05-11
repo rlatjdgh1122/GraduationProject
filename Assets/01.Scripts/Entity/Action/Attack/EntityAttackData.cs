@@ -11,6 +11,7 @@ public class EntityAttackData : MonoBehaviour
         owner = GetComponent<Entity>();
     }
 
+    //range필요없음
     public virtual void AoEAttack(float knbValue, float stunValue, float range = 0)
     {
 

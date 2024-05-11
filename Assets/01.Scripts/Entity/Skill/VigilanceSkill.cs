@@ -28,6 +28,7 @@ public class VigilanceSkill : Skill
         Gorilla.DamageCasterCompo.SetPosition();
         OnVigilanceEvent?.Invoke();
         Gorilla.DamageCasterCompo.SetPosition();
+        Gorilla.HealthCompo.ApplyHeal(50);
         Gorilla.Stat.AddStat(_sizeUpDamage, StatType.Damage, StatMode.Increase);
         //Gorilla.AttackCompo.AoEAttack(0, 0.5f, 5f);
         Vector3 targetSize = (Gorilla.transform.localScale) * _sizeUpValue;
