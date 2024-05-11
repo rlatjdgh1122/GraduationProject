@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6923013871008912047}
   - component: {fileID: 7320257373663738630}
   - component: {fileID: 9089055526050408793}
+  - component: {fileID: 7596830286845428917}
   m_Layer: 0
   m_Name: raft
   m_TagString: Untagged
@@ -96,6 +97,22 @@ OffMeshLink:
   m_BiDirectional: 1
   m_Activated: 1
   m_AutoUpdatePositions: 0
+--- !u!114 &7596830286845428917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010324154374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ca6ae76f57521344801a2ec03a26189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveDuration: 5
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &429575290084872896
 GameObject:
   m_ObjectHideFlags: 0

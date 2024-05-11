@@ -269,7 +269,6 @@ public class WaveManager : Singleton<WaveManager>
     {
         SignalHub.OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
         SignalHub.OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
-        SignalHub.OnIceArrivedEvent -= OnIceArrivedEventHanlder;
     }
 
     public void CheckIsEndBattlePhase()
