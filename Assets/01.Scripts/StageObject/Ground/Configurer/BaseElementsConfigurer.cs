@@ -6,6 +6,7 @@ public abstract class BaseElementsConfigurer
 {
     private readonly float setposY = 1.9f;
     private readonly float groundRadius = 5f;
+    private readonly float raftRadius = 2f;
     private readonly float checkDistance = 1.5f;
 
     protected bool isBossWave => WaveManager.Instance.CurrentWaveCount % 5 == 0; // 보스 나올 웨이브인지
@@ -17,7 +18,7 @@ public abstract class BaseElementsConfigurer
         this.transform = transform;
     }
 
-    protected Vector3 GetRandomPosition(List<Vector3> previousElementsPositions)
+    protected Vector3 GetGroundRandomPosition(List<Vector3> previousElementsPositions)
     {
         Vector3 randomPos;
         bool positionFound = false;
@@ -43,13 +44,24 @@ public abstract class BaseElementsConfigurer
         return randomPos;
     }
 
-    protected void SetElementsPosition(GameObject spawnedElement, Transform transform, List<Vector3> previousElementsPositions)
+    protected void SetGroundElementsPosition(GameObject spawnedElement, Transform transform, List<Vector3> previousElementsPositions)
     {
         spawnedElement.transform.SetParent(transform);
 
-        Vector3 resourcePos = GetRandomPosition(previousElementsPositions);
+        Vector3 resourcePos = GetGroundRandomPosition(previousElementsPositions);
 
         spawnedElement.transform.localPosition = resourcePos;
+        spawnedElement.transform.localScale = Vector3.one;
+    }
+
+    protected void SetRaftElementsPosition(GameObject spawnedElement, Transform transform)
+    {
+        spawnedElement.transform.SetParent(transform);
+
+        Vector3 elementPos = Vector3.one;
+        elementPos *= 0.2f;
+
+        spawnedElement.transform.localPosition = elementPos;
         spawnedElement.transform.localScale = Vector3.one;
     }
 

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GroundConfigurer : ComingObjectConfigurer
 {
-    public override ComingElements SetComingObjectElements(Transform groundTrm)
+    public override ComingElements SetComingObjectElements(Transform groundTrm, bool isRaft = false)
     {
         _previousElementsPositions.Clear();
 
@@ -22,7 +22,7 @@ public class GroundConfigurer : ComingObjectConfigurer
                                                                  _comingElementsDataSO.NormalRewardPrefab.name,
                                                                  _comingElementsDataSO.BossRewardPrefab.name);
 
-        return new GroundElements(enemyConfigurer.SetEnemy(_previousElementsPositions),
+        return new GroundElements(enemyConfigurer.SetEnemy(_previousElementsPositions, isRaft),
                                   resourceConfigurer.SetResource(_previousElementsPositions),
                                   rewardConfigurer.SetReward(_previousElementsPositions));
     }

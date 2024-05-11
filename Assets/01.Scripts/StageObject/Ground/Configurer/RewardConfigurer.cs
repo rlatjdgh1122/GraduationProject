@@ -18,7 +18,7 @@ public class RewardConfigurer : BaseElementsConfigurer
         {
             CostBox spawnReward = PoolManager.Instance.Pop(_bossRewardNames) as CostBox;
 
-            SetElementsPosition(spawnReward.gameObject, transform, previousElementsPositions);
+            SetGroundElementsPosition(spawnReward.gameObject, transform, previousElementsPositions);
 
             return spawnReward;
         }
@@ -27,7 +27,7 @@ public class RewardConfigurer : BaseElementsConfigurer
         {
             CostBox spawnReward = PoolManager.Instance.Pop(_normalRewardNames) as CostBox;
 
-            SetElementsPosition(spawnReward.gameObject, transform, previousElementsPositions);
+            SetGroundElementsPosition(spawnReward.gameObject, transform, previousElementsPositions);
 
             return spawnReward;
         }

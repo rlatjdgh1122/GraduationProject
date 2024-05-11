@@ -18,7 +18,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         }
     }
 
-    public Enemy[] SetEnemy(List<Vector3> previousElementsPositions)
+    public Enemy[] SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
     {
         float enemyCountProportion = 0.5f;
 
@@ -28,7 +28,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
         {
             Enemy spawnBoss = PoolManager.Instance.Pop(_bossQueue.Dequeue()) as Enemy;
 
-            SetElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
             SetEnemyNav(spawnBoss);
 
             enemyCountProportion = 0.25f; // 보스 나오면 짜바리들은 조금만 나오게
@@ -47,7 +46,15 @@ public class EnemyConfigurer : BaseElementsConfigurer
             Enemy spawnEnemy = PoolManager.Instance.Pop(enemyName) as Enemy;
 
             SetEnemyNav(spawnEnemy);
-            SetElementsPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
+
+            if (isRaft)
+            {
+                SetRaftElementsPosition(spawnEnemy.gameObject, transform);
+            }
+            else
+            {
+                SetGroundElementsPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
+            }
 
             spawnedEnemies.Add(spawnEnemy);
         }

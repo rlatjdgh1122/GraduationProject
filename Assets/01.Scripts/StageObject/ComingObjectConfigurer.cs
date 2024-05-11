@@ -10,7 +10,7 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
 
     protected List<Vector3> _previousElementsPositions = new List<Vector3>();
 
-    public virtual ComingElements SetComingObjectElements(Transform groundTrm)
+    public virtual ComingElements SetComingObjectElements(Transform groundTrm, bool isRaft = false)
     {
         _previousElementsPositions.Clear();
 
@@ -25,6 +25,6 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
         //                                                         _comingElementsDataSO.NormalRewardPrefab.name,
         //                                                         _comingElementsDataSO.BossRewardPrefab.name);
 
-        return new ComingElements(enemyConfigurer.SetEnemy(_previousElementsPositions));
+        return new ComingElements(enemyConfigurer.SetEnemy(_previousElementsPositions, isRaft));
     }
 }
