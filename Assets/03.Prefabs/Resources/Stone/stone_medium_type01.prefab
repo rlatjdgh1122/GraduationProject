@@ -113,10 +113,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: b6219a49d227ca042ae854b5182f28fa, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
-  _noiseValue: 10
+  _noiseValue: 7
   _maxNoiseValue: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   OnRecieveResourceEvent:
@@ -181,6 +180,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
 --- !u!114 &8465313987333907702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +403,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0165
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0165
       objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}

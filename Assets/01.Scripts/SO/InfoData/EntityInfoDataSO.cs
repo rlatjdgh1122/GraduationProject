@@ -17,6 +17,7 @@ public class EntityInfoDataSO : ScriptableObject
     public PenguinTypeEnum PenguinType;
     public string PenguinName;
     public string Weapon;
+    public string PenguinTypeName;
 
     [Range(0f, 1f)] public float hp;
     [Range(0f, 1f)] public float atk;

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PopupUI : MonoBehaviour
@@ -8,6 +9,10 @@ public class PopupUI : MonoBehaviour
     private float _panelFadeTime;
     [SerializeField]
     private float _panelDelayTime;
+
+    [SerializeField]
+    private List<UIType> _transferable;
+    public List<UIType> Transferable => _transferable;
 
     [SerializeField]
     private SoundName _soundName = SoundName.UI;

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,10 +14,13 @@ public class PenguinInfoUI : PopupUI
     #region 정보창 변수
 
     [Header("정보창 변수")]
-    [SerializeField] private TextMeshProUGUI _weaponNameTxt = null;
+    [SerializeField] private TextMeshProUGUI _penguinTypeTxt = null;
     [SerializeField] private TextMeshProUGUI _penguinNameTxt = null;
     [SerializeField] private Image _penguinIcon = null;
     [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
+    [SerializeField] private Image _atkSlider = null;
+    [SerializeField] private Image _defSlider = null;
+    [SerializeField] private Image _rngSlider = null;
 
     #endregion
 
@@ -37,6 +41,7 @@ public class PenguinInfoUI : PopupUI
         SpawnAttackSlotItem(_statItemCount);
         SpawnArmorSlotItem(_statItemCount);
     }
+
     protected virtual void ShowStat()
     {
         ShowAttackStat(_ownerStat.damage);
@@ -47,13 +52,24 @@ public class PenguinInfoUI : PopupUI
         ShowAromorStat(_ownerStat.maxHealth);
         ShowAromorStat(_ownerStat.evasion);
     }
+
     protected virtual void ShowInfo()
     {
-        _weaponNameTxt.text = _ownerInfoData.Weapon;
+        _atkSlider.DOFillAmount(_ownerInfoData.atk, 0.5f);
+        _defSlider.DOFillAmount(_ownerInfoData.hp, 0.5f);
+        _rngSlider.DOFillAmount(_ownerInfoData.range, 0.5f);
+
+        _penguinTypeTxt.text = _ownerInfoData.PenguinTypeName;
         _penguinNameTxt.text = _ownerInfoData.PenguinName;
         _penguinIcon.sprite = _ownerInfoData.PenguinIcon;
         _legionNameTxt.text = _ownerInfoData.LegionName;
     }
+
+    public void HidePenguinInfoUI()
+    {
+        UIManager.Instance.HidePanel("PenguinInfoUI");
+    }
+
     public override void HidePanel()
     {
         base.HidePanel();
@@ -61,13 +77,16 @@ public class PenguinInfoUI : PopupUI
 
         PenguinManager.Instance.DummyPenguinCameraCompo.DisableCamera();
     }
+
     public override void ShowPanel()
     {
         base.ShowPanel();
 
+        UIManager.Instance.HidePanel("StorePanel");
         ShowStat();
         ShowInfo();
     }
+
     private void SpawnAttackSlotItem(int count)
     {
         for (int i = 0; i < count; ++i)

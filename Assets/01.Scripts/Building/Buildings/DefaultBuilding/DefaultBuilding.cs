@@ -55,13 +55,13 @@ public class DefaultBuilding : BaseBuilding
         if (isSpawnUIOn)
         {
             UIManager.Instance.HidePanel("StorePanel");
+            ChangeSpawnUIBool(false);
         }
         else
         {
             UIManager.Instance.ShowPanel("StorePanel");
+            ChangeSpawnUIBool(true);
         }
-
-        UpdateSpawnUIBool();
 
         StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
 
@@ -95,6 +95,9 @@ public class DefaultBuilding : BaseBuilding
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
     }
+
+    public void ChangeSpawnUIBool(bool value) => isSpawnUIOn = value;
+
     private void DisableAllUI()
     {
         if (isSpawnUIOn)

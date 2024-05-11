@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ public enum UIType
     General,
     Legion,
     Store,
-    Info
+    Info,
+    Quest
 }
 
 public class UIManager : Singleton<UIManager>
@@ -78,6 +80,8 @@ public class UIManager : Singleton<UIManager>
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
+        if (!CheckShowAble(popupUI.UIGroup)) return;
+
         for (int i = 0; i < currentPopupUI.Count; i++)
         {
             PopupUI ui = currentPopupUI.Pop();
@@ -93,6 +97,13 @@ public class UIManager : Singleton<UIManager>
             popupUI.ShowPanel();
             _currentUI = popupUI;
         }
+    }
+
+    private bool CheckShowAble(UIType type)
+    {
+
+        return _currentUI == null || _currentUI.Transferable.Contains(type);
+
     }
 
     public void HidePanel(string uiName)
