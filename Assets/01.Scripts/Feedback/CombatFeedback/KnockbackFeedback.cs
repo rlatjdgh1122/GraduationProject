@@ -15,6 +15,7 @@ public class KnockbackFeedback : CombatFeedback
     public override bool StartFeedback()
     {
         Vector3 currentPosition = ownerTrm.position;
+
         //내 위치에서 맞은 위치로 넉백
         Vector3 knockbackPosition = currentPosition - new Vector3(actionData.HitNormal.x, 0f, actionData.HitNormal.z) * Value;
 

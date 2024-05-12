@@ -14,7 +14,7 @@ public class DamageCaster : MonoBehaviour
     private TargetObject _owner;
     private General General => _owner as General;
 
-    public void SetOwner(TargetObject owner, bool setPos = true)
+    public void SetOwner(TargetObject owner, bool setPos = false)
     {
         _owner = owner;
         if (setPos)
