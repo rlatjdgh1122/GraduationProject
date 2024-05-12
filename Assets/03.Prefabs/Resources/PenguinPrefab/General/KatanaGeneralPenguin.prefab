@@ -64,17 +64,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: af97d1f0f8cd79b41a58d33a8cfedd70, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   innerDistance: 14
   attackDistance: 1.8
   TargetLayer:
     serializedVersion: 2
     m_Bits: 4096
-  moveSpeed: 4.5
   attackSpeed: 1
-  maxDetectedCount: 0
-  provokeRange: 25
   passiveData: {fileID: 11400000, guid: a1eab8340ac55b24cada4090e9221a24, type: 2}
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
@@ -150,6 +146,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
 --- !u!114 &7976706834734502278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +174,7 @@ MonoBehaviour:
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
+  HitTarget: {fileID: 0}
 --- !u!143 &2281162865220839448
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6026,7 +6024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 2
+  _detectRange: 3
   _hitType: 17
   TargetLayer:
     serializedVersion: 2

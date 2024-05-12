@@ -1,3 +1,4 @@
+using StatOperator;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -7,17 +8,24 @@ public abstract class Feedback : MonoBehaviour, IFeedback
     protected EntityActionData actionData;
     protected Transform actionDataTrm => actionData.transform;
     protected Entity owner;
+    protected BaseStat stat;
 
     protected Animator _animator;
     protected CharacterController _controller;
     protected NavMeshAgent _navMeshAgent;
     protected Transform ownerTrm => owner.transform;
 
+    protected float _value = 0f;
+
     public virtual float Value
     {
-        //여기서 스탯가져와서 하면 강인함 가능
-        get;
-        set;
+        // 여기서 스탯 가져와서 하면 강인함 가능
+        get
+        {
+            var percent = stat.tenacity.GetValue() / 100f;
+            return _value * (1 - percent);
+        }
+        set { _value = value; }
     }
 
     public virtual void Awake()
@@ -30,6 +38,8 @@ public abstract class Feedback : MonoBehaviour, IFeedback
     {
         if (owner != null)
         {
+            stat = owner.Stat;
+
             _animator = owner.AnimatorCompo;
             _controller = owner.CharacterCompo;
             _navMeshAgent = owner.NavAgent;

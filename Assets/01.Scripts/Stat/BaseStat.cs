@@ -14,6 +14,7 @@ public abstract class BaseStat : ScriptableObject
     public Stat maxHealth; //체력
     public Stat armor; //방어도
     public Stat evasion; //회피도
+    public Stat tenacity; //강인함 (CC기)
     public Stat magicResistance; //마법방어
 
     [Header("Major stat")]
