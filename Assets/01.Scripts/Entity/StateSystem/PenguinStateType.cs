@@ -19,5 +19,12 @@ public enum PenguinStateType
 
     Dash,
     Throw,
+    SpinAttack,
+    #endregion
+
+    #region 그 외
+
+    Impact,
+    Block,
     #endregion
 }

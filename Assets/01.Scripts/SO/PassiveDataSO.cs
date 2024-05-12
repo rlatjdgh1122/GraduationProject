@@ -30,18 +30,22 @@ public class PassiveDataSO : ScriptableObject
     private bool _isOverTime = false;
 
     /// <summary>
-    /// 체력이 50이하 일 때 페시브 활성화 확인 여부
+    /// 체력이 50이하 일 때 패시브 활성화 확인 여부
     /// </summary>>
     /// <returns> 결과</returns>
 
     /// ratio가 50일경우 현재체력 50% 이하일때 발동
-    public bool CheckHealthRatioEventPassive(float maxHp, float currentHP)
+    public bool CheckHealthRatioEventPassive(float maxHp, float currentHP, float ratio = -1)
     {
         // 현재 체력의 퍼센트 계산
         float healthPercent = (currentHP / maxHp) * 100f;
 
+        if (ratio > 0) //임시
+        {
+            ratio = Ratio;
+        }
         // 현재 체력이 지정된 비율보다 낮으면 true 반환
-        if (healthPercent <= Ratio)
+        if (healthPercent <= ratio)
         {
             return true;
         }

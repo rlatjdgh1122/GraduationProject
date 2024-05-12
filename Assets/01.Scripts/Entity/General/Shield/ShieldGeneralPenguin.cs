@@ -8,7 +8,6 @@ public class ShieldGeneralPenguin : General
         base.Awake();
 
         SetBaseState();
-
     }
 
     protected override void Start()
@@ -25,6 +24,21 @@ public class ShieldGeneralPenguin : General
     public override void StateInit()
     {
         StateMachine.Init(PenguinStateType.Idle);
+    }
+
+    protected override void HandleHit()
+    {
+        base.HandleHit();
+
+        if(CheckHealthRatioPassive(HealthCompo.maxHealth, HealthCompo.currentHealth, 90))
+        {
+            OnPassiveHealthRatioEvent();
+        }
+    }
+
+    public override void OnPassiveHealthRatioEvent()
+    {
+        StateMachine.ChangeState(PenguinStateType.Impact);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();

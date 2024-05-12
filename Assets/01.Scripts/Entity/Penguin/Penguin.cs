@@ -161,8 +161,8 @@ public class Penguin : Entity
     public bool CheckAttackPassive(int curAttackCount)
 => passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
-    public bool CheckHealthRatioPassive(float maxHp, float currentHP)
- => passiveData?.CheckHealthRatioEventPassive(maxHp, currentHP) ?? false;
+    public bool CheckHealthRatioPassive(float maxHp, float currentHP, float ratio = -1)
+ => passiveData?.CheckHealthRatioEventPassive(maxHp, currentHP, ratio) ?? false;
 
     public bool CheckSecondPassive()
 => passiveData?.CheckSecondEventPassive() ?? false;
