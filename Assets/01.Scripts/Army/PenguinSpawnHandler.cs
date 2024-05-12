@@ -35,8 +35,6 @@ public class PenguinSpawnHandler : MonoBehaviour
             penguin.StateInit();
 
 
-            penguin.DamageCasterCompo.SetPosition();
-
             //¥ıπÃ ∆Î±œ¿∫ ≤®¡‹
             dummy.gameObject.SetActive(false);
         }
