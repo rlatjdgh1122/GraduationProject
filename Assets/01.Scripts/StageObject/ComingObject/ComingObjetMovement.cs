@@ -1,6 +1,10 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public abstract class ComingObjetMovement : MonoBehaviour
@@ -14,17 +18,36 @@ public abstract class ComingObjetMovement : MonoBehaviour
     protected MeshCollider _meshCollider;
 
     protected Vector3 _targetPos;
-    private Vector3 _centerPos;
-    protected Vector3 _closestPointDirToCenter => _meshCollider.ClosestPoint(_centerPos); // 반드시 _meshCollider의 convex를 켜줘야함
+    protected Vector3 _centerPos;
+    protected Vector3 _closestPointToCenter // 반드시 _meshCollider의 convex를 켜줘야함
+    {
+        get
+        {
+            Vector3 closestPoint = _meshCollider.ClosestPoint(_centerPos);
+            return closestPoint;
+        }
+    }
+
 
     protected Vector3 RaycastHit_ToCenterPos
     {
         get
         {
-            if (Physics.Raycast(_closestPointDirToCenter, (_centerPos - _closestPointDirToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+            if (Physics.Raycast(_closestPointToCenter, (_centerPos - _closestPointToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
             {
+                // 쪼만한 년 밑에 있는 큰 년 에다가 쏘기
+
+                //Debug.Log($"{gameObject} 찾음 {hit.point}");
+                //Debug.Log($"obj: {hit.collider.gameObject}");
+                //Debug.Log($"root: {hit.collider.transform.root}");
                 return hit.point;
             }
+            else
+            {
+                //Debug.Log($"{_closestPointToCenter}못 찾음");
+                //Debug.Log($"{_centerPos}못 찾음");
+            }
+
             return Vector3.zero;
         }
     }
@@ -36,6 +59,7 @@ public abstract class ComingObjetMovement : MonoBehaviour
 
     public virtual void Move()
     {
+        Debug.Log($"{gameObject}: {_targetPos}");
         transform.DOMove(_targetPos, _moveDuration).
             OnComplete(() =>
             {
@@ -72,32 +96,11 @@ public abstract class ComingObjetMovement : MonoBehaviour
         _centerPos = trm.position;
     }
 
-    public virtual void SetComingObejctPos(Transform parentTransform, Vector3 position)
+    private void Update()
     {
-        // 중앙과 히트 포인트 사이의 거리 계산
-        float centerToHitPointX = Mathf.Abs(_meshCollider.transform.position.x - RaycastHit_ToCenterPos.x);
-        float centerToHitPointZ = Mathf.Abs(_meshCollider.transform.position.z - RaycastHit_ToCenterPos.z);
-
-        // 가장 가까운 포인트와 히트 포인트 사이의 거리 계산
-        float closestPointToHitPointX = Mathf.Abs(_closestPointDirToCenter.x - RaycastHit_ToCenterPos.x);
-        float closestPointToHitPointZ = Mathf.Abs(_closestPointDirToCenter.z - RaycastHit_ToCenterPos.z);
-
-        // X와 Z 거리 계산
-        float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
-        float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
-
-        // 타겟 벡터 계산
-        Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
-
-        //// X 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
-        targetVec.x += Mathf.Sign(transform.position.x) * xDistance;
-        //
-        //// Z 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
-        targetVec.z += Mathf.Sign(transform.position.z) * zDistance;
-
-        // 타겟 위치 설정
-        _targetPos = targetVec;
+        Debug.DrawRay(_closestPointToCenter, (_centerPos - _closestPointToCenter).normalized * 100f, Color.red, 99f);
     }
 
+    public abstract void SetComingObejctPos(Transform parentTransform, Vector3 position);
     protected abstract void Arrived();
 }

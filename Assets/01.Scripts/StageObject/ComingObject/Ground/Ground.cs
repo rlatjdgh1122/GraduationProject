@@ -23,6 +23,7 @@ public class Ground : MonoBehaviour, IComingObject
     public Outline OutlineCompo => _outline;
 
     private GroundMovement _groundMove;
+    public GroundMovement GroundMove => _groundMove;
 
     private Enemy[] _enemies;
 
