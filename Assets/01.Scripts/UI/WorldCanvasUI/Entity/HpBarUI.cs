@@ -28,10 +28,8 @@ public class HpBarUI : WorldUI
 
     public void UpdateHpbarUI(float current, float max)
     {
-        UIManager.Instance.InitializHudTextSequence();
-
-        UIManager.Instance.HudTextSequence.Append(canvas.DOFade(1, 0.5f))
-        .Join(_hpbar.DOFillAmount(current / max, 0.5f));
+        canvas.DOFade(1, 0.5f);
+        _hpbar.DOFillAmount(current / max, 0.5f);
 
         if (_fadeOutCoroutine != null)
         {
@@ -42,9 +40,7 @@ public class HpBarUI : WorldUI
 
     public void FadeOutImmediately()
     {
-        UIManager.Instance.InitializHudTextSequence();
-
-        UIManager.Instance.HudTextSequence.Append(canvas.DOFade(0, 0.3f));
+        canvas.DOFade(0, 0.3f);
     }
 
     private IEnumerator FadeOutTime()
