@@ -21,15 +21,16 @@ public class State
     #region Enter
     protected void IdleEnter()
     {
-       /* if (_navAgent.isOnNavMesh)
-        {
-            //_navAgent?.ResetPath();
-            _navAgent.velocity = Vector3.zero;
-            //_navAgent.isStopped = false;
-            //_penguin.SetNavmeshPriority(Penguin.PriorityType.High);
-        }*/
+        /* if (_navAgent.isOnNavMesh)
+         {
+             //_navAgent?.ResetPath();
+             _navAgent.velocity = Vector3.zero;
+             //_navAgent.isStopped = false;
+             //_penguin.SetNavmeshPriority(Penguin.PriorityType.High);
+         }*/
 
         _penguin.StopImmediately();
+        _penguin.PenguinTriggerCalled = false;
         //_penguin.CurrentTarget = null;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
@@ -42,6 +43,7 @@ public class State
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
+        _penguin.PenguinTriggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
 
         if (!_penguin.TargetLock)
@@ -132,6 +134,8 @@ public class State
     }
     protected void AttackExit()
     {
+
+        _penguin.PenguinTriggerCalled = false;
         _penguin.AnimatorCompo.speed = 1;
 
         if (_penguin.CurrentTarget != null)

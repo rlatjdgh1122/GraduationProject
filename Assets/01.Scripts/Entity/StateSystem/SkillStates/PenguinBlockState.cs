@@ -45,7 +45,8 @@ public class PenguinBlockState : State
 
     private void ImpactShield()
     {
-        _stateMachine.ChangeState(PenguinStateType.Impact);
+        if (_penguin.PenguinTriggerCalled)
+            _stateMachine.ChangeState(PenguinStateType.Impact);
     }
 
 
