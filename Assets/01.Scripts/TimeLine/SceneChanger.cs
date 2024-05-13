@@ -14,12 +14,19 @@ public class SceneChanger : MonoBehaviour
 
     private void Update()
     {
-        StartCoroutine(WwaitCutSceneTime(CutSceneTime, NextScene));
+        StartCoroutine(WaitCutSceneTime(CutSceneTime, NextScene));
     }
 
-    IEnumerator WwaitCutSceneTime(float waitCutSceneTime, string sceneName)
+    IEnumerator WaitCutSceneTime(float waitCutSceneTime, string sceneName)
     {
         yield return new WaitForSeconds(waitCutSceneTime);
-        SceneManager.LoadScene(sceneName);
+        if(NextScene != "FSMTest")
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            LoadingSceneController.LoadScene(sceneName);
+        }
     }
 }
