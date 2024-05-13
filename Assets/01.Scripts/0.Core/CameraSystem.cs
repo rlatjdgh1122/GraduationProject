@@ -19,7 +19,7 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float _scrollAmount = 5f;
 
     [Header("카메라 회전")]
-    [Range(0.1f, 9f)]
+    [Range(0f, 9f)]
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float zoomSpeed = 10f;
 
