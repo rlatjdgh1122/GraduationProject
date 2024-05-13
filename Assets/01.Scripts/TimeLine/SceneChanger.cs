@@ -20,7 +20,7 @@ public class SceneChanger : MonoBehaviour
     IEnumerator WaitCutSceneTime(float waitCutSceneTime, string sceneName)
     {
         yield return new WaitForSeconds(waitCutSceneTime);
-        if(NextScene != "FSMTest")
+        if(NextScene != "SeonghoScene")
         {
             SceneManager.LoadScene(sceneName);
         }
