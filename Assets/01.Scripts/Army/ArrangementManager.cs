@@ -43,19 +43,20 @@ public class ArrangementManager : Singleton<ArrangementManager>
         //이전 데이터와 현재 데이터를 비교
         CompareDataList(dataList);
 
-        //추가된 정보에 따라 생성
-        foreach (var item in addDataList)
-        {
-            SpawnPenguin(item);
-        }
-
         //사라진 정보에 따라 제거
         foreach (var item in removeDataList)
         {
             var legionName = item.LegionName;
 
+            //스폰할때 만들어진 애만 가능
             var penguin = PenguinManager.Instance.GetPenguinByInfoData(item);
             RemovePenguin(legionName, penguin);
+        }
+
+        //추가된 정보에 따라 생성
+        foreach (var item in addDataList)
+        {
+            SpawnPenguin(item);
         }
 
         PenguinManager.Instance.ApplySaveData(addDataList, removeDataList);
@@ -86,12 +87,16 @@ public class ArrangementManager : Singleton<ArrangementManager>
             //1 1 3->현재
             //remove-> 2
             //add-> 3
+            //아 근데 이러면 3이 겹쳐서 안됨 새로만들어주고 넣어줘야할듯(Instantiate)
 
             for (int i = 0; i < dataList.Count; ++i)
             {
                 //데이터가 서로 다르다면
-                if (!prevSaveDataList[i].Equals(dataList[i])) 
+                if (!prevSaveDataList[i].Equals(dataList[i]))
                 {
+                    //근데 펭귄 타입이 같으면 이미 있으니 안함
+                    if (prevSaveDataList[i].PenguinType.Equals(highDataList[i].PenguinType)) return;
+
                     removeDataList.Add(prevSaveDataList[i]);
                     addDataList.Add(dataList[i]);
                 }
