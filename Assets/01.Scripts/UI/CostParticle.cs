@@ -28,6 +28,8 @@ public class CostParticle : PoolableMono
 
     public void TargetPosition(Transform parent, Image target) //Å¸°Ù ÁöÁ¤
     {
+        if (parent == null) return;
+
         transform.parent = parent;
         _particleImage.attractorTarget = target.transform;
 

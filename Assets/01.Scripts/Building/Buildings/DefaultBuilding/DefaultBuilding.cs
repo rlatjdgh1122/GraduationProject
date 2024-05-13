@@ -13,12 +13,12 @@ public class DefaultBuilding : BaseBuilding
     //private PenguinStoreUI _penguinSpawnUI;
     //[SerializeField] private RectTransform _constructionStationUI;
 
-    [SerializeField] private float onSpawnUIYPosValue = 320;
+    //[SerializeField] private float onSpawnUIYPosValue = 320;
 
     private bool isSpawnUIOn;
 
-    Vector3 _onSpawnUIVec;
-    Vector3 _offSpawnUIVec;
+    //Vector3 _onSpawnUIVec;
+    //Vector3 _offSpawnUIVec;
 
     [SerializeField] private Transform _btnTrm;
 

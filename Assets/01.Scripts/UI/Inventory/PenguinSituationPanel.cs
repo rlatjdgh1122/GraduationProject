@@ -85,6 +85,9 @@ public class PenguinSituationPanel : PopupUI
         var dummy = PenguinManager.Instance.GetDummyByInfoData(data);
         PenguinManager.Instance.RemoveDummyPenguin(dummy);
         PoolManager.Instance.Push(dummy);
+
+        LegionInventoryManager.Instance.SaveLegion();
+        LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
 
     public void HealEvent()

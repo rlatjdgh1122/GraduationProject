@@ -26,14 +26,12 @@ public class NoiseManager : Singleton<NoiseManager>
 
     private float _saveNoiseValue = 0;
 
+    [SerializeField]
     private PhaseChangeButton _btn;
 
     public override void Awake()
     {
         _maxNosise = _initMaxNosise;
-        
-        //이거그냥 인슥페터로 하자 0.6 먹음
-        _btn = FindObjectOfType<PhaseChangeButton>();
 
         AddViewNoise(_currentViewNoise);
     }
@@ -91,7 +89,7 @@ public class NoiseManager : Singleton<NoiseManager>
     }
 
     public void AddNoise(float noise)
-    { 
+    {
         _currentNoise += noise;
 
         if (_currentNoise >= _maxNosise)

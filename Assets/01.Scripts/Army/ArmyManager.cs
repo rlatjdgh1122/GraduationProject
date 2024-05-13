@@ -230,7 +230,7 @@ public class ArmyManager : Singleton<ArmyManager>
     #region 군단 영입 부분
     /// <summary>
     /// 장군을 제외한 펭귄을 군단에 넣는 함수
-    /// </summary>
+    /// </summary>  
     /// <param name="legion"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
 
