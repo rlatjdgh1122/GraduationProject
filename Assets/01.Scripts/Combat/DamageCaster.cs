@@ -146,7 +146,6 @@ public class DamageCaster : MonoBehaviour
     {
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<Health>(out Health health))
         {

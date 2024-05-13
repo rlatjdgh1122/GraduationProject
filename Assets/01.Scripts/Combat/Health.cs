@@ -121,8 +121,12 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
             OnHit?.Invoke();
 
-            if (isFeedback) { hitF.PlayFeedback(); }
-        }
+            if (isFeedback) 
+            {
+                hitF.PlayFeedback(); 
+            }
+
+        }//end if
 
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
