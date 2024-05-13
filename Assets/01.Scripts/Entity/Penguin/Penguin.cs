@@ -161,6 +161,9 @@ public class Penguin : Entity
     public bool CheckAttackPassive(int curAttackCount)
 => passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
+    public bool CheckHitPassive(int curHitCount)
+=> passiveData?.CheckHitEventPassive(curHitCount) ?? false;
+
     public bool CheckHealthRatioPassive(float maxHp, float currentHP, float ratio = -1)
  => passiveData?.CheckHealthRatioEventPassive(maxHp, currentHP, ratio) ?? false;
 
@@ -172,20 +175,13 @@ public class Penguin : Entity
     #region Passive Event
 
 
-    public virtual void OnPassiveAttackEvent()
-    {
+    public virtual void OnPassiveAttackEvent() { }
 
-    }
+    public virtual void OnPassiveHitEvent() { }
 
-    public virtual void OnPassiveHealthRatioEvent()
-    {
+    public virtual void OnPassiveHealthRatioEvent() { }
 
-    }
-
-    public virtual void OnPassiveSecondEvent()
-    {
-
-    }
+    public virtual void OnPassiveSecondEvent() { }
 
     #endregion
 

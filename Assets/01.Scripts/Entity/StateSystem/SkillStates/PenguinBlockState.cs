@@ -1,4 +1,5 @@
 using ArmySystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,10 @@ public class PenguinBlockState : State
         base.EnterState();
 
         _penguin.WaitForCommandToArmyCalled = false;
-        _penguin.FindNearestEnemy();
         _penguin.StopImmediately();
+        _penguin.FindNearestEnemy();
+
+        _penguin.HealthCompo.OnHit += ImpactShield;
     }
 
     public override void UpdateState()
@@ -40,10 +43,17 @@ public class PenguinBlockState : State
 
     }//end method
 
+    private void ImpactShield()
+    {
+        _stateMachine.ChangeState(PenguinStateType.Impact);
+    }
+
 
     public override void ExitState()
     {
         base.ExitState();
+
+        _penguin.HealthCompo.OnHit -= ImpactShield;
     }
 
 }

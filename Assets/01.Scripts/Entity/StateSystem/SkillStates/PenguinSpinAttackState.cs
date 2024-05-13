@@ -47,5 +47,7 @@ public class PenguinSpinAttackState : State
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }
+        else
+            _stateMachine.ChangeState(PenguinStateType.Impact);
     }
 }
