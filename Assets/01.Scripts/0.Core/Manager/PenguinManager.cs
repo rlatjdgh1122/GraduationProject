@@ -131,6 +131,8 @@ public class PenguinManager
         SoldierPenguinList.Remove(penguin);
         dummyToPenguinDic.Remove(obj);
         penguinToDummyDic.Remove(penguin);
+
+        UpdateOwnershipDataList();
     }
 
     /// <summary>
@@ -147,6 +149,8 @@ public class PenguinManager
         DummyPenguinList.Remove(dummy);
         penguinToDummyDic.Remove(obj);
         dummyToPenguinDic.Remove(dummy);
+
+        UpdateOwnershipDataList();
     }
     public void AddInfoDataMapping(EntityInfoDataSO data, Penguin penguin)
     {

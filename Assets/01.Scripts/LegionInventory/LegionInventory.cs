@@ -162,7 +162,8 @@ public class LegionInventory : LegionUI
 
                 slotList[saveData.SlotIdx].ExitSlot(null);
             }
-        }
+        }//end foreach
+
     }
 
     public void RemovePenguinInCurrentLegion(int idx)
