@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class EnemyMoveState : EnemyBaseState
 {
@@ -29,6 +30,8 @@ public class EnemyMoveState : EnemyBaseState
 
         if (_enemy.NavAgent.isOnOffMeshLink)
             _stateMachine.ChangeState(EnemyStateType.Jump);
+
+        Debug.Log(_enemy.NavAgent.isOnOffMeshLink);
 
         if (_enemy.IsReachedNexus)
             _stateMachine.ChangeState(EnemyStateType.Reached); //���� ��Ÿ� ���� ���Դ� -> Reached (�ؼ��� ����)

@@ -3,22 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RaftMovement : ComingObjetMovement
 {
     private Raft _raft;
+
+    private OffMeshLink _offMeshLink;
 
     protected override void Awake()
     {
         base.Awake();
 
         _raft = GetComponent<Raft>(); // 嬴 路塭 衛除 機擠
+        _offMeshLink = GetComponent<OffMeshLink>();
     }
 
     protected override void Arrived()
     {
         Debug.Log("陛塭導晦");
         _raft.Arrived();
+
+
+        GameObject temp = new GameObject();
+        temp.transform.position = RaycastHit_ToCenterPos;
+
+        GameObject temp2 = new GameObject();
+        temp2.transform.position = GetClosestPointToCenter();
+
+        _offMeshLink.endTransform = temp.transform;
+        _offMeshLink.startTransform = temp2.transform;
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)
