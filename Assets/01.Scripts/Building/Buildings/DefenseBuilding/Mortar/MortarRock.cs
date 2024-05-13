@@ -88,7 +88,6 @@ public class MortarRock : Arrow
     {
         if (!isDestoried)
         {
-            Debug.Log("´ê¾Æ¼­ ºÎ¼­Áü");
             isDestoried = true;
             _mortarAttackRangeSprite.transform.SetParent(transform);
             _mortarAttackRangeSprite.SetActive(false);

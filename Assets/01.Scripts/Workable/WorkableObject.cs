@@ -25,11 +25,14 @@ public class WorkableObject : TargetObject
 
     public Action OnNoiseExcessEvent = null;
 
-    protected override void HandleHit()
+    protected override void Awake()
     {
+        base.Awake();
 
+        ActionData = GetComponent<EntityActionData>();
     }
-    protected override void HandleDie()
+
+    protected override void HandleHit()
     {
 
     }
