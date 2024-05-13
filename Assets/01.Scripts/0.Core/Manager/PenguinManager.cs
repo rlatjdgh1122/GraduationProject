@@ -49,7 +49,7 @@ public class PenguinManager
     #endregion
 
     #region 펭귄 리스트
-    private List<DummyPenguinListItem> _dummyPenguinList = new();
+
     public List<DummyPenguin> DummyPenguinList = new();
 
     /// <summary>
@@ -69,6 +69,9 @@ public class PenguinManager
     public CameraSystem CameraCompo { get; set; }
     public DummyPenguinCamera DummyPenguinCameraCompo { get; set; }
 
+    //PenguinManger용
+    private List<DummyPenguinListItem> _itemDummyPenguinList = new();
+
     #region  GetComponent
     public void GetComponent_CameraSystem(CameraSystem compo)
     {
@@ -80,7 +83,6 @@ public class PenguinManager
         DummyPenguinCameraCompo = compo;
     }
     #endregion
-
     //게임 매니저에서 등록
     public void Setting(SoldierRegisterSO soldierTypeListSO)
     {
@@ -100,7 +102,7 @@ public class PenguinManager
     #region Add Or Remove
     public void AddDummyPenguin(DummyPenguin obj)
     {
-        _dummyPenguinList.Add(new DummyPenguinListItem
+        _itemDummyPenguinList.Add(new DummyPenguinListItem
         {
             IsHaveOwner = false,
             dummyPenguin = obj
@@ -321,7 +323,7 @@ public class PenguinManager
 
         //지금까지 생성된 더미펭귄들에서
         //오너를 가지고 있지 않은 애들을 골라 오너를 넣어줌
-        foreach (var info in _dummyPenguinList)
+        foreach (var info in _itemDummyPenguinList)
         {
             var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
@@ -356,7 +358,7 @@ public class PenguinManager
         //오너를 가지고 있는 더미펭귄들을 골라 오너를 지워주고
         //딕셔너리에서 지워줌
 
-        foreach (var info in _dummyPenguinList)
+        foreach (var info in _itemDummyPenguinList)
         {
             var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
@@ -386,7 +388,7 @@ public class PenguinManager
         if (NotBelongDummyPenguinList.Count > 0) NotBelongDummyPenguinList.Clear();
 
 
-        foreach (var item in _dummyPenguinList)
+        foreach (var item in _itemDummyPenguinList)
         {
             if (item.IsHaveOwner)
             {
