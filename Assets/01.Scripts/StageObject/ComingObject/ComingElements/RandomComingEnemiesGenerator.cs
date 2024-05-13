@@ -49,7 +49,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
                 .GetComponent<Ground>();
             _allGrounds.Enqueue(ground);
 
-            ground.SetMoveTarget(transform.parent);
+            ground.SetMoveTarget(transform.parent.parent.parent);
 
             ground.gameObject.SetActive(false); 
         }
@@ -144,7 +144,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             randomRaftPos.y = 0f;
 
             raft.transform.position = randomRaftPos;
-            raft.SetMoveTarget(transform.parent);
+            raft.SetMoveTarget(transform.parent.parent.parent);
             raft.SetComingObjectInfo(transform,
                                      randomRaftPos,
                                      _raftConfigurer.SetComingObjectElements(raft.transform));

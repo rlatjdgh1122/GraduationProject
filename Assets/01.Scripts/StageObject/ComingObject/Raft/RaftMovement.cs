@@ -33,9 +33,12 @@ public class RaftMovement : ComingObjetMovement
         float centerToHitPointX = Mathf.Abs(_meshCollider.transform.position.x - RaycastHit_ToCenterPos.x);
         float centerToHitPointZ = Mathf.Abs(_meshCollider.transform.position.z - RaycastHit_ToCenterPos.z);
 
+        Vector3 closestPointToCenter = GetClosestPointToCenter();
+        Debug.Log($"RaftclosestPoint: {closestPointToCenter}");
+
         // 가장 가까운 포인트와 히트 포인트 사이의 거리 계산
-        float closestPointToHitPointX = Mathf.Abs(_closestPointToCenter.x - RaycastHit_ToCenterPos.x);
-        float closestPointToHitPointZ = Mathf.Abs(_closestPointToCenter.z - RaycastHit_ToCenterPos.z);
+        float closestPointToHitPointX = Mathf.Abs(closestPointToCenter.x - RaycastHit_ToCenterPos.x);
+        float closestPointToHitPointZ = Mathf.Abs(closestPointToCenter.z - RaycastHit_ToCenterPos.z);
 
         // X와 Z 거리 계산
         float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
@@ -52,5 +55,12 @@ public class RaftMovement : ComingObjetMovement
 
         // 타겟 위치 설정
         _targetPos = targetVec;
+    }
+
+    protected override Vector3 GetClosestPointToCenter()
+    {
+        Vector3 closestPoint = _meshCollider.ClosestPoint(_centerPos);
+        closestPoint.y = _centerPos.y;
+        return closestPoint;
     }
 }

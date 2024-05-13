@@ -19,35 +19,17 @@ public abstract class ComingObjetMovement : MonoBehaviour
 
     protected Vector3 _targetPos;
     protected Vector3 _centerPos;
-    protected Vector3 _closestPointToCenter // 반드시 _meshCollider의 convex를 켜줘야함
-    {
-        get
-        {
-            Vector3 closestPoint = _meshCollider.ClosestPoint(_centerPos);
-            return closestPoint;
-        }
-    }
-
 
     protected Vector3 RaycastHit_ToCenterPos
     {
         get
         {
-            if (Physics.Raycast(_closestPointToCenter, (_centerPos - _closestPointToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
-            {
-                // 쪼만한 년 밑에 있는 큰 년 에다가 쏘기
+            Vector3 closestPointToCenter = GetClosestPointToCenter();
 
-                //Debug.Log($"{gameObject} 찾음 {hit.point}");
-                //Debug.Log($"obj: {hit.collider.gameObject}");
-                //Debug.Log($"root: {hit.collider.transform.root}");
+            if (Physics.Raycast(closestPointToCenter, (_centerPos - closestPointToCenter).normalized, out RaycastHit hit, Mathf.Infinity))
+            {
                 return hit.point;
             }
-            else
-            {
-                //Debug.Log($"{_closestPointToCenter}못 찾음");
-                //Debug.Log($"{_centerPos}못 찾음");
-            }
-            Debug.Log("안 맞았습니다.");
             return Vector3.zero;
         }
     }
@@ -96,9 +78,16 @@ public abstract class ComingObjetMovement : MonoBehaviour
         _centerPos = trm.position;
     }
 
+    protected virtual Vector3 GetClosestPointToCenter() // 반드시 _meshCollider의 convex를 켜줘야함
+    {
+        Vector3 closestPoint = _meshCollider.ClosestPoint(_centerPos);
+        return closestPoint;
+    }
+
     private void Update()
     {
-        Debug.DrawRay(_closestPointToCenter, (_centerPos - _closestPointToCenter).normalized * 100f, Color.red, 99f);
+        Vector3 closestPointToCenter = GetClosestPointToCenter();
+        Debug.DrawRay(closestPointToCenter, (_centerPos - closestPointToCenter).normalized * 10f, Color.red, 99f);
     }
 
     public abstract void SetComingObejctPos(Transform parentTransform, Vector3 position);
