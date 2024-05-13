@@ -6,14 +6,26 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
 {
     protected T _owner;
 
+    protected Collider _colider;
+
+    [SerializeField]
+    private Transform _nonBrokenBuilding;
+    [SerializeField]
+    private DeadBuillding _brokenBuilding;
+
     private void Awake()
     {
         _owner = GetComponent<T>();
+        _colider = GetComponent<Collider>();
     }
 
     public virtual void OnDied()
     {
+        _owner.enabled = false;
+        _colider.enabled = false;
 
+        _brokenBuilding.gameObject.SetActive(true);
+        _nonBrokenBuilding.gameObject.SetActive(false);
     }
 
     public virtual void OnResurrected()

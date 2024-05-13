@@ -32,8 +32,8 @@ public class MortarBuilding : DefenseBuilding
     {
         base.Awake();
         _mortarFireParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
-        _ignitingPenguin = transform.Find("IgnitingPenguin/Visual").GetComponent<IgnitingPenguinAnimaionTrigger>();
-        _burningRope = transform.Find("Rope").GetComponent<BurningRope>();
+        _ignitingPenguin = transform.Find("Visual/IgnitingPenguin/Visual").GetComponent<IgnitingPenguinAnimaionTrigger>();
+        _burningRope = transform.Find("Visual/Rope").GetComponent<BurningRope>();
 
         _cannonTransform = transform.Find("Visual/Cannon").transform;
         _originScale = _cannonTransform.localScale;
@@ -81,10 +81,12 @@ public class MortarBuilding : DefenseBuilding
                 yield return null;
             }
 
+            if(HealthCompo.IsDead) yield break;
+
             Fire();
             elapsedTime = 0.0f; // 시간 초기화
 
-        } while (isBattlePhase && _currentTarget != null);
+        } while (!HealthCompo.IsDead && isBattlePhase && _currentTarget != null);
 
         isFired = false;
         ReturnOriginScale();

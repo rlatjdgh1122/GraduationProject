@@ -30,7 +30,6 @@ public class LegionSavePanel : PopupUI
 
     public void LegionNumber(int legionNumber)
     {
-        Debug.Log(legionNumber);
         _legionNumber = legionNumber;
     }
 
@@ -56,6 +55,8 @@ public class LegionSavePanel : PopupUI
         LegionInventoryManager.Instance.SaveLegion(); //저장하기
 
         UIManager.Instance.ShowWarningUI("저장 성공!");
+
+        LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
 
         HideSavePanel();
     }

@@ -161,9 +161,13 @@ public class LegionInventory : LegionUI
                 if (retire) currentLegionList.Remove(saveData);
 
                 slotList[saveData.SlotIdx].ExitSlot(null);
+
+                if (saveData.JobType == PenguinJobType.General) currentGeneral--;
+                else currentPenguinCnt--;
             }
         }//end foreach
-
+        
+        LegionCountTextSetting();
     }
 
     public void RemovePenguinInCurrentLegion(int idx)

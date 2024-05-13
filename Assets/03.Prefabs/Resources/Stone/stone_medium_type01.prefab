@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1933395896596009899}
   - component: {fileID: 4063426467558323910}
   - component: {fileID: 6753431277586583840}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: HitFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   _maxDetectEnemy: 5
   resourceType: 0
-  _noiseValue: 7
+  _noiseValue: 5
   _maxNoiseValue: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   OnRecieveResourceEvent:
@@ -359,10 +359,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 5ae62ba9390b35747a025f433eff6d28,
         type: 3}
+    - target: {fileID: 2726557347904242214, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
       propertyPath: m_Name
       value: HealthUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026883480836637388, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7551485562132339281, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
