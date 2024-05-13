@@ -34,7 +34,6 @@ public class RaftMovement : ComingObjetMovement
         float centerToHitPointZ = Mathf.Abs(_meshCollider.transform.position.z - RaycastHit_ToCenterPos.z);
 
         Vector3 closestPointToCenter = GetClosestPointToCenter();
-        Debug.Log($"RaftclosestPoint: {closestPointToCenter}");
 
         // 가장 가까운 포인트와 히트 포인트 사이의 거리 계산
         float closestPointToHitPointX = Mathf.Abs(closestPointToCenter.x - RaycastHit_ToCenterPos.x);

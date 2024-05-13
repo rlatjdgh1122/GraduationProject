@@ -26,7 +26,7 @@ public abstract class ComingObjetMovement : MonoBehaviour
         {
             Vector3 closestPointToCenter = GetClosestPointToCenter();
 
-            if (Physics.Raycast(closestPointToCenter, (_centerPos - closestPointToCenter).normalized, out RaycastHit hit, Mathf.Infinity))
+            if (Physics.Raycast(closestPointToCenter, (_centerPos - closestPointToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
             {
                 return hit.point;
             }
