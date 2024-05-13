@@ -149,8 +149,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623337}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.012899988, y: 0, z: 0.009697681, w: 0.99986976}
-  m_LocalPosition: {x: 19.69, y: -0.116025865, z: 0.16}
+  m_LocalRotation: {x: 0.01373993, y: 0, z: -0.00968461, w: 0.99985874}
+  m_LocalPosition: {x: 19.69, y: -0.12778993, z: 0.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1349,8 +1349,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 206201372}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.024536185, y: 0, z: -0.018921526, w: 0.9995199}
-  m_LocalPosition: {x: -25.4, y: 0.027745537, z: 6.39}
+  m_LocalRotation: {x: 0.02293358, y: 0, z: -0.0000145912745, w: 0.999737}
+  m_LocalPosition: {x: -25.4, y: -0.15798241, z: 6.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5721,6 +5721,7 @@ RectTransform:
   - {fileID: 1118066158}
   - {fileID: 3697909178525102150}
   - {fileID: 9034379310948507182}
+  - {fileID: 1234840113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6661,6 +6662,94 @@ Transform:
   m_Children: []
   m_Father: {fileID: 583110008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1234840112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1234840113}
+  - component: {fileID: 1234840115}
+  - component: {fileID: 1234840114}
+  - component: {fileID: 1234840116}
+  m_Layer: 5
+  m_Name: BlackPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1234840113
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234840112}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1049694165}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 2.1207, y: -19.0855}
+  m_SizeDelta: {x: 63.6179, y: 139.9595}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1234840114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234840112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1234840115
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234840112}
+  m_CullTransparentMesh: 1
+--- !u!225 &1234840116
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234840112}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1262331554
 GameObject:
   m_ObjectHideFlags: 0
@@ -8633,8 +8722,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675853052}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0055565634, y: 0, z: 0.0020245602, w: 0.99998254}
-  m_LocalPosition: {x: 28.599998, y: -0.7841884, z: 15.799999}
+  m_LocalRotation: {x: 0.0073284674, y: 0, z: -0.0022194586, w: 0.9999707}
+  m_LocalPosition: {x: 28.599998, y: -1.1010756, z: 15.799999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9753,8 +9842,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974876406}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0044234865, y: 0, z: 0.008554554, w: 0.9999536}
-  m_LocalPosition: {x: -15.77, y: -0.10518559, z: -11.02}
+  m_LocalRotation: {x: 0.011894784, y: 0, z: -0.0096701635, w: 0.9998825}
+  m_LocalPosition: {x: -15.77, y: -0.00039999932, z: -11.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11133,7 +11222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -662, y: 2.1206}
+  m_AnchoredPosition: {x: -662, y: 2.1206055}
   m_SizeDelta: {x: 400, y: 63.6179}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &112650874774677864
@@ -25582,6 +25671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed7a1630c2fbb746bcf7ae249e4b5e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _blackPanel: {fileID: 1234840116}
+  _fadeDuration: 2
 --- !u!4 &6310509807633349822
 Transform:
   m_ObjectHideFlags: 0
@@ -31461,13 +31552,13 @@ MonoBehaviour:
   OnButtonEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 794716566114685794}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 6297594016610630877}
+        m_TargetAssemblyTypeName: StartSceneEvent, Assembly-CSharp
+        m_MethodName: GameStartBtn
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
