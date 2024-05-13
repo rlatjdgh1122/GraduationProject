@@ -165,8 +165,8 @@ public class LegionInventory : LegionUI
                 if (saveData.JobType == PenguinJobType.General) currentGeneral--;
                 else currentPenguinCnt--;
             }
-        }
-
+        }//end foreach
+        
         LegionCountTextSetting();
     }
 
