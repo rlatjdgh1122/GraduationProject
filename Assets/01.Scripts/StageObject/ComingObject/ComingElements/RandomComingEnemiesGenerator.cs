@@ -39,6 +39,8 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         _groundConfigurer = transform.Find("GroundConfigurer").GetComponent<GroundConfigurer>();
         _raftConfigurer = transform.Find("RaftConfigurer").GetComponent<RaftConfigurer>();
+            
+        SignalHub.OnIceArrivedEvent += TutorialGenerateRaft;
     }
 
     private void Start()
@@ -123,7 +125,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         if(curWave < 10) // 튜토리얼이면 정해진대로
         {
-            TutorialGenerateRaft();
             TutorialGlacierSetPos();
         }
         else // 아니면 랜덤으로
@@ -162,5 +163,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartPriorityEvent -= GenerateGlacier;
+        SignalHub.OnIceArrivedEvent -= TutorialGenerateRaft;
     }
 }

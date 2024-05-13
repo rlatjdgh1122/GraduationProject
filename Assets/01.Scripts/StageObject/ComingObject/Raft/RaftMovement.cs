@@ -15,12 +15,6 @@ public class RaftMovement : ComingObjetMovement
         _raft = GetComponent<Raft>(); // 아 몰라 시간 업음
     }
 
-    public override void Move()
-    {
-        // 배는 좀 있다 오니까
-        CoroutineUtil.CallWaitForSeconds(5f, null, () => base.Move());
-    }
-
     protected override void Arrived()
     {
         Debug.Log("가라앉기");

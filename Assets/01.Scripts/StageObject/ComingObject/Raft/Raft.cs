@@ -15,7 +15,7 @@ public class Raft : PoolableMono, IComingObject
 
     public override void Init()
     {
-        SignalHub.OnBattlePhaseStartEvent += RaftMoveHandler;
+        CoroutineUtil.CallWaitForSeconds(2f, null, () => _raftMovement.Move());
     }
 
     public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
@@ -28,11 +28,6 @@ public class Raft : PoolableMono, IComingObject
     public void SetEnemies(Enemy[] enemies)
     {
         _enemies = enemies;
-    }
-
-    private void RaftMoveHandler()
-    {
-        _raftMovement.Move();
     }
 
     private void OnSink()
@@ -59,10 +54,5 @@ public class Raft : PoolableMono, IComingObject
     {
         _raftMovement.transform.LookAt(trm);
         _raftMovement.SetMoveTarget(trm);
-    }
-
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseStartEvent -= RaftMoveHandler;
     }
 }

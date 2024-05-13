@@ -41,7 +41,6 @@ public abstract class ComingObjetMovement : MonoBehaviour
 
     public virtual void Move()
     {
-        Debug.Log($"{gameObject}: {_targetPos}");
         transform.DOMove(_targetPos, _moveDuration).
             OnComplete(() =>
             {
