@@ -4,8 +4,6 @@ using UnityEngine;
 public class ShieldGeneralPenguin : General
 {
 
-    private bool IsStateImpact = false;
-
     protected override void Awake()
     {
         base.Awake();
@@ -36,7 +34,7 @@ public class ShieldGeneralPenguin : General
         var maxHp = HealthCompo.maxHealth;
         var curHp = HealthCompo.currentHealth;
 
-        if (IsStateImpact == false
+        if (PenguinTriggerCalled == false
             && CheckHealthRatioPassive(maxHp, curHp, 90))
         {
             OnPassiveHealthRatioEvent();
@@ -45,16 +43,18 @@ public class ShieldGeneralPenguin : General
 
     public override void OnPassiveHealthRatioEvent()
     {
-        _characterStat.armor.AddIncrease(500);
         StateMachine.ChangeState(PenguinStateType.Impact);
-        Debug.Log("방어모드");
-        IsStateImpact = true;
+        PenguinTriggerCalled = true;
+
+        //spinattack Exit에서 PenguinTriggerCalled를 true로 바꿈
     }
 
     public override void OnPassiveHitEvent()
     {
         StateMachine.ChangeState(PenguinStateType.SpinAttack);
-        IsStateImpact = false;
+        //spinattack Enter에서 PenguinTriggerCalled를 false로 바꿈
+
+        //idle Enter에서도 바꿈
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
