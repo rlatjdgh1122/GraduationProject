@@ -62,17 +62,14 @@ public class GroundMovement : ComingObjetMovement
         float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
         float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
 
-        Debug.Log($"xDistance: {xDistance}");
-        Debug.Log($"zDistance: {zDistance}");
-
         // 타겟 벡터 계산
         Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
 
-        //// X 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
-        targetVec.x += Mathf.Sign(transform.position.x) * xDistance;
-        //
-        //// Z 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
-        targetVec.z += Mathf.Sign(transform.position.y) * zDistance;
+        // X 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
+        targetVec.x += Mathf.Sign(transform.localPosition.x) * xDistance;
+        
+        // Z 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
+        targetVec.z += Mathf.Sign(transform.localPosition.z) * zDistance;
 
         // 타겟 위치 설정
         _targetPos = targetVec;

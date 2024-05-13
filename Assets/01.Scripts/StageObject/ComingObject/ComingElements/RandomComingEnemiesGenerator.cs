@@ -61,7 +61,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         _rotateValues.Clear();
 
-        for (int i = 1; i <= GetCurHexagonGroundsGoalCount(); i++)
+        for (int i = 0; i <= GetCurHexagonGroundsGoalCount(); i++)
         {
             _rotateValues.Enqueue(GetCurAngleBetweenGlacier() * i);
             Ground ground = SpawnGlaciers();

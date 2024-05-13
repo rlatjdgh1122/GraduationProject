@@ -47,7 +47,7 @@ public abstract class ComingObjetMovement : MonoBehaviour
                 //Debug.Log($"{_closestPointToCenter}못 찾음");
                 //Debug.Log($"{_centerPos}못 찾음");
             }
-
+            Debug.Log("안 맞았습니다.");
             return Vector3.zero;
         }
     }
