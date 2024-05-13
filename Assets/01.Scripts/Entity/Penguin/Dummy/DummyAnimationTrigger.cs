@@ -13,7 +13,7 @@ public class DummyAnimationTrigger : MonoBehaviour
 
     public void EndAnimationTrigger()
     {
-        _penguin.AnimationFinishTrigger();
+        _penguin?.AnimationFinishTrigger();
     }
 
 }
