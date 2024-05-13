@@ -34,7 +34,7 @@ public class EnemyBaseState : EnemyState
         if (_animalAttack.ComboCounter > _animalAttack.animalAttackList.Count - 1
             || Time.time >= _animalAttack.LastAttackTime + _animalAttack.ComboWindow)
         {
-            _animalAttack.ComboCounter = 0; //�޺� �ʱ�ȭ ���ǿ� ���� �޺� �ʱ�ȭ
+            _animalAttack.ComboCounter = 0;
         }
         _enemy.AnimatorCompo.SetInteger(_comboCounterHash, _animalAttack.ComboCounter);
 
@@ -49,7 +49,7 @@ public class EnemyBaseState : EnemyState
 
         if (_enemy.CurrentTarget != null)
         {
-            _navAgent.ResetPath();
+            //_navAgent.ResetPath();
             _enemy.MoveToCurrentTarget();
         }
     }
@@ -89,10 +89,10 @@ public class EnemyBaseState : EnemyState
 
     protected void AttackComboExit()
     {
+        AttackExit();
+
         ++_animalAttack.ComboCounter;
         _animalAttack.LastAttackTime = Time.time;
-
-        _enemy.AnimatorCompo.speed = 1;
     }
 
     protected void ChaseExit()

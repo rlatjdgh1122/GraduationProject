@@ -157,7 +157,7 @@ public class Penguin : Entity
         }
     }
 
-    #region passive
+    #region Passive Check
     public bool CheckAttackPassive(int curAttackCount)
 => passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
@@ -166,6 +166,11 @@ public class Penguin : Entity
 
     public bool CheckSecondPassive()
 => passiveData?.CheckSecondEventPassive() ?? false;
+
+    #endregion
+
+    #region Passive Event
+
 
     public virtual void OnPassiveAttackEvent()
     {
@@ -181,6 +186,7 @@ public class Penguin : Entity
     {
 
     }
+
     #endregion
 
     protected void FindTarget()

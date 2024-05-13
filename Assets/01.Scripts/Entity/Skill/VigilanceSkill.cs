@@ -25,11 +25,15 @@ public class VigilanceSkill : Skill
     {
         base.PlaySkill();
 
-        Gorilla.DamageCasterCompo.SetPosition();
+        //Gorilla.DamageCasterCompo.SetPosition();
         OnVigilanceEvent?.Invoke();
-        Gorilla.DamageCasterCompo.SetPosition();
+        //Gorilla.DamageCasterCompo.SetPosition();
+
+        //체력 채워주기
+        Gorilla.HealthCompo.ApplyHeal(50);
+        //스탯 올려주기
         Gorilla.Stat.AddStat(_sizeUpDamage, StatType.Damage, StatMode.Increase);
-        //Gorilla.AttackCompo.AoEAttack(0, 0.5f, 5f);
+        //커져라!
         Vector3 targetSize = (Gorilla.transform.localScale) * _sizeUpValue;
         Gorilla.transform.DOScale(targetSize, _sizeUpDuration);
     }
