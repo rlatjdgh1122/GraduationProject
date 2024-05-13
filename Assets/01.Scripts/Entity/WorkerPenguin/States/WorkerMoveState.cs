@@ -14,7 +14,7 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
 
         _worker.MoveToTarget();
 
-        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
 
     public override void UpdateState()
