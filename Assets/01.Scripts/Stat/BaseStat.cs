@@ -38,6 +38,7 @@ public abstract class BaseStat : ScriptableObject
             { evasion,           "회피 확률"},
             { damage,            "공격력"},
             { criticalChance,    "크리티컬 확률"},
+            { tenacity,          "강인함" },
         };
     }
 

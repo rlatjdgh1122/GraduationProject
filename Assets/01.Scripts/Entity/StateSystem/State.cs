@@ -21,12 +21,13 @@ public class State
     #region Enter
     protected void IdleEnter()
     {
-        if (_navAgent.isOnNavMesh)
+       /* if (_navAgent.isOnNavMesh)
         {
-            _navAgent?.ResetPath();
+            //_navAgent?.ResetPath();
+            _navAgent.velocity = Vector3.zero;
             //_navAgent.isStopped = false;
             //_penguin.SetNavmeshPriority(Penguin.PriorityType.High);
-        }
+        }*/
 
         _penguin.StopImmediately();
         //_penguin.CurrentTarget = null;
@@ -104,6 +105,8 @@ public class State
 
         _triggerCalled = true;
         _penguin.SuccessfulToArmyCalled = false;
+
+        _penguin.StartImmediately();
 
         if (_penguin.WaitForCommandToArmyCalled)
             _penguin.MoveToMouseClickPositon();

@@ -73,7 +73,7 @@ public abstract class Entity : TargetObject
     {
         if (NavAgent.isActiveAndEnabled)
         {
-            NavAgent.ResetPath();
+            //NavAgent.ResetPath();
             NavAgent.SetDestination(CurrentTarget.transform.position);
         }
     }

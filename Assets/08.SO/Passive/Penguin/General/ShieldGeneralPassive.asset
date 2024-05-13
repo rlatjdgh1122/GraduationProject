@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17a62f3cf4e3b234f879f1f32caade54, type: 3}
-  m_Name: SumoGeneralPassive
+  m_Name: ShieldGeneralPassive
   m_EditorClassIdentifier: 
-  IsAttackEvent: 1
+  IsAttackEvent: 0
   AttackCount: 3
   IsSecondEvent: 0
   Second: 10
   IsBackAttack: 0
-  IsAroundEnemyCountEventEvent: 0
+  IsAroundEnemyCountEvent: 0
   AroundRadius: 3
   AroundEnemyCount: 3
   CheckTarget:
     serializedVersion: 2
     m_Bits: 0
+  IsHealthRatioEvent: 1
+  Ratio: 70
+  IsHitEvent: 1
+  HitCount: 5
