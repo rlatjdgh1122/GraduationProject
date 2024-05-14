@@ -100,10 +100,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
                                       groundPos,
                                       _groundConfigurer.SetComingObjectElements(curground.transform));
 
-        CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
-        {
-            transform.rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
-        });
+        transform.rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f); // 문제가 생긴하면 아마 이것 때문일것. 기다려라.
     }
 
     private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
@@ -159,11 +156,9 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGlacierSetPos()
     {
-        Debug.Log(_tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount);
-
         for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
         {
-            CoroutineUtil.CallWaitForSeconds(0.1f, null, () => GlacierSetPos());
+            GlacierSetPos();
         }
     }
 
