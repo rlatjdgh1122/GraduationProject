@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,8 @@ public class ScreenResolution : MonoBehaviour
         _resolutionDropDown = transform.Find("ResolutionDropDown").GetComponent<TMP_Dropdown>();
         _screenModeDropDown = transform.Find("ScreenModeDropDown").GetComponent<TMP_Dropdown>();
 
+        ApplyScreen();
+
         _resolutionDropDown.onValueChanged.RemoveAllListeners();
         _resolutionDropDown.onValueChanged.AddListener((optionNumber) => GetResolutionIndex(optionNumber));
 
@@ -34,18 +37,21 @@ public class ScreenResolution : MonoBehaviour
         _resolutions.AddRange(Screen.resolutions); //사용 가능한 해상도 넣기
         _resolutionDropDown.options.Clear(); //기존 드랍 다운에 있는 옵션 제거
 
+        _resolutions.Reverse();
+        
         foreach (Resolution resolution in _resolutions)
         {
-            TMP_Dropdown.OptionData option = new();
+            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
 
             int hz = (int)Math.Round(resolution.refreshRateRatio.value);
+
             option.text = $"{resolution.width} x {resolution.height} {hz}hz";
 
             _resolutionDropDown.options.Add(option);
         }
 
+
         _resolutionDropDown.value = _resolutionIndex;
-        _resolutionDropDown.options.Reverse();
 
         _resolutionDropDown.RefreshShownValue();
     }
@@ -75,6 +81,7 @@ public class ScreenResolution : MonoBehaviour
 
     private void ApplyScreen() //화면에 적용
     {
+        Debug.Log($"너비 : {_resolutions[_resolutionIndex].width}, 높이 : {_resolutions[_resolutionIndex].height}");
         Screen.SetResolution(_resolutions[_resolutionIndex].width, _resolutions[_resolutionIndex].height
                     , _screenMode);
     }
