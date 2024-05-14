@@ -14,7 +14,7 @@ public class NavmeshBaker : MonoBehaviour
         SignalHub.OnIceArrivedEvent += NavmeshBake;
     }
 
-    private void NavmeshBake()
+    public void NavmeshBake()
     {
         _navMeshSurface.BuildNavMesh();
     }

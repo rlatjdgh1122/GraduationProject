@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class EnemyIdleState : EnemyBaseState
 {
@@ -16,6 +17,9 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void UpdateState()
     {
+        //if (_enemy.NavAgent.isOnOffMeshLink)
+        //    _stateMachine.ChangeState(EnemyStateType.Jump);
+
         base.UpdateState();
     }
 

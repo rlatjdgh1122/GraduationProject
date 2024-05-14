@@ -34,6 +34,20 @@ public abstract class ComingObjetMovement : MonoBehaviour
         }
     }
 
+    protected Transform RaycastHitTrm
+    {
+        get
+        {
+            Vector3 closestPointToCenter = GetClosestPointToCenter();
+
+            if (Physics.Raycast(closestPointToCenter, (_centerPos - closestPointToCenter).normalized, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+            {
+                return hit.transform;
+            }
+            return null;
+        }
+    }
+
     protected virtual void Awake()
     {
         _meshCollider = transform.GetChild(0).GetComponent<MeshCollider>();
@@ -81,12 +95,6 @@ public abstract class ComingObjetMovement : MonoBehaviour
     {
         Vector3 closestPoint = _meshCollider.ClosestPoint(_centerPos);
         return closestPoint;
-    }
-
-    private void Update()
-    {
-        Vector3 closestPointToCenter = GetClosestPointToCenter();
-        Debug.DrawRay(closestPointToCenter, (_centerPos - closestPointToCenter).normalized * 10f, Color.red, 99f);
     }
 
     public abstract void SetComingObejctPos(Transform parentTransform, Vector3 position);

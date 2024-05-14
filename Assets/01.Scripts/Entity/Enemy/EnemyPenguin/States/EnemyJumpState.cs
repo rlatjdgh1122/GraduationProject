@@ -13,7 +13,6 @@ public class EnemyJumpState : EnemyBaseState
 
         _triggerCalled = false;
 
-        Debug.Log("а║га╥н ©х");
         _enemy.MoveToNexus();
     }
 
