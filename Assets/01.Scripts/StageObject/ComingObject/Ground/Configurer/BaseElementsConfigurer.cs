@@ -25,7 +25,7 @@ public abstract class BaseElementsConfigurer
 
         do
         {
-            randomPos = (Vector3)Random.insideUnitCircle * groundRadius;
+            randomPos = Random.insideUnitSphere * groundRadius;
             randomPos.y = setposY;
 
             positionFound = true;
@@ -41,6 +41,10 @@ public abstract class BaseElementsConfigurer
         } while (!positionFound);
 
         previousElementsPositions.Add(randomPos);
+
+        randomPos = Random.insideUnitSphere * groundRadius;
+        randomPos.y = setposY;                                                                                                                                  
+
         return randomPos;
     }
 

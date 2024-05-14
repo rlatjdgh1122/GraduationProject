@@ -9,9 +9,12 @@ public class RaftConfigurer : ComingObjectConfigurer
     {
         _previousElementsPositions.Clear();
 
-        EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
-                                                              _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
-                                                              _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray());
+        EnemyConfigurer enemyConfigurer = new EnemyConfigurer
+        (
+            groundTrm,
+            _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
+            _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray()
+        );
 
         return new RaftElements(enemyConfigurer.SetEnemy(_previousElementsPositions, isRaft));
     }

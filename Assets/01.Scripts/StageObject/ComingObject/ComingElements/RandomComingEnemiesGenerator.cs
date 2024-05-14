@@ -63,34 +63,38 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         _rotateValues.Clear();
 
-        for (int i = 0; i <= GetCurHexagonGroundsGoalCount(); i++)
+        float[] rotateValueArray = new float[GetCurHexagonGroundsGoalCount()];
+
+        for (int i = 0; i < GetCurHexagonGroundsGoalCount(); i++)
         {
-            _rotateValues.Enqueue(GetCurAngleBetweenGlacier() * i);
+            rotateValueArray[i] = GetCurAngleBetweenGlacier() * i;
             Ground ground = SpawnGlaciers();
             _curHexagon_Grounds.Enqueue(ground);
         }
 
-        var array = _rotateValues.ToArray();                // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
-        System.Random rnd = new System.Random();            // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
-        array = array.OrderBy(x => rnd.Next()).ToArray();   // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
-        _rotateValues = new Queue<float>(array);            // 나올 수 있는 각도들을 Queue에 넣어두고 랜덤으로 셔플
+        System.Random rnd = new System.Random();            // 나올 수 있는 각도들 배열을 랜덤으로 셔플
+        rotateValueArray = rotateValueArray.OrderBy(x => rnd.Next()).ToArray();
+
+        for(int i = 0; i < rotateValueArray.Length; i++)
+        {
+            _rotateValues.Enqueue(rotateValueArray[i]);
+        }
     }
 
     private void GlacierSetPos()
     {
         // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨
-
-        int realMakedHexagonCount = makedHexagonCount + 1;
-
         Ground curground = _curHexagon_Grounds.Dequeue();
         curground.ActivateGround();
 
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
 
+        Debug.Log(rotateValue);
+
         curground.gameObject.SetActive(true);
 
-        Vector3 groundPos = new Vector3(transform.localPosition.x, 0f, _spawnDistance * realMakedHexagonCount);
+        Vector3 groundPos = new Vector3(transform.localPosition.x, 0f, _spawnDistance * (makedHexagonCount + 1));
 
         curground.SetComingObjectInfo(transform,
                                       groundPos,
@@ -98,13 +102,14 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         CoroutineUtil.CallWaitForOneFrame(() => // SetGroundInfo 하고 나서 해야 하니 1프레임 기다리고 한다.
         {
-            transform.rotation = Quaternion.Euler(0.0f, 30.0f, 0.0f);
+            transform.rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
         });
     }
 
     private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
     {
         if (makedHexagonCount == 0) { return 60; } // 근데 처음에는 3개 깔린 상태로 시작하니까 60 반환
+        Debug.Log("ckwkEK");
         return 360 / GetCurHexagonGroundsGoalCount();
     }
 
@@ -154,9 +159,11 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGlacierSetPos()
     {
+        Debug.Log(_tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount);
+
         for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
         {
-            GlacierSetPos();
+            CoroutineUtil.CallWaitForSeconds(0.1f, null, () => GlacierSetPos());
         }
     }
 

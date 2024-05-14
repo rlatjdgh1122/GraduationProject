@@ -9,6 +9,8 @@ public class GroundConfigurer : ComingObjectConfigurer
 {
     public override ComingElements SetComingObjectElements(Transform groundTrm, bool isRaft = false)
     {
+        Debug.Log($"{gameObject} GroundClear");
+
         _previousElementsPositions.Clear();
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,

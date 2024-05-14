@@ -12,6 +12,7 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
 
     public virtual ComingElements SetComingObjectElements(Transform groundTrm, bool isRaft = false)
     {
+        Debug.Log($"{gameObject} ComingObjClear");
         _previousElementsPositions.Clear();
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
