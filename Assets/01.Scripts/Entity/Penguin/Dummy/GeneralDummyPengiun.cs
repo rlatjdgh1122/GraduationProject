@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class GeneralDummyPengiun : DummyPenguin
 {
+    public GeneralStat Stat { get; set; } = null;
+
     private void OnMouseDown()
     {
-        PenguinManager.Instance.ShowInfoUI<GeneralInfoDataSO, GeneralStat>(this);
+        if (UIManager.Instance.CheckShowAble(UIType.Info))
+        {
+            PenguinManager.Instance.ShowGeneralInfoUI(this);
+            OutlineCompo.enabled = true;
+        }
     }
 }

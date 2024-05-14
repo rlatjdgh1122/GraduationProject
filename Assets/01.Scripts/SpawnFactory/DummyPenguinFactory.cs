@@ -20,7 +20,7 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
     /// 더미 펭귄 생성
     /// </summary>
     /// <param name="dummyPenguin"> 더미 펭귄</param>   
-    public void SpawnDummyPenguinHandler(DummyPenguin dummyPenguin)
+    public T SpawnDummyPenguinHandler<T>(T dummyPenguin) where T : DummyPenguin
     {
         if (spawnXIdx >= 5)
         {
@@ -34,9 +34,11 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
 
         spawnXIdx++; // 생성 위치를 위한 idx
 
-        DummyPenguin spawnPenguin = SpawnObject(dummyPenguin, spawnVec) as DummyPenguin;
+        T spawnPenguin = SpawnObject(dummyPenguin, spawnVec) as T;
 
         PenguinManager.Instance.AddDummyPenguin(spawnPenguin); // 리스트에 추가
+
+        return spawnPenguin;
     }
     private void ResetPTInfo()
     {

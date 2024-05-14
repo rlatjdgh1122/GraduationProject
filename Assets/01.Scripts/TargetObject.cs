@@ -7,7 +7,12 @@ using UnityEngine.UI;
 public abstract class TargetObject : PoolableMono
 {
     [SerializeField] protected BaseStat _characterStat;
-    public BaseStat Stat => _characterStat;
+
+    public BaseStat Stat
+    {
+        get => _characterStat;
+        set => _characterStat = value;
+    }
 
     //사실 as랑 같음
     public T ReturnGenericStat<T>() where T : BaseStat => (T)_characterStat;
@@ -38,7 +43,6 @@ public abstract class TargetObject : PoolableMono
 
     private float radius = 0f;
 
-    
     protected virtual void Awake()
     {
         _targetColliders = new Collider[_maxDetectEnemy];

@@ -91,7 +91,7 @@ public class DummyPenguin : PoolableMono
     {
         if(UIManager.Instance.CheckShowAble(UIType.Info))
         {
-            PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
+            PenguinManager.Instance.ShowPenguinInfoUI(this);
             OutlineCompo.enabled = true;
         }
     }

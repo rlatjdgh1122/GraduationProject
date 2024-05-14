@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Xml.XPath;
 using Unity.VisualScripting;
@@ -171,7 +172,7 @@ public class PenguinManager
             infoDataToPenguinDic.Add(dataType, penguin);
             penguinToInfoDataDic.Add(penguin, dataType);
         }
-      
+
     }
 
     #endregion
@@ -335,6 +336,12 @@ public class PenguinManager
             //오너를 가지고 있지 않다면
             if (!info.IsHaveOwner)
             {
+                //만약 장군이라면
+                if (data.JobType == PenguinJobType.General)
+                {
+                    //더미 펭귄에 스탯으로 바꿈
+                    penguin.Stat = (dummyPenguin as GeneralDummyPengiun).Stat;
+                }
                 //펭귄 타입이 같다면
                 if (dataType == dummyPenguinType)
                 {
@@ -431,28 +438,38 @@ public class PenguinManager
     /// <typeparam name="T1">InfoData를 넣으세요</typeparam>
     /// <typeparam name="T2">Stat을 넣으세요</typeparam>
     /// <param name="dummy"></param>
-    public void ShowInfoUI<T1, T2>(DummyPenguin dummy) where T1 : EntityInfoDataSO where T2 : BaseStat
+    public void ShowPenguinInfoUI(DummyPenguin dummy)
     {
-        T1 infoData = GetInfoDataByDummyPenguin<T1>(dummy);
+        var infoData = GetInfoDataByDummyPenguin<PenguinInfoDataSO>(dummy);
 
         //군단에 소속되지 않았다면 디폴트 정보를 넘겨줌
-        if (infoData == null) infoData = dummy.NotCloneInfo as T1;
+        if (infoData == null) infoData = dummy.NotCloneInfo;
 
-        T2 statData = GetStatByInfoData<T2>(infoData);
+        var statData = GetStatByInfoData<PenguinStat>(infoData);
 
         GetCurrentInfoData = infoData;
         GetCurrentStat = statData;
 
         UIManager.Instance.HidePanel("PenguinInfoUI");
-        //PenguinManager.Instance.CameraCompo.SetFollowTarget(dummy.transform, 10f, 5f);
         DummyPenguinCameraCompo.SetCamera(dummy.transform);
 
         // 장군 정보와 펭귄 정보는 따로
-        //if (stat is PenguinStat && infoData is EntityInfoDataSO)
         UIManager.Instance.ShowPanel("PenguinInfoUI");
-        /*else
-            UIManager.Instance.ShowPanel("GeneralInfoUI");*/
+    }
 
+    public void ShowGeneralInfoUI(GeneralDummyPengiun dummy)
+    {
+        //var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
+        var data = dummy.Stat;
+
+        GetCurrentInfoData = data.InfoData;
+        GetCurrentStat = data;
+
+        UIManager.Instance.HidePanel("GeneralInfoUI");
+        DummyPenguinCameraCompo.SetCamera(dummy.transform);
+
+        // 장군 정보와 펭귄 정보는 따로
+        UIManager.Instance.ShowPanel("GeneralInfoUI");
     }
 }
 
