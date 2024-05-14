@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyGorillaStat
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 150
+    _baseValue: 300
     _fewTimes: 1
-    _finalValue: 150
+    _finalValue: 300
     increases: 
     decreases: 
   armor:
@@ -25,8 +25,14 @@ MonoBehaviour:
     increases: 
     decreases: 
   evasion:
-    _baseValue: 50
-    _fewTimes: NaN
+    _baseValue: 5
+    _fewTimes: 1
+    _finalValue: 5
+    increases: 
+    decreases: 
+  tenacity:
+    _baseValue: 30
+    _fewTimes: 0
     _finalValue: 0
     increases: 
     decreases: 

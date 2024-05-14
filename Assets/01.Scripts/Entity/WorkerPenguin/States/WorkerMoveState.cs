@@ -1,3 +1,5 @@
+using UnityEngine.AI;
+
 public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
 {
     public WorkerMoveState(Worker worker, WorkerStateMachine<WorkerPenguinStateEnum> stateMachine, string animationBoolName) 
@@ -11,6 +13,8 @@ public class WorkerMoveState : WorkerState<WorkerPenguinStateEnum>
         _triggerCalled = true;
 
         _worker.MoveToTarget();
+
+        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
 
     public override void UpdateState()

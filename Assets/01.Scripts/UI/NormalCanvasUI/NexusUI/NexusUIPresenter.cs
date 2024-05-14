@@ -108,19 +108,9 @@ public class NexusUIPresenter : NexusPopupUI
     }
     #endregion
 
-    public override void ShowPanel()
-    {
-        base.ShowPanel();
-    }
-
     public void HideNexusPanel()
     {
         UIManager.Instance.HidePanel("NexusUI");
-    }
-
-    public override void HidePanel()
-    {
-        base.HidePanel();
     }
 
     public override void UIUpdate()

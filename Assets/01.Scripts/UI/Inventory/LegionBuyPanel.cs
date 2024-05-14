@@ -57,7 +57,7 @@ public class LegionBuyPanel : PopupUI
 
         int legion = _legionNumber + 1;
 
-        LegionInventoryManager.Instance.LegionList()[_legionNumber].Locked = false; //군단 버튼 해금
+        LegionInventoryManager.Instance.LegionList[_legionNumber].Locked = false; //군단 버튼 해금
         UIManager.Instance.ShowWarningUI($"{legion}군단 구매 성공!");
 
         _legionChange.ChangingLegion(_legionNumber); //구매한 군단으로 바꾸기

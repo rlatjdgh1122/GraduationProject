@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MortarDeadController : MonoBehaviour
+public class MortarDeadController : BuildingDeadController<MortarBuilding>
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnDied()
     {
-        
-    }
+        base.OnDied();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //_owner.IsInstalled = false;
     }
 }

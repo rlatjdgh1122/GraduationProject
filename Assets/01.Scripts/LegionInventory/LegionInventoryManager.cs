@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 [Serializable]
@@ -23,12 +24,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     private UnitInventoryData _selectData;
     public UnitInventoryData SelectData => _selectData;
 
-    public List<LegionInfo> _legionList = new();
+    [SerializeField] private List<LegionInfo> _legionList = new();
+    public List<LegionInfo> LegionList => _legionList;
     public int LegionCount => _legionList.Count;
-
-    private bool _canShowPanel = true;
-    public bool CanShowPanel => _canShowPanel;
-
 
     public override void Awake()
     {
@@ -174,15 +172,8 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         return _legionInven.ExcedLimitOfLegion(CurrentLegion);
     }
 
-    public List<LegionInfo> LegionList()
-    {
-        return _legionList;
-    }
-
     public void ShowPenguinSituation(EntityInfoDataSO so, float percent)
     {
         _penguinSituation.SetPenguinSituation(so, percent, (so as PenguinInfoDataSO).Price);
     }
-
-    public void ChangeCanShowPanel(bool value) => _canShowPanel = value;
 }

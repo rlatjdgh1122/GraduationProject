@@ -26,6 +26,7 @@ public class EnemyReachedState : EnemyBaseState
 
         _enemy.LookAtNexus();
 
+
         if (_triggerCalled)
         {
             if (_enemy.IsTargetInInnerRange)

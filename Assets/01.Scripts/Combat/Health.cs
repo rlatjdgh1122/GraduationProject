@@ -7,10 +7,29 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 {
     public int maxHealth;
     public int currentHealth;
-    private int _armor;
-    private int _evasion;
+
+
+    private float armor
+    {
+        get
+        {
+            var result = _onwer.armor.GetValue() * 0.01f;
+            return result;
+        }
+    }
+
+    private float evasion
+    {
+        get
+        {
+            var result = _onwer.evasion.GetValue() * 0.01f;
+            return result;
+        }
+    }
 
     public LayerMask groundLayer;
+
+    private BaseStat _onwer;
 
     #region ActionEvent
 
@@ -40,23 +59,21 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
     public void SetHealth(BaseStat owner)
     {
+        _onwer = owner;
         currentHealth = maxHealth = owner.GetMaxHealthValue();
-        _armor = owner.armor.GetValue();
-        _evasion = owner.evasion.GetValue();
     }
 
     public void SetMaxHealth(BaseStat owner)
     {
         maxHealth = owner.GetMaxHealthValue();
-    }  
+    }
 
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, TargetObject hitTarget, bool isFeedback = true)
     {
         if (IsDead) return;
 
         float dice = UnityEngine.Random.value;
-        float adjustedEvasion = _evasion * 0.01f;
-        if (dice < adjustedEvasion)
+        if (dice < evasion)
         {
             if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Evasion, out var evasionF))
             {
@@ -70,8 +87,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         _actionData.HitType = hitType;
         _actionData.HitTarget = hitTarget;
 
-        float adjustedDamage = damage * (1.0f - (_armor * 0.01f));
-
+        //float adjustedDamage = damage * (1.0f - (_armor * 0.01f));
+        float adjustedDamage = damage * (1 - armor);
         currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
 
         /*if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
@@ -104,8 +121,12 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
             OnHit?.Invoke();
 
-            if (isFeedback) { hitF.PlayFeedback(); }
-        }
+            if (isFeedback) 
+            {
+                hitF.PlayFeedback(); 
+            }
+
+        }//end if
 
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
 
@@ -119,6 +140,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Stun, out var stunF, value))
         {
+            if (value <= 0) return;
+
             stunF.PlayFeedback();
         }
     }
@@ -127,6 +150,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Knockback, out var knockbackF, value))
         {
+            if (value <= 0) return;
+
             knockbackF.PlayFeedback();
 
             //바다에 빠졌다면
@@ -142,6 +167,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     {
         if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Provoked, out var ProvokedF, value))
         {
+            if (value <= 0) return;
+
             ProvokedF.PlayFeedback();
         }
     }

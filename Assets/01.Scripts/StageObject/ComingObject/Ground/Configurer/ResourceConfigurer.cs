@@ -15,6 +15,7 @@ public class ResourceConfigurer : BaseElementsConfigurer
     public ResourceObject[] SetResource(List<Vector3> previousElementsPositions)
     {
         int randIdx = Random.Range(0, _resourceGeneratePattern.Length);
+
         ResourceGeneratePattern spawnResourcePattern = _resourceGeneratePattern[randIdx];
 
         int spawnResourcesCount = spawnResourcePattern.resourceCounts.Sum();

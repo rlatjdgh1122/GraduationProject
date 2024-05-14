@@ -13,13 +13,13 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
 
     protected Animator _anim;
     protected NavMeshAgent _agent;
-    protected CharacterController _character;
+    protected Collider _collider;
 
     protected void Awake()
     {
         _owner = GetComponent<T>();
         _agent = GetComponent<NavMeshAgent>();
-        _character = GetComponent<CharacterController>();
+        _collider = GetComponent<Collider>();
         _anim = transform.Find("Visual").GetComponent<Animator>();
     }
 
@@ -37,7 +37,7 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
         _anim.SetBool(HASH_DEAD, true);
         //엔티티 네브메쉬와 콜라이더 꺼줌
         _agent.enabled = false;
-        _character.enabled = false;
+        _collider.enabled = false;
         //엔티티 죽음 처리
         _owner.IsDead = true;
         //엔티티 스크립트 꺼줌
@@ -49,11 +49,14 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
         //체력 다시 채움
         _owner.HealthCompo.SetHealth(_owner.Stat);
 
+        _anim.speed = 1f;
+        //애니메이션 켜줌
+        _anim.enabled = true;
         //죽는 애니메이션 꺼줌
         _anim.SetBool(HASH_DEAD, false);
         //엔티티 네브메쉬와 콜라이더 켜줌
         _agent.enabled = true;
-        _character.enabled = true;
+        _collider.enabled = true;
         //엔티티 살려줌
         _owner.IsDead = false;
         //엔티티 스크립트 켜줌

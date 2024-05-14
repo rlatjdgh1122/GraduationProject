@@ -16,8 +16,6 @@ public class TentInitPos : MonoBehaviour
                 if (initCount == remainCnt)
                 {
                     //WaveManager.Instance.DummyPenguinInitTentFinHandle();
-                    SignalHub.OnCompletedGoToHouseEvent?.Invoke();
-                    Debug.Log("다 들어갔어 친구야");
                     initCount = 0;
                 }
             }

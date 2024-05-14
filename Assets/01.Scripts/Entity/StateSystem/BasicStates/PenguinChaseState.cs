@@ -1,3 +1,5 @@
+using ArmySystem;
+
 public class PenguinChaseState : State
 {
     public PenguinChaseState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
@@ -15,7 +17,7 @@ public class PenguinChaseState : State
     {
         base.UpdateState();
 
-        if(_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
+        if(_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }
@@ -36,5 +38,7 @@ public class PenguinChaseState : State
     public override void ExitState()
     {
         base.ExitState();
+
+        ChaseExit();
     }
 }

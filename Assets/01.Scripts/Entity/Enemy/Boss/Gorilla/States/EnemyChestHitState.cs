@@ -24,7 +24,7 @@ public class EnemyChestHitState : EnemyBaseState
             if (_enemy.IsTargetInAttackRange)
                 _stateMachine.ChangeState(EnemyStateType.Attack);
             else
-                _stateMachine.ChangeState(EnemyStateType.Idle);
+                _stateMachine.ChangeState(EnemyStateType.Move);
         }
     }
     public override void ExitState()

@@ -10,6 +10,8 @@ public class PenguinMoveState : State
     public override void EnterState()
     {
         base.EnterState();
+
+        MoveEnter();
     }
 
     public override void UpdateState()
@@ -29,5 +31,7 @@ public class PenguinMoveState : State
     public override void ExitState()
     {
         base.ExitState();
+
+        MoveExit();
     }
 }

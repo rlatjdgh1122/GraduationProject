@@ -138,4 +138,9 @@ public class QuestUI : PopupUI
         UIManager.Instance.ShowPanel("UncompletedQuest");
         UIManager.Instance.HidePanel("CompletedQuest");
     }
+
+    public void HideQuestUI()
+    {
+        UIManager.Instance.HidePanel("QuestUI");
+    }
 }

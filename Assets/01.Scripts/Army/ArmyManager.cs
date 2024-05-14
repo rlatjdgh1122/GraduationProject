@@ -16,12 +16,19 @@ public class ArmyManager : Singleton<ArmyManager>
     public int CurLegion => curArmyIdx + 1;
 
     public int ArmiesCount => armies.Count;
-    private void Start()
+
+    public override void Awake()
     {
-        CreateArmy();
         KeySetting();
 
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
+    }
+    private void Start()
+    {
+        if (armies.Count > 0)
+            armies.Clear();
+
+        CreateArmy();
     }
 
     private void KeySetting()
@@ -223,7 +230,7 @@ public class ArmyManager : Singleton<ArmyManager>
     #region 군단 영입 부분
     /// <summary>
     /// 장군을 제외한 펭귄을 군단에 넣는 함수
-    /// </summary>
+    /// </summary>  
     /// <param name="legion"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
 
@@ -330,8 +337,9 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         Army newArmy = new Army();
 
+        newArmy.MoveSpeed = 4f;
         newArmy.LegionName = $"{ArmiesCount + 1}군단";
-        newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+        //newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
 
         armies.Add(newArmy);
         GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");

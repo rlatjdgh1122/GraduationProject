@@ -10,15 +10,15 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
-    private PenguinStoreUI _penguinSpawnUI;
-    [SerializeField] private RectTransform _constructionStationUI;
+    //private PenguinStoreUI _penguinSpawnUI;
+    //[SerializeField] private RectTransform _constructionStationUI;
 
-    [SerializeField] private float onSpawnUIYPosValue = 320;
+    //[SerializeField] private float onSpawnUIYPosValue = 320;
 
     private bool isSpawnUIOn;
 
-    Vector3 _onSpawnUIVec;
-    Vector3 _offSpawnUIVec;
+    //Vector3 _onSpawnUIVec;
+    //Vector3 _offSpawnUIVec;
 
     [SerializeField] private Transform _btnTrm;
 
@@ -35,9 +35,9 @@ public class DefaultBuilding : BaseBuilding
 
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
 
-        _penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
+        //_penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
 
-        SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
+        //SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
         Installed();
 
     }
@@ -55,15 +55,15 @@ public class DefaultBuilding : BaseBuilding
         if (isSpawnUIOn)
         {
             UIManager.Instance.HidePanel("StorePanel");
+            ChangeSpawnUIBool(false);
         }
         else
         {
             UIManager.Instance.ShowPanel("StorePanel");
+            ChangeSpawnUIBool(true);
         }
 
-        UpdateSpawnUIBool();
-
-        StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+        //StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
 
         if (_constructionStation.isSpawnUIOn)
         {
@@ -95,21 +95,24 @@ public class DefaultBuilding : BaseBuilding
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
     }
-    private void DisableAllUI()
-    {
-        if (isSpawnUIOn)
-        {
-            if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
-            {
-                StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
-            }
-            else
-            {
-                //_penguinSpawnUI.OnDisableStorePanel();
-            }
-        }
+
+    public void ChangeSpawnUIBool(bool value) => isSpawnUIOn = value;
+
+    //private void DisableAllUI()
+    //{
+    //    if (isSpawnUIOn)
+    //    {
+    //        if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
+    //        {
+    //            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
+    //        }
+    //        else
+    //        {
+    //            //_penguinSpawnUI.OnDisableStorePanel();
+    //        }
+    //    }
         
-    }
+    //}
 
     protected override void Running()
     {

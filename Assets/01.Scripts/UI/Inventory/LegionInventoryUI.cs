@@ -4,29 +4,25 @@ using UnityEngine;
 
 public class LegionInventoryUI : PopupUI
 {
-    public List<DescriptionUI> Descriptions;
-    private bool _isDescript = false;
-
-    public override void Awake()
-    {
-        base.Awake();
-    }
+    [SerializeField]
+    private RectTransform _descriptionUI;
 
     public void ShowLegionUIPanel()
     {
-        UIManager.Instance.ShowPanel(this.gameObject.name);
-
-        LegionInventoryManager.Instance.ChangeCanShowPanel(false);
+        UIManager.Instance.ShowPanel("LegionInventory");
 
         LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
 
+    public void HideLegionInventoryUI()
+    {
+        UIManager.Instance.HidePanel("LegionInventory");
+    }
+
     public override void HidePanel()
     {
         base.HidePanel();
-
-        LegionInventoryManager.Instance.ChangeCanShowPanel(true);
 
         if (LegionInventoryManager.Instance.ChangedInCurrentLegion())
         {
@@ -56,11 +52,11 @@ public class LegionInventoryUI : PopupUI
 
     public void ShowDescript()
     {
-        _isDescript = !_isDescript;
+        _descriptionUI.gameObject.SetActive(true);
+    }
 
-        foreach (var ui in Descriptions)
-        {
-            ui.ShowAllDescript(_isDescript);
-        }
+    public void HideDescript()
+    {
+        _descriptionUI.gameObject.SetActive(false);
     }
 }

@@ -1,30 +1,34 @@
+using ArmySystem;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using ArmySystem;
-using System.Net.NetworkInformation;
 
 [RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
 {
-    public enum PriorityType
+
+    public float moveSpeed
     {
-        High = 50,
-        Low = 51,
+        get
+        {
+            if (owner is not null)
+            {
+                return owner.MoveSpeed;
+            }
+
+            return 4f;
+        }
     }
-    public float moveSpeed = 4.5f;
+
     public float attackSpeed = 1f;
-    public int maxDetectedCount;
-    public float provokeRange = 25f;
 
     public PassiveDataSO passiveData = null;
-    #region ���� ������ ����
+
+    #region property
 
     public bool ArmyTriggerCalled = false;
-    public bool WaitForCommandToArmyCalled = true; //������ ������ ���� �� ���������� ���
-    public bool SuccessfulToArmyCalled = false; //������ ������ ���������� �ذ��ߴ°�
+    public bool WaitForCommandToArmyCalled = true;
+    public bool SuccessfulToArmyCalled = false;
 
 
     private Coroutine movingCoroutine = null;
@@ -77,7 +81,7 @@ public class Penguin : Entity
     public EntityAttackData AttackCompo { get; private set; }
     public PenguinStateMachine StateMachine { get; private set; }
     #endregion
-    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
+    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
     public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
 
 
@@ -97,7 +101,15 @@ public class Penguin : Entity
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
-    private IDeadable _deadCompo = null;
+    private void OnEnable()
+    {
+        SignalHub.OnIceArrivedEvent += FindTarget;
+    }
+    private void OnDisable()
+    {
+        SignalHub.OnIceArrivedEvent -= FindTarget;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -106,8 +118,8 @@ public class Penguin : Entity
         {
             NavAgent.speed = moveSpeed;
         }
+
         AttackCompo = GetComponent<EntityAttackData>();
-        _deadCompo = GetComponent<IDeadable>();
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
@@ -145,38 +157,51 @@ public class Penguin : Entity
         }
     }
 
-    #region passive
+    #region Passive Check
     public bool CheckAttackPassive(int curAttackCount)
 => passiveData?.CheckAttackEventPassive(curAttackCount) ?? false;
 
-    public bool CheckHealthRatioPassive(float maxHp, float currentHP)
- => passiveData?.CheckHealthRatioEventPassive(maxHp, currentHP) ?? false;
+    public bool CheckHitPassive(int curHitCount)
+=> passiveData?.CheckHitEventPassive(curHitCount) ?? false;
+
+    public bool CheckHealthRatioPassive(float maxHp, float currentHP, float ratio = -1)
+ => passiveData?.CheckHealthRatioEventPassive(maxHp, currentHP, ratio) ?? false;
 
     public bool CheckSecondPassive()
 => passiveData?.CheckSecondEventPassive() ?? false;
 
-    public virtual void OnPassiveAttackEvent()
-    {
-
-    }
-
-    public virtual void OnPassiveStunEvent()
-    {
-
-    }
-
-    public virtual void OnPassiveSecondEvent()
-    {
-
-    }
     #endregion
+
+    #region Passive Event
+
+
+    public virtual void OnPassiveAttackEvent() { }
+
+    public virtual void OnPassiveHitEvent() { }
+
+    public virtual void OnPassiveHealthRatioEvent() { }
+
+    public virtual void OnPassiveSecondEvent() { }
+
+    #endregion
+
+    protected void FindTarget()
+    {
+        FindNearestEnemy();
+    }
 
     public void SetOwner(Army army)
     {
         owner = army;
+
+        if (NavAgent != null)
+        {
+            NavAgent.speed = moveSpeed;
+        }
+
     }
 
-    #region AI ����
+    #region State Method
     public virtual void AnimationTrigger()
     {
 
@@ -189,7 +214,7 @@ public class Penguin : Entity
 
     public void FindNearestEnemy()
     {
-        CurrentTarget = FindNearestTarget<Enemy>(20f, TargetLayer);
+        CurrentTarget = FindNearestTarget<Enemy>(50f, TargetLayer);
     }
 
     public virtual void LookTarget()
@@ -215,10 +240,11 @@ public class Penguin : Entity
             transform.rotation = targetRotation;
         }
     }
+    public virtual void StateInit() { }
 
     #endregion
 
-    #region ���� ����
+    #region Set Stat
     public IEnumerator AddStatCorou(float time, int value, StatType type, StatMode mode)
     {
         yield return new WaitForSeconds(time);
@@ -232,13 +258,8 @@ public class Penguin : Entity
 
     #endregion
 
-    #region ������ ����
-    //��Ʋ����϶� �����̰� ������ ���콺 ��ġ�� �̵� �ڵ�
+    #region Move Method
 
-    /// <summary>
-    /// ��ġ�� ��ġ�� �̵�
-    /// </summary>
-    /// <param name="mousePos"></param>
     public void MoveToMySeat(Vector3 mousePos)
     {
         if (NavAgent.isActiveAndEnabled)
@@ -301,17 +322,6 @@ public class Penguin : Entity
     }
     #endregion
 
-    #region ���� ��� ���� ����
-
-    public virtual void StateInit() { }
-
-    #endregion
-
-    public void SetNavmeshPriority(PriorityType type)
-    {
-        NavAgent.avoidancePriority = (int)type;
-    }
-
     protected override void HandleHit()
     {
     }
@@ -323,5 +333,5 @@ public class Penguin : Entity
         owner = null;
     }
 
-  
+
 }

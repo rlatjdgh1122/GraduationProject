@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ public enum UIType
     General,
     Legion,
     Store,
-    Info
+    Info,
+    Quest
 }
 
 public class UIManager : Singleton<UIManager>
@@ -78,9 +80,11 @@ public class UIManager : Singleton<UIManager>
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
+        if (!CheckShowAble(popupUI.UIGroup)) return;
+
         for (int i = 0; i < currentPopupUI.Count; i++)
         {
-            PopupUI ui = currentPopupUI.Pop();
+            PopupUI ui = currentPopupUI.Peek();
 
             if (ui.UIGroup != popupUI.UIGroup)
             {
@@ -95,13 +99,30 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    public bool CheckShowAble(UIType type)
+    {
+        return _currentUI == null || _currentUI.Transferable.Contains(type);
+    }
+
+    public void ChangeCurrentUI()
+    {
+        if (currentPopupUI.Count <= 0)
+        {
+            _currentUI = null;
+        }
+        else
+        {
+            _currentUI = currentPopupUI.Peek();
+        }
+    }
+
     public void HidePanel(string uiName)
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
         popupUI.HidePanel();
 
-        _currentUI = null;
+        ChangeCurrentUI();
     }
 
     public void MovePanel(string uiName, float x, float y, float fadeTime)
@@ -115,15 +136,6 @@ public class UIManager : Singleton<UIManager>
         _warningUI.SetValue(text);
         _warningUI.ShowAndHidePanel(_warningUI.IntervalTime);
     }
-
-    public bool ContainUI(string uiName)
-    {
-        if (_currentUI != null && _currentUI.name == uiName)
-        {
-            return true;
-        }
-        else return false;
-    }
     #endregion
 
     #region UI Function
@@ -136,7 +148,7 @@ public class UIManager : Singleton<UIManager>
                 if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                 {
                     currentPopupUI.Peek().HidePanel();
-                    _currentUI = null;
+                    ChangeCurrentUI();
                 }
             }
         }

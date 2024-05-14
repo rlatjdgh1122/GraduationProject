@@ -123,8 +123,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6780846587439056849}
-        m_TargetAssemblyTypeName: ResourceUI, Assembly-CSharp
-        m_MethodName: HidePanel
+        m_TargetAssemblyTypeName: ResourceUIObserver, Assembly-CSharp
+        m_MethodName: HideResourceUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -779,9 +779,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelFadeTime: 0.25
   _panelDelayTime: 0
+  _transferable: 02000000
   _soundName: 16
   _uiGroup: 2
-  CanShowAnotherUI: 0
 --- !u!222 &7554568240181996703
 CanvasRenderer:
   m_ObjectHideFlags: 0

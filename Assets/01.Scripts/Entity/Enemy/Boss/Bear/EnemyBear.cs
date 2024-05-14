@@ -15,6 +15,7 @@ public class EnemyBear : Enemy
     {
         base.Start();
 
+        DamageCasterCompo.transform.localPosition = Vector3.zero;
         StateMachine.Init(EnemyStateType.Idle);
     }
 

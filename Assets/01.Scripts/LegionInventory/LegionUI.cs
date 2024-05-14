@@ -68,7 +68,7 @@ public class LegionUI : InitLegionInventory
     public void LegionCountTextSetting()
     {
         int curLegion = LegionInventoryManager.Instance.CurrentLegion;
-        int maxLegion = LegionInventoryManager.Instance.LegionList()[curLegion].MaxCount;
+        int maxLegion = LegionInventoryManager.Instance.LegionList[curLegion].MaxCount;
 
         ColorBoolean(currentGeneral >= 1, _generalCountText);
         _generalCountText.text = $"{currentGeneral} / 1";
@@ -120,7 +120,7 @@ public class LegionUI : InitLegionInventory
 
     public bool ExcedLimitOfLegion(int legionNumber)
     {
-        if (legion.LegionList()[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
+        if (legion.LegionList[legionNumber].MaxCount <= currentPenguinCnt - currentRemovePenguinCnt)
         {
             return true;
         }

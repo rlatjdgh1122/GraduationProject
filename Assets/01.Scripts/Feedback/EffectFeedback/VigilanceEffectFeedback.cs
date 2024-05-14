@@ -22,7 +22,7 @@ public class VigilanceEffectFeedback : EffectFeedback
 
             effect.transform.position = ownerTrm.position;
             effect.transform.rotation = ownerTrm.rotation;
-            effect.transform.localScale = ownerTrm.lossyScale;
+            effect.transform.localScale = ownerTrm.lossyScale * .4f;
             effect.StartPlay(_effectEndTime);
 
             return true;

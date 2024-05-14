@@ -9,18 +9,21 @@ public class PenguinSituationUI : PenguinSituationPanel
 {
     [SerializeField]
     private CanvasGroup _healPanel, _retirePanel;
-    private TextMeshProUGUI _healPriceText;
+    private TextMeshProUGUI _remainCostText;
     private TextMeshProUGUI _healPercentText;
 
     [SerializeField]
     private TextMeshProUGUI _situationText, _penguinNameText;
 
+    private float _hpPercent = 0;
+    private int _penguinPrce = 0;
+
     public override void Awake()
     {
         base.Awake();
 
-        _healPriceText   = _healPanel.transform.Find("PriceText").GetComponent<TextMeshProUGUI>();
-        _healPercentText = _healPanel.transform.Find("CurrentPenguinHP").GetComponent<TextMeshProUGUI>();
+        _remainCostText   = _healPanel.transform.Find("RemainCostText").GetComponent<TextMeshProUGUI>();
+        _healPercentText  = _healPanel.transform.Find("CurrentPenguinHPText").GetComponent<TextMeshProUGUI>();
     }
     public void SetPenguinSituation(EntityInfoDataSO so, float percent, int penguinPrice)
     {
@@ -31,36 +34,55 @@ public class PenguinSituationUI : PenguinSituationPanel
         }
 
         data = so;
-
-        CheckBuy(percent, penguinPrice);
+        _hpPercent = percent;
+        _penguinPrce = penguinPrice;
+        _penguinNameText.text = so.PenguinName;
 
         ShowPanel();
         ShowHealPanel();
-
-        _penguinNameText.text = so.PenguinName;
     }
 
     public void ShowHealPanel()
     {
-        int remainCost = CostManager.Instance.Cost - price;
+        CheckBuy(_hpPercent, _penguinPrce);
+
+        int remainCost = price;
 
         ChangingPanel(_retirePanel, _healPanel);
 
-        canHeal   = true;
-        canRetire = false;
+        isHeal   = true;
+        isRetire = false;
 
-        _healPriceText.text   = $"°¡°Ý     :    -{price}";
-        _healPercentText.text = $"ÇöÀç HP {hpPercent}%";
-        _situationText.text   = $"Æë±Ï È¸º¹ÇÏ±â (³²´Â ÀçÈ­: {remainCost})";
+
+        string sign;
+        Color color;
+
+        if (CostManager.Instance.CheckRemainingCost(price))
+        {
+            color = Color.green;
+            sign = "";
+        }
+        else
+        {
+            color = Color.red;
+            sign = "-";
+        }
+
+        string arrow = isReducedHP ? "<color=red>¡å</color>" : null;
+
+        ChangeTextColor(_remainCostText, color);
+
+        _remainCostText.text   = $"³²´Â ÀçÈ­    :    {sign}{CostManager.Instance.Cost - price}";
+        _healPercentText.text = $"ÇöÀç HP {hpPercent}% {arrow}";
+        _situationText.text   = $"Æë±Ï È¸º¹ÇÏ±â (°¡°Ý: {remainCost})";
     }
 
     public void ShowRetirePanel()
     {
         ChangingPanel(_healPanel, _retirePanel);
 
-        canHeal   = false;
-        canRetire = true;
-
+        isHeal   = false;
+        isRetire = true;
         canClick  = true;
 
         _situationText.text = "Æë±Ï ÀºÅðÇÏ±â";
@@ -73,5 +95,10 @@ public class PenguinSituationUI : PenguinSituationPanel
 
         afterPanel.alpha  = 1;
         afterPanel.blocksRaycasts  = true;
+    }
+
+    private void ChangeTextColor(TextMeshProUGUI text,  Color color)
+    {
+        text.color = color;
     }
 }

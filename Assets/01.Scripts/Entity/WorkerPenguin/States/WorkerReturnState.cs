@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WorkerReturnState : WorkerState<WorkerPenguinStateEnum>
 {
@@ -14,6 +15,8 @@ public class WorkerReturnState : WorkerState<WorkerPenguinStateEnum>
         base.Enter();
         _triggerCalled = true;
         _worker.MoveToNexus();
+
+        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
     }
 
     public override void UpdateState()

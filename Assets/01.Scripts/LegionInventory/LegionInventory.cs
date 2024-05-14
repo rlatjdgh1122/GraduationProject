@@ -115,7 +115,7 @@ public class LegionInventory : LegionUI
 
         data = Instantiate(data);
 
-        data.LegionName = legion.LegionList()[legion.CurrentLegion].Name;
+        data.LegionName = legion.LegionList[legion.CurrentLegion].Name;
         data.SlotIdx = idx;
 
         int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
@@ -161,8 +161,13 @@ public class LegionInventory : LegionUI
                 if (retire) currentLegionList.Remove(saveData);
 
                 slotList[saveData.SlotIdx].ExitSlot(null);
+
+                if (saveData.JobType == PenguinJobType.General) currentGeneral--;
+                else currentPenguinCnt--;
             }
-        }
+        }//end foreach
+        
+        LegionCountTextSetting();
     }
 
     public void RemovePenguinInCurrentLegion(int idx)
@@ -193,9 +198,11 @@ public class LegionInventory : LegionUI
                 slotList[idx].ExitSlot(null);
 
                 if (curData.JobType == PenguinJobType.General) currentGeneral--;
-                else currentPenguinCnt--;
-
-                currentRemovePenguinCnt++;
+                else
+                {
+                    currentPenguinCnt--;
+                    currentRemovePenguinCnt++;
+                }
             }
             else
             {

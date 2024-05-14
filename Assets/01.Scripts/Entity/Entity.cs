@@ -18,6 +18,8 @@ public abstract class Entity : TargetObject
     public Outline OutlineCompo { get; private set; }
     #endregion
 
+    public bool PenguinTriggerCalled { get; set; } = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -73,7 +75,7 @@ public abstract class Entity : TargetObject
     {
         if (NavAgent.isActiveAndEnabled)
         {
-            NavAgent.ResetPath();
+            //NavAgent.ResetPath();
             NavAgent.SetDestination(CurrentTarget.transform.position);
         }
     }

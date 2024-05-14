@@ -21,15 +21,19 @@ public class PenguinIdleState : State
 
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Move);
-
-        if (_penguin.IsTargetInInnerRange)
-            _stateMachine.ChangeState(PenguinStateType.Chase);
+        
+        if(_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Battle)
+        {
+            if (_penguin.IsTargetInInnerRange)
+                _stateMachine.ChangeState(PenguinStateType.Chase);
+        }
+      
     }
 
     public override void ExitState()
     {
-        IdleExit();
-
         base.ExitState();
+
+        IdleExit();
     }
 }

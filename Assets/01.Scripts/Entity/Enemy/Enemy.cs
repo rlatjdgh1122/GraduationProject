@@ -93,7 +93,7 @@ public class Enemy : Entity
 
     public void FindNearestTarget()
     {
-        CurrentTarget = FindNearestTarget<TargetObject>(500, TargetLayer);
+        CurrentTarget = FindNearestTarget<TargetObject>(100, TargetLayer);
     }
 
     public virtual void AnimationTrigger()
@@ -144,14 +144,15 @@ public class Enemy : Entity
     }
     private void FriendlyPenguinDeadHandler()
     {
-        WaveManager.Instance.CheckIsEndBattlePhase();
-        SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
+        //WaveManager.Instance.CheckIsEndBattlePhase();
+        //SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
     }
 
     public void DieEventHandler()
     {
-        SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
-        SignalHub.OnEnemyPenguinDead?.Invoke();
+        //SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
+        //SignalHub.OnEnemyPenguinDead?.Invoke();
+        WaveManager.Instance.CheckIsEndBattlePhase();
     }
 
     #region passive

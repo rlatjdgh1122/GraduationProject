@@ -91,7 +91,7 @@ public class GeneralUIPresenter : PopupUI
         }
         else
         {
-            Debug.Log("통화량이 부족하여 업그레이드할 수 없습니다.");
+            UIManager.Instance.ShowWarningUI("돈이 부족하여 업그레이드 할 수 없습니다.");
         }
     }
 
@@ -145,13 +145,8 @@ public class GeneralUIPresenter : PopupUI
     }
     #endregion
 
-    public override void ShowPanel()
+    public void HideGeneralUI()
     {
-        base.ShowPanel();
-    }
-
-    public override void HidePanel()
-    {
-        base.HidePanel();
+        UIManager.Instance.HidePanel("GeneralUI");
     }
 }

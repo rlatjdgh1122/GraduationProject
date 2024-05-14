@@ -1,6 +1,4 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DummyPenguinCamera : MonoBehaviour
@@ -14,12 +12,14 @@ public class DummyPenguinCamera : MonoBehaviour
 
     public void SetCamera(Transform trm)
     {
+        PenguinManager.Instance.CameraCompo.IsMoving = false;
         _cinemachineCam.gameObject.SetActive(true);
         _cinemachineCam.Follow = trm;
     }
 
     public void DisableCamera()
     {
+        PenguinManager.Instance.CameraCompo.IsMoving = true;
         _cinemachineCam.Follow = null;
         _cinemachineCam.gameObject.SetActive(false);
     }

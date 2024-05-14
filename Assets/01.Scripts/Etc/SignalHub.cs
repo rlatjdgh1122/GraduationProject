@@ -8,8 +8,6 @@ using ArmySystem;
 
 
 public delegate void ChangedArmy(Army prevArmy, Army newArmy);
-public delegate void ChangedArmyScreen(Army prevArmy, Army newArmy);
-public delegate void PenguinArrangementSetting(ArrangementInfo info);
 public delegate void ChangedBattleMode(MovefocusMode mode);
 
 public delegate void ModifyArmyInfo();
@@ -20,7 +18,6 @@ public delegate void BattlePhaseStartEvent();
 public delegate void BattlePhaseStartPriorityEvent();
 public delegate void BattlePhaseEndEvent();
 public delegate void IceArrivedEvent();
-public delegate void DummyPenguinsCompletedGoToHouseEvent();
 
 public delegate void StartQuestEvent();
 public delegate void EndQuestEvent();
@@ -33,20 +30,11 @@ public delegate void NoiseIncreaseEvent();
 
 public static class SignalHub
 {
-    /// <summary>
-    /// 더미 펭귄이 모두 성공적으로 안에 들어갔다면
-    /// </summary>
-    public static DummyPenguinsCompletedGoToHouseEvent OnCompletedGoToHouseEvent;
 
     /// <summary>
     /// 적 죽을 때 실행됨
     /// </summary>
     public static EnemyPenguinDead OnEnemyPenguinDead;
-
-    /// <summary>
-    /// F1~F9눌러 군단 화면 고정 키 변경
-    /// </summary>
-    public static ChangedArmyScreen OnArmyScreenChanged;
 
     #region 군단
     /// <summary>
@@ -62,10 +50,6 @@ public static class SignalHub
     /// </summary>
     public static ModifyArmyInfo OnModifyCurArmy;
 
-    #endregion
-
-    #region 군단 UI
-    public static PenguinArrangementSetting OnModifyArrangementInfo;
     #endregion
 
     #region 웨이브

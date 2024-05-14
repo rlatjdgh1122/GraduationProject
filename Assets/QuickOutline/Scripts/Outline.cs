@@ -81,13 +81,16 @@ public class Outline : MonoBehaviour
     [SerializeField]
     private bool IncludingChildren = true;
 
+
     [SerializeField, HideInInspector]
     private List<Mesh> bakeKeys = new List<Mesh>();
 
     [SerializeField, HideInInspector]
     private List<ListVector3> bakeValues = new List<ListVector3>();
 
-    public Renderer[] renderers;
+    public List<Renderer> renderers = new();
+    public List<Renderer> ExceptRenderer = new();
+
     private Renderer ren;
     private Material outlineMaskMaterial;
     private Material outlineFillMaterial;
@@ -97,7 +100,14 @@ public class Outline : MonoBehaviour
     {
         // Cache renderers
         if (IncludingChildren)
-            renderers = GetComponentsInChildren<Renderer>();
+        {
+            renderers = GetComponentsInChildren<Renderer>().ToList();
+
+            foreach(var ren  in ExceptRenderer)
+            {
+                renderers.Remove(ren);
+            }
+        }
 
         ren ??= GetComponent<Renderer>();
 

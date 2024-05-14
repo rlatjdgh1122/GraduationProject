@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3791001372442376361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -116,7 +116,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0267, y: 0.01532, z: -0.0042}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5931681622798992011}
@@ -138,10 +138,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 5931134bf3f441247849b17b20e32131, type: 2}
   CurrentTarget: {fileID: 0}
-  IsDead: 0
   _maxDetectEnemy: 5
   resourceType: 0
-  _noiseValue: 5
+  _noiseValue: 7
   _maxNoiseValue: 0
   _resourceData: {fileID: 11400000, guid: 377f11e9b786a25408ef243720c0eeb5, type: 2}
   OnRecieveResourceEvent:
@@ -206,6 +205,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
 --- !u!114 &2828444158195936754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 1884160459888884991}
   - component: {fileID: 7485922346794440368}
   - component: {fileID: 7910632256159931357}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: HitFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,10 +359,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 5ae62ba9390b35747a025f433eff6d28,
         type: 3}
+    - target: {fileID: 2726557347904242214, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
       propertyPath: m_Name
       value: HealthUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026883480836637388, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7551485562132339281, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
@@ -403,6 +423,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0165
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.013499999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0165
       objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
@@ -463,6 +498,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8588555500741687122, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}

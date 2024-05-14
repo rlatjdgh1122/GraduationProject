@@ -1,3 +1,4 @@
+using ArmySystem;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
+        if (_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
         }
@@ -49,7 +50,7 @@ public class ShieldBlockState : ShieldBaseState
     {
         if (StunCount > 0 && _penguin.CheckHealthRatioPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
         {
-            _penguin?.OnPassiveStunEvent();
+            _penguin?.OnPassiveHealthRatioEvent();
             StunCount--;
         }
         else

@@ -133,6 +133,9 @@ public abstract class DefenseBuilding : BaseBuilding
     protected override void SetInstalled()
     {
         base.SetInstalled();
+
+        _collider.enabled = true;
+
         _health.enabled = true; // 설치 완료 되면 공격 대상 O
     }
 }

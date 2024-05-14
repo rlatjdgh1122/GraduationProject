@@ -14,7 +14,7 @@ public class DamageCaster : MonoBehaviour
     private TargetObject _owner;
     private General General => _owner as General;
 
-    public void SetOwner(TargetObject owner, bool setPos = true)
+    public void SetOwner(TargetObject owner, bool setPos = false)
     {
         _owner = owner;
         if (setPos)
@@ -76,6 +76,33 @@ public class DamageCaster : MonoBehaviour
             }
         }
     }
+
+    //외부에서 설정
+    public void CaseAoEDamage(float range, int damage = 0, float knbValue = 0f, float stunValue = 0f)
+    {
+        var Colls = Physics.OverlapSphere(transform.position, range, TargetLayer);
+
+        foreach (var col in Colls)
+        {
+            RaycastHit raycastHit;
+
+            var dir = (col.transform.position - transform.position).normalized;
+            dir.y = 0;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+
+            if (raycastSuccess
+                && raycastHit.collider.TryGetComponent<Health>(out Health health))
+            {
+
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
+                health.Knockback(knbValue, raycastHit.normal);
+                health.Stun(stunValue);
+
+            }
+        }
+    }
+
     /// <summary>
     /// 단일 데미지
     /// </summary>
@@ -83,6 +110,7 @@ public class DamageCaster : MonoBehaviour
     public bool CastDamage(float knbValue = 0f, float stunValue = 0f)
     {
         RaycastHit raycastHit;
+        //var dir = (_owner.CurrentTarget.transform.position - transform.position).normalized;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
 
         if (raycastSuccess
@@ -118,7 +146,6 @@ public class DamageCaster : MonoBehaviour
     {
         RaycastHit raycastHit;
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
-
         if (raycastSuccess
             && raycastHit.collider.TryGetComponent<Health>(out Health health))
         {
@@ -142,17 +169,17 @@ public class DamageCaster : MonoBehaviour
             _hitType = originType;
         }
 
-       /* var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
+        /* var Colls = Physics.OverlapSphere(transform.position, _detectRange, TargetLayer);
 
-        foreach (var col in Colls)
-        {
-            if (col.TryGetComponent<Health>(out Health health))
-            {
-                int damage = _owner.Stat.damage.GetValue();
+         foreach (var col in Colls)
+         {
+             if (col.TryGetComponent<Health>(out Health health))
+             {
+                 int damage = _owner.Stat.damage.GetValue();
 
-                health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType, _owner);
-            }
-        }*/
+                 health.ApplyDamage(damage, col.transform.position, col.transform.position, _hitType, _owner);
+             }
+         }*/
     }
 
     public void CastDashDamage()
@@ -237,7 +264,7 @@ public class DamageCaster : MonoBehaviour
         return true;
     }
 
-    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float range = 0, float knbValue = 0f, float stunValue = 0f)
+    public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0f, float stunValue = 0f, float range = 2)
     {
         var Colls = Physics.OverlapSphere(transform.position, range, TargetLayer);
 
@@ -250,7 +277,7 @@ public class DamageCaster : MonoBehaviour
             var dir = (col.transform.position - transform.position).normalized;
             dir.y = 0;
 
-            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, range, TargetLayer);
 
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))

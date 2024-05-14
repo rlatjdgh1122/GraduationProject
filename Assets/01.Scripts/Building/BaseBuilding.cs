@@ -49,8 +49,6 @@ public abstract class BaseBuilding : WorkableObject
     private Material[] _skinNormalMats;
     protected SkinnedMeshRenderer[] _skinRenderers;
 
-    private int installedTime = 0;
-
     private bool isInstalling = false;
     public bool IsInstalling => isInstalling;
 
@@ -130,6 +128,7 @@ public abstract class BaseBuilding : WorkableObject
             WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryWokerCount, this);
 
             _phaseStartSubscriptionAction = () => WorkerManager.Instance.ReturnBuilders(this);
+            _phaseStartSubscriptionAction = () => BuildingEnable(isInstalled);
             SignalHub.OnBattlePhaseStartEvent += _phaseStartSubscriptionAction;
             SignalHub.OnBattlePhaseEndEvent += PlusInstalledTime;
 
@@ -156,6 +155,7 @@ public abstract class BaseBuilding : WorkableObject
         else
         {
             WorkerManager.Instance.SendBuilders(_buildingItemInfo.NecessaryWokerCount, this);
+            BuildingEnable(true);
         }
     }
 
@@ -178,6 +178,8 @@ public abstract class BaseBuilding : WorkableObject
 
         isInstalled = true;
         isInstalling = false;
+
+        BuildingEnable(true);
 
         if (_buildingItemInfo != null)
         {
@@ -256,6 +258,11 @@ public abstract class BaseBuilding : WorkableObject
         {
             _skinRenderers[i].material = _skinNormalMats[i];
         }
+    }
+
+    public void BuildingEnable(bool value)
+    {
+        _collider.enabled = value;
     }
 
     private void OnEnable()
