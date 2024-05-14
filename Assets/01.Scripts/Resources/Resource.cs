@@ -7,7 +7,6 @@ using UnityEngine;
 public class Resource
 {
     public ResourceDataSO resourceData;
-    [HideInInspector]
     public int stackSize;
 
     public Resource(ResourceDataSO resourceData)

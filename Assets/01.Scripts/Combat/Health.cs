@@ -37,6 +37,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     public Action OnDied;
 
     public UnityEvent WaterFallEvent;
+    public UnityEvent OnHitEvent;
     public UnityEvent OnDeathEvent;
     public UnityEvent OnDashDeathEvent;
     public UnityEvent<float, float> OnUIUpdate;
@@ -119,6 +120,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
                     break;
             }
 
+            OnHitEvent?.Invoke();
             OnHit?.Invoke();
 
             if (isFeedback) { hitF.PlayFeedback(); }

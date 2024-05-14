@@ -14,23 +14,11 @@ public class ResourceManager : Singleton<ResourceManager>
 
     public override void Awake()
     {
-        resourceStack = new List<Resource>();
+        //resourceStack = new List<Resource>();
         resourceDictionary = new Dictionary<ResourceDataSO, Resource>();
     }
 
     public ResourceDataSO[] resourceArray;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            AddResource(resourceArray[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            AddResource(resourceArray[1]);
-        }
-    }
 
     public void AddResource(ResourceDataSO resourceData, int count = 1)
     {
