@@ -49,6 +49,7 @@ public class RandomGroundGenerator : MonoBehaviour
 
     private void AddGlacierToCurHexagon()
     {
+        Debug.Log("Add");
         _rotateValues.Clear();
 
         for (int i = 1; i <= GetCurHexagonGroundsGoalCount(); i++)
