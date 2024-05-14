@@ -90,8 +90,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         float rotateValue = _rotateValues.Dequeue();
         transform.Rotate(Vector3.up * rotateValue);
 
-        Debug.Log(rotateValue);
-
         curground.gameObject.SetActive(true);
 
         Vector3 groundPos = new Vector3(transform.localPosition.x, 0f, _spawnDistance * (makedHexagonCount + 1));
@@ -106,7 +104,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
     {
         if (makedHexagonCount == 0) { return 60; } // 근데 처음에는 3개 깔린 상태로 시작하니까 60 반환
-        Debug.Log("ckwkEK");
         return 360 / GetCurHexagonGroundsGoalCount();
     }
 
