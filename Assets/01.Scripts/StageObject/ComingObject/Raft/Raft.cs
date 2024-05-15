@@ -39,21 +39,14 @@ public class Raft : PoolableMono, IComingObject
 
     private void OnSink()
     {
-        StartCoroutine(SinkCoroutine());
         transform.DOMoveY(-15f, 10f).OnComplete(() => PoolManager.Instance.Push(this));
-    }
-
-    private IEnumerator SinkCoroutine()
-    {
-        yield return new WaitForSeconds(3f); // 3ÃÊ ´ë±â
-
-        NavmeshManager.Instance.NavmeshBake();
     }
 
     public void Arrived()
     {
         ActivateEnemies();
-        CoroutineUtil.CallWaitForSeconds(3f, null, () => OnSink());
+        OnSink();
+        NavmeshManager.Instance.NavmeshBake();
     }
 
     private void ActivateEnemies()
@@ -63,6 +56,8 @@ public class Raft : PoolableMono, IComingObject
             enemy.NavAgent.enabled = true;
             enemy.IsMove = true;
             enemy.transform.SetParent(null);
+
+            enemy.StateMachine.ChangeState(EnemyStateType.Move);
         }
     }
 

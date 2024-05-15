@@ -7,7 +7,7 @@ public class NavmeshManager : Singleton<NavmeshManager>
 {
     private NavMeshSurface _navMeshSurface;
 
-    private void Awake()
+    public override void Awake()
     {
         _navMeshSurface = GetComponent<NavMeshSurface>();
 
