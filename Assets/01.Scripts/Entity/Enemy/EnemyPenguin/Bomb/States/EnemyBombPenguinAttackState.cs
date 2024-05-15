@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class EnemyBombPenguinAttackState : EnemyBaseState
 {
     private int curAttackCount = 0;

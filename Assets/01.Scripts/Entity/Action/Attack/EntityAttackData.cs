@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EntityAttackData : MonoBehaviour
@@ -23,6 +24,11 @@ public class EntityAttackData : MonoBehaviour
     }
 
     public virtual void MeleeSphereAttack()
+    {
+
+    }
+
+    public virtual void BombAttack()
     {
 
     }
