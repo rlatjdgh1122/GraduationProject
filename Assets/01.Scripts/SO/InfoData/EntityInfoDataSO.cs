@@ -23,7 +23,8 @@ public class EntityInfoDataSO : ScriptableObject
     [TextArea()]
     public string PenguinDescription;
 
-    public List<string> PenguinPersonalityList = new();
+    [SerializeField] 
+    private List<string> PenguinPersonalityList = new();
 
     [ReadOnly]
     public string PenguinPersonality;

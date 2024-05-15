@@ -20,6 +20,8 @@ public class DummyPenguin : PoolableMono
 
     public PenguinInfoDataSO NotCloneInfo => _defaultInfo;
 
+    public PenguinInfoDataSO DefaultInfo { get; private set; } = null;
+
     private int MaxNumberOfDumbAnim = 3;
     public bool IsGoToHouse { get; set; } = false;
     public Transform HouseTrm { get; private set; }
@@ -40,11 +42,6 @@ public class DummyPenguin : PoolableMono
 
     public DummyStateMachine DummyStateMachine { get; private set; }
 
-    private void OnDisable()
-    {
-        _defaultInfo.Setting();
-    }
-
     private void Awake()
     {
         Transform visualTrm = transform.Find("Visual");
@@ -53,8 +50,11 @@ public class DummyPenguin : PoolableMono
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm.GetComponent<Animator>();
         OutlineCompo = GetComponent<Outline>();
-
         Setting();
+
+
+        DefaultInfo = Instantiate(_defaultInfo);
+        DefaultInfo.Setting();
     }
 
     private void Setting()
@@ -95,7 +95,7 @@ public class DummyPenguin : PoolableMono
 
     private void OnMouseDown()
     {
-        if(UIManager.Instance.CheckShowAble(UIType.Info))
+        if (UIManager.Instance.CheckShowAble(UIType.Info))
         {
             PenguinManager.Instance.ShowPenguinInfoUI(this);
             OutlineCompo.enabled = true;

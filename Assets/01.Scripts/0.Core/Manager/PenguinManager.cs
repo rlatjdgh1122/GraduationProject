@@ -440,10 +440,15 @@ public class PenguinManager
     /// <param name="dummy"></param>
     public void ShowPenguinInfoUI(DummyPenguin dummy)
     {
+        var defaultInfo = dummy.DefaultInfo;
         var infoData = GetInfoDataByDummyPenguin<PenguinInfoDataSO>(dummy);
 
-        //군단에 소속되지 않았다면 디폴트 정보를 넘겨줌
-        if (infoData == null) infoData = dummy.NotCloneInfo;
+        if (infoData == null)
+            infoData = defaultInfo;
+        else
+            infoData.PenguinPersonality = defaultInfo.PenguinPersonality;
+
+        //군단에 소속되지 않았다면 default정보를 넘겨줌
 
         var statData = GetStatByInfoData<PenguinStat>(infoData);
 

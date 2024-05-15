@@ -20,9 +20,9 @@ public class GeneralInfoUI : PenguinInfoUI
         _synergyTxt.text = info.Synergy;
         _levelTxt.text = $"{stat.Level.ToString()}lv";
     }
-
+        
     public override void HideInfoUI()
     {
-        UIManager.Instance.HidePanel("GeneralInfoUI");
+        UIManager.Instance.HidePanel("PenguinInfoUI");
     }
 }

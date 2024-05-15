@@ -48,4 +48,10 @@ public class PenguinInfoUI : PopupUI
         _rectTransform.DOScale(Vector3.one, 0.9f);
         ShowInfo();
     }
+
+    public void ShowLegionUI()
+    {
+        UIManager.Instance.ShowPanel("LegionInventory");
+        LegionInventoryManager.Instance.SaveLegion();
+    }
 }
