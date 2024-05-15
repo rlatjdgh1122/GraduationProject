@@ -27,6 +27,11 @@ public class MeleeAttackableEntity : EntityAttackData
         DamageCasterCompo.CastDamage(knbValue,stunValue);
     }
 
+    public override void BombAttack()
+    {
+        DamageCasterCompo.CastBombDamage();
+    }
+
     public override void DashAttack()
     {
         DamageCasterCompo.CastDashDamage();
