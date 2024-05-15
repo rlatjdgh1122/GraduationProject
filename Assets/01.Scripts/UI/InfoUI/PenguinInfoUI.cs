@@ -25,7 +25,7 @@ public class PenguinInfoUI : PopupUI
         _legionNameTxt.text = _ownerInfoData.LegionName;
     }
 
-    public void HidePenguinInfoUI()
+    public virtual void HideInfoUI()
     {
         UIManager.Instance.HidePanel("PenguinInfoUI");
     }
@@ -33,6 +33,7 @@ public class PenguinInfoUI : PopupUI
     public override void HidePanel()
     {
         base.HidePanel();
+
         _rectTransform.DOScale(Vector3.zero, 0.5f);
         PenguinManager.Instance.DummyPenguinList.ForEach(p => p.OutlineCompo.enabled = false);
         PenguinManager.Instance.DummyPenguinCameraCompo.DisableCamera();
@@ -46,5 +47,11 @@ public class PenguinInfoUI : PopupUI
 
         _rectTransform.DOScale(Vector3.one, 0.9f);
         ShowInfo();
+    }
+
+    public void ShowLegionUI()
+    {
+        UIManager.Instance.ShowPanel("LegionInventory");
+        LegionInventoryManager.Instance.SaveLegion();
     }
 }
