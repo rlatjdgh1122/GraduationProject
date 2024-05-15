@@ -14,7 +14,7 @@ public class GroundMovement : ComingObjetMovement
 
         _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
 
-        SignalHub.OnIceArrivedEvent += DisableWaveEffect;
+        SignalHub.OnGroundArrivedEvent += DisableWaveEffect;
     }
 
     public override void Move()
@@ -38,7 +38,7 @@ public class GroundMovement : ComingObjetMovement
         CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
                                               () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
-        WaveManager.Instance.OnIceArrivedEventHanlder();
+        SignalHub.OnGroundArrivedEvent?.Invoke();
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)
@@ -79,6 +79,6 @@ public class GroundMovement : ComingObjetMovement
 
     private void OnDisable()
     {
-        SignalHub.OnIceArrivedEvent -= DisableWaveEffect;
+        SignalHub.OnGroundArrivedEvent -= DisableWaveEffect;
     }
 }

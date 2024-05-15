@@ -21,6 +21,7 @@ public class RaftMovement : ComingObjetMovement
         Debug.Log("가라앉기");
 
         _raft.Arrived(RaycastHitTrm);
+        SignalHub.OnRaftArrivedEvent?.Invoke();
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)
@@ -40,7 +41,7 @@ public class RaftMovement : ComingObjetMovement
         float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
 
         // 타겟 벡터 계산
-        Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
+        Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0.85f, RaycastHit_ToCenterPos.z);
 
         //// X 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
         targetVec.x += Mathf.Sign(transform.position.x) * xDistance;

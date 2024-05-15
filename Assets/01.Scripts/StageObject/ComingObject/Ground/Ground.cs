@@ -90,7 +90,7 @@ public class Ground : MonoBehaviour, IComingObject
     {
         SignalHub.OnBattlePhaseStartEvent += GroundMoveHandler;
         SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
-        SignalHub.OnIceArrivedEvent += ActivateEnemies;
+        SignalHub.OnGroundArrivedEvent += ActivateEnemies;
     }
 
     public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
@@ -115,7 +115,7 @@ public class Ground : MonoBehaviour, IComingObject
         }
 
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
-        SignalHub.OnIceArrivedEvent -= ActivateEnemies;
+        SignalHub.OnGroundArrivedEvent -= ActivateEnemies;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
     }
 
@@ -123,6 +123,6 @@ public class Ground : MonoBehaviour, IComingObject
     {
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
-        SignalHub.OnIceArrivedEvent -= ActivateEnemies;
+        SignalHub.OnGroundArrivedEvent -= ActivateEnemies;
     }
 }

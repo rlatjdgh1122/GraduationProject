@@ -11,7 +11,8 @@ public class NavmeshBaker : MonoBehaviour
     {
         _navMeshSurface = GetComponent<NavMeshSurface>();
         NavmeshBake();
-        SignalHub.OnIceArrivedEvent += NavmeshBake;
+        SignalHub.OnGroundArrivedEvent += NavmeshBake;
+        SignalHub.OnRaftArrivedEvent += NavmeshBake;
     }
 
     public void NavmeshBake()
@@ -19,8 +20,17 @@ public class NavmeshBaker : MonoBehaviour
         _navMeshSurface.BuildNavMesh();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            NavmeshBake();
+        }
+    }
+
     private void OnDisable()
     {
-        SignalHub.OnIceArrivedEvent -= NavmeshBake;
+        SignalHub.OnGroundArrivedEvent -= NavmeshBake;
+        SignalHub.OnRaftArrivedEvent -= NavmeshBake;
     }
 }

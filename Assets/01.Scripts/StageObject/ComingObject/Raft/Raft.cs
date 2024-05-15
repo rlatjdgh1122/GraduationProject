@@ -46,11 +46,6 @@ public class Raft : PoolableMono, IComingObject
     {
         foreach (Enemy enemy in _enemies)
         {
-            enemy.transform.LookAt(RaycastHitTrm);
-
-            enemy.transform.SetParent(RaycastHitTrm.parent);
-            enemy.transform.position = new Vector3(0.0f, 2f, 0.0f);
-
             CoroutineUtil.CallWaitForOneFrame(() =>
             {
                 enemy.NavAgent.enabled = true;
@@ -64,5 +59,11 @@ public class Raft : PoolableMono, IComingObject
     public void SetMoveTarget(Transform trm)
     {
         _raftMovement.SetMoveTarget(trm);
+
+
+        transform.localPosition = new Vector3(transform.localPosition.x,
+                                              38f,
+                                              transform.localPosition.z);
+
     }
 }

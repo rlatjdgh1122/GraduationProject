@@ -40,7 +40,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         _groundConfigurer = transform.Find("GroundConfigurer").GetComponent<GroundConfigurer>();
         _raftConfigurer = transform.Find("RaftConfigurer").GetComponent<RaftConfigurer>();
             
-        SignalHub.OnIceArrivedEvent += TutorialGenerateRaft;
+        SignalHub.OnGroundArrivedEvent += TutorialGenerateRaft;
     }
 
     private void Start()
@@ -144,6 +144,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             randomRaftPos.y = 0.7f;
 
             raft.transform.position = randomRaftPos;
+
             raft.transform.rotation = Quaternion.identity;
             raft.SetMoveTarget(transform.parent.parent.parent);
             raft.SetComingObjectInfo(transform,
@@ -163,6 +164,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartPriorityEvent -= GenerateGlacier;
-        SignalHub.OnIceArrivedEvent -= TutorialGenerateRaft;
+        SignalHub.OnGroundArrivedEvent -= TutorialGenerateRaft;
     }
 }

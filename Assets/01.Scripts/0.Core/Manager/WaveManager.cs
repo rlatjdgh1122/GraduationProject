@@ -69,7 +69,7 @@ public class WaveManager : Singleton<WaveManager>
     {
         SignalHub.OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
         SignalHub.OnBattlePhaseEndEvent += OnBattlePhaseEndHandle;     // 전투페이즈 종료 이벤트 
-        SignalHub.OnIceArrivedEvent += OnIceArrivedHandle;
+        SignalHub.OnGroundArrivedEvent += OnIceArrivedHandle;
     }
 
     private void OnIceArrivedHandle()
@@ -143,11 +143,6 @@ public class WaveManager : Singleton<WaveManager>
         }
 
         SignalHub.OnBattlePhaseEndEvent?.Invoke();
-    }
-
-    public void OnIceArrivedEventHanlder()
-    {
-        SignalHub.OnIceArrivedEvent?.Invoke();
     }
 
     public bool IsCurrentWaveCountEqualTo(int value)

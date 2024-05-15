@@ -103,11 +103,11 @@ public class Penguin : Entity
 
     private void OnEnable()
     {
-        SignalHub.OnIceArrivedEvent += FindTarget;
+        SignalHub.OnGroundArrivedEvent += FindTarget;
     }
     private void OnDisable()
     {
-        SignalHub.OnIceArrivedEvent -= FindTarget;
+        SignalHub.OnGroundArrivedEvent -= FindTarget;
     }
 
     protected override void Awake()
