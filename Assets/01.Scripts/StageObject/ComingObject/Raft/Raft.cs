@@ -29,30 +29,40 @@ public class Raft : PoolableMono, IComingObject
     public void SetEnemies(Enemy[] enemies)
     {
         _enemies = enemies;
+
+        for(int i = 0; i <  enemies.Length; i++)
+        {
+            _enemies[i].gameObject.transform.localScale *= 3;
+            _enemies[i].transform.localPosition = new Vector3(0f, 1f, 0f);
+        }
     }
 
     private void OnSink()
     {
-        //transform.DOMoveY(-15f, 10f).OnComplete(() => PoolManager.Instance.Push(this));
+        StartCoroutine(SinkCoroutine());
+        transform.DOMoveY(-15f, 10f).OnComplete(() => PoolManager.Instance.Push(this));
     }
 
-    public void Arrived(Transform RaycastHitTrm)
+    private IEnumerator SinkCoroutine()
     {
-        ActivateEnemies(RaycastHitTrm);
+        yield return new WaitForSeconds(3f); // 3ÃÊ ´ë±â
+
+        NavmeshManager.Instance.NavmeshBake();
+    }
+
+    public void Arrived()
+    {
+        ActivateEnemies();
         CoroutineUtil.CallWaitForSeconds(3f, null, () => OnSink());
     }
 
-    private void ActivateEnemies(Transform RaycastHitTrm)
+    private void ActivateEnemies()
     {
         foreach (Enemy enemy in _enemies)
         {
-            CoroutineUtil.CallWaitForOneFrame(() =>
-            {
-                enemy.NavAgent.enabled = true;
-                enemy.IsMove = true;
-            });
-
-            //enemy.StateMachine.ChangeState(EnemyStateType.Jump);
+            enemy.NavAgent.enabled = true;
+            enemy.IsMove = true;
+            enemy.transform.SetParent(null);
         }
     }
 

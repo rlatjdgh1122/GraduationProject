@@ -18,10 +18,8 @@ public class RaftMovement : ComingObjetMovement
 
     protected override void Arrived()
     {
-        Debug.Log("°¡¶ó¾É±â");
-
-        _raft.Arrived(RaycastHitTrm);
-        SignalHub.OnRaftArrivedEvent?.Invoke();
+        NavmeshManager.Instance.NavmeshBake();
+        CoroutineUtil.CallWaitForOneFrame(() => _raft.Arrived());
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)

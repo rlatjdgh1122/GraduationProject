@@ -38,6 +38,7 @@ public class GroundMovement : ComingObjetMovement
         CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
                                               () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
+        NavmeshManager.Instance.NavmeshBake();
         SignalHub.OnGroundArrivedEvent?.Invoke();
     }
 
