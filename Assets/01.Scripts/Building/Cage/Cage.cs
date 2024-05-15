@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Cage : MonoBehaviour
+public class Cage : PoolableMono
 {
     [SerializeField]
     private PenguinTypeEnum _penguinType;

@@ -123,6 +123,22 @@ public class LegionInventory : LegionUI
         currentLegionList.Add(data);
         currentDictionary.Add(idx, data);
 
+        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+
+        if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+        if (questIdx == 1 && data.PenguinType == PenguinTypeEnum.Archer)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+
+        if (questIdx == 5)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+
         CheckType(data);
 
         LegionCountTextSetting();
