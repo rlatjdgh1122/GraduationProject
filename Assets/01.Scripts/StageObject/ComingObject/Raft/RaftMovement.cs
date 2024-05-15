@@ -20,10 +20,6 @@ public class RaftMovement : ComingObjetMovement
     {
         Debug.Log("°¡¶ó¾É±â");
 
-        //_offMeshLink.endTransform = RaycastHitTrm.Find("GameObject");
-        //_offMeshLink.startTransform = transform.Find("StartPosition");
-
-
         _raft.Arrived(RaycastHitTrm);
     }
 

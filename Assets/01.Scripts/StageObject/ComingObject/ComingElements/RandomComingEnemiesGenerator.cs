@@ -27,7 +27,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
-    private readonly string raftName = "raft";
+    private readonly string raftName = "Raft";
 
     private Ground SpawnGlaciers()
     {
@@ -141,9 +141,10 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
             float raftZ = randomRaftPos.y;
             randomRaftPos.z = raftZ;
-            randomRaftPos.y = 0f;
+            randomRaftPos.y = 0.7f;
 
             raft.transform.position = randomRaftPos;
+            raft.transform.rotation = Quaternion.identity;
             raft.SetMoveTarget(transform.parent.parent.parent);
             raft.SetComingObjectInfo(transform,
                                      randomRaftPos,

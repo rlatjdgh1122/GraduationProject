@@ -63,7 +63,6 @@ public class Raft : PoolableMono, IComingObject
 
     public void SetMoveTarget(Transform trm)
     {
-        _raftMovement.transform.LookAt(trm);
         _raftMovement.SetMoveTarget(trm);
     }
 }
