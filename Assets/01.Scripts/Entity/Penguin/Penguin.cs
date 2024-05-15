@@ -265,11 +265,11 @@ public class Penguin : Entity
         if (NavAgent.isActiveAndEnabled)
         {
             NavAgent.isStopped = false;
-
+/*
             if (movingCoroutine != null)
             {
                 StopCoroutine(movingCoroutine);
-            }
+            }*/
 
             if (prevMousePos != Vector3.zero)
             {
@@ -301,7 +301,9 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
+        Debug.Log("움직임 끝");
     }
+
     private void MoveToMouseClick(Vector3 pos)
     {
         if (NavAgent.isActiveAndEnabled)
