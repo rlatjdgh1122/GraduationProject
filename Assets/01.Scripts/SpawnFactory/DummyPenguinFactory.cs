@@ -8,12 +8,12 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
 
     private void OnEnable()
     {
-        SignalHub.OnIceArrivedEvent += ResetPTInfo;
+        SignalHub.OnGroundArrivedEvent += ResetPTInfo;
     }
 
     public void OnDisable()
     {
-        SignalHub.OnIceArrivedEvent -= ResetPTInfo;
+        SignalHub.OnGroundArrivedEvent -= ResetPTInfo;
     }
 
     /// <summary>

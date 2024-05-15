@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class EnemyIdleState : EnemyBaseState
 {
@@ -11,11 +12,14 @@ public class EnemyIdleState : EnemyBaseState
 
         IdleEnter();
 
-        SignalHub.OnIceArrivedEvent += ChangeState;
+        SignalHub.OnGroundArrivedEvent += ChangeState;
     }
 
     public override void UpdateState()
     {
+        //if (_enemy.NavAgent.isOnOffMeshLink)
+        //    _stateMachine.ChangeState(EnemyStateType.Jump);
+
         base.UpdateState();
     }
 
@@ -33,6 +37,6 @@ public class EnemyIdleState : EnemyBaseState
 
         IdleExit();
 
-        SignalHub.OnIceArrivedEvent -= ChangeState;
+        SignalHub.OnGroundArrivedEvent -= ChangeState;
     }
 }

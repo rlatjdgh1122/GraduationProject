@@ -12,6 +12,7 @@ public class EnemyJumpState : EnemyBaseState
         base.EnterState();
 
         _triggerCalled = false;
+
         _enemy.MoveToNexus();
     }
 

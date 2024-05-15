@@ -17,7 +17,7 @@ public delegate void EnemyPenguinDead();
 public delegate void BattlePhaseStartEvent();
 public delegate void BattlePhaseStartPriorityEvent();
 public delegate void BattlePhaseEndEvent();
-public delegate void IceArrivedEvent();
+public delegate void GroundArrivedEvent();
 
 public delegate void StartQuestEvent();
 public delegate void EndQuestEvent();
@@ -56,7 +56,7 @@ public static class SignalHub
     public static BattlePhaseStartEvent OnBattlePhaseStartEvent;
     public static BattlePhaseStartPriorityEvent OnBattlePhaseStartPriorityEvent;
     public static BattlePhaseEndEvent OnBattlePhaseEndEvent;
-    public static IceArrivedEvent OnIceArrivedEvent;
+    public static GroundArrivedEvent OnGroundArrivedEvent;
     #endregion
 
     #region Quest
