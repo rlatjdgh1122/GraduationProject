@@ -51,9 +51,30 @@ public class InitLegionInventory : MonoBehaviour, ICreateSlotUI
 
     protected void CheckType(EntityInfoDataSO data)
     {
+        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+
         if (data.JobType == PenguinJobType.Solider)
+        {
             currentPenguinCnt++;
+
+            if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)
+            {
+                TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+            }
+            if (questIdx == 1 && data.PenguinType == PenguinTypeEnum.Archer)
+            {
+                TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+            }
+        }
         else
+        {
             currentGeneral++;
+
+            if (questIdx == 5)
+            {
+                TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+            }
+        }
+
     }
 }

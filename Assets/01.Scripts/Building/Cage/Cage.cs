@@ -43,6 +43,8 @@ public class Cage : MonoBehaviour
     {
         if (!_isClick && !WaveManager.Instance.IsBattlePhase)
         {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+
             StartCoroutine(DissolveCoroutine());
             
             _isClick = true;

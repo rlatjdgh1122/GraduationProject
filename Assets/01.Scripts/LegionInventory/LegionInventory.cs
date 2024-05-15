@@ -118,17 +118,6 @@ public class LegionInventory : LegionUI
         data.LegionName = legion.LegionList[legion.CurrentLegion].Name;
         data.SlotIdx = idx;
 
-        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
-
-        if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if (questIdx == 1 && data.PenguinType == PenguinTypeEnum.Archer)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-
         slotList[idx].HpValue(1);
 
         currentLegionList.Add(data);
