@@ -7,5 +7,5 @@ public class TutorialGroundInfoDataSO : ScriptableObject
 {
     public List<ComingEnemiesInfo> TutorialComingEnemies = new List<ComingEnemiesInfo>();
 
-    public List<ResourceGeneratePattern> TutorialResourceGeneratePattern = new List<ResourceGeneratePattern>();
+    //public List<ResourceGeneratePattern> TutorialResourceGeneratePattern = new List<ResourceGeneratePattern>();
 }
