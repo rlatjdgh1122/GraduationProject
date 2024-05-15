@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.XPath;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -133,6 +134,8 @@ public class PenguinManager
         dummyToPenguinDic.Remove(obj);
         penguinToDummyDic.Remove(penguin);
 
+        RemoveItemListDummy(obj);
+
         UpdateOwnershipDataList();
     }
 
@@ -151,8 +154,24 @@ public class PenguinManager
         penguinToDummyDic.Remove(obj);
         dummyToPenguinDic.Remove(dummy);
 
+        RemoveItemListDummy(dummy);
+
         UpdateOwnershipDataList();
     }
+    private void RemoveItemListDummy(DummyPenguin obj)
+    {
+        var ItemList = _itemDummyPenguinList.ToList();
+
+        foreach (var item in ItemList)
+        {
+            if (item.dummyPenguin.Equals(obj))
+            {
+                _itemDummyPenguinList.Remove(item);
+                break;
+            }
+        }
+    }
+
     public void AddInfoDataMapping(EntityInfoDataSO data, Penguin penguin)
     {
         EntityInfoDataSO dataType = null;

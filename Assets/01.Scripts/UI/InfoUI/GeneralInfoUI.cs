@@ -23,6 +23,6 @@ public class GeneralInfoUI : PenguinInfoUI
         
     public override void HideInfoUI()
     {
-        UIManager.Instance.HidePanel("PenguinInfoUI");
+        UIManager.Instance.HidePanel("GeneralInfoUI");
     }
 }

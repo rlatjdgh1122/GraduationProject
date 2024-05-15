@@ -29,7 +29,7 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
         }
 
         Vector3 spawnVec = new Vector3(6 + (spawnXIdx * 1.5f),
-                                       0.0f,
+                                       1.22f,
                                        -1.5f - (spawnZIdx * 1.5f));
 
         spawnXIdx++; // 생성 위치를 위한 idx
