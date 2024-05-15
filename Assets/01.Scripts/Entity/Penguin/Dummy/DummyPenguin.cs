@@ -17,6 +17,7 @@ public class DummyPenguin : PoolableMono
 {
     [SerializeField]
     private PenguinInfoDataSO _defaultInfo = null;
+
     public PenguinInfoDataSO NotCloneInfo => _defaultInfo;
 
     private int MaxNumberOfDumbAnim = 3;
@@ -38,6 +39,11 @@ public class DummyPenguin : PoolableMono
     #endregion
 
     public DummyStateMachine DummyStateMachine { get; private set; }
+
+    private void OnDisable()
+    {
+        _defaultInfo.Setting();
+    }
 
     private void Awake()
     {
