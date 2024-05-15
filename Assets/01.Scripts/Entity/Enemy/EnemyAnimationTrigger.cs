@@ -51,6 +51,12 @@ public class EnemyAnimationTrigger : MonoBehaviour
         _enemy.AttackCompo.MeleeAttack(knbValue,stunValue);
     }
 
+    protected virtual void BombAttackTrigger()
+    {
+        OnAttackSoundEvent?.Invoke();
+        _enemy.AttackCompo.BombAttack();
+    }
+
     protected virtual void RangeAttackTrigger()
     {
         OnAttackSoundEvent?.Invoke();

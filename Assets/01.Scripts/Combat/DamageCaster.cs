@@ -264,6 +264,31 @@ public class DamageCaster : MonoBehaviour
         return true;
     }
 
+    public bool CastBombDamage()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectRange * 0.7f, TargetLayer);
+        Debug.Log(colliders.Length);
+
+        foreach (Collider collider in colliders)
+        {
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                int damage = _owner.Stat.damage.GetValue();
+                damageable.ApplyDamage(damage, transform.position, collider.transform.position, _hitType, _owner);
+            }
+        }
+
+        IDamageable selfDamageable = _owner.GetComponent<IDamageable>();
+        if (selfDamageable != null)
+        {
+            int selfDamage = _owner.Stat.damage.GetValue();
+            selfDamageable.ApplyDamage(selfDamage * 2, transform.position, _owner.transform.position, _hitType, _owner); //혹시나 안죽을까봐 본인한테는 데미지 2배로
+        }
+
+        return true;
+    }
+
     public void SelectTypeAOECast(int damage, HitType hitType, SoundName sound, float knbValue = 0f, float stunValue = 0f, float range = 2)
     {
         var Colls = Physics.OverlapSphere(transform.position, range, TargetLayer);
