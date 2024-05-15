@@ -25,7 +25,7 @@ public class PenguinInfoUI : PopupUI
         _legionNameTxt.text = _ownerInfoData.LegionName;
     }
 
-    public void HidePenguinInfoUI()
+    public virtual void HideInfoUI()
     {
         UIManager.Instance.HidePanel("PenguinInfoUI");
     }

@@ -38,7 +38,7 @@ public class GeneralUIPresenter : PopupUI
 
     public void SetCurrentView(GeneralView generalView)
     {
-        _currentView = generalView;
+        _currentView = generalView;                                        
         currentGeneralStat = _currentView.GeneralInfoData;
 
         if (selectedAbility.value == 0) //아직 업그레이드 선택지가 정해져있지 않은 상황에서
