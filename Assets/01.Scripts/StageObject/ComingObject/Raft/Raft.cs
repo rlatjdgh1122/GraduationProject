@@ -39,7 +39,11 @@ public class Raft : PoolableMono, IComingObject
 
     private void OnSink()
     {
-        transform.DOMoveY(-15f, 10f).OnComplete(() => PoolManager.Instance.Push(this));
+        CoroutineUtil.CallWaitForSeconds(1f, null, () => transform.DOMoveY(-15f, 10f).OnComplete(() =>
+        {
+            PoolManager.Instance.Push(this);
+            NavmeshManager.Instance.NavmeshBake();
+        }));
     }
 
     public void Arrived()

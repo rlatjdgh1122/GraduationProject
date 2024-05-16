@@ -66,6 +66,7 @@ public class StrengthBuffBuilding : BuffBuilding
                 _inRangePenguins.Add(instanceID, _colls[i].GetComponent<Penguin>());
             }
 
+            // null 뜸
             //임시수정
             _inRangePenguins[instanceID].AddStat(GetBuffValue(), StatType.Damage, StatMode.Increase); 
         }
