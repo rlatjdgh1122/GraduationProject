@@ -1,19 +1,19 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GaugeSkill : Skill
 {
     [SerializeField] private float _targetValue;  
-    public float _hitValue = 0;
+    public float HitValue = 0;
 
-    private General General => _owner as General;
+    public UnityEvent<float, float> OnHitValueChanged;
 
-    bool IsUsed = false;
+    public ShieldGeneralPenguin shieldPenguin => _owner as ShieldGeneralPenguin;
 
     public override void SetOwner(Entity owner)
     {
         base.SetOwner(owner);
 
-        IsUsed = false;
         _owner.HealthCompo.OnHit += PlusGauge;
     }
 
@@ -21,22 +21,15 @@ public class GaugeSkill : Skill
     {
         if (!IsAvaliable) return;
 
-        if (_owner.HealthCompo.currentHealth <= _owner.HealthCompo.maxHealth * 0.5f)
+        HitValue++;
+
+        if (HitValue >= _targetValue)
         {
-            if (!IsUsed)
-            {
-                OnSkillStart?.Invoke();
-                IsUsed = true;
-            }
-
-            _hitValue++;
-
-            if (_hitValue >= _targetValue)
-            {
-                General.canSpinAttack = true;
-                OnSkillCompleted?.Invoke();
-                IsAvaliable = false;
-            }
+            shieldPenguin.OnPassiveHitEvent();
+            HitValue = 0;
+            OnHitValueChanged?.Invoke(HitValue, _targetValue);
         }
+
+        OnHitValueChanged?.Invoke(HitValue, _targetValue);
     }
 }
