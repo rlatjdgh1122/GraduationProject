@@ -12,15 +12,16 @@ public class StartSceneEvent : MonoBehaviour
     [SerializeField]
     private float _fadeDuration;
 
-    private bool _canClick = true;
-    public bool CanClick => _canClick;
+    private bool _isGameStart = true;
+
+    private bool _canClick => UIManager.Instance.currentPopupUI.Count > 0;
 
     public void GameStartBtn()
     {
-        if (!_canClick) return;
+        if (!_isGameStart || _canClick) return;
 
         _blackPanel.blocksRaycasts = true;
-        _canClick = false;
+        _isGameStart = false;
 
         _blackPanel.DOFade(1, _fadeDuration)
             .OnComplete(() =>
@@ -31,11 +32,15 @@ public class StartSceneEvent : MonoBehaviour
 
     public void SettingBtn()
     {
+        if (_canClick) return;
 
+        UIManager.Instance.ShowPanel("OptionUI");
     }
 
     public void ExitBtn()
     {
+        if (_canClick) return;
+
         Application.Quit();
     }
 }

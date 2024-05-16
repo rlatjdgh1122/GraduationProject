@@ -20,11 +20,11 @@ public class TransformableButtonUI : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _rectTransform.DOScale(_targetSize, _fadeTime);
+        _rectTransform.DOScale(_targetSize, _fadeTime).SetUpdate(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _rectTransform.DOScale(1, _fadeTime);
+        _rectTransform.DOScale(1, _fadeTime).SetUpdate(true);
     }
 }

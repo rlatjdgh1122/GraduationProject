@@ -16,7 +16,8 @@ public enum UIType
     Legion,
     Store,
     Info,
-    Quest
+    Quest,
+    Setting
 }
 
 public class UIManager : Singleton<UIManager>
@@ -150,6 +151,11 @@ public class UIManager : Singleton<UIManager>
                     currentPopupUI.Peek().HidePanel();
                     ChangeCurrentUI();
                 }
+            }
+            else
+            {
+                if(popupUIDictionary.ContainsKey("EscUI"))
+                    ShowPanel("EscUI");
             }
         }
     }
