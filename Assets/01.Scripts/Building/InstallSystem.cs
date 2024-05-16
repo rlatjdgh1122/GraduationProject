@@ -92,6 +92,7 @@ public class InstallSystem : MonoBehaviour
         selectedBuildingIDX = -1;
 
         _curBuilding?.StopInstall();
+        _previousGround?.UpdateOutlineColor(OutlineColorType.None);
 
         if (_curBuilding != null && !_curBuilding.IsInstalling)
         {

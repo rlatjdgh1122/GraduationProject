@@ -1,4 +1,5 @@
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
@@ -17,6 +18,7 @@ public class Raft : PoolableMono, IComingObject
     public override void Init()
     {
         CoroutineUtil.CallWaitForSeconds(2f, null, () => _raftMovement.Move());
+        SignalHub.OnBattlePhaseEndEvent += OnSink;
     }
 
     public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
@@ -39,18 +41,23 @@ public class Raft : PoolableMono, IComingObject
 
     private void OnSink()
     {
-        CoroutineUtil.CallWaitForSeconds(1f, null, () => transform.DOMoveY(-15f, 10f).OnComplete(() =>
+        foreach(Enemy enemy in _enemies)
         {
-            PoolManager.Instance.Push(this);
+            PoolManager.Instance.Push(enemy);
+        }
+
+        transform.DOMoveY(-15f, 10f).OnComplete(() =>
+        {
             NavmeshManager.Instance.NavmeshBake();
-        }));
+            PoolManager.Instance.Push(this);
+        });
     }
 
     public void Arrived()
     {
-        ActivateEnemies();
-        OnSink();
+        ActivateEnemies(); 
         NavmeshManager.Instance.NavmeshBake();
+        SignalHub.OnRaftArrivedEvent?.Invoke();
     }
 
     private void ActivateEnemies()
@@ -60,8 +67,10 @@ public class Raft : PoolableMono, IComingObject
             enemy.NavAgent.enabled = true;
             enemy.IsMove = true;
             enemy.transform.SetParent(null);
+            enemy.ColliderCompo.enabled = true;
 
             enemy.StateMachine.ChangeState(EnemyStateType.Move);
+            enemy.FindNearestTarget();
         }
     }
 
@@ -74,5 +83,10 @@ public class Raft : PoolableMono, IComingObject
                                               38f,
                                               transform.localPosition.z);
 
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= OnSink;
     }
 }

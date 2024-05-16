@@ -33,6 +33,7 @@ public class StrengthBuffBuilding : BuffBuilding
     protected override void Running()
     {
         if (HealthCompo.IsDead) return; 
+        if (!WaveManager.Instance.IsBattlePhase) return; 
 
         Collider[] newColls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
 

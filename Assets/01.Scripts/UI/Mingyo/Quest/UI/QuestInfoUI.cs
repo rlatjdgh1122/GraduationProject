@@ -146,8 +146,15 @@ public class QuestInfoUI : MonoBehaviour
         foreach (var item in _questBoxUIs[quest])
         {
             Debug.Log(quest.QuestGoalList[idx].CurrentAmount);
-            item.UpdateSliderValue(quest.QuestGoalList[idx].CurrentAmount);
-            idx++;
+            try
+            {
+                item.UpdateSliderValue(quest.QuestGoalList[idx].CurrentAmount);
+                idx++;
+            }
+            catch
+            {
+
+            }
         }
     }
 
