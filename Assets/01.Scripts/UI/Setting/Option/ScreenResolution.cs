@@ -32,27 +32,36 @@ public class ScreenResolution : MonoBehaviour
 
     private void ResolutionInit()
     {
-        _resolutions.AddRange(Screen.resolutions); //사용 가능한 해상도 넣기
-        _resolutionDropDown.options.Clear(); //기존 드랍 다운에 있는 옵션 제거
+        _resolutions.AddRange(Screen.resolutions); // 사용 가능한 해상도 넣기
+        _resolutionDropDown.options.Clear(); // 기존 드랍 다운에 있는 옵션 제거
 
         _resolutions.Reverse();
-        
+
+        Resolution currentResolution = Screen.currentResolution;
+        float aspectRatio = (float)currentResolution.width / currentResolution.height;
+
         foreach (Resolution resolution in _resolutions)
         {
-            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
+            float resolutionAspectRatio = (float)resolution.width / resolution.height;
 
-            int hz = (int)Math.Round(resolution.refreshRateRatio.value);
+            // 현재 해상도와 동일한 화면 비율을 가진 해상도만 추가
+            if (Mathf.Approximately(aspectRatio, resolutionAspectRatio))
+            {
+                TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
 
-            option.text = $"{resolution.width} x {resolution.height} {hz}hz";
+                int hz = (int)Math.Round(resolution.refreshRateRatio.value);
 
-            _resolutionDropDown.options.Add(option);
+                option.text = $"{resolution.width} x {resolution.height} {hz}hz";
+
+                _resolutionDropDown.options.Add(option);
+            }
         }
-
 
         _resolutionDropDown.value = _resolutionIndex;
 
         _resolutionDropDown.RefreshShownValue();
     }
+
 
     private void GetResolutionIndex(int index) //해상도 받아오기
     {

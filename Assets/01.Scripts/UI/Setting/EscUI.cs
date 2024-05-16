@@ -61,7 +61,7 @@ public class EscUI : PopupUI
             button.blocksRaycasts = true;
         }
 
-        StartCoroutine(WaitAndSetShowingFalse(_buttonFadeTime * _buttons.Length + 0.8f));
+        StartCoroutine(WaitAndSetShowingFalse(_buttonFadeTime * _buttons.Length + 1f));
     }
     private IEnumerator WaitAndSetShowingFalse(float waitTime)
     {

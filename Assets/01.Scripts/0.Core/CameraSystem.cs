@@ -66,10 +66,13 @@ public class CameraSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraControl();
-        CameraRotate();
-        CameraZoomHandle();
-        CameraMove();
+        if (UIManager.Instance.currentPopupUI.Count <= 0)
+        {
+            CameraControl();
+            CameraRotate();
+            CameraZoomHandle();
+            CameraMove();
+        }
     }
 
     private void CameraControl()
@@ -196,5 +199,10 @@ public class CameraSystem : MonoBehaviour
 
         Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
         transform.DOMove(vec, 0.5f);
+    }
+
+    public void CaemraAllStop()
+    {
+
     }
 }
