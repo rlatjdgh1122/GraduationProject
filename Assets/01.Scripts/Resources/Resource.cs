@@ -12,10 +12,10 @@ public class Resource
     public Resource(ResourceDataSO resourceData)
     {
         this.resourceData = resourceData;
-        AddStack();
+        AddStack(0);
     }
 
-    public void AddStack(int count = 1)
+    public void AddStack(int count)
     {
         stackSize += count;
     }
