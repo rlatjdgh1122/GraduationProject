@@ -38,6 +38,8 @@ public class UIManager : Singleton<UIManager>
 
     public Sequence HudTextSequence;
 
+    private Transform _maskingImage;
+
     public void InitializHudTextSequence()
     {
         HudTextSequence?.Kill(); // 기존 시퀀스를 중단
@@ -46,6 +48,8 @@ public class UIManager : Singleton<UIManager>
 
     public override void Awake()
     {
+        _maskingImage = FindObjectOfType<MaskingImage>().transform;
+
         canvasTrm = GameObject.Find("Canvas").transform;
         _warningUI = FindObjectOfType<WarningUI>();
 
@@ -217,4 +221,9 @@ public class UIManager : Singleton<UIManager>
         //.Append(text.DOFade(0f, 0.5f))
         //.Join(text.rectTransform.DOMoveY(ScreenCenterVec.y - 50f, 0.5f));
     }
+
+    public void SetMaskingImagePos(Vector3 pos)
+    {
+        _maskingImage.transform.position = pos;
+    }   
 }

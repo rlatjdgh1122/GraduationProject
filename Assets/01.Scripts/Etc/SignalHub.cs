@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using ArmySystem;
+using UnityEngine.InputSystem.LowLevel;
 
 
 
@@ -59,6 +60,7 @@ public static class SignalHub
     public static BattlePhaseEndEvent OnBattlePhaseEndEvent;
     public static GroundArrivedEvent OnGroundArrivedEvent;
     public static RaftArrivedEvent OnRaftArrivedEvent;
+    public static RaftArrivedEvent OnRaaftArrivedEvent;
     #endregion
 
     #region Quest

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class CustomMakUI : Image
+public class CustomMaskUI : Image
 {
     public override Material materialForRendering
     {
