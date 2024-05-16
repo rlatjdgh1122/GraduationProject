@@ -301,7 +301,7 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("움직임 끝");
+        //Debug.Log("움직임 끝");
     }
 
     private void MoveToMouseClick(Vector3 pos)
