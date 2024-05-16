@@ -6,4 +6,8 @@ using UnityEngine.UI;
 
 public class MaskingImage : MonoBehaviour
 {
+    private void Start()
+    {
+        transform.parent.gameObject.SetActive(false);
+    }
 }
