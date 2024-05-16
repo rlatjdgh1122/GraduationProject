@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 {
     public GeneralStat GeneralInfoData;
-    public DummyPenguin dummyGeneralPenguin;
+    public GeneralDummyPengiun dummyGeneralPenguin;
 
     [SerializeField] private Color _outlineColor;
 
@@ -24,6 +24,11 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
     public Button purchaseButton;
     public Button upgradeButton;
 
+    private void OnDisable()
+    {
+        GeneralInfoData.InfoData.Setting();
+    }
+
     public override void Awake()
     {
         base.Awake();
@@ -36,6 +41,7 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
         else
             UpdateDefaultUI(GeneralInfoData);
     }
+
 
     public void UpdateDefaultUI(GeneralStat generalStat)
     {

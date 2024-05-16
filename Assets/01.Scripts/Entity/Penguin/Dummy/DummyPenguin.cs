@@ -17,7 +17,10 @@ public class DummyPenguin : PoolableMono
 {
     [SerializeField]
     private PenguinInfoDataSO _defaultInfo = null;
+
     public PenguinInfoDataSO NotCloneInfo => _defaultInfo;
+
+    public PenguinInfoDataSO DefaultInfo { get; private set; } = null;
 
     private int MaxNumberOfDumbAnim = 3;
     public bool IsGoToHouse { get; set; } = false;
@@ -47,8 +50,11 @@ public class DummyPenguin : PoolableMono
         NavAgent = GetComponent<NavMeshAgent>();
         AnimatorCompo = visualTrm.GetComponent<Animator>();
         OutlineCompo = GetComponent<Outline>();
-
         Setting();
+
+
+        DefaultInfo = Instantiate(_defaultInfo);
+        DefaultInfo.Setting();
     }
 
     private void Setting()
@@ -89,9 +95,9 @@ public class DummyPenguin : PoolableMono
 
     private void OnMouseDown()
     {
-        if(UIManager.Instance.CheckShowAble(UIType.Info))
+        if (UIManager.Instance.CheckShowAble(UIType.Info))
         {
-            PenguinManager.Instance.ShowInfoUI<PenguinInfoDataSO, PenguinStat>(this);
+            PenguinManager.Instance.ShowPenguinInfoUI(this);
             OutlineCompo.enabled = true;
         }
     }

@@ -38,7 +38,7 @@ public class GeneralUIPresenter : PopupUI
 
     public void SetCurrentView(GeneralView generalView)
     {
-        _currentView = generalView;
+        _currentView = generalView;                                        
         currentGeneralStat = _currentView.GeneralInfoData;
 
         if (selectedAbility.value == 0) //아직 업그레이드 선택지가 정해져있지 않은 상황에서
@@ -54,7 +54,11 @@ public class GeneralUIPresenter : PopupUI
         {
             PurchaseGeneral();
 
-            _penguinFactory.SpawnDummyPenguinHandler(_currentView.dummyGeneralPenguin);
+            //더미 생성해주고
+            var spawnDummy = _penguinFactory.SpawnDummyPenguinHandler(_currentView.dummyGeneralPenguin);
+            //더미 펭귄한테 내 스탯 주기
+            spawnDummy.Stat = _currentView.GeneralInfoData;
+
             LegionInventoryManager.Instance.AddPenguin(general.InfoData);
 
             currentCost -= currentGeneralStat.InfoData.Price;
@@ -81,7 +85,7 @@ public class GeneralUIPresenter : PopupUI
     public void ShowUpgradePanel()
     {
         UIManager.Instance.ShowPanel("GeneralUpgrade");
-    }    
+    }
 
     public void Upgrade()
     {
@@ -127,7 +131,7 @@ public class GeneralUIPresenter : PopupUI
         selectedAbility = chosenStat;
     }
 
-    public void AddAbilityStat()    
+    public void AddAbilityStat()
     {
         //selectedAbility.baseIncreaseValue += selectedAbility.increaseValue;
         currentGeneralStat.AddStat(selectedAbility.value, selectedAbility.statType, StatMode.Increase);

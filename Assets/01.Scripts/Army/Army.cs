@@ -35,7 +35,8 @@ namespace ArmySystem
         }
         public void AddStat(int value, StatType type, StatMode mode)
         {
-            this.General?.AddStat(value, type, mode);
+            //this.General?.AddStat(value, type, mode);
+
             foreach (var solider in this.Soldiers)
             {
                 solider.AddStat(value, type, mode);
@@ -43,7 +44,7 @@ namespace ArmySystem
         }
         public void RemoveStat(int value, StatType type, StatMode mode)
         {
-            this.General?.RemoveStat(value, type, mode);
+            //this.General?.RemoveStat(value, type, mode);
 
             foreach (var solider in this.Soldiers)
             {
