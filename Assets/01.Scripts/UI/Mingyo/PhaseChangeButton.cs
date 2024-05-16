@@ -43,7 +43,6 @@ public class PhaseChangeButton : MonoBehaviour
         OnOffButton();
     }
 
-
     private void OnOffButton()
     {
         isOn = !isOn;
