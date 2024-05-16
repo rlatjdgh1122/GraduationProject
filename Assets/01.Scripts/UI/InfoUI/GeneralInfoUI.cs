@@ -18,7 +18,7 @@ public class GeneralInfoUI : PenguinInfoUI
         base.ShowInfo();
 
         _synergyTxt.text = info.Synergy;
-        _levelTxt.text = $"{stat.Level.ToString()}lv";
+        _levelTxt.text = $"Lv.{stat.Level.ToString()}";
     }
         
     public override void HideInfoUI()
