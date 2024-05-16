@@ -1,9 +1,7 @@
-using System;
-using UnityEngine;
+using UnityEngine.Events;
 
 public class ShieldGeneralPenguin : General
 {
-
     protected override void Awake()
     {
         base.Awake();
@@ -22,6 +20,7 @@ public class ShieldGeneralPenguin : General
 
         StateMachine.CurrentState.UpdateState();
     }
+
     public override void StateInit()
     {
         StateMachine.Init(PenguinStateType.Idle);
@@ -52,9 +51,6 @@ public class ShieldGeneralPenguin : General
     public override void OnPassiveHitEvent()
     {
         StateMachine.ChangeState(PenguinStateType.SpinAttack);
-        //spinattack Enter에서 PenguinTriggerCalled를 false로 바꿈
-
-        //idle Enter에서도 바꿈
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
