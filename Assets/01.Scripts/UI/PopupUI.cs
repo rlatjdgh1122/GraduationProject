@@ -54,7 +54,7 @@ public class PopupUI : MonoBehaviour
         UIManager.Instance.currentPopupUI.Push(this);
         SoundManager.Play2DSound(_soundName);
         _panel.blocksRaycasts = true;
-        _panel.DOFade(1, _panelFadeTime);
+        _panel.DOFade(1, _panelFadeTime).SetUpdate(true);
     }
 
     public virtual void HidePanel()
@@ -66,7 +66,7 @@ public class PopupUI : MonoBehaviour
         SoundManager.Play2DSound(_soundName);
 
         _panel.blocksRaycasts = false;
-        _panel.DOFade(0, _panelFadeTime);
+        _panel.DOFade(0, _panelFadeTime).SetUpdate(true);
     }
 
     public virtual void ShowAndHidePanel(float waitTime)
