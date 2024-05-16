@@ -131,7 +131,7 @@ public class WaveManager : Singleton<WaveManager>
         isWin = _isWin;
 
         int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
-        bool isDone = questIdx == 0 || questIdx == 2;
+        bool isDone = questIdx == 0 || questIdx == 1 || questIdx == 2 || questIdx == 3 || questIdx == 4 || questIdx == 6;
 
         if (isDone) // 일단 퀘스트
         {

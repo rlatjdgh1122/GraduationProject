@@ -104,10 +104,12 @@ public class Penguin : Entity
     private void OnEnable()
     {
         SignalHub.OnGroundArrivedEvent += FindTarget;
+        SignalHub.OnRaftArrivedEvent += FindTarget;
     }
     private void OnDisable()
     {
         SignalHub.OnGroundArrivedEvent -= FindTarget;
+        SignalHub.OnRaftArrivedEvent -= FindTarget;
     }
 
     protected override void Awake()

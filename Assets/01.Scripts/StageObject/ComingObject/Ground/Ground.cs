@@ -42,6 +42,7 @@ public class Ground : MonoBehaviour, IComingObject
         {
             enemy.NavAgent.enabled = true;
             enemy.IsMove = true;
+            enemy.ColliderCompo.enabled = true;
         }
     }
 

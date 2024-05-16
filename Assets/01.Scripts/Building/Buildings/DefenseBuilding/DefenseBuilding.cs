@@ -134,7 +134,7 @@ public abstract class DefenseBuilding : BaseBuilding
     {
         base.SetInstalled();
 
-        _collider.enabled = true;
+        ColliderCompo.enabled = true;
 
         _health.enabled = true; // 설치 완료 되면 공격 대상 O
     }

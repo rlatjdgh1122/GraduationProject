@@ -95,7 +95,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
                 if (!prevSaveDataList[i].Equals(dataList[i]))
                 {
                     //근데 펭귄 타입이 같으면 이미 있으니 안함
-                    if (prevSaveDataList[i].PenguinType.Equals(highDataList[i].PenguinType)) return;
+                    if (prevSaveDataList[i].PenguinType.Equals(dataList[i].PenguinType)) return;
 
                     removeDataList.Add(prevSaveDataList[i]);
                     addDataList.Add(dataList[i]);
@@ -135,30 +135,18 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
     private void SpawnPenguin(EntityInfoDataSO data)
     {
-        var _legionName = data.LegionName;
         var _slotIdx = data.SlotIdx;
-        var _jobType = data.JobType;
         var _penguinType = data.PenguinType;
 
-        Penguin spawnPenguin =
-            PenguinManager.Instance.SpawnSoldier(_penguinType, SpawnPoint.position, seatPosList[_slotIdx]);
+        Penguin spawnPenguin = PenguinManager.Instance.SpawnSoldier(_penguinType, SpawnPoint.position, seatPosList[_slotIdx]);
 
         PenguinManager.Instance.AddSoliderPenguin(spawnPenguin);
         PenguinManager.Instance.AddInfoDataMapping(data, spawnPenguin);
-
-        if (_jobType == PenguinJobType.Solider)
-        {
-            ArmyManager.Instance.JoinArmyToSoldier(_legionName, spawnPenguin);
-        }
-
-        else if (_jobType == PenguinJobType.General)
-        {
-            ArmyManager.Instance.JoinArmyToGeneral(_legionName, spawnPenguin as General);
-        }
     }
 
     private void RemovePenguin(string _legionName, Penguin penguin)
     {
+        PenguinManager.Instance.RemoveSoliderPenguin(penguin);
         ArmyManager.Instance.RemovePenguin(_legionName, penguin);
     }
 }

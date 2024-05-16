@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace ArmySystem
 {
@@ -17,7 +18,6 @@ namespace ArmySystem
         public General General = null; //¿Â±∫
 
         public List<Ability> Abilities = new();
-
 
         public void AddStat(List<Ability> abilities)
         {
@@ -42,6 +42,7 @@ namespace ArmySystem
                 solider.AddStat(value, type, mode);
             }
         }
+
         public void RemoveStat(int value, StatType type, StatMode mode)
         {
             //this.General?.RemoveStat(value, type, mode);
@@ -51,5 +52,13 @@ namespace ArmySystem
                 solider.RemoveStat(value, type, mode);
             }
         }
+
+        public bool CheckEmpty()
+        {
+            if (Soldiers.Count <= 0 && !General) return true;
+
+            return false;
+        }
+
     }
 }

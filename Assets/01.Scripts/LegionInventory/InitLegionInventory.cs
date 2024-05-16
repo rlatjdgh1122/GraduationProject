@@ -51,9 +51,7 @@ public class InitLegionInventory : MonoBehaviour, ICreateSlotUI
 
     protected void CheckType(EntityInfoDataSO data)
     {
-        if (data.JobType == PenguinJobType.Solider)
-            currentPenguinCnt++;
-        else
-            currentGeneral++;
+        if (data.JobType == PenguinJobType.Solider) { currentPenguinCnt++; }
+        else { currentGeneral++; }
     }
 }

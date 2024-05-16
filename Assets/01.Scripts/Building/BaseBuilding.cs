@@ -262,7 +262,7 @@ public abstract class BaseBuilding : WorkableObject
 
     public void BuildingEnable(bool value)
     {
-        _collider.enabled = value;
+        ColliderCompo.enabled = value;
     }
 
     private void OnEnable()

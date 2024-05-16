@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UnitInformationUI : MonoBehaviour
 {
+    public readonly char Cashing_Separator = ',';
+
     private EntityInfoDataSO so;
 
     private TextMeshProUGUI _classNameText;
@@ -20,13 +22,14 @@ public class UnitInformationUI : MonoBehaviour
 
     private CanvasGroup _detailInfoButton;
 
+
     private void Awake()
     {
-        _penguinIcon   = transform.Find("PenguinFace").GetComponent<Image>();
+        _penguinIcon = transform.Find("PenguinFace").GetComponent<Image>();
         _classNameText = transform.Find("PenguinClassTex").GetComponent<TextMeshProUGUI>();
-        _nameText   = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
-        _atkSlide   = transform.Find("Atk/fillAmount").GetComponent<Image>();
-        _defSlide   = transform.Find("Def/fillAmount").GetComponent<Image>();
+        _nameText = transform.Find("PenguinName").GetComponent<TextMeshProUGUI>();
+        _atkSlide = transform.Find("Atk/fillAmount").GetComponent<Image>();
+        _defSlide = transform.Find("Def/fillAmount").GetComponent<Image>();
         _rangeSlide = transform.Find("Range/fillAmount").GetComponent<Image>();
 
         _generalInfo = transform.Find("GeneralInfo").GetComponent<CanvasGroup>();
@@ -47,7 +50,7 @@ public class UnitInformationUI : MonoBehaviour
 
         SetUIElements(data);
 
-        if(data.InfoData.JobType == PenguinJobType.General)
+        if (data.InfoData.JobType == PenguinJobType.General)
         {
             ShowGeneralInfo(data.InfoData as GeneralInfoDataSO);
         }
@@ -81,7 +84,14 @@ public class UnitInformationUI : MonoBehaviour
     private void ShowGeneralInfo(GeneralInfoDataSO generalData)
     {
         _generalInfo.DOFade(1, 0.5f);
-        _synergyText.text = generalData.Synergy;
+
+        var stat = PenguinManager.Instance.GetGeneralStatToSoliderType(generalData.PenguinType);
+        var armyStat = stat.GeneralDetailData.abilities[0];
+        var synergyText = generalData.Synergy.Split(Cashing_Separator);
+
+        _synergyText.text = $"{synergyText[0]}<color=green>{armyStat.value}%</color>{synergyText[1]}";
+
+        // _synergyText.text = generalData.Synergy;
         _descriptionText.text = generalData.Description;
 
         return;
@@ -92,7 +102,7 @@ public class UnitInformationUI : MonoBehaviour
         _penguinIcon.gameObject.SetActive(false);
         _classNameText.text = string.Empty;
         _nameText.text = string.Empty;
-        
+
         _atkSlide.DOFillAmount(0, 0.5f);
         _defSlide.DOFillAmount(0, 0.5f);
         _rangeSlide.DOFillAmount(0, 0.5f);

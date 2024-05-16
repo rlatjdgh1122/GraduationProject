@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
+using Unity.Jobs.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -49,6 +50,9 @@ public class PenguinManager
     public BaseStat GetCurrentStat = null;
     public EntityInfoDataSO GetCurrentInfoData = null;
     #endregion
+
+    //Àå±º ½ºÅÈÀ» °¡Á®¿È
+    private Dictionary<PenguinTypeEnum, GeneralStat> soliderTypeToGeneralStatDic = new();
 
     #region Æë±Ï ¸®½ºÆ®
 
@@ -113,17 +117,27 @@ public class PenguinManager
         NotBelongDummyPenguinList.Add(obj);
     }
 
+    public void AddGeneralStat(PenguinTypeEnum type, GeneralStat stat)
+    {
+        soliderTypeToGeneralStatDic.Add(type, stat);
+    }
+
 
     public void AddSoliderPenguin(Penguin obj)
     {
         SoldierPenguinList.Add(obj);
     }
 
+    public void RemoveSoliderPenguin(Penguin obj)
+    {
+        SoldierPenguinList.Remove(obj);
+    }
+
     /// <summary>
     /// ÅðÃâÇÒ ¶§ »ç¿ë
     /// </summary>
     /// <param name="obj"></param>
-    public void RemoveDummyPenguin(DummyPenguin obj)
+    public void RetireDummyPenguin(DummyPenguin obj)
     {
         DummyPenguinList.Remove(obj);
 
@@ -143,7 +157,7 @@ public class PenguinManager
     /// »ç¸ÁÇÒ ¶§ »ç¿ë
     /// </summary>
     /// <param name="obj"></param>
-    public void RemoveSoliderPenguin(Penguin obj)
+    public void DeadSoliderPenguin(Penguin obj)
     {
         SoldierPenguinList.Remove(obj);
 
@@ -158,6 +172,7 @@ public class PenguinManager
 
         UpdateOwnershipDataList();
     }
+
     private void RemoveItemListDummy(DummyPenguin obj)
     {
         var ItemList = _itemDummyPenguinList.ToList();
@@ -185,7 +200,6 @@ public class PenguinManager
             dataType = data as PenguinInfoDataSO;
         }
 
-        //Debug.Log("data : " + dataType.GetInstanceID());
         if (!infoDataToPenguinDic.ContainsKey(dataType))
         {
             infoDataToPenguinDic.Add(dataType, penguin);
@@ -343,6 +357,9 @@ public class PenguinManager
     private void ApplyDummyPenguin(EntityInfoDataSO data)
     {
         var dataType = data.PenguinType;
+        var jobType = data.JobType;
+        var legionName = data.LegionName;
+
         var penguin = GetPenguinByInfoData(data);
 
         //Áö±Ý±îÁö »ý¼ºµÈ ´õ¹ÌÆë±Ïµé¿¡¼­
@@ -370,12 +387,26 @@ public class PenguinManager
                     penguinToDummyDic.Add(penguin, dummyPenguin);
                     dummyToPenguinDic.Add(dummyPenguin, penguin);
 
+                    JoinToArmy(legionName, penguin, jobType);
                     break;
                 }
             }
 
         }
         UpdateOwnershipDataList();
+    }
+
+    private void JoinToArmy(string legionName, Penguin penguin, PenguinJobType jobType)
+    {
+        if (jobType == PenguinJobType.Solider)
+        {
+            ArmyManager.Instance.JoinArmyToSoldier(legionName, penguin);
+        }
+
+        else if (jobType == PenguinJobType.General)
+        {
+            ArmyManager.Instance.JoinArmyToGeneral(legionName, penguin as General);
+        }
     }
 
     //Æë±Ï°ú ´õ¹ÌÆë±ÏÀ» µñ¼Å³Ê¸®¿¡¼­ Á¦¿Ü
@@ -431,6 +462,9 @@ public class PenguinManager
         }
     }
     #endregion
+
+    public GeneralStat GetGeneralStatToSoliderType(PenguinTypeEnum type)
+   => soliderTypeToGeneralStatDic[type];
 
     /// <summary>
     /// ÆØ±Ï »ý¼ºÇÏ´Â ÇÔ¼ö

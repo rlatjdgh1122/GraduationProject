@@ -33,6 +33,7 @@ public class StrengthBuffBuilding : BuffBuilding
     protected override void Running()
     {
         if (HealthCompo.IsDead) return; 
+        if (!WaveManager.Instance.IsBattlePhase) return; 
 
         Collider[] newColls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
 
@@ -66,6 +67,7 @@ public class StrengthBuffBuilding : BuffBuilding
                 _inRangePenguins.Add(instanceID, _colls[i].GetComponent<Penguin>());
             }
 
+            // null ¶ä
             //ÀÓ½Ã¼öÁ¤
             _inRangePenguins[instanceID].AddStat(GetBuffValue(), StatType.Damage, StatMode.Increase); 
         }

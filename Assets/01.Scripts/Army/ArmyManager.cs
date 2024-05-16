@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ArmySystem;
+using System.Linq;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
@@ -279,8 +280,9 @@ public class ArmyManager : Singleton<ArmyManager>
 
         obj.SetOwner(Army);
         Army.General = obj;
+        var stat = obj.ReturnGenericStat<GeneralStat>();
+        var Abilities = stat.GeneralDetailData.abilities;
 
-        var Abilities = obj.ReturnGenericStat<GeneralStat>().GeneralDetailData.abilities;
         Army.Abilities.AddRange(Abilities);
 
         Army.AddStat(Abilities);
@@ -310,6 +312,7 @@ public class ArmyManager : Singleton<ArmyManager>
         if (obj is General)
         {
             armies[idx].General = null;
+
             //군단 능력치 전부 빼기
             if (Abilities.Count > 0)
                 Army.RemoveStat(Abilities);
@@ -354,4 +357,12 @@ public class ArmyManager : Singleton<ArmyManager>
     }
 
     #endregion
+
+    public bool CheckEmpty()
+    {
+        if (armies.Count <= 0) return true;
+
+        bool result = armies.All(x => x.CheckEmpty());
+        return result;
+    }
 }

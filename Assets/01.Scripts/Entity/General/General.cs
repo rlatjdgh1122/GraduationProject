@@ -1,8 +1,12 @@
+using System;
+
 public class General : Penguin
 {
     public Skill skill;
 
     public bool canSpinAttack = false;
+
+    public Action<Penguin> OnSynergyEvent = null;
 
     protected override void Awake()
     {

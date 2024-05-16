@@ -118,29 +118,26 @@ public class LegionInventory : LegionUI
         data.LegionName = legion.LegionList[legion.CurrentLegion].Name;
         data.SlotIdx = idx;
 
-        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
-
-        if (data.PenguinType == PenguinTypeEnum.Basic && questIdx == 0)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if (data.PenguinType == PenguinTypeEnum.Archer && questIdx == 2)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if (data.PenguinType == PenguinTypeEnum.Shield && questIdx == 6)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if (data.PenguinType == PenguinTypeEnum.Mop && questIdx == 6)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
-        }
-
         slotList[idx].HpValue(1);
 
         currentLegionList.Add(data);
         currentDictionary.Add(idx, data);
+
+        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+
+        if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+        if (questIdx == 1 && data.PenguinType == PenguinTypeEnum.Archer)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+
+        if (questIdx == 5)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
 
         CheckType(data);
 

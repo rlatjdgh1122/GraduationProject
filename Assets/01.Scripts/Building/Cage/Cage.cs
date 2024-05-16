@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Cage : MonoBehaviour
+public class Cage : PoolableMono
 {
     [SerializeField]
     private PenguinTypeEnum _penguinType;
@@ -43,6 +43,8 @@ public class Cage : MonoBehaviour
     {
         if (!_isClick && !WaveManager.Instance.IsBattlePhase)
         {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+
             StartCoroutine(DissolveCoroutine());
             
             _isClick = true;

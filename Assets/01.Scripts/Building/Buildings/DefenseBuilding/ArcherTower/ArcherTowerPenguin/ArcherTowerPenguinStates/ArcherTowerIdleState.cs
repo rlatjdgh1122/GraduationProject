@@ -15,6 +15,7 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
 
         _triggerCalled = true;
         SignalHub.OnGroundArrivedEvent += FindTarget;
+        SignalHub.OnRaftArrivedEvent += FindTarget;
     }
 
     private void FindTarget()
@@ -33,6 +34,7 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
     public override void Exit()
     {
         SignalHub.OnGroundArrivedEvent -= FindTarget;
+        SignalHub.OnRaftArrivedEvent -= FindTarget;
         base.Exit();
     }
 }

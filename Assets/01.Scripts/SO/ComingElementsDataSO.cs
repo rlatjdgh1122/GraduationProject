@@ -24,4 +24,8 @@ public class ComingElementsDataSO : ScriptableObject
     [SerializeField]
     private ResourceGeneratePatternDataSO _resourceGeneratePatternDataSO;
     public ResourceGeneratePatternDataSO ResourceGeneratePatternDataSO => _resourceGeneratePatternDataSO;
+
+    [SerializeField]
+    private GameObject _magicCagePrefab;
+    public GameObject MagicCagePrefab => _magicCagePrefab;
 }

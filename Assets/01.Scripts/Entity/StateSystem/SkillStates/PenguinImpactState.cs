@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PenguinImpactState : State
 {
-
-    public int HitCount = 0;
-
     public PenguinImpactState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -33,17 +30,4 @@ public class PenguinImpactState : State
     {
         base.ExitState();
     }
-
-    public override void AnimationTrigger()
-    {
-        base.AnimationTrigger();
-
-        if (_penguin.CheckHitPassive(++HitCount))
-        {
-            _penguin?.OnPassiveHitEvent();
-
-            HitCount = 0;
-        }
-    }
-
 }

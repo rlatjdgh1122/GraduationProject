@@ -14,7 +14,16 @@ public class ResourceConfigurer : BaseElementsConfigurer
 
     public ResourceObject[] SetResource(List<Vector3> previousElementsPositions)
     {
-        int randIdx = Random.Range(0, _resourceGeneratePattern.Length);
+        int randIdx;
+
+        if (WaveManager.Instance.CurrentWaveCount < 2) // 튜토리얼이면 적당히 정해지게
+        {
+            randIdx = 0;
+        }
+        else
+        {
+            randIdx = Random.Range(0, _resourceGeneratePattern.Length);
+        }
 
         ResourceGeneratePattern spawnResourcePattern = _resourceGeneratePattern[randIdx];
 
