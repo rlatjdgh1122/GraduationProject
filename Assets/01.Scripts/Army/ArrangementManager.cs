@@ -95,7 +95,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
                 if (!prevSaveDataList[i].Equals(dataList[i]))
                 {
                     //근데 펭귄 타입이 같으면 이미 있으니 안함
-                    if (prevSaveDataList[i].PenguinType.Equals(highDataList[i].PenguinType)) return;
+                    if (prevSaveDataList[i].PenguinType.Equals(dataList[i].PenguinType)) return;
 
                     removeDataList.Add(prevSaveDataList[i]);
                     addDataList.Add(dataList[i]);
@@ -159,6 +159,7 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
     private void RemovePenguin(string _legionName, Penguin penguin)
     {
+        PenguinManager.Instance.RemoveSoliderPenguin(penguin);
         ArmyManager.Instance.RemovePenguin(_legionName, penguin);
     }
 }

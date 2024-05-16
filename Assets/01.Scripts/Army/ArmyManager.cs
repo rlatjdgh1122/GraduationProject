@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ArmySystem;
+using System.Linq;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
@@ -354,4 +355,12 @@ public class ArmyManager : Singleton<ArmyManager>
     }
 
     #endregion
+
+    public bool CheckEmpty()
+    {
+        if (armies.Count <= 0) return true;
+
+        bool result = armies.All(x => x.CheckEmpty());
+        return result;
+    }
 }

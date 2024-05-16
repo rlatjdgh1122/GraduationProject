@@ -16,7 +16,7 @@ public class ResourceConfigurer : BaseElementsConfigurer
     {
         int randIdx;
 
-        if (WaveManager.Instance.CurrentWaveCount < 1) // 튜토리얼이면 적당히 정해지게
+        if (WaveManager.Instance.CurrentWaveCount < 2) // 튜토리얼이면 적당히 정해지게
         {
             randIdx = 0;
         }
