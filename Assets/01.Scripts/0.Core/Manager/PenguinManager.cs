@@ -116,14 +116,19 @@ public class PenguinManager
 
     public void AddSoliderPenguin(Penguin obj)
     {
-        SoldierPenguinList.Add(obj);
+        SoldierPenguinList.Add(obj); 
+    }
+
+    public void RemoveSoliderPenguin(Penguin obj)
+    {
+        SoldierPenguinList.Remove(obj);
     }
 
     /// <summary>
     /// 퇴출할 때 사용
     /// </summary>
     /// <param name="obj"></param>
-    public void RemoveDummyPenguin(DummyPenguin obj)
+    public void RetireDummyPenguin(DummyPenguin obj)
     {
         DummyPenguinList.Remove(obj);
 
@@ -143,7 +148,7 @@ public class PenguinManager
     /// 사망할 때 사용
     /// </summary>
     /// <param name="obj"></param>
-    public void RemoveSoliderPenguin(Penguin obj)
+    public void DeadSoliderPenguin(Penguin obj)
     {
         SoldierPenguinList.Remove(obj);
 
@@ -158,6 +163,7 @@ public class PenguinManager
 
         UpdateOwnershipDataList();
     }
+
     private void RemoveItemListDummy(DummyPenguin obj)
     {
         var ItemList = _itemDummyPenguinList.ToList();
@@ -185,7 +191,6 @@ public class PenguinManager
             dataType = data as PenguinInfoDataSO;
         }
 
-        //Debug.Log("data : " + dataType.GetInstanceID());
         if (!infoDataToPenguinDic.ContainsKey(dataType))
         {
             infoDataToPenguinDic.Add(dataType, penguin);

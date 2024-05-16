@@ -37,10 +37,17 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
-        WaveManager.Instance.BattlePhaseStartEventHandler();
-        SoundManager.Play2DSound(SoundName.StartFight);
-        NoiseManager.Instance.SaveNoise();
-        OnOffButton();
+        if(ArmyManager.Instance.CheckEmpty())
+        {
+            UIManager.Instance.ShowWarningUI("군단에 펭귄을 넣어주세요!");
+        }
+        else
+        {
+            WaveManager.Instance.BattlePhaseStartEventHandler();
+            SoundManager.Play2DSound(SoundName.StartFight);
+            NoiseManager.Instance.SaveNoise();
+            OnOffButton();
+        }
     }
 
     private void OnOffButton()

@@ -15,7 +15,7 @@ public abstract class TargetObject : PoolableMono
     }
 
     //사실 as랑 같음
-    public T ReturnGenericStat<T>() where T : BaseStat => (T)_characterStat;
+    public T ReturnGenericStat<T>() where T : BaseStat => (T)Stat;
 
     public TargetObject CurrentTarget;
 
