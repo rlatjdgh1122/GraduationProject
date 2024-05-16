@@ -955,7 +955,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2492686001576016035}
         m_TargetAssemblyTypeName: PenguinInfoUI, Assembly-CSharp
-        m_MethodName: HidePanel
+        m_MethodName: HideInfoUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -965,9 +965,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PopupUI, Assembly-CSharp
-        m_MethodName: ShowPanel
+      - m_Target: {fileID: 2492686001576016035}
+        m_TargetAssemblyTypeName: PenguinInfoUI, Assembly-CSharp
+        m_MethodName: ShowLegionUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2110,7 +2110,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC131\uACA9"
+  m_text: TMI
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6b9f9eec2937a74c8305cad91025fe7, type: 2}
   m_sharedMaterial: {fileID: -6298700896093532552, guid: c6b9f9eec2937a74c8305cad91025fe7,
@@ -2516,7 +2516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelFadeTime: 0.25
   _panelDelayTime: 0
-  _transferable: 
+  _transferable: 05000000
   _soundName: 16
   _uiGroup: 7
   _penguinTypeTxt: {fileID: 569284264908398548}
@@ -2724,7 +2724,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2492686001576016035}
         m_TargetAssemblyTypeName: PenguinInfoUI, Assembly-CSharp
-        m_MethodName: HidePenguinInfoUI
+        m_MethodName: HideInfoUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

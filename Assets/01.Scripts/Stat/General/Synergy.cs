@@ -15,6 +15,7 @@ public class Synergy
     public string synergyName;
     public SynergyType type;
     [SerializeField] private int _level = 1;
+
     public int level
     {
         get
