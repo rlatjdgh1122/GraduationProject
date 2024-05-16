@@ -6,9 +6,8 @@ using System.Collections;
 public class BombTimerSliderUI : WorldUI
 {
     [SerializeField] private Image _timerImage; 
+    [SerializeField] private Image _hpbar; 
     [SerializeField] private float duration = 10f;
-
-    EnemyBombPenguin _penguin;
 
     public override void Update()
     {
@@ -16,13 +15,7 @@ public class BombTimerSliderUI : WorldUI
 
         try
         {
-            if (_penguin.IsDead)
-            {
-                Debug.Log("¾Ó");
-                FadeOutImmediately();
-                return;
-            }
-            if (_timerImage.fillAmount >= 1)
+            if (_timerImage.fillAmount >= 1 || _hpbar.fillAmount <= 0)
             {
                 FadeOutImmediately();
                 return;
