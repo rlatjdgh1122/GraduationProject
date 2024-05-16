@@ -85,9 +85,11 @@ public class UnitInformationUI : MonoBehaviour
     {
         _generalInfo.DOFade(1, 0.5f);
 
+        var stat = PenguinManager.Instance.GetGeneralStatToSoliderType(generalData.PenguinType);
+        var armyStat = stat.GeneralDetailData.abilities[0];
         var synergyText = generalData.Synergy.Split(Cashing_Separator);
 
-        _synergyText.text = $"{synergyText[0]} {synergyText[1]}";
+        _synergyText.text = $"{synergyText[0]}<color=green>{armyStat.value}%</color>{synergyText[1]}";
 
         // _synergyText.text = generalData.Synergy;
         _descriptionText.text = generalData.Description;

@@ -280,11 +280,8 @@ public class ArmyManager : Singleton<ArmyManager>
 
         obj.SetOwner(Army);
         Army.General = obj;
-
         var stat = obj.ReturnGenericStat<GeneralStat>();
         var Abilities = stat.GeneralDetailData.abilities;
-
-        Debug.Log("B :" + stat.GetInstanceID());
 
         Army.Abilities.AddRange(Abilities);
 
@@ -315,6 +312,7 @@ public class ArmyManager : Singleton<ArmyManager>
         if (obj is General)
         {
             armies[idx].General = null;
+
             //군단 능력치 전부 빼기
             if (Abilities.Count > 0)
                 Army.RemoveStat(Abilities);

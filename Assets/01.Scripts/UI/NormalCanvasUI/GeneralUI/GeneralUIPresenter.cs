@@ -122,8 +122,6 @@ public class GeneralUIPresenter : PopupUI
         int level = GeneralDetailData.synergy.level++;
         GeneralDetailData.abilities[0].value *= level;
 
-        Debug.Log("A :" + currentGeneralStat.GetInstanceID());
-
         SetRandom();
         HideBoxes();
     }

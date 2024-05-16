@@ -15,7 +15,7 @@ public abstract class TargetObject : PoolableMono
     }
 
     //사실 as랑 같음
-    public T ReturnGenericStat<T>() where T : BaseStat => (T)Stat;
+    public T ReturnGenericStat<T>() where T : BaseStat => (T)_characterStat;
 
     public TargetObject CurrentTarget;
 
@@ -36,7 +36,7 @@ public abstract class TargetObject : PoolableMono
     private IDeadable _deadCompo = null;
 
     private Transform nexusTrm = null;
-    public Collider ColliderCompo = null;
+    public Collider ColliderCompo { get; set; } = null;
 
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _targetColliders;
