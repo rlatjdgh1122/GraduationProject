@@ -83,7 +83,7 @@ public class PenguinSituationPanel : PopupUI
         LegionInventoryManager.Instance.DeadLegionPenguin(data.LegionName, data.SlotIdx, true);
 
         var dummy = PenguinManager.Instance.GetDummyByInfoData(data);
-        PenguinManager.Instance.RemoveDummyPenguin(dummy);
+        PenguinManager.Instance.RetireDummyPenguin(dummy);
         PoolManager.Instance.Push(dummy);
 
         LegionInventoryManager.Instance.SaveLegion();
