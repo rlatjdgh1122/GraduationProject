@@ -66,11 +66,6 @@ public class CostBox : PoolableMono
 
     private void ClickEvent()
     {
-        if (TutorialManager.Instance.CurTutoQuestIdx == 1) // 일단 퀘스트
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-
         SoundManager.Play2DSound(_costSound);
 
         _box.gameObject.SetActive(false);

@@ -42,7 +42,17 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
         for (int i = 0; i < enemyCount; i++)
         {
-            int randomIdx = Random.Range(0, _enemyNames.Length);
+            int randomIdx;
+            
+            if (WaveManager.Instance.CurrentWaveCount < 5) // 튜토리얼이면 자폭병 안 나오게
+            {
+                randomIdx = Random.Range(0, _enemyNames.Length - 1);
+            }
+            else
+            {
+                randomIdx = Random.Range(0, _enemyNames.Length);
+            }
+            
             string enemyName = _enemyNames[randomIdx];
             Enemy spawnEnemy = PoolManager.Instance.Pop(enemyName) as Enemy;
 
@@ -51,6 +61,8 @@ public class EnemyConfigurer : BaseElementsConfigurer
             if (isRaft)
             {
                 SetRaftElementsPosition(spawnEnemy.gameObject, transform);
+                spawnEnemy.transform.rotation = Quaternion.identity;
+                spawnEnemy.transform.position += new Vector3(0, 1f, 0f);
             }
             else
             {
@@ -67,5 +79,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
     {
         spawnEnemy.IsMove = false;
         spawnEnemy.NavAgent.enabled = false;
+        spawnEnemy.ColliderCompo.enabled = false;
     }
 }

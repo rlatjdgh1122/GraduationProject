@@ -7,7 +7,7 @@ public abstract class BaseElementsConfigurer
     private readonly float setposY = 1.9f;
     private readonly float groundRadius = 5f;
     private readonly float raftRadius = 2f;
-    private readonly float checkDistance = 1.5f;
+    private readonly float checkDistance = 2f;
 
     protected bool isBossWave => WaveManager.Instance.CurrentWaveCount % 5 == 0; // 보스 나올 웨이브인지
 
@@ -42,8 +42,8 @@ public abstract class BaseElementsConfigurer
 
         previousElementsPositions.Add(randomPos);
 
-        randomPos = Random.insideUnitSphere * groundRadius;
-        randomPos.y = setposY;                                                                                                                                  
+        //randomPos = Random.insideUnitSphere * groundRadius;
+        // randomPos.y = setposY;                                                                                                                                  
 
         return randomPos;
     }

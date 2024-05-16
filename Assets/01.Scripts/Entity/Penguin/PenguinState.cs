@@ -13,7 +13,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     #region Enter
     protected void IdleEnter()
     {
-        SignalHub.OnGroundArrivedEvent += FindTarget;
+        //SignalHub.OnGroundArrivedEvent += FindTarget;
 
         if (_navAgent.isOnNavMesh)
         {
@@ -125,7 +125,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     protected void IdleExit()
     {
         //_penguin.SetNavmeshPriority(Penguin.PriorityType.Low);
-        SignalHub.OnGroundArrivedEvent -= FindTarget;
+        //SignalHub.OnGroundArrivedEvent -= FindTarget;
     }
     protected void AttackExit()
     {

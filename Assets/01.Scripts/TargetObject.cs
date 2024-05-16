@@ -36,7 +36,7 @@ public abstract class TargetObject : PoolableMono
     private IDeadable _deadCompo = null;
 
     private Transform nexusTrm = null;
-    protected Collider _collider = null;
+    public Collider ColliderCompo = null;
 
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _targetColliders;
@@ -48,7 +48,7 @@ public abstract class TargetObject : PoolableMono
         _targetColliders = new Collider[_maxDetectEnemy];
 
         HealthCompo = transform?.GetComponent<Health>();
-        _collider = GetComponent<Collider>();
+        ColliderCompo = GetComponent<Collider>();
         _deadCompo = GetComponent<IDeadable>();
 
         HealthCompo?.SetHealth(_characterStat);
@@ -63,8 +63,8 @@ public abstract class TargetObject : PoolableMono
         nexusTrm = GameManager.Instance.NexusTrm;
 
         //내 위치와 transform.forward * 5에서 가장 가까운 포인트의 거리를 비교 => 내 크기의 반지름(원형모형 기준)
-        if (_collider != null)
-            radius = Vector3.Magnitude(transform.position - _collider.ClosestPoint(transform.right * 20));
+        if (ColliderCompo != null)
+            radius = Vector3.Magnitude(transform.position - ColliderCompo.ClosestPoint(transform.right * 20));
     }
     protected virtual void Start()
     {

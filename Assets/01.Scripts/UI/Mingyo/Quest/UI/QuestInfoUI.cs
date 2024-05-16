@@ -142,12 +142,19 @@ public class QuestInfoUI : MonoBehaviour
 
     public void UpdateQuestBoxUIInfo(Quest quest)
     {
-        // 이렇게 하면 문제가 업데이트 된 UI가 현재 QuestInfoUI가 아니면 오류 생김
-        // 아마 QuestInfoBoxUI도 생성이 아니라 업데이트 하는 방식으로 해야 할 듯.
-
-        for (int i = 0; i < _questBoxUIs[quest].Count; i++)
+        int idx = 0;
+        foreach (var item in _questBoxUIs[quest])
         {
-            _questBoxUIs[quest][i].UpdateSliderValue(quest.QuestGoalList[i].CurrentAmount);
+            Debug.Log(quest.QuestGoalList[idx].CurrentAmount);
+            try
+            {
+                item.UpdateSliderValue(quest.QuestGoalList[idx].CurrentAmount);
+                idx++;
+            }
+            catch
+            {
+
+            }
         }
     }
 

@@ -39,7 +39,8 @@ public class GroundMovement : ComingObjetMovement
                                               () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
         NavmeshManager.Instance.NavmeshBake();
-        SignalHub.OnGroundArrivedEvent?.Invoke();
+
+        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)

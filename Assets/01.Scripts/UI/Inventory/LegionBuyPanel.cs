@@ -65,6 +65,12 @@ public class LegionBuyPanel : PopupUI
         ArmyManager.Instance.CreateArmy();
         CostManager.Instance.SubtractFromCurrentCost(_price);
 
+
+        if (TutorialManager.Instance.CurTutoQuestIdx == 6)
+        {
+            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+
         _canBuy = false;
 
         HidePanel();

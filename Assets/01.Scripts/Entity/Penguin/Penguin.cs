@@ -104,10 +104,12 @@ public class Penguin : Entity
     private void OnEnable()
     {
         SignalHub.OnGroundArrivedEvent += FindTarget;
+        SignalHub.OnRaftArrivedEvent += FindTarget;
     }
     private void OnDisable()
     {
         SignalHub.OnGroundArrivedEvent -= FindTarget;
+        SignalHub.OnRaftArrivedEvent -= FindTarget;
     }
 
     protected override void Awake()
@@ -301,7 +303,7 @@ public class Penguin : Entity
             currentTime += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("움직임 끝");
+        //Debug.Log("움직임 끝");
     }
 
     private void MoveToMouseClick(Vector3 pos)
