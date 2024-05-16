@@ -7,6 +7,7 @@ using UnityEngine;
 public class GroundMovement : ComingObjetMovement
 {
     private GameObject _waveEffect;
+    [SerializeField] private GameObject _groundHitEffect;
 
     protected override void Awake()
     {
@@ -32,6 +33,8 @@ public class GroundMovement : ComingObjetMovement
 
     protected override void Arrived()
     {
+        _groundHitEffect = Instantiate(_groundHitEffect, GetClosestPointToCenter(), Quaternion.LookRotation(transform.position - GetClosestPointToCenter()));
+        
         SoundManager.Play2DSound(SoundName.GroundHit);
 
         // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
@@ -41,6 +44,8 @@ public class GroundMovement : ComingObjetMovement
         NavmeshManager.Instance.NavmeshBake();
 
         CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
+
+        CoroutineUtil.CallWaitForSeconds(.5f, null, () => Destroy(_groundHitEffect));
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)
