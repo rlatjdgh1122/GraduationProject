@@ -17,12 +17,17 @@ public enum UIType
     Store,
     Info,
     Quest,
-    Setting
+    Setting,
+    Gif
 }
 
 public class UIManager : Singleton<UIManager>
 {
     public Transform canvasTrm;
+
+    [SerializeField]
+    private GifScreenController _gifScreenController;
+    public GifScreenController GifController => _gifScreenController;
 
     private WarningUI _warningUI;
 
@@ -63,17 +68,6 @@ public class UIManager : Singleton<UIManager>
                 Debug.LogWarning($"중복 키 : {popupUI.name}");
             }
         }
-        //foreach (WorldUI worldUI in worldUIs)
-        //{
-        //    if(!worldUIDictionary.ContainsKey(worldUI.name))
-        //    {
-        //        worldUIDictionary.Add(worldUI.name, worldUI);
-        //    }
-        //    else
-        //    {
-        //        Debug.LogWarning("중복 키");
-        //    }
-        //}
     }
 
     #region popUI Logics
@@ -87,12 +81,12 @@ public class UIManager : Singleton<UIManager>
         {
             PopupUI ui = currentPopupUI.Peek();
 
-            if (ui.UIGroup != popupUI.UIGroup)
+            if (ui.UIGroup != popupUI.UIGroup && popupUI.UIGroup != UIType.Gif)
             {
                 ui.HidePanel();
             }
         }
-
+        
         if (popupUI != null)
         {
             popupUI.ShowPanel();
@@ -102,7 +96,8 @@ public class UIManager : Singleton<UIManager>
 
     public bool CheckShowAble(UIType type)
     {
-        return _currentUI == null || _currentUI.Transferable.Contains(type);
+        return _currentUI == null || _currentUI.Transferable.Contains(type)
+            || type == UIType.Gif;
     }
 
     public void ChangeCurrentUI()
@@ -146,7 +141,8 @@ public class UIManager : Singleton<UIManager>
         {
             if (currentPopupUI.Count > 0)
             {
-                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
+                    && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                 {
                     currentPopupUI.Peek().HidePanel();
                     ChangeCurrentUI();
