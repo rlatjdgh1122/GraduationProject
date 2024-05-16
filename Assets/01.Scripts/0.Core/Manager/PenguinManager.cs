@@ -191,7 +191,6 @@ public class PenguinManager
             dataType = data as PenguinInfoDataSO;
         }
 
-        //Debug.Log("data : " + dataType.GetInstanceID());
         if (!infoDataToPenguinDic.ContainsKey(dataType))
         {
             infoDataToPenguinDic.Add(dataType, penguin);

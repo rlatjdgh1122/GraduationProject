@@ -281,7 +281,11 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.General = obj;
 
-        var Abilities = obj.ReturnGenericStat<GeneralStat>().GeneralDetailData.abilities;
+        var stat = obj.ReturnGenericStat<GeneralStat>();
+        var Abilities = stat.GeneralDetailData.abilities;
+
+        Debug.Log("B :" + stat.GetInstanceID());
+
         Army.Abilities.AddRange(Abilities);
 
         Army.AddStat(Abilities);
