@@ -53,4 +53,12 @@ public class PhaseChangeButton : MonoBehaviour
 
         gameObject.DOAnchorPos(gameObject.rectTransform().anchoredPosition + new Vector2(moveXValue, 0f), 0.5f).SetEase(Ease.InOutBack);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            UIManager.Instance.SetMaskingImagePos(transform.position, transform);
+        }
+    }
 }

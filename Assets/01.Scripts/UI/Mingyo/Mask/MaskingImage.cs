@@ -6,11 +6,4 @@ using UnityEngine.UI;
 
 public class MaskingImage : MonoBehaviour
 {
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            UIManager.Instance.SetMaskingImagePos(Input.mousePosition);
-        }
-    }
 }
