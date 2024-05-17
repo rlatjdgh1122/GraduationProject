@@ -8,6 +8,20 @@ public class MaskingImage : MonoBehaviour
 {
     private void Start()
     {
-        transform.parent.gameObject.SetActive(false);
+        CoroutineUtil.CallWaitForOneFrame(() => UIManager.Instance.HidePanel("Masking"));
     }
+
+    private Transform _buttonTrm;
+    public Transform ButtonTrm
+    {
+        get
+        {
+            if (_buttonTrm == null)
+            {
+                _buttonTrm = transform.parent.Find("MaskingButtonTrm");
+            }
+            return _buttonTrm;
+        }
+    }
+
 }

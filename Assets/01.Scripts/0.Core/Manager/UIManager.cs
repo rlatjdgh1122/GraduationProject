@@ -39,9 +39,6 @@ public class UIManager : Singleton<UIManager>
 
     public Sequence HudTextSequence;
 
-    private Transform _maskingImage;
-    private KeyValuePair<Transform, Button> _prevMaskingUiTrms; // trm, 부모
-
     public void InitializHudTextSequence()
     {
         HudTextSequence?.Kill(); // 기존 시퀀스를 중단
@@ -50,8 +47,6 @@ public class UIManager : Singleton<UIManager>
 
     public override void Awake()
     {
-        _maskingImage = FindObjectOfType<MaskingImage>().transform;
-
         canvasTrm = GameObject.Find("Canvas").transform;
         _warningUI = FindObjectOfType<WarningUI>();
 
@@ -222,28 +217,5 @@ public class UIManager : Singleton<UIManager>
         //.Join(text.rectTransform.DOMoveY(ScreenCenterVec.y, 0.5f))
         //.Append(text.DOFade(0f, 0.5f))
         //.Join(text.rectTransform.DOMoveY(ScreenCenterVec.y - 50f, 0.5f));
-    }
-
-    public void SetMaskingImagePos(Vector3 pos, Transform OnUI) // 귀찮으니 일단 이따구로 스레기처럼 함 
-    {
-        _maskingImage.parent.gameObject.SetActive(true);
-
-        _prevMaskingUiTrms = new KeyValuePair<Transform, Button>(OnUI, OnUI.GetComponent<Button>());
-
-        OnUI.transform.SetParent(_maskingImage.parent.Find("MaskingButtonTrm")); 
-
-        _maskingImage.transform.position = pos;
-
-        _prevMaskingUiTrms.Value.onClick.AddListener(OffMaskingImage);
-
-    }   
-
-    private void OffMaskingImage()
-    {
-        _prevMaskingUiTrms.Key.SetParent(_prevMaskingUiTrms.Key.parent);
-
-        _prevMaskingUiTrms.Value.onClick.RemoveListener(OffMaskingImage);
-
-        _maskingImage.parent.gameObject.SetActive(false);
     }
 }

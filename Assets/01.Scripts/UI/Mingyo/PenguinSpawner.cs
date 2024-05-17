@@ -26,6 +26,8 @@ public class PenguinSpawner : DefaultBuilding
     protected override void Start()
     {
         base.Start();
+        SignalHub.OnTutorialArrowSignEvent?.Invoke(transform);
+        UIManager.Instance.HidePanel("Masking");
     }
 
     protected override void Awake()

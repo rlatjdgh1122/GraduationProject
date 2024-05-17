@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using ArmySystem;
-using UnityEngine.InputSystem.LowLevel;
 
 
 
@@ -29,6 +25,9 @@ public delegate void OffPopUiEvent();
 
 public delegate void ViewNoiseIncreaseEvent();
 public delegate void NoiseIncreaseEvent();
+
+public delegate void TutorialArrowSignPointEvent(Transform OnUI);
+public delegate void DefaultBuilingClickEvent();
 
 public static class SignalHub
 {
@@ -69,9 +68,13 @@ public static class SignalHub
     public static EndQuestEvent OnEndQuestEvent;
     public static ProgressQuestEvent OnProgressQuestEvent;
 
-    public static OffPopUiEvent OnOffPopUiEvent;
+    public static TutorialArrowSignPointEvent OnTutorialArrowSignEvent;
+    public static DefaultBuilingClickEvent OnDefaultBuilingClickEvent;
 
     #endregion
+
+    public static OffPopUiEvent OnOffPopUiEvent;
+
 
     #region Noise
 

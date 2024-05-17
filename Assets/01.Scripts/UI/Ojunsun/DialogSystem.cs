@@ -18,7 +18,6 @@ public class DialogSystem : MonoBehaviour
 
     private Tween fadeTween;
 
-    private int dialCount = 1; //dialog가 켜진 횟수
     bool isTyping = false; //글자가 모두 출력되기 전에 스킵 하는 걸 막기 위한 변수
     bool canClick = true;
 
@@ -62,7 +61,6 @@ public class DialogSystem : MonoBehaviour
 
             if (sentences.Count <= 0)
             {
-                dialCount++;
                 End();
                 return;
             }
@@ -91,6 +89,8 @@ public class DialogSystem : MonoBehaviour
         canClick = false;
         FadeOut(_fadeValue);
         StartCoroutine(FadeTime());
+
+        UIManager.Instance.ShowPanel("Masking");
     }
 
     IEnumerator FadeTime()
