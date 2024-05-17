@@ -52,7 +52,7 @@ public class LegionInventoryUI : PopupUI
 
     public void ShowDescript()
     {
-        UIManager.Instance.GifController.ShowGif(GifType.LegionImport);
+        UIManager.Instance.GifController.ShowGif(GifType.LegionUI);
         _descriptionUI.gameObject.SetActive(true);
     }
 
