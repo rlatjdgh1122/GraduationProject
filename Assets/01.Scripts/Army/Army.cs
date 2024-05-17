@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace ArmySystem
 {
@@ -17,22 +16,26 @@ namespace ArmySystem
         public List<Penguin> Soldiers = new(); //±∫¿Œ ∆Î±œµÈ
         public General General = null; //¿Â±∫
 
-        public List<Ability> Abilities = new();
+        public Ability Ability = null; //Ω√≥ ¡ˆ Ω∫≈»
 
-        public void AddStat(List<Ability> abilities)
+        public void AddStat(Ability incStat)
         {
-            foreach (var incStat in abilities)
-            {
-                AddStat(incStat.value, incStat.statType, incStat.statMode);
-            }
+            this.Ability = incStat;
+            //if (Ability.Value == incStat.Value) return;
+            //UnityEngine.Debug.Log("Ω∫≈»¡ı∞°");
+            AddStat(incStat.value, incStat.statType, incStat.statMode);
         }
-        public void RemoveStat(List<Ability> abilities)
+
+        public void RemoveStat()
         {
-            foreach (var incStat in abilities)
-            {
-                RemoveStat(incStat.value, incStat.statType, incStat.statMode);
-            }
+            if (Ability == null) return;
+            //UnityEngine.Debug.Log("Ω∫≈»ª©¡÷±‚");
+
+            RemoveStat(Ability.value, Ability.statType, Ability.statMode);
+
+            Ability = null;
         }
+
         public void AddStat(int value, StatType type, StatMode mode)
         {
             //this.General?.AddStat(value, type, mode);

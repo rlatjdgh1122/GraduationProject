@@ -808,6 +808,9 @@ MonoBehaviour:
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -845,6 +848,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!114 &6928047295355190610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,6 +1027,7 @@ MonoBehaviour:
     - {x: 0.70710677, y: -0.00000008747433, z: -0.70710677}
     - {x: 0.70710677, y: 0.00000007952212, z: 0.70710677}
   renderers: []
+  ExceptRenderer: []
 --- !u!114 &1447605658880618635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2541,6 +2546,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7551485562132339281, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2619,7 +2629,7 @@ PrefabInstance:
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.075
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,
         type: 3}
@@ -2640,6 +2650,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588555500741687122, guid: 0af4319c2e1e9084793fde56a613effc,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

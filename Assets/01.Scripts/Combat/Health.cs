@@ -49,6 +49,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     private EntityActionData _actionData;
 
     public bool IsDead = false;
+    public bool OnHpBarUI = false;
+
     public bool IsMaxHP => currentHealth == maxHealth;
 
     private void Awake()
@@ -123,14 +125,16 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
             OnHitEvent?.Invoke();
             OnHit?.Invoke();
 
-            if (isFeedback) 
+            if (isFeedback)
             {
-                hitF.PlayFeedback(); 
+                hitF.PlayFeedback();
             }
 
         }//end if
 
+
         OnUIUpdate?.Invoke(currentHealth, maxHealth);
+
 
         if (currentHealth <= 0)
         {
