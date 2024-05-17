@@ -27,6 +27,7 @@ public class NexusBase : MonoBehaviour
         if (!WaveManager.Instance.IsBattlePhase)
         {
             UIManager.Instance.ShowPanel("NexusUI");
+            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }
     }
 

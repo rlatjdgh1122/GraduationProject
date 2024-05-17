@@ -90,7 +90,10 @@ public class DialogSystem : MonoBehaviour
         FadeOut(_fadeValue);
         StartCoroutine(FadeTime());
 
-        UIManager.Instance.ShowPanel("Masking", true);
+        if (WaveManager.Instance.CurrentWaveCount % 2 == 1)
+        {
+            MaskingUIManager.Instance.SetMaskingImagePos();
+        }
     }
 
     IEnumerator FadeTime()

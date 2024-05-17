@@ -24,11 +24,6 @@ public class LegionInventoryUI : PopupUI
     {
         base.HidePanel();
 
-        if (WaveManager.Instance.CurrentWaveCount < 4) // 튜토리얼 마스킹 UI
-        {
-            MaskingUIManager.Instance.SetMaskingImagePos(transform);
-        }
-
         if (LegionInventoryManager.Instance.ChangedInCurrentLegion())
         {
             UIManager.Instance.ShowPanel("SaveLegionPanel");

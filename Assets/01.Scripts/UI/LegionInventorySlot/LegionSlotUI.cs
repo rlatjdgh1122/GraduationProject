@@ -63,8 +63,6 @@ public abstract class LegionSlotUI : SlotUI
             return;
         }
 
-        SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
-
         if (Data == null && legion.SelectData != null) //슬롯에 데이터 넣기
         {
             PushDataInSlot();

@@ -26,7 +26,6 @@ public delegate void OffPopUiEvent();
 public delegate void ViewNoiseIncreaseEvent();
 public delegate void NoiseIncreaseEvent();
 
-public delegate void TutorialArrowSignPointEvent(Transform OnUI);
 public delegate void DefaultBuilingClickEvent();
 public delegate void ClickMaskingButtonEvent();
 
@@ -68,9 +67,7 @@ public static class SignalHub
     public static EndQuestEvent OnEndQuestEvent;
     public static ProgressQuestEvent OnProgressQuestEvent;
 
-    public static TutorialArrowSignPointEvent OnTutorialArrowSignEvent;
     public static DefaultBuilingClickEvent OnDefaultBuilingClickEvent;
-
 
     public static ClickMaskingButtonEvent OnClickPenguinSpawnButtonEvent;
 

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class MaskingUIManager : Singleton<MaskingUIManager>
 {
     private MaskingImage _maskingImage;
-    public MaskingImage MaskingImageCompo => _maskingImage;
 
     private Transform _prevMaskingUiTrms;
     private Transform _prevMaskingUiParentTrms;
@@ -23,22 +22,22 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     {
         _maskingImage = FindObjectOfType<MaskingImage>();
 
-        SetMaskingImagePos(null);
-        maskingUIIdx = 0;
+        foreach (var trm in pointsByQuests[0].MaskPointTransforms)
+        {
+            pointsByQuestsQueue.Enqueue(trm);
+        }
 
-        CoroutineUtil.CallWaitForSeconds(0.5f, null, () => UIManager.Instance.HidePanel("Masking"));
+        maskingUIIdx = 1;
     }
 
-    public void SetMaskingImagePos(Transform _OnTrm) // 귀찮으니 일단 이따구로 스레기처럼 함 
+    public void SetMaskingImagePos() // 귀찮으니 일단 이따구로 스레기처럼 함 
     {
         if(pointsByQuestsQueue.Count == 0)
         {
-            Debug.Log("?!");
-            foreach(var trm in pointsByQuests[maskingUIIdx].MaskPointTransforms)
+            foreach(var trm in pointsByQuests[maskingUIIdx++].MaskPointTransforms)
             {
                 pointsByQuestsQueue.Enqueue(trm);
             }
-            maskingUIIdx++;
         }
 
         CoroutineUtil.CallWaitForSeconds(0.1f, null, () => UIManager.Instance.ShowPanel("Masking", true));
@@ -106,7 +105,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         if (pointsByQuestsQueue.Count != 0)
         {
-            SetMaskingImagePos(null);
+            SetMaskingImagePos();
         }
     }
 

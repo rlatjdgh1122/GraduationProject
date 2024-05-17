@@ -145,7 +145,6 @@ public class QuestInfoUI : MonoBehaviour
         int idx = 0;
         foreach (var item in _questBoxUIs[quest])
         {
-            Debug.Log(quest.QuestGoalList[idx].CurrentAmount);
             try
             {
                 item.UpdateSliderValue(quest.QuestGoalList[idx].CurrentAmount);

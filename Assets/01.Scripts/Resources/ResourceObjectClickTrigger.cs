@@ -16,6 +16,11 @@ public class ResourceObjectClickTrigger : MonoBehaviour
         {
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI");
+
+            if (WaveManager.Instance.CurrentWaveCount < 4)
+            {
+                MaskingUIManager.Instance.SetMaskingImagePos();
+            }
         }
     }
 }
