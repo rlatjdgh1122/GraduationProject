@@ -20,7 +20,7 @@ public class ResourceManager : Singleton<ResourceManager>
 
     public ResourceDataSO[] resourceArray;
 
-    public void AddResource(ResourceDataSO resourceData, int count = 1)
+    public void AddResource(ResourceDataSO resourceData, int count)
     {
         if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
         {
