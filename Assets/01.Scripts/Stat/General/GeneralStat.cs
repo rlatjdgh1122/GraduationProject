@@ -42,16 +42,8 @@ public class GeneralStat : PenguinStat
         
     }
 
-    int a = 3;
-
     public void LevelUpPrice()
     {
         GeneralDetailData.LevelUp();
-        A(ref a);
-    }
-
-    public void A(ref int A)
-    {
-        A += 10;
     }
 }

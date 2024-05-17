@@ -20,8 +20,9 @@ namespace ArmySystem
 
         public void AddStat(Ability incStat)
         {
-            //UnityEngine.Debug.Log("Ω∫≈»¡ı∞°");
             this.Ability = incStat;
+            //if (Ability.Value == incStat.Value) return;
+            //UnityEngine.Debug.Log("Ω∫≈»¡ı∞°");
             AddStat(incStat.value, incStat.statType, incStat.statMode);
         }
 

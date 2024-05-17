@@ -121,7 +121,6 @@ public class GeneralUIPresenter : PopupUI
         currentGeneralStat.GeneralDetailData.synergy.level++;
         currentGeneralStat.LevelUpPrice();
 
-        UpgradeGeneral();
         SetRandom();
         HideBoxes();
     }

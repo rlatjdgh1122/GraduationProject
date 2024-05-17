@@ -22,7 +22,7 @@ public class GeneralInfoUI : PenguinInfoUI
         var synergyText = info.Synergy.Split(Cashing_Separator);
 
         _synergyTxt.text = $"{synergyText[0]}<color=green>{armyStat}%</color>{synergyText[1]}";
-        _levelTxt.text = $"{stat.Level}lv";
+        _levelTxt.text = $"{stat.GeneralDetailData.synergy.level}lv";
     }
 
     public override void HideInfoUI()

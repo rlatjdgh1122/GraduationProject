@@ -115,6 +115,17 @@ public abstract class TargetObject : PoolableMono
     }
 
     #region Stat
+
+    public void AddStat(Ability incStat)
+    {
+        AddStat(incStat.value, incStat.statType, incStat.statMode);
+    }
+
+    public void RemoveStat(Ability incStat)
+    {
+        RemoveStat(incStat.value, incStat.statType, incStat.statMode);
+    }
+
     public void AddStat(List<Ability> abilities)
     {
         foreach (var incStat in abilities)
@@ -122,6 +133,7 @@ public abstract class TargetObject : PoolableMono
             AddStat(incStat.value, incStat.statType, incStat.statMode);
         }
     }
+
     public void RemoveStat(List<Ability> abilities)
     {
         foreach (var incStat in abilities)
@@ -134,6 +146,7 @@ public abstract class TargetObject : PoolableMono
     {
         Stat.AddStat(value, type, mode);
     }
+
     public void RemoveStat(int value, StatType type, StatMode mode)
     {
         Stat.RemoveStat(value, type, mode);

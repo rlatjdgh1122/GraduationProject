@@ -34,7 +34,7 @@ public class SynergyUI : MonoBehaviour
         }
         else
         {
-            _text.text = $"군단장을 보유하고 있지 않음";
+            _text.text = $"</color=gray>시너지가 없음</color>";
         }
     }
 

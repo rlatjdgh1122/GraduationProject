@@ -4,6 +4,7 @@ using UnityEngine;
 using ArmySystem;
 using System.Linq;
 using UnityEngine.Rendering;
+using Unity.Burst.Intrinsics;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
@@ -100,28 +101,24 @@ public class ArmyManager : Singleton<ArmyManager>
 
         int Idx = legion - 1;
         var curArmy = armies[Idx];
-       /* var General = curArmy.General;
-        var GeneralHealtCompo = General.HealthCompo;
+
+        var General = curArmy.General;
+        
 
         //중복 선택된 군단도 아웃라인 보이게
         curArmy.Soldiers.ForEach(s =>
         {
-            *//* CoroutineUtil.CallWaitForSeconds(1f,
-                     () => s.OutlineCompo.enabled = true,
-                     () => s.OutlineCompo.enabled = false);*//*
-
             s.OutlineCompo.enabled = true;
             s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
 
         if (General)
         {
+            var GeneralHealtCompo = General.HealthCompo;
+
             General.OutlineCompo.enabled = true;
             General.HealthCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
-            *//*CoroutineUtil.CallWaitForSeconds(1f,
-                    () => curArmy.General.OutlineCompo.enabled = true,
-                    () => curArmy.General.OutlineCompo.enabled = false);*//*
-        }*/
+        }
 
         //군단 체인지 하는건 한 번만 실행해도 되니깐
         //이전과 같은 군단을 선택했다면 리턴
@@ -151,9 +148,9 @@ public class ArmyManager : Singleton<ArmyManager>
                     }
 
                     s.OutlineCompo.enabled = true;
-                   /* CoroutineUtil.CallWaitForSeconds(1f,
-                    () => s.OutlineCompo.enabled = true,
-                    () => s.OutlineCompo.enabled = false);*/
+                    /* CoroutineUtil.CallWaitForSeconds(1f,
+                     () => s.OutlineCompo.enabled = true,
+                     () => s.OutlineCompo.enabled = false);*/
 
                     s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
 
@@ -255,12 +252,10 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
 
-        var General = Army.General;
-
-        if (General)
+        if (Army.Ability != null)
         {
-            var stat = Army.General.ReturnGenericStat<GeneralStat>();
-            stat.GeneralDetailData.synergy.InvokeOnValidate();
+            //들어왓는데 시너지가 잇다면 스탯추가
+            obj.AddStat(Army.Ability);
         }
 
     }
@@ -330,6 +325,9 @@ public class ArmyManager : Singleton<ArmyManager>
         {
             //군단 리스트에서 제외
             Army.Soldiers.Remove(obj);
+
+            if (Army.Ability != null)
+                obj.RemoveStat(Army.Ability);
         }
     }
 
