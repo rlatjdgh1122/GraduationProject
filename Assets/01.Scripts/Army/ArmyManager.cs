@@ -287,10 +287,11 @@ public class ArmyManager : Singleton<ArmyManager>
         var stat = obj.ReturnGenericStat<GeneralStat>();
 
 
+        stat.GeneralDetailData.synergy.Stat.OnValidate += Army.AddStat ;
+        //시너지 스탯 연결
+
         //인보크
         stat.GeneralDetailData.synergy.InvokeOnValidate();
-        //시너지 스탯 연결
-        stat.GeneralDetailData.synergy.Stat.OnValidate += Army.AddStat;
     }
 
     #endregion

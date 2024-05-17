@@ -428,7 +428,7 @@ public class PenguinManager
                 if (info.Equals(data))
                 {
                     var dummyPenguin = info.dummyPenguin;
-
+                    info.IsHaveOwner = false;
                     //Æë±ÏÀÌ¶û ´õ¹ÌÆë±ÏÀÌ¶û ¿¬°áÇØÁ¦
                     penguinToDummyDic.Remove(penguin);
                     dummyToPenguinDic.Remove(dummyPenguin);
