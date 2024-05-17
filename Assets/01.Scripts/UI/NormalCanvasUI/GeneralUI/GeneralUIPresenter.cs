@@ -95,7 +95,7 @@ public class GeneralUIPresenter : PopupUI
         }
         else
         {
-            UIManager.Instance.ShowWarningUI("돈이 부족하여 업그레이드 할 수 없습니다.");
+            UIManager.Instance.ShowWarningUI("재화가 부족합니다");
         }
     }
 
@@ -153,5 +153,10 @@ public class GeneralUIPresenter : PopupUI
     public void HideGeneralUI()
     {
         UIManager.Instance.HidePanel("GeneralUI");
+    }
+
+    public void ShowGifScreenUI()
+    {
+        UIManager.Instance.GifController.ShowGif();
     }
 }
