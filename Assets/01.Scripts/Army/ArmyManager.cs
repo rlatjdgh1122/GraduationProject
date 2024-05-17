@@ -1,10 +1,8 @@
+using ArmySystem;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using ArmySystem;
 using System.Linq;
-using UnityEngine.Rendering;
-using Unity.Burst.Intrinsics;
+using UnityEngine;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
