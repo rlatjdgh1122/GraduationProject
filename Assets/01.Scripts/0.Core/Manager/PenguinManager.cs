@@ -377,7 +377,7 @@ public class PenguinManager
             if (!info.IsHaveOwner)
             {
                 //∏∏æ‡ ¿Â±∫¿Ã∂Û∏È
-                if (data.JobType == PenguinJobType.General)
+                if (dummyPenguin is GeneralDummyPengiun)
                 {
                     //¥ıπÃ ∆Î±œø° Ω∫≈»¿∏∑Œ πŸ≤ﬁ
                     penguin.Stat = (dummyPenguin as GeneralDummyPengiun).Stat;
