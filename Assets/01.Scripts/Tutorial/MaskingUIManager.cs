@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,29 +13,34 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     private int maskingUIIdx;
 
     [SerializeField]
-    private List<Transform> _maskingPointTrms = new List<Transform>();
-    private Queue<Transform> _maskingPointTrmsQueue = new Queue<Transform>();
+    private List<TransformMaskPointsByQuest> pointsByQuests = new List<TransformMaskPointsByQuest>();
+
+    Queue<string> pointsByQuestsQueue = new Queue<string>();
 
     public override void Awake()
     {
         _maskingImage = FindObjectOfType<MaskingImage>();
 
-        SignalHub.OnTutorialArrowSignEvent += SetMaskingImagePos;
+        SetMaskingImagePos(null);
         maskingUIIdx = 0;
 
-        foreach (Transform t in _maskingPointTrms)
-        {
-            _maskingPointTrmsQueue.Enqueue(t);
-        }
+        CoroutineUtil.CallWaitForSeconds(0.5f, null, () => UIManager.Instance.HidePanel("Masking"));
     }
 
     private void SetMaskingImagePos(Transform _OnTrm) // 귀찮으니 일단 이따구로 스레기처럼 함 
     {
+        if(pointsByQuestsQueue.Count == 0)
+        {
+            foreach(var trm in pointsByQuests[TutorialManager.Instance.CurTutoQuestIdx].MaskPointTransforms)
+            {
+                pointsByQuestsQueue.Enqueue(trm);
+            }
+        }
+
+        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => UIManager.Instance.ShowPanel("Masking", true));
+
         maskingUIIdx++;
-
-        UIManager.Instance.ShowPanel("Masking");
-
-        Transform OnTrm = _maskingPointTrmsQueue.Dequeue();
+        Transform OnTrm = GameObject.Find(pointsByQuestsQueue.Dequeue().ToString()).transform;
 
         Vector3 onPos = OnTrm.position;
 
@@ -47,7 +53,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         else // UI 면
         {
             OnTrm.transform.SetParent(_maskingImage.ButtonTrm);
-            _prevMaskingUiTrms = new KeyValuePair<Transform, Button>(OnTrm, OnTrm.GetComponent<Button>());
+            _prevMaskingUiTrms = new KeyValuePair<Transform, Button>(OnTrm, OnTrm.GetOrAddComponent<Button>());
             _prevMaskingUiTrms.Value.onClick.AddListener(OffMaskingImageUI);
         }
 
@@ -60,19 +66,29 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         _prevMaskingUiTrms.Value.onClick.RemoveListener(OffMaskingImageUI);
 
-        UIManager.Instance.HidePanel("Masking");
+        if (pointsByQuestsQueue.Count != 0)
+        {
+            SetMaskingImagePos(null);
+        }
+        else
+        {
+            UIManager.Instance.HidePanel("Masking");
+        }
+
     }
 
     private void OffMaskingImageObj()
     {
         SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
 
-        UIManager.Instance.HidePanel("Masking");
-    }
-
-    private void OnDisable()
-    {
-        SignalHub.OnTutorialArrowSignEvent -= SetMaskingImagePos;
+        if (pointsByQuestsQueue.Count != 0)
+        {
+            SetMaskingImagePos(null);
+        }
+        else
+        {
+            UIManager.Instance.HidePanel("Masking");
+        }
     }
 
     public bool IsArrowSignPoint(int idx) { return maskingUIIdx == idx;}

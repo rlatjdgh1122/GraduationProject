@@ -78,27 +78,41 @@ public class UIManager : Singleton<UIManager>
     }
 
     #region popUI Logics
-    public void ShowPanel(string uiName)
+    public void ShowPanel(string uiName, bool canOverlap = false)
     {
+        if (uiName == "Masking")
+        {
+            Debug.Log("Show");
+        }
+
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
         if (!CheckShowAble(popupUI.UIGroup)) return;
 
-        for (int i = 0; i < currentPopupUI.Count; i++)
+        if (!canOverlap)
         {
-            PopupUI ui = currentPopupUI.Peek();
-
-            if (ui.UIGroup != popupUI.UIGroup)
+            for (int i = 0; i < currentPopupUI.Count; i++)
             {
-                ui.HidePanel();
+                PopupUI ui = currentPopupUI.Peek();
+
+                if (ui.UIGroup != popupUI.UIGroup)
+                {
+                    ui.HidePanel();
+                }
+            }
+
+            if (popupUI != null)
+            {
+                popupUI.ShowPanel();
+                _currentUI = popupUI;
             }
         }
-
-        if (popupUI != null)
+        else
         {
             popupUI.ShowPanel();
-            _currentUI = popupUI;
         }
+
+        
     }
 
     public bool CheckShowAble(UIType type)

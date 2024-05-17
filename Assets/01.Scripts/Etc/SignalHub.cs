@@ -59,7 +59,6 @@ public static class SignalHub
     public static BattlePhaseEndEvent OnBattlePhaseEndEvent;
     public static GroundArrivedEvent OnGroundArrivedEvent;
     public static RaftArrivedEvent OnRaftArrivedEvent;
-    public static RaftArrivedEvent OnRaaftArrivedEvent;
     #endregion
 
     #region Quest

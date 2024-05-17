@@ -49,6 +49,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         {
             Ground ground = Instantiate(_glacierPrefab, transform.position, Quaternion.identity)
                 .GetComponent<Ground>();
+
             _allGrounds.Enqueue(ground);
 
             ground.SetMoveTarget(transform.parent.parent.parent);

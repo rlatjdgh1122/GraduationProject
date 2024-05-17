@@ -90,7 +90,7 @@ public class DialogSystem : MonoBehaviour
         FadeOut(_fadeValue);
         StartCoroutine(FadeTime());
 
-        UIManager.Instance.ShowPanel("Masking");
+        UIManager.Instance.ShowPanel("Masking", true);
     }
 
     IEnumerator FadeTime()

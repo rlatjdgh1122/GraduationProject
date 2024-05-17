@@ -46,7 +46,6 @@ public class DefaultBuilding : BaseBuilding
     {
         if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/)
         {
-            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             SpawnButton();
         }
     }
@@ -62,6 +61,7 @@ public class DefaultBuilding : BaseBuilding
         {
             UIManager.Instance.ShowPanel("StorePanel");
             ChangeSpawnUIBool(true);
+            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }
 
         //StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
