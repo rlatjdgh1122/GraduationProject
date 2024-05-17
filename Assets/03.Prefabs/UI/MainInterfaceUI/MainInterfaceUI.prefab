@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 2165549727579534484}
   - component: {fileID: 5186629447583957753}
   m_Layer: 5
-  m_Name: SettingButton
+  m_Name: ShowGifButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,7 +307,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2165549727579534484}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1600211268508226594}
+        m_TargetAssemblyTypeName: MainInterfaceUI, Assembly-CSharp
+        m_MethodName: ShowViewGifsUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1293166721438949105
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,7 +842,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8011224864959994467}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1600211268508226594}
+        m_TargetAssemblyTypeName: MainInterfaceUI, Assembly-CSharp
+        m_MethodName: ShowEscUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2377828174688630072
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1093,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 46cd29bc38a738c4db9cf65064c2cadf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a830e173050ac4478df4c54745cd4c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2216,7 +2240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 45006646caa805a4fb4ef82a491ff736, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4caa799cd0b31e047ab399159e224a0e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2571,7 +2595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3310a6644afac61499b8bb6c4d8eb848, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2c6a58bcdd707b543a13cd37b566d4a9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
