@@ -18,10 +18,10 @@ public class GeneralInfoUI : PenguinInfoUI
     {
         base.ShowInfo();
 
-        var armyStat = stat.GeneralDetailData.abilities[0];
+        var armyStat = stat.GeneralDetailData.synergy.Stat.value;
         var synergyText = info.Synergy.Split(Cashing_Separator);
 
-        _synergyTxt.text = $"{synergyText[0]}<color=green>{armyStat.value}%</color>{synergyText[1]}";
+        _synergyTxt.text = $"{synergyText[0]}<color=green>{armyStat}%</color>{synergyText[1]}";
         _levelTxt.text = $"{stat.Level}lv";
     }
 

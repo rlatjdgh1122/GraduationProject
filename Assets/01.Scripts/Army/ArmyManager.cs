@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ArmySystem;
 using System.Linq;
+using UnityEngine.Rendering;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
@@ -99,23 +100,28 @@ public class ArmyManager : Singleton<ArmyManager>
 
         int Idx = legion - 1;
         var curArmy = armies[Idx];
+       /* var General = curArmy.General;
+        var GeneralHealtCompo = General.HealthCompo;
 
         //중복 선택된 군단도 아웃라인 보이게
         curArmy.Soldiers.ForEach(s =>
         {
-            CoroutineUtil.CallWaitForSeconds(1f,
-                    () => s.OutlineCompo.enabled = true,
-                    () => s.OutlineCompo.enabled = false);
+            *//* CoroutineUtil.CallWaitForSeconds(1f,
+                     () => s.OutlineCompo.enabled = true,
+                     () => s.OutlineCompo.enabled = false);*//*
 
+            s.OutlineCompo.enabled = true;
             s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
 
-        if (curArmy.General)
+        if (General)
         {
-            CoroutineUtil.CallWaitForSeconds(1f,
+            General.OutlineCompo.enabled = true;
+            General.HealthCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
+            *//*CoroutineUtil.CallWaitForSeconds(1f,
                     () => curArmy.General.OutlineCompo.enabled = true,
-                    () => curArmy.General.OutlineCompo.enabled = false);
-        }
+                    () => curArmy.General.OutlineCompo.enabled = false);*//*
+        }*/
 
         //군단 체인지 하는건 한 번만 실행해도 되니깐
         //이전과 같은 군단을 선택했다면 리턴
@@ -144,9 +150,10 @@ public class ArmyManager : Singleton<ArmyManager>
                         s.FindNearestEnemy();
                     }
 
-                    CoroutineUtil.CallWaitForSeconds(1f,
+                    s.OutlineCompo.enabled = true;
+                   /* CoroutineUtil.CallWaitForSeconds(1f,
                     () => s.OutlineCompo.enabled = true,
-                    () => s.OutlineCompo.enabled = false);
+                    () => s.OutlineCompo.enabled = false);*/
 
                     s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
 
@@ -229,12 +236,12 @@ public class ArmyManager : Singleton<ArmyManager>
     #endregion
 
     #region 군단 영입 부분
+
     /// <summary>
     /// 장군을 제외한 펭귄을 군단에 넣는 함수
     /// </summary>  
     /// <param name="legion"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
-
     public void JoinArmyToSoldier(string legion, Penguin obj) //들어가고 싶은 군단, 군인펭귄
     {
         if (armies.Find(p => p.LegionName == legion) == null)
@@ -244,16 +251,18 @@ public class ArmyManager : Singleton<ArmyManager>
         }
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
-        var Abilities = Army.Abilities;
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
 
-        //스탯 추가
-        if (Abilities.Count > 0)
+        var General = Army.General;
+
+        if (General)
         {
-            obj.AddStat(Abilities);
+            var stat = Army.General.ReturnGenericStat<GeneralStat>();
+            stat.GeneralDetailData.synergy.InvokeOnValidate();
         }
+
     }
 
     /// <summary>
@@ -269,8 +278,8 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
-        var Army = armies[idx];
+        var Idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[Idx];
 
         if (Army.General != null)
         {
@@ -281,13 +290,14 @@ public class ArmyManager : Singleton<ArmyManager>
         obj.SetOwner(Army);
         Army.General = obj;
         var stat = obj.ReturnGenericStat<GeneralStat>();
-        var Abilities = stat.GeneralDetailData.abilities;
 
-        Army.Abilities.AddRange(Abilities);
 
-        Army.AddStat(Abilities);
-
+        //인보크
+        stat.GeneralDetailData.synergy.InvokeOnValidate();
+        //시너지 스탯 연결
+        stat.GeneralDetailData.synergy.Stat.OnValidate += Army.AddStat;
     }
+
     #endregion
 
     #region 펭귄 및 군단 생성 부분
@@ -301,35 +311,25 @@ public class ArmyManager : Singleton<ArmyManager>
     public void RemovePenguin(string legion, Penguin obj)
     {
         //증가된 군단 스탯 지우기
-
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
-        var Abilities = Army.Abilities;
+        //var Abilities = Army.Abilities;
 
         obj.owner = (null);
 
         //장군이라면
         if (obj is General)
         {
+            var stat = obj.ReturnGenericStat<GeneralStat>();
+            stat.GeneralDetailData.synergy.Stat.OnValidate -= Army.AddStat;
+            Army.RemoveStat();
+
             armies[idx].General = null;
-
-            //군단 능력치 전부 빼기
-            if (Abilities.Count > 0)
-                Army.RemoveStat(Abilities);
-
-
-            //군단 능력치 없애기
-            if (Abilities.Count > 0)
-                Army.Abilities.Clear();
         }
         else if (obj is Penguin)
         {
             //군단 리스트에서 제외
             Army.Soldiers.Remove(obj);
-
-            //군단 능력치 빼기
-            if (Abilities.Count > 0)
-                obj.RemoveStat(Abilities);
         }
     }
 

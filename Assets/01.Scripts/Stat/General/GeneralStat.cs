@@ -10,9 +10,15 @@ public class GeneralDetailData
     public bool IsAvailable;
     public int level;
     public Stat levelUpPrice;
-    public string passive;
-    public Synergy synergy;
+    public int levelUpIncreaseValue;
     public List<Ability> abilities;
+    //public string passive;
+    public Synergy synergy;
+
+    public void LevelUp()
+    {
+        levelUpPrice.AddIncrease(levelUpIncreaseValue);
+    }
 }
 
 [CreateAssetMenu(menuName = "SO/Stat/Penguin/General")]
@@ -21,6 +27,7 @@ public class GeneralStat : PenguinStat
     public GeneralDetailData GeneralDetailData;
     public GeneralInfoDataSO InfoData;
 
+    //이건 장군 레벨
     public int Level
     {
         get
@@ -30,12 +37,21 @@ public class GeneralStat : PenguinStat
         set
         {
             GeneralDetailData.level = value;
-            LevelUp();
+            LevelUpPrice();
         }
+        
     }
 
-    public void LevelUp()
+    int a = 3;
+
+    public void LevelUpPrice()
     {
-        GeneralDetailData.levelUpPrice.AddIncrease(10); //일단 임시 UI먼저함
+        GeneralDetailData.LevelUp();
+        A(ref a);
+    }
+
+    public void A(ref int A)
+    {
+        A += 10;
     }
 }

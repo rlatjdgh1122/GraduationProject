@@ -93,16 +93,20 @@ MonoBehaviour:
       _finalValue: 0
       increases: 
       decreases: 
-    passive: 
-    synergy:
-      synergyName: "\uBC18\uD56D"
-      type: 0
-      _level: 1
-      baseValue: 0
-      increaseValue: 0
+    levelUpIncreaseValue: 0
     abilities:
     - abilityName: "\uCD5C\uB300\uCCB4\uB825"
       statType: 128
       statMode: 0
       value: 5
+    synergy:
+      _level: 1
+      synergyName: "\uBC18\uD56D"
+      type: 0
+      Stat:
+        abilityName: "\uCD5C\uB300\uCCB4\uB825"
+        statType: 128
+        statMode: 0
+        value: 5
+      increaseValue: 1
   InfoData: {fileID: 11400000, guid: d50022a548f88b347b2ca71b24368fc4, type: 2}

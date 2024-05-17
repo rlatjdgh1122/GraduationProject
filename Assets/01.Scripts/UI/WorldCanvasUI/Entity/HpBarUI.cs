@@ -39,12 +39,13 @@ public class HpBarUI : WorldUI
 
     public void FadeOutImmediately()
     {
+        canvas?.DOKill();
+        canvas.DOFade(0, 0.3f);
+
         /*UIManager.Instance.InitializHudTextSequence();
 
         UIManager.Instance.HudTextSequence.Append(canvas.DOFade(0, 0.3f));*/
 
-        canvas?.DOKill();
-        canvas.DOFade(0, 0.3f);
     }
 
     private IEnumerator FadeOutTime()
