@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
+using Unity.Jobs.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -49,6 +50,9 @@ public class PenguinManager
     public BaseStat GetCurrentStat = null;
     public EntityInfoDataSO GetCurrentInfoData = null;
     #endregion
+
+    //Àå±º ½ºÅÈÀ» °¡Á®¿È
+    private Dictionary<PenguinTypeEnum, GeneralStat> soliderTypeToGeneralStatDic = new();
 
     #region Æë±Ï ¸®½ºÆ®
 
@@ -113,10 +117,15 @@ public class PenguinManager
         NotBelongDummyPenguinList.Add(obj);
     }
 
+    public void AddGeneralStat(PenguinTypeEnum type, GeneralStat stat)
+    {
+        soliderTypeToGeneralStatDic.Add(type, stat);
+    }
+
 
     public void AddSoliderPenguin(Penguin obj)
     {
-        SoldierPenguinList.Add(obj); 
+        SoldierPenguinList.Add(obj);
     }
 
     public void RemoveSoliderPenguin(Penguin obj)
@@ -134,14 +143,16 @@ public class PenguinManager
 
         var penguin = dummyToPenguinDic[obj];
 
-        BelongDummyPenguinList.Remove(obj);
         SoldierPenguinList.Remove(penguin);
-        dummyToPenguinDic.Remove(obj);
-        penguinToDummyDic.Remove(penguin);
+        //penguinToDummyDic.Remove(penguin);
+        BelongDummyPenguinList.Remove(obj);
+        //dummyToPenguinDic.Remove(obj);
 
         RemoveItemListDummy(obj);
 
         UpdateOwnershipDataList();
+
+        PoolManager.Instance.Push(obj);
     }
 
     /// <summary>
@@ -154,14 +165,16 @@ public class PenguinManager
 
         var dummy = penguinToDummyDic[obj];
 
-        BelongDummyPenguinList.Remove(dummy);
         DummyPenguinList.Remove(dummy);
-        penguinToDummyDic.Remove(obj);
-        dummyToPenguinDic.Remove(dummy);
+        //penguinToDummyDic.Remove(obj);
+        BelongDummyPenguinList.Remove(dummy);
+        //dummyToPenguinDic.Remove(dummy);
 
         RemoveItemListDummy(dummy);
 
         UpdateOwnershipDataList();
+
+        PoolManager.Instance.Push(dummy);
     }
 
     private void RemoveItemListDummy(DummyPenguin obj)
@@ -348,6 +361,9 @@ public class PenguinManager
     private void ApplyDummyPenguin(EntityInfoDataSO data)
     {
         var dataType = data.PenguinType;
+        var jobType = data.JobType;
+        var legionName = data.LegionName;
+
         var penguin = GetPenguinByInfoData(data);
 
         //Áö±Ý±îÁö »ý¼ºµÈ ´õ¹ÌÆë±Ïµé¿¡¼­
@@ -361,7 +377,7 @@ public class PenguinManager
             if (!info.IsHaveOwner)
             {
                 //¸¸¾à Àå±ºÀÌ¶ó¸é
-                if (data.JobType == PenguinJobType.General)
+                if (dummyPenguin is GeneralDummyPengiun)
                 {
                     //´õ¹Ì Æë±Ï¿¡ ½ºÅÈÀ¸·Î ¹Ù²Þ
                     penguin.Stat = (dummyPenguin as GeneralDummyPengiun).Stat;
@@ -375,6 +391,7 @@ public class PenguinManager
                     penguinToDummyDic.Add(penguin, dummyPenguin);
                     dummyToPenguinDic.Add(dummyPenguin, penguin);
 
+                    JoinToArmy(legionName, penguin, jobType);
                     break;
                 }
             }
@@ -383,17 +400,46 @@ public class PenguinManager
         UpdateOwnershipDataList();
     }
 
+    private void JoinToArmy(string legionName, Penguin penguin, PenguinJobType jobType)
+    {
+        if (jobType == PenguinJobType.Solider)
+        {
+            ArmyManager.Instance.JoinArmyToSoldier(legionName, penguin);
+        }
+
+        else if (jobType == PenguinJobType.General)
+        {
+            ArmyManager.Instance.JoinArmyToGeneral(legionName, penguin as General);
+        }
+    }
+
     //Æë±Ï°ú ´õ¹ÌÆë±ÏÀ» µñ¼Å³Ê¸®¿¡¼­ Á¦¿Ü
     private void ReleaseDummyPenguin(EntityInfoDataSO data)
     {
         var dataType = data.PenguinType;
         var penguin = GetPenguinByInfoData(data);
+        
+
+        foreach (var info in _itemDummyPenguinList)
+        {
+            if (info.IsHaveOwner)
+            {
+                var dummy = GetDummyByInfoData(data);
+                if (info.dummyPenguin.Equals(dummy))
+                {
+                    var dummyPenguin = info.dummyPenguin;
+                    info.IsHaveOwner = false;
+                    //Æë±ÏÀÌ¶û ´õ¹ÌÆë±ÏÀÌ¶û ¿¬°áÇØÁ¦
+                    penguinToDummyDic.Remove(penguin);
+                    dummyToPenguinDic.Remove(dummyPenguin);
+                }
+            }
+        }
 
         //Áö±Ý±îÁö »ý¼ºµÈ ´õ¹ÌÆë±Ïµé¿¡¼­
         //¿À³Ê¸¦ °¡Áö°í ÀÖ´Â ´õ¹ÌÆë±ÏµéÀ» °ñ¶ó ¿À³Ê¸¦ Áö¿öÁÖ°í
         //µñ¼Å³Ê¸®¿¡¼­ Áö¿öÁÜ
-
-        foreach (var info in _itemDummyPenguinList)
+        /*foreach (var info in _itemDummyPenguinList)
         {
             var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
@@ -414,7 +460,7 @@ public class PenguinManager
                 }
             }
 
-        }
+        }*/
     }
 
     private void UpdateOwnershipDataList()
@@ -436,6 +482,9 @@ public class PenguinManager
         }
     }
     #endregion
+
+    public GeneralStat GetGeneralStatToSoliderType(PenguinTypeEnum type)
+   => soliderTypeToGeneralStatDic[type];
 
     /// <summary>
     /// ÆØ±Ï »ý¼ºÇÏ´Â ÇÔ¼ö

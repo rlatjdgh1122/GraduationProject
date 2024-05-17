@@ -25,4 +25,10 @@ public abstract class WorldUI : MonoBehaviour
     {
         canvas.DOFade(1, 0.1f);
     }
+
+    public virtual void FadeOutImmediately()
+    {
+        canvas.DOKill();
+        canvas.DOFade(0, 0.3f);
+    }
 }

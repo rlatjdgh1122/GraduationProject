@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: KatanaGeneralPenguin
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 200
+    _baseValue: 250
     _fewTimes: 1
-    _finalValue: 200
+    _finalValue: 250
     increases: 
     decreases: 
   armor:
@@ -67,7 +67,7 @@ MonoBehaviour:
     increases: 
     decreases: 
   damage:
-    _baseValue: 17
+    _baseValue: 15
     _fewTimes: 0
     _finalValue: 0
     increases: 
@@ -93,16 +93,20 @@ MonoBehaviour:
       _finalValue: 0
       increases: 
       decreases: 
-    passive: 
-    synergy:
-      synergyName: "\uC9C8\uD48D"
-      type: 2
-      _level: 1
-      baseValue: 0
-      increaseValue: 5
+    levelUpIncreaseValue: 0
     abilities:
     - abilityName: "\uD06C\uB9AC\uD2F0\uCEEC \uD655\uB960"
       statType: 2048
       statMode: 0
       value: 5
+    synergy:
+      _level: 1
+      synergyName: "\uC9C8\uD48D"
+      type: 2
+      Stat:
+        abilityName: "\uD06C\uB9AC\uD2F0\uCEEC \uD655\uB960"
+        statType: 2048
+        statMode: 0
+        value: 5
+      increaseValue: 1
   InfoData: {fileID: 11400000, guid: a95eb314b55514447aefbb8158cd40eb, type: 2}

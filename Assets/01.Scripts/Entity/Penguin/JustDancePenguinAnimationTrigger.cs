@@ -27,6 +27,6 @@ public class JustDancePenguinAnimationTrigger : MonoBehaviour
     {
         float randomValue = Random.Range(0, 4);
 
-        _anim.SetFloat(AnimID, randomValue);
+        _anim?.SetFloat(AnimID, randomValue);
     }
 }

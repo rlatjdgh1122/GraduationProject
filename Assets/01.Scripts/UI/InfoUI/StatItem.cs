@@ -25,7 +25,7 @@ public class StatItem : IStatable
         string value = stat.GetValue().ToString();
         string percentTxt = SetPercentText(percent);
 
-        _value.text = $"{value}{percentTxt}";
+        _value.text = $"{value} {percentTxt}";
         _statName.text = statName;
     }
 

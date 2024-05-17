@@ -95,7 +95,7 @@ public class GeneralUIPresenter : PopupUI
         }
         else
         {
-            UIManager.Instance.ShowWarningUI("돈이 부족하여 업그레이드 할 수 없습니다.");
+            UIManager.Instance.ShowWarningUI("재화가 부족합니다");
         }
     }
 
@@ -118,12 +118,8 @@ public class GeneralUIPresenter : PopupUI
 
     public void SelectSynergyBox()
     {
-        var GeneralDetailData = currentGeneralStat.GeneralDetailData;
-        int level = GeneralDetailData.synergy.level++;
-        GeneralDetailData.abilities[0].value *= level;
-
-        Debug.Log("A :" + currentGeneralStat.GetInstanceID());
-
+        currentGeneralStat.GeneralDetailData.synergy.level++;
+        UpgradeGeneral();
         SetRandom();
         HideBoxes();
     }
@@ -157,5 +153,10 @@ public class GeneralUIPresenter : PopupUI
     public void HideGeneralUI()
     {
         UIManager.Instance.HidePanel("GeneralUI");
+    }
+
+    public void ShowGifScreenUI()
+    {
+        UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
     }
 }

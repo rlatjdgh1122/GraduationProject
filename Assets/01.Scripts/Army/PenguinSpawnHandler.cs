@@ -60,15 +60,19 @@ public class PenguinSpawnHandler : MonoBehaviour
             var trm = penguin.transform;
             var dummy = PenguinManager.Instance.GetDummyByPenguin(penguin);
 
-            //¥ıπÃ ∆Î±œø° ¥Î«— ºº∆√¿ª «ÿ¡‹
-            dummy.gameObject.SetActive(true);
-            dummy.IsGoToHouse = false;
-            dummy.transform.position = trm.position;
-            dummy.transform.rotation = trm.rotation;
-            dummy.ChangeNavqualityToHigh();
-            dummy.StateInit();
-            //Ω«¡¶ ∆Î±œ¿∫ ≤®¡‹
-            penguin.gameObject.SetActive(false);
+            if(dummy != null)
+            {
+                //¥ıπÃ ∆Î±œø° ¥Î«— ºº∆√¿ª «ÿ¡‹
+                dummy.gameObject.SetActive(true);
+                dummy.IsGoToHouse = false;
+                dummy.transform.position = trm.position;
+                dummy.transform.rotation = trm.rotation;
+                dummy.ChangeNavqualityToHigh();
+                dummy.StateInit();
+                //Ω«¡¶ ∆Î±œ¿∫ ≤®¡‹
+                penguin.gameObject.SetActive(false);
+            }
+           
         }
 
 

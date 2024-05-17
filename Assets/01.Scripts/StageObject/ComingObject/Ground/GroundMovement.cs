@@ -7,12 +7,15 @@ using UnityEngine;
 public class GroundMovement : ComingObjetMovement
 {
     private GameObject _waveEffect;
+    [SerializeField] private GameObject _groundHitEffect;
 
+    private Ground _ground;
     protected override void Awake()
     {
         base.Awake();
 
         _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
+        _ground = GetComponent<Ground>();
 
         SignalHub.OnGroundArrivedEvent += DisableWaveEffect;
     }
@@ -32,6 +35,8 @@ public class GroundMovement : ComingObjetMovement
 
     protected override void Arrived()
     {
+        _groundHitEffect = Instantiate(_groundHitEffect, GetClosestPointToCenter(), Quaternion.LookRotation(transform.position - GetClosestPointToCenter()));
+        
         SoundManager.Play2DSound(SoundName.GroundHit);
 
         // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
@@ -39,8 +44,11 @@ public class GroundMovement : ComingObjetMovement
                                               () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
         NavmeshManager.Instance.NavmeshBake();
+        _ground.ActivateEnemies(); //ÀÌ°Å
 
         CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
+
+        CoroutineUtil.CallWaitForSeconds(.5f, null, () => Destroy(_groundHitEffect));
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)

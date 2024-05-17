@@ -35,6 +35,7 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 
         //여기서도 클론으로
         GeneralInfoData = Instantiate(GeneralInfoData);
+        PenguinManager.Instance.AddGeneralStat(GeneralInfoData.InfoData.PenguinType, GeneralInfoData);
 
         if (GeneralInfoData.GeneralDetailData.IsAvailable)
             SetUpgradeUI(GeneralInfoData);

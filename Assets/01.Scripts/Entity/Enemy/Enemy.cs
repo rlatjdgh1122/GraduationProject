@@ -33,8 +33,6 @@ public class Enemy : Entity
 
     public bool IsTargetInInnerRange => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
-    public bool IsTargetInAttackRange => CurrentTarget != null &&
-                            Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
     public bool IsReachedNexus =>
                             Vector3.Distance(transform.position, NexusTarget.GetClosetPostion(transform.position)) <= nexusDistance;
 
@@ -74,6 +72,11 @@ public class Enemy : Entity
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
+    }
+
+    public void StateInit()
+    {
+        StateMachine.Init(EnemyStateType.Idle);
     }
 
     protected override void Start()

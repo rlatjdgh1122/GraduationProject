@@ -135,26 +135,13 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
     private void SpawnPenguin(EntityInfoDataSO data)
     {
-        var _legionName = data.LegionName;
         var _slotIdx = data.SlotIdx;
-        var _jobType = data.JobType;
         var _penguinType = data.PenguinType;
 
-        Penguin spawnPenguin =
-            PenguinManager.Instance.SpawnSoldier(_penguinType, SpawnPoint.position, seatPosList[_slotIdx]);
+        Penguin spawnPenguin = PenguinManager.Instance.SpawnSoldier(_penguinType, SpawnPoint.position, seatPosList[_slotIdx]);
 
         PenguinManager.Instance.AddSoliderPenguin(spawnPenguin);
         PenguinManager.Instance.AddInfoDataMapping(data, spawnPenguin);
-
-        if (_jobType == PenguinJobType.Solider)
-        {
-            ArmyManager.Instance.JoinArmyToSoldier(_legionName, spawnPenguin);
-        }
-
-        else if (_jobType == PenguinJobType.General)
-        {
-            ArmyManager.Instance.JoinArmyToGeneral(_legionName, spawnPenguin as General);
-        }
     }
 
     private void RemovePenguin(string _legionName, Penguin penguin)

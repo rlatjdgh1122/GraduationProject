@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: ShieldGeneralPenguin
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 300
+    _baseValue: 400
     _fewTimes: 1.4066666
     _finalValue: 422
     increases: 05000000050000000500000005000000050000000500000005000000
     decreases: 
   armor:
-    _baseValue: 15
+    _baseValue: 25
     _fewTimes: 1
     _finalValue: 15
     increases: 
@@ -93,16 +93,20 @@ MonoBehaviour:
       _finalValue: 1000
       increases: 
       decreases: 
-    passive: 
-    synergy:
-      synergyName: "\uC758\uC9C0"
-      type: 0
-      _level: 1
-      baseValue: 0
-      increaseValue: 0
+    levelUpIncreaseValue: 20
     abilities:
     - abilityName: "\uBC29\uC5B4\uB825"
       statType: 256
       statMode: 0
       value: 5
+    synergy:
+      _level: 1
+      synergyName: "\uC758\uC9C0"
+      type: 0
+      Stat:
+        abilityName: "\uBC29\uC5B4\uB825"
+        statType: 256
+        statMode: 0
+        value: 5
+      increaseValue: 1
   InfoData: {fileID: 11400000, guid: 676df572a3241db4487ec8d8d15a8357, type: 2}

@@ -29,7 +29,7 @@ namespace BLINK
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            /*if (Input.GetKeyDown(KeyCode.A))
             {
                 NextAnimation();
             }
@@ -37,7 +37,7 @@ namespace BLINK
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ReplayAnimation();
-            }
+            }*/
         }
 
         public void NextAnimation()

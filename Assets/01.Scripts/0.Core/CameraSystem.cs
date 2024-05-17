@@ -73,6 +73,10 @@ public class CameraSystem : MonoBehaviour
             CameraZoomHandle();
             CameraMove();
         }
+        else
+        {
+            isRotating = false;
+        }
     }
 
     private void CameraControl()

@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class EnemyConfigurer : BaseElementsConfigurer
 {
     private string[] _enemyNames;
+
 
     private Queue<string> _bossQueue = new Queue<string>();
 
@@ -20,7 +22,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
     public Enemy[] SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
     {
-        float enemyCountProportion = 0.5f;
+        float enemyCountProportion = 1.0f;
 
         List<Enemy> spawnedEnemies = new List<Enemy>();
 
@@ -36,7 +38,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         }
 
         int minEnemyCount = 1;
-        int maxEnemyCount = 5;
+        int maxEnemyCount = 10;
 
         int enemyCount = GetRandomElementsCount(minEnemyCount, maxEnemyCount, enemyCountProportion);
 

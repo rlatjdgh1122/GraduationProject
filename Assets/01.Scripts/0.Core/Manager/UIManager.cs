@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum UIType
 {
@@ -18,12 +17,19 @@ public enum UIType
     Store,
     Info,
     Quest,
-    Setting
+    Setting,
+    Gif,
+    Credit,
+    GifInfo
 }
 
 public class UIManager : Singleton<UIManager>
 {
     public Transform canvasTrm;
+
+    [SerializeField]
+    private GifScreenController _gifScreenController;
+    public GifScreenController GifController => _gifScreenController;
 
     private WarningUI _warningUI;
 
@@ -64,55 +70,36 @@ public class UIManager : Singleton<UIManager>
                 Debug.LogWarning($"중복 키 : {popupUI.name}");
             }
         }
-        //foreach (WorldUI worldUI in worldUIs)
-        //{
-        //    if(!worldUIDictionary.ContainsKey(worldUI.name))
-        //    {
-        //        worldUIDictionary.Add(worldUI.name, worldUI);
-        //    }
-        //    else
-        //    {
-        //        Debug.LogWarning("중복 키");
-        //    }
-        //}
     }
 
     #region popUI Logics
-    public void ShowPanel(string uiName, bool canOverlap = false)
+    public void ShowPanel(string uiName)
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
-        if (!canOverlap)
+        if (!CheckShowAble(popupUI.UIGroup)) return;
+
+        for (int i = 0; i < currentPopupUI.Count; i++)
         {
-            if (!CheckShowAble(popupUI.UIGroup)) return;
+            PopupUI ui = currentPopupUI.Peek();
 
-            for (int i = 0; i < currentPopupUI.Count; i++)
+            if (ui.UIGroup != popupUI.UIGroup && popupUI.UIGroup != UIType.Gif)
             {
-                PopupUI ui = currentPopupUI.Peek();
-
-                if (ui.UIGroup != popupUI.UIGroup)
-                {
-                    ui.HidePanel();
-                }
-            }
-
-            if (popupUI != null)
-            {
-                popupUI.ShowPanel();
-                _currentUI = popupUI;
+                ui.HidePanel();
             }
         }
-        else
+        
+        if (popupUI != null)
         {
             popupUI.ShowPanel();
+            _currentUI = popupUI;
         }
-
-        
     }
 
     public bool CheckShowAble(UIType type)
     {
-        return _currentUI == null || _currentUI.Transferable.Contains(type);
+        return _currentUI == null || _currentUI.Transferable.Contains(type)
+            || type == UIType.Gif;
     }
 
     public void ChangeCurrentUI()
@@ -156,7 +143,8 @@ public class UIManager : Singleton<UIManager>
         {
             if (currentPopupUI.Count > 0)
             {
-                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
+                    && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                 {
                     currentPopupUI.Peek().HidePanel();
                     ChangeCurrentUI();

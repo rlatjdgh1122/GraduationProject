@@ -82,9 +82,10 @@ public class PenguinSituationPanel : PopupUI
 
         LegionInventoryManager.Instance.DeadLegionPenguin(data.LegionName, data.SlotIdx, true);
 
+
         var dummy = PenguinManager.Instance.GetDummyByInfoData(data);
+
         PenguinManager.Instance.RetireDummyPenguin(dummy);
-        PoolManager.Instance.Push(dummy);
 
         LegionInventoryManager.Instance.SaveLegion();
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
@@ -101,6 +102,8 @@ public class PenguinSituationPanel : PopupUI
 
         UIManager.Instance.ShowWarningUI($"{data.PenguinName}의 체력이 회복되었습니다!");
         CostManager.Instance.SubtractFromCurrentCost(price);
+
+        LegionInventoryManager.Instance.SaveLegion();
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
 }

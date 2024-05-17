@@ -12,6 +12,7 @@ public class EnemyDeadController : EntityDeadController<Enemy>
     public override void OnResurrected()
     {
         base.OnResurrected();
+        _owner.StateInit();
 
     }
 }

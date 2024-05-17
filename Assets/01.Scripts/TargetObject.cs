@@ -15,7 +15,7 @@ public abstract class TargetObject : PoolableMono
     }
 
     //사실 as랑 같음
-    public T ReturnGenericStat<T>() where T : BaseStat => (T)Stat;
+    public T ReturnGenericStat<T>() where T : BaseStat => (T)_characterStat;
 
     public TargetObject CurrentTarget;
 
@@ -33,10 +33,12 @@ public abstract class TargetObject : PoolableMono
         }
     }
     public Health HealthCompo { get; private set; }
+
+
     private IDeadable _deadCompo = null;
 
     private Transform nexusTrm = null;
-    public Collider ColliderCompo = null;
+    public Collider ColliderCompo { get; set; } = null;
 
     [SerializeField] private int _maxDetectEnemy = 5;
     private Collider[] _targetColliders;
@@ -113,6 +115,17 @@ public abstract class TargetObject : PoolableMono
     }
 
     #region Stat
+
+    public void AddStat(Ability incStat)
+    {
+        AddStat(incStat.value, incStat.statType, incStat.statMode);
+    }
+
+    public void RemoveStat(Ability incStat)
+    {
+        RemoveStat(incStat.value, incStat.statType, incStat.statMode);
+    }
+
     public void AddStat(List<Ability> abilities)
     {
         foreach (var incStat in abilities)
@@ -120,6 +133,7 @@ public abstract class TargetObject : PoolableMono
             AddStat(incStat.value, incStat.statType, incStat.statMode);
         }
     }
+
     public void RemoveStat(List<Ability> abilities)
     {
         foreach (var incStat in abilities)
@@ -132,6 +146,7 @@ public abstract class TargetObject : PoolableMono
     {
         Stat.AddStat(value, type, mode);
     }
+
     public void RemoveStat(int value, StatType type, StatMode mode)
     {
         Stat.RemoveStat(value, type, mode);

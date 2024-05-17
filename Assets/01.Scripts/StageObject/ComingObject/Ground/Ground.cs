@@ -36,13 +36,16 @@ public class Ground : MonoBehaviour, IComingObject
         }
     }
 
-    private void ActivateEnemies()
+    public void ActivateEnemies()
     {
         foreach (Enemy enemy in _enemies)
         {
             enemy.NavAgent.enabled = true;
             enemy.IsMove = true;
             enemy.ColliderCompo.enabled = true;
+
+            enemy.StateMachine.ChangeState(EnemyStateType.Move);
+            enemy.FindNearestTarget();
         }
     }
 
@@ -91,7 +94,7 @@ public class Ground : MonoBehaviour, IComingObject
     {
         SignalHub.OnBattlePhaseStartEvent += GroundMoveHandler;
         SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
-        SignalHub.OnGroundArrivedEvent += ActivateEnemies;
+        //SignalHub.OnGroundArrivedEvent += ActivateEnemies;
     }
 
     public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
@@ -116,14 +119,14 @@ public class Ground : MonoBehaviour, IComingObject
         }
 
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
-        SignalHub.OnGroundArrivedEvent -= ActivateEnemies;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
+        //SignalHub.OnGroundArrivedEvent -= ActivateEnemies;
     }
 
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
-        SignalHub.OnGroundArrivedEvent -= ActivateEnemies;
+        //SignalHub.OnGroundArrivedEvent -= ActivateEnemies;
     }
 }
