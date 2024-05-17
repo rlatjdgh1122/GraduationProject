@@ -14,6 +14,10 @@ public class ScreenData
     [SerializeField]
     private VideoClip _gifClip;
     public VideoClip GifClip => _gifClip;
+
+    [TextArea] [SerializeField]
+    private string _gifName;
+    public string GifName => _gifName;
 }
 
 [CreateAssetMenu(menuName = "SO/Screen")]

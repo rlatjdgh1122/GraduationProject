@@ -62,4 +62,9 @@ public class GifScreenController : MonoBehaviour
 
         _videoPlayer.loopPointReached -= OnGifEnd;
     }
+
+    public void ExitGifScreenUI()
+    {
+        OnGifEnd(null);
+    }
 }
