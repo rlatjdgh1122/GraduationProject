@@ -11,7 +11,7 @@ public class EnemyBombPenguinIdleState : EnemyBaseState
 
         IdleEnter();
 
-        SignalHub.OnGroundArrivedEvent += ChangeState;
+        //SignalHub.OnGroundArrivedEvent += ChangeState;
     }
 
     public override void UpdateState()
@@ -33,6 +33,6 @@ public class EnemyBombPenguinIdleState : EnemyBaseState
 
         IdleExit();
 
-        SignalHub.OnGroundArrivedEvent -= ChangeState;
+        //SignalHub.OnGroundArrivedEvent -= ChangeState;
     }
 }

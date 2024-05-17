@@ -19,7 +19,8 @@ public class RaftMovement : ComingObjetMovement
     protected override void Arrived()
     {
         NavmeshManager.Instance.NavmeshBake();
-        CoroutineUtil.CallWaitForOneFrame(() => _raft.Arrived());
+        //CoroutineUtil.CallWaitForOneFrame(() => _raft.Arrived());
+        CoroutineUtil.CallWaitForSeconds(1f, () => _raft.Arrived());
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position)

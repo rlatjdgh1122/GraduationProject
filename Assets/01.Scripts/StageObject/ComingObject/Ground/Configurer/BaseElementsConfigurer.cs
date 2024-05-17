@@ -63,7 +63,9 @@ public abstract class BaseElementsConfigurer
         spawnedElement.transform.SetParent(transform);
 
         Vector3 elementPos = Vector3.one;
-        elementPos *= 0.2f;
+        //elementPos *= 0.2f;
+        elementPos.y = setposY;
+
 
         spawnedElement.transform.localPosition = elementPos;
         spawnedElement.transform.localScale = Vector3.one;

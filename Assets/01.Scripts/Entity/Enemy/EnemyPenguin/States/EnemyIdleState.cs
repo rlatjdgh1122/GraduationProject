@@ -12,7 +12,7 @@ public class EnemyIdleState : EnemyBaseState
 
         IdleEnter();
 
-        SignalHub.OnGroundArrivedEvent += ChangeState;
+        //SignalHub.OnGroundArrivedEvent += ChangeState;
     }
 
     public override void UpdateState()
@@ -37,6 +37,6 @@ public class EnemyIdleState : EnemyBaseState
 
         IdleExit();
 
-        SignalHub.OnGroundArrivedEvent -= ChangeState;
+        //SignalHub.OnGroundArrivedEvent -= ChangeState;
     }
 }

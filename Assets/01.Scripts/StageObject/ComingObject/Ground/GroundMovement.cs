@@ -9,11 +9,13 @@ public class GroundMovement : ComingObjetMovement
     private GameObject _waveEffect;
     [SerializeField] private GameObject _groundHitEffect;
 
+    private Ground _ground;
     protected override void Awake()
     {
         base.Awake();
 
         _waveEffect = transform.Find("TopArea/GlacierModel/WaterWave").gameObject;
+        _ground = GetComponent<Ground>();
 
         SignalHub.OnGroundArrivedEvent += DisableWaveEffect;
     }
@@ -42,6 +44,7 @@ public class GroundMovement : ComingObjetMovement
                                               () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
         NavmeshManager.Instance.NavmeshBake();
+        _ground.ActivateEnemies(); //ÀÌ°Å
 
         CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
 
