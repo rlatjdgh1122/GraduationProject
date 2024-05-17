@@ -10,7 +10,9 @@ public enum GifType
     GetReward,
     LegionUI,
     NoisebarInfo,
-    PenguinFight
+    PenguinFight,
+    GeneralBuy,
+    PenguinBuy
 }
 
 public class GifScreenController : MonoBehaviour
