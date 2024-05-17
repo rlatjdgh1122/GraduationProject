@@ -318,7 +318,9 @@ public class ArmyManager : Singleton<ArmyManager>
         {
             var stat = obj.ReturnGenericStat<GeneralStat>();
             stat.GeneralDetailData.synergy.Stat.OnValidate -= Army.AddStat;
-            Army.RemoveStat();
+            Army.RemoveStat(Army.Ability);
+
+            Army.Ability = null;
 
             armies[idx].General = null;
         }

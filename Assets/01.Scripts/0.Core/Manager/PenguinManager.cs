@@ -418,14 +418,14 @@ public class PenguinManager
     {
         var dataType = data.PenguinType;
         var penguin = GetPenguinByInfoData(data);
-
-       
+        
 
         foreach (var info in _itemDummyPenguinList)
         {
             if (info.IsHaveOwner)
             {
-                if (info.Equals(data))
+                var dummy = GetDummyByInfoData(data);
+                if (info.dummyPenguin.Equals(dummy))
                 {
                     var dummyPenguin = info.dummyPenguin;
                     info.IsHaveOwner = false;
