@@ -11,19 +11,30 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     private int maskingUIIdx;
 
+    [SerializeField]
+    private List<Transform> _maskingPointTrms = new List<Transform>();
+    private Queue<Transform> _maskingPointTrmsQueue = new Queue<Transform>();
+
     public override void Awake()
     {
         _maskingImage = FindObjectOfType<MaskingImage>();
 
         SignalHub.OnTutorialArrowSignEvent += SetMaskingImagePos;
         maskingUIIdx = 0;
+
+        foreach (Transform t in _maskingPointTrms)
+        {
+            _maskingPointTrmsQueue.Enqueue(t);
+        }
     }
 
-    private void SetMaskingImagePos(Transform OnTrm) // 귀찮으니 일단 이따구로 스레기처럼 함 
+    private void SetMaskingImagePos(Transform _OnTrm) // 귀찮으니 일단 이따구로 스레기처럼 함 
     {
         maskingUIIdx++;
 
         UIManager.Instance.ShowPanel("Masking");
+
+        Transform OnTrm = _maskingPointTrmsQueue.Dequeue();
 
         Vector3 onPos = OnTrm.position;
 
