@@ -157,6 +157,6 @@ public class GeneralUIPresenter : PopupUI
 
     public void ShowGifScreenUI()
     {
-        UIManager.Instance.GifController.ShowGif();
+        UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
     }
 }
