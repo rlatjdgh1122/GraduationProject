@@ -102,6 +102,8 @@ public class PenguinSituationPanel : PopupUI
 
         UIManager.Instance.ShowWarningUI($"{data.PenguinName}의 체력이 회복되었습니다!");
         CostManager.Instance.SubtractFromCurrentCost(price);
+
+        LegionInventoryManager.Instance.SaveLegion();
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
 }

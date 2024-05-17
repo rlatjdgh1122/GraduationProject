@@ -74,6 +74,11 @@ public class Enemy : Entity
             passiveData = Instantiate(passiveData);
     }
 
+    public void StateInit()
+    {
+        StateMachine.Init(EnemyStateType.Idle);
+    }
+
     protected override void Start()
     {
         base.Start();
