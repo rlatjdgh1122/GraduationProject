@@ -44,4 +44,14 @@ public class MainInterfaceUI : MonoBehaviour
             _woodText.text = $"{resource.stackSize}";
         }
     }
+
+    public void ShowViewGifsUI()
+    {
+        UIManager.Instance.ShowPanel("ViewGifsUI");
+    }
+
+    public void ShowEscUI()
+    {
+        UIManager.Instance.ShowPanel("EscUI");
+    }
 }

@@ -18,7 +18,9 @@ public enum UIType
     Info,
     Quest,
     Setting,
-    Gif
+    Gif,
+    Credit,
+    GifInfo
 }
 
 public class UIManager : Singleton<UIManager>
