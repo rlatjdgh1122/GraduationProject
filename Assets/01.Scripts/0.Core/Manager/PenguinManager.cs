@@ -143,14 +143,16 @@ public class PenguinManager
 
         var penguin = dummyToPenguinDic[obj];
 
-        BelongDummyPenguinList.Remove(obj);
         SoldierPenguinList.Remove(penguin);
-        dummyToPenguinDic.Remove(obj);
-        penguinToDummyDic.Remove(penguin);
+        //penguinToDummyDic.Remove(penguin);
+        BelongDummyPenguinList.Remove(obj);
+        //dummyToPenguinDic.Remove(obj);
 
         RemoveItemListDummy(obj);
 
         UpdateOwnershipDataList();
+
+        PoolManager.Instance.Push(obj);
     }
 
     /// <summary>
@@ -163,14 +165,16 @@ public class PenguinManager
 
         var dummy = penguinToDummyDic[obj];
 
-        BelongDummyPenguinList.Remove(dummy);
         DummyPenguinList.Remove(dummy);
-        penguinToDummyDic.Remove(obj);
-        dummyToPenguinDic.Remove(dummy);
+        //penguinToDummyDic.Remove(obj);
+        BelongDummyPenguinList.Remove(dummy);
+        //dummyToPenguinDic.Remove(dummy);
 
         RemoveItemListDummy(dummy);
 
         UpdateOwnershipDataList();
+
+        PoolManager.Instance.Push(dummy);
     }
 
     private void RemoveItemListDummy(DummyPenguin obj)
@@ -415,11 +419,27 @@ public class PenguinManager
         var dataType = data.PenguinType;
         var penguin = GetPenguinByInfoData(data);
 
+       
+
+        foreach (var info in _itemDummyPenguinList)
+        {
+            if (info.IsHaveOwner)
+            {
+                if (info.Equals(data))
+                {
+                    var dummyPenguin = info.dummyPenguin;
+
+                    //Æë±ÏÀÌ¶û ´õ¹ÌÆë±ÏÀÌ¶û ¿¬°áÇØÁ¦
+                    penguinToDummyDic.Remove(penguin);
+                    dummyToPenguinDic.Remove(dummyPenguin);
+                }
+            }
+        }
+
         //Áö±Ý±îÁö »ý¼ºµÈ ´õ¹ÌÆë±Ïµé¿¡¼­
         //¿À³Ê¸¦ °¡Áö°í ÀÖ´Â ´õ¹ÌÆë±ÏµéÀ» °ñ¶ó ¿À³Ê¸¦ Áö¿öÁÖ°í
         //µñ¼Å³Ê¸®¿¡¼­ Áö¿öÁÜ
-
-        foreach (var info in _itemDummyPenguinList)
+        /*foreach (var info in _itemDummyPenguinList)
         {
             var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
             var dummyPenguin = info.dummyPenguin;
@@ -440,7 +460,7 @@ public class PenguinManager
                 }
             }
 
-        }
+        }*/
     }
 
     private void UpdateOwnershipDataList()

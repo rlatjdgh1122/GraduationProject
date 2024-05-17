@@ -52,6 +52,8 @@ public class PenguinInfoUI : PopupUI
     public void ShowLegionUI()
     {
         UIManager.Instance.ShowPanel("LegionInventory");
-        LegionInventoryManager.Instance.SaveLegion();
+
+        LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
+        LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
     }
 }

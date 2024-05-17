@@ -225,7 +225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &62794630576868994
 Transform:
   m_ObjectHideFlags: 0
@@ -264,7 +264,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 64e0587224e8a5a41abef5e27cabfcc4, type: 2}
   CurrentTarget: {fileID: 0}
-  ColliderCompo: {fileID: 0}
   _maxDetectEnemy: 5
   innerDistance: 7
   attackDistance: 1.5
@@ -339,6 +338,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!114 &6511240833441493960
 MonoBehaviour:
   m_ObjectHideFlags: 0

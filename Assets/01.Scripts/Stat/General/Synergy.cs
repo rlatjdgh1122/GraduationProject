@@ -12,9 +12,11 @@ public enum SynergyType
 [Serializable]
 public class Synergy
 {
+    [SerializeField] private int _level = 1;
     public string synergyName;
     public SynergyType type;
-    [SerializeField] private int _level = 1;
+    public Ability Stat;
+
 
     public int level
     {
@@ -28,11 +30,19 @@ public class Synergy
             IncreaseStat();
         }
     }
-    public float baseValue;
-    public float increaseValue;
+    //public float baseValue;
+    public int increaseValue;
 
     public void IncreaseStat()
     {
-        baseValue += increaseValue;
+        Stat.Value += increaseValue;
+    }
+
+    public void InvokeOnValidate()
+    {
+        if (Stat != null)
+        {
+            Stat.OnValidate?.Invoke(Stat);
+        }
     }
 }

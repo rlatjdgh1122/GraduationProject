@@ -7,13 +7,10 @@ using UnityEngine.Video;
 
 public enum GifType
 {
-    PenguinBuy,
-    LegionImport,
-    LegionBuy,
     GetReward,
-    PenguinFight,
-    NoiseInfo,
-    GeneralShip,
+    LegionUI,
+    NoisebarInfo,
+    PenguinFight
 }
 
 public class GifScreenController : MonoBehaviour
