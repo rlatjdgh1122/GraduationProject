@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyArcherPenguinStat
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 100
+    _baseValue: 60
     _fewTimes: 1
-    _finalValue: 100
+    _finalValue: 60
     increases: 
     decreases: 
   armor:
@@ -27,6 +27,12 @@ MonoBehaviour:
   evasion:
     _baseValue: 5
     _fewTimes: NaN
+    _finalValue: 0
+    increases: 
+    decreases: 
+  tenacity:
+    _baseValue: 0
+    _fewTimes: 0
     _finalValue: 0
     increases: 
     decreases: 
@@ -61,7 +67,7 @@ MonoBehaviour:
     increases: 
     decreases: 
   damage:
-    _baseValue: 17
+    _baseValue: 25
     _fewTimes: 0
     _finalValue: 0
     increases: 
@@ -72,22 +78,9 @@ MonoBehaviour:
     _finalValue: 0
     increases: 
     decreases: 
-  criticalDamage:
+  criticalValue:
     _baseValue: 0
     _fewTimes: 0
     _finalValue: 0
     increases: 
     decreases: 
-  UniqueType: 0
-  JobType: 0
-  PenguinType: 0
-  PenguinName: 
-  PenguinIcon: {fileID: 0}
-  PenguinData:
-    price: 0
-    _type: 
-    _characteristic: 
-    Weapon: 
-    hp: 0
-    atk: 0
-    range: 0
