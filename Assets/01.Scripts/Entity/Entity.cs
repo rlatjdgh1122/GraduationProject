@@ -18,6 +18,8 @@ public abstract class Entity : TargetObject
     public Outline OutlineCompo { get; private set; }
     #endregion
 
+    public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
+
     public bool PenguinTriggerCalled { get; set; } = false;
 
     protected override void Awake()

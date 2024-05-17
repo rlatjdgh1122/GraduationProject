@@ -6,6 +6,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
 {
     private string[] _enemyNames;
 
+
     private Queue<string> _bossQueue = new Queue<string>();
 
     public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames) : base(transform)
@@ -36,7 +37,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         }
 
         int minEnemyCount = 1;
-        int maxEnemyCount = 5;
+        int maxEnemyCount = 10;
 
         int enemyCount = GetRandomElementsCount(minEnemyCount, maxEnemyCount, enemyCountProportion);
 

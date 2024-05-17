@@ -20,20 +20,24 @@ namespace ArmySystem
 
         public void AddStat(Ability incStat)
         {
-            this.Ability = incStat;
+            if(Ability != null)
+            {
+                Ability prevAbility = Ability.DeepCopy();
+                RemoveStat(prevAbility);
+            }
+
             //if (Ability.Value == incStat.Value) return;
             //UnityEngine.Debug.Log("Ω∫≈»¡ı∞°");
             AddStat(incStat.value, incStat.statType, incStat.statMode);
+            Ability = incStat.DeepCopy();
         }
 
-        public void RemoveStat()
+        public void RemoveStat(Ability incStat)
         {
-            if (Ability == null) return;
-            //UnityEngine.Debug.Log("Ω∫≈»ª©¡÷±‚");
+            if (incStat == null) return;
 
-            RemoveStat(Ability.value, Ability.statType, Ability.statMode);
-
-            Ability = null;
+           RemoveStat(incStat.value, incStat.statType, incStat.statMode);
+            //RemoveStat(5, StatType.Armor, StatMode.Increase);
         }
 
         public void AddStat(int value, StatType type, StatMode mode)

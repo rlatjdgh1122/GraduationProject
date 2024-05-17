@@ -5,6 +5,18 @@ public delegate void OnChangedValue(Ability ability);
 [Serializable]
 public class Ability 
 {
+   public Ability DeepCopy()
+    {
+        var instance = new Ability();
+
+        instance.abilityName = abilityName;
+        instance.statType = statType;
+        instance.statMode = statMode;
+        instance.value = value;
+
+        return instance;
+    }
+
     public OnChangedValue OnValidate;
 
     public string abilityName;

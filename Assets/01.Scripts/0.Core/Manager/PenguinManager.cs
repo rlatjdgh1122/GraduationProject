@@ -377,7 +377,7 @@ public class PenguinManager
             if (!info.IsHaveOwner)
             {
                 //∏∏æ‡ ¿Â±∫¿Ã∂Û∏È
-                if (data.JobType == PenguinJobType.General)
+                if (dummyPenguin is GeneralDummyPengiun)
                 {
                     //¥ıπÃ ∆Î±œø° Ω∫≈»¿∏∑Œ πŸ≤ﬁ
                     penguin.Stat = (dummyPenguin as GeneralDummyPengiun).Stat;
@@ -418,17 +418,17 @@ public class PenguinManager
     {
         var dataType = data.PenguinType;
         var penguin = GetPenguinByInfoData(data);
-
-       
+        
 
         foreach (var info in _itemDummyPenguinList)
         {
             if (info.IsHaveOwner)
             {
-                if (info.Equals(data))
+                var dummy = GetDummyByInfoData(data);
+                if (info.dummyPenguin.Equals(dummy))
                 {
                     var dummyPenguin = info.dummyPenguin;
-
+                    info.IsHaveOwner = false;
                     //∆Î±œ¿Ã∂˚ ¥ıπÃ∆Î±œ¿Ã∂˚ ø¨∞·«ÿ¡¶
                     penguinToDummyDic.Remove(penguin);
                     dummyToPenguinDic.Remove(dummyPenguin);

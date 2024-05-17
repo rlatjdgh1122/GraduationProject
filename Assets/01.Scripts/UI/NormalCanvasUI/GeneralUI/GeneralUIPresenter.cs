@@ -119,8 +119,7 @@ public class GeneralUIPresenter : PopupUI
     public void SelectSynergyBox()
     {
         currentGeneralStat.GeneralDetailData.synergy.level++;
-        currentGeneralStat.LevelUpPrice();
-
+        UpgradeGeneral();
         SetRandom();
         HideBoxes();
     }
