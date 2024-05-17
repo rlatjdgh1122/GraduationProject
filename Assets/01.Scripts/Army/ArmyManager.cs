@@ -57,7 +57,7 @@ public class ArmyManager : Singleton<ArmyManager>
         {
             foreach (var dic in keyDictionary)
             {
-                if (Input.GetKeyDown(dic.Key))
+                if (Input.GetKeyDown(dic.Key))    
                 {
                     dic.Value();
                 }

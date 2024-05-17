@@ -6,10 +6,13 @@ using UnityEngine;
 using ArmySystem;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Rendering;
 public class MoveModeUI : MonoBehaviour
 {
     [Header("¼öÄ¡")]
+    public float WaitFadeInTime = 0.5f;
     public float FadeInDuration = 1.2f;
+    public float WaitFadeOutTime = 0.5f;
     public float FadeOutDuration = 0.5f;
 
     [Header("ÄÄÆ÷³ÍÆ®")]
@@ -27,8 +30,8 @@ public class MoveModeUI : MonoBehaviour
 
     //A42A20 - »¡
     //2D5C34 - ÃÊ
-
     private CanvasGroup _canvasGroup = null;
+    private RectTransform _trm = null;
 
     private void OnEnable()
     {
@@ -40,13 +43,7 @@ public class MoveModeUI : MonoBehaviour
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-
-        Init();
-    }
-
-    private void Init()
-    {
-        _canvasGroup.DOFade(0, FadeOutDuration);
+        _trm = GetComponent<RectTransform>();
     }
 
     private void OnBattleModeChangedHandler(MovefocusMode mode)
@@ -67,12 +64,21 @@ public class MoveModeUI : MonoBehaviour
 
     private void OnBattleStartHandler()
     {
-        _canvasGroup.DOFade(1, FadeInDuration);
+        UIManager.Instance.InitializHudTextSequence();
+        UIManager.Instance.HudTextSequence
+            .PrependInterval(WaitFadeInTime)
+            .Append(_trm.DOAnchorPosY(-30, FadeInDuration));
+
+        //_canvasGroup.DOFade(1, FadeInDuration);
     }
 
     private void OnBattleEndHandler()
     {
-        _canvasGroup.DOFade(0, FadeOutDuration);
+        UIManager.Instance.InitializHudTextSequence();
+        UIManager.Instance.HudTextSequence
+            .PrependInterval(WaitFadeOutTime)
+            .Append(_trm.DOAnchorPosY(180, FadeOutDuration));
+        // _canvasGroup.DOFade(0, FadeOutDuration);
     }
 
 
