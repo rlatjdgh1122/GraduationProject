@@ -11,6 +11,7 @@ public class PenguinDashState : State
         base.EnterState();
 
         _penguin.LookTargetImmediately();
+        AttackEnter();
 
         if (_penguin.CurrentTarget == null)
         {
