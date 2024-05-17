@@ -5,19 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum StartButtonType
-{
-    Start,
-    Setting,
-    Exit,
-    Credits
-}
-
 public class HoverGround : MonoBehaviour
 {
-    [SerializeField]
-    private StartButtonType _buttonType;
-
     [SerializeField]
     private float _duration = 1f;
 
@@ -25,7 +14,6 @@ public class HoverGround : MonoBehaviour
 
     private Material _material;
     private TextMeshPro _text;
-    private Color _noramlColor;
 
     [SerializeField]
     private Color _changeColor;
@@ -37,7 +25,6 @@ public class HoverGround : MonoBehaviour
         _zPos = transform.localPosition.z;
 
         _material = GetComponent<MeshRenderer>().material;
-        _noramlColor = _material.color;
         _text = transform.Find("Text").GetComponent<TextMeshPro>();
     }
 

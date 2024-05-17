@@ -30,6 +30,13 @@ public class StartSceneEvent : MonoBehaviour
             });
     }
 
+    public void CreditsBtn()
+    {
+        if (_canClick) return;
+
+        UIManager.Instance.ShowPanel("CreditUI");
+    }
+
     public void SettingBtn()
     {
         if (_canClick) return;
