@@ -30,6 +30,7 @@ public abstract class LegionSlotUI : SlotUI
     {
         if (Data == null && legion.SelectData == null) return;
 
+
         if (Data != null)
         {
             if (Input.GetKey(removeKey)) //만약 삭제키를 누르면
@@ -61,6 +62,8 @@ public abstract class LegionSlotUI : SlotUI
             UIManager.Instance.ShowWarningUI("군단이 가득 찼습니다!");
             return;
         }
+
+        SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
 
         if (Data == null && legion.SelectData != null) //슬롯에 데이터 넣기
         {

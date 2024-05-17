@@ -46,6 +46,8 @@ public class InitLegionInventory : MonoBehaviour, ICreateSlotUI
 
             slot.transform.SetParent(legionInventoryParent);
             slotList.Add(slot);
+
+            slot.gameObject.name = $"LegionSlot {i}";
         }
     }
 

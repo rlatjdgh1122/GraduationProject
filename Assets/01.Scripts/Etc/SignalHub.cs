@@ -28,6 +28,7 @@ public delegate void NoiseIncreaseEvent();
 
 public delegate void TutorialArrowSignPointEvent(Transform OnUI);
 public delegate void DefaultBuilingClickEvent();
+public delegate void ClickMaskingButtonEvent();
 
 public static class SignalHub
 {
@@ -69,6 +70,9 @@ public static class SignalHub
 
     public static TutorialArrowSignPointEvent OnTutorialArrowSignEvent;
     public static DefaultBuilingClickEvent OnDefaultBuilingClickEvent;
+
+
+    public static ClickMaskingButtonEvent OnClickPenguinSpawnButtonEvent;
 
     #endregion
 

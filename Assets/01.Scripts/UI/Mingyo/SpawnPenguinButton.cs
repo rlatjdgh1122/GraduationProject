@@ -42,6 +42,8 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         _dummyPenguin = dummyPenguin;
         _price = price;
 
+        gameObject.name = $"{infoData.PenguinName} 구매 버튼";
+
         _isLocked = isLocked;
     }
 
@@ -88,6 +90,7 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
 
         if(Input.GetMouseButtonDown(0)) //마우스 왼쪽 버튼
         {
+            SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
             SpawnPenguinLeftEventHandler();
         }
         if(Input.GetMouseButtonDown(1)) //마우스 오른쪽 버튼

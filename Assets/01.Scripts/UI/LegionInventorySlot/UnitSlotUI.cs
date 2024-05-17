@@ -30,6 +30,8 @@ public class UnitSlotUI : SlotUI
 
         unitImage.sprite = data.PenguinIcon;
 
+        gameObject.name = $"{data.PenguinName} ½½·Ô";
+
         UpdateSlot();
     }
 
@@ -76,6 +78,8 @@ public class UnitSlotUI : SlotUI
     public override void OnPointerDown(PointerEventData eventData)
     {
         if (_locked) return;
+
+        SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
 
         UnitInventoryData data = new UnitInventoryData(_keyData, _stackSize);
 
