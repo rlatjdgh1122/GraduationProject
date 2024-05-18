@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
+using static UnityEngine.Rendering.DebugUI;
 
 public class LegionSlot : LegionSlotUI
 {
@@ -71,10 +72,13 @@ public class LegionSlot : LegionSlotUI
     public void HpValue(float value)
     {
         _hpPercent = value;
-        _hpSlide.DOFillAmount(value, 0.3f);
     }
 
-    public void ShowHP() => _hp.gameObject.SetActive(true);
+    public void ShowHP()
+    {
+        _hp.gameObject.SetActive(true); 
+        _hpSlide.DOFillAmount(_hpPercent, 0.3f);
+    }
 
     public void HideHP() => _hp.gameObject.SetActive(false);
 }
