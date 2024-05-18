@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public struct BuildingInfo
 {
     [field: SerializeField]
-    public int ID { get ; private set; }
+    public int ID { get; private set; }
     [HideInInspector]
     public Grid GridCompo;
     [field: SerializeField]
@@ -82,7 +82,7 @@ public abstract class BaseBuilding : WorkableObject
         }
         catch
         {
-            Debug.LogError($"Not Founded id: {gameObject}"); 
+            Debug.LogError($"Not Founded id: {gameObject}");
         }
 
         if (_buildingItemInfo != null)
@@ -164,7 +164,7 @@ public abstract class BaseBuilding : WorkableObject
         OnNoiseExcessEvent -= InstallEnd;
         WorkerManager.Instance.ReturnBuilders(this);
 
-        SetInstalled();        
+        SetInstalled();
     }
 
     public virtual void SetSelect()
@@ -193,7 +193,7 @@ public abstract class BaseBuilding : WorkableObject
 
     protected override void Update()
     {
-        if(isInstalled)
+        if (isInstalled)
         {
             Running(); // ��ġ �Ǹ� ���� ����
         }
@@ -244,7 +244,7 @@ public abstract class BaseBuilding : WorkableObject
                 _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
             }
         }
-        
+
     }
 
     public void MatChangeToNormal()
@@ -262,7 +262,10 @@ public abstract class BaseBuilding : WorkableObject
 
     public void BuildingEnable(bool value)
     {
-        ColliderCompo.enabled = value;
+        //ColliderCompo.enabled = value;
+
+        if (ColliderCompo != null)
+            ColliderCompo.enabled = value;
     }
 
     private void OnEnable()

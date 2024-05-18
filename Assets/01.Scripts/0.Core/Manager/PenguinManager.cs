@@ -537,8 +537,10 @@ public class PenguinManager
 
     public void ShowGeneralInfoUI(GeneralDummyPengiun dummy)
     {
-        //var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
+        var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
         var data = dummy.Stat;
+
+        data.InfoData.LegionName = infoData.LegionName;
 
         GetCurrentInfoData = data.InfoData;
         GetCurrentStat = data;

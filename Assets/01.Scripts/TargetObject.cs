@@ -51,7 +51,7 @@ public abstract class TargetObject : PoolableMono
 
         HealthCompo = transform?.GetComponent<Health>();
         ColliderCompo = GetComponent<Collider>();
-        _deadCompo = GetComponent<IDeadable>();
+        _deadCompo = transform?.GetComponent<IDeadable>();
 
         HealthCompo?.SetHealth(_characterStat);
         _characterStat = Instantiate(_characterStat);
@@ -96,10 +96,12 @@ public abstract class TargetObject : PoolableMono
         float maxDistance = 300f;
 
         // 넥서스 기준으로 주변 객체 검색
-        int count = Physics.OverlapSphereNonAlloc(nexusTrm.position, checkRange, _targetColliders, mask);
+        int count = Physics.OverlapSphereNonAlloc(transform.position, checkRange, _targetColliders, mask);
+
         for (int i = 0; i < count; ++i)
         {
             Collider collider = _targetColliders[i];
+            if (this is Penguin) Debug.Log(collider.name);
             if (collider.TryGetComponent(out T potentialTarget))
             {
                 float distanceToTarget = Vector3.Distance(transform.position, potentialTarget.transform.position);
@@ -159,12 +161,12 @@ public abstract class TargetObject : PoolableMono
 
     protected virtual void HandleDie()
     {
-        _deadCompo.OnDied();
+        _deadCompo?.OnDied();
     }
 
     public override void Init()
     {
-        _deadCompo.OnResurrected();
+        _deadCompo?.OnResurrected();
     }
 
     protected virtual void OnDestroy()
