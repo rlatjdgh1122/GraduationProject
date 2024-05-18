@@ -18,7 +18,7 @@ public class GeneralSelection : GeneralPopupUI
 
     public void UpdateUI()
     {
-        generalText.text = $"장군의 {ability.abilityName} {ability.value}% 증가";
+        generalText.text = $"군단장의 {ability.abilityName} {ability.value}% 증가";
 
         synergyText.text = $"{generalStat.GeneralDetailData.synergy.synergyName}\n Lv {generalStat.GeneralDetailData.synergy.level} -> Lv {generalStat.GeneralDetailData.synergy.level + 1}"; 
     }
