@@ -55,7 +55,7 @@ public class ArmyManager : Singleton<ArmyManager>
         {
             foreach (var dic in keyDictionary)
             {
-                if (Input.GetKeyDown(dic.Key))    
+                if (Input.GetKeyDown(dic.Key))
                 {
                     dic.Value();
                 }
@@ -101,7 +101,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var curArmy = armies[Idx];
 
         var General = curArmy.General;
-        
+
 
         //중복 선택된 군단도 아웃라인 보이게
         curArmy.Soldiers.ForEach(s =>
@@ -127,7 +127,8 @@ public class ArmyManager : Singleton<ArmyManager>
             UIManager.Instance.ShowWarningUI($"{curArmy.LegionName}에는 펭귄이 존재하지 않습니다.");
             return;
         }
-
+        else
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 선택");
 
         var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
         curArmyIdx = Idx;
@@ -151,14 +152,6 @@ public class ArmyManager : Singleton<ArmyManager>
                     {
                         s.FindNearestEnemy();
                     }
-
-                    s.OutlineCompo.enabled = true;
-                    /* CoroutineUtil.CallWaitForSeconds(1f,
-                     () => s.OutlineCompo.enabled = true,
-                     () => s.OutlineCompo.enabled = false);*/
-
-                    s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
-
                 });
             },
 
@@ -169,8 +162,13 @@ public class ArmyManager : Singleton<ArmyManager>
                    s.OutlineCompo.enabled = false;
                    s.HealthCompo.OffUIUpdate?.Invoke();
                });
-           }); //end IdxExcept
 
+               if (p.General)
+               {
+                   p.General.OutlineCompo.enabled = false;
+                   p.General.HealthCompo.OffUIUpdate?.Invoke();
+               }
+           }); //end IdxExcept
 
     } //end method
 
@@ -292,7 +290,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var stat = obj.ReturnGenericStat<GeneralStat>();
 
 
-        stat.GeneralDetailData.synergy.Stat.OnValidate += Army.AddStat ;
+        stat.GeneralDetailData.synergy.Stat.OnValidate += Army.AddStat;
         //시너지 스탯 연결
 
         //인보크

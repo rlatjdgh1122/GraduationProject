@@ -73,6 +73,8 @@ public class EnemyBaseState : EnemyState
     {
         _enemy.StopImmediately();
         _triggerCalled = false;
+
+        _enemy.FindNearestTarget();
     }
     #endregion
 
@@ -112,6 +114,7 @@ public class EnemyBaseState : EnemyState
 
     protected void ChestHitExit()
     {
+        _enemy.StartImmediately();
         _triggerCalled = false;
     }
     #endregion
