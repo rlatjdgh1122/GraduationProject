@@ -547,6 +547,8 @@ public class PenguinManager
 
         if (infoData)
             data.InfoData.LegionName = infoData.LegionName;
+        else
+            data.InfoData.LegionName = "소속된 군단 없음";
 
         GetCurrentInfoData = data.InfoData;
         GetCurrentStat = data;
