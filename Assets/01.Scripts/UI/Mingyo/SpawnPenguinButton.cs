@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
-public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
+public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private int _price;
 
