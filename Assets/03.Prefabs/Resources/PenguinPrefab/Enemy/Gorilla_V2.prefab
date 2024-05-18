@@ -2604,7 +2604,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 526336
   moveSpeed: 2
-  attackSpeed: 1
+  attackSpeed: 2
   rotationSpeed: 2
   nexusDistance: 2
   passiveData: {fileID: 11400000, guid: 93ddcb9f472c4f041a241849214c9023, type: 2}
@@ -2693,6 +2693,9 @@ MonoBehaviour:
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2717,19 +2720,20 @@ MonoBehaviour:
   OffUIUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3626438556952978707}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 2195762485821600047}
+        m_TargetAssemblyTypeName: HpBarUI, Assembly-CSharp
+        m_MethodName: FadeOutImmediately
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!114 &4972266172656177943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4754,18 +4758,12 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1923765981865764610}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3626438556952978707}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29d8df26212f61f4392b784abcc88cb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3626438556952978707 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2945675560226947601, guid: 0af4319c2e1e9084793fde56a613effc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1923765981865764610}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7652644950206507260 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8106830067657084926, guid: 0af4319c2e1e9084793fde56a613effc,

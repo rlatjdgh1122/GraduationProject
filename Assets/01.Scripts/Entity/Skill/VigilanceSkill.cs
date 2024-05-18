@@ -30,7 +30,7 @@ public class VigilanceSkill : Skill
         //Gorilla.DamageCasterCompo.SetPosition();
 
         //체력 채워주기
-        Gorilla.HealthCompo.ApplyHeal(50);
+        Gorilla.HealthCompo.ApplyHeal(100);
         //스탯 올려주기
         Gorilla.Stat.AddStat(_sizeUpDamage, StatType.Damage, StatMode.Increase);
         //커져라!
