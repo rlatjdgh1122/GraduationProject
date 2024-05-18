@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PenguinSpinAttackState : State
 {
+    General general => _penguin as General;
+
     public PenguinSpinAttackState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -12,7 +14,7 @@ public class PenguinSpinAttackState : State
     public override void EnterState()
     {
         base.EnterState();
-
+        general.skill.IsAvaliable = false;
         AttackEnter();
     }
 
@@ -35,7 +37,7 @@ public class PenguinSpinAttackState : State
     public override void ExitState()
     {
         base.ExitState();
-
+        general.skill.IsAvaliable = true;
         AttackExit();
     }
 
