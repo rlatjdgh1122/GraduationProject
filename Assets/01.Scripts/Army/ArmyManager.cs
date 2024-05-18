@@ -107,6 +107,7 @@ public class ArmyManager : Singleton<ArmyManager>
         curArmy.Soldiers.ForEach(s =>
         {
             s.OutlineCompo.enabled = true;
+            s.HealthCompo.IsAlwaysShowUI = true;
             s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
 
@@ -115,6 +116,7 @@ public class ArmyManager : Singleton<ArmyManager>
             var GeneralHealtCompo = General.HealthCompo;
 
             General.OutlineCompo.enabled = true;
+            General.HealthCompo.IsAlwaysShowUI = true;
             General.HealthCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
         }
 
@@ -160,12 +162,14 @@ public class ArmyManager : Singleton<ArmyManager>
                p.Soldiers.ForEach(s =>
                {
                    s.OutlineCompo.enabled = false;
+                   s.HealthCompo.IsAlwaysShowUI = false;
                    s.HealthCompo.OffUIUpdate?.Invoke();
                });
 
                if (p.General)
                {
                    p.General.OutlineCompo.enabled = false;
+                   p.General.HealthCompo.IsAlwaysShowUI = false;
                    p.General.HealthCompo.OffUIUpdate?.Invoke();
                }
            }); //end IdxExcept
