@@ -13,22 +13,21 @@ public class BuildingViewGroupController : MonoBehaviour
         _buildingViewGroups = GetComponentsInChildren<BuildingViewGroup>().ToList();
     }
 
+    private void Start()
+    {
+        SwapElements(_buildingViewGroups[0]);
+    }
+
     public void SwapElements(BuildingViewGroup viewGroup)
     {
+        UIManager.Instance.ShowPanel($"{viewGroup.Category}");
+
         foreach (BuildingViewGroup group in _buildingViewGroups)
         {
-            if (group.Category != viewGroup.Category && group.IsArrived)
+            if (group.Category != viewGroup.Category)
             {
-                UIManager.Instance.MovePanel($"{group.Category}", 0, -1400, 0.75f);
-                group.IsArrived = false;
-            }
-
-            if (group.Category == viewGroup.Category && !group.IsArrived)
-            {
-                _selectedGroup = group;
-                _selectedGroup.IsArrived = true;
-                UIManager.Instance.MovePanel($"{_selectedGroup.Category}", 0, -100, 0.75f);
-            }
+                UIManager.Instance.HidePanel($"{group.Category}");
+            }    
         }
     }
 }
