@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c106f83077f2d4ead4bb55f164ef07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cancleInstallBuildingText: {fileID: 0}
+  _cancelInstallBuildingText: {fileID: 0}
   _buildingSpawnFailHudText: {fileID: 0}
   _groundLayer:
     serializedVersion: 2
@@ -172,6 +172,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9109645053425442958}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3277fcf54994a764fae3a6a43cb06290,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8291624149528607108}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3277fcf54994a764fae3a6a43cb06290,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3145377372853971626}
   m_SourcePrefab: {fileID: 100100000, guid: 3277fcf54994a764fae3a6a43cb06290, type: 3}
 --- !u!4 &8165966335703782711 stripped
 Transform:
@@ -204,6 +212,8 @@ MonoBehaviour:
   IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
+  renderers: []
+  ExceptRenderer: []
 --- !u!156049354 &1328993726329179685
 Grid:
   m_ObjectHideFlags: 0
@@ -228,7 +238,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac4d582ce94d7d40beb7584af570bd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterStat: {fileID: 0}
+  _characterStat: {fileID: 11400000, guid: 390a69cde83dbd04ea1fe35b49bb15fb, type: 2}
+  CurrentTarget: {fileID: 0}
+  _maxDetectEnemy: 5
+  resourceType: 0
+  _noiseValue: 0
+  _maxNoiseValue: 0
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
     type: 2}
@@ -244,7 +259,53 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32768
   _defaultBuildingType: 0
-  _penguinSpawnUI: {fileID: 0}
-  _constructionStationUI: {fileID: 0}
-  onSpawnUIYPosValue: 320
   _btnTrm: {fileID: 0}
+--- !u!114 &8291624149528607108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8797931068056162189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3145377372853971626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8797931068056162189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d59ff96f7e14443b783782b3cde1a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  WaterFallEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OffUIUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  IsDead: 0
+  OnHpBarUI: 0
