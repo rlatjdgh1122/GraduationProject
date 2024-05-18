@@ -62,7 +62,7 @@ public abstract class BaseBuilding : WorkableObject
 
     private BattlePhaseStartEvent _phaseStartSubscriptionAction;
 
-    protected Ground InstalledGround()
+    public Ground InstalledGround()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {

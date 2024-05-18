@@ -21,6 +21,8 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
 
     public virtual void OnDied()
     {
+        _owner.InstalledGround()?.UnInstallBuilding();
+
         _owner.enabled = false;
         _colider.enabled = false;
 
