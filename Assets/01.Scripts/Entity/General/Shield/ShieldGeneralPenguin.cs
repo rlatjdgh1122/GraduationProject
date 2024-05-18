@@ -30,14 +30,14 @@ public class ShieldGeneralPenguin : General
     {
         base.HandleHit();
 
-        var maxHp = HealthCompo.maxHealth;
-        var curHp = HealthCompo.currentHealth;
+        //var maxHp = HealthCompo.maxHealth;
+        //var curHp = HealthCompo.currentHealth;
 
-        if (PenguinTriggerCalled == false
-            && CheckHealthRatioPassive(maxHp, curHp, 90))
-        {
-            OnPassiveHealthRatioEvent();
-        }
+        //if (PenguinTriggerCalled == false
+        //    && CheckHealthRatioPassive(maxHp, curHp, 70))
+        //{
+        //    OnPassiveHealthRatioEvent();
+        //}
     }
 
     public override void OnPassiveHealthRatioEvent()
@@ -51,6 +51,11 @@ public class ShieldGeneralPenguin : General
     public override void OnPassiveHitEvent()
     {
         StateMachine.ChangeState(PenguinStateType.SpinAttack);
+    }
+
+    public void OnBlockEvent()
+    {
+        StateMachine.ChangeState(PenguinStateType.Block);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
