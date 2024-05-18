@@ -12,7 +12,9 @@ public enum GifType
     NoisebarInfo,
     PenguinFight,
     GeneralBuy,
-    PenguinBuy
+    PenguinBuy,
+    WorkerPenguin,
+    NexusUpgrade
 }
 
 public class GifScreenController : MonoBehaviour
