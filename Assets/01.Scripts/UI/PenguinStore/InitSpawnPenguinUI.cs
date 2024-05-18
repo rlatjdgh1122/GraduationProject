@@ -22,6 +22,7 @@ public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
     [SerializeField] private Transform _spawnPenguinButtonParent;
     [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
     [SerializeField] protected List<PenguinTypeEnum> _slotLockType;
+    [SerializeField] private List<Transform> _spawnPoints;
 
     protected Dictionary<PenguinTypeEnum, SpawnPenguinButton> lockButtonDicntionary = new();
     protected Dictionary<PenguinTypeEnum, PenguinInfoDataSO> penguinInfoDictionary = new();
@@ -72,13 +73,15 @@ public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
 
     public void CreateSlot()
     {
-        foreach (var spawnObj in _soliderPenguinList)
+        for (int i = 0; i < _soliderPenguinList.Count; i++)
         {
-            var dummyPenguin = spawnObj;
-            var UIinfo = spawnObj.NotCloneInfo;
+            var dummyPenguin = _soliderPenguinList[i];
+            var UIinfo = dummyPenguin.NotCloneInfo;
 
 
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
+
+            btn.transform.position = _spawnPoints[i].position;
 
             if (CheckSlotLock(UIinfo.PenguinType))
             {
