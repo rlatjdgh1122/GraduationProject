@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class PopupUI : MonoBehaviour
 {
+    [Header("Popup Setting")] [Space(10f)]
     [SerializeField]
     private float _panelFadeTime;
     [SerializeField]
     private float _panelDelayTime;
 
+    [Space(10f)]
     [SerializeField]
     private List<UIType> _transferable;
     public List<UIType> Transferable => _transferable;
 
+    [Space(10f)]
     [SerializeField]
     private SoundName _soundName = SoundName.UI;
 
