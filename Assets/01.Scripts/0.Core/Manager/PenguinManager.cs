@@ -419,7 +419,7 @@ public class PenguinManager
     {
         var dataType = data.PenguinType;
         var penguin = GetPenguinByInfoData(data);
-        
+
 
         foreach (var info in _itemDummyPenguinList)
         {
@@ -545,7 +545,8 @@ public class PenguinManager
         var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
         var data = dummy.Stat;
 
-        data.InfoData.LegionName = infoData.LegionName;
+        if (infoData)
+            data.InfoData.LegionName = infoData.LegionName;
 
         GetCurrentInfoData = data.InfoData;
         GetCurrentStat = data;
