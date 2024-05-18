@@ -61,6 +61,11 @@ public class Ground : MonoBehaviour, IComingObject
         UpdateOutlineColor(OutlineColorType.None);
     }
 
+    public void UnInstallBuilding()
+    {
+        isInstalledBuilding = false;
+    }
+
     public void UpdateOutlineColor(OutlineColorType type)
     {
         if(_outline == null)
