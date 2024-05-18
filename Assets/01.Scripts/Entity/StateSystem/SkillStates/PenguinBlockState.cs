@@ -15,11 +15,10 @@ public class PenguinBlockState : State
     {
         base.EnterState();
 
+        _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
         _penguin.FindNearestEnemy();
-
-        _penguin.HealthCompo.OnHit += ImpactShield;
     }
 
     public override void UpdateState()
@@ -41,20 +40,15 @@ public class PenguinBlockState : State
             IsTargetNull(PenguinStateType.Idle);
         }
 
+        if (_triggerCalled)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }
+
     }//end method
-
-    private void ImpactShield()
-    {
-        if (_penguin.PenguinTriggerCalled)
-            _stateMachine.ChangeState(PenguinStateType.Impact);
-    }
-
 
     public override void ExitState()
     {
         base.ExitState();
-
-        _penguin.HealthCompo.OnHit -= ImpactShield;
     }
-
 }
