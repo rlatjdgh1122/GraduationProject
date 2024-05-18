@@ -122,6 +122,13 @@ public class ArmyManager : Singleton<ArmyManager>
         //이전과 같은 군단을 선택했다면 리턴
         if (curArmyIdx == Idx) return;
 
+        if (curArmy.CheckEmpty())
+        {
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName}에는 펭귄이 존재하지 않습니다.");
+            return;
+        }
+
+
         var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
         curArmyIdx = Idx;
 
