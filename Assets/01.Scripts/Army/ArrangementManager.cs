@@ -95,7 +95,8 @@ public class ArrangementManager : Singleton<ArrangementManager>
                 if (!prevSaveDataList[i].Equals(dataList[i]))
                 {
                     //근데 펭귄 타입이 같으면 이미 있으니 안함
-                    if (prevSaveDataList[i].PenguinType.Equals(dataList[i].PenguinType)) return;
+                    if (prevSaveDataList[i].PenguinType.Equals(dataList[i].PenguinType)
+                        && prevSaveDataList[i].SlotIdx.Equals(dataList[i].SlotIdx)) return;
 
                     removeDataList.Add(prevSaveDataList[i]);
                     addDataList.Add(dataList[i]);

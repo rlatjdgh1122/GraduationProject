@@ -166,9 +166,9 @@ public class PenguinManager
         var dummy = penguinToDummyDic[obj];
 
         DummyPenguinList.Remove(dummy);
-        //penguinToDummyDic.Remove(obj);
+        penguinToDummyDic.Remove(obj);
         BelongDummyPenguinList.Remove(dummy);
-        //dummyToPenguinDic.Remove(dummy);
+        dummyToPenguinDic.Remove(dummy);
 
         RemoveItemListDummy(dummy);
 

@@ -23,9 +23,6 @@ public class PenguinDeadController : EntityDeadController<Penguin>
         PenguinManager.Instance.DeadSoliderPenguin(_owner);
         LegionInventoryManager.Instance.DeadLegionPenguin(infoData.LegionName, infoData.SlotIdx);
 
-        LegionInventoryManager.Instance.SaveLegion();
-        LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
-
         SignalHub.OnModifyCurArmy?.Invoke();
     }
 
