@@ -32,8 +32,6 @@ public class NexusUIPresenter : NexusPopupUI
             return;
         }
 
-        _nexusUpgradePanel.ShowPanel();
-
         _nexusStat.maxHealth.AddSum
             (_nexusStat.maxHealth.GetValue(), _nexusStat.level, _nexusStat.levelupIncreaseValue);
         _nexusStat.level++;
@@ -57,6 +55,7 @@ public class NexusUIPresenter : NexusPopupUI
         NexusManager.Instance.SetNexusHealth();        
         NexusManager.Instance.UpdateNexusInfoData();
 
+        _nexusUpgradePanel.ShowPanel();
         UpdateRecieverUI();
 
         if (TutorialManager.Instance.CurTutoQuestIdx == 4) //ÀÏ´Ü Äù½ºÆ®
