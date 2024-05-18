@@ -77,7 +77,7 @@ public class UIManager : Singleton<UIManager>
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
-        if (isOverlap)
+        if (!isOverlap)
         {
             if (!CheckShowAble(popupUI.UIGroup)) return;
 
