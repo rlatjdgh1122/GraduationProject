@@ -6,17 +6,17 @@ using UnityEngine;
 public class EnemyConfigurer : BaseElementsConfigurer
 {
     private string[] _enemyNames;
-
-
-    private Queue<string> _bossQueue = new Queue<string>();
+    private string[] _bossNames;
 
     public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames) : base(transform)
     {
         _enemyNames = enemyNames;
 
-        foreach (var bossName in bossNames)
+        _bossNames = bossNames;
+
+        foreach (var enemyName in _bossNames)
         {
-            _bossQueue.Enqueue(bossName);
+            Debug.Log(enemyName);
         }
     }
 
@@ -28,13 +28,28 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
         if (isBossWave)
         {
-            Enemy spawnBoss = PoolManager.Instance.Pop(_bossQueue.Dequeue()) as Enemy;
+            //걍 하드코딩함
+            Enemy spawnBoss;
+            if (WaveManager.Instance.CurrentWaveCount == 5)
+            {
+                spawnBoss = PoolManager.Instance.Pop(_bossNames[0]) as Enemy;
+            }
+            else
+            {
+                spawnBoss = PoolManager.Instance.Pop(_bossNames[1]) as Enemy;
+            }
+
+            Debug.Log(_bossNames[WaveManager.Instance.CurrentWaveCount % 5]);
 
             SetEnemyNav(spawnBoss);
             SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
 
             enemyCountProportion = 0.25f; // 보스 나오면 짜바리들은 조금만 나오게
             spawnedEnemies.Add(spawnBoss);
+        }
+        else
+        {
+            Debug.Log(WaveManager.Instance.CurrentWaveCount);
         }
 
         int minEnemyCount = 1;

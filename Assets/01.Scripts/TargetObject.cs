@@ -101,7 +101,6 @@ public abstract class TargetObject : PoolableMono
         for (int i = 0; i < count; ++i)
         {
             Collider collider = _targetColliders[i];
-            if (this is Penguin) Debug.Log(collider.name);
             if (collider.TryGetComponent(out T potentialTarget))
             {
                 float distanceToTarget = Vector3.Distance(transform.position, potentialTarget.transform.position);
