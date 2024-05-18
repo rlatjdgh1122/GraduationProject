@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CostUI : MonoBehaviour
+public class CostUI : MonoBehaviour  
 {
     [Header("Input UI")]
     [SerializeField] private TextMeshProUGUI _currentCostText;
