@@ -10618,7 +10618,6 @@ MonoBehaviour:
   _transferable: 05000000
   _soundName: 16
   _uiGroup: 5
-  _descriptionUI: {fileID: 1252211872408708367}
 --- !u!1 &5559222923122865530
 GameObject:
   m_ObjectHideFlags: 0
@@ -13187,6 +13186,8 @@ GameObject:
   - component: {fileID: 1252211872408708367}
   - component: {fileID: 3834692654947273696}
   - component: {fileID: 547655393089171084}
+  - component: {fileID: 2073666761982593798}
+  - component: {fileID: 4499339527106274497}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -13257,6 +13258,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2073666761982593798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6533083249977127312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ca14bdbbfbd97d40853cc95cc04735f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panelFadeTime: 0.3
+  _panelDelayTime: 0
+  _transferable: 05000000
+  _soundName: 16
+  _uiGroup: 5
+--- !u!225 &4499339527106274497
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6533083249977127312}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6551999387138586343
 GameObject:
   m_ObjectHideFlags: 0
@@ -13539,9 +13569,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8238350279374064911}
-        m_TargetAssemblyTypeName: LegionInventoryUI, Assembly-CSharp
-        m_MethodName: HideDescript
+      - m_Target: {fileID: 2073666761982593798}
+        m_TargetAssemblyTypeName: LegionDescriptionUI, Assembly-CSharp
+        m_MethodName: HideLegionDescriptionUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -41,6 +41,7 @@ public class NoiseUI : MonoBehaviour
         SignalHub.OnNoiseIncreaseEvent += IncreaseNoiseUI;
         SignalHub.OnBattlePhaseStartEvent += HideNoiseUI;
         SignalHub.OnBattlePhaseEndEvent += ShowNoiseUI;
+        SignalHub.OnNoiseUpdateEvent += OnUpdateNoiseUI;
     }
 
     private void OnDisable()
@@ -50,6 +51,13 @@ public class NoiseUI : MonoBehaviour
         SignalHub.OnNoiseIncreaseEvent -= IncreaseNoiseUI;
         SignalHub.OnBattlePhaseStartEvent -= HideNoiseUI;
         SignalHub.OnBattlePhaseEndEvent -= ShowNoiseUI;
+        SignalHub.OnNoiseUpdateEvent -= OnUpdateNoiseUI;
+    }
+
+    private void OnUpdateNoiseUI()
+    {
+        IncreaseViewNoiseUI();
+        IncreaseNoiseUI();
     }
 
     private void IncreaseViewNoiseUI()

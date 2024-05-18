@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EscButtonController : MonoBehaviour
+public class EscButtonController : EscUI
 {
     public void ContinueBtnClick()
     {
+        if (!_canHide) return;
         UIManager.Instance.HidePanel("OptionUI");
         UIManager.Instance.HidePanel("EscUI");
     }
