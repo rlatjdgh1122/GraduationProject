@@ -91,8 +91,6 @@ public class UnitSlotUI : SlotUI
     {
         if (_locked) return;
 
-        SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
-
         UnitInventoryData data = new UnitInventoryData(_keyData, _stackSize);
 
         LegionInventoryManager.Instance.SelectInfoData(data);

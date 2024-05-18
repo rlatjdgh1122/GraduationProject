@@ -19,7 +19,7 @@ public class ResourceObjectClickTrigger : MonoBehaviour
 
             if (WaveManager.Instance.CurrentWaveCount < 4)
             {
-                MaskingUIManager.Instance.SetMaskingImagePos();
+                SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             }
         }
     }

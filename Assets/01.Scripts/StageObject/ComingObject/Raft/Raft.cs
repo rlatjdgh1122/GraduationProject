@@ -46,7 +46,7 @@ public class Raft : PoolableMono, IComingObject
             PoolManager.Instance.Push(enemy);
         }
 
-        transform.DOMoveY(-15f, 10f).OnComplete(() =>
+        transform.DOMoveY(-15f, 1f).OnComplete(() =>
         {
             NavmeshManager.Instance.NavmeshBake();
             PoolManager.Instance.Push(this);
