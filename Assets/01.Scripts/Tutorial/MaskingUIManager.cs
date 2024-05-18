@@ -43,7 +43,6 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         CoroutineUtil.CallWaitForSeconds(0.25f, null, () => UIManager.Instance.ShowPanel("Masking", true));
 
         string points = questPointsQueue.Dequeue();
-        Debug.Log(points);
 
         Transform OnTrm = GameObject.Find(points).transform;
 
@@ -53,7 +52,6 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         {
             onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
             SignalHub.OnDefaultBuilingClickEvent += OffMaskingImageObj;
-            Debug.Log("구독");
 
         }
         else // UI 면
@@ -99,7 +97,6 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     private void OffMaskingImageObj()
     {
         SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
-        Debug.Log("구독해제");
 
         OffMask();
     }

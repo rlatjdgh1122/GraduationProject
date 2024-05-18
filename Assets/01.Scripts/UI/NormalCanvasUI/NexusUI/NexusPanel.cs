@@ -20,6 +20,8 @@ public class NexusPanel : NexusPopupUI
     protected override void Start()
     {
         base.Start();
+
+        _panel.alpha = 1.0f;
         UpdateUI();
     }
 
