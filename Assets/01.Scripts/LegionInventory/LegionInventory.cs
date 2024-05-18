@@ -102,6 +102,7 @@ public class LegionInventory : LegionUI
         }
 
         LegionCountTextSetting();
+        ImportHpValue();
     }
 
     //private void PenguinTakeDamage(int idx, float hp) => slotList[idx].HpValue(hp);
