@@ -46,7 +46,7 @@ public class LegionInventory : LegionUI
         }
 
         ArrangementManager.Instance.ApplySaveData(savedLegionList);
-        SignalHub.OnModifyCurArmy?.Invoke();
+        //SignalHub.OnModifyCurArmy?.Invoke();
 
         ResetLegion();
     }
