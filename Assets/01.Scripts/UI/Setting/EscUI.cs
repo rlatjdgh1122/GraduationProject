@@ -16,7 +16,7 @@ public class EscUI : PopupUI
 
     private CanvasGroup[] _buttons;
 
-    private bool _canHide = true;
+    protected bool _canHide = true;
 
     public override void Awake()
     {
