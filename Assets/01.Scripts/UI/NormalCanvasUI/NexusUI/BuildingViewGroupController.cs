@@ -29,5 +29,21 @@ public class BuildingViewGroupController : MonoBehaviour
                 UIManager.Instance.HidePanel($"{group.Category}");
             }    
         }
+
+        //foreach (BuildingViewGroup group in _buildingViewGroups) <- 이전에 했던 움직이는 코드
+        //{
+        //    if (group.Category != viewGroup.Category && group.IsArrived)
+        //    {
+        //        UIManager.Instance.MovePanel($"{group.Category}", 0, -1400, 0.75f);
+        //        group.IsArrived = false;
+        //    }
+
+        //    if (group.Category == viewGroup.Category && !group.IsArrived)
+        //    {
+        //        _selectedGroup = group;
+        //        _selectedGroup.IsArrived = true;
+        //        UIManager.Instance.MovePanel($"{_selectedGroup.Category}", 0, -100, 0.75f);
+        //    }
+        //}
     }
 }
