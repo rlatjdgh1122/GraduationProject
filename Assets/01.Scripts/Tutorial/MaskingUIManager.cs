@@ -16,7 +16,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     [SerializeField]
     private List<TransformMaskPointsByQuest> pointsByQuests = new List<TransformMaskPointsByQuest>();
 
-    Queue<string> pointsByQuestsQueue = new Queue<string>();
+    Queue<string> questPointsQueue = new Queue<string>();
 
     public override void Awake()
     {
@@ -24,7 +24,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         foreach (var trm in pointsByQuests[0].MaskPointTransforms)
         {
-            pointsByQuestsQueue.Enqueue(trm);
+            questPointsQueue.Enqueue(trm);
         }
 
         maskingUIIdx = 1;
@@ -32,17 +32,20 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     public void SetMaskingImagePos() // 귀찮으니 일단 이따구로 스레기처럼 함 
     {
-        if(pointsByQuestsQueue.Count == 0)
+        if(questPointsQueue.Count == 0)
         {
             foreach(var trm in pointsByQuests[maskingUIIdx++].MaskPointTransforms)
             {
-                pointsByQuestsQueue.Enqueue(trm);
+                questPointsQueue.Enqueue(trm);
             }
         }
 
-        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => UIManager.Instance.ShowPanel("Masking", true));
+        CoroutineUtil.CallWaitForSeconds(0.25f, null, () => UIManager.Instance.ShowPanel("Masking", true));
 
-        Transform OnTrm = GameObject.Find(pointsByQuestsQueue.Dequeue().ToString()).transform;
+        string points = questPointsQueue.Dequeue();
+        Debug.Log(points);
+
+        Transform OnTrm = GameObject.Find(points).transform;
 
         Vector3 onPos = OnTrm.position;
 
@@ -50,6 +53,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         {
             onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
             SignalHub.OnDefaultBuilingClickEvent += OffMaskingImageObj;
+            Debug.Log("구독");
 
         }
         else // UI 면
@@ -95,6 +99,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     private void OffMaskingImageObj()
     {
         SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
+        Debug.Log("구독해제");
 
         OffMask();
     }
@@ -103,11 +108,17 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     {
         UIManager.Instance.HidePanel("Masking");
 
-        if (pointsByQuestsQueue.Count != 0)
+        if (questPointsQueue.Count != 0)
         {
             SetMaskingImagePos();
         }
     }
 
     public bool IsArrowSignPoint(int idx) { return maskingUIIdx == idx;}
+
+    private void OnDisable()
+    {
+        SignalHub.OnClickPenguinSpawnButtonEvent -= OffMaskingImageUI;
+        SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
+    }
 }
