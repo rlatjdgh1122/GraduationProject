@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DefaultBuilding : BaseBuilding
 {
@@ -20,7 +21,7 @@ public class DefaultBuilding : BaseBuilding
     //Vector3 _onSpawnUIVec;
     //Vector3 _offSpawnUIVec;
 
-    [SerializeField] private Transform _btnTrm;
+    private Outline _outline;
 
     private ConstructionStation _constructionStation;
 
@@ -34,7 +35,7 @@ public class DefaultBuilding : BaseBuilding
         base.Awake();
 
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
-
+        _outline = GetComponent<Outline>();
         //_penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
 
         //SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
@@ -95,9 +96,21 @@ public class DefaultBuilding : BaseBuilding
     public virtual void UpdateSpawnUIBool()
     {
         isSpawnUIOn = isSpawnUIOn ? false : true;
+
+        BuildingOutline();
     }
 
-    public void ChangeSpawnUIBool(bool value) => isSpawnUIOn = value;
+    public void ChangeSpawnUIBool(bool value)
+    {
+        isSpawnUIOn = value;
+
+        BuildingOutline();
+    }
+
+    private void BuildingOutline()
+    {
+        _outline.enabled = isSpawnUIOn;
+    }
 
     //private void DisableAllUI()
     //{

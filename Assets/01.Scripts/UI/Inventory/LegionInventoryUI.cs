@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class LegionInventoryUI : PopupUI
 {
-    [SerializeField]
-    private RectTransform _descriptionUI;
-
     public void ShowLegionUIPanel()
     {
         UIManager.Instance.ShowPanel("LegionInventory");
@@ -52,12 +49,7 @@ public class LegionInventoryUI : PopupUI
 
     public void ShowDescript()
     {
-        _descriptionUI.gameObject.SetActive(true);
-    }
-
-    public void HideDescript()
-    {
-        _descriptionUI.gameObject.SetActive(false);
+        UIManager.Instance.ShowPanel("Description");
     }
 
     public void ShowGifScreenUI()

@@ -41,21 +41,21 @@ public class PenguinSituationPanel : PopupUI
     }
 
     public void SituationButtonEvent()
-    {
-        if(!canBuy)
-        {
-            UIManager.Instance.ShowWarningUI("재화가 부족합니다!");
-            return;
-        }
-
-        if (!canClick)
-        {
-            UIManager.Instance.ShowWarningUI("펭귄의 HP가 가득차있습니다");
-            return;
-        }
-        
+    {        
         if (isHeal)
         {
+            if (!canBuy)
+            {
+                UIManager.Instance.ShowWarningUI("재화가 부족합니다!");
+                return;
+            }
+
+            if (!canClick)
+            {
+                UIManager.Instance.ShowWarningUI("펭귄의 HP가 가득차있습니다");
+                return;
+            }
+
             HealEvent();
         }
         else if (isRetire)

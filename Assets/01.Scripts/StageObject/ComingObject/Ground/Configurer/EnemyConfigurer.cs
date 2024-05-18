@@ -22,7 +22,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
     public Enemy[] SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
     {
-        float enemyCountProportion = 1.0f;
+        float enemyCountProportion = 0.5f;
 
         List<Enemy> spawnedEnemies = new List<Enemy>();
 

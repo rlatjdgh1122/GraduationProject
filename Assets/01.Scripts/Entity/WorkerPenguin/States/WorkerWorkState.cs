@@ -17,7 +17,7 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 
         _worker.StopImmediately();
 
-        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        _navAgent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
 
     public override void UpdateState()
@@ -35,13 +35,17 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
                 _stateMachine.ChangeState(WorkerPenguinStateEnum.Return);
             }
         }
+        else
+        {
+            if (!_worker.IsTargetInAttackRange)
+                _stateMachine.ChangeState(WorkerPenguinStateEnum.Move);
+        }
 
     }
 
     public override void Exit()
     {
         _worker.StartImmediately();
-
         base.Exit();
     }
 }

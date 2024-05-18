@@ -25,6 +25,7 @@ public delegate void OffPopUiEvent();
 
 public delegate void ViewNoiseIncreaseEvent();
 public delegate void NoiseIncreaseEvent();
+public delegate void NoiseUpdateEvent();
 
 public delegate void DefaultBuilingClickEvent();
 public delegate void ClickMaskingButtonEvent();
@@ -80,6 +81,7 @@ public static class SignalHub
 
     public static ViewNoiseIncreaseEvent OnViewNoiseIncreaseEvent;
     public static NoiseIncreaseEvent OnNoiseIncreaseEvent;
+    public static NoiseUpdateEvent OnNoiseUpdateEvent;
 
     #endregion
 }

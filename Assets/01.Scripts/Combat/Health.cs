@@ -8,7 +8,6 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     public int maxHealth;
     public int currentHealth;
 
-
     private float armor
     {
         get
@@ -43,6 +42,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     public UnityEvent<float, float> OnUIUpdate;
     public UnityEvent OffUIUpdate;
 
+
     private FeedbackController feedbackCompo = null;
     #endregion
 
@@ -50,6 +50,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
     public bool IsDead = false;
     public bool OnHpBarUI = false;
+    public bool IsAlwaysShowUI { get; set; } = false;
 
     public bool IsMaxHP => currentHealth == maxHealth;
 
@@ -187,8 +188,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
 
+        OnUIUpdate?.Invoke(currentHealth, maxHealth);
         //나중에 바꾸기
-        //OnUIUpdate?.Invoke(currentHealth, maxHealth);
         //if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Heal, out var hitF))
         //{
         //    hitF.PlayFeedback();

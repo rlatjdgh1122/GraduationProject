@@ -166,9 +166,9 @@ public class PenguinManager
         var dummy = penguinToDummyDic[obj];
 
         DummyPenguinList.Remove(dummy);
-        //penguinToDummyDic.Remove(obj);
+        penguinToDummyDic.Remove(obj);
         BelongDummyPenguinList.Remove(dummy);
-        //dummyToPenguinDic.Remove(dummy);
+        dummyToPenguinDic.Remove(dummy);
 
         RemoveItemListDummy(dummy);
 
@@ -279,6 +279,7 @@ public class PenguinManager
 
         return resultPenguin;
     }
+
     public Penguin GetPenguinByDummyPenguin(DummyPenguin dummyPenguin)
     {
         Penguin resultPenguin = null;
@@ -432,9 +433,13 @@ public class PenguinManager
                     //펭귄이랑 더미펭귄이랑 연결해제
                     penguinToDummyDic.Remove(penguin);
                     dummyToPenguinDic.Remove(dummyPenguin);
+
+                    break;
                 }
             }
         }
+
+        UpdateOwnershipDataList();
 
         //지금까지 생성된 더미펭귄들에서
         //오너를 가지고 있는 더미펭귄들을 골라 오너를 지워주고
@@ -537,8 +542,10 @@ public class PenguinManager
 
     public void ShowGeneralInfoUI(GeneralDummyPengiun dummy)
     {
-        //var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
+        var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
         var data = dummy.Stat;
+
+        data.InfoData.LegionName = infoData.LegionName;
 
         GetCurrentInfoData = data.InfoData;
         GetCurrentStat = data;

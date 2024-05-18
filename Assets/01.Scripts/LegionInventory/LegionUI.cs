@@ -39,17 +39,8 @@ public class LegionUI : InitLegionInventory
     {
         if (_showHP)
         {
-            foreach (var hp in currentLegionList)
-            {
-                var penguin = PenguinManager.Instance.GetPenguinByInfoData(hp);
-                
-                float curHp = penguin.HealthCompo.currentHealth;
-                float maxHp = penguin.HealthCompo.maxHealth;
+            ImportHpValue();
 
-                float hpPercent = curHp / maxHp;
-
-                slotList[hp.SlotIdx].HpValue(hpPercent);
-            }
             foreach (var slot in slotList)
             {
                 if (slot.Data != null)
@@ -62,6 +53,21 @@ public class LegionUI : InitLegionInventory
             {
                 slot.HideHP();
             }
+        }
+    }
+
+    protected void ImportHpValue()
+    {
+        foreach (var hp in currentLegionList)
+        {
+            var penguin = PenguinManager.Instance.GetPenguinByInfoData(hp);
+
+            float curHp = penguin.HealthCompo.currentHealth;
+            float maxHp = penguin.HealthCompo.maxHealth;
+
+            float hpPercent = curHp / maxHp;
+
+            slotList[hp.SlotIdx].HpValue(hpPercent);
         }
     }
 

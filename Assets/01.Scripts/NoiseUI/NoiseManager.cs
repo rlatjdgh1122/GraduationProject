@@ -55,6 +55,8 @@ public class NoiseManager : Singleton<NoiseManager>
         float geometricSequence = Mathf.Pow(_increaseMaxNoise, level - 1);
 
         _maxNosise = _initMaxNosise * geometricSequence;
+
+        SignalHub.OnNoiseUpdateEvent?.Invoke();
     }
 
     public void PhaseStartAddSaveNoise()

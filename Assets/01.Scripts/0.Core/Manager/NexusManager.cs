@@ -39,10 +39,10 @@ public class NexusManager : Singleton<NexusManager>
     private void SetNexusInfoData()
     {
         _nexusInfo.currentMaxHealth = _nexusStat.GetMaxHealthValue();
-        _nexusInfo.previousMaxHealth = 0;
+        _nexusInfo.previousMaxHealth = 300;
         _nexusInfo.nextMaxHealth = _nexusStat.GetUpgradedMaxHealthValue();
         _nexusInfo.currentWorkerCount = WorkerManager.Instance.MaxWorkerCount;
-        _nexusInfo.previousWorkerCount = 0;
+        _nexusInfo.previousWorkerCount = 1;
         _nexusInfo.nextWorkerCount = WorkerManager.Instance.MaxWorkerCount + 1;
         _nexusInfo.previewBuilding = _buildingDatabase.BuildingItems.FirstOrDefault(b => b.UnlockedLevel == _nexusStat.level + 1);
         _nexusInfo.unlockedBuilding = null;

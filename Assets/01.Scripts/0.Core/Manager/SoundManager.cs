@@ -73,13 +73,9 @@ public class SoundManager : MonoBehaviour
     private AudioMixerGroup sfxMixer;
     private AudioMixer mainMixer;
 
-    private Camera mainCamera;
+    private Dictionary<SoundName, float> soundCooldowns = new(); // 사운드 재생 쿨다운을 관리할 딕셔너리
+    private float cooldownTime = 0.1f; // 사운드 중복 재생 방지 시간
 
-    private void Awake()
-    {
-        //아니 이거 왜 않됨??????????
-        mainCamera = Cam.MainCam;
-    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
@@ -98,18 +94,13 @@ public class SoundManager : MonoBehaviour
         bgmMixer = mainMixer.FindMatchingGroups("BGM")[0];
 
         DontDestroyOnLoad(gameObject);
-
     }
 
     public static void Play2DSound(SoundName name, SoundType type = SoundType.SFX)
     {
-
-        if (instance == null) return;
-
-        if (name == SoundName.None) return;
+        if (instance == null || name == SoundName.None) return;
 
         instance.Play2D(name, type);
-
     }
 
     /// <summary>
@@ -126,17 +117,21 @@ public class SoundManager : MonoBehaviour
     SoundType type = SoundType.SFX,
     AudioRolloffMode rolloffMode = AudioRolloffMode.Linear)
     {
-
         if (instance == null) return;
 
         if (clipName == SoundName.None) return;
 
         instance.Play3D(clipName, position, minFOV, maxFOV, maxDistance, type, rolloffMode);
-
     }
 
     private void Play2D(SoundName clipName, SoundType type)
     {
+        if (soundCooldowns.ContainsKey(clipName) && Time.time < soundCooldowns[clipName] + cooldownTime)
+        {
+            return; // 사운드 쿨다운 시간 내에 중복 재생을 방지
+        }
+
+        soundCooldowns[clipName] = Time.time; // 사운드 재생 시간 기록
 
         GameObject obj = new GameObject();
         var source = obj.AddComponent<AudioSource>();

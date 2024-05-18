@@ -15,7 +15,7 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
     protected NavMeshAgent _agent;
     protected Collider _collider;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _owner = GetComponent<T>();
         _agent = GetComponent<NavMeshAgent>();
@@ -55,8 +55,8 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
         //죽는 애니메이션 꺼줌
         _anim.SetBool(HASH_DEAD, false);
         //엔티티 네브메쉬와 콜라이더 켜줌
-        _agent.enabled = true;
         _collider.enabled = true;
+        _agent.enabled = true;
         //엔티티 살려줌
         _owner.IsDead = false;
         //엔티티 스크립트 켜줌
