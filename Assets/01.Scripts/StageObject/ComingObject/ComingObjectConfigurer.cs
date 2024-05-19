@@ -17,7 +17,7 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
                                                               _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
-                                                              _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray());
+                                                              _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray());
 
         //ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
         //                                                               _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());

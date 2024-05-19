@@ -46,7 +46,7 @@ public class LegionInventory : LegionUI
         }
 
         ArrangementManager.Instance.ApplySaveData(savedLegionList);
-        SignalHub.OnModifyCurArmy?.Invoke();
+        //SignalHub.OnModifyCurArmy?.Invoke();
 
         ResetLegion();
     }
@@ -130,7 +130,7 @@ public class LegionInventory : LegionUI
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
-        if (questIdx == 1 && data.PenguinType == PenguinTypeEnum.Archer)
+        if (questIdx == 1)
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }

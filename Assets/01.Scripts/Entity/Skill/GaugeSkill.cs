@@ -29,6 +29,17 @@ public class GaugeSkill : Skill
             HitValue = 0;
             OnHitValueChanged?.Invoke(HitValue, _targetValue);
         }
+        else
+        {
+            var maxHp = shieldPenguin.HealthCompo.maxHealth;
+            var curHp = shieldPenguin.HealthCompo.currentHealth;
+
+            if (shieldPenguin.PenguinTriggerCalled == false
+                && shieldPenguin.CheckHealthRatioPassive(maxHp, curHp, 70))
+            {
+                shieldPenguin.OnPassiveHealthRatioEvent();
+            }
+        }
 
         OnHitValueChanged?.Invoke(HitValue, _targetValue);
     }

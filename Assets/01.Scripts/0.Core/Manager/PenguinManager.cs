@@ -15,6 +15,21 @@ public class PenguinManager
         public DummyPenguin dummyPenguin;
     }
 
+    public void Clear()
+    {
+        soldierTypeToDefaultPenguinDic.TryClear();
+        soldierTypeToDefaultStatDic.TryClear();
+        soldierTypeToDefaultInfoDataDic.TryClear();
+
+        penguinToDummyDic.TryClear();
+        dummyToPenguinDic.TryClear();
+
+        infoDataToPenguinDic.TryClear();
+        penguinToInfoDataDic.TryClear();
+
+        soliderTypeToGeneralStatDic.TryClear();
+    }
+
     #region 教臂沛
     private static PenguinManager _instance;
     public static PenguinManager Instance
@@ -419,7 +434,7 @@ public class PenguinManager
     {
         var dataType = data.PenguinType;
         var penguin = GetPenguinByInfoData(data);
-        
+
 
         foreach (var info in _itemDummyPenguinList)
         {
@@ -545,7 +560,10 @@ public class PenguinManager
         var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
         var data = dummy.Stat;
 
-        data.InfoData.LegionName = infoData.LegionName;
+        if (infoData)
+            data.InfoData.LegionName = infoData.LegionName;
+        else
+            data.InfoData.LegionName = "家加等 焙窜 绝澜";
 
         GetCurrentInfoData = data.InfoData;
         GetCurrentStat = data;

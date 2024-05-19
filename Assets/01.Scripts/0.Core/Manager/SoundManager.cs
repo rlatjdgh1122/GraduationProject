@@ -61,7 +61,7 @@ public enum SoundName : uint
 
     #endregion
 
-    None = uint.MaxValue,
+    None = 100,
 }
 
 public class SoundManager : MonoBehaviour

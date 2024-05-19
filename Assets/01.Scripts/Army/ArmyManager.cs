@@ -14,7 +14,17 @@ public class ArmyManager : Singleton<ArmyManager>
     public MovefocusMode CurFocusMode => curFocusMode;
 
     private int curArmyIdx = -1;
-    public int CurLegion => curArmyIdx + 1;
+
+    public int CurLegion
+    {
+        get
+        {
+            int curLegion = curArmyIdx + 1;
+
+            if (curLegion <= 0) return 1;
+            return curLegion;
+        }
+    }
 
     public int ArmiesCount => armies.Count;
 
@@ -84,6 +94,11 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
+    public void ChangedCurrentArmy()
+    {
+        ChangeArmy(CurLegion);
+    }
+
 
     /// <summary>
     /// 군단 변경
@@ -91,11 +106,14 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="legion"> 몇번째 군단</param>
     private void ChangeArmy(int legion)
     {
+
         //전투 라운드가 아니면 실행안해줌
         if (!WaveManager.Instance.IsBattlePhase) return;
 
         //아직 생성되지 않은 군단에 접근하면 리턴해줌
         if (armies.Count < legion) return;
+
+        SignalHub.OnModifyCurArmy?.Invoke();
 
         int Idx = legion - 1;
         var curArmy = armies[Idx];
@@ -136,7 +154,6 @@ public class ArmyManager : Singleton<ArmyManager>
         curArmyIdx = Idx;
 
         SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
-        SignalHub.OnModifyCurArmy?.Invoke();
 
         armies.IdxExcept
             (

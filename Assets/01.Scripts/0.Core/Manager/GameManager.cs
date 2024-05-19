@@ -104,4 +104,9 @@ public class GameManager : Singleton<GameManager>
         _poolingListSO.GeneralPenguinList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
         _poolingListSO.EffectList.ForEach(p => PoolManager.Instance.CreatePool(p.prefab, p.poolCount));
     }
+
+    public void OnDisable()
+    {
+        PenguinManager.Instance.Clear();
+    }
 }

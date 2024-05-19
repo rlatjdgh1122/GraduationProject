@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,7 @@ public class UnitSlotUI : SlotUI
     private TextMeshProUGUI _countText;
     private Image _lockImg;
     private Image _lockIconImg;
+    private Image _generalImg;
 
     private bool _locked => _stackSize <= 0;
     private int _stackSize = 0;
@@ -19,6 +21,7 @@ public class UnitSlotUI : SlotUI
         base.Awake();
 
         unitImage = transform.Find("Penguin").GetComponent<Image>();
+        _generalImg = transform.Find("GeneralPenguin").GetComponent<Image>();
         _countText = transform.Find("CountBK/Count").GetComponent<TextMeshProUGUI>();
         _lockImg = transform.Find("Lock").GetComponent<Image>();
         _lockIconImg = transform.Find("Icon").GetComponent<Image>();
@@ -28,7 +31,16 @@ public class UnitSlotUI : SlotUI
     {
         _keyData = data;
 
-        unitImage.sprite = data.PenguinIcon;
+        if (data.JobType == PenguinJobType.Solider)
+        {
+            unitImage.sprite = data.PenguinIcon;
+            unitImage.DOFade(1, 0);
+        }
+        else
+        {
+            _generalImg.sprite = data.PenguinIcon;
+            _generalImg.DOFade(1, 0);
+        }
 
         gameObject.name = $"{data.PenguinName} ½½·Ô";
 
@@ -78,8 +90,6 @@ public class UnitSlotUI : SlotUI
     public override void OnPointerDown(PointerEventData eventData)
     {
         if (_locked) return;
-
-        SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
 
         UnitInventoryData data = new UnitInventoryData(_keyData, _stackSize);
 

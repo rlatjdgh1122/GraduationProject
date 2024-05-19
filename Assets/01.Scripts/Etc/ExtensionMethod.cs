@@ -17,7 +17,14 @@ public static class ExtensionMethod
     }
     #endregion
 
+    #region Dictionary
 
+    public static void TryClear<key, value>(this Dictionary<key, value> dic)
+    {
+        if (dic.Count > 0) dic.Clear();
+    }
+
+    #endregion
 
     #region Linq »Æ¿Â
 

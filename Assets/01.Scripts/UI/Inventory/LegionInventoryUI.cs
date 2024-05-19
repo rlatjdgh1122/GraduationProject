@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class LegionInventoryUI : PopupUI
 {
+    private bool _onDisciption = true;
+
     public void ShowLegionUIPanel()
     {
         UIManager.Instance.ShowPanel("LegionInventory");
 
         LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
+
+        if (_onDisciption)
+            ShowDescript();
     }
 
     public void HideLegionInventoryUI()
@@ -50,6 +55,7 @@ public class LegionInventoryUI : PopupUI
     public void ShowDescript()
     {
         UIManager.Instance.ShowPanel("Description");
+        _onDisciption = false;
     }
 
     public void ShowGifScreenUI()

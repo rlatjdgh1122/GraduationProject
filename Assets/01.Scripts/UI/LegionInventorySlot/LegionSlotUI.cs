@@ -86,6 +86,15 @@ public abstract class LegionSlotUI : SlotUI
     {
         unitImage.enabled = true;
         unitImage.sprite = Data.PenguinIcon;
+
+        if(Data.JobType == PenguinJobType.General)
+        {
+            unitImage.transform.localScale = new Vector3(1.3f, 1.1f, 1f);
+        }
+        else
+        {
+            unitImage.transform.localScale = new Vector3(1f, 1.1f, 1f);
+        }
     }
 
     /// <summary>

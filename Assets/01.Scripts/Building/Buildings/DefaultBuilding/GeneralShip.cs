@@ -35,6 +35,7 @@ public class GeneralShip : MonoBehaviour
     {
         if(!WaveManager.Instance.IsBattlePhase)
         {
+            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             UIManager.Instance.ShowPanel("GeneralUI");
         }
     }

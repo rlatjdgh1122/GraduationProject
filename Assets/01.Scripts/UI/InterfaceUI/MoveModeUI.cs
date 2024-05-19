@@ -7,7 +7,7 @@ using ArmySystem;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.Rendering;
-public class MoveModeUI : MonoBehaviour
+public class MoveModeUI : MonoBehaviour  
 {
     [Header("¼öÄ¡")]
     public float WaitFadeInTime = 0.5f;
