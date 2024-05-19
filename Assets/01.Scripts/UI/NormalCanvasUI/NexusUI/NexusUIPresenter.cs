@@ -71,16 +71,16 @@ public class NexusUIPresenter : NexusPopupUI
 
     public void OnAdmitBuildingPanel()
     {
-        UIManager.Instance.HidePanel("NexusPanel");
         UIManager.Instance.ShowPanel("BuildingPanel");
+        UIManager.Instance.HidePanel("NexusPanel");
         //UIManager.Instance.MovePanel("NexusPanel", -2500, 0, 0.7f);
         //UIManager.Instance.MovePanel("BuildingPanel", 0, 0, 0.7f);
     }
 
     public void OnAdmitNexusPanel()
     {
-        UIManager.Instance.HidePanel("BuildingPanel");
         UIManager.Instance.ShowPanel("NexusPanel");
+        UIManager.Instance.HidePanel("BuildingPanel");
         //UIManager.Instance.MovePanel("NexusPanel", 0, 0, 0.7f);
         //UIManager.Instance.MovePanel("BuildingPanel", 2500, 0, 0.7f);
     }

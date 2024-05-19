@@ -57,7 +57,6 @@ public class CameraSystem : MonoBehaviour
     {
         isMoving = true;
         _startPosition = transform.position;
-        Debug.Log(_startPosition);
         _vCamstartRotation = _cinemachineCam.transform.rotation;
 
         transposer = _cinemachineCam.GetCinemachineComponent<CinemachineTransposer>();
