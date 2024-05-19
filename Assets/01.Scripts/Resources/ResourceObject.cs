@@ -18,6 +18,7 @@ public class ResourceObject : WorkableObject
 
     private ResourceStat _resourceStat;
     private IDeadable _deadCompo = null;
+
     #region property
     public ResourceDataSO ResourceData => _resourceData;
     public Sprite ResourceImage => _resourceIcon;

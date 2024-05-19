@@ -24,7 +24,22 @@ public class NoiseFeedback : Feedback
         if (_noiseManager == null)
             return false;
 
-        var Colls = Physics.OverlapSphere(transform.position, _detectRange, _targetLayer);
+        RaycastHit raycastHit;
+        bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, _targetLayer);
+
+        if (raycastSuccess
+            && raycastHit.collider.TryGetComponent(out WorkableObject obj))
+        {
+            if (_workerType == WorkerType.Builder)
+                obj.IncreaseCurrentNoise();
+            else
+            {
+                _noiseManager.AddNoise(obj.NoiseValue);
+                _noiseManager.AddViewNoise(obj.NoiseValue);
+            }
+        }
+
+        /*var Colls = Physics.OverlapSphere(transform.position, _detectRange, _targetLayer);
         foreach (var col in Colls)
         {
             if (col.TryGetComponent<WorkableObject>(out WorkableObject obj))
@@ -37,7 +52,7 @@ public class NoiseFeedback : Feedback
                     _noiseManager.AddViewNoise(obj.NoiseValue);
                 }
             }
-        }
+        }*/
 
         return true;
     }
