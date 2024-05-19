@@ -1696,7 +1696,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.461, z: 0}
   m_LocalScale: {x: 0.78787, y: 0.78787, z: 0.78787}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7930250154432293248}
   - {fileID: 762061538298039653}
@@ -1819,7 +1819,7 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: d228f5d46cd24324aafce18405e4f8d1, type: 2}
   CurrentTarget: {fileID: 0}
   _maxDetectEnemy: 5
-  innerDistance: 10
+  innerDistance: 5
   attackDistance: 2
   TargetLayer:
     serializedVersion: 2
@@ -1827,7 +1827,7 @@ MonoBehaviour:
   moveSpeed: 3
   attackSpeed: 1
   rotationSpeed: 2
-  nexusDistance: 2
+  nexusDistance: 3.5
   passiveData: {fileID: 0}
   NexusTarget: {fileID: 0}
   IsMove: 1
@@ -1851,6 +1851,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   WaterFallEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
@@ -1890,6 +1893,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!114 &4727469769408345316
 MonoBehaviour:
   m_ObjectHideFlags: 0

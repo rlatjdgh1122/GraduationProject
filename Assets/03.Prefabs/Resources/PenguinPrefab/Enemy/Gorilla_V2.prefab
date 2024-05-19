@@ -2693,6 +2693,9 @@ MonoBehaviour:
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2730,6 +2733,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!114 &4972266172656177943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3301,7 +3305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 1.5
+  _detectRange: 3
   _hitType: 1
   TargetLayer:
     serializedVersion: 2
