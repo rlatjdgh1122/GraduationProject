@@ -18,6 +18,8 @@ public class EscUI : PopupUI
 
     protected bool _canHide = true;
 
+    private float _currentTimeScale = 0;
+
     public override void Awake()
     {
         base.Awake();
@@ -29,6 +31,7 @@ public class EscUI : PopupUI
     {
         _canHide = false;
 
+        _currentTimeScale = Time.timeScale;
         Time.timeScale = 0;
 
         base.ShowPanel();
@@ -41,7 +44,7 @@ public class EscUI : PopupUI
         if (!_canHide) return;
         HideButton();
 
-        Time.timeScale = 1;
+        Time.timeScale = _currentTimeScale;
 
         base.HidePanel();
     }
