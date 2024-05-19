@@ -18,9 +18,12 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     Queue<string> questPointsQueue = new Queue<string>();
 
+    CameraSystem _cameraSystem;
+
     public override void Awake()
     {
         _maskingImage = FindObjectOfType<MaskingImage>();
+        _cameraSystem = FindObjectOfType<CameraSystem>();
 
         foreach (var trm in pointsByQuests[0].MaskPointTransforms)
         {
@@ -50,9 +53,14 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         if (!OnTrm.TryGetComponent(out RectTransform rect)) // ui가 아니면
         {
-            onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
-            SignalHub.OnDefaultBuilingClickEvent += OffMaskingImageObj;
+            _cameraSystem.Look(new Vector3(onPos.x, 35.55f, onPos.z));
 
+            CoroutineUtil.CallWaitForOneFrame(() =>
+            {
+                onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
+                _maskingImage.transform.position = onPos;
+            });
+            SignalHub.OnDefaultBuilingClickEvent += OffMaskingImageObj;
         }
         else // UI 면
         {
@@ -70,7 +78,6 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
                 SignalHub.OnClickPenguinSpawnButtonEvent += OffMaskingImageUI;
 
             }
-
         }
 
         _maskingImage.transform.position = onPos;

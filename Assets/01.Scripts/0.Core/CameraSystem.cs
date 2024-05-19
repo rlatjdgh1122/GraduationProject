@@ -57,6 +57,7 @@ public class CameraSystem : MonoBehaviour
     {
         isMoving = true;
         _startPosition = transform.position;
+        Debug.Log(_startPosition);
         _vCamstartRotation = _cinemachineCam.transform.rotation;
 
         transposer = _cinemachineCam.GetCinemachineComponent<CinemachineTransposer>();
@@ -90,16 +91,21 @@ public class CameraSystem : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            isMoving = false;
-            isRotating = false;
-            transform.position = _startPosition;
-            transform.rotation = Quaternion.identity;
-            _cinemachineCam.transform.rotation = _vCamstartRotation;
+            Look(_startPosition);
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             isMoving = true;
         }
+    }
+
+    public void Look(Vector3 pos)
+    {
+        isMoving = false;
+        isRotating = false;
+        transform.position = pos;
+        transform.rotation = Quaternion.identity;
+        _cinemachineCam.transform.rotation = _vCamstartRotation;
     }
 
     private void CameraMove()
