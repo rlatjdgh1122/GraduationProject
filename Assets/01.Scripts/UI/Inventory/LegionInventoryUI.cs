@@ -10,6 +10,8 @@ public class LegionInventoryUI : PopupUI
     {
         UIManager.Instance.ShowPanel("LegionInventory");
 
+        LegionInventoryManager.Instance.CanShowUI(true);
+
         LegionInventoryManager.Instance.SaveLegion(); //혹시 모르니깐 저장
         LegionInventoryManager.Instance.ChangeLegion(LegionInventoryManager.Instance.CurrentLegion);
 
@@ -20,6 +22,8 @@ public class LegionInventoryUI : PopupUI
     public void HideLegionInventoryUI()
     {
         UIManager.Instance.HidePanel("LegionInventory");
+
+        LegionInventoryManager.Instance.CanShowUI(false);
     }
 
     public override void HidePanel()

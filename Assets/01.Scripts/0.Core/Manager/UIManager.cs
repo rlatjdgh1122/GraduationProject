@@ -149,30 +149,30 @@ public class UIManager : Singleton<UIManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (currentPopupUI.Count > 0)
-            {
-                string name = currentPopupUI.Peek().name;
+            //if (currentPopupUI.Count > 0)
+            //{
+            //    string name = currentPopupUI.Peek().name;
 
-                bool isNotBattleResult = name != "DefeatUI" && name != "VictoryUI" &&
-                    name != "GifScreen" && name != "Masking";
+            //    bool isNotBattleResult = name != "DefeatUI" && name != "VictoryUI" &&
+            //        name != "GifScreen" && name != "Masking";
 
-                if (isNotBattleResult) //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
-                {
-                    bool isbuildingPannel = name == "BuildingPanel" || name == "NexusPanel" || // 나중에 지우소
-                        name == "Buff" || name == "Resource" || name == "Defense" || name == "Trap";
+            //    if (isNotBattleResult) //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+            //    {
+            //        bool isbuildingPannel = name == "BuildingPanel" || name == "NexusPanel" || // 나중에 지우소
+            //            name == "Buff" || name == "Resource" || name == "Defense" || name == "Trap";
 
-                    if (isbuildingPannel)
-                    {
-                        HidePanel("NexusUI");
-                        ChangeCurrentUI();
-                        return;
-                    }
+            //        if (isbuildingPannel)
+            //        {
+            //            HidePanel("NexusUI");
+            //            ChangeCurrentUI();
+            //            return;
+            //        }
 
-                    currentPopupUI.Peek().HidePanel();
-                    ChangeCurrentUI();
-                }
-            }
-            else
+            //        currentPopupUI.Peek().HidePanel();
+            //        ChangeCurrentUI();
+            //    }
+            //}
+            if (currentPopupUI.Count <= 0)
             {
                 if(popupUIDictionary.ContainsKey("EscUI"))
                     ShowPanel("EscUI");
