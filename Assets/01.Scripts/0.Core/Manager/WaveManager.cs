@@ -65,6 +65,8 @@ public class WaveManager : Singleton<WaveManager>
 
     #endregion
 
+    private bool isFirst = true;
+
     public void BattlePhaseSubscribe()
     {
         SignalHub.OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
@@ -124,6 +126,12 @@ public class WaveManager : Singleton<WaveManager>
         // 빙하 랜덤 생성 땜에 우선순위 이벤트 먼저 하고 함
         SignalHub.OnBattlePhaseStartPriorityEvent?.Invoke();
         CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnBattlePhaseStartEvent?.Invoke());
+
+        if (isFirst)
+        {
+            UIManager.Instance.GifController.ShowGif(GifType.PenguinFight);
+            isFirst = false;
+        }
     }
 
     public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
@@ -140,6 +148,11 @@ public class WaveManager : Singleton<WaveManager>
         else if (questIdx == 5)
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+
+        if (currentWaveCount == 3)
+        {
+            UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
         }
 
         SignalHub.OnBattlePhaseEndEvent?.Invoke();
