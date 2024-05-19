@@ -33,7 +33,8 @@ public class GeneralShip : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(!WaveManager.Instance.IsBattlePhase && UIManager.Instance.currentPopupUI.Count <= 0)
+        if(!WaveManager.Instance.IsBattlePhase && (UIManager.Instance.currentPopupUI.Count <= 0
+            || UIManager.Instance.currentPopupUI.Peek().name == "Masking"))
         {
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             UIManager.Instance.ShowPanel("GeneralUI");
