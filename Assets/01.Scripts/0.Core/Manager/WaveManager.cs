@@ -102,6 +102,13 @@ public class WaveManager : Singleton<WaveManager>
         {
             ShowDefeatUI();
         }
+
+        Debug.Log(currentWaveCount);
+
+        if (currentWaveCount == 11)
+        {
+            UIManager.Instance.ShowPanel("CreditUI");
+        }
     }
 
     public void ShowDefeatUI()
