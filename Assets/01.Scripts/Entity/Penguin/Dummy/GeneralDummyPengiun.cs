@@ -8,7 +8,7 @@ public class GeneralDummyPengiun : DummyPenguin
 
     private void OnMouseDown()
     {
-        if (UIManager.Instance.CheckShowAble(UIType.Info))
+        if (UIManager.Instance.currentPopupUI.Count <= 0 && UIManager.Instance.CheckShowAble(UIType.Info))
         {
             PenguinManager.Instance.ShowGeneralInfoUI(this);
             OutlineCompo.enabled = true;
