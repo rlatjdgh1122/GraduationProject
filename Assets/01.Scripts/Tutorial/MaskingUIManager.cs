@@ -55,7 +55,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         {
             _cameraSystem.Look(new Vector3(onPos.x, 35.55f, onPos.z));
 
-            CoroutineUtil.CallWaitForOneFrame(() =>
+            CoroutineUtil.CallWaitForSeconds(0.1f, null, () =>
             {
                 onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
                 _maskingImage.transform.position = onPos;

@@ -100,6 +100,8 @@ public class CameraSystem : MonoBehaviour
 
     public void Look(Vector3 pos)
     {
+        targetFieldOfView = 50f;
+
         isMoving = false;
         isRotating = false;
         transform.position = pos;
