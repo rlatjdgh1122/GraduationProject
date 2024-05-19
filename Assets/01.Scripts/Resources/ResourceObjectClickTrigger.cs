@@ -6,17 +6,24 @@ public class ResourceObjectClickTrigger : MonoBehaviour
 {
     ResourceObject _resourceObject;
 
+    private bool isFirst = true;
+
     private void Awake()
     {
         _resourceObject = transform.GetComponent<ResourceObject>();
     }
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && (UIManager.Instance.currentPopupUI.Count <= 0
-            || UIManager.Instance.currentPopupUI.Peek().name == "Masking"))
+        if (!WaveManager.Instance.IsBattlePhase)
         {
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI");
+
+            if (isFirst)
+            {
+                UIManager.Instance.GifController.ShowGif(GifType.WorkerPenguin);
+                isFirst = false;
+            }
 
             if (WaveManager.Instance.CurrentWaveCount < 4)
             {

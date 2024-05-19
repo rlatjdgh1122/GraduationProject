@@ -8,6 +8,8 @@ public class NexusBase : MonoBehaviour
 
     private LayerMask _groundLayer = 1 << 3;
 
+    private bool isFirst = true;
+
 
     private void Start()
     {
@@ -24,9 +26,14 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && (UIManager.Instance.currentPopupUI.Count <= 0
-            || UIManager.Instance.currentPopupUI.Peek().name == "Masking"))
+        if (!WaveManager.Instance.IsBattlePhase && !LegionInventoryManager.Instance.CanUI)
         {
+            if (isFirst)
+            {
+                UIManager.Instance.GifController.ShowGif(GifType.NexusUpgrade);
+                isFirst = false;
+            }
+
             UIManager.Instance.ShowPanel("NexusUI");
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }

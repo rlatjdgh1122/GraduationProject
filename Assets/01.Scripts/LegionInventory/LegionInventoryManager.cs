@@ -28,6 +28,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public List<LegionInfo> LegionList => _legionList;
     public int LegionCount => _legionList.Count;
 
+    private bool _canUI = false;
+    public bool CanUI => _canUI;
+
     public override void Awake()
     {
         _unitInven = FindObjectOfType<UnitInventory>();
@@ -36,6 +39,8 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         LegionChange = FindObjectOfType<LegionChange>();
         _penguinSituation = FindObjectOfType<PenguinSituationUI>();
     }
+
+    public void CanShowUI(bool value) => _canUI = value;
 
     /// <summary>
     /// ������ ������

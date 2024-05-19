@@ -65,6 +65,8 @@ public class WaveManager : Singleton<WaveManager>
 
     #endregion
 
+    private bool isFirst = true;
+
     public void BattlePhaseSubscribe()
     {
         SignalHub.OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
@@ -100,6 +102,13 @@ public class WaveManager : Singleton<WaveManager>
         {
             ShowDefeatUI();
         }
+
+        Debug.Log(currentWaveCount);
+
+        if (currentWaveCount == 11)
+        {
+            UIManager.Instance.ShowPanel("CreditUI");
+        }
     }
 
     public void ShowDefeatUI()
@@ -129,6 +138,12 @@ public class WaveManager : Singleton<WaveManager>
             UIManager.Instance.ShowBossWarningUI("춘자 등장!");
         if (currentWaveCount == 9)
             UIManager.Instance.ShowBossWarningUI("보스 등장!");
+
+        if (isFirst)
+        {
+            UIManager.Instance.GifController.ShowGif(GifType.PenguinFight);
+            isFirst = false;
+        }
     }
 
     public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
@@ -145,6 +160,11 @@ public class WaveManager : Singleton<WaveManager>
         else if (questIdx == 5)
         {
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        }
+
+        if (currentWaveCount == 3)
+        {
+            UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
         }
 
         SignalHub.OnBattlePhaseEndEvent?.Invoke();

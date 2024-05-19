@@ -25,6 +25,8 @@ public class DefaultBuilding : BaseBuilding
 
     private ConstructionStation _constructionStation;
 
+    private bool isFirst = true;
+
     public override void Init()
     {
         isSpawnUIOn = false;
@@ -47,6 +49,11 @@ public class DefaultBuilding : BaseBuilding
     {
         if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/)
         {
+            if (isFirst)
+            {
+                UIManager.Instance.GifController.ShowGif(GifType.PenguinBuy);
+                isFirst = false;
+            }
             SpawnButton();
         }
     }
