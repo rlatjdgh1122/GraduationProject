@@ -94,6 +94,11 @@ public class DialogSystem : MonoBehaviour
         {
             MaskingUIManager.Instance.SetMaskingImagePos();
         }
+
+        if (WaveManager.Instance.CurrentWaveCount == 4)
+        {
+            UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
+        }
     }
 
     IEnumerator FadeTime()
