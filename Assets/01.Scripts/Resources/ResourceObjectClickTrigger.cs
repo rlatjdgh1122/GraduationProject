@@ -14,7 +14,8 @@ public class ResourceObjectClickTrigger : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && (UIManager.Instance.currentPopupUI.Count <= 0
+            || UIManager.Instance.currentPopupUI.Peek().name == "Masking"))
         {
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI");

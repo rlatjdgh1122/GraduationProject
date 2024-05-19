@@ -26,7 +26,8 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && (UIManager.Instance.currentPopupUI.Count <= 0
+            || UIManager.Instance.currentPopupUI.Peek().name == "Masking"))
         {
             if (isFirst)
             {

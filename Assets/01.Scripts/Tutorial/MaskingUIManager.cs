@@ -11,6 +11,8 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     private Transform _prevMaskingUiTrms;
     private Transform _prevMaskingUiParentTrms;
 
+    private int _maskingTrmIdx = 0;
+
     private int maskingUIIdx;
 
     [SerializeField]
@@ -35,9 +37,9 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     public void SetMaskingImagePos() // 귀찮으니 일단 이따구로 스레기처럼 함 
     {
-        if(questPointsQueue.Count == 0)
+        if (questPointsQueue.Count == 0)
         {
-            foreach(var trm in pointsByQuests[maskingUIIdx++].MaskPointTransforms)
+            foreach (var trm in pointsByQuests[maskingUIIdx++].MaskPointTransforms)
             {
                 questPointsQueue.Enqueue(trm);
             }
@@ -65,6 +67,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         else // UI 면
         {
             _prevMaskingUiTrms = OnTrm;
+            _maskingTrmIdx = _prevMaskingUiTrms.GetSiblingIndex(); //부모한테 몇번째 어 그거
             _prevMaskingUiParentTrms = OnTrm.parent;
 
             OnTrm.transform.SetParent(_maskingImage.ButtonTrm);
@@ -86,6 +89,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     public void OffMaskingButtonUI()
     {
         _prevMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
+        _prevMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
 
         _prevMaskingUiTrms.GetComponent<Button>().onClick.RemoveListener(OffMaskingImageUI);
 
@@ -95,11 +99,12 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
     public void OffMaskingImageUI()
     {
         _prevMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
+        _prevMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
 
         SignalHub.OnClickPenguinSpawnButtonEvent += OffMaskingImageUI;
 
         OffMask();
-    }   
+    }
 
     private void OffMaskingImageObj()
     {
@@ -118,7 +123,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         }
     }
 
-    public bool IsArrowSignPoint(int idx) { return maskingUIIdx == idx;}
+    public bool IsArrowSignPoint(int idx) { return maskingUIIdx == idx; }
 
     private void OnDisable()
     {
