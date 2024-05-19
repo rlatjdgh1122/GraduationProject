@@ -157,7 +157,7 @@ public class WaveManager : Singleton<WaveManager>
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
 
-        if (currentWaveCount == 3)
+        if (currentWaveCount == 2)
         {
             UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
         }
