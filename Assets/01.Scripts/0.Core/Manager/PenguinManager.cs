@@ -15,6 +15,21 @@ public class PenguinManager
         public DummyPenguin dummyPenguin;
     }
 
+    public void Clear()
+    {
+        soldierTypeToDefaultPenguinDic.TryClear();
+        soldierTypeToDefaultStatDic.TryClear();
+        soldierTypeToDefaultInfoDataDic.TryClear();
+
+        penguinToDummyDic.TryClear();
+        dummyToPenguinDic.TryClear();
+
+        infoDataToPenguinDic.TryClear();
+        penguinToInfoDataDic.TryClear();
+
+        soliderTypeToGeneralStatDic.TryClear();
+    }
+
     #region ΩÃ±€≈Ê
     private static PenguinManager _instance;
     public static PenguinManager Instance
