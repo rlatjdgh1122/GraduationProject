@@ -102,6 +102,13 @@ public class WaveManager : Singleton<WaveManager>
         {
             ShowDefeatUI();
         }
+
+        Debug.Log(currentWaveCount);
+
+        if (currentWaveCount == 11)
+        {
+            UIManager.Instance.ShowPanel("CreditUI");
+        }
     }
 
     public void ShowDefeatUI()
@@ -126,6 +133,11 @@ public class WaveManager : Singleton<WaveManager>
         // 빙하 랜덤 생성 땜에 우선순위 이벤트 먼저 하고 함
         SignalHub.OnBattlePhaseStartPriorityEvent?.Invoke();
         CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnBattlePhaseStartEvent?.Invoke());
+
+        if (currentWaveCount == 4)
+            UIManager.Instance.ShowBossWarningUI("춘자 등장!");
+        if (currentWaveCount == 9)
+            UIManager.Instance.ShowBossWarningUI("보스 등장!");
 
         if (isFirst)
         {

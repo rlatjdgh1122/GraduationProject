@@ -33,10 +33,11 @@ public class UIManager : Singleton<UIManager>
     public GifScreenController GifController => _gifScreenController;
 
     private WarningUI _warningUI;
+    private BossWarningUI _bossWarningUI;
 
     public Dictionary<string, PopupUI> popupUIDictionary = new();
     //public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
-    
+
     public Stack<PopupUI> currentPopupUI = new Stack<PopupUI>();
 
     //public Vector2 ScreenCenterVec = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
@@ -56,6 +57,7 @@ public class UIManager : Singleton<UIManager>
     {
         canvasTrm = GameObject.Find("Canvas").transform;
         _warningUI = FindObjectOfType<WarningUI>();
+        _bossWarningUI = FindObjectOfType<BossWarningUI>();
 
         PopupUI[] popupUIs = canvasTrm.GetComponentsInChildren<PopupUI>();
         //WorldUI[] worldUIs = FindObjectsOfType<WorldUI>();
@@ -142,6 +144,12 @@ public class UIManager : Singleton<UIManager>
         _warningUI.SetValue(text);
         _warningUI.ShowAndHidePanel(_warningUI.IntervalTime);
     }
+
+    public void ShowBossWarningUI(string text)
+    {
+        _bossWarningUI.SetValue(text);
+        _bossWarningUI.Show();
+    }
     #endregion
 
     #region UI Function
@@ -174,7 +182,7 @@ public class UIManager : Singleton<UIManager>
             //}
             if (currentPopupUI.Count <= 0)
             {
-                if(popupUIDictionary.ContainsKey("EscUI"))
+                if (popupUIDictionary.ContainsKey("EscUI"))
                     ShowPanel("EscUI");
             }
         }
