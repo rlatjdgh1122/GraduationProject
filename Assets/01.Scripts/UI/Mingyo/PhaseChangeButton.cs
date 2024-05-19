@@ -37,7 +37,7 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
-        if(ArmyManager.Instance.CheckEmpty())
+        if (ArmyManager.Instance.CheckEmpty())
         {
             UIManager.Instance.ShowWarningUI("군단에 펭귄을 넣어주세요!");
         }
@@ -46,6 +46,14 @@ public class PhaseChangeButton : MonoBehaviour
             WaveManager.Instance.BattlePhaseStartEventHandler();
             SoundManager.Play2DSound(SoundName.StartFight);
             NoiseManager.Instance.SaveNoise();
+
+            //IsBattlePhase가 true일때만 ChangedArmy를 실행할 수 잇는데
+            //코드보니깐 전투 시작하고 0.1초 뒤에 true가되길래 0.15초뒤에 실행되게함
+
+            //이렇게말고 우선순위 배틀 스타트에서 IsBattlePhase를 true로 만들어도 되긴함
+            CoroutineUtil.CallWaitForSeconds(0.15f, null, () => ArmyManager.Instance.ChangedCurrentArmy());
+
+
             OnOffButton();
         }
     }
