@@ -28,6 +28,8 @@ public class GifScreenController : MonoBehaviour
         _videoPlayer = GetComponent<VideoPlayer>();
     }
 
+    private float timeScale;
+
     public void ShowGif(GifType type)
     {
         if (_videoPlayer.clip != null) return;
@@ -36,7 +38,9 @@ public class GifScreenController : MonoBehaviour
 
         if (gif != null)
         {
-            UIManager.Instance.ShowPanel("GifScreen");
+            UIManager.Instance.ShowPanel("GifScreen", true);
+
+            timeScale = Time.timeScale;
 
             Time.timeScale = 0;
 
@@ -62,7 +66,7 @@ public class GifScreenController : MonoBehaviour
 
         UIManager.Instance.HidePanel("GifScreen");
 
-        Time.timeScale = 1;
+        Time.timeScale = timeScale;
 
         _videoPlayer.loopPointReached -= OnGifEnd;
     }
