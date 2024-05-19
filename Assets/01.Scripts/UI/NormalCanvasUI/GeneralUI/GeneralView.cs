@@ -72,6 +72,7 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 
     public void OnPurchase()
     {
+        presenter.SetCurrentView(this); //이거 추가했음
         presenter.Purchase(GeneralInfoData);
     }
 
