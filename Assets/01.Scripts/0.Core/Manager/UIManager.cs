@@ -20,7 +20,8 @@ public enum UIType
     Setting,
     Gif,
     Credit,
-    GifInfo
+    GifInfo,
+    CheckQuest
 }
 
 public class UIManager : Singleton<UIManager>
