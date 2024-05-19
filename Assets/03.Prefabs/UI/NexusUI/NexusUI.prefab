@@ -614,7 +614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2511951420825191348}
   - component: {fileID: 4477985060724414184}
-  - component: {fileID: 5108684049112053699}
+  - component: {fileID: 4712052115249825754}
   m_Layer: 5
   m_Name: BuildingPanel
   m_TagString: Untagged
@@ -664,7 +664,7 @@ MonoBehaviour:
   _transferable: 
   _soundName: 16
   _uiGroup: 3
---- !u!225 &5108684049112053699
+--- !u!225 &4712052115249825754
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1876,6 +1876,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 116464136744688906}
+        m_TargetAssemblyTypeName: BuildingViewGroupController, Assembly-CSharp
+        m_MethodName: SwapElements
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 6814776315372135483}
+          m_ObjectArgumentAssemblyTypeName: BuildingViewGroup, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5102,7 +5114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1143523758838201687}
   - component: {fileID: 6562196984253554413}
-  - component: {fileID: 3419829678438212173}
+  - component: {fileID: 3847791032753814889}
   m_Layer: 5
   m_Name: NexusPanel
   m_TagString: Untagged
@@ -5170,7 +5182,7 @@ MonoBehaviour:
   nextWorkerCount: {fileID: 6632719579390040788}
   buildingIcon: {fileID: 7367444063679245468}
   upgradePrice: {fileID: 6522151556145239054}
---- !u!225 &3419829678438212173
+--- !u!225 &3847791032753814889
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
