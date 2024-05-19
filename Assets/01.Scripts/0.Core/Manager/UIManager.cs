@@ -150,9 +150,23 @@ public class UIManager : Singleton<UIManager>
         {
             if (currentPopupUI.Count > 0)
             {
-                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
-                    && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+                string name = currentPopupUI.Peek().name;
+
+                bool isNotBattleResult = name != "DefeatUI" && name != "VictoryUI" &&
+                    name != "GifScreen";
+
+                if (isNotBattleResult) //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                 {
+                    bool isbuildingPannel = name == "BuildingPanel" || name == "NexusPanel" ||
+                        name == "Buff" || name == "Resource" || name == "Defense" || name == "Trap";
+
+                    if (isbuildingPannel)
+                    {
+                        HidePanel("NexusUI");
+                        ChangeCurrentUI();
+                        return;
+                    }
+
                     currentPopupUI.Peek().HidePanel();
                     ChangeCurrentUI();
                 }
