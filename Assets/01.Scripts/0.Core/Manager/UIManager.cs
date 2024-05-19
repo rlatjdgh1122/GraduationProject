@@ -154,7 +154,7 @@ public class UIManager : Singleton<UIManager>
                 string name = currentPopupUI.Peek().name;
 
                 bool isNotBattleResult = name != "DefeatUI" && name != "VictoryUI" &&
-                    name != "GifScreen";
+                    name != "GifScreen" && name != "Masking";
 
                 if (isNotBattleResult) //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                 {
