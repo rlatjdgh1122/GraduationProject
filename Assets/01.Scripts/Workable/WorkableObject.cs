@@ -39,7 +39,7 @@ public class WorkableObject : TargetObject
 
     public void IncreaseCurrentNoise()
     {
-        _currentNoiseValue += _noiseValue; 
+        _currentNoiseValue += _noiseValue;
 
         NoiseManager.Instance.AddViewNoise(_noiseValue);
 

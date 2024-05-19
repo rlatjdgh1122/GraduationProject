@@ -81,6 +81,8 @@ public class NoiseManager : Singleton<NoiseManager>
     {
         _currentViewNoise += noise;
 
+        Debug.Log($"View Noise : {_currentViewNoise}, Add ViewNoise : {noise}");
+
         if(_currentViewNoise > _currentNoise)
             _currentViewNoise = _currentNoise;
 
@@ -98,6 +100,8 @@ public class NoiseManager : Singleton<NoiseManager>
         {
             _saveNoiseValue = _currentNoise - _maxNosise;
         }
+
+        Debug.Log($"Current Noise : {_currentNoise}, Max Noise : {_maxNosise}, Add Noise : {noise}, Save Noise : {_saveNoiseValue}");
 
         SignalHub.OnNoiseIncreaseEvent?.Invoke();
     }
