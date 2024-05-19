@@ -157,7 +157,7 @@ public class UIManager : Singleton<UIManager>
 
                 if (isNotBattleResult) //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                 {
-                    bool isbuildingPannel = name == "BuildingPanel" || name == "NexusPanel" ||
+                    bool isbuildingPannel = name == "BuildingPanel" || name == "NexusPanel" || // 나중에 지우소
                         name == "Buff" || name == "Resource" || name == "Defense" || name == "Trap";
 
                     if (isbuildingPannel)
