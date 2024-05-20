@@ -103,13 +103,13 @@ public class Penguin : Entity
 
     private void OnEnable()
     {
-        SignalHub.OnGroundArrivedEvent += FindTarget;
-        SignalHub.OnRaftArrivedEvent += FindTarget;
+        SignalHub.OnGroundArrivedEvent += ChaseToTarget;
+        SignalHub.OnRaftArrivedEvent += ChaseToTarget;
     }
     private void OnDisable()
     {
-        SignalHub.OnGroundArrivedEvent -= FindTarget;
-        SignalHub.OnRaftArrivedEvent -= FindTarget;
+        SignalHub.OnGroundArrivedEvent -= ChaseToTarget;
+        SignalHub.OnRaftArrivedEvent -= ChaseToTarget;
     }
 
     protected override void Awake()
@@ -217,6 +217,11 @@ public class Penguin : Entity
     public void FindNearestEnemy()
     {
         CurrentTarget = FindNearestTarget<Enemy>(50f, TargetLayer);
+    }
+
+    public void ChaseToTarget()
+    {
+        CurrentTarget = FindNearestTarget<Enemy>(350f, TargetLayer);
     }
 
     public virtual void LookTarget()
