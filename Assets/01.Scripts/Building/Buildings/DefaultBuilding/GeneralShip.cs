@@ -31,6 +31,7 @@ public class GeneralShip : MonoBehaviour
         transform.DOLookAt(innerTrm.transform.position, 2f);
     }
 
+    private bool isFirst = true;
     private void OnMouseDown()
     {
         if(!WaveManager.Instance.IsBattlePhase 
@@ -46,6 +47,15 @@ public class GeneralShip : MonoBehaviour
 
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             UIManager.Instance.ShowPanel("GeneralUI");
+
+            if (WaveManager.Instance.CurrentWaveCount == 5)
+            {
+                if (isFirst)
+                {
+                    UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
+                    isFirst = false;
+                }
+            }
         }
     }
 }

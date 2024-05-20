@@ -8,6 +8,10 @@ using UnityEngine.EventSystems;
 
 public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 {
+    [SerializeField]
+    private GeneralStat _generalInfo;
+
+    [HideInInspector]
     public GeneralStat GeneralInfoData;
     public GeneralDummyPengiun dummyGeneralPenguin;
 
@@ -29,12 +33,11 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
         GeneralInfoData.InfoData.Setting();
     }
 
-    public override void Awake()
+    private void Start()
     {
-        base.Awake();
-
         //여기서도 클론으로
-        GeneralInfoData = Instantiate(GeneralInfoData);
+        GeneralInfoData = Instantiate(_generalInfo);
+        Debug.Log(GeneralInfoData.name);
         PenguinManager.Instance.AddGeneralStat(GeneralInfoData.InfoData.PenguinType, GeneralInfoData);
 
         if (GeneralInfoData.GeneralDetailData.IsAvailable)
@@ -54,6 +57,10 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 
     public void SetUpgradeUI(GeneralStat generalStat)
     {
+        Debug.Log("셋업");
+        Debug.Log($"{generalStat.name}");
+        Debug.Log($"{generalStat.GeneralDetailData.levelUpPrice.GetValue():N0} 업그레이드");
+        Debug.Log($"{generalStat.GeneralDetailData.level} 업그레이드");
         purchaseButton.gameObject.SetActive(false);
         upgradeButton.gameObject.SetActive(true);
         icon.DOColor(Color.white, 0.6f);
@@ -72,7 +79,9 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
 
     public void OnPurchase()
     {
+        Debug.Log("눌리긴함");
         presenter.SetCurrentView(this); //이거 추가했음
+        Debug.Log(GeneralInfoData.name);
         presenter.Purchase(GeneralInfoData);
     }
 

@@ -50,14 +50,18 @@ public class GeneralUIPresenter : PopupUI
     {
         currentGeneralStat = general;
 
+        Debug.Log("구매 완료");
+
         if (currentCost >= currentGeneralStat.InfoData.Price)
         {
             PurchaseGeneral();
 
+            Debug.Log($"생성: {_currentView.dummyGeneralPenguin}");
             //더미 생성해주고
             var spawnDummy = _penguinFactory.SpawnDummyPenguinHandler(_currentView.dummyGeneralPenguin);
             //더미 펭귄한테 내 스탯 주기
             spawnDummy.Stat = _currentView.GeneralInfoData;
+            Debug.Log($"스텟: {spawnDummy.Stat}");
 
             LegionInventoryManager.Instance.AddPenguin(general.InfoData);
 
