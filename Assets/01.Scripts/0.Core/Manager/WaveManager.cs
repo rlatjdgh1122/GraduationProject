@@ -118,7 +118,7 @@ public class WaveManager : Singleton<WaveManager>
 
     private void GetReward() // 보상 획득 함수
     {
-        UIManager.Instance.ShowPanel("VictoryUI");
+        UIManager.Instance.ShowPanel("VictoryUI", true);
     }
 
     public void CloseWinPanel()
@@ -190,8 +190,10 @@ public class WaveManager : Singleton<WaveManager>
 
     public void CheckIsEndBattlePhase()
     {
+        Debug.Log($"Remain Enemy: {GameManager.Instance.GetCurrentEnemyCount()}");
         if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
         {
+            Debug.Log("GetReward");
             GetReward();
         }
     }

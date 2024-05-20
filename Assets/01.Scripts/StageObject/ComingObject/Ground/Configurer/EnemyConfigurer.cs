@@ -13,11 +13,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
         _enemyNames = enemyNames;
 
         _bossNames = bossNames;
-
-        foreach (var enemyName in _bossNames)
-        {
-            Debug.Log(enemyName);
-        }
     }
 
     public Enemy[] SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
@@ -46,10 +41,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
             enemyCountProportion = 0.25f; // 보스 나오면 짜바리들은 조금만 나오게
             spawnedEnemies.Add(spawnBoss);
-        }
-        else
-        {
-            Debug.Log(WaveManager.Instance.CurrentWaveCount);
         }
 
         int minEnemyCount = 1;
