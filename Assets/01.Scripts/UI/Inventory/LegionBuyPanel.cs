@@ -27,9 +27,9 @@ public class LegionBuyPanel : PopupUI
         _legionChange    = transform.parent.GetComponent<LegionChange>();
     }
 
-    public void CheckCanBuy(int currentCost, int price, int legionNumber)
+    public void CheckCanBuy(float currentCost, int price, int legionNumber)
     {
-        int amount = currentCost - price;
+        float amount = currentCost - price;
         _price = price;
 
         _currentCostText.text = currentCost.ToString();

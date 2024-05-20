@@ -49,9 +49,6 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         string points = questPointsQueue.Dequeue();
 
-        Debug.Log(points);
-
-
         Transform OnTrm = GameObject.Find(points).transform;
 
         Vector3 onPos = OnTrm.position;

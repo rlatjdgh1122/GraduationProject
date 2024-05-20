@@ -81,7 +81,7 @@ public class NoiseManager : Singleton<NoiseManager>
     {
         _currentViewNoise += noise;
 
-        Debug.Log($"View Noise : {_currentViewNoise}, Add ViewNoise : {noise}");
+        // Debug.Log($"View Noise : {_currentViewNoise}, Add ViewNoise : {noise}");
 
         if(_currentViewNoise > _currentNoise)
             _currentViewNoise = _currentNoise;

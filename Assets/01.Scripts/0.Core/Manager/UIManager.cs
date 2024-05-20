@@ -82,6 +82,14 @@ public class UIManager : Singleton<UIManager>
 
         if (!isOverlap)
         {
+            if (uiName == "VictoryUI")
+            {
+                foreach (var name in currentPopupUI)
+                {
+                    Debug.Log(name.name);
+                }
+            }
+
             if (!CheckShowAble(popupUI.UIGroup)) return;
 
             for (int i = 0; i < currentPopupUI.Count; i++)
@@ -109,16 +117,6 @@ public class UIManager : Singleton<UIManager>
 
     public bool CheckShowAble(UIType type)
     {
-        try
-        {
-            Debug.Log($"_currentUI: {_currentUI}");
-            Debug.Log($"_currentUI.Transferable.Contains(type): {_currentUI.Transferable.Contains(type)}");
-            Debug.Log(type.ToString());
-        }
-        catch
-        {
-
-        }
         return _currentUI == null || _currentUI.Transferable.Contains(type);
     }
 

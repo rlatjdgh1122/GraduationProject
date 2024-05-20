@@ -17,7 +17,7 @@ public class GeneralUIPresenter : PopupUI
 
     private DummyPenguinFactory _penguinFactory;
 
-    private int currentCost
+    private float currentCost
     {
         get
         {
