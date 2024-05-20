@@ -38,24 +38,13 @@ public class Ground : MonoBehaviour, IComingObject
 
     public void ActivateEnemies()
     {
-        CoroutineUtil.CallWaitForSeconds(0.15f,
-         () =>
-         {
-             foreach (var enemy in _enemies)
-             {
-                 enemy.ColliderCompo.enabled = true;
-             }
-         },
-
-         () =>
-         {
-             foreach (var enemy in _enemies)
-             {
-                 enemy.NavAgent.enabled = true;
-                 enemy.StateMachine.ChangeState(EnemyStateType.Move);
-                 enemy.FindNearestTarget();
-             }
-         });
+        foreach (var enemy in _enemies)
+        {
+            enemy.ColliderCompo.enabled = true;
+            enemy.NavAgent.enabled = true;
+            enemy.StateMachine.ChangeState(EnemyStateType.Move);
+            enemy.FindNearestTarget();
+        }
     }
 
     private void GroundMoveHandler()

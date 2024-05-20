@@ -35,7 +35,7 @@ public class Raft : PoolableMono, IComingObject
         for(int i = 0; i <  enemies.Length; i++)
         {
             _enemies[i].gameObject.transform.localScale *= 3;
-            _enemies[i].transform.localPosition = new Vector3(0f, 1f, 0f);
+            _enemies[i].transform.localPosition = new Vector3(0f, 2f, 0f);
         }
     }
 
@@ -62,24 +62,13 @@ public class Raft : PoolableMono, IComingObject
 
     private void ActivateEnemies()
     {
-        CoroutineUtil.CallWaitForSeconds(0.15f,
-           () =>
-           {
-               foreach (var enemy in _enemies)
-               {
-                   enemy.ColliderCompo.enabled = true;
-               }
-           },
-
-           () =>
-           {
-               foreach (var enemy in _enemies)
-               {
-                   enemy.NavAgent.enabled = true;
-                   enemy.StateMachine.ChangeState(EnemyStateType.Move);
-                   enemy.FindNearestTarget();
-               }
-           });
+        foreach (var enemy in _enemies)
+        {
+            enemy.ColliderCompo.enabled = true;
+            enemy.NavAgent.enabled = true;
+            enemy.StateMachine.ChangeState(EnemyStateType.Move);
+            enemy.FindNearestTarget();
+        }
     }
 
     public void SetMoveTarget(Transform trm)
