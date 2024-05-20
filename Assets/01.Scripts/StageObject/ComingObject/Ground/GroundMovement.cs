@@ -44,8 +44,8 @@ public class GroundMovement : ComingObjetMovement
                                               () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
         NavmeshManager.Instance.NavmeshBake();
-        _ground.ActivateEnemies(); //이거
         SignalHub.OnGroundArrivedEvent?.Invoke();
+        _ground.ActivateEnemies(); //이거
         //CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
 
         CoroutineUtil.CallWaitForSeconds(.5f, null, () => Destroy(_groundHitEffect));

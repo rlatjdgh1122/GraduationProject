@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         return activeCount;
-    }
+    } 
 
     public int GetCurrentDeadEnemyCount()
     {
