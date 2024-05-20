@@ -15,8 +15,7 @@ public class PenguinThrowState : State
     {
         base.EnterState();
 
-        if (_penguin.CurrentTarget != null)
-            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+        AttackEnter();
 
         if (_penguin.CurrentTarget == null)
         {
@@ -43,5 +42,6 @@ public class PenguinThrowState : State
     public override void ExitState()
     {
         base.ExitState();
+        AttackExit();
     }
 }
