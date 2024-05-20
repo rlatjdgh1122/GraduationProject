@@ -361,7 +361,7 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 406b804e62846d34c9ee9847723bbe63, type: 2}
   CurrentTarget: {fileID: 0}
   _maxDetectEnemy: 5
-  innerDistance: 7
+  innerDistance: 30
   attackDistance: 1.5
   TargetLayer:
     serializedVersion: 2
@@ -390,6 +390,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   WaterFallEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitEvent:
     m_PersistentCalls:
       m_Calls: []
   OnDeathEvent:
@@ -429,6 +432,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!114 &6316292419597617660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7025,6 +7029,7 @@ MonoBehaviour:
     - {x: -0.0011716121, y: -0.023782756, z: 0.99971646}
     - {x: -0.46358585, y: -0.056091066, z: 0.88427484}
   renderers: []
+  ExceptRenderer: []
 --- !u!114 &7807761171550603744
 MonoBehaviour:
   m_ObjectHideFlags: 0

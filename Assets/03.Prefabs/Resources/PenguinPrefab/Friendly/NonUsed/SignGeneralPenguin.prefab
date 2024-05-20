@@ -638,6 +638,9 @@ MonoBehaviour:
   OnAoEAttackTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnStunTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnRangeAttackTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -645,6 +648,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAnimationEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashEndTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOnTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEffectOffTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &2660982613146323686
@@ -1573,8 +1585,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222b24ce834742d47b4a862ec3ced7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healEffect: {fileID: -198098653787150809, guid: 880628dabbf32df439f61db0b7a24c20,
-    type: 3}
   _effectEndTime: 2
 --- !u!1 &7646628238967564039
 GameObject:
@@ -1625,6 +1635,7 @@ GameObject:
   - component: {fileID: 9110268882776743276}
   - component: {fileID: 1852338766902700292}
   - component: {fileID: 6044028384851319910}
+  - component: {fileID: 5071400429889375860}
   m_Layer: 11
   m_Name: SignGeneralPenguin
   m_TagString: Untagged
@@ -1666,35 +1677,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterStat: {fileID: 11400000, guid: 7162521df94a26641899ec1d6b1d38bf, type: 2}
-  innerDistance: 10
-  attackDistance: 1.5
-  moveSpeed: 4.5
-  attackSpeed: 1
-  maxDetectedCount: 0
-  provokeRange: 25
   CurrentTarget: {fileID: 0}
-  IsDead: 0
-  owner:
-    Legion: 0
-    IsMoving: 0
-    Soldiers: []
-    General: {fileID: 0}
-    info:
-      totalCount: 0
-      basicCount: 0
-      archerCount: 0
-      shieldCount: 0
-      basicTimes: 0
-      archerTimes: 0
-      shieldTimes: 0
+  _maxDetectEnemy: 5
+  innerDistance: 30
+  attackDistance: 1.5
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackSpeed: 1
   passiveData: {fileID: 11400000, guid: 6e46276f3dfa51f4f863a55dc8911a85, type: 2}
-  ligeonStat:
-    IncStat:
-    - type: 1024
-      value: 50
-    DecStat:
-    - type: 128
-      value: 50
+  ArmyTriggerCalled: 0
+  WaitForCommandToArmyCalled: 1
+  SuccessfulToArmyCalled: 0
+  TargetLock: 0
+  skill: {fileID: 0}
+  canSpinAttack: 0
   healValue: 10
 --- !u!114 &5359918780269923923
 MonoBehaviour:
@@ -1710,21 +1707,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
-  OnHealedEvent:
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  WaterFallEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7940957576370655278}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnHitEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1741,6 +1729,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
   OnUIUpdate:
@@ -1773,6 +1764,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsDead: 0
+  OnHpBarUI: 0
 --- !u!114 &4249885385378917100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1800,6 +1793,7 @@ MonoBehaviour:
   HitPoint: {x: 0, y: 0, z: 0}
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
+  HitTarget: {fileID: 0}
 --- !u!143 &9110268882776743276
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1867,6 +1861,20 @@ MonoBehaviour:
   IncludingChildren: 1
   bakeKeys: []
   bakeValues: []
+  renderers: []
+  ExceptRenderer: []
+--- !u!114 &5071400429889375860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7850825631145298133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7868602062511878558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2191,7 +2199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitToDisappear: 3.8
-  _canvas: {fileID: 5932791649326627044}
+  _hpbar: {fileID: 0}
 --- !u!222 &1372147777801818598
 CanvasRenderer:
   m_ObjectHideFlags: 0
