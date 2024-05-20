@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseElementsConfigurer
 {
-    private readonly float setposY = 1.9f;
+    private readonly float setposY = 2f;
     private readonly float groundRadius = 5f;
     private readonly float raftRadius = 2f;
     private readonly float checkDistance = 2f;
