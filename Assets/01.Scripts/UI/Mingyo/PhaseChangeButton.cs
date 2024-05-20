@@ -14,8 +14,8 @@ public class PhaseChangeButton : MonoBehaviour
     {
         get
         {
-            if (isOn) { return 300.0f; }
-            return -300.0f;
+            if (isOn) { return 335.0f; }
+            return -335.0f;
         }
     }
 
@@ -57,7 +57,6 @@ public class PhaseChangeButton : MonoBehaviour
             OnOffButton();
         }
     }
-
     private void OnOffButton()
     {
         isOn = !isOn;
