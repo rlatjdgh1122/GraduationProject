@@ -51,6 +51,7 @@ public class PenguinStunState : State
     public override void ExitState()
     {
         _penguin.AnimatorCompo.speed = 1;
+        AttackExit();
         base.ExitState();
     }
 }
