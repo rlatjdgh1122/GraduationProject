@@ -72,6 +72,11 @@ public class NexusUpgradePanel : NexusPopupUI
         UpdateUI();
     }
 
+    public void HideNexusUpgradeUI()
+    {
+        UIManager.Instance.HidePanel("NexusUpgradePanel");
+    }
+
     public override void HidePanel()
     {
         base.HidePanel();

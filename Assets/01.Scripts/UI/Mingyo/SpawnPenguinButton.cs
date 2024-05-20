@@ -14,6 +14,8 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
     private int _price;
 
     private PenguinInfoDataSO _infoData;
+    public PenguinInfoDataSO InfoData => _infoData;
+
     private DummyPenguin _dummyPenguin;
     private PenguinStoreUI _penguinStore;
     
@@ -25,6 +27,8 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
     private Image _locked;
 
     private bool _isLocked = false;
+
+    public bool IsWaveLock { get; set; } = false;
 
     protected virtual void Awake()
     {
@@ -61,6 +65,8 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         }
     }
 
+    public void LockedButtonInEndWave() => _locked.gameObject.SetActive(IsWaveLock);
+
     public void UnLockedButton()
     {
         _isLocked = false;
@@ -82,7 +88,7 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_isLocked)
+        if(_isLocked || IsWaveLock)
         {
             UIManager.Instance.ShowWarningUI("잠겨있습니다!");
             return;
