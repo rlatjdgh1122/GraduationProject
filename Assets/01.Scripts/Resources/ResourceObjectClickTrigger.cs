@@ -6,8 +6,6 @@ public class ResourceObjectClickTrigger : MonoBehaviour
 {
     ResourceObject _resourceObject;
 
-    private bool isFirst = true;
-
     private void Awake()
     {
         _resourceObject = transform.GetComponent<ResourceObject>();
@@ -19,10 +17,10 @@ public class ResourceObjectClickTrigger : MonoBehaviour
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI");
 
-            if (isFirst)
+            if (ResourceManager.Instance.IsFirst)
             {
                 UIManager.Instance.GifController.ShowGif(GifType.WorkerPenguin);
-                isFirst = false;
+                ResourceManager.Instance.IsFirst = false;
             }
 
             if (WaveManager.Instance.CurrentWaveCount < 4)

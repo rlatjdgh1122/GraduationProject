@@ -12,6 +12,8 @@ public class ResourceManager : Singleton<ResourceManager>
     public delegate void OnUIUpdateHandler(Resource resource, int stackCount);
     public event OnUIUpdateHandler OnUIUpdate;
 
+    public bool IsFirst { get; set; } = true;
+
     public override void Awake()
     {
         //resourceStack = new List<Resource>();
