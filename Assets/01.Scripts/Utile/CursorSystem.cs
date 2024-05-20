@@ -17,13 +17,16 @@ public class CursorSystem : MonoBehaviour
 
     private void ChangeCursorIcon(MovefocusMode cursorMode)
     {
+
         if (cursorMode == MovefocusMode.Command)
         {
-            Cursor.SetCursor(_commandCursor, new Vector2(_commandCursor.width / 3, 0), CursorMode.Auto);
+            Vector2 cursorOffset = new Vector2(_commandCursor.width / 2, _commandCursor.height / 2);
+            Cursor.SetCursor(_commandCursor, cursorOffset, CursorMode.Auto);
         }
         else
         {
-            Cursor.SetCursor(_battleCursor, new Vector2(_battleCursor.width / 3, 0), CursorMode.Auto);
+            Vector2 cursorOffset = new Vector2(_battleCursor.width / 2, _battleCursor.height / 2);
+            Cursor.SetCursor(_battleCursor, cursorOffset, CursorMode.Auto);
         }
     }
 }
