@@ -15,7 +15,7 @@ public class ResourceObjectClickTrigger : MonoBehaviour
         if (!WaveManager.Instance.IsBattlePhase)
         {
             ResourceManager.Instance.SelectedResource = _resourceObject;
-            UIManager.Instance.ShowPanel("ResourceUI");
+            UIManager.Instance.ShowPanel("ResourceUI", true);
 
             if (ResourceManager.Instance.IsFirst)
             {

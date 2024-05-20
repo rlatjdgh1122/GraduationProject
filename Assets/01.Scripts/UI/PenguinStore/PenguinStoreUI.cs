@@ -32,7 +32,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
 
     public void OnEnableStorePanel() //스토어 패널 활성화
     {
-        UIManager.Instance.ShowPanel("StorePanel", true);
+        UIManager.Instance.ShowPanel("StorePanel");
     }
 
     public void OnDisableStorePanel()//스토어 패널 비활성화
