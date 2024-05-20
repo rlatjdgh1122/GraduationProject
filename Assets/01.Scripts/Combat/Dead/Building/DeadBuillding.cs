@@ -10,6 +10,7 @@ public class DeadBuillding : MonoBehaviour
 
     private MeshRenderer[] _visualRenderers;
     private BaseBuilding _parentBuilding;
+    public BaseBuilding ParentBuilding => _parentBuilding;
 
     private void Awake()
     {

@@ -34,6 +34,7 @@ public class Raft : PoolableMono, IComingObject
 
         for(int i = 0; i <  enemies.Length; i++)
         {
+            _enemies[i].gameObject.transform.localScale = Vector3.one;
             _enemies[i].gameObject.transform.localScale *= 3;
             _enemies[i].transform.localPosition = new Vector3(0f, 2f, 0f);
         }

@@ -29,6 +29,7 @@ public class BuildingView : NexusPopupUI
     {
         base.Start();
         building = _buildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
+        building.CurrentInstallCount = 0;
         spawn = GetComponent<SpawnBuildingButton>();
         purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
 
