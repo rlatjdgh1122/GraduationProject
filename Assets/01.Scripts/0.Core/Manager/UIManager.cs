@@ -174,6 +174,11 @@ public class UIManager : Singleton<UIManager>
             }
             else if (currentPopupUI.Count > 0)
             {
+                foreach(var popuis in currentPopupUI)
+                {
+                    if (popuis.name == "Masking" || popuis.name == "GifScreen") { return; }
+                }
+
                 string name = currentPopupUI.Peek().name;
 
                 bool isNotBattleResult = name != "DefeatUI" && name != "VictoryUI" &&
