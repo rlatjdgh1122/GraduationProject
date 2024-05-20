@@ -18,7 +18,7 @@ public class CostParticle : PoolableMono
     private bool IsParticleImage;
     private int _cost;
     private int _repeat;        
-    private int _increaseValue; //증가값
+    private float _increaseValue; //증가값
     private int _divideCost = 0;
 
     private void Awake()

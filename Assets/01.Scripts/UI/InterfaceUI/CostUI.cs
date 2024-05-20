@@ -52,7 +52,7 @@ public class CostUI : MonoBehaviour
     #region ParticleImage
 
 
-    public void CostArriveText(int repeat)
+    public void CostArriveText(float repeat)
     {
         _currentCostText.text = $"{repeat}";
     }
@@ -72,7 +72,7 @@ public class CostUI : MonoBehaviour
 
         ChangeCost();
     }
-    public void SubtractCost(int value)
+    public void SubtractCost(float value)
     {
         Color minusColor = new Color(255, 0, 0); //юс╫ц
         _addCostText.color = minusColor;
@@ -91,7 +91,7 @@ public class CostUI : MonoBehaviour
             });
     }
 
-    public void OnlyCurrentCostView(int cost)
+    public void OnlyCurrentCostView(float cost)
     {
         _currentCostText.text = $"{cost}";
     }
