@@ -42,7 +42,7 @@ public class NexusBase : MonoBehaviour
                 isFirst = false;
             }
 
-            UIManager.Instance.ShowPanel("NexusUI");
+            UIManager.Instance.ShowPanel("NexusUI", true);
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             NexusManager.Instance.CanClick = true;
         }
