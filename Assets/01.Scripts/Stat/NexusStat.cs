@@ -7,7 +7,7 @@ public class NexusStat : BaseStat
 {
     [Header("Level")]
     public int level;
-    public int upgradePrice;
+    public float upgradePrice;
     public int needResourceHigh;
     public int needResourceLow;
     public int priceIncreaseValue;

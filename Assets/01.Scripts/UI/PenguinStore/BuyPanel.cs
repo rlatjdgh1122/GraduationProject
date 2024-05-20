@@ -27,7 +27,7 @@ public class BuyPanel : PopupUI
     private int _cnt = 1;
     private int _price = 0;
     private bool _canBuy;
-    private int _amount = 0;
+    private float _amount = 0;
 
     public override void Awake()
     {
@@ -86,7 +86,7 @@ public class BuyPanel : PopupUI
     private void AmountCostUpdate() //현재 보유 재화에서 총 가격을 뺀 남은 재화 업뎃
     {
         PriceUpdate();
-        int amount = CostManager.Instance.Cost - _amountPrice;
+        float amount = CostManager.Instance.Cost - _amountPrice;
 
         if (_amountPrice > CostManager.Instance.Cost) //만약 총가격이 현재 재화보다 크다면
         {

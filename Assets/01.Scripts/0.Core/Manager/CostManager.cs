@@ -8,9 +8,9 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class CostManager : Singleton<CostManager>
 {
-    private int _currentCost;
+    private float _currentCost;
 
-    public int Cost
+    public float Cost
     {
         get
         {
@@ -44,7 +44,7 @@ public class CostManager : Singleton<CostManager>
     /// 현재 재화에서 가격을 빼주기
     /// </summary>
     /// <param name="price">가격</param>
-    public void SubtractFromCurrentCost(int price) //현재 재화에서 빼기
+    public void SubtractFromCurrentCost(float price) //현재 재화에서 빼기
     {
         SoundManager.Play2DSound(_buySound);
 
@@ -58,9 +58,9 @@ public class CostManager : Singleton<CostManager>
     /// </summary>
     /// <param name="price">가격</param>
     /// <returns></returns>
-    public bool CheckRemainingCost(int price)
+    public bool CheckRemainingCost(float price)
     {
-        int remainCost = _currentCost - price;
+        float remainCost = _currentCost - price;
 
         return remainCost >= 0 ? true : false;
     }
@@ -89,7 +89,7 @@ public class CostManager : Singleton<CostManager>
         _currentCost += value;
     }
 
-    public void CostArriveText(int cost)
+    public void CostArriveText(float cost)
     {
         _costUI.CostArriveText(cost);
     } 
