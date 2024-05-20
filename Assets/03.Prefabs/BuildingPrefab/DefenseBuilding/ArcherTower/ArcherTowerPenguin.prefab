@@ -1256,7 +1256,6 @@ GameObject:
   - component: {fileID: 2030206095074393266}
   - component: {fileID: 8721236801684161815}
   - component: {fileID: 6097800464092270967}
-  - component: {fileID: 1692377265151070789}
   - component: {fileID: 3515857164637395661}
   - component: {fileID: 3170093532850742559}
   m_Layer: 11
@@ -1306,10 +1305,7 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 0
-  moveSpeed: 4.5
   attackSpeed: 1
-  maxDetectedCount: 0
-  provokeRange: 25
   passiveData: {fileID: 0}
   ArmyTriggerCalled: 0
   WaitForCommandToArmyCalled: 1
@@ -1392,6 +1388,7 @@ MonoBehaviour:
   bakeKeys: []
   bakeValues: []
   renderers: []
+  ExceptRenderer: []
 --- !u!114 &8721236801684161815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,6 +1409,9 @@ MonoBehaviour:
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1425,6 +1425,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!156049354 &6097800464092270967
 Grid:
   m_ObjectHideFlags: 0
@@ -1437,18 +1438,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &1692377265151070789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4862602252113058120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &3515857164637395661
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1456,7 +1445,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4862602252113058120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5

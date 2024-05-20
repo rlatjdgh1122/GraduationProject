@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(PenguinDeadController))]
 public class Penguin : Entity
 {
 
