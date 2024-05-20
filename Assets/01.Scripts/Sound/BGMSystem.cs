@@ -25,10 +25,17 @@ public class BGMSystem : MonoBehaviour
 
     private void Awake()
     {
-        SoundManager.Play2DSound(_normalBGM, SoundType.BGM);
-        _currentBGM = _normalBGM;
+        //SoundManager.Play2DSound(_normalBGM, SoundType.BGM);
+        //_currentBGM = _normalBGM;
         //InputButtonSfx();
     }
+
+    private void Start()
+    {
+        SoundManager.Play2DSound(_normalBGM, SoundType.BGM);
+        _currentBGM = _normalBGM;
+    }
+
     private void InputButtonSfx()
     {
         foreach (Button allBtn in FindObjectsOfType<Button>())
@@ -41,6 +48,7 @@ public class BGMSystem : MonoBehaviour
     {
         SignalHub.OnBattlePhaseStartEvent += StartBattleBGM;
         SignalHub.OnBattlePhaseEndEvent += EndBattleBGM;
+
     }
 
     private void OnDisable()

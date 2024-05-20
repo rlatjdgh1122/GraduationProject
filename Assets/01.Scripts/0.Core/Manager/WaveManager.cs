@@ -134,6 +134,11 @@ public class WaveManager : Singleton<WaveManager>
         SignalHub.OnBattlePhaseStartPriorityEvent?.Invoke();
         CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnBattlePhaseStartEvent?.Invoke());
 
+        if (currentWaveCount == 4)
+            UIManager.Instance.ShowBossWarningUI("춘자 등장!");
+        if (currentWaveCount == 9)
+            UIManager.Instance.ShowBossWarningUI("보스 등장!");
+
         if (isFirst)
         {
             UIManager.Instance.GifController.ShowGif(GifType.PenguinFight);
