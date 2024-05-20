@@ -62,16 +62,24 @@ public class Raft : PoolableMono, IComingObject
 
     private void ActivateEnemies()
     {
-        foreach (Enemy enemy in _enemies)
-        {
-            enemy.NavAgent.enabled = true;
-            enemy.IsMove = true;
-            enemy.transform.SetParent(null);
-            enemy.ColliderCompo.enabled = true;
+        CoroutineUtil.CallWaitForSeconds(0.15f,
+           () =>
+           {
+               foreach (var enemy in _enemies)
+               {
+                   enemy.ColliderCompo.enabled = true;
+               }
+           },
 
-            enemy.StateMachine.ChangeState(EnemyStateType.Move);
-            enemy.FindNearestTarget();
-        }
+           () =>
+           {
+               foreach (var enemy in _enemies)
+               {
+                   enemy.NavAgent.enabled = true;
+                   enemy.StateMachine.ChangeState(EnemyStateType.Move);
+                   enemy.FindNearestTarget();
+               }
+           });
     }
 
     public void SetMoveTarget(Transform trm)

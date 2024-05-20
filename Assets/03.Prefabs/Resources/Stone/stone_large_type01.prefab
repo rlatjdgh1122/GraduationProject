@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: -5280869224777893067}
   - component: {fileID: -5903858803645535922}
   - component: {fileID: 5545645647195631038}
+  - component: {fileID: 1427436215501568450}
   m_Layer: 17
   m_Name: stone_large_type01
   m_TagString: Untagged
@@ -297,6 +298,22 @@ CapsuleCollider:
   m_Height: 2.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.3, z: 0}
+--- !u!208 &1427436215501568450
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4379172729860633078}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.2, y: 0.5, z: 1.2}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4420004203288298737
 GameObject:
   m_ObjectHideFlags: 0

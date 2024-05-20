@@ -38,18 +38,24 @@ public class Ground : MonoBehaviour, IComingObject
 
     public void ActivateEnemies()
     {
-        CoroutineUtil.CallWaitForOneFrame(() =>
-        {
-            foreach (Enemy enemy in _enemies)
-            {
-                enemy.NavAgent.enabled = true;
-                enemy.IsMove = true;
-                enemy.ColliderCompo.enabled = true;
+        CoroutineUtil.CallWaitForSeconds(0.15f,
+         () =>
+         {
+             foreach (var enemy in _enemies)
+             {
+                 enemy.ColliderCompo.enabled = true;
+             }
+         },
 
-                enemy.StateMachine.ChangeState(EnemyStateType.Move);
-                enemy.FindNearestTarget();
-            }
-        });
+         () =>
+         {
+             foreach (var enemy in _enemies)
+             {
+                 enemy.NavAgent.enabled = true;
+                 enemy.StateMachine.ChangeState(EnemyStateType.Move);
+                 enemy.FindNearestTarget();
+             }
+         });
     }
 
     private void GroundMoveHandler()
@@ -71,7 +77,7 @@ public class Ground : MonoBehaviour, IComingObject
 
     public void UpdateOutlineColor(OutlineColorType type)
     {
-        if(_outline == null)
+        if (_outline == null)
         {
             _outline = GetComponent<Outline>();
         }
