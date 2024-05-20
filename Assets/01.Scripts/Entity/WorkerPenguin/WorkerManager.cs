@@ -68,6 +68,9 @@ public class WorkerManager : Singleton<WorkerManager>
                 penguin.StartWork(workableObject);
             }
         }
+
+        if (WaveManager.Instance.CurrentWaveCount == 3)
+            UIManager.Instance.ShowWarningUI("자원을 캘 때에는 가만히 있어 주세요");
     }
 
     public void ReturnWorker(WorkableObject workableObject)
