@@ -221,7 +221,8 @@ public class Penguin : Entity
 
     public void ChaseToTarget()
     {
-        CurrentTarget = FindNearestTarget<Enemy>(350f, TargetLayer);
+        //적이 빙하가 붙자마자 콜라이더 켜지니깐 켜질때까지 기다리고 찾기
+        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => FindNearestEnemy());
     }
 
     public virtual void LookTarget()
@@ -272,11 +273,11 @@ public class Penguin : Entity
         if (NavAgent.isActiveAndEnabled)
         {
             NavAgent.isStopped = false;
-/*
-            if (movingCoroutine != null)
-            {
-                StopCoroutine(movingCoroutine);
-            }*/
+            /*
+                        if (movingCoroutine != null)
+                        {
+                            StopCoroutine(movingCoroutine);
+                        }*/
 
             if (prevMousePos != Vector3.zero)
             {
