@@ -20,6 +20,10 @@ public class ResourceConfigurer : BaseElementsConfigurer
         {
             randIdx = 0;
         }
+        else if(WaveManager.Instance.CurrentWaveCount < 3)
+        {
+            randIdx = 2;
+        }
         else
         {
             randIdx = Random.Range(0, _resourceGeneratePattern.Length);
