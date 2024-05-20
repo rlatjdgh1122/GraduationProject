@@ -45,8 +45,8 @@ public class GroundMovement : ComingObjetMovement
 
         NavmeshManager.Instance.NavmeshBake();
         _ground.ActivateEnemies(); //ÀÌ°Å
-
-        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
+        SignalHub.OnGroundArrivedEvent?.Invoke();
+        //CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
 
         CoroutineUtil.CallWaitForSeconds(.5f, null, () => Destroy(_groundHitEffect));
     }
