@@ -84,6 +84,8 @@ public class DialogSystem : MonoBehaviour
         isTyping = false;
     }
 
+
+    int fiveWaveidx = 0;
     private void End()
     {
         canClick = false;
@@ -102,7 +104,11 @@ public class DialogSystem : MonoBehaviour
 
         if (WaveManager.Instance.CurrentWaveCount == 5)
         {
-            UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
+            fiveWaveidx++;
+            if (fiveWaveidx == 2)
+            {
+                UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
+            }
         }
     }
 
