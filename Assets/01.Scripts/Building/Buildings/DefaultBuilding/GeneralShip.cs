@@ -34,6 +34,9 @@ public class GeneralShip : MonoBehaviour
     private bool isFirst = true;
     private void OnMouseDown()
     {
+        Debug.Log($"GeneralShip Debug) IsBattlePhase {WaveManager.Instance.IsBattlePhase}, " +
+            $"Gif {UIManager.Instance.GifController.CanShow}, " +
+            $"Legion {LegionInventoryManager.Instance.CanUI}, Nexus {NexusManager.Instance.CanClick}");
         if(!WaveManager.Instance.IsBattlePhase 
             && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI
