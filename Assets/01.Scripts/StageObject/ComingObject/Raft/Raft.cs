@@ -55,9 +55,9 @@ public class Raft : PoolableMono, IComingObject
 
     public void Arrived()
     {
-        ActivateEnemies(); 
         NavmeshManager.Instance.NavmeshBake();
         SignalHub.OnRaftArrivedEvent?.Invoke();
+        ActivateEnemies(); 
     }
 
     private void ActivateEnemies()

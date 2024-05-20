@@ -155,7 +155,8 @@ public class Enemy : Entity
     {
         //SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
         //SignalHub.OnEnemyPenguinDead?.Invoke();
-        WaveManager.Instance.CheckIsEndBattlePhase();
+        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => WaveManager.Instance.CheckIsEndBattlePhase());
+
     }
 
     #region passive

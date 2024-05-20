@@ -5,7 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class WaveManager : Singleton<WaveManager>  
+public class WaveManager : Singleton<WaveManager>
 {
     #region 사용 변수들
 
@@ -190,6 +190,9 @@ public class WaveManager : Singleton<WaveManager>
 
     public void CheckIsEndBattlePhase()
     {
-        if (GameManager.Instance.GetCurrentEnemyCount() <= 0) { GetReward(); }
+        if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
+        {
+            GetReward();
+        }
     }
 }
