@@ -68,6 +68,7 @@ public class CameraSystem : MonoBehaviour
     {
         if (UIManager.Instance.currentPopupUI.Count <= 0)
         {
+            if(!isMoving) { isMoving = true; }
             CameraControl();
             CameraRotate();
             CameraZoomHandle();
