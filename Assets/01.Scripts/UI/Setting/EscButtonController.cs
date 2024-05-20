@@ -13,7 +13,8 @@ public class EscButtonController : EscUI
 
     public void GotoMainMenuBtnClick()
     {
-        LoadingSceneController.LoadScene("StartScene");
+        Application.Quit();
+        //LoadingSceneController.LoadScene("StartScene");
     }
 
     public void ShowOptionBtnClick()
