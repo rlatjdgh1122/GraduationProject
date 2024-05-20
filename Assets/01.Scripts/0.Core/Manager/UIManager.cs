@@ -103,13 +103,23 @@ public class UIManager : Singleton<UIManager>
         else
         {
             popupUI.ShowPanel();
+            //_currentUI = popupUI;
         }
     }
 
     public bool CheckShowAble(UIType type)
     {
-        return _currentUI == null || _currentUI.Transferable.Contains(type)
-            || type == UIType.Gif;
+        try
+        {
+            Debug.Log($"_currentUI: {_currentUI}");
+            Debug.Log($"_currentUI.Transferable.Contains(type): {_currentUI.Transferable.Contains(type)}");
+            Debug.Log(type.ToString());
+        }
+        catch
+        {
+
+        }
+        return _currentUI == null || _currentUI.Transferable.Contains(type);
     }
 
     public void ChangeCurrentUI()

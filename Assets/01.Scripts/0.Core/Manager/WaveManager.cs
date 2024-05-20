@@ -162,11 +162,6 @@ public class WaveManager : Singleton<WaveManager>
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
         }
 
-        if (currentWaveCount == 3)
-        {
-            UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
-        }
-
         SignalHub.OnBattlePhaseEndEvent?.Invoke();
     }
 

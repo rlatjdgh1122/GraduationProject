@@ -95,7 +95,12 @@ public class DialogSystem : MonoBehaviour
             MaskingUIManager.Instance.SetMaskingImagePos();
         }
 
-        if (WaveManager.Instance.CurrentWaveCount == 4)
+        if (WaveManager.Instance.CurrentWaveCount == 3)
+        {
+            UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
+        }
+
+        if (WaveManager.Instance.CurrentWaveCount == 5)
         {
             UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
         }

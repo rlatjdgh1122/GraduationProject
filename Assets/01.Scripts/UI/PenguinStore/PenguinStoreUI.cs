@@ -32,7 +32,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
 
     public void OnEnableStorePanel() //스토어 패널 활성화
     {
-        UIManager.Instance.ShowPanel("StorePanel");
+        UIManager.Instance.ShowPanel("StorePanel", true);
     }
 
     public void OnDisableStorePanel()//스토어 패널 비활성화
@@ -42,7 +42,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
 
     public void OnEnableBuyPanel() //구매 패널 활성화
     {
-        UIManager.Instance.ShowPanel("BuyPanel");
+        UIManager.Instance.ShowPanel("BuyPanel", true);
     }
 
     public void OnDisableBuyPanel()//구매 패널 비활성화
@@ -52,7 +52,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
 
     public void OnEnablePenguinInfo() //펭귄 정보 활성화
     {
-        UIManager.Instance.ShowPanel("DetailInfoPanel");
+        UIManager.Instance.ShowPanel("DetailInfoPanel", true);
     }
 
     public void OnDisablePenguinInfo() //펭귄 정보 비활성화
