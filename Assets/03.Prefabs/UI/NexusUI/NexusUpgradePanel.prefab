@@ -896,7 +896,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2865724998319055452}
         m_TargetAssemblyTypeName: NexusUpgradePanel, Assembly-CSharp
-        m_MethodName: HidePanel
+        m_MethodName: HideNexusUpgradeUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3128,9 +3128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelFadeTime: 0.3
   _panelDelayTime: 0
+  _transferable: 
   _soundName: 16
   _uiGroup: 3
-  CanShowAnotherUI: 0
   _level: {fileID: 7461601812242735254}
   _previousHp: {fileID: 3690442106481515091}
   _currentHp: {fileID: 6388776621771091589}
@@ -3577,7 +3577,7 @@ PrefabInstance:
     - target: {fileID: 2373548326963315315, guid: bb818bcd1f8fc4170ad421ddfa84c1e9,
         type: 3}
       propertyPath: _bursts.Array.data[0].used
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3817557494372724381, guid: bb818bcd1f8fc4170ad421ddfa84c1e9,
         type: 3}
@@ -3597,7 +3597,7 @@ PrefabInstance:
     - target: {fileID: 5476149695428531946, guid: bb818bcd1f8fc4170ad421ddfa84c1e9,
         type: 3}
       propertyPath: _bursts.Array.data[0].used
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8805784165914375672, guid: bb818bcd1f8fc4170ad421ddfa84c1e9,
         type: 3}
