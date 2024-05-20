@@ -95,7 +95,9 @@ public class DummyPenguin : PoolableMono
 
     private void OnMouseDown()
     {
-        if (UIManager.Instance.CheckShowAble(UIType.Info) && !LegionInventoryManager.Instance.CanUI)
+        if (UIManager.Instance.CheckShowAble(UIType.Info) 
+            && !LegionInventoryManager.Instance.CanUI
+            && !NexusManager.Instance.CanClick)
         {
             PenguinManager.Instance.ShowPenguinInfoUI(this);
             OutlineCompo.enabled = true;

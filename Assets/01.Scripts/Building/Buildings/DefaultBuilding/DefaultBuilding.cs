@@ -48,7 +48,8 @@ public class DefaultBuilding : BaseBuilding
     private void OnMouseDown()
     {
         if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/
-            && !LegionInventoryManager.Instance.CanUI)
+            && !LegionInventoryManager.Instance.CanUI
+            && !NexusManager.Instance.CanClick)
         {
             if (isFirst)
             {

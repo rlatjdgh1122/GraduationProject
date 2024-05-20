@@ -26,8 +26,15 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && !LegionInventoryManager.Instance.CanUI)
+        if (!WaveManager.Instance.IsBattlePhase
+            && !LegionInventoryManager.Instance.CanUI)
         {
+            if (WaveManager.Instance.CurrentWaveCount <= 2)
+            {
+                UIManager.Instance.ShowWarningUI("튜토리얼이 진행되지 않았습니다");
+                return;
+            }
+
             if (isFirst)
             {
                 UIManager.Instance.GifController.ShowGif(GifType.NexusUpgrade);
@@ -36,6 +43,7 @@ public class NexusBase : MonoBehaviour
 
             UIManager.Instance.ShowPanel("NexusUI");
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
+            NexusManager.Instance.CanClick = true;
         }
     }
 

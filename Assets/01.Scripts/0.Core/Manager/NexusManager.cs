@@ -19,6 +19,8 @@ public class NexusManager : Singleton<NexusManager>
     public NexusInfoDataSO NexusInfo => _nexusInfo;
     public NexusBase NexusBase => _nexusBase;
 
+    public bool CanClick { get; set; }
+
     public override void Awake()
     {
         _nexusStat = Instantiate(_nexusStat);
