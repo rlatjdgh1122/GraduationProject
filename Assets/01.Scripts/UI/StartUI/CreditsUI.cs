@@ -45,4 +45,9 @@ public class CreditsUI : PopupUI
     {
         UIManager.Instance.HidePanel("CreditUI");
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
