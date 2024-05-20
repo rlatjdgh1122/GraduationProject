@@ -14,24 +14,24 @@ namespace AssetKits.ParticleImage
         private ParticleImage _particle;
 
         private Mesh _trailMesh;
-        
+
         public Mesh trailMesh
         {
             get
             {
-                if(_trailMesh == null)
+                if (_trailMesh == null)
                 {
                     _trailMesh = new Mesh();
                     _trailMesh.MarkDynamic();
                 }
-                
+
                 return _trailMesh;
             }
         }
-        
+
         private Mesh.MeshDataArray _trailMeshDataArray;
         private Mesh.MeshData _trailMeshData;
-        
+
         private int offset;
         private int trisOffset;
         private int trisCount;
@@ -49,16 +49,16 @@ namespace AssetKits.ParticleImage
         public void PrepareMeshData(int vertexCount, int particleCount)
         {
             trisCount = (vertexCount - particleCount) * 6;
-            
+
             _trailMeshDataArray = Mesh.AllocateWritableMeshData(1);
             _trailMeshData = _trailMeshDataArray[0];
-            
-            _trailMeshData.SetVertexBufferParams(vertexCount * 2, 
+
+            _trailMeshData.SetVertexBufferParams(vertexCount * 2,
                 new VertexAttributeDescriptor(VertexAttribute.Position),
                 new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 4, 1));
-            
+
             _trailMeshData.SetIndexBufferParams(trisCount, IndexFormat.UInt16);
-            
+
             offset = 0;
             trisOffset = 0;
         }
@@ -68,38 +68,59 @@ namespace AssetKits.ParticleImage
             var vertexBuffer = _trailMeshData.GetVertexData<Vector3>();
             var colorBuffer = _trailMeshData.GetVertexData<Color>(1);
             var indexBuffer = _trailMeshData.GetIndexData<ushort>();
-            
-            for(var i = 0; i < points.Length; i++)
+
+            for (var i = 0; i < points.Length; i++)
             {
-                vertexBuffer[i + offset] = points[i];
+                if (i + offset < vertexBuffer.Length)
+                {
+                    vertexBuffer[i + offset] = points[i];
+                }
+                else
+                {
+                    Debug.LogError($"Index {i + offset} is out of range for vertexBuffer with length {vertexBuffer.Length}");
+                }
             }
-            
-            for(var i = 0; i < cols.Length; i++)
+
+            for (var i = 0; i < cols.Length; i++)
             {
-                colorBuffer[i + offset] = cols[i];
+                if (i + offset < colorBuffer.Length)
+                {
+                    colorBuffer[i + offset] = cols[i];
+                }
+                else
+                {
+                    Debug.LogError($"Index {i + offset} is out of range for colorBuffer with length {colorBuffer.Length}");
+                }
             }
-            
-            for(var i = 0; i < tris.Length; i++)
+
+            for (var i = 0; i < tris.Length; i++)
             {
-                indexBuffer[i + trisOffset] = (ushort)(tris[i] + offset);
+                if (i + trisOffset < indexBuffer.Length)
+                {
+                    indexBuffer[i + trisOffset] = (ushort)(tris[i] + offset);
+                }
+                else
+                {
+                    Debug.LogError($"Index {i + trisOffset} is out of range for indexBuffer with length {indexBuffer.Length}");
+                }
             }
-            
+
             offset += points.Length;
             trisOffset += tris.Length;
         }
-        
+
         public void SetMeshData()
         {
-            SetMeshData(_trailMeshDataArray,_trailMeshData, trisCount);
+            SetMeshData(_trailMeshDataArray, _trailMeshData, trisCount);
         }
 
         public void SetMeshData(Mesh.MeshDataArray meshDataArray, Mesh.MeshData meshData, int triCount)
         {
             meshData.subMeshCount = 1;
             meshData.SetSubMesh(0, new SubMeshDescriptor(0, triCount));
-            
+
             Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, trailMesh, MeshUpdateFlags.DontRecalculateBounds);
-            
+
             trailMesh.RecalculateBounds();
             canvasRenderer.SetMesh(trailMesh);
             SetMaterialDirty();
