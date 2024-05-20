@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PenguinThrowState : State
 {
-    private General General => _penguin as General;
-
     public PenguinThrowState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }

@@ -36,8 +36,8 @@ public class RaftMovement : ComingObjetMovement
         float closestPointToHitPointZ = Mathf.Abs(closestPointToCenter.z - RaycastHit_ToCenterPos.z);
 
         // X와 Z 거리 계산
-        float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
-        float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
+        float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX - 0.3f);
+        float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ - 0.3f);
 
         // 타겟 벡터 계산
         Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0.85f, RaycastHit_ToCenterPos.z);
