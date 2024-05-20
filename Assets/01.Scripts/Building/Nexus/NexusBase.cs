@@ -27,7 +27,8 @@ public class NexusBase : MonoBehaviour
     private void OnMouseDown()
     {
         if (!WaveManager.Instance.IsBattlePhase
-            && !LegionInventoryManager.Instance.CanUI)
+            && !LegionInventoryManager.Instance.CanUI
+            && !UIManager.Instance.GifController.CanShow)
         {
             if (WaveManager.Instance.CurrentWaveCount <= 2)
             {

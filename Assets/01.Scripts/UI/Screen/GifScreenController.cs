@@ -21,7 +21,9 @@ public class GifScreenController : MonoBehaviour
 {
     [SerializeField] private GifScreenDataSO _gifDataSO;
 
-    private VideoPlayer _videoPlayer;
+    private VideoPlayer _videoPlayer; 
+    
+    public bool CanShow { get; private set; } = false;
 
     private void Awake()
     {
@@ -41,7 +43,7 @@ public class GifScreenController : MonoBehaviour
             UIManager.Instance.ShowPanel("GifScreen", true);
 
             timeScale = Time.timeScale;
-
+            CanShow = true;
             Time.timeScale = 0;
 
             _videoPlayer.clip = gif.GifClip;
@@ -63,7 +65,7 @@ public class GifScreenController : MonoBehaviour
         _videoPlayer.clip = null;
 
         _videoPlayer.Stop();
-
+        CanShow = false;
         UIManager.Instance.HidePanel("GifScreen");
 
         Time.timeScale = timeScale;

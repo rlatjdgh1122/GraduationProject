@@ -34,6 +34,7 @@ public class GeneralShip : MonoBehaviour
     private void OnMouseDown()
     {
         if(!WaveManager.Instance.IsBattlePhase 
+            && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI
             && !NexusManager.Instance.CanClick)
         {

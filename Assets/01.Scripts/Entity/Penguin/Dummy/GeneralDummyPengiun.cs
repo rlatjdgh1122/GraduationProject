@@ -8,7 +8,8 @@ public class GeneralDummyPengiun : DummyPenguin
 
     private void OnMouseDown()
     {
-        if (UIManager.Instance.CheckShowAble(UIType.Info) 
+        if (UIManager.Instance.CheckShowAble(UIType.Info)
+            && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI
             && !NexusManager.Instance.CanClick)
         {
