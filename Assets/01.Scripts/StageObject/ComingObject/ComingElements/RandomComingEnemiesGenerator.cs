@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RandomComingEnemiesGenerator : MonoBehaviour  
+public class RandomComingEnemiesGenerator : MonoBehaviour
 {
     // 빙하와 육각형은 다른 것이다. 빙하들이 모여서 육각형을 만드는 거임
 
@@ -39,13 +39,13 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         _groundConfigurer = transform.Find("GroundConfigurer").GetComponent<GroundConfigurer>();
         _raftConfigurer = transform.Find("RaftConfigurer").GetComponent<RaftConfigurer>();
-            
+
         SignalHub.OnGroundArrivedEvent += TutorialGenerateRaft;
     }
 
     private void Start()
     {
-        for(int i = 0; i < 50; i++)
+        for (int i = 0; i < 50; i++)
         {
             Ground ground = Instantiate(_glacierPrefab, transform.position, Quaternion.identity)
                 .GetComponent<Ground>();
@@ -54,7 +54,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
             ground.SetMoveTarget(transform.parent.parent.parent);
 
-            ground.gameObject.SetActive(false); 
+            ground.gameObject.SetActive(false);
         }
 
         SignalHub.OnBattlePhaseStartPriorityEvent += GenerateGlacier;
@@ -76,7 +76,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         System.Random rnd = new System.Random();            // 나올 수 있는 각도들 배열을 랜덤으로 셔플
         rotateValueArray = rotateValueArray.OrderBy(x => rnd.Next()).ToArray();
 
-        for(int i = 0; i < rotateValueArray.Length; i++)
+        for (int i = 0; i < rotateValueArray.Length; i++)
         {
             _rotateValues.Enqueue(rotateValueArray[i]);
         }
@@ -108,7 +108,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         return 360 / GetCurHexagonGroundsGoalCount();
     }
 
-    
+
     private int GetCurHexagonGroundsGoalCount()  // 지금 만들 육각형에 필요한 빙하의 개수
     {
         if (makedHexagonCount == 0) { return 4; } // 근데 처음에는 3개 깔린 상태로 시작하니까 4 반환
@@ -123,7 +123,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             AddGlacierToCurHexagon();
         }
 
-        if(curWave < 10) // 튜토리얼이면 정해진대로
+        if (curWave < 10) // 튜토리얼이면 정해진대로
         {
             TutorialGlacierSetPos();
         }
@@ -136,23 +136,28 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
     {
-        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
-        {
-            Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
-            Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
-            float raftZ = randomRaftPos.y;
-            randomRaftPos.z = raftZ;
-            randomRaftPos.y = 0.7f;
+        CoroutineUtil.CallWaitForSeconds(3f, null,
+            () =>
+            {
+                for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
+                {
+                    Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
+                    Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
+                    float raftZ = randomRaftPos.y;
+                    randomRaftPos.z = raftZ;
+                    randomRaftPos.y = 0.7f;
 
-            raft.transform.position = randomRaftPos;
+                    raft.transform.position = randomRaftPos;
 
-            raft.transform.rotation = Quaternion.identity;
-            raft.SetMoveTarget(transform.parent.parent.parent);
-            raft.SetComingObjectInfo(transform,
-                                     randomRaftPos,
-                                     _raftConfigurer.SetComingObjectElements(raft.transform));
-        }
+                    raft.transform.rotation = Quaternion.identity;
+                    raft.SetMoveTarget(transform.parent.parent.parent);
+                    raft.SetComingObjectInfo(transform,
+                                             randomRaftPos,
+                                             _raftConfigurer.SetComingObjectElements(raft.transform));
+                }
+            });
     }
+
 
     private void TutorialGlacierSetPos()
     {

@@ -109,6 +109,11 @@ public class WaveManager : Singleton<WaveManager>
         {
             UIManager.Instance.ShowPanel("CreditUI");
         }
+
+        if(currentWaveCount < 4)
+        {
+            SignalHub.OnLockButtonEvent?.Invoke();
+        }
     }
 
     public void ShowDefeatUI()

@@ -27,6 +27,7 @@ public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
     protected Dictionary<PenguinTypeEnum, SpawnPenguinButton> lockButtonDicntionary = new();
     protected Dictionary<PenguinTypeEnum, PenguinInfoDataSO> penguinInfoDictionary = new();
 
+    protected List<SpawnPenguinButton> spawnButtonList = new();
     private List<DummyPenguin> _soliderPenguinList = new();
 
     protected UnitInventory unitInventory;
@@ -82,6 +83,8 @@ public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
 
             btn.transform.position = _spawnPoints[i].position;
+
+            spawnButtonList.Add(btn);
 
             if (CheckSlotLock(UIinfo.PenguinType))
             {
