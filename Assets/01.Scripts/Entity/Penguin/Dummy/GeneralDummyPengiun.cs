@@ -8,7 +8,9 @@ public class GeneralDummyPengiun : DummyPenguin
 
     private void OnMouseDown()
     {
-        if (UIManager.Instance.CheckShowAble(UIType.Info) && !LegionInventoryManager.Instance.CanUI)
+        if (UIManager.Instance.CheckShowAble(UIType.Info) 
+            && !LegionInventoryManager.Instance.CanUI
+            && !NexusManager.Instance.CanClick)
         {
             PenguinManager.Instance.ShowGeneralInfoUI(this);
             OutlineCompo.enabled = true;

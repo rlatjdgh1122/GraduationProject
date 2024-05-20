@@ -33,8 +33,16 @@ public class GeneralShip : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(!WaveManager.Instance.IsBattlePhase && !LegionInventoryManager.Instance.CanUI)
+        if(!WaveManager.Instance.IsBattlePhase 
+            && !LegionInventoryManager.Instance.CanUI
+            && !NexusManager.Instance.CanClick)
         {
+            if (WaveManager.Instance.CurrentWaveCount <= 4)
+            {
+                UIManager.Instance.ShowWarningUI("튜토리얼이 진행되지 않았습니다");
+                return;
+            }
+
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             UIManager.Instance.ShowPanel("GeneralUI");
         }

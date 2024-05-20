@@ -12,8 +12,16 @@ public class ResourceObjectClickTrigger : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase 
+            && !LegionInventoryManager.Instance.CanUI
+            && !NexusManager.Instance.CanClick)
         {
+            if (WaveManager.Instance.CurrentWaveCount <= 2)
+            {
+                UIManager.Instance.ShowWarningUI("튜토리얼이 진행되지 않았습니다");
+                return;
+            }
+
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI", true);
 
