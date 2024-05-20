@@ -16,6 +16,11 @@ public class StartSceneEvent : MonoBehaviour
 
     private bool _canClick => UIManager.Instance.currentPopupUI.Count > 0;
 
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
+
     public void GameStartBtn()
     {
         if (!_isGameStart || _canClick) return;
