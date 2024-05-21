@@ -69,6 +69,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
 
     public void OnEnableBuyPanel() //구매 패널 활성화
     {
+        SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
         UIManager.Instance.ShowPanel("BuyPanel", true);
     }
 

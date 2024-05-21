@@ -8,7 +8,7 @@ public class LegionInventoryUI : PopupUI
 
     public void ShowLegionUIPanel()
     {
-        UIManager.Instance.ShowPanel("LegionInventory");
+        UIManager.Instance.ShowPanel("LegionInventory", true);
 
         LegionInventoryManager.Instance.CanShowUI(true);
 

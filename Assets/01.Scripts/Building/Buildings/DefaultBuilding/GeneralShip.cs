@@ -49,8 +49,8 @@ public class GeneralShip : MonoBehaviour
                 return;
             }
 
-            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             UIManager.Instance.ShowPanel("GeneralUI");
+            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
 
             if (WaveManager.Instance.CurrentWaveCount == 5)
             {

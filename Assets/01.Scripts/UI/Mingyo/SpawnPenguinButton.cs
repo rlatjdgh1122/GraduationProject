@@ -96,7 +96,6 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
 
         if(Input.GetMouseButtonDown(0)) //마우스 왼쪽 버튼
         {
-            SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
             SpawnPenguinLeftEventHandler();
         }
         if(Input.GetMouseButtonDown(1)) //마우스 오른쪽 버튼

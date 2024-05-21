@@ -72,9 +72,13 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
             OnTrm.transform.SetParent(_maskingImage.ButtonTrm);
 
+            Debug.Log(OnTrm.gameObject);
+            Debug.Log(OnTrm.parent.gameObject);
+
             if (OnTrm.TryGetComponent(out Button btn))
             {
-                OnTrm.GetComponent<Button>().onClick.AddListener(OffMaskingButtonUI);
+                Button button = OnTrm.GetComponent<Button>();
+                button.onClick.AddListener(OffMaskingButtonUI);
             }
             else
             {
@@ -91,7 +95,11 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         _prevMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
         _prevMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
 
-        _prevMaskingUiTrms.GetComponent<Button>().onClick.RemoveListener(OffMaskingImageUI);
+        Button btn = _prevMaskingUiTrms.GetComponent<Button>();
+        btn.onClick.RemoveListener(OffMaskingButtonUI);
+
+        Debug.Log("OffButton");
+
 
         OffMask();
     }
