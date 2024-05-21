@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum UIType
 {
@@ -130,6 +132,30 @@ public class UIManager : Singleton<UIManager>
         {
             _currentUI = currentPopupUI.Peek();
         }
+    }
+
+    public void HideAllPanel()
+    {
+        if (currentPopupUI.Count <= 0) return;
+
+        //var panelStackCopy = new Stack<PopupUI>(currentPopupUI);
+
+        int size = currentPopupUI.Count;
+
+        for(int i = 0; i < size; i++)
+        {
+            currentPopupUI.TryPop(out var panel);
+            panel.HidePanel();
+        }
+
+       /* foreach (var panel in panelStackCopy)
+        {
+            // 원본 스택을 수정
+            currentPopupUI.TryPop(out _);
+            panel.HidePanel();
+        }*/
+
+        Debug.Log("After : " +  currentPopupUI.Count);
     }
 
     public void HidePanel(string uiName)
