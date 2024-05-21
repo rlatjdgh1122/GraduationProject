@@ -89,16 +89,6 @@ public class DialogSystem : MonoBehaviour
         canClick = false;
         FadeOut(_fadeValue);
         StartCoroutine(FadeTime());
-
-        if (WaveManager.Instance.CurrentWaveCount % 2 == 1)
-        {
-            MaskingUIManager.Instance.SetMaskingImagePos();
-        }
-
-        if (WaveManager.Instance.CurrentWaveCount == 3)
-        {
-            UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
-        }
     }
 
     IEnumerator FadeTime()
@@ -122,6 +112,16 @@ public class DialogSystem : MonoBehaviour
         {
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
+
+            if (WaveManager.Instance.CurrentWaveCount % 2 == 1)
+            {
+                MaskingUIManager.Instance.SetMaskingImagePos();
+            }
+
+            if (WaveManager.Instance.CurrentWaveCount == 3)
+            {
+                UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
+            }
         });
     }
 
