@@ -32,7 +32,6 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         KeySetting();
 
-        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
     }
     private void Start()
     {
@@ -40,6 +39,7 @@ public class ArmyManager : Singleton<ArmyManager>
             armies.Clear();
 
         CreateArmy();
+        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
     }
 
     private void KeySetting()
