@@ -136,26 +136,27 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
     {
-        CoroutineUtil.CallWaitForSeconds(3f, null,
+        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
+        {
+            Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
+            Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
+            float raftZ = randomRaftPos.y;
+            randomRaftPos.z = raftZ;
+            randomRaftPos.y = 0.7f;
+
+            raft.transform.position = randomRaftPos;
+
+            raft.transform.rotation = Quaternion.identity;
+            raft.SetMoveTarget(transform.parent.parent.parent);
+            raft.SetComingObjectInfo(transform,
+                                     randomRaftPos,
+                                     _raftConfigurer.SetComingObjectElements(raft.transform));
+        };
+       /* CoroutineUtil.CallWaitForSeconds(0.1f, null,
             () =>
             {
-                for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
-                {
-                    Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
-                    Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
-                    float raftZ = randomRaftPos.y;
-                    randomRaftPos.z = raftZ;
-                    randomRaftPos.y = 0.7f;
-
-                    raft.transform.position = randomRaftPos;
-
-                    raft.transform.rotation = Quaternion.identity;
-                    raft.SetMoveTarget(transform.parent.parent.parent);
-                    raft.SetComingObjectInfo(transform,
-                                             randomRaftPos,
-                                             _raftConfigurer.SetComingObjectElements(raft.transform));
-                }
-            });
+               
+            });*/
     }
 
 
