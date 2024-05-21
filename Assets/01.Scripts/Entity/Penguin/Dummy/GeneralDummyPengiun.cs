@@ -13,6 +13,12 @@ public class GeneralDummyPengiun : DummyPenguin
             && !LegionInventoryManager.Instance.CanUI
             && !NexusManager.Instance.CanClick)
         {
+            if (WaveManager.Instance.CurrentWaveCount <= 5)
+            {
+                UIManager.Instance.ShowWarningUI("튜토리얼이 진행되지 않았습니다");
+                return;
+            }
+
             PenguinManager.Instance.ShowGeneralInfoUI(this);
             OutlineCompo.enabled = true;
         }
