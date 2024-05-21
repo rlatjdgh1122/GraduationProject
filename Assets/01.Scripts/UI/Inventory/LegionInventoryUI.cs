@@ -62,7 +62,7 @@ public class LegionInventoryUI : PopupUI
 
     public void ShowDescript()
     {
-        UIManager.Instance.ShowPanel("Description");
+        UIManager.Instance.ShowPanel("Description", true);
         _onDisciption = false;
     }
 }
