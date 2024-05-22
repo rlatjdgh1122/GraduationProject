@@ -7,7 +7,7 @@ public class GroundElements : ComingElements
     public ResourceObject[] Resources { get; private set; }
     public CostBox Reward { get; private set; }
 
-    public GroundElements(Enemy[] enemies, ResourceObject[] resources, CostBox costBox) : base(enemies)
+    public GroundElements(List<Enemy> enemies, ResourceObject[] resources, CostBox costBox) : base(enemies)
     {
         Resources = resources;
         Reward = costBox;

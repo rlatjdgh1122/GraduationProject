@@ -103,7 +103,7 @@ public class WaveManager : Singleton<WaveManager>
             ShowDefeatUI();
         }
 
-        Debug.Log(currentWaveCount);
+        //Debug.Log(currentWaveCount);
 
         if (currentWaveCount == 11)
         {

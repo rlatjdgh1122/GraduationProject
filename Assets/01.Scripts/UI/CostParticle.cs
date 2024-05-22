@@ -75,7 +75,7 @@ public class CostParticle : PoolableMono
 
         StopAllCoroutines();
 
-        CostManager.Instance.OnlyCostUIUseThis(_cost);
+        CostManager.Instance.AddCost(_cost);
         CostManager.Instance.CostStopText();
 
         PoolManager.Instance.Push(this);

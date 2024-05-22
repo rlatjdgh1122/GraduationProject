@@ -12,7 +12,8 @@ public class ResourceManager : Singleton<ResourceManager>
     public delegate void OnUIUpdateHandler(Resource resource, int stackCount);
     public event OnUIUpdateHandler OnUIUpdate;
 
-    public bool IsFirst { get; set; } = true;
+    public bool OnResourceUI { get; set; }
+    public bool IsGifFirst { get; set; } = true;
 
     public override void Awake()
     {
@@ -36,6 +37,14 @@ public class ResourceManager : Singleton<ResourceManager>
             resourceDictionary.Add(resourceData, newResource);
             OnUIUpdate(newResource, count);
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+            AddResource(resourceArray[0], 10);
+        if (Input.GetKeyDown(KeyCode.B))
+            AddResource(resourceArray[1], 10);
     }
 
     public void RemoveResource(ResourceDataSO resourceData, int count = 1)

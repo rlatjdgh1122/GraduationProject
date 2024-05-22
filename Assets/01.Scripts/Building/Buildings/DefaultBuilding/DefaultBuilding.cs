@@ -47,6 +47,11 @@ public class DefaultBuilding : BaseBuilding
 
     private void OnMouseDown()
     {
+        if(WaveManager.Instance.CurrentWaveCount == 3 || WaveManager.Instance.CurrentWaveCount == 4)
+        {
+            UIManager.Instance.ShowWarningUI("튜토리얼이 진행 중입니다");
+        }
+
         if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/
             && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI

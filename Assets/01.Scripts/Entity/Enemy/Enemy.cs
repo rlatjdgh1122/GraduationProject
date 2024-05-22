@@ -28,8 +28,8 @@ public class Enemy : Entity
     public bool IsProvoked = false;
     public bool UseAttackCombo = false;
 
-    public bool IsTargetInInnerRangeWhenTargetNexus => CurrentTarget != null &&
-                           Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= 100;
+    public bool IsTargetInInnerRangeWhenTargetNexus => NexusTarget != null &&
+                           Vector3.Distance(transform.position, NexusTarget.GetClosetPostion(transform.position)) <= 100;
 
     public bool IsTargetInInnerRange => CurrentTarget != null &&
                             Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;

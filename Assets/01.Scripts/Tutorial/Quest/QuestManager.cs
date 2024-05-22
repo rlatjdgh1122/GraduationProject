@@ -105,7 +105,7 @@ public class QuestManager : Singleton<QuestManager>
         }
         #endregion
 
-        Debug.Log($"{questData.Id} 퀘스트 시이작");
+        //Debug.Log($"{questData.Id} 퀘스트 시이작");
 
         _canStartQuests.Remove(questId); // 실제로 시작하였으니 시작가능 퀘스트에서 삭제
 
@@ -185,7 +185,7 @@ public class QuestManager : Singleton<QuestManager>
         QuestData questData = GetQuestData(questId);
         Quest quest = GetRunningQuest(questId);
 
-        Debug.Log($"{questData.Id} 퀘스트 끄읕");
+        //Debug.Log($"{questData.Id} 퀘스트 끄읕");
 
         quest.SetQuestState(QuestState.Finish); // 퀘스트에 완료처리 해주고
         _questUI.UpdatePopUpQuestUI(quest);

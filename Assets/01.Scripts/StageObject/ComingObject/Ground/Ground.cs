@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum OutlineColorType
@@ -20,7 +21,7 @@ public class Ground : MonoBehaviour, IComingObject
     private GroundMovement _groundMove;
     public GroundMovement GroundMove => _groundMove;
 
-    private Enemy[] _enemies;
+    private List<Enemy> _enemies = new();
 
     private void Awake()
     {
@@ -40,9 +41,10 @@ public class Ground : MonoBehaviour, IComingObject
     {
         foreach (var enemy in _enemies)
         {
+            enemy.IsMove = true;
             enemy.ColliderCompo.enabled = true;
             enemy.NavAgent.enabled = true;
-            enemy.StateMachine.ChangeState(EnemyStateType.Move);
+            //enemy.StateMachine.ChangeState(EnemyStateType.Move);
             enemy.FindNearestTarget();
         }
     }
@@ -108,13 +110,15 @@ public class Ground : MonoBehaviour, IComingObject
         SetEnemies(groundElements.Enemies);
     }
 
-    public void SetEnemies(Enemy[] enemies)
+    public void SetEnemies(List<Enemy> enemies)
     {
+        if (_enemies.Count > 0) _enemies.Clear();
         _enemies = enemies;
     }
 
     private void OnBattleEnd()
     {
+
         foreach (var enemy in _enemies)
         {
             PoolManager.Instance.Push(enemy); // 아니 이거 풀매니저 SO에 넣으면 오류 150개뜸 내가 보았을 때 이거는 씬에는 이미 있는데 풀매니저로 개지랄 하려고 해서 그러는듯. 나중에 빙판 자동 생성할때 같이 수정
@@ -124,6 +128,7 @@ public class Ground : MonoBehaviour, IComingObject
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
         //SignalHub.OnGroundArrivedEvent -= ActivateEnemies;
+        if (_enemies.Count > 0) _enemies.Clear();
     }
 
     private void OnDisable()

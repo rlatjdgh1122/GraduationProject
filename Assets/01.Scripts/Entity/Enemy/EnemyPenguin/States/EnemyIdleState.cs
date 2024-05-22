@@ -11,24 +11,22 @@ public class EnemyIdleState : EnemyBaseState
         base.EnterState();
 
         IdleEnter();
-
-        //SignalHub.OnGroundArrivedEvent += ChangeState;
     }
 
     public override void UpdateState()
     {
-        //if (_enemy.NavAgent.isOnOffMeshLink)
-        //    _stateMachine.ChangeState(EnemyStateType.Jump);
+        if (_enemy.IsMove)
+        {
+            if (_enemy.IsTargetInInnerRange)
+            {
+                _stateMachine.ChangeState(EnemyStateType.Chase);
+            }
+            else if (_enemy.IsTargetInInnerRangeWhenTargetNexus)
+            {
+                _stateMachine.ChangeState(EnemyStateType.Move);
+            }
 
-        base.UpdateState();
-    }
-
-    private void ChangeState()
-    {
-        _enemy.NavAgent.enabled = true;
-        _enemy.FindNearestTarget();
-
-        _stateMachine.ChangeState(EnemyStateType.Move);
+        }//end if
     }
 
     public override void ExitState()
@@ -36,7 +34,5 @@ public class EnemyIdleState : EnemyBaseState
         base.ExitState();
 
         IdleExit();
-
-        //SignalHub.OnGroundArrivedEvent -= ChangeState;
     }
 }
