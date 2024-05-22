@@ -6,9 +6,9 @@ public class ComingElements
 {
     public List<Transform> Elements { get; private set; }
 
-    public Enemy[] Enemies { get; private set; }
+    public List<Enemy> Enemies { get; private set; }
 
-    public ComingElements(Enemy[] enemies)
+    public ComingElements(List<Enemy> enemies)
     {
         Elements = new List<Transform>();
 

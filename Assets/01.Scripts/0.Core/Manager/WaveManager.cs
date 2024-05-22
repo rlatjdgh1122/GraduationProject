@@ -103,7 +103,7 @@ public class WaveManager : Singleton<WaveManager>
             ShowDefeatUI();
         }
 
-        Debug.Log(currentWaveCount);
+        //Debug.Log(currentWaveCount);
 
         if (currentWaveCount == 11)
         {
@@ -195,10 +195,10 @@ public class WaveManager : Singleton<WaveManager>
 
     public void CheckIsEndBattlePhase()
     {
-        Debug.Log($"Remain Enemy: {GameManager.Instance.GetCurrentEnemyCount()}");
+        //Debug.Log($"Remain Enemy: {GameManager.Instance.GetCurrentEnemyCount()}");
         if (GameManager.Instance.GetCurrentEnemyCount() <= 0)
         {
-            Debug.Log("GetReward");
+           // Debug.Log("GetReward");
             GetReward();
         }
     }

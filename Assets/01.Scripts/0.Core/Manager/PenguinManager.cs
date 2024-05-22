@@ -273,11 +273,6 @@ public class PenguinManager
         {
             resultDummy = dummy;
         }
-        else
-        {
-            Debug.Log("GetDummyByPenguin에서 오류");
-            Debug.Log($"{penguin.name}과 등록된 더미 펭귄이 없습니다.");
-        }
 
         return resultDummy;
     }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Raft : PoolableMono, IComingObject
 {
-    private Enemy[] _enemies;
+    private List<Enemy> _enemies = new();
     private RaftMovement _raftMovement;
 
     private void Awake()
@@ -28,11 +28,12 @@ public class Raft : PoolableMono, IComingObject
         SetEnemies(groundElements.Enemies);
     }
 
-    public void SetEnemies(Enemy[] enemies)
+    public void SetEnemies(List<Enemy> enemies)
     {
+        if (_enemies.Count > 0) _enemies.Clear();
         _enemies = enemies;
 
-        for(int i = 0; i <  enemies.Length; i++)
+        for (int i = 0; i <  enemies.Count; i++)
         {
             _enemies[i].gameObject.transform.localScale = Vector3.one;
             _enemies[i].gameObject.transform.localScale *= 3;
@@ -52,6 +53,8 @@ public class Raft : PoolableMono, IComingObject
             NavmeshManager.Instance.NavmeshBake();
             PoolManager.Instance.Push(this);
         });
+
+        if (_enemies.Count > 0) _enemies.Clear();
     }
 
     public void Arrived()
@@ -65,6 +68,7 @@ public class Raft : PoolableMono, IComingObject
     {
         foreach (var enemy in _enemies)
         {
+            enemy.IsMove = true;
             enemy.ColliderCompo.enabled = true;
             enemy.NavAgent.enabled = true;
             //enemy.StateMachine.ChangeState(EnemyStateType.Move);
