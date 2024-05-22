@@ -10,7 +10,7 @@ public class SceneChanger : MonoBehaviour
     [SerializeField]
     private string NextScene;
 
-    private float startTime;
+    private string _mainScene = "FSMTestMin";
 
     private void Update()
     {
@@ -19,8 +19,13 @@ public class SceneChanger : MonoBehaviour
 
     IEnumerator WaitCutSceneTime(float waitCutSceneTime, string sceneName)
     {
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            LoadingSceneController.LoadScene(_mainScene);
+        }
+
         yield return new WaitForSeconds(waitCutSceneTime);
-        if(NextScene != "FSMTestMin")
+        if(NextScene != _mainScene)
         {
             SceneManager.LoadScene(sceneName);
         }
@@ -28,5 +33,6 @@ public class SceneChanger : MonoBehaviour
         {
             LoadingSceneController.LoadScene(sceneName);
         }
+
     }
 }
