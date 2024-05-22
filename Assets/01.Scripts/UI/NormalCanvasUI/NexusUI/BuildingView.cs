@@ -53,8 +53,6 @@ public class BuildingView : NexusPopupUI
 
     public void UpdateUI()
     {
-        Debug.Log($"{_building.CodeName}: {_building.IsUnlocked}");
-
         lockedPanel.gameObject.SetActive(!_building.IsUnlocked);
         buildingName.text = _building.Name;
         buildingIcon.sprite = _building.UISprite;
