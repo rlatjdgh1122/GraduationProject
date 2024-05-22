@@ -22,7 +22,7 @@ public class BuildingUpgradePanel : NexusPopupUI
 
     public void SetBuilding(BuildingView view)
     {
-        _building = view.building;
+        _building = view.Building;
     }
 
     public void Upgrade()

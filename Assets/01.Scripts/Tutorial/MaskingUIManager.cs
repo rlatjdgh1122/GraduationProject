@@ -72,9 +72,6 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
             OnTrm.transform.SetParent(_maskingImage.ButtonTrm);
 
-            Debug.Log(OnTrm.gameObject);
-            Debug.Log(OnTrm.parent.gameObject);
-
             if (OnTrm.TryGetComponent(out Button btn))
             {
                 Button button = OnTrm.GetComponent<Button>();
@@ -97,9 +94,6 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         Button btn = _prevMaskingUiTrms.GetComponent<Button>();
         btn.onClick.RemoveListener(OffMaskingButtonUI);
-
-        Debug.Log("OffButton");
-
 
         OffMask();
     }

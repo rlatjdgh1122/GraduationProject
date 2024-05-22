@@ -18,6 +18,27 @@ public enum DefaultBuildingType
 [System.Serializable]
 public class BuildingItemInfo
 {
+    public BuildingItemInfo(BuildingItemInfo buildingItemInfo)
+    {
+        _unlockedLevel = buildingItemInfo._unlockedLevel;
+        _buildingTypeEnum = buildingItemInfo._buildingTypeEnum;
+        name = buildingItemInfo.name;
+        _codeName = buildingItemInfo._codeName;
+        id = buildingItemInfo.id;
+        _level = buildingItemInfo._level;
+        _price = buildingItemInfo._price;
+        _description = buildingItemInfo._description;
+        _size = buildingItemInfo._size;
+        _prefab = buildingItemInfo._prefab;
+        _uiSprite = buildingItemInfo._uiSprite;
+        installedTime = buildingItemInfo.installedTime;
+        _currentInstallCount = buildingItemInfo._currentInstallCount;
+        _maxInstallableCount = buildingItemInfo._maxInstallableCount;
+        _necessaryResources = buildingItemInfo._necessaryResources;
+        necessaryWokerCount = buildingItemInfo.necessaryWokerCount;
+        IsUnlocked = buildingItemInfo.IsUnlocked;
+    }
+
     [SerializeField]
     private int _unlockedLevel;
     public int UnlockedLevel => _unlockedLevel;

@@ -38,11 +38,12 @@ public class NexusUIPresenter : NexusPopupUI
 
         NoiseManager.Instance.IncreaseMaxNoise(_nexusStat.level);
 
-        foreach (BuildingItemInfo building in _buildingDatabase.BuildingItems)
+        foreach (BuildingItemInfo building in NexusManager.Instance.BuildingItemInfos.Values)
         {
             if (_nexusStat.level == building.UnlockedLevel)
             {
                 building.IsUnlocked = true;
+                Debug.Log($"{building.CodeName}: {building.IsUnlocked}");
             }
         }
 
@@ -66,7 +67,10 @@ public class NexusUIPresenter : NexusPopupUI
 
     public void UpdateRecieverUI()
     {
-        _receiverList.ForEach(r => r.UIUpdate());
+        foreach (NexusPopupUI _receiver in _receiverList)
+        {
+            _receiver.UIUpdate();
+        }
     }
 
     public void OnAdmitBuildingPanel()
@@ -89,7 +93,7 @@ public class NexusUIPresenter : NexusPopupUI
     #region buildingUI
     public void PurchaseBuilding(BuildingView view)
     {
-        foreach (var resource in view.building.NecessaryResource)
+        foreach (var resource in view.Building.NecessaryResource)
         {
             ResourceManager.Instance.resourceDictionary.TryGetValue(resource.NecessaryResource.resourceData, out var saveResource);
 
@@ -100,9 +104,9 @@ public class NexusUIPresenter : NexusPopupUI
             }
         }
 
-        if (view.building.IsUnlocked)
+        if (view.Building.IsUnlocked)
         {
-            view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.building);
+            view.spawn.SetUpButtonInfo(view.purchaseButton, _buildingFactory, view.Building);
         }
         else
         {

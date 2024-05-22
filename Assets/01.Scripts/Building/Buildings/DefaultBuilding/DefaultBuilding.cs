@@ -41,8 +41,8 @@ public class DefaultBuilding : BaseBuilding
         //_penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
 
         //SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
-        Installed();
-
+        SetInstalled();
+        InstalledGround()?.InstallBuilding();
     }
 
     private void OnMouseDown()

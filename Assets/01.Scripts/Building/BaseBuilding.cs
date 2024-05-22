@@ -52,9 +52,6 @@ public abstract class BaseBuilding : WorkableObject
     private bool isInstalling = false;
     public bool IsInstalling => isInstalling;
 
-    private TimeRemain _remainTimeUI;
-    public TimeRemain RemainTimeUI => _remainTimeUI;
-
     private bool isSelected;
     public bool IsSelected => isSelected;
 
@@ -75,25 +72,6 @@ public abstract class BaseBuilding : WorkableObject
     protected override void Awake()
     {
         base.Awake();
-
-        try
-        {
-            _buildingItemInfo = _buildingDatabaseSO.BuildingItems.Find(idx => idx.ID == BuildingInfoCompo.ID);
-        }
-        catch
-        {
-            Debug.LogError($"Not Founded id: {gameObject}");
-        }
-
-        if (_buildingItemInfo != null)
-        {
-            if (_buildingItemInfo.BuildingTypeEnum != BuildingType.Trap ||
-                _buildingItemInfo.InstalledTime != 0)
-            {
-                _remainTimeUI = transform.Find("TimeRemainCanvas").GetComponent<TimeRemain>();
-            }
-        }
-
         SetUpCompo();
     }
 
@@ -120,8 +98,6 @@ public abstract class BaseBuilding : WorkableObject
 
     public void Installed()
     {
-        if (_buildingItemInfo == null) return;
-
         if (MaxNoiseValue > 0)
         {
             ChangeToTransparencyMat(OutlineColorType.None);
@@ -167,8 +143,9 @@ public abstract class BaseBuilding : WorkableObject
         SetInstalled();
     }
 
-    public virtual void SetSelect()
+    public virtual void SetSelect(BuildingItemInfo info)
     {
+        _buildingItemInfo = info;
         isSelected = true;
     }
 

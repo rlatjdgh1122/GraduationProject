@@ -58,9 +58,9 @@ public class InstallSystem : MonoBehaviour
 
         _curBuilding = building;
 
-        building.SetSelect();
+        building.SetSelect(info);
 
-        StartInstall(building.BuildingInfoCompo.ID);
+        StartInstall(info);
     }
 
     private void RightRotateBuilding()
@@ -73,13 +73,13 @@ public class InstallSystem : MonoBehaviour
         _curBuilding.transform.Rotate(0.0f, 90.0f, 0.0f);
     }
 
-    private void StartInstall(int id)
+    private void StartInstall(BuildingItemInfo info)
     {
-        selectedBuildingIDX = _buildingDatabaseSO.BuildingItems.FindIndex(building => building.ID == id);
+        selectedBuildingIDX = info.ID;
 
         if (selectedBuildingIDX < 0)
         {
-            Debug.LogError($"No id found {id}");
+            Debug.LogError($"No id found {info.ID}");
             return;
         }
 

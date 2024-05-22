@@ -27,7 +27,7 @@ public class NexusPanel : NexusPopupUI
 
     public void UpdateUI()
     {
-        currentLevel.text = $"Lv {_nexusStat.level}";   
+        currentLevel.text = $"Lv {_nexusStat.level}";
         nextLevel.text = $"Lv {_nexusStat.level + 1}";
         currentHp.text = $"{_nexusInfo.currentMaxHealth}";
         nextHp.text = $"{_nexusInfo.nextMaxHealth}";
