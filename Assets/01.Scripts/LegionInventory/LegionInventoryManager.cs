@@ -31,6 +31,9 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     private bool _canUI = false;
     public bool CanUI => _canUI;
 
+    public int BuyArcherPenguinCountIn2Wave = 0;
+    public int AddLegionArcherPenguinCountIn2Wave = 0;
+
     public override void Awake()
     {
         _unitInven = FindObjectOfType<UnitInventory>();

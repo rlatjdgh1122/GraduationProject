@@ -37,6 +37,21 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
+        if(WaveManager.Instance.CurrentWaveCount == 2)
+        {
+            if(LegionInventoryManager.Instance.BuyArcherPenguinCountIn2Wave < 2)
+            {
+                UIManager.Instance.ShowWarningUI("아처 펭귄을 구매해 주세요");
+                return;
+            }
+
+            if(LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave < 2)
+            {
+                UIManager.Instance.ShowWarningUI("아처 펭귄을 군단에 넣어주세요");
+                return;
+            }
+        }
+
         if (ArmyManager.Instance.CheckEmpty())
         {
             UIManager.Instance.ShowWarningUI("군단에 펭귄을 넣어주세요!");

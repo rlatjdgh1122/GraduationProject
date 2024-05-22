@@ -41,6 +41,18 @@ public class ArcherTowerPenguin : Penguin
         _StateMachine.CurrentState.UpdateState();
     }
 
+    public override void LookTarget()
+    {
+        if (CurrentTarget != null)
+        {
+            Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
+            directionToTarget.y = 0;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget,Vector3.up);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
+        }
+    }
+
     public override void AnimationTrigger() => _StateMachine.CurrentState.AnimationFinishTrigger();
 
     protected override void HandleDie()
