@@ -15,6 +15,8 @@ public class ResourceManager : Singleton<ResourceManager>
     public bool OnResourceUI { get; set; }
     public bool IsGifFirst { get; set; } = true;
 
+    public bool OnlyGetOneStone { get; set; } = false;
+
     public override void Awake()
     {
         //resourceStack = new List<Resource>();
