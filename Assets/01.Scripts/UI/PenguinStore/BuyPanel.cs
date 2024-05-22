@@ -68,6 +68,11 @@ public class BuyPanel : PopupUI
 
     public void PlusCnt() //UI 안에 있는 +버튼을 누르면
     {
+        if (WaveManager.Instance.CurrentWaveCount == 1 && _cnt > 2)
+        {
+            return;
+        }
+
         if (_maxCount < _cnt) return;
 
         _cnt++;
