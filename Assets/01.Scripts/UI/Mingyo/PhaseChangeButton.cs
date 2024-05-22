@@ -55,6 +55,8 @@ public class PhaseChangeButton : MonoBehaviour
 
 
             OnOffButton();
+
+            UIManager.Instance.HideAllPanel();
         }
     }
     private void OnOffButton()

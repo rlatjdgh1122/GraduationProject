@@ -53,26 +53,22 @@ public class PenguinSituationUI : PenguinSituationPanel
         isHeal   = true;
         isRetire = false;
 
-
-        string sign;
         Color color;
 
         if (CostManager.Instance.CheckRemainingCost(price))
         {
             color = Color.green;
-            sign = "";
         }
         else
         {
             color = Color.red;
-            sign = "-";
         }
 
         string arrow = isReducedHP ? "<color=red>▼</color>" : null;
 
         ChangeTextColor(_remainCostText, color);
 
-        _remainCostText.text   = $"남는 재화    :    {sign}{CostManager.Instance.Cost - price}";
+        _remainCostText.text   = $"남는 재화    :    {CostManager.Instance.Cost - price}";
         _healPercentText.text = $"현재 HP {hpPercent}% {arrow}";
         _situationText.text   = $"펭귄 회복하기 (가격: {remainCost})";
     }

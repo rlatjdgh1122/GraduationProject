@@ -31,7 +31,7 @@ public class GeneralShip : MonoBehaviour
         transform.DOLookAt(innerTrm.transform.position, 2f);
     }
 
-    private bool isFirst = true;
+    private bool isGifFirst = true;
     private void OnMouseDown()
     {
         //이 디버그는 지우지 마셈
@@ -54,10 +54,10 @@ public class GeneralShip : MonoBehaviour
 
             if (WaveManager.Instance.CurrentWaveCount == 5)
             {
-                if (isFirst)
+                if (isGifFirst)
                 {
                     UIManager.Instance.GifController.ShowGif(GifType.GeneralBuy);
-                    isFirst = false;
+                    isGifFirst = false;
                 }
             }
         }

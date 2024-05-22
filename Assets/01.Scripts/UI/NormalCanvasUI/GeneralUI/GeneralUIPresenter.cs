@@ -156,6 +156,6 @@ public class GeneralUIPresenter : PopupUI
 
     public void HideGeneralUI()
     {
-        UIManager.Instance.HidePanel("GeneralUI");
+        UIManager.Instance.HideAllPanel();
     }
 }
