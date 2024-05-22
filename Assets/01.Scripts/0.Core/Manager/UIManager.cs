@@ -153,7 +153,7 @@ public class UIManager : Singleton<UIManager>
             panel.HidePanel();
         }*/
 
-        Debug.Log("After : " +  currentPopupUI.Count);
+        //Debug.Log("After : " +  currentPopupUI.Count);
     }
 
     public void HidePanel(string uiName)
