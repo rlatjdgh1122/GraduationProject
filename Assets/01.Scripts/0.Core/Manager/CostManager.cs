@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CostManager : Singleton<CostManager>
 {
@@ -38,6 +39,12 @@ public class CostManager : Singleton<CostManager>
 
         Cost = _defaultCost;
         _costUI.OnlyCurrentCostView(Cost);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+            AddFromCurrentCost(100);
     }
 
     /// <summary>
@@ -81,10 +88,11 @@ public class CostManager : Singleton<CostManager>
         else 
         {
             _costUI.AddCost(value);
+            AddCost(value);
         }
     }
 
-    public void OnlyCostUIUseThis(int value)
+    public void AddCost(int value)
     {
         _currentCost += value;
     }

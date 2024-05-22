@@ -38,6 +38,14 @@ public class ResourceManager : Singleton<ResourceManager>
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+            AddResource(resourceArray[0], 10);
+        if (Input.GetKeyDown(KeyCode.B))
+            AddResource(resourceArray[1], 10);
+    }
+
     public void RemoveResource(ResourceDataSO resourceData, int count = 1)
     {
         if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
