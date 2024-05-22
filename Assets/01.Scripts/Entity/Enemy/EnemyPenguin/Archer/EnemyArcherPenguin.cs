@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class EnemyArcherPenguin : Enemy
 {
@@ -28,7 +29,7 @@ public class EnemyArcherPenguin : Enemy
     public override void Init()
     {
         base.Init();
-
+        Debug.Log($"{name} : »ý¼º");
         StateMachine.Init(EnemyStateType.Idle);
     }
 

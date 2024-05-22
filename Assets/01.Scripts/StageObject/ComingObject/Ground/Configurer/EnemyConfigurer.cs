@@ -87,7 +87,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
     private void SetEnemyNav(Enemy spawnEnemy)
     {
-        spawnEnemy.IsMove = false;
+        //spawnEnemy.IsMove = false;
         spawnEnemy.NavAgent.enabled = false;
         spawnEnemy.ColliderCompo.enabled = false;
     }

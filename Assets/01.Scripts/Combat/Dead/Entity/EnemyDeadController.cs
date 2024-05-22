@@ -23,7 +23,5 @@ public class EnemyDeadController : EntityDeadController<Enemy>
         _owner.IsDead = false;
         //엔티티 스크립트 켜줌
         _owner.enabled = true;
-        //_owner.StateInit();
-
     }
 }

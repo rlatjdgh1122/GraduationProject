@@ -42,7 +42,7 @@ public class Ground : MonoBehaviour, IComingObject
         {
             enemy.ColliderCompo.enabled = true;
             enemy.NavAgent.enabled = true;
-            enemy.StateMachine.ChangeState(EnemyStateType.Move);
+            //enemy.StateMachine.ChangeState(EnemyStateType.Move);
             enemy.FindNearestTarget();
         }
     }
