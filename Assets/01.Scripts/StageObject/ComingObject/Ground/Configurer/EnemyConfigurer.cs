@@ -34,8 +34,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
                 spawnBoss = PoolManager.Instance.Pop(_bossNames[1]) as Enemy;
             }
 
-            Debug.Log(_bossNames[WaveManager.Instance.CurrentWaveCount % 5]);
-
             SetEnemyNav(spawnBoss);
             SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
 
@@ -45,6 +43,8 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
         int minEnemyCount = 1;
         int maxEnemyCount = 10;
+
+        if(isRaft) { maxEnemyCount = 1; }
 
         int enemyCount = GetRandomElementsCount(minEnemyCount, maxEnemyCount, enemyCountProportion);
 
