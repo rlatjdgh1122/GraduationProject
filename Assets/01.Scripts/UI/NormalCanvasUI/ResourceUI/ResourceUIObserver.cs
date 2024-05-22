@@ -31,6 +31,13 @@ public class ResourceUIObserver : PopupUI
         UIManager.Instance.HidePanel("ResourceUI");
     }
 
+    public override void HidePanel()
+    {
+        base.HidePanel();
+
+        ResourceManager.Instance.OnResourceUI = false;
+    }
+
     public void IncreaseWorkerCount()
     {
         if (WorkerManager.Instance.MaxWorkerCount < resource.RequiredWorkerCount)

@@ -64,6 +64,7 @@ public class UIManager : Singleton<UIManager>
 
         foreach (PopupUI popupUI in popupUIs)
         {
+            Debug.Log(popupUI.name);
             if (!popupUIDictionary.ContainsKey(popupUI.name))
             {
                 popupUIDictionary.Add(popupUI.name, popupUI);
@@ -136,22 +137,22 @@ public class UIManager : Singleton<UIManager>
     {
         if (currentPopupUI.Count <= 0) return;
 
-        //var panelStackCopy = new Stack<PopupUI>(currentPopupUI);
+        var panelStackCopy = new Stack<PopupUI>(currentPopupUI);
 
-        int size = currentPopupUI.Count;
+        //int size = currentPopupUI.Count;
 
-        for(int i = 0; i < size; i++)
-        {
-            currentPopupUI.TryPop(out var panel);
-            panel.HidePanel();
-        }
+        //for(int i = 0; i < size; i++)
+        //{
+        //    currentPopupUI.TryPop(out var panel);
+        //    panel.HidePanel();
+        //}
 
-       /* foreach (var panel in panelStackCopy)
+        foreach (var panel in panelStackCopy)
         {
             // 원본 스택을 수정
             currentPopupUI.TryPop(out _);
             panel.HidePanel();
-        }*/
+        }
 
         Debug.Log("After : " +  currentPopupUI.Count);
     }
