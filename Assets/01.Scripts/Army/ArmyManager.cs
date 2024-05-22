@@ -75,6 +75,8 @@ public class ArmyManager : Singleton<ArmyManager>
 
     private void OnBattleModeChanged()
     {
+        if (!WaveManager.Instance.IsBattlePhase) return;
+
         curFocusMode = curFocusMode == MovefocusMode.Command ? MovefocusMode.Battle : MovefocusMode.Command;
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
 

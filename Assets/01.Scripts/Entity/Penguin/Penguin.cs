@@ -80,7 +80,7 @@ public class Penguin : Entity
     public EntityAttackData AttackCompo { get; private set; }
     public PenguinStateMachine StateMachine { get; private set; }
     #endregion
-    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(MousePos, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
+    public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(prevMousePos, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
 
 
 

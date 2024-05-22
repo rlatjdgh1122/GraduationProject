@@ -10812,6 +10812,7 @@ GameObject:
   - component: {fileID: 8219931268960883709}
   - component: {fileID: 4725740827886887584}
   - component: {fileID: 4030283614382440730}
+  - component: {fileID: 1556534045400393162}
   m_Layer: 19
   m_Name: StrengthBuffStatue
   m_TagString: Untagged
@@ -10910,6 +10911,9 @@ MonoBehaviour:
   WaterFallEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -10947,6 +10951,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   IsDead: 0
+  OnHpBarUI: 0
 --- !u!65 &5282128203786667868
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11010,6 +11015,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nonBrokenBuilding: {fileID: 1007958997084681413}
   _brokenBuilding: {fileID: 7992055578074349574}
+--- !u!208 &1556534045400393162
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626319666108112526}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.3, y: 1, z: 0.3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -0.05}
+  m_TimeToStationary: 0.5
 --- !u!1 &5645419006487348993
 GameObject:
   m_ObjectHideFlags: 0
