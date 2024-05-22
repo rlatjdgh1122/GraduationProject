@@ -10,8 +10,6 @@ public class BuildingView : NexusPopupUI
 
     [HideInInspector]
     public SpawnBuildingButton spawn;
-    [HideInInspector]
-    public BuildingItemInfo building;
 
     public Button purchaseButton;
     public TextMeshProUGUI buildingName;
@@ -20,22 +18,19 @@ public class BuildingView : NexusPopupUI
     public TextMeshProUGUI maxInstallableCount;
     public Image lockedPanel;
 
-    public override void Awake()
-    {
-        base.Awake();
-    }
+    private BuildingItemInfo _building;
+    public BuildingItemInfo Building => _building;
 
     protected override void Start()
     {
-        base.Start();
-        building = _buildingDatabase.BuildingItems.FirstOrDefault(building => building.CodeName == this.name);
-        building.CurrentInstallCount = 0;
+        _building = NexusManager.Instance.BuildingItemInfos[name];
+
         spawn = GetComponent<SpawnBuildingButton>();
-        purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(building.Prefab.GetComponent<BaseBuilding>(), building));
+        purchaseButton.onClick.AddListener(() => spawn.SpawnBuildingEventHandler(_building.Prefab.GetComponent<BaseBuilding>(), _building));
 
         UpdateUI();
 
-        foreach(var ui in building.NecessaryResource)
+        foreach(var ui in _building.NecessaryResource)
         {
             BuildingPriceUI priceUI = Instantiate(_priceUI);
             priceUI.UpdateUI(ui.NecessaryResource.resourceData.resourceIcon, ui.NecessaryResourceCount);
@@ -48,12 +43,20 @@ public class BuildingView : NexusPopupUI
         _presenter.PurchaseBuilding(this);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            UpdateUI();
+        }
+    }
+
     public void UpdateUI()
     {
-        lockedPanel.gameObject.SetActive(!building.IsUnlocked);
-        buildingName.text = building.Name;
-        buildingIcon.sprite = building.UISprite;
-        maxInstallableCount.text = $"{building.CurrentInstallCount}/{building.MaxInstallableCount}";
+        lockedPanel.gameObject.SetActive(!_building.IsUnlocked);
+        buildingName.text = _building.Name;
+        buildingIcon.sprite = _building.UISprite;
+        maxInstallableCount.text = $"{_building.CurrentInstallCount}/{_building.MaxInstallableCount}";
     }
 
     public override void UIUpdate()

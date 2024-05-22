@@ -9,7 +9,6 @@ public abstract class NexusPopupUI : PopupUI
     #region components
     protected NexusUIPresenter _presenter;
     protected NexusStat _nexusStat;
-    protected BuildingDatabaseSO _buildingDatabase;
     protected NexusInfoDataSO _nexusInfo;
     #endregion
 
@@ -22,7 +21,6 @@ public abstract class NexusPopupUI : PopupUI
     protected virtual void Start()
     {
         _nexusStat = NexusManager.Instance.NexusStat;
-        _buildingDatabase = NexusManager.Instance.BuildingDatabase;
         _nexusInfo = NexusManager.Instance.NexusInfo;
     }
 

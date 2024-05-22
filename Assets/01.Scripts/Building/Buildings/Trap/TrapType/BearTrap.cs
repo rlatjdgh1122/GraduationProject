@@ -14,8 +14,9 @@ public class BearTrap : BaseTrap
         base.Init();
     }
 
-    public override void SetSelect()
+    public override void SetSelect(BuildingItemInfo info)
     {
+        base.SetSelect(info);
         _animator.SetBool("IsCatched", false);
     }
 

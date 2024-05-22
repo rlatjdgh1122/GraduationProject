@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ public class NexusManager : Singleton<NexusManager>
 
     public bool CanClick { get; set; }
 
+    private Dictionary<string, BuildingItemInfo> _buildingItemInfos = new();
+    public Dictionary<string, BuildingItemInfo> BuildingItemInfos => _buildingItemInfos; // ÀÏ´Ü ºôµùµµ
+
     public override void Awake()
     {
         _nexusStat = Instantiate(_nexusStat);
@@ -28,6 +32,15 @@ public class NexusManager : Singleton<NexusManager>
         _nexusInfo = Instantiate(_nexusInfo);
 
         SetNexusInfoData();
+        SetBuildingData();
+    }
+
+    private void SetBuildingData()
+    {
+        foreach (var item in _buildingDatabase.BuildingItems)
+        {
+            _buildingItemInfos.Add(item.CodeName, new BuildingItemInfo(item));
+        }
     }
 
     public void SetNexusHealth()

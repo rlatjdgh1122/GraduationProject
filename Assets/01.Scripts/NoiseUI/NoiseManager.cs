@@ -101,7 +101,7 @@ public class NoiseManager : Singleton<NoiseManager>
             _saveNoiseValue = _currentNoise - _maxNosise;
         }
 
-       // Debug.Log($"Current Noise : {_currentNoise}, Max Noise : {_maxNosise}, Add Noise : {noise}, Save Noise : {_saveNoiseValue}");
+        // Debug.Log($"Current Noise : {_currentNoise}, Max Noise : {_maxNosise}, Add Noise : {noise}, Save Noise : {_saveNoiseValue}");
 
         SignalHub.OnNoiseIncreaseEvent?.Invoke();
     }
