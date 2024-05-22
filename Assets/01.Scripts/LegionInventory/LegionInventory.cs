@@ -124,6 +124,11 @@ public class LegionInventory : LegionUI
         currentLegionList.Add(data);
         currentDictionary.Add(idx, data);
 
+        if(WaveManager.Instance.CurrentWaveCount == 2 && data.PenguinType == PenguinTypeEnum.Archer)
+        {
+            LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave++;
+        }
+
         int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
 
         if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)

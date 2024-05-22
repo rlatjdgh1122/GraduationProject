@@ -140,6 +140,11 @@ public class BuyPanel : PopupUI
 
         for (int i = 0; i < _cnt; i++)
         {
+            if(WaveManager.Instance.CurrentWaveCount == 2)
+            {
+                LegionInventoryManager.Instance.BuyArcherPenguinCountIn2Wave++;
+            }
+
             LegionInventoryManager.Instance.AddPenguin(_dummyPenguin.NotCloneInfo);
 
             _presenter.PenguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
