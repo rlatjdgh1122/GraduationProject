@@ -56,6 +56,11 @@ public class InfoPanel : PopupUI
         base.HidePanel();
     }
 
+    public void HideInfoPanel()
+    {
+        UIManager.Instance.HidePanel("DetailInfoPanel");
+    }
+
     public override void ShowPanel()
     {
         base.ShowPanel();

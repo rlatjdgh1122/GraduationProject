@@ -17,7 +17,7 @@ public class LegionInventoryUI : PopupUI
 
         if (_onDisciption)
         {
-            UIManager.Instance.GifController.ShowGif(GifType.LegionUI);
+            UIManager.Instance?.GifController?.ShowGif(GifType.LegionUI);
             ShowDescript();
         }
 

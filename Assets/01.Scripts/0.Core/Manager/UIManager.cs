@@ -64,6 +64,7 @@ public class UIManager : Singleton<UIManager>
 
         foreach (PopupUI popupUI in popupUIs)
         {
+            Debug.Log(popupUI.name);
             if (!popupUIDictionary.ContainsKey(popupUI.name))
             {
                 popupUIDictionary.Add(popupUI.name, popupUI);
