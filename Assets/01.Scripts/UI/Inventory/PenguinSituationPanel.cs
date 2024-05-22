@@ -80,8 +80,13 @@ public class PenguinSituationPanel : PopupUI
     {
         if (!isRetire) return;
 
-        LegionInventoryManager.Instance.DeadLegionPenguin(data.LegionName, data.SlotIdx, true);
+        if(data is GeneralInfoDataSO)
+        {
+            UIManager.Instance.ShowWarningUI("장군은 은퇴시킬 수 없습니다!");
+            return;
+        }
 
+        LegionInventoryManager.Instance.DeadLegionPenguin(data.LegionName, data.SlotIdx, true);
 
         var dummy = PenguinManager.Instance.GetDummyByInfoData(data);
 

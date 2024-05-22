@@ -15,14 +15,18 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void UpdateState()
     {
-        if (_enemy.IsTargetInInnerRange)
+        if (_enemy.IsMove)
         {
-            _stateMachine.ChangeState(EnemyStateType.Chase);
-        }
-        else if (_enemy.IsTargetInInnerRangeWhenTargetNexus)
-        {
-            _stateMachine.ChangeState(EnemyStateType.Move);
-        }
+            if (_enemy.IsTargetInInnerRange)
+            {
+                _stateMachine.ChangeState(EnemyStateType.Chase);
+            }
+            else if (_enemy.IsTargetInInnerRangeWhenTargetNexus)
+            {
+                _stateMachine.ChangeState(EnemyStateType.Move);
+            }
+
+        }//end if
     }
 
     public override void ExitState()

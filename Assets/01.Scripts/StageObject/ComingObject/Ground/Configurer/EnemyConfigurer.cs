@@ -1,7 +1,8 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 public class EnemyConfigurer : BaseElementsConfigurer
 {
@@ -15,7 +16,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         _bossNames = bossNames;
     }
 
-    public Enemy[] SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
+    public List<Enemy> SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
     {
         float enemyCountProportion = 0.5f;
 
@@ -44,14 +45,14 @@ public class EnemyConfigurer : BaseElementsConfigurer
         int minEnemyCount = 1;
         int maxEnemyCount = 10;
 
-        if(isRaft) { maxEnemyCount = 1; }
+        if (isRaft) { maxEnemyCount = 1; }
 
         int enemyCount = GetRandomElementsCount(minEnemyCount, maxEnemyCount, enemyCountProportion);
 
         for (int i = 0; i < enemyCount; i++)
         {
             int randomIdx;
-            
+
             if (WaveManager.Instance.CurrentWaveCount < 5) // 튜토리얼이면 자폭병 안 나오게
             {
                 randomIdx = Random.Range(0, _enemyNames.Length - 1);
@@ -60,11 +61,11 @@ public class EnemyConfigurer : BaseElementsConfigurer
             {
                 randomIdx = Random.Range(0, _enemyNames.Length);
             }
-            
+
             string enemyName = _enemyNames[randomIdx];
             Enemy spawnEnemy = PoolManager.Instance.Pop(enemyName) as Enemy;
 
-            Debug.Log($"{isRaft} : {spawnEnemy.GetInstanceID()}");
+            Debug.Log($"{isRaft} : {spawnEnemy.GetInstanceID()}");  
 
             SetEnemyNav(spawnEnemy);
 
@@ -82,12 +83,12 @@ public class EnemyConfigurer : BaseElementsConfigurer
             spawnedEnemies.Add(spawnEnemy);
         }
 
-        return spawnedEnemies.ToArray();
+        return spawnedEnemies;
     }
 
     private void SetEnemyNav(Enemy spawnEnemy)
     {
-        //spawnEnemy.IsMove = false;
+        spawnEnemy.IsMove = false;
         spawnEnemy.NavAgent.enabled = false;
         spawnEnemy.ColliderCompo.enabled = false;
     }

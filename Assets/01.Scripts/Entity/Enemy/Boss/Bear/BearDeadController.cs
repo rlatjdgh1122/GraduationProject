@@ -16,6 +16,5 @@ public class BearDeadController : EntityDeadController<EnemyBear>
     {
         base.OnResurrected();
         _owner.StateInit();
-
     }
 }

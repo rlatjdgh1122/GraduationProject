@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RaftElements : ComingElements
 {
-    public RaftElements(Enemy[] enemies) : base(enemies)
+    public RaftElements(List<Enemy> enemies) : base(enemies)
     {
 
     }
