@@ -12,6 +12,7 @@ public class KnockbackFeedback : CombatFeedback
         base.Awake();
         _groundLayer = 1 << LayerMask.NameToLayer("Ground");
     }
+
     public override bool StartFeedback()
     {
         Vector3 currentPosition = ownerTrm.position;
