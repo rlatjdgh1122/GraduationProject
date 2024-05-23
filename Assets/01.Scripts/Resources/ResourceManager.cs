@@ -16,6 +16,7 @@ public class ResourceManager : Singleton<ResourceManager>
     public bool IsGifFirst { get; set; } = true;
 
     public bool OnlyGetOneStone { get; set; } = false;
+    public bool OnlyGetOneWood { get; set; } = false;
 
     public override void Awake()
     {

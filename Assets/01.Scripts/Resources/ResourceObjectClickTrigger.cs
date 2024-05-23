@@ -25,6 +25,12 @@ public class ResourceObjectClickTrigger : MonoBehaviour
             return;
         }
 
+        if (WaveManager.Instance.CurrentWaveCount == 4 && ResourceManager.Instance.OnlyGetOneWood)
+        {
+            UIManager.Instance.ShowWarningUI("현재 웨이브에서는 나무 하나만 캐실 수 있습니다");
+            return;
+        }
+
         if (WaveManager.Instance.CurrentWaveCount == 4 && _resourceObject.ResourceData.resourceType == ResourceType.Stone)
         {
             UIManager.Instance.ShowWarningUI("나무를 캐주세요");
@@ -46,8 +52,11 @@ public class ResourceObjectClickTrigger : MonoBehaviour
                 UIManager.Instance.GifController.ShowGif(GifType.WorkerPenguin);
                 ResourceManager.Instance.IsGifFirst = false;
             }
+            if (WaveManager.Instance.CurrentWaveCount == 3)
+                ResourceManager.Instance.OnlyGetOneStone = true;
+            if (WaveManager.Instance.CurrentWaveCount == 4)
+                ResourceManager.Instance.OnlyGetOneWood = true;
 
-            ResourceManager.Instance.OnlyGetOneStone = true;
             ResourceManager.Instance.OnResourceUI = true;
 
             if (WaveManager.Instance.CurrentWaveCount < 4)

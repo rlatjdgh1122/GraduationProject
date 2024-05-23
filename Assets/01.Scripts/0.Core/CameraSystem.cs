@@ -1,10 +1,12 @@
 using Cinemachine;
 using DG.Tweening;
 using System;
+using TMPro;
 using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
+    [Space(10f)]
     [Header("카메라 움직임")]
     [SerializeField] private float _moveSpeed = 50f;
     [SerializeField] private int _edgeScrollSize = 20;
@@ -13,11 +15,13 @@ public class CameraSystem : MonoBehaviour
     private bool _dragPanMoveActive;
     private Vector2 _lastMousePosition;
 
+    [Space(10f)]
     [Header("카메라 확대&축소")]
     [SerializeField] private float _fieldOfViewMax = 50;
     [SerializeField] private float fieldOfViewMin = 10;
     [SerializeField] private float _scrollAmount = 5f;
 
+    [Space(10f)]
     [Header("카메라 회전")]
     [Range(0f, 9f)]
     [SerializeField] private float _rotateSpeed;
@@ -27,7 +31,7 @@ public class CameraSystem : MonoBehaviour
     private bool isRotating = false;
     private Vector3 lastMousePosition;
 
-
+    [Space(10f)]
     [Header("카메라 이동 범위")]
     [Range(-100f, 100f)]
     [SerializeField] private float minXValue = -50f;
@@ -38,6 +42,10 @@ public class CameraSystem : MonoBehaviour
     [Range(-100f, 100f)]
     [SerializeField] private float maxZValue = 50f;
 
+    [Space(10f)]
+    [Header("카메라 Space Text 띄우기")]
+    [SerializeField] private float _distance;
+    [SerializeField] private TextMeshProUGUI _goToNexusText;
 
     private bool isMoving = true;
     public bool IsMoving
@@ -86,6 +94,7 @@ public class CameraSystem : MonoBehaviour
             transform.position = _startPosition;
             transform.rotation = Quaternion.identity;
             _cinemachineCam.transform.rotation = _vCamstartRotation;
+            CheckDistanceAndFade();
         }
 
         if (Input.GetKey(KeyCode.Space))
@@ -107,12 +116,12 @@ public class CameraSystem : MonoBehaviour
         transform.position = pos;
         transform.rotation = Quaternion.identity;
         _cinemachineCam.transform.rotation = _vCamstartRotation;
+        CheckDistanceAndFade();
     }
 
     private void CameraMove()
     {
-        if (isMoving &&
-            !isRotating)
+        if (isMoving && !isRotating)
         {
             float xInput = 0;
             float yInput = 0;
@@ -153,6 +162,7 @@ public class CameraSystem : MonoBehaviour
             }
 
             transform.position += moveDir * _moveSpeed * Time.unscaledDeltaTime;
+            CheckDistanceAndFade();
         }
     }
 
@@ -168,7 +178,6 @@ public class CameraSystem : MonoBehaviour
         }
 
         targetFieldOfView = Mathf.Clamp(targetFieldOfView, fieldOfViewMin, _fieldOfViewMax);
-
 
         _cinemachineCam.m_Lens.FieldOfView
             = Mathf.Lerp(_cinemachineCam.m_Lens.FieldOfView, targetFieldOfView, Time.unscaledDeltaTime * zoomSpeed);
@@ -204,10 +213,22 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
+    private void CheckDistanceAndFade()
+    {
+        if (Vector3.Distance(transform.position, _startPosition) >= _distance)
+        {
+            _goToNexusText.DOFade(1, 0.5f);
+        }
+        else
+        {
+            _goToNexusText.DOFade(0, 0.5f);
+        }
+    }
+
     public void SetCameraTartget(Vector3 target)
     {
         Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
-        transform.DOMove(vec, 0.5f);
+        transform.DOMove(vec, 0.5f).OnComplete(CheckDistanceAndFade);
     }
 
     public void CaemraAllStop()

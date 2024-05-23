@@ -237,7 +237,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (isFirst) { isFirst = false; return; } //맨 처음 화면이 켜져있을 때 esc창이 나오는걸 방지 
 
-        if (hasFocus)
+        if (currentPopupUI.Peek().name != "VictoryUI" && hasFocus)
         {
             _escButtonController?.ShowEscPanel();
         }

@@ -208,7 +208,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8948069827359767143}
+      - m_Target: {fileID: 4803567564484957264}
         m_TargetAssemblyTypeName: GifScreenPanel, Assembly-CSharp
         m_MethodName: ChangeSpeedText
         m_Mode: 1
@@ -419,6 +419,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2777365940658895136}
         m_TargetAssemblyTypeName: GifScreenController, Assembly-CSharp
         m_MethodName: ExitGifScreenUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4803567564484957264}
+        m_TargetAssemblyTypeName: GifScreenPanel, Assembly-CSharp
+        m_MethodName: ResetPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -857,8 +869,8 @@ GameObject:
   - component: {fileID: 5077315052200305288}
   - component: {fileID: 7558895047915310513}
   - component: {fileID: 2777365940658895136}
-  - component: {fileID: 8948069827359767143}
-  - component: {fileID: 4306226972594747501}
+  - component: {fileID: 4803567564484957264}
+  - component: {fileID: 1530094496425968901}
   m_Layer: 5
   m_Name: GifScreen
   m_TagString: Untagged
@@ -946,7 +958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gifDataSO: {fileID: 11400000, guid: 25629a5c095c23b47bcef5532e6b8ef5, type: 2}
---- !u!114 &8948069827359767143
+--- !u!114 &4803567564484957264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -963,7 +975,7 @@ MonoBehaviour:
   _transferable: 
   _soundName: 16
   _uiGroup: 10
---- !u!225 &4306226972594747501
+--- !u!225 &1530094496425968901
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -973,7 +985,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &8984912938706126484
 GameObject:
