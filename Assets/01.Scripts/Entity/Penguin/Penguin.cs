@@ -107,6 +107,8 @@ public class Penguin : Entity
     {
         SignalHub.OnGroundArrivedEvent += ChaseToTarget;
         SignalHub.OnRaftArrivedEvent += ChaseToTarget;
+
+      
     }
     private void OnDisable()
     {
@@ -127,6 +129,30 @@ public class Penguin : Entity
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
+    }
+
+    private readonly string _penguinEffect = "PenguinDamageUp";
+    
+    protected override void Start()
+    {
+        base.Start();
+
+        EffectPlayer buffEffect = PoolManager.Instance.Pop(_penguinEffect) as EffectPlayer;
+        Debug.Log(buffEffect);
+
+
+        buffEffect.transform.SetParent(transform);
+        buffEffect.transform.localPosition = Vector3.zero;
+        buffEffect.transform.localScale = Vector3.one * 0.5f;
+        buffEffect.transform.rotation = Quaternion.identity;
+
+        var main = buffEffect.Particles[0].main;
+        main.startSize = 0.3f;
+
+        _strengthBuffEffect = buffEffect;
+
+        if (_strengthBuffEffect)
+            _strengthBuffEffect?.ParticleStop();
     }
 
     protected override void Update()
@@ -261,7 +287,7 @@ public class Penguin : Entity
         Stat.AddStat(value, type, mode);
     }
 
-    public IEnumerator RemoveStatCorou(float time, int value, StatType type, StatMode mode,Action completeAction)
+    public IEnumerator RemoveStatCorou(float time, int value, StatType type, StatMode mode, Action completeAction)
     {
         yield return new WaitForSeconds(time);
         Stat.RemoveStat(value, type, mode);
@@ -347,11 +373,5 @@ public class Penguin : Entity
 
         owner = null;
     }
-
-    public void SetStrengthBuffEffect(EffectPlayer effectPlayer) // 나중에 반드시 바꿀 것
-    {
-        _strengthBuffEffect = effectPlayer;
-    }
-
 
 }

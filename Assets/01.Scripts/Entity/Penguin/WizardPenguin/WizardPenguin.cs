@@ -22,6 +22,7 @@ public class WizardPenguin : Penguin
 
     protected override void Start()
     {
+        base.Start();
         StateInit();
     }
     public override void StateInit()

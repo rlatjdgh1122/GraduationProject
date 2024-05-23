@@ -16,9 +16,22 @@ public class EffectPlayer : PoolableMono
         Invoke(nameof(Stop), endTime);
     }
 
+
     public void Stop()
     {
         PoolManager.Instance.Push(this);
+    }
+
+    public void ParticleStart()
+    {
+        if (_particles != null)
+            _particles.ForEach(p => p.Play());
+    }
+
+    public void ParticleStop()
+    {
+        if (_particles != null)
+            _particles.ForEach(p => p.Stop());
     }
 
     protected virtual IEnumerator Timer(float timer)

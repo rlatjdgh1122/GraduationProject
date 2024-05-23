@@ -21,6 +21,7 @@ public class ArcherPenguin : Penguin
 
     protected override void Start()
     {
+        base.Start();
         StateInit();
     }
     public override void StateInit()
