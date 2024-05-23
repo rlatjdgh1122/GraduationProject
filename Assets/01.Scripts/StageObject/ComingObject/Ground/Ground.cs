@@ -57,6 +57,7 @@ public class Ground : MonoBehaviour, IComingObject
 
     public void InstallBuilding() //땅에 설치되었다고 처리
     {
+        Debug.Log($"{gameObject}에서 설치되엇습니다");
         isInstalledBuilding = true;
         UpdateOutlineColor(OutlineColorType.None);
     }
