@@ -15,6 +15,7 @@ public class StrengthBuffBuilding : BuffBuilding
 
     private FeedbackPlayer _feedbackPlayer;
     private BuffEffectFeedback _feedbackEffect;
+    private readonly string _penguinEffect = "PenguinDamageUp";
 
     public override void Init()
     {
@@ -94,10 +95,10 @@ public class StrengthBuffBuilding : BuffBuilding
                 //임시수정
                 StartCoroutine(_inRangePenguins[key].RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), StatType.Damage, StatMode.Increase));
 
-                EffectPlayer buffEffect = PoolManager.Instance.Pop(_feedbackEffect.Effect.name) as EffectPlayer;
+                EffectPlayer buffEffect = PoolManager.Instance.Pop(_penguinEffect) as EffectPlayer;
                 buffEffect.transform.SetParent(_inRangePenguins[key].gameObject.transform);
                 buffEffect.transform.localPosition = Vector3.zero;
-                buffEffect.transform.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+                buffEffect.transform.rotation = Quaternion.identity;
 
                 var main = buffEffect.Particles[0].main;
                 main.startSize = 0.3f;
