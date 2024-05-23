@@ -29,8 +29,7 @@ public class Meteor : PoolableMono
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground") 
-            || coll.gameObject.layer == LayerMask.NameToLayer("SmallGround"))
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Explode();
         }
