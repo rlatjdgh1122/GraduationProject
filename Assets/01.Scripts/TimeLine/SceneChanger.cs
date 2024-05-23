@@ -23,11 +23,17 @@ public class SceneChanger : MonoBehaviour
         StartCoroutine(WaitCutSceneTime(CutSceneTime, NextScene));
     }
 
+    private bool ExcludeKeyCode()
+    {
+        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKey(KeyCode.LeftAlt) ||
+            Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2);
+    }
+
     IEnumerator WaitCutSceneTime(float waitCutSceneTime, string sceneName)
     {
         if(Input.anyKeyDown)
         {
-            if(!Input.GetKeyDown(KeyCode.Escape) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) 
+            if(!ExcludeKeyCode()) 
             {
                 _blackPanel.DOFade(1, _duration).OnComplete(() => LoadingSceneController.LoadScene(_mainScene));
             }
