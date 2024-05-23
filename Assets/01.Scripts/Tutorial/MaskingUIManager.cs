@@ -80,6 +80,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
             else
             {
                 SignalHub.OnClickPenguinSpawnButtonEvent += OffMaskingImageUI;
+
             }
         }
 

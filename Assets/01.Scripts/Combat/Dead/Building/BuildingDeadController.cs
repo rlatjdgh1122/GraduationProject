@@ -29,7 +29,7 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
         _brokenBuilding.gameObject.SetActive(true);
         _nonBrokenBuilding.gameObject.SetActive(false);
 
-        _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
+        _brokenBuilding.ParentBuilding.BuildingItemInfoCompo.CurrentInstallCount -= 1;
         GameObject.Find(_brokenBuilding.ParentBuilding.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
     }
 
