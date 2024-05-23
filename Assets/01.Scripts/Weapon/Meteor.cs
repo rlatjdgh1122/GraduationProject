@@ -6,7 +6,7 @@ using UnityEngine;
 public class Meteor : PoolableMono
 {
     [SerializeField] private float _meteorPower;
-    
+
     private Rigidbody _rigid;
     private DamageCaster _damageCaster;
 
@@ -29,7 +29,8 @@ public class Meteor : PoolableMono
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (coll.gameObject.layer == LayerMask.NameToLayer("Ground") 
+            || coll.gameObject.layer == LayerMask.NameToLayer("SmallGround"))
         {
             Explode();
         }
