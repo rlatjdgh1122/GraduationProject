@@ -254,12 +254,14 @@ public abstract class BaseBuilding : WorkableObject
             ColliderCompo.enabled = value;
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
         if (_phaseStartSubscriptionAction != null)
         {
             SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
+        isInstalled = false;
     }
+
 
 }
