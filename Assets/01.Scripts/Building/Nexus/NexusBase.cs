@@ -28,7 +28,8 @@ public class NexusBase : MonoBehaviour
     {
         if (!WaveManager.Instance.IsBattlePhase
             && !LegionInventoryManager.Instance.CanUI
-            && !UIManager.Instance.GifController.CanShow)
+            && !UIManager.Instance.GifController.CanShow
+            && !TutorialManager.Instance.ShowTutorialQuest)
         {
             if (WaveManager.Instance.CurrentWaveCount <= 2)
             {

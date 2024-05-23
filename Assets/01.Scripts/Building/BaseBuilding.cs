@@ -166,6 +166,15 @@ public abstract class BaseBuilding : WorkableObject
 
             //SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
+
+        if(WaveManager.Instance.CurrentWaveCount == 3)
+        {
+            WaveManager.Instance.OnBuildBuffTower = true;
+        }
+        if (WaveManager.Instance.CurrentWaveCount == 4)
+        {
+            WaveManager.Instance.OnBuildArcherTower = true;
+        }
     }
 
     protected override void Update()

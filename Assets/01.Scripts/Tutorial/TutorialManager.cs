@@ -21,6 +21,8 @@ public class TutorialManager : Singleton<TutorialManager>
 
     private QuestData _curQuestData => _questDataSO.QuestDatas[curQuestIdx];
 
+    public bool ShowTutorialQuest { get; set; } = false;
+
     private void Start()
     {
         curQuestIdx = 0;

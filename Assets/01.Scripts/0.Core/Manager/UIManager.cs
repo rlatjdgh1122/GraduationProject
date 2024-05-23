@@ -35,6 +35,8 @@ public class UIManager : Singleton<UIManager>
     private WarningUI _warningUI;
     private BossWarningUI _bossWarningUI;
 
+    private bool isFirst = true;
+
     public Dictionary<string, PopupUI> popupUIDictionary = new();
     //public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
 
@@ -46,6 +48,8 @@ public class UIManager : Singleton<UIManager>
     private PopupUI _currentUI;
 
     public Sequence HudTextSequence;
+
+    private EscButtonController _escButtonController;
 
     public void InitializHudTextSequence()
     {
@@ -74,6 +78,8 @@ public class UIManager : Singleton<UIManager>
                 Debug.LogWarning($"중복 키 : {popupUI.name}");
             }
         }
+
+        _escButtonController = FindObjectOfType<EscButtonController>();
     }
 
     #region popUI Logics
@@ -227,6 +233,17 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
+    #region Alt tap
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (isFirst) { isFirst = false; return; } //맨 처음 화면이 켜져있을 때 esc창이 나오는걸 방지 
+
+        if (hasFocus)
+        {
+            _escButtonController.ShowEscPanel();
+        }
+    }
+    #endregion
 
     public IEnumerator UIMoveDotCoroutine(RectTransform transform, Vector3 targetVec, float duration,
                                       Ease ease = Ease.Linear, params Action[] actions)
