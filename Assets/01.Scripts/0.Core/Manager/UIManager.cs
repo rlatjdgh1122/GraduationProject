@@ -202,7 +202,7 @@ public class UIManager : Singleton<UIManager>
             }
             else if (currentPopupUI.Count > 0)
             {
-                foreach(var popuis in currentPopupUI)
+                foreach (var popuis in currentPopupUI)
                 {
                     if (popuis.name == "Masking" || popuis.name == "GifScreen") { return; }
                 }
@@ -235,11 +235,12 @@ public class UIManager : Singleton<UIManager>
     #region Alt tap
     private void OnApplicationFocus(bool hasFocus)
     {
-        if (isFirst) { isFirst = false; return; } //맨 처음 화면이 켜져있을 때 esc창이 나오는걸 방지 
+        if (isFirst) { isFirst = false; return; } //맨 처음 화면이 켜져있을 때 esc창이 나오는걸 방지
 
-        if (currentPopupUI.Count <= 0) return;
+        if (currentPopupUI.TryPeek(out var result))
+            if (result.name == "VictoryUI") return;
 
-        if (currentPopupUI.Peek().name != "VictoryUI" && hasFocus)
+        if (hasFocus)
         {
             _escButtonController?.ShowEscPanel();
         }

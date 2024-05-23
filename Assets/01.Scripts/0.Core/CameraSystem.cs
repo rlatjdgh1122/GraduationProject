@@ -61,11 +61,14 @@ public class CameraSystem : MonoBehaviour
 
     private bool canMoving => UIManager.Instance.currentPopupUI.Count <= 0 && !MaskingUIManager.Instance.IsMasking;
 
+    private float _startFOV = 0;
+
     private void Awake()
     {
         isMoving = true;
         _startPosition = transform.position;
         _vCamstartRotation = _cinemachineCam.transform.rotation;
+        _startFOV = _cinemachineCam.m_Lens.FieldOfView;
 
         transposer = _cinemachineCam.GetCinemachineComponent<CinemachineTransposer>();
 
@@ -164,6 +167,11 @@ public class CameraSystem : MonoBehaviour
             transform.position += moveDir * _moveSpeed * Time.unscaledDeltaTime;
             CheckDistanceAndFade();
         }
+    }
+
+    public void ResetFOV()
+    {
+        _cinemachineCam.m_Lens.FieldOfView = _startFOV;
     }
 
     private void CameraZoomHandle()

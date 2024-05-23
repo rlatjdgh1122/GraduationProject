@@ -40,8 +40,11 @@ public class GroundMovement : ComingObjetMovement
         SoundManager.Play2DSound(SoundName.GroundHit);
 
         // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
-        CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = true,
-                                              () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+        CoroutineUtil.CallWaitForSeconds(.5f, () =>
+        {
+            Define.CamDefine.Cam.ShakeCam.enabled = true;
+            Define.CamDefine.Cam.ShakeCam.m_Lens.FieldOfView = Define.CamDefine.Cam.MainCam.fieldOfView;
+        }, () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
         NavmeshManager.Instance.NavmeshBake();
         SignalHub.OnGroundArrivedEvent?.Invoke();

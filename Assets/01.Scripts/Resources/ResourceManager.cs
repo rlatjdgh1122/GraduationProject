@@ -18,6 +18,8 @@ public class ResourceManager : Singleton<ResourceManager>
     public bool OnlyGetOneStone { get; set; } = false;
     public bool OnlyGetOneWood { get; set; } = false;
 
+    public bool GetStone { get; set; } = true;
+
     public override void Awake()
     {
         //resourceStack = new List<Resource>();

@@ -37,6 +37,12 @@ public class NexusBase : MonoBehaviour
                 return;
             }
 
+            if(!ResourceManager.Instance.GetStone)
+            {
+                UIManager.Instance.ShowWarningUI("돌이 캐질 때까지 기다려 주세요");
+                return;
+            }
+
             if (isFirst)
             {
                 UIManager.Instance.GifController.ShowGif(GifType.NexusUpgrade);
