@@ -61,9 +61,13 @@ public abstract class BaseBuilding : WorkableObject
 
     public Ground InstalledGround()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, Mathf.Infinity))
         {
             return hit.collider.transform.parent.GetComponent<Ground>();
+        }
+        else
+        {
+            Debug.Log("Not hit");
         }
         return null;
     }
@@ -253,4 +257,9 @@ public abstract class BaseBuilding : WorkableObject
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, Vector3.down);
+    }
 }
