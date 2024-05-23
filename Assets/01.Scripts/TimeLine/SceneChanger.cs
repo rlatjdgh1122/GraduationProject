@@ -25,9 +25,12 @@ public class SceneChanger : MonoBehaviour
 
     IEnumerator WaitCutSceneTime(float waitCutSceneTime, string sceneName)
     {
-        if(Input.GetKeyDown(KeyCode.S))
+        if(Input.anyKeyDown)
         {
-            _blackPanel.DOFade(1, _duration).OnComplete(() => LoadingSceneController.LoadScene(_mainScene));
+            if(!Input.GetKeyDown(KeyCode.Escape) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) 
+            {
+                _blackPanel.DOFade(1, _duration).OnComplete(() => LoadingSceneController.LoadScene(_mainScene));
+            }
         }
 
         yield return new WaitForSeconds(waitCutSceneTime);
