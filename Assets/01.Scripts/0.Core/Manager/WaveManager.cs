@@ -67,6 +67,9 @@ public class WaveManager : Singleton<WaveManager>
 
     private bool isFirst = true;
 
+    public bool OnBuildArcherTower = false;
+    public bool OnBuildBuffTower = false;
+
     public void BattlePhaseSubscribe()
     {
         SignalHub.OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독

@@ -35,7 +35,8 @@ public class ResourceObjectClickTrigger : MonoBehaviour
             && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI
             && !NexusManager.Instance.CanClick
-            && !ResourceManager.Instance.OnResourceUI)
+            && !ResourceManager.Instance.OnResourceUI
+            && !TutorialManager.Instance.ShowTutorialQuest)
         {
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI", true);

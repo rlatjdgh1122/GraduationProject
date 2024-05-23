@@ -11,7 +11,8 @@ public class GeneralDummyPengiun : DummyPenguin
         if (UIManager.Instance.CheckShowAble(UIType.Info)
             && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI
-            && !NexusManager.Instance.CanClick)
+            && !NexusManager.Instance.CanClick
+            && !TutorialManager.Instance.ShowTutorialQuest)
         {
             if (WaveManager.Instance.CurrentWaveCount <= 5)
             {
