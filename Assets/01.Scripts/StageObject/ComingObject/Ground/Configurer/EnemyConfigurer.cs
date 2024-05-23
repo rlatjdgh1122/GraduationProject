@@ -65,8 +65,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
             string enemyName = _enemyNames[randomIdx];
             Enemy spawnEnemy = PoolManager.Instance.Pop(enemyName) as Enemy;
 
-            Debug.Log($"{isRaft} : {spawnEnemy.GetInstanceID()}");  
-
             SetEnemyNav(spawnEnemy);
 
             if (isRaft)

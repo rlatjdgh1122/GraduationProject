@@ -128,7 +128,7 @@ public abstract class BuffBuilding : BaseBuilding
             buildingEffectFeedback.FinishFeedback();
     }
 
-    private void CheckEnterTarget()
+    protected void CheckEnterTarget()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
 
@@ -139,25 +139,26 @@ public abstract class BuffBuilding : BaseBuilding
             if (!_buffTargetList.Contains(coll))
             {
                 _buffTargetList.Add(coll);
+
                 EnterTarget(coll);
             }
         }
     }
 
-    private void CheckExitTarget()
+    protected void CheckExitTarget()
     {
-        //exitTargetList.TryClear();
-
         Collider[] colls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
 
         foreach (Collider coll in _buffTargetList)
         {
+
             if (_exitTargetList.Contains(coll)) continue;
 
             bool found = Array.Exists(colls, x => x.Equals(coll));
 
             if (found == false)
             {
+                AddExitTargetList(coll);
                 ExitTarget(coll);
             }
 
@@ -165,8 +166,12 @@ public abstract class BuffBuilding : BaseBuilding
 
         _buffTargetList.RemoveList(_exitTargetList);
     }
+
     protected void AddExitTargetList(Collider coll)
         => _exitTargetList.Add(coll);
+
+    protected void RemoveExitTargetList(Collider coll)
+       => _exitTargetList.Remove(coll);
 
     protected abstract void EnterTarget(Collider coll);
     protected abstract void ExitTarget(Collider coll);
@@ -203,5 +208,11 @@ public abstract class BuffBuilding : BaseBuilding
         base.SetInstalled();
 
         _health.enabled = true; // 설치 완료 되면 공격 대상 O
+    }
+
+    public void Clear()
+    {
+        _buffTargetList.TryClear();
+        _exitTargetList.TryClear();
     }
 }

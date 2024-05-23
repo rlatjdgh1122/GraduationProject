@@ -41,7 +41,9 @@ public class StrengthBuffBuilding : BuffBuilding
 
     private void EndBuffEffect(Collider coll)
     {
-        AddExitTargetList(coll);
+        RemoveExitTargetList(coll);
+
+        CheckEnterTarget();
     }
 
     #region Set Value
