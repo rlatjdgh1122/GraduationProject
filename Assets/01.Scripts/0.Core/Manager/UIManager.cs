@@ -240,7 +240,7 @@ public class UIManager : Singleton<UIManager>
 
         if (hasFocus)
         {
-            _escButtonController.ShowEscPanel();
+            _escButtonController?.ShowEscPanel();
         }
     }
     #endregion
