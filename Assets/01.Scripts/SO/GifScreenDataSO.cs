@@ -20,9 +20,24 @@ public class ScreenData
     public string GifName => _gifName;
 }
 
+[Serializable]
+public class GifSpeedData
+{
+    [SerializeField]
+    private float _speed;
+    public float Speed => _speed;
+
+    [SerializeField] [TextArea]
+    private string _speedText;
+    public string SpeedText => _speedText;
+}
+
 [CreateAssetMenu(menuName = "SO/Screen")]
 public class GifScreenDataSO : ScriptableObject
 {
     [SerializeField] private List<ScreenData> _gifScreenList = new();
     public List<ScreenData> GifScreenList => _gifScreenList;
+
+    [SerializeField] private List<GifSpeedData> _gifSpeedList = new();
+    public List<GifSpeedData> GifSpeedList => _gifSpeedList;
 }
