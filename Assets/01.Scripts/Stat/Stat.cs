@@ -74,6 +74,8 @@ public class Stat
 
     public void RemoveIncrease(int value)
     {
+        Debug.Log($"value: {value}");
+
         if (value != 0)
             increases.Remove(value);
 

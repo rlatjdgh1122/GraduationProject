@@ -43,7 +43,6 @@ public class NexusUIPresenter : NexusPopupUI
             if (_nexusStat.level == building.UnlockedLevel)
             {
                 building.IsUnlocked = true;
-                Debug.Log($"{building.CodeName}: {building.IsUnlocked}");
             }
         }
 

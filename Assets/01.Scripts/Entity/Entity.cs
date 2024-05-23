@@ -7,7 +7,7 @@ public abstract class Entity : TargetObject
     public float innerDistance = 4f;
     public float attackDistance = 1.5f;
 
-    [SerializeField] protected LayerMask TargetLayer;
+    [SerializeField] public LayerMask TargetLayer;
 
     #region Components 
     public CharacterController CharacterCompo { get; private set; }

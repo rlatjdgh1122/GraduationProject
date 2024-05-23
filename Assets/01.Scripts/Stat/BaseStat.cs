@@ -437,6 +437,7 @@ public abstract class BaseStat : ScriptableObject
             case StatType.Damage:
                 if (mode == StatMode.Increase)
                 {
+                    Debug.Log("ASDF");
                     damage.RemoveIncrease(value);
                 }
                 else if (mode == StatMode.Decrease)
