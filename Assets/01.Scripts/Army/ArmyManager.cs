@@ -7,11 +7,17 @@ using UnityEngine;
 public class ArmyManager : Singleton<ArmyManager>
 {
     [SerializeField] private List<Army> armies;
+
     public List<Army> Armies { get { return armies; } }
     private Dictionary<KeyCode, Action> keyDictionary = new();
 
-    public MovefocusMode curFocusMode = MovefocusMode.Battle;
+    [SerializeField] private MovefocusMode curFocusMode = MovefocusMode.Battle;
+    [SerializeField] private Color battleModeOutline = Color.white;
+    [SerializeField] private Color commandModeOutline = Color.white;
+
     public MovefocusMode CurFocusMode => curFocusMode;
+
+    private Color GetOutlineColor => curFocusMode == MovefocusMode.Command ? commandModeOutline : battleModeOutline;
 
     private int curArmyIdx = -1;
 
@@ -83,17 +89,22 @@ public class ArmyManager : Singleton<ArmyManager>
         var curArmy = GetCurArmy();
         curArmy.MoveFocusMode = curFocusMode;
 
-        if (curFocusMode == MovefocusMode.Battle)
+        curArmy.Soldiers.ForEach(s =>
         {
-            curArmy.Soldiers.ForEach(s =>
-            {
+            s.OutlineCompo?.SetColor(GetOutlineColor);
+
+            if (curFocusMode == MovefocusMode.Battle)
                 s.FindNearestEnemy();
-            });
-        }
+        });
+
         if (curArmy.General)
         {
-            curArmy.General.FindNearestEnemy();
+            curArmy.General.OutlineCompo?.SetColor(GetOutlineColor);
+
+            if (curFocusMode == MovefocusMode.Battle)
+                curArmy.General.FindNearestEnemy();
         }
+
     }
 
     public void ChangedCurrentArmy()
@@ -122,11 +133,12 @@ public class ArmyManager : Singleton<ArmyManager>
 
         var General = curArmy.General;
 
-
         //중복 선택된 군단도 아웃라인 보이게
         curArmy.Soldiers.ForEach(s =>
         {
             s.OutlineCompo.enabled = true;
+            s.OutlineCompo.SetColor(GetOutlineColor);
+
             s.HealthCompo.IsAlwaysShowUI = true;
             s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
@@ -136,8 +148,10 @@ public class ArmyManager : Singleton<ArmyManager>
             var GeneralHealtCompo = General.HealthCompo;
 
             General.OutlineCompo.enabled = true;
-            General.HealthCompo.IsAlwaysShowUI = true;
-            General.HealthCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
+            General.OutlineCompo.SetColor(GetOutlineColor);
+
+            GeneralHealtCompo.IsAlwaysShowUI = true;
+            GeneralHealtCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
         }
 
         //군단 체인지 하는건 한 번만 실행해도 되니깐
@@ -166,9 +180,13 @@ public class ArmyManager : Singleton<ArmyManager>
                 //curArmy set battleMode
                 p.MoveFocusMode = curFocusMode;
 
+                var color = curFocusMode == MovefocusMode.Command ? commandModeOutline : battleModeOutline;
+
 
                 p.Soldiers.ForEach(s =>
                 {
+                    s.OutlineCompo?.SetColor(color);
+
                     if (CurFocusMode == MovefocusMode.Battle)
                     {
                         s.FindNearestEnemy();

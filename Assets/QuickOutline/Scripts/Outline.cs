@@ -181,6 +181,7 @@ public class Outline : MonoBehaviour
         }
     }
 
+
     void OnDisable()
     {
         if (ren != null)
@@ -215,6 +216,12 @@ public class Outline : MonoBehaviour
         Destroy(outlineMaskMaterial);
         Destroy(outlineFillMaterial);
     }
+
+    public void SetColor(Color color)
+    {
+        OutlineColor = color;
+    }
+
 
     void Bake()
     {
