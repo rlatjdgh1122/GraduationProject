@@ -13,13 +13,19 @@ public class CursorSystem : MonoBehaviour
 
     MovefocusMode _currentMode;
 
-    private void Awake()
+    private void OnEnable()
     {
         SignalHub.OnBattleModeChanged += ChangeCursorIcon;
         SignalHub.OnBattlePhaseStartEvent += ChangeCursorIconOnStart;
-        SignalHub.OnBattlePhaseEndEvent += ChangeCursorIconToNomal;
+        SignalHub.OnBattlePhaseEndEvent += ChangeCursorIconToNomal; 
     }
 
+    private void OnDisable()
+    {
+        SignalHub.OnBattleModeChanged -= ChangeCursorIcon;
+        SignalHub.OnBattlePhaseStartEvent -= ChangeCursorIconOnStart;
+        SignalHub.OnBattlePhaseEndEvent -= ChangeCursorIconToNomal;
+    }
     private void ChangeCursorIcon(MovefocusMode cursorMode)
     {
         if (cursorMode == MovefocusMode.Command && WaveManager.Instance.IsBattlePhase)
