@@ -17,7 +17,7 @@ public class PenguinDashState : State
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }    
-        else
+        else if (_penguin.IsTargetInThrowRange)
         {
             _triggerCalled = false;
             General.skill.PlaySkill();
