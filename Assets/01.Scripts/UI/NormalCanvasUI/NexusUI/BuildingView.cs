@@ -43,14 +43,6 @@ public class BuildingView : NexusPopupUI
         _presenter.PurchaseBuilding(this);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            UpdateUI();
-        }
-    }
-
     public void UpdateUI()
     {
         lockedPanel.gameObject.SetActive(!_building.IsUnlocked);
