@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,11 @@ public class SceneChanger : MonoBehaviour
     [SerializeField]
     private string NextScene;
 
+    [SerializeField]
+    private CanvasGroup _blackPanel;
+    [SerializeField]
+    private float _duration;
+
     private string _mainScene = "FSMTestMin";
 
     private void Update()
@@ -19,12 +25,16 @@ public class SceneChanger : MonoBehaviour
 
     IEnumerator WaitCutSceneTime(float waitCutSceneTime, string sceneName)
     {
-        if(Input.GetKeyDown(KeyCode.S))
+        if(Input.anyKeyDown)
         {
-            LoadingSceneController.LoadScene(_mainScene);
+            if(!Input.GetKeyDown(KeyCode.Escape) && !Input.GetKey(KeyCode.LeftAlt) && !Input.GetKey(KeyCode.RightAlt)) 
+            {
+                _blackPanel.DOFade(1, _duration).OnComplete(() => LoadingSceneController.LoadScene(_mainScene));
+            }
         }
 
         yield return new WaitForSeconds(waitCutSceneTime);
+
         if(NextScene != _mainScene)
         {
             SceneManager.LoadScene(sceneName);

@@ -56,7 +56,8 @@ public class DefaultBuilding : BaseBuilding
         if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/
             && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI
-            && !NexusManager.Instance.CanClick)
+            && !NexusManager.Instance.CanClick
+            && !TutorialManager.Instance.ShowTutorialQuest)
         {
             if (isFirst)
             {

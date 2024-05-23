@@ -52,6 +52,17 @@ public class PhaseChangeButton : MonoBehaviour
             }
         }
 
+        if(WaveManager.Instance.CurrentWaveCount == 3 && !WaveManager.Instance.OnBuildBuffTower)
+        {
+            UIManager.Instance.ShowWarningUI("힘의 조각상을 지어주세요");
+            return;
+        }
+        if (WaveManager.Instance.CurrentWaveCount == 4 && !WaveManager.Instance.OnBuildArcherTower)
+        {
+            UIManager.Instance.ShowWarningUI("아처 타워를 지어주세요");
+            return;
+        }
+
         if (ArmyManager.Instance.CheckEmpty())
         {
             UIManager.Instance.ShowWarningUI("군단에 펭귄을 넣어주세요!");
