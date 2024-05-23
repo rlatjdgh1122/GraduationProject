@@ -36,12 +36,14 @@ public class StrengthBuffBuilding : BuffBuilding
         if (coll.gameObject.TryGetComponent(out Penguin penguin))
         {
             StartCoroutine(penguin.RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), buffStatType, buffStatMode,
-                () => EndBuffEffect(coll)));
+                () => EndBuffEffect(coll, penguin)));
         }
     }
 
-    private void EndBuffEffect(Collider coll)
+    private void EndBuffEffect(Collider coll, Penguin penguin)
     {
+        penguin.StrengthBuffEffect?.Stop();
+
         RemoveExitTargetList(coll);
 
         CheckEnterTarget();

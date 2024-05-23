@@ -98,6 +98,9 @@ public class Penguin : Entity
         }
     }
 
+    private EffectPlayer _strengthBuffEffect;
+    public EffectPlayer StrengthBuffEffect => _strengthBuffEffect;
+
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
     private void OnEnable()
@@ -343,6 +346,11 @@ public class Penguin : Entity
         base.Init();
 
         owner = null;
+    }
+
+    public void SetStrengthBuffEffect(EffectPlayer effectPlayer) // 나중에 반드시 바꿀 것
+    {
+        _strengthBuffEffect = effectPlayer;
     }
 
 
