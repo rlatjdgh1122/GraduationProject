@@ -61,7 +61,7 @@ public abstract class BaseBuilding : WorkableObject
 
     public Ground InstalledGround()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
             return hit.collider.transform.parent.GetComponent<Ground>();
         }

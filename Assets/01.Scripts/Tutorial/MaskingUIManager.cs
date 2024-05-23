@@ -89,6 +89,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
             }
         }
 
+        _cameraSystem.ResetFOV();
         _maskingImage.transform.position = onPos;
     }
 
