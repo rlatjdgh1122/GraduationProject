@@ -1,5 +1,10 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class StrengthBuffBuilding : BuffBuilding
 {
@@ -96,7 +101,7 @@ public class StrengthBuffBuilding : BuffBuilding
                 buffEffect.transform.rotation = Quaternion.identity;
 
                 var main = buffEffect.Particles[0].main;
-                main.startSize = 0.3f;
+                main.startSize = 0.25f;
 
                 buffEffect.StartPlay(OutoffRangeBuffDuration);
 

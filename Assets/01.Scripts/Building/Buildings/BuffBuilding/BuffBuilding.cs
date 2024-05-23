@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -83,7 +82,7 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
             isChecked = true;
             isEffectPlaying = true;
         }
-        else if (_curcolls.Length < previousColls.Length)
+        else if(_curcolls.Length < previousColls.Length)
         {
             if (isChecked == true)
             {
@@ -157,7 +156,7 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, innerDistance);
