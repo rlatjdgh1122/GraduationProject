@@ -19,6 +19,8 @@ public abstract class Entity : TargetObject
     #endregion
 
     public bool IsTargetInAttackRange => CurrentTarget != null && Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance;
+    public bool IsTargetInThrowRange => CurrentTarget != null && 
+        Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) <= attackDistance + 1;
 
     public bool PenguinTriggerCalled { get; set; } = false;
 
