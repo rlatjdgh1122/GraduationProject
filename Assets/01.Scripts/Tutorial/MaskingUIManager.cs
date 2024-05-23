@@ -22,6 +22,9 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     CameraSystem _cameraSystem;
 
+    private bool isMasking;
+    public bool IsMasking => isMasking;
+
     public override void Awake()
     {
         _maskingImage = FindObjectOfType<MaskingImage>();
@@ -35,7 +38,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         maskingUIIdx = 1;
     }
 
-    public void SetMaskingImagePos() // 귀찮으니 일단 이따구로 스레기처럼 함 
+    public void SetMaskingImagePos() // 시간없으니 일단 이따구로 스레기처럼 함 
     {
         if (questPointsQueue.Count == 0)
         {
@@ -45,7 +48,9 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
             }
         }
 
-        CoroutineUtil.CallWaitForSeconds(0.25f, null, () => UIManager.Instance.ShowPanel("Masking", true));
+        isMasking = true;
+
+        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => UIManager.Instance.ShowPanel("Masking", true));
 
         string points = questPointsQueue.Dequeue();
 
@@ -122,7 +127,10 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         if (questPointsQueue.Count != 0)
         {
             SetMaskingImagePos();
+            return;
         }
+
+        isMasking = false;
     }
 
     public bool IsArrowSignPoint(int idx) { return maskingUIIdx == idx; }
