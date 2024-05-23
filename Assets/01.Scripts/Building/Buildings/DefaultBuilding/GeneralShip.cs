@@ -41,7 +41,8 @@ public class GeneralShip : MonoBehaviour
         if(!WaveManager.Instance.IsBattlePhase 
             && !UIManager.Instance.GifController.CanShow
             && !LegionInventoryManager.Instance.CanUI
-            && !NexusManager.Instance.CanClick)
+            && !NexusManager.Instance.CanClick
+            && !TutorialManager.Instance.ShowTutorialQuest)
         {
             if (WaveManager.Instance.CurrentWaveCount <= 4)
             {

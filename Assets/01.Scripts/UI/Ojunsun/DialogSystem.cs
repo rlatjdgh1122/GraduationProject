@@ -103,6 +103,8 @@ public class DialogSystem : MonoBehaviour
         {
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
+
+            TutorialManager.Instance.ShowTutorialQuest = true;
         });
     }
 
@@ -112,6 +114,8 @@ public class DialogSystem : MonoBehaviour
         {
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
+
+            TutorialManager.Instance.ShowTutorialQuest = false;
 
             if (WaveManager.Instance.CurrentWaveCount % 2 == 1)
             {
