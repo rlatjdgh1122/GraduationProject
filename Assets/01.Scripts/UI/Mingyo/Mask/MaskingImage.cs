@@ -6,11 +6,6 @@ using UnityEngine.UI;
 
 public class MaskingImage : MonoBehaviour
 {
-    private void Start()
-    {
-        CoroutineUtil.CallWaitForOneFrame(() => UIManager.Instance.HidePanel("Masking"));
-    }
-
     private Transform _buttonTrm;
     public Transform ButtonTrm
     {
@@ -22,6 +17,12 @@ public class MaskingImage : MonoBehaviour
             }
             return _buttonTrm;
         }
+    }
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
+        CoroutineUtil.CallWaitForSeconds(1f, null, () => { gameObject.SetActive(true); });
     }
 
 }

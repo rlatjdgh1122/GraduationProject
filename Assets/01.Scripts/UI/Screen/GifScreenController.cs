@@ -20,9 +20,13 @@ public enum GifType
 public class GifScreenController : MonoBehaviour
 {
     [SerializeField] private GifScreenDataSO _gifDataSO;
+    public GifScreenDataSO GifDataSO => _gifDataSO;
 
-    private VideoPlayer _videoPlayer; 
-    
+    private VideoPlayer _videoPlayer;
+
+    private int _speedUpBtnClickCount = 0;
+    public int SpeedUpBtnClickCount => _speedUpBtnClickCount;
+
     public bool CanShow { get; private set; } = false;
 
     private void Awake()
@@ -73,8 +77,21 @@ public class GifScreenController : MonoBehaviour
         _videoPlayer.loopPointReached -= OnGifEnd;
     }
 
+    public void OnGifSpeed()
+    {
+        if (_videoPlayer.clip == null) return;
+
+        _speedUpBtnClickCount = ++_speedUpBtnClickCount >= _gifDataSO.GifSpeedList.Count ? 0 : _speedUpBtnClickCount;
+
+        _videoPlayer.playbackSpeed = _gifDataSO.GifSpeedList[_speedUpBtnClickCount].Speed;
+    }
+
+
     public void ExitGifScreenUI()
     {
+        _speedUpBtnClickCount = 0;
+        _videoPlayer.playbackSpeed = 1;
+
         OnGifEnd(null);
     }
 }

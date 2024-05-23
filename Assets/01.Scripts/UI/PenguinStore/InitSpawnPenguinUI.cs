@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
+public class InitSpawnPenguinUI : MonoBehaviour, ICreateSlotUI
 {
     #region Component
 
@@ -32,10 +32,8 @@ public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
 
     protected UnitInventory unitInventory;
 
-    public override void Awake()
+    public void Awake()
     {
-        base.Awake();
-
         PenguinFactory = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
         BuyPanel = transform.Find("BuyPanel").GetComponent<BuyPanel>();
         infoPanel = transform.Find("DetailInfoPanel").GetComponent<InfoPanel>();
