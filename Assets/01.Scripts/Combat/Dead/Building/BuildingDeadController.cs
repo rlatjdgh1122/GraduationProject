@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where T : BaseBuilding
 {
@@ -29,8 +30,8 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
         _brokenBuilding.gameObject.SetActive(true);
         _nonBrokenBuilding.gameObject.SetActive(false);
 
-        _brokenBuilding.ParentBuilding.BuildingItemInfoCompo.CurrentInstallCount -= 1;
-        GameObject.Find(_brokenBuilding.ParentBuilding.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
+        _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
+        GameObject.Find(_owner.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
     }
 
     public virtual void OnResurrected()
