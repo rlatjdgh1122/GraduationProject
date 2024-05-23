@@ -16,15 +16,6 @@ public class StrengthBuffBuilding : BuffBuilding
         if (coll.gameObject.TryGetComponent(out Penguin penguin))
         {
             penguin.Stat.AddStat(GetBuffValue(), buffStatType, buffStatMode);
-        }
-    }
-
-    protected override void ExitTarget(Collider coll)
-    {
-        if (coll.gameObject.TryGetComponent(out Penguin penguin))
-        {
-            StartCoroutine(penguin.RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), buffStatType, buffStatMode,
-                () => EndBuffEffect(coll)));
 
             EffectPlayer buffEffect = PoolManager.Instance.Pop(_penguinEffect) as EffectPlayer;
 
@@ -37,6 +28,15 @@ public class StrengthBuffBuilding : BuffBuilding
             main.startSize = 0.3f;
 
             buffEffect.StartPlay(OutoffRangeBuffDuration);
+        }
+    }
+
+    protected override void ExitTarget(Collider coll)
+    {
+        if (coll.gameObject.TryGetComponent(out Penguin penguin))
+        {
+            StartCoroutine(penguin.RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), buffStatType, buffStatMode,
+                () => EndBuffEffect(coll)));
         }
     }
 
