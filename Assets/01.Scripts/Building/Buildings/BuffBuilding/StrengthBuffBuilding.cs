@@ -30,10 +30,11 @@ public class StrengthBuffBuilding : BuffBuilding
 
             buffEffect.transform.SetParent(penguin.transform);
             buffEffect.transform.localPosition = Vector3.zero;
+            buffEffect.transform.localScale = Vector3.one * 0.5f;
             buffEffect.transform.rotation = Quaternion.identity;
 
             var main = buffEffect.Particles[0].main;
-            main.startSize = 0.1f;
+            main.startSize = 0.3f;
 
             buffEffect.StartPlay(OutoffRangeBuffDuration);
         }

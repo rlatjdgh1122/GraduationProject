@@ -41,9 +41,6 @@ public abstract class BuffBuilding : BaseBuilding
         }
     }
 
-
-    private bool isChecked = false; //enter, stay, exit를 위한 변수(건들 필요 없음)
-
     protected int buffValue;
     public int BuffValues
     {
@@ -62,6 +59,18 @@ public abstract class BuffBuilding : BaseBuilding
     public FeedbackPlayer buildingEffectFeedback { get; protected set; } = null;
     [SerializeField] private List<Collider> _buffTargetList = new();
     [SerializeField] private List<Collider> _exitTargetList = new();
+
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseStartEvent += PlayEffect;
+        SignalHub.OnBattlePhaseEndEvent += StopEffect;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartEvent -= PlayEffect;
+        SignalHub.OnBattlePhaseEndEvent -= StopEffect;
+    }
 
     protected override void Awake()
     {
@@ -96,10 +105,6 @@ public abstract class BuffBuilding : BaseBuilding
         {
             OnExit();
         }
-        else if (count <= 0)
-        {
-            StopEffect();
-        }
 
         currentCheckCount = count;
     }
@@ -107,7 +112,6 @@ public abstract class BuffBuilding : BaseBuilding
 
     private void OnEnter()
     {
-        PlayEffect(); //내 이펙트 실행
         CheckEnterTarget();
     }
 
@@ -116,13 +120,13 @@ public abstract class BuffBuilding : BaseBuilding
         CheckExitTarget();
     }
 
-    private void PlayEffect()
+    public void PlayEffect()
     {
         if (buildingEffectFeedback != null)
             buildingEffectFeedback.PlayFeedback();
     }
 
-    private void StopEffect()
+    public void StopEffect()
     {
         if (buildingEffectFeedback != null)
             buildingEffectFeedback.FinishFeedback();
@@ -151,7 +155,6 @@ public abstract class BuffBuilding : BaseBuilding
 
         foreach (Collider coll in _buffTargetList)
         {
-
             if (_exitTargetList.Contains(coll)) continue;
 
             bool found = Array.Exists(colls, x => x.Equals(coll));
