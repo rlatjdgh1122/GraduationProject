@@ -24,8 +24,6 @@ public class ResourceManager : Singleton<ResourceManager>
         resourceDictionary = new Dictionary<ResourceDataSO, Resource>();
     }
 
-    public ResourceDataSO[] resourceArray;
-
     public void AddResource(ResourceDataSO resourceData, int count)
     {
         if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
@@ -40,14 +38,6 @@ public class ResourceManager : Singleton<ResourceManager>
             resourceDictionary.Add(resourceData, newResource);
             OnUIUpdate(newResource, count);
         }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-            AddResource(resourceArray[0], 10);
-        if (Input.GetKeyDown(KeyCode.B))
-            AddResource(resourceArray[1], 10);
     }
 
     public void RemoveResource(ResourceDataSO resourceData, int count = 1)

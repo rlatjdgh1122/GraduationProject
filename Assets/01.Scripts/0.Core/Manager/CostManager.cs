@@ -41,12 +41,6 @@ public class CostManager : Singleton<CostManager>
         _costUI.OnlyCurrentCostView(Cost);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.C))
-            AddFromCurrentCost(100);
-    }
-
     /// <summary>
     /// 현재 재화에서 가격을 빼주기
     /// </summary>
