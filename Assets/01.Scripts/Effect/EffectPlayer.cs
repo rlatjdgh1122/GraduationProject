@@ -13,17 +13,15 @@ public class EffectPlayer : PoolableMono
         if (_particles != null)
             _particles.ForEach(p => p.Play());
 
-        //StartCoroutine(Timer(endTime));
-
         Invoke(nameof(Stop), endTime);
     }
 
-    protected void Stop()
+    public void Stop()
     {
         PoolManager.Instance.Push(this);
     }
 
-    protected IEnumerator Timer(float timer)
+    protected virtual IEnumerator Timer(float timer)
     {
         yield return new WaitForSeconds(timer);
         PoolManager.Instance.Push(this);

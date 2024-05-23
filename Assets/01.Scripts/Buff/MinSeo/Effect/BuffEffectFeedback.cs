@@ -43,6 +43,7 @@ public class BuffEffectFeedback : Feedback
             return false;
 
         PoolManager.Instance.Push(_curEffect);
+        Debug.Log(_curEffect);
         _curEffect = null;
 
         return true;
