@@ -1,116 +1,50 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class StrengthBuffBuilding : BuffBuilding
 {
-    private Collider[] _colls;
-    private Collider[] previousColls = default;
-
-    private Dictionary<int , Penguin> _inRangePenguins = new Dictionary<int , Penguin>();
-
-    private FeedbackPlayer _feedbackPlayer;
-    private BuffEffectFeedback _feedbackEffect;
     private readonly string _penguinEffect = "PenguinDamageUp";
-
-    public override void Init()
-    {
-        _inRangePenguins.Clear();
-    }
 
     protected override void Awake()
     {
         base.Awake();
 
-        _feedbackPlayer = transform.Find("BuffFeedback").GetComponent<FeedbackPlayer>();
-        _feedbackEffect = transform.Find("BuffFeedback").GetComponent<BuffEffectFeedback>();
-        
+        buildingEffectFeedback = transform.Find("BuffFeedback").GetComponent<FeedbackPlayer>();
     }
 
-    protected override void Running()
+    protected override void EnterTarget(Collider coll)
     {
-        if (HealthCompo.IsDead) return; 
-        if (!WaveManager.Instance.IsBattlePhase) return; 
-
-        Collider[] newColls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
-
-        if (previousColls == default || !IsSameColliders(previousColls, newColls))
+        if (coll.gameObject.TryGetComponent(out Penguin penguin))
         {
-            previousColls = _colls;
-            _colls = newColls;
-
-            if (previousColls != null)
-            {
-                previousColls = BuffRunning(_feedbackPlayer, _colls, previousColls);
-            }
+            penguin.Stat.AddStat(GetBuffValue(), buffStatType, buffStatMode);
         }
     }
 
-    protected override void BuffEvent()
+    protected override void ExitTarget(Collider coll)
     {
-        int curPreviousCollsLength = previousColls.Length;
-        for (int i = 0; i < _colls.Length; i++)
+        if (coll.gameObject.TryGetComponent(out Penguin penguin))
         {
-            GameObject obj = _colls[i].gameObject;
-            int instanceID = obj.GetInstanceID();
+            StartCoroutine(penguin.RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), buffStatType, buffStatMode,
+                () => EndBuffEffect(coll)));
 
-            if (_inRangePenguins.ContainsKey(instanceID))
-            {
-                continue;
-            }
+            EffectPlayer buffEffect = PoolManager.Instance.Pop(_penguinEffect) as EffectPlayer;
 
-            if (!_inRangePenguins.TryGetValue(instanceID, out Penguin penguin))
-            {
-                _inRangePenguins.Add(instanceID, _colls[i].GetComponent<Penguin>());
-            }
+            buffEffect.transform.SetParent(penguin.transform);
+            buffEffect.transform.localPosition = Vector3.zero;
+            buffEffect.transform.rotation = Quaternion.identity;
 
-            // null 뜸
-            //임시수정
-            _inRangePenguins[instanceID].AddStat(GetBuffValue(), StatType.Damage, StatMode.Increase); 
+            var main = buffEffect.Particles[0].main;
+            main.startSize = 0.1f;
+
+            buffEffect.StartPlay(OutoffRangeBuffDuration);
         }
     }
 
-    protected override void CommenceBuffDecay()
+    private void EndBuffEffect(Collider coll)
     {
-        foreach (var key in _inRangePenguins.Keys)
-        {
-            bool found = false;
-            for (int i = 0; i < _colls.Length; i++)
-            {
-                GameObject _collObj = _colls[i].gameObject;
-                int _collObjInstanceID = _collObj.GetInstanceID();
-                if (_collObjInstanceID == key)
-                {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found)
-            {
-                //임시수정
-                StartCoroutine(_inRangePenguins[key].RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), StatType.Damage, StatMode.Increase));
-
-                EffectPlayer buffEffect = PoolManager.Instance.Pop(_penguinEffect) as EffectPlayer;
-                buffEffect.transform.SetParent(_inRangePenguins[key].gameObject.transform);
-                buffEffect.transform.localPosition = Vector3.zero;
-                buffEffect.transform.rotation = Quaternion.identity;
-
-                var main = buffEffect.Particles[0].main;
-                main.startSize = 0.25f;
-
-                buffEffect.StartPlay(OutoffRangeBuffDuration);
-
-                _inRangePenguins.Remove(key);
-                break;
-            }
-        }
+        AddExitTargetList(coll);
     }
 
+    #region Set Value
 
     protected override void SetBuffValue(int value)
     {
@@ -131,4 +65,5 @@ public class StrengthBuffBuilding : BuffBuilding
     {
         return this.OutoffRangeBuffDuration;
     }
+    #endregion
 }

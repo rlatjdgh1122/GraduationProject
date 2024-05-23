@@ -1,11 +1,11 @@
 using System;
 
-public delegate void OnChangedValue(Ability ability);
+
 
 [Serializable]
-public class Ability 
+public class Ability
 {
-   public Ability DeepCopy()
+    public Ability DeepCopy()
     {
         var instance = new Ability();
 
@@ -17,7 +17,7 @@ public class Ability
         return instance;
     }
 
-    public OnChangedValue OnValidate;
+    public OnValueUpdated<Ability> OnValidate;
 
     public string abilityName;
     public StatType statType;
@@ -34,4 +34,4 @@ public class Ability
 
         get => value;
     }
-}   
+}

@@ -75,6 +75,21 @@ public static class ExtensionMethod
             }
         }
     }
+
+    public static void RemoveList<T>(this List<T> thisList, List<T> otherList)
+    {
+        foreach (var item in otherList)
+        {
+            thisList.Remove(item);
+        }
+    }
+
+
+    public static void TryClear<T>(this List<T> list)
+    {
+        if (list.Count > 0) list.Clear();
+    }
+
     #endregion
 
 

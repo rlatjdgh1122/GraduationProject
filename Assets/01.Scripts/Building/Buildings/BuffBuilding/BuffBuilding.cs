@@ -4,14 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
-public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
+public abstract class BuffBuilding : BaseBuilding
 {
     [SerializeField]
     [Range(0.0f, 10.0f)]
     protected float innerDistance;
 
+    [SerializeField] private int maxDectectTarget = 30;
+
     [SerializeField]
     protected LayerMask _targetLayer;
+
+
+    [SerializeField] protected StatType buffStatType;
+
+    [SerializeField] protected StatMode buffStatMode;
 
     [SerializeField]
     private int defaultBuffValue;
@@ -50,9 +57,11 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         }
     }
 
-    Health _health;
+    private Health _health = null;
 
-    private bool isEffectPlaying = false;
+    public FeedbackPlayer buildingEffectFeedback { get; protected set; } = null;
+    [SerializeField] private List<Collider> _buffTargetList = new();
+    [SerializeField] private List<Collider> _exitTargetList = new();
 
     protected override void Awake()
     {
@@ -63,82 +72,104 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         _health = GetComponent<Health>();
         _health.SetHealth(_characterStat);
         _health.enabled = false; // 설치 완료 되기 전까지는 공격 대상 X
+
+        _colls = new Collider[maxDectectTarget];
     }
 
-    public override void Init()
-    {
-        isEffectPlaying = false;
-    }
+    private Collider[] _colls;
+    private int currentCheckCount = 0;
 
-    public Collider[] BuffRunning(FeedbackPlayer feedbackPlayer, Collider[] _curcolls, Collider[] previousColls)
+    protected override void Running()
     {
-        if (_curcolls.Length > previousColls.Length)
+        if (HealthCompo.IsDead) return;
+        if (!WaveManager.Instance.IsBattlePhase) return;
+
+        int count = Physics.OverlapSphereNonAlloc(transform.position, innerDistance, _colls, _targetLayer);
+
+        if (count == currentCheckCount) return;
+
+        if (count > currentCheckCount)
         {
-            if (!isEffectPlaying)
-            {
-                feedbackPlayer.PlayFeedback();
-            }
-            OnPenguinInsideRangeEnter();
-            isChecked = true;
-            isEffectPlaying = true;
+            OnEnter();
         }
-        else if(_curcolls.Length < previousColls.Length)
+        else if (count < currentCheckCount)
         {
-            if (isChecked == true)
-            {
-                OnPenguinInsideRangeExit();
-            }
-
-            if (_curcolls.Length == 0)
-            {
-                isChecked = false;
-                feedbackPlayer.FinishFeedback();
-                isEffectPlaying = false;
-            }
+            OnExit();
+        }
+        else if (count <= 0)
+        {
+            StopEffect();
         }
 
-        return _curcolls;
+        currentCheckCount = count;
     }
 
-    protected virtual void OnPenguinInsideRangeEnter()
+
+    private void OnEnter()
     {
-        // 범위 안에 들어오면 각각 버프이벤트 구독
-        BuffEvent();
+        PlayEffect(); //내 이펙트 실행
+        CheckEnterTarget();
     }
 
-    protected virtual void OnPenguinInsideRangeStay()
+    private void OnExit()
     {
-
+        CheckExitTarget();
     }
 
-    protected virtual void OnPenguinInsideRangeExit()
+    private void PlayEffect()
     {
-        CommenceBuffDecay();
+        if (buildingEffectFeedback != null)
+            buildingEffectFeedback.PlayFeedback();
     }
 
-    protected bool IsSameColliders(Collider[] colliders1, Collider[] colliders2)
+    private void StopEffect()
     {
-        if (colliders1 == null || colliders2 == null || colliders1.Length != colliders2.Length)
+        if (buildingEffectFeedback != null)
+            buildingEffectFeedback.FinishFeedback();
+    }
+
+    private void CheckEnterTarget()
+    {
+        Collider[] colls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
+
+        foreach (var coll in colls)
         {
-            return false;
-        }
+            if (_exitTargetList.Contains(coll)) continue;
 
-        HashSet<int> hashSet = new HashSet<int>(); //HashSet을 사용해 중복여부 확인
-        foreach (var collider in colliders1)
-        {
-            hashSet.Add(collider.GetInstanceID());
-        }
-
-        foreach (var collider in colliders2)
-        {
-            if (!hashSet.Contains(collider.GetInstanceID()))
+            if (!_buffTargetList.Contains(coll))
             {
-                return false;
+                _buffTargetList.Add(coll);
+                EnterTarget(coll);
             }
         }
-
-        return true;
     }
+
+    private void CheckExitTarget()
+    {
+        //exitTargetList.TryClear();
+
+        Collider[] colls = Physics.OverlapSphere(transform.position, innerDistance, _targetLayer);
+
+        foreach (Collider coll in _buffTargetList)
+        {
+            if (_exitTargetList.Contains(coll)) continue;
+
+            bool found = Array.Exists(colls, x => x.Equals(coll));
+
+            if (found == false)
+            {
+                ExitTarget(coll);
+            }
+
+        }//end foreach
+
+        _buffTargetList.RemoveList(_exitTargetList);
+    }
+    protected void AddExitTargetList(Collider coll)
+        => _exitTargetList.Add(coll);
+
+    protected abstract void EnterTarget(Collider coll);
+    protected abstract void ExitTarget(Collider coll);
 
     private void OnMouseEnter()
     {
@@ -156,14 +187,12 @@ public abstract class BuffBuilding : BaseBuilding, IBuffBuilding
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, innerDistance);
     }
 
-    protected abstract void BuffEvent(); //범위 안에 들어오면 실행될 버프 이벤트
-    protected abstract void CommenceBuffDecay(); //범위 밖으로 나가면 실행될 버프 소멸 이벤트
     protected abstract void SetBuffValue(int value);
     protected abstract int GetBuffValue();
     protected abstract void SetOutoffRangeBuffDuration(float value);

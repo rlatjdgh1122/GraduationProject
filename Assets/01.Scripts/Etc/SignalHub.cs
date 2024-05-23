@@ -2,7 +2,8 @@ using UnityEngine;
 using ArmySystem;
 
 
-
+public delegate void OnValueChanged<T>(T prevValue , T curValue);
+public delegate void OnValueUpdated<T>(T value);
 
 public delegate void ChangedArmy(Army prevArmy, Army newArmy);
 public delegate void ChangedBattleMode(MovefocusMode mode);
