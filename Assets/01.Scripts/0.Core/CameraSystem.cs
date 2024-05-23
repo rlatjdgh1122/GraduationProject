@@ -51,7 +51,7 @@ public class CameraSystem : MonoBehaviour
     private Vector3 _startPosition;
     private Quaternion _vCamstartRotation;
 
-    private Vector3 prevPos = Vector3.zero;
+    private bool canMoving => UIManager.Instance.currentPopupUI.Count <= 0 && !MaskingUIManager.Instance.IsMasking;
 
     private void Awake()
     {
@@ -66,18 +66,17 @@ public class CameraSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (UIManager.Instance.currentPopupUI.Count <= 0)
+        if (!canMoving)
         {
-            if(!isMoving) { isMoving = true; }
-            CameraControl();
-            CameraRotate();
-            CameraZoomHandle();
-            CameraMove();
+            if (isRotating) { isRotating = false; }
+            return;
         }
-        else
-        {
-            isRotating = false;
-        }
+
+        if (!isMoving) { isMoving = true; }
+        CameraControl();
+        CameraRotate();
+        CameraZoomHandle();
+        CameraMove();
     }
 
     private void CameraControl()
@@ -207,8 +206,6 @@ public class CameraSystem : MonoBehaviour
 
     public void SetCameraTartget(Vector3 target)
     {
-        prevPos = transform.position;
-
         Vector3 vec = new Vector3(target.x, transform.position.y, target.z);
         transform.DOMove(vec, 0.5f);
     }
