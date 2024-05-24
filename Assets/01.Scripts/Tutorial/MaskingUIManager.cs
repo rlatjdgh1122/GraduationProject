@@ -96,11 +96,16 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         _cameraSystem.ResetFOV();
         _maskingImage.transform.position = onPos;
     }
-
-    public void OffMaskingButtonUI()
+    
+    private void OffMaskingUI()
     {
         _curMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
         _curMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
+    }
+
+    public void OffMaskingButtonUI()
+    {
+        OffMaskingUI();
 
         Button btn = _curMaskingUiTrms.GetComponent<Button>();
         btn.onClick.RemoveListener(OffMaskingButtonUI);
@@ -110,8 +115,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     public void OffMaskingImageUI()
     {
-        _curMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
-        _curMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
+        OffMaskingUI();
 
         SignalHub.OnClickPenguinSpawnButtonEvent -= OffMaskingImageUI;
 
