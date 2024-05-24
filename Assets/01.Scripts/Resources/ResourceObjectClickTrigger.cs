@@ -59,7 +59,7 @@ public class ResourceObjectClickTrigger : MonoBehaviour
 
             ResourceManager.Instance.OnResourceUI = true;
 
-            if (WaveManager.Instance.CurrentWaveCount < 4)
+            if (WaveManager.Instance.CurrentWaveCount < 5)
             {
                 SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             }

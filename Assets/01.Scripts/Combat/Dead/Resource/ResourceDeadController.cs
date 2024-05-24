@@ -24,7 +24,7 @@ public class ResourceDeadController : MonoBehaviour, IDeadable
 
         _visual.SetActive(false);
 
-        if (WaveManager.Instance.CurrentWaveCount < 4)
+        if (WaveManager.Instance.CurrentWaveCount < 5)
         {
             CoroutineUtil.CallWaitForOneFrame(() => MaskingUIManager.Instance.SetMaskingImagePos());
         }
