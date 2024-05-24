@@ -9,7 +9,7 @@ public class Cage : PoolableMono
     [SerializeField]
     private PenguinTypeEnum _penguinType;
 
-    [SerializeField] 
+    [SerializeField]
     private ParticleSystem _clickParticle;
 
     [SerializeField]
@@ -41,12 +41,14 @@ public class Cage : PoolableMono
 
     private void OnMouseDown()
     {
-        if (!_isClick && !WaveManager.Instance.IsBattlePhase)
+        if (!_isClick && !WaveManager.Instance.IsBattlePhase && !TutorialManager.Instance.ShowTutorialQuest)
         {
+            SignalHub.OnDefaultBuilingClickEvent.Invoke();
+
             TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
 
             StartCoroutine(DissolveCoroutine());
-            
+
             _isClick = true;
         }
     }

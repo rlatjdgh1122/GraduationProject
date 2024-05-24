@@ -10,7 +10,7 @@ public class GeneralUIPresenter : PopupUI
 
     [HideInInspector]
     public GeneralView _currentView;
-    [HideInInspector]
+    //[HideInInspector]
     public GeneralStat currentGeneralStat;
     [HideInInspector]
     public Ability selectedAbility;
@@ -124,7 +124,7 @@ public class GeneralUIPresenter : PopupUI
     {
         currentGeneralStat.GeneralDetailData.synergy.level++;
         UpgradeGeneral();
-        SetRandom();
+        //SetRandom();
         HideBoxes();
     }
 
