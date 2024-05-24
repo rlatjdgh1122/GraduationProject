@@ -10,6 +10,7 @@ public delegate void ChangedBattleMode(MovefocusMode mode);
 
 public delegate void ModifyArmyInfo();
 
+public delegate void OurPenguinDead();
 public delegate void EnemyPenguinDead();
 
 public delegate void BattlePhaseStartEvent();
@@ -40,6 +41,11 @@ public static class SignalHub
     /// Àû Á×À» ¶§ ½ÇÇàµÊ
     /// </summary>
     public static EnemyPenguinDead OnEnemyPenguinDead;
+
+    /// <summary>
+    /// ¾Æ±º Á×À» ¶§ ½ÇÇàµÊ
+    /// </summary>
+    public static EnemyPenguinDead OnOurPenguinDead;
 
     #region ±º´Ü
     /// <summary>
