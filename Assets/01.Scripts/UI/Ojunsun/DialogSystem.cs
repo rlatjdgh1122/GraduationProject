@@ -117,10 +117,7 @@ public class DialogSystem : MonoBehaviour
 
             TutorialManager.Instance.ShowTutorialQuest = false;
 
-            if (WaveManager.Instance.CurrentWaveCount % 2 == 1)
-            {
-                MaskingUIManager.Instance.SetMaskingImagePos();
-            }
+            MaskingUIManager.Instance.SetMaskingImagePos();
 
             if (WaveManager.Instance.CurrentWaveCount == 3)
             {

@@ -100,7 +100,7 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         }
         if(Input.GetMouseButtonDown(1)) //마우스 오른쪽 버튼
         {
-            if (WaveManager.Instance.CurrentWaveCount < 2) { return; }
+            if (WaveManager.Instance.CurrentWaveCount < 3) { return; }
             SpawnPenguinRightEventHandler();
         }
     }
