@@ -81,6 +81,12 @@ public class BuyPanel : PopupUI
     }
     public void MinusCnt()//UI 안에 있는 -버튼을 누르면
     {
+        if (WaveManager.Instance.CurrentWaveCount == 1)
+        {
+            UIManager.Instance.ShowWarningUI("수박바 펭귄 3마리를 구매해 주세요");
+            return;
+        }
+
         if (_cnt <= 1) return;
 
         _cnt--;
@@ -139,13 +145,28 @@ public class BuyPanel : PopupUI
 
     public void BuyButton()
     {
+        if (WaveManager.Instance.CurrentWaveCount == 1 && _cnt < 3)
+        {
+            int saveCnt = _cnt;
+            Debug.Log(saveCnt);
+            UIManager.Instance.ShowWarningUI("수박바 펭귄 3마리를 구매해 주세요");
+            UIManager.Instance.ShowPanel("BuyPanel", true);
+            _cnt = saveCnt;
+            return;
+        }
+
         if (!_canBuy) return;
 
         CostManager.Instance.SubtractFromCurrentCost(_amountPrice);
 
         for (int i = 0; i < _cnt; i++)
         {
-            if(WaveManager.Instance.CurrentWaveCount == 2)
+            if(WaveManager.Instance.CurrentWaveCount == 1 && _infoData.PenguinType == PenguinTypeEnum.Basic)
+            {
+                LegionInventoryManager.Instance.BuyBasicPenguinCountIn1Wave++;
+            }
+
+            if(WaveManager.Instance.CurrentWaveCount == 2 && _infoData.PenguinType == PenguinTypeEnum.Archer)
             {
                 LegionInventoryManager.Instance.BuyArcherPenguinCountIn2Wave++;
             }
@@ -170,6 +191,17 @@ public class BuyPanel : PopupUI
         AmountCostUpdate();
         BuyButton();
         UIManager.Instance.ShowWarningUI("구매 성공!");
+    }
+
+    public void HideBuyPanel()
+    {
+        if (WaveManager.Instance.CurrentWaveCount == 1)
+        {
+            UIManager.Instance.ShowWarningUI("수박바 펭귄 3마리를 구매해 주세요");
+            return;
+        }
+
+        UIManager.Instance.HidePanel("BuyPanel");
     }
 
     public override void HidePanel()

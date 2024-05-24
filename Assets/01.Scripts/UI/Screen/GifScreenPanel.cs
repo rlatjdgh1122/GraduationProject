@@ -39,6 +39,6 @@ public class GifScreenPanel : PopupUI
 
     public void ChangeSpeedText()
     {
-        _speedText.text = _controller.GifDataSO.GifSpeedList[_controller.SpeedUpBtnClickCount].SpeedText;
+        _speedText.text = $"{_controller.GifSpeedList[_controller.SpeedUpBtnClickCount]}x ¹è¼Ó";
     }
 }
