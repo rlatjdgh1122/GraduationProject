@@ -193,9 +193,6 @@ public class UIManager : Singleton<UIManager>
     #region UI Function
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            ShowPanel("CreditUI");
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (currentPopupUI.Count <= 0)
