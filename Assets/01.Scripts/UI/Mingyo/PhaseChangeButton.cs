@@ -37,17 +37,18 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
+        #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ïµï¿½ ï¿½Úµï¿½
         if (WaveManager.Instance.CurrentWaveCount == 1)
         {
             if (LegionInventoryManager.Instance.BuyBasicPenguinCountIn1Wave < 3)
             {
-                UIManager.Instance.ShowWarningUI($"¼ö¹Ú¹Ù Æë±ÏÀ» {3 - LegionInventoryManager.Instance.BuyBasicPenguinCountIn1Wave}¸¶¸® ´õ ±¸¸ÅÇØ ÁÖ¼¼¿ä");
+                UIManager.Instance.ShowWarningUI($"ï¿½ï¿½ï¿½Ú¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ {3 - LegionInventoryManager.Instance.BuyBasicPenguinCountIn1Wave}ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
                 return;
             }
 
             if (LegionInventoryManager.Instance.AddLegionBasicPenguinCountIn1Wave < 3)
             {
-                UIManager.Instance.ShowWarningUI($"¼ö¹Ú¹Ù Æë±ÏÀ» ±º´Ü¿¡ {3 - LegionInventoryManager.Instance.AddLegionBasicPenguinCountIn1Wave}¸¶¸® ´õ Ãß°¡ÇØ ÁÖ¼¼¿ä");
+                UIManager.Instance.ShowWarningUI($"ï¿½ï¿½ï¿½Ú¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¿ï¿½ {3 - LegionInventoryManager.Instance.AddLegionBasicPenguinCountIn1Wave}ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
                 return;
             }
         }
@@ -56,25 +57,26 @@ public class PhaseChangeButton : MonoBehaviour
         {
             if (LegionInventoryManager.Instance.BuyArcherPenguinCountIn2Wave < 2)
             {
-                UIManager.Instance.ShowWarningUI($"¾ÆÃ³ Æë±ÏÀ» ±¸¸ÅÇØ ÁÖ¼¼¿ä");
+                UIManager.Instance.ShowWarningUI($"ï¿½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
                 return;
             }
 
             if (LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave < 2)
             {
-                UIManager.Instance.ShowWarningUI($"¾ÆÃ³ Æë±ÏÀ» ±º´Ü¿¡ {2 - LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave}¸¶¸® ´õ Ãß°¡ÇØ ÁÖ¼¼¿ä");
+                UIManager.Instance.ShowWarningUI($"ï¿½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¿ï¿½ {2 - LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave}ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
                 return;
             }
         }
 
         if (WaveManager.Instance.CurrentWaveCount == 3 && !WaveManager.Instance.OnBuildBuffTower)
         {
-            UIManager.Instance.ShowWarningUI("ÈûÀÇ Á¶°¢»óÀ» °Ç¼³ÇØ ÁÖ¼¼¿ä");
+            UIManager.Instance.ShowWarningUI("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
             return;
         }
+
         if (WaveManager.Instance.CurrentWaveCount == 4 && !WaveManager.Instance.OnBuildArcherTower)
         {
-            UIManager.Instance.ShowWarningUI("¾ÆÃ³ Å¸¿ö¸¦ °Ç¼³ÇØ ÁÖ¼¼¿ä");
+            UIManager.Instance.ShowWarningUI("ï¿½ï¿½Ã³ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
             return;
         }
 
@@ -82,14 +84,14 @@ public class PhaseChangeButton : MonoBehaviour
         {
             if (ArmyManager.Instance.GetCurArmy().General == false)
             {
-                UIManager.Instance.ShowWarningUI("±º´Ü¿¡ ±º´ÜÀåÀ» ³Ö¾îÁÖ¼¼¿ä!");
+                UIManager.Instance.ShowWarningUI("ï¿½ï¿½ï¿½Ü¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½!");
                 return;
             }
         }
 
         if (ArmyManager.Instance.CheckEmpty())
         {
-            UIManager.Instance.ShowWarningUI("±º´Ü¿¡ Æë±ÏÀ» ³Ö¾îÁÖ¼¼¿ä!");
+            UIManager.Instance.ShowWarningUI("ï¿½ï¿½ï¿½Ü¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½!");
         }
         else
         {
@@ -97,10 +99,10 @@ public class PhaseChangeButton : MonoBehaviour
             SoundManager.Play2DSound(SoundName.StartFight);
             NoiseManager.Instance.SaveNoise();
 
-            //IsBattlePhase°¡ trueÀÏ¶§¸¸ ChangedArmy¸¦ ½ÇÇàÇÒ ¼ö ÀÕ´Âµ¥
-            //ÄÚµåº¸´Ï±ñ ÀüÅõ ½ÃÀÛÇÏ°í 0.1ÃÊ µÚ¿¡ true°¡µÇ±æ·¡ 0.15ÃÊµÚ¿¡ ½ÇÇàµÇ°ÔÇÔ
+            //IsBattlePhaseï¿½ï¿½ trueï¿½Ï¶ï¿½ï¿½ï¿½ ChangedArmyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Õ´Âµï¿½
+            //ï¿½Úµåº¸ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ 0.1ï¿½ï¿½ ï¿½Ú¿ï¿½ trueï¿½ï¿½ï¿½Ç±æ·¡ 0.15ï¿½ÊµÚ¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
 
-            //ÀÌ·¸°Ô¸»°í ¿ì¼±¼øÀ§ ¹èÆ² ½ºÅ¸Æ®¿¡¼­ IsBattlePhase¸¦ true·Î ¸¸µé¾îµµ µÇ±äÇÔ
+            //ï¿½Ì·ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ² ï¿½ï¿½Å¸Æ®ï¿½ï¿½ï¿½ï¿½ IsBattlePhaseï¿½ï¿½ trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½îµµ ï¿½Ç±ï¿½ï¿½ï¿½
             CoroutineUtil.CallWaitForSeconds(0.15f, null, () => ArmyManager.Instance.ChangedCurrentArmy());
 
 

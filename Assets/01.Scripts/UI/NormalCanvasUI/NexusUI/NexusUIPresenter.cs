@@ -46,6 +46,8 @@ public class NexusUIPresenter : NexusPopupUI
             }
         }
 
+        LegionInventoryManager.Instance.AddLegionGeneralPenguinIn5Wave++; //지워야함 무조건
+
         CostManager.Instance.SubtractFromCurrentCost(_nexusStat.upgradePrice);
 
         _nexusStat.upgradePrice *= 1.5f; // <-이건 임시

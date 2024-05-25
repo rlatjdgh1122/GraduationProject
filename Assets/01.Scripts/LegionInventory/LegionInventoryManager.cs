@@ -28,14 +28,16 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     public List<LegionInfo> LegionList => _legionList;
     public int LegionCount => _legionList.Count;
 
+
+    #region 전시 끝나면 무조건 지워야함
     private bool _canUI = false;
     public bool CanUI => _canUI;
-
     public int BuyArcherPenguinCountIn2Wave = 0;
     public int AddLegionArcherPenguinCountIn2Wave = 0;
 
     public int BuyBasicPenguinCountIn1Wave = 0;
     public int AddLegionBasicPenguinCountIn1Wave = 0;
+    #endregion
 
     public override void Awake()
     {

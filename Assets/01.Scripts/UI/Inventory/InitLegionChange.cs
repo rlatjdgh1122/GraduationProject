@@ -42,6 +42,12 @@ public class InitLegionChange : PopupUI, ICreateSlotUI
 
     public void ShowChangeLegionPanel()
     {
+        if(WaveManager.Instance.CurrentWaveCount < 5)
+        {
+            UIManager.Instance.ShowWarningUI("튜토리얼이 진행 중입니다");
+            return;
+        }
+
         ShowPanel();
 
         UIManager.Instance.InitializHudTextSequence();

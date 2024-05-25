@@ -124,7 +124,9 @@ public class LegionInventory : LegionUI
         currentLegionList.Add(data);
         currentDictionary.Add(idx, data);
 
-        if(WaveManager.Instance.CurrentWaveCount == 1 && data.PenguinType == PenguinTypeEnum.Basic)
+        #region 전시 끝나면 무조건 지워야함
+
+        if (WaveManager.Instance.CurrentWaveCount == 1 && data.PenguinType == PenguinTypeEnum.Basic)
         {
             LegionInventoryManager.Instance.AddLegionBasicPenguinCountIn1Wave++;
         }
@@ -133,6 +135,8 @@ public class LegionInventory : LegionUI
         {
             LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave++;
         }
+
+#endregion
 
         int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
 
@@ -211,6 +215,11 @@ public class LegionInventory : LegionUI
                 }
 
                 if (WaveManager.Instance.CurrentWaveCount == 2 && curData.PenguinType == PenguinTypeEnum.Archer)
+                {
+                    LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave--;
+                }
+
+                if (WaveManager.Instance.CurrentWaveCount == 5 && curData.JobType == PenguinJobType.General)
                 {
                     LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave--;
                 }
