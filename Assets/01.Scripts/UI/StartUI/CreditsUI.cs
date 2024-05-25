@@ -43,12 +43,11 @@ public class CreditsUI : PopupUI
         yield return new WaitForSecondsRealtime(_delayTime);
 
         _uiTrm.DOLocalMoveY(_endYPos, _moveDuration)
-             .SetUpdate(true)
             .OnComplete(() =>
             {
-                _exitButton.DOFade(1, 0.3f);
+                _exitButton.DOFade(1, 0.3f).SetUpdate(true);
                 _exitButton.blocksRaycasts = true;
-            });
+            }).SetUpdate(true);
     }
 
     public void HideCreditPanel()
