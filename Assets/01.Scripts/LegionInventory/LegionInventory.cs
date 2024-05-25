@@ -136,11 +136,6 @@ public class LegionInventory : LegionUI
             LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave++;
         }
 
-        if(WaveManager.Instance.CurrentWaveCount == 5 && data.JobType == PenguinJobType.General)
-        {
-            LegionInventoryManager.Instance.AddLegionGeneralPenguinIn5Wave++;
-        }
-
 #endregion
 
         int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
@@ -220,6 +215,11 @@ public class LegionInventory : LegionUI
                 }
 
                 if (WaveManager.Instance.CurrentWaveCount == 2 && curData.PenguinType == PenguinTypeEnum.Archer)
+                {
+                    LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave--;
+                }
+
+                if (WaveManager.Instance.CurrentWaveCount == 5 && curData.JobType == PenguinJobType.General)
                 {
                     LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave--;
                 }

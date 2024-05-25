@@ -80,14 +80,6 @@ public class PhaseChangeButton : MonoBehaviour
             return;
         }
 
-        Debug.Log(LegionInventoryManager.Instance.AddLegionGeneralPenguinIn5Wave);
-
-        if(WaveManager.Instance.CurrentWaveCount == 5 && LegionInventoryManager.Instance.AddLegionGeneralPenguinIn5Wave < 4)
-        {
-            UIManager.Instance.ShowWarningUI("군단장을 군단에 추가해 주세요");
-            return;
-        }
-
 #endregion
 
         if (ArmyManager.Instance.CheckEmpty())

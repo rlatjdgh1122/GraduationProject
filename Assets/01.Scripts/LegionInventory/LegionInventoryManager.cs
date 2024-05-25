@@ -37,8 +37,6 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 
     public int BuyBasicPenguinCountIn1Wave = 0;
     public int AddLegionBasicPenguinCountIn1Wave = 0;
-
-    public int AddLegionGeneralPenguinIn5Wave = 0;
     #endregion
 
     public override void Awake()
