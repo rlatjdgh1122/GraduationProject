@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class GeneralView : GeneralPopupUI, IPointerEnterHandler
+public class GeneralView : GeneralPopupUI
 {
     [SerializeField]
     private GeneralStat _generalInfo;
@@ -89,9 +89,9 @@ public class GeneralView : GeneralPopupUI, IPointerEnterHandler
         presenter.ShowUpgradePanel();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+  /*  public void OnPointerEnter(PointerEventData eventData)
     {
         if (presenter != null)
             presenter.SetCurrentView(this);
-    }
+    }*/
 }

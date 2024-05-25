@@ -9,6 +9,7 @@ public class VictoryUI : PopupUI
     [SerializeField] private TextMeshProUGUI _eliminatedEnemy;
     [SerializeField] private TextMeshProUGUI _deadPenguin;
     [SerializeField] private TextMeshProUGUI _reward;
+    [SerializeField] private SoundName VictorySound;
     [SerializeField] private int _cost;
     [SerializeField] private Image _btn;
 
@@ -21,6 +22,7 @@ public class VictoryUI : PopupUI
     {
         base.ShowPanel();
 
+        SoundManager.Play2DSound(VictorySound);
         SetTexts();
     }
 
