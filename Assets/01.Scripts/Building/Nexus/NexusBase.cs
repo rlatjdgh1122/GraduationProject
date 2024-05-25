@@ -26,10 +26,17 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (WaveManager.Instance.CurrentWaveCount == 5 && LegionInventoryManager.Instance.AddLegionGeneralPenguinIn5Wave == 1)
+        {
+            UIManager.Instance.ShowWarningUI("군단장을 군단에 추가해 주세요");
+            return;
+        }
+
         if (!WaveManager.Instance.IsBattlePhase
             && !LegionInventoryManager.Instance.CanUI
             && !UIManager.Instance.GifController.CanShow
-            && !TutorialManager.Instance.ShowTutorialQuest)
+            && !TutorialManager.Instance.ShowTutorialQuest
+            && !NexusManager.Instance.CantClickOnBuild)
         {
             if (WaveManager.Instance.CurrentWaveCount <= 2)
             {

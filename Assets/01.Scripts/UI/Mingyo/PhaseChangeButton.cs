@@ -37,6 +37,7 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
+        #region 전시 끝나면 무조건 지워야 하는 하드 코딩
         if (WaveManager.Instance.CurrentWaveCount == 1)
         {
             if (LegionInventoryManager.Instance.BuyBasicPenguinCountIn1Wave < 3)
@@ -72,11 +73,22 @@ public class PhaseChangeButton : MonoBehaviour
             UIManager.Instance.ShowWarningUI("힘의 조각상을 건설해 주세요");
             return;
         }
+
         if (WaveManager.Instance.CurrentWaveCount == 4 && !WaveManager.Instance.OnBuildArcherTower)
         {
             UIManager.Instance.ShowWarningUI("아처 타워를 건설해 주세요");
             return;
         }
+
+        Debug.Log(LegionInventoryManager.Instance.AddLegionGeneralPenguinIn5Wave);
+
+        if(WaveManager.Instance.CurrentWaveCount == 5 && LegionInventoryManager.Instance.AddLegionGeneralPenguinIn5Wave < 4)
+        {
+            UIManager.Instance.ShowWarningUI("군단장을 군단에 추가해 주세요");
+            return;
+        }
+
+#endregion
 
         if (ArmyManager.Instance.CheckEmpty())
         {

@@ -17,6 +17,8 @@ public class GeneralUIPresenter : PopupUI
 
     private DummyPenguinFactory _penguinFactory;
 
+    private bool _buyGeneral = false;//전시 끝나면 지워야함
+
     private float currentCost
     {
         get
@@ -62,7 +64,7 @@ public class GeneralUIPresenter : PopupUI
             //더미 펭귄한테 내 스탯 주기
             spawnDummy.Stat = _currentView.GeneralInfoData;
             Debug.Log($"스텟: {spawnDummy.Stat}");
-
+            _buyGeneral = true;
             LegionInventoryManager.Instance.AddPenguin(general.InfoData);
 
             currentCost -= currentGeneralStat.InfoData.Price;
@@ -156,6 +158,12 @@ public class GeneralUIPresenter : PopupUI
 
     public void HideGeneralUI()
     {
+        if(!_buyGeneral) //전시 끝나면 지워야함
+        {
+            UIManager.Instance.ShowWarningUI("군단장을 구매해 주세요");
+            return;
+        }
+
         UIManager.Instance.HideAllPanel();
     }
 }
