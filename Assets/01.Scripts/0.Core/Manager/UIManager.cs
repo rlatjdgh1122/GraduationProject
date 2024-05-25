@@ -193,6 +193,9 @@ public class UIManager : Singleton<UIManager>
     #region UI Function
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+            ShowPanel("CreditUI");
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (currentPopupUI.Count <= 0)
@@ -204,7 +207,7 @@ public class UIManager : Singleton<UIManager>
             {
                 foreach (var popuis in currentPopupUI)
                 {
-                    if (popuis.name == "Masking" || popuis.name == "GifScreen") { return; }
+                    if (popuis.name == "Masking" || popuis.name == "GifScreen"  || popuis.name == "CreditUI") { return; }
                 }
 
                 string name = currentPopupUI.Peek().name;
