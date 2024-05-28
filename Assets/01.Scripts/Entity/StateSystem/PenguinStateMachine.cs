@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PenguinStateMachine
 {
@@ -25,6 +26,8 @@ public class PenguinStateMachine
         CurrentState.ExitState();
         CurrentState = StateDictionary[newState];
         CurrentState.EnterState();
+
+        Debug.Log($"{PrevState} -> {CurrentState}");
     }
 
     public void AddState(PenguinStateType stateType, State playerState)

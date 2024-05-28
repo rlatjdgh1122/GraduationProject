@@ -320,6 +320,7 @@ public class Penguin : Entity
         {
             if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) return;
 
+            NavAgent.isStopped = false;
             NavAgent.SetDestination(pos);
         }
     }

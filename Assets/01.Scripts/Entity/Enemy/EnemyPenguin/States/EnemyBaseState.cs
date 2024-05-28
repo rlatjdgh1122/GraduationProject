@@ -85,7 +85,6 @@ public class EnemyBaseState : EnemyState
 
     protected void AttackExit()
     {
-        _enemy.StartImmediately();
         _enemy.AnimatorCompo.speed = 1;
     }
 
@@ -114,7 +113,6 @@ public class EnemyBaseState : EnemyState
 
     protected void ChestHitExit()
     {
-        _enemy.StartImmediately();
         _triggerCalled = false;
     }
     #endregion

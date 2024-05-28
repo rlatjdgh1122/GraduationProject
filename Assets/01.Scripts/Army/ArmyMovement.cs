@@ -9,7 +9,7 @@ public class ArmyMovement : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
     private ParticleSystem ClickParticle;
     private Army curArmy = null;
-    public List<PenguinMovementInfo> armySoldierList = new();
+    public List<Penguin> armySoldierList = new();
 
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
@@ -27,13 +27,13 @@ public class ArmyMovement : MonoBehaviour
     {
         SignalHub.OnArmyChanged += OnArmyChangedHandler;
         SignalHub.OnModifyCurArmy += OnModifyCurArmyHnadler;
-        _inputReader.RightClickEvent += SetClickMovement;
+        _inputReader.RightClickEvent += OnClickForMovement;
     }
     private void OnDisable()
     {
         SignalHub.OnArmyChanged -= OnArmyChangedHandler;
         SignalHub.OnModifyCurArmy -= OnModifyCurArmyHnadler;
-        _inputReader.RightClickEvent -= SetClickMovement;
+        _inputReader.RightClickEvent -= OnClickForMovement;
     }
     private void Awake()
     {
@@ -56,42 +56,56 @@ public class ArmyMovement : MonoBehaviour
     {
         if (armySoldierList.Count < 0) return;
 
-        if (armySoldierList.Count > 0)
-            armySoldierList.Clear();
+        armySoldierList.TryClear();
 
         //장군이 있다면 장군도 추가
         if (curArmy.General)
         {
-            PenguinMovementInfo armySoldier =
-                new(false, curArmy.General);
-
-            armySoldierList.Add(armySoldier);
+            armySoldierList.Add(curArmy.General);
         }
 
         //군사들 추가
         for (int i = 0; i < curArmy.Soldiers.Count; ++i)
         {
-            PenguinMovementInfo armySoldier =
-                new(false, curArmy.Soldiers[i]);
-            armySoldierList.Add(armySoldier);
+            armySoldierList.Add(curArmy.Soldiers[i]);
         }
     }
-    public void SetClickMovement()
+
+    public void OnClickForMovement()
     {
         RaycastHit hit;
         if (Physics.Raycast(RayCasts.MousePointRay, out hit))
         {
-            if (WaitForAllTrueCoutine != null)
-                StopCoroutine(WaitForAllTrueCoutine);
-
-            WaitForAllTrueCoutine = StartCoroutine(WaitForAllTrue_Corou(hit.point));
+            if (WaitForAllTrueCoutine != null) StopCoroutine(WaitForAllTrueCoutine);
+            WaitForAllTrueCoutine = StartCoroutine(Movement_Corou(hit.point));
 
             ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
             ClickParticle.Play();
         }
     }
 
-    /// <summary>
+    private IEnumerator Movement_Corou(Vector3 mousePos)
+    {
+        if (armySoldierList.Count <= 0)
+            yield break;
+
+        curArmy.IsArmyReady = false;
+
+        foreach (var penguin in armySoldierList)
+        {
+            penguin.MousePos = mousePos;
+            penguin.SuccessfulToArmyCalled = false;
+            penguin.ArmyTriggerCalled = true;
+            penguin.MoveToMySeat(mousePos);
+        }
+
+        yield return new WaitUntil(() => armySoldierList.TrueForAll(penguin => penguin.SuccessfulToArmyCalled));
+
+        curArmy.IsArmyReady = true;
+    }
+
+    #region 이전 코드 
+    /*/// <summary>
     /// 군단 모두가 자리에 도착할때까지 대기
     /// </summary>
     /// <param name="mousePos"></param>
@@ -103,18 +117,12 @@ public class ArmyMovement : MonoBehaviour
 
         isCanMove = false;
         successfulSeatMyPos = false;
-
-        //curArmy.IsCanReadyAttackInCurArmySoldiersList = false;
+        curArmy.IsArmyReady = false;
 
         foreach (var item in armySoldierList)
         {
             item.IsCheck = false;
             var obj = item.Obj;
-
-            //공격상태일땐 안해줌
-            if (obj.CurrentTarget == null)
-                obj.ArmyTriggerCalled = true;
-
             obj.MousePos = mousePos;
         }
 
@@ -125,7 +133,7 @@ public class ArmyMovement : MonoBehaviour
 
         yield return new WaitUntil(() => result == true);
 
-        //curArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+        curArmy.IsArmyReady = true;
     }
 
     /// <summary>
@@ -193,12 +201,8 @@ public class ArmyMovement : MonoBehaviour
             yield return waitingByheartbeat;
         }
         successfulSeatMyPos = true;
-    }
-
-    private void SetSoldierMovePosition(Vector3 mousePos, Penguin penguin)
-    {
-        penguin.MoveToMySeat(mousePos);
-    }
+    }*/
+    #endregion
 
     private void OnDestroy()
     {

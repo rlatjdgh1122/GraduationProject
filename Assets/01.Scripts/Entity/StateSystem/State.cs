@@ -19,23 +19,17 @@ public class State
     }
 
     #region Enter
+
     protected void IdleEnter()
     {
-        /* if (_navAgent.isOnNavMesh)
-         {
-             //_navAgent?.ResetPath();
-             _navAgent.velocity = Vector3.zero;
-             //_navAgent.isStopped = false;
-             //_penguin.SetNavmeshPriority(Penguin.PriorityType.High);
-         }*/
-
         _penguin.StopImmediately();
+
         _penguin.PenguinTriggerCalled = false;
-        //_penguin.CurrentTarget = null;
         _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
     }
+
     protected void AttackEnter()
     {
         //적이 죽을때 이벤트를 연결
@@ -71,6 +65,7 @@ public class State
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
         _penguin.AnimatorCompo.speed = _penguin.attackSpeed;
     }
+
     protected void ChaseEnter()
     {
         //굳이 필요한가?
@@ -95,43 +90,35 @@ public class State
                 _penguin.FindNearestEnemy();
         }
 
-        _penguin.StartImmediately();
 
         //따라감
         if (_penguin.CurrentTarget != null)
             _penguin.MoveToCurrentTarget();
     }
+
     protected void MoveEnter()
     {
         //if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
-
         _triggerCalled = true;
-        _penguin.SuccessfulToArmyCalled = false;
 
-        _penguin.StartImmediately();
-
-        if (_penguin.WaitForCommandToArmyCalled)
-            _penguin.MoveToMouseClickPositon();
+        //if (_penguin.WaitForCommandToArmyCalled)
+            //_penguin.MoveToMouseClickPositon();
     }
+
     protected void MustMoveEnter()
     {
         _penguin.MoveToMouseClickPositon();
-    }
-    protected void DeadEnter()
-    {
-        /*_triggerCalled = true;
-        _penguin.CurrentTarget = null;
-        _penguin.enabled = false;
-        _penguin.NavAgent.enabled = false;*/
+        _penguin.SuccessfulToArmyCalled = false;
     }
     #endregion
 
     #region Exit
+
     protected void IdleExit()
     {
-        //_penguin.SetNavmeshPriority(Penguin.PriorityType.Low);
-        //SignalHub.OnIceArrivedEvent -= FindTarget;
+
     }
+
     protected void AttackExit()
     {
 
@@ -146,10 +133,17 @@ public class State
     {
 
     }
+
     protected void MoveExit()
     {
 
     }
+
+    protected void MustMoveExit()
+    {
+
+    }
+
     #endregion
 
     /// <summary>
@@ -199,7 +193,10 @@ public class State
 
     public virtual void UpdateState()
     {
-
+        if (_penguin.ArmyTriggerCalled)
+        {
+            _penguin.StateMachine.ChangeState(PenguinStateType.MustMove);
+        }
     }
 
     public virtual void ExitState()

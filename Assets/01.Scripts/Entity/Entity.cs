@@ -71,6 +71,7 @@ public abstract class Entity : TargetObject
     {
         if (NavAgent.isActiveAndEnabled)
         {
+            NavAgent.isStopped = false;
             NavAgent?.ResetPath();
             NavAgent?.SetDestination(pos);
         }
@@ -79,7 +80,7 @@ public abstract class Entity : TargetObject
     {
         if (NavAgent.isActiveAndEnabled)
         {
-            //NavAgent.ResetPath();
+            NavAgent.isStopped = false;
             NavAgent.SetDestination(CurrentTarget.transform.position);
         }
     }
@@ -96,7 +97,7 @@ public abstract class Entity : TargetObject
         }
     }
 
-    public void StartImmediately()
+   /* public void StartImmediately()
     {
         if (NavAgent != null)
         {
@@ -106,6 +107,6 @@ public abstract class Entity : TargetObject
             }
 
         }
-    }
+    }*/
     #endregion
 }

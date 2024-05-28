@@ -89,7 +89,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
                 _penguin.FindNearestEnemy();
         }
 
-        _penguin.StartImmediately();
 
         //따라감
         if (_penguin.CurrentTarget != null)
@@ -101,7 +100,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         //if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
 
         _triggerCalled = true;
-        _penguin.SuccessfulToArmyCalled = false;
 
         if (_penguin.WaitForCommandToArmyCalled)
             _penguin.MoveToMouseClickPositon();
