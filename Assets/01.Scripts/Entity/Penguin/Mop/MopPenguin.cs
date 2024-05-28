@@ -22,6 +22,7 @@ public class MopPenguin : Penguin
 
     protected override void Start()
     {
+        base.Start();
         StateInit();
     }
     protected override void Update()

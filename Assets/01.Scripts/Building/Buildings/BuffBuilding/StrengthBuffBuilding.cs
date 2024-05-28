@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class StrengthBuffBuilding : BuffBuilding
 {
@@ -16,18 +17,7 @@ public class StrengthBuffBuilding : BuffBuilding
         if (coll.gameObject.TryGetComponent(out Penguin penguin))
         {
             penguin.Stat.AddStat(GetBuffValue(), buffStatType, buffStatMode);
-
-            EffectPlayer buffEffect = PoolManager.Instance.Pop(_penguinEffect) as EffectPlayer;
-
-            buffEffect.transform.SetParent(penguin.transform);
-            buffEffect.transform.localPosition = Vector3.zero;
-            buffEffect.transform.localScale = Vector3.one * 0.5f;
-            buffEffect.transform.rotation = Quaternion.identity;
-
-            var main = buffEffect.Particles[0].main;
-            main.startSize = 0.3f;
-
-            buffEffect.StartPlay(OutoffRangeBuffDuration);
+            penguin.StrengthBuffEffect?.ParticleStart();
         }
     }
 
@@ -35,17 +25,40 @@ public class StrengthBuffBuilding : BuffBuilding
     {
         if (coll.gameObject.TryGetComponent(out Penguin penguin))
         {
-            StartCoroutine(penguin.RemoveStatCorou(OutoffRangeBuffDuration, GetBuffValue(), buffStatType, buffStatMode,
-                () => EndBuffEffect(coll)));
+            CoroutineUtil.CallWaitForSeconds(OutoffRangeBuffDuration, null, () =>
+            {
+                penguin.Stat.RemoveStat(GetBuffValue(), buffStatType, StatMode.Increase);
+                EndBuffEffect(coll, penguin);
+            });
         }
     }
 
-    private void EndBuffEffect(Collider coll)
+    private void EndBuffEffect(Collider coll, Penguin penguin)
     {
+        penguin.StrengthBuffEffect?.ParticleStop();
+
         RemoveExitTargetList(coll);
 
         CheckEnterTarget();
     }
+
+    protected override void HandleDie()
+    {
+        base.HandleDie();
+
+        foreach(var coll in _buffTargetList)
+        {
+            if (coll.gameObject.TryGetComponent(out Penguin penguin))
+            {
+                CoroutineUtil.CallWaitForSeconds(OutoffRangeBuffDuration, null, () =>
+                {
+                    penguin.Stat.RemoveStat(GetBuffValue(), buffStatType, StatMode.Increase);
+                    EndBuffEffect(coll, penguin);
+                });
+            }
+        }
+    }
+
 
     #region Set Value
 

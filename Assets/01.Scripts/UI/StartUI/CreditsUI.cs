@@ -26,6 +26,8 @@ public class CreditsUI : PopupUI
     {
         base.ShowPanel();
 
+        Time.timeScale = 1;
+
         StartCoroutine(ShowPanelCoroutine());
     }
 

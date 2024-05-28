@@ -60,6 +60,7 @@ public enum SoundName : uint
     BearTrap,
 
     #endregion
+    Credit,
 
     None = 100,
 }

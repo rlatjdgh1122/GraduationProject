@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class DefeatUI : PopupUI
 {
-    [SerializeField] private SoundName _loseSound;
+    [SerializeField] private AudioVolumeController _audioController;
 
     public override void Awake()
     {
@@ -17,8 +17,9 @@ public class DefeatUI : PopupUI
     public override void ShowPanel()
     {
         base.ShowPanel();
-
-        SoundManager.Play2DSound(_loseSound);
+        
+        SoundManager.StopBGM(SoundName.NormalBattleBGM);
+        _audioController.SFXVolume(0);
     }
 
     public override void HidePanel()
@@ -33,7 +34,8 @@ public class DefeatUI : PopupUI
 
     public void Restart()
     {
-        Application.Quit(); //일단 게임 종료
+        UIManager.Instance.ShowPanel("CreditUI");
+        //Application.Quit(); //일단 게임 종료
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

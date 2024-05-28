@@ -20,6 +20,8 @@ public class MeleePenguin : Penguin
     }
     protected override void Start()
     {
+        base.Start();
+
         StateInit();
     }
     public override void StateInit()

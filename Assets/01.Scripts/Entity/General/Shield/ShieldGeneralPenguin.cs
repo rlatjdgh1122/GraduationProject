@@ -11,6 +11,7 @@ public class ShieldGeneralPenguin : General
 
     protected override void Start()
     {
+        base.Start();
         StateInit();
     }
 

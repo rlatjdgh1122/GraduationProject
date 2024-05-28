@@ -57,8 +57,8 @@ public abstract class BuffBuilding : BaseBuilding
     private Health _health = null;
 
     public FeedbackPlayer buildingEffectFeedback { get; protected set; } = null;
-    [SerializeField] private List<Collider> _buffTargetList = new();
-    [SerializeField] private List<Collider> _exitTargetList = new();
+    [SerializeField] protected List<Collider> _buffTargetList = new();
+    [SerializeField] protected List<Collider> _exitTargetList = new();
 
     private void OnEnable()
     {
