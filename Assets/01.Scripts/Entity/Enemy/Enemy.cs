@@ -115,6 +115,7 @@ public class Enemy : Entity
         if (NavAgent.isActiveAndEnabled)
         {
             //NavAgent.ResetPath();
+            NavAgent.isStopped = false;
             NavAgent.SetDestination(NexusTarget.transform.position);
         }
     }
