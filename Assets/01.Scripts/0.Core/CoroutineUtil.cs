@@ -13,12 +13,12 @@ public static class CoroutineUtil
         _coroutineExecutor = _coroutineObj.AddComponent<CoroutineExecutor>();
     }
 
-    public static void CallWaitForOneFrame(Action action) //1ÇÁ·¹ÀÓ µÚ¿¡ ½ÇÇà
+    public static void CallWaitForOneFrame(Action action) //1í”„ë ˆì„ ë’¤ì— ì‹¤í–‰
     {
         _coroutineExecutor.StartCoroutine(DoCallWaitForOneFrame(action));
     }
 
-    public static void CallWaitForSeconds(float seconds, Action beforeAction = null, Action afterAction = null) //nÃÊ µÚ¿¡ ½ÇÇà
+    public static void CallWaitForSeconds(float seconds, Action beforeAction = null, Action afterAction = null) //nì´ˆ ë’¤ì— ì‹¤í–‰
     {
         _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, beforeAction, afterAction));
     }
@@ -36,5 +36,5 @@ public static class CoroutineUtil
         afterAction?.Invoke();
     }
 
-    private class CoroutineExecutor : MonoBehaviour { }
+    private class CoroutineExecutor : MonoBehaviour { } // ì½”ë£¨í‹´ì„ ì‹¤í–‰í•´ì£¼ê¸° ìœ„í•œ ëª¨ë…¸ë¹„í—¤ì´ë¹„ì–´ì˜¤ë¸Œì íŠ¸
 }
