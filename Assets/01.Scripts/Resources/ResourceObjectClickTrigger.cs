@@ -52,14 +52,10 @@ public class ResourceObjectClickTrigger : MonoBehaviour
                 UIManager.Instance.GifController.ShowGif(GifType.WorkerPenguin);
                 ResourceManager.Instance.IsGifFirst = false;
             }
-            if (WaveManager.Instance.CurrentWaveCount == 3)
-                ResourceManager.Instance.OnlyGetOneStone = true;
-            if (WaveManager.Instance.CurrentWaveCount == 4)
-                ResourceManager.Instance.OnlyGetOneWood = true;
 
             ResourceManager.Instance.OnResourceUI = true;
 
-            if (WaveManager.Instance.CurrentWaveCount < 4)
+            if (WaveManager.Instance.CurrentWaveCount < 5)
             {
                 SignalHub.OnDefaultBuilingClickEvent?.Invoke();
             }

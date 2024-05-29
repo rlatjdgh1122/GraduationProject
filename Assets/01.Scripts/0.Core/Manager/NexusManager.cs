@@ -21,6 +21,7 @@ public class NexusManager : Singleton<NexusManager>
     public NexusBase NexusBase => _nexusBase;
 
     public bool CanClick { get; set; }
+    public bool CantClickOnBuild { get; set; } = false;
 
     private Dictionary<string, BuildingItemInfo> _buildingItemInfos = new();
     public Dictionary<string, BuildingItemInfo> BuildingItemInfos => _buildingItemInfos; // ÀÏ´Ü ºôµùµµ

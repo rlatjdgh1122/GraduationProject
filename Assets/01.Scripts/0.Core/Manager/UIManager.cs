@@ -204,7 +204,7 @@ public class UIManager : Singleton<UIManager>
             {
                 foreach (var popuis in currentPopupUI)
                 {
-                    if (popuis.name == "Masking" || popuis.name == "GifScreen") { return; }
+                    if (popuis.name == "Masking" || popuis.name == "GifScreen"  || popuis.name == "CreditUI") { return; }
                 }
 
                 string name = currentPopupUI.Peek().name;

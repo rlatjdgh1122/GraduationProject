@@ -62,6 +62,7 @@ public class WorkerManager : Singleton<WorkerManager>
             if(WaveManager.Instance.CurrentWaveCount == 3)
             {
                 ResourceManager.Instance.GetStone = false;
+                ResourceManager.Instance.OnlyGetOneStone = true;
             }
         }
         else if (workableObject.resourceType == ResourceType.Wood)
@@ -72,6 +73,9 @@ public class WorkerManager : Singleton<WorkerManager>
                 _spawnedWorkerList.Add(penguin);
                 penguin.StartWork(workableObject);
             }
+
+            if (WaveManager.Instance.CurrentWaveCount == 4)
+                ResourceManager.Instance.OnlyGetOneWood = true;
         }
     }
 

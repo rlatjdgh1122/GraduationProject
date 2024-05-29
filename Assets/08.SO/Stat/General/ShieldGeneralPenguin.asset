@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth:
     _baseValue: 300
-    _fewTimes: 1.405
-    _finalValue: 562
+    _fewTimes: 1.4066666
+    _finalValue: 422
     increases: 05000000050000000500000005000000050000000500000005000000
     decreases: 
   armor:
@@ -95,10 +95,14 @@ MonoBehaviour:
       decreases: 
     levelUpIncreaseValue: 20
     abilities:
+    - abilityName: "\uB370\uBBF8\uC9C0"
+      statType: 1024
+      statMode: 0
+      value: 50
     - abilityName: "\uBC29\uC5B4\uB825"
       statType: 256
       statMode: 0
-      value: 5
+      value: 50
     synergy:
       _level: 1
       synergyName: "\uC758\uC9C0"
@@ -107,6 +111,6 @@ MonoBehaviour:
         abilityName: "\uBC29\uC5B4\uB825"
         statType: 256
         statMode: 0
-        value: 5
+        value: 30
       increaseValue: 1
   InfoData: {fileID: 11400000, guid: 676df572a3241db4487ec8d8d15a8357, type: 2}

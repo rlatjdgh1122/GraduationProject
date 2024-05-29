@@ -20,14 +20,15 @@ public enum GifType
 public class GifScreenController : MonoBehaviour
 {
     [SerializeField] private GifScreenDataSO _gifDataSO;
-    public GifScreenDataSO GifDataSO => _gifDataSO;
+    [SerializeField] private List<float> _gifSpeedList = new();
 
     private VideoPlayer _videoPlayer;
-
     private int _speedUpBtnClickCount = 0;
-    public int SpeedUpBtnClickCount => _speedUpBtnClickCount;
 
+    public int SpeedUpBtnClickCount => _speedUpBtnClickCount;
+    public GifScreenDataSO GifDataSO => _gifDataSO;
     public bool CanShow { get; private set; } = false;
+    public List<float> GifSpeedList => _gifSpeedList;
 
     private void Awake()
     {
@@ -81,9 +82,9 @@ public class GifScreenController : MonoBehaviour
     {
         if (_videoPlayer.clip == null) return;
 
-        _speedUpBtnClickCount = ++_speedUpBtnClickCount >= _gifDataSO.GifSpeedList.Count ? 0 : _speedUpBtnClickCount;
+        _speedUpBtnClickCount = ++_speedUpBtnClickCount >= _gifSpeedList.Count ? 0 : _speedUpBtnClickCount;
 
-        _videoPlayer.playbackSpeed = _gifDataSO.GifSpeedList[_speedUpBtnClickCount].Speed;
+        _videoPlayer.playbackSpeed = _gifSpeedList[_speedUpBtnClickCount];
     }
 
 

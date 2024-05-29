@@ -1150,6 +1150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2679723624851784720}
   - component: {fileID: 9150200626596208274}
+  - component: {fileID: 6027918321730466936}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -1188,7 +1189,7 @@ MonoBehaviour:
   CanUseSkill: 0
   _sizeUpValue: 1.25
   _sizeUpDuration: 0.5
-  _sizeUpDamage: 20
+  _sizeUpDamage: 10
   _stunValue: 1.5
   OnVigilanceEvent:
     m_PersistentCalls:
@@ -1205,6 +1206,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6027918321730466936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533214029508360264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f237cfbc89496164eb2d0f6656e74328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: 11
+  increases: 0a0000000a0000000a0000000a0000000a000000
+  decreases: 
+  fewtimes: 1.5833334
+  result: 19
 --- !u!1 &2592182983226036646
 GameObject:
   m_ObjectHideFlags: 0

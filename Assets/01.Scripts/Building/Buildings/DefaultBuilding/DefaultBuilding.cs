@@ -49,7 +49,13 @@ public class DefaultBuilding : BaseBuilding
     {
         if(WaveManager.Instance.CurrentWaveCount == 3)
         {
-            UIManager.Instance.ShowWarningUI("튜토리얼이 진행 중입니다");
+            UIManager.Instance.ShowWarningUI("튜토리얼이 진행 중이므로 힘의 조각상만 건설할 수 있습니다");
+            return;
+        }
+
+        if (WaveManager.Instance.CurrentWaveCount == 4)
+        {
+            UIManager.Instance.ShowWarningUI("튜토리얼을 진행 중이므로 아처 타워만 건설할 수 있습니다");
             return;
         }
 

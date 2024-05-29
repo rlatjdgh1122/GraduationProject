@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MaskingUIManager : Singleton<MaskingUIManager>
 {
     private MaskingImage _maskingImage;
 
-    private Transform _prevMaskingUiTrms;
+    private Transform _curMaskingUiTrms;
     private Transform _prevMaskingUiParentTrms;
 
     private int _maskingTrmIdx = 0;
@@ -54,6 +56,8 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         string points = questPointsQueue.Dequeue();
 
+        Debug.Log(points);
+
         Transform OnTrm = GameObject.Find(points).transform;
 
         Vector3 onPos = OnTrm.position;
@@ -71,8 +75,8 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         }
         else // UI 면
         {
-            _prevMaskingUiTrms = OnTrm;
-            _maskingTrmIdx = _prevMaskingUiTrms.GetSiblingIndex(); //부모한테 몇번째 어 그거
+            _curMaskingUiTrms = OnTrm;
+            _maskingTrmIdx = _curMaskingUiTrms.GetSiblingIndex(); //부모한테 몇번째 어 그거
             _prevMaskingUiParentTrms = OnTrm.parent;
 
             OnTrm.transform.SetParent(_maskingImage.ButtonTrm);
@@ -92,13 +96,18 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         _cameraSystem.ResetFOV();
         _maskingImage.transform.position = onPos;
     }
+    
+    private void OffMaskingUI()
+    {
+        _curMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
+        _curMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
+    }
 
     public void OffMaskingButtonUI()
     {
-        _prevMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
-        _prevMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
+        OffMaskingUI();
 
-        Button btn = _prevMaskingUiTrms.GetComponent<Button>();
+        Button btn = _curMaskingUiTrms.GetComponent<Button>();
         btn.onClick.RemoveListener(OffMaskingButtonUI);
 
         OffMask();
@@ -106,10 +115,9 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     public void OffMaskingImageUI()
     {
-        _prevMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
-        _prevMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
+        OffMaskingUI();
 
-        SignalHub.OnClickPenguinSpawnButtonEvent += OffMaskingImageUI;
+        SignalHub.OnClickPenguinSpawnButtonEvent -= OffMaskingImageUI;
 
         OffMask();
     }

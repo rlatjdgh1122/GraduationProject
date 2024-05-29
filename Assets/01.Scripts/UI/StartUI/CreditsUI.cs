@@ -26,21 +26,28 @@ public class CreditsUI : PopupUI
     {
         base.ShowPanel();
 
-        Time.timeScale = 1;
+        Time.timeScale = 0;
 
         StartCoroutine(ShowPanelCoroutine());
     }
 
+    public override void HidePanel()
+    {
+        base.HidePanel();
+
+        Time.timeScale = 1;
+    }
+
     private IEnumerator ShowPanelCoroutine()
     {
-        yield return new WaitForSeconds(_delayTime);
+        yield return new WaitForSecondsRealtime(_delayTime);
 
         _uiTrm.DOLocalMoveY(_endYPos, _moveDuration)
             .OnComplete(() =>
             {
-                _exitButton.DOFade(1, 0.3f);
+                _exitButton.DOFade(1, 0.3f).SetUpdate(true);
                 _exitButton.blocksRaycasts = true;
-            });
+            }).SetUpdate(true);
     }
 
     public void HideCreditPanel()

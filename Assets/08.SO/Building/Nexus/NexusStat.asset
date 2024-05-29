@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NexusStat
   m_EditorClassIdentifier: 
   maxHealth:
-    _baseValue: 300
+    _baseValue: 500
     _fewTimes: 1
     _finalValue: 300
     increases: 
@@ -27,6 +27,12 @@ MonoBehaviour:
   evasion:
     _baseValue: 0
     _fewTimes: NaN
+    _finalValue: 0
+    increases: 
+    decreases: 
+  tenacity:
+    _baseValue: 0
+    _fewTimes: 0
     _finalValue: 0
     increases: 
     decreases: 
@@ -84,45 +90,3 @@ MonoBehaviour:
   needResourceLow: 0
   priceIncreaseValue: 1
   levelupIncreaseValue: 25
-  unlockedBuilding:
-    _unlockedLevel: 0
-    _buildingTypeEnum: 0
-    name: 
-    _codeName: 
-    id: 0
-    _level: 1
-    _price: 0
-    _description: 
-    _size: {x: 0, y: 0}
-    _prefab: {fileID: 0}
-    _uiSprite: {fileID: 0}
-    installedTime: 0
-    _currentInstallCount: 0
-    _maxInstallableCount: 0
-    _necessaryResources:
-      resourceData: {fileID: 0}
-      stackSize: 0
-    necessaryResourceCount: 0
-    necessaryWokerCount: 0
-    IsUnlocked: 0
-  previewBuilding:
-    _unlockedLevel: 0
-    _buildingTypeEnum: 0
-    name: 
-    _codeName: 
-    id: 0
-    _level: 1
-    _price: 0
-    _description: 
-    _size: {x: 0, y: 0}
-    _prefab: {fileID: 0}
-    _uiSprite: {fileID: 0}
-    installedTime: 0
-    _currentInstallCount: 0
-    _maxInstallableCount: 0
-    _necessaryResources:
-      resourceData: {fileID: 0}
-      stackSize: 0
-    necessaryResourceCount: 0
-    necessaryWokerCount: 0
-    IsUnlocked: 0
