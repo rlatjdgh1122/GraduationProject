@@ -56,13 +56,13 @@ public class StatCalculatorWindow : EditorWindow
             fontSize = 15
         };
 
-        EditorGUILayout.LabelField("기본 스탯의 ", $"{fewtimes.ToString()}배 증가", resultLabelSize);
-        EditorGUILayout.LabelField("최종 스탯 : ", result.ToString(), resultLabelSize);
+        EditorGUILayout.LabelField("기본 스탯의 ", $"{fewtimes}배", resultLabelSize);
+        EditorGUILayout.LabelField("최종 스탯 ", result.ToString(), resultLabelSize);
 
         GUILayout.EndScrollView();
     }
 
-    private void Result()
+    private void Result()  
     {
         int plusValue = StatCalculator.MultiOperValue(stat, increases);
         int minusValue = StatCalculator.SumOperValue(plusValue, decreases);

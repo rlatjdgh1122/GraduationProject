@@ -46,10 +46,8 @@ namespace StatOperator
         /// <summary>
         /// 합연산. 기존 값에 몇배 증가했는지 리턴(소수 2자리까지 #반올림)
         /// </summary>
-        /// <param name="value"></param>
-        ///  수정할 값.
-        /// <param name="percents"></param>
-        ///  합연산 할 퍼센트 리스트.
+        /// <param name="value">수정할 값.</param>
+        /// <param name="percents">합연산 할 퍼센트 리스트.</param>
         /// <returns></returns>
         public static float SumOperTimes(int value, List<int> percents)
         {
@@ -64,10 +62,8 @@ namespace StatOperator
         /// <summary>
         /// 곱연산. 기존 값에 몇배 증가했는지 리턴(소수 2자리까지 #반올림)
         /// </summary>
-        /// <param name="value"></param>
-        /// 수정할 값.
-        /// <param name="percents"></param>
-        /// 곱연산 할 퍼센트 리스트.
+        /// <param name="value">수정할 값.</param>
+        /// <param name="percents">곱연산 할 퍼센트 리스트.</param>
         /// <returns></returns>
         public static float MultiOperTimes(int value, List<int> percents)
         {
@@ -79,8 +75,19 @@ namespace StatOperator
             }
             return Mathf.Round(sum * 100.0f) / 100.0f;
         }
-    }
 
-}
+        /// <summary>
+        /// 방어력 포함하여 최종적으로 받을 데미지 계산(롤 방어력 계산과 같음)
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="armor"></param>
+        /// <returns></returns>
+        public static int GetDamage(int damage, int armor)
+        {
+            return Mathf.RoundToInt(damage * 1 / (1 + armor * 0.01f));
+        }
+
+    }//end class
+}//end namespace
 
 
