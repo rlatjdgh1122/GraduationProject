@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GeneralSlot : MonoBehaviour
+public class GeneralSlot : ArmyComponentUI
 {
-    [SerializeField] private GeneralInfoDataSO _generalInfo;
+    [SerializeField] private GeneralStat _generalData;
+    [SerializeField] private GeneralDummyPengiun _dummy;
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private Image _icon;
 
@@ -17,12 +17,13 @@ public class GeneralSlot : MonoBehaviour
 
     private void SetUI()
     {
-        _nameText.text = $"{_generalInfo.PenguinName}";
-        _icon.sprite = _generalInfo.PenguinIcon;
+        _nameText.text = $"{_generalData.InfoData.PenguinName}";
+        _icon.sprite = _generalData.InfoData.PenguinIcon;
     }
 
-    public void OnPurchase()
+    public void ShowInfo()
     {
-
+        infoPanel.SetPurchaseInfo(_generalData, factory, _dummy);
+        //new GeneralInfo(_generalData, factory, _dummy);
     }
 }
