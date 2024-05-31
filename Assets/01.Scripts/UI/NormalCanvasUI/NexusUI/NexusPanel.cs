@@ -50,13 +50,13 @@ public class NexusPanel : NexusPopupUI
         _presenter.LevelUp();
     }
 
-    public override void MovePanel(float x, float y, float fadeTime)
-    {
-        base.MovePanel(x, y, fadeTime);
-    }
-
     public override void UIUpdate()
     {
         UpdateUI();   
+    }
+
+    public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
+    {
+        base.MovePanel(x, y, fadeTime, ease);
     }
 }

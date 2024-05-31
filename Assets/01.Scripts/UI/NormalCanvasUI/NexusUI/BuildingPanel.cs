@@ -9,8 +9,8 @@ public class BuildingPanel : PopupUI
         base.Awake();
     }
 
-    public override void MovePanel(float x, float y, float fadeTime)
+    public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
     {
-        base.MovePanel(x, y, fadeTime);
+        base.MovePanel(x, y, fadeTime, ease);
     }
 }

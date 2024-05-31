@@ -324,7 +324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892e92dfa2d505a4fb1a0e125b86be69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generalInfo: {fileID: 11400000, guid: 676df572a3241db4487ec8d8d15a8357, type: 2}
+  factory: {fileID: 0}
+  _generalData: {fileID: 0}
+  _dummy: {fileID: 0}
   _nameText: {fileID: 1712952236469570015}
   _icon: {fileID: 491822869254924975}
 --- !u!222 &4897739463214251517
@@ -489,7 +491,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 188382671537880097}
         m_TargetAssemblyTypeName: GeneralSlot, Assembly-CSharp
-        m_MethodName: OnPurchase
+        m_MethodName: ShowInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
