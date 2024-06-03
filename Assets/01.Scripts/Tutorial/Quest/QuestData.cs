@@ -16,7 +16,7 @@ public enum QuestState
 [Serializable]
 public class QuestData
 {
-    public QuestState QuestStateEnum;
+    public QuestState QuestStateEnum; // 이것도 퀘스트 상태이긴 한데 이 퀘스트가 실행가능 한지
 
     public string Id;
 

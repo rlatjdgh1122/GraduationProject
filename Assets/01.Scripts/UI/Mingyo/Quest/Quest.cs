@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Quest
 {
-    public QuestState QuestStateEnum;
+    public QuestState QuestStateEnum; // 퀘스트의 상태
 
     public string QuestId;
 
-    public List<QuestGoal> QuestGoalList { get; private set; } = new();
+    public List<QuestGoal> QuestGoalList { get; private set; } = new(); // 이 퀘스트를 완료 하기 위한 목표들
     public QuestData QuestDataCompo { get; private set; }
 
-    public Quest(QuestData questData)
+    public Quest(QuestData questData) // 퀘스트 생성자
     {
         QuestStateEnum = questData.QuestStateEnum;
 
@@ -19,7 +19,7 @@ public class Quest
         QuestDataCompo = questData;
     }
 
-    public void UpdateCondition(string id)
+    public void UpdateCondition(string id) // 퀘스트가 진행되었을때 
     {
         for(int i = 0; i <  QuestGoalList.Count; i++)
         {

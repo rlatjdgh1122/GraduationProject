@@ -54,7 +54,7 @@ public class GroundMovement : ComingObjetMovement
         CoroutineUtil.CallWaitForSeconds(.5f, null, () => Destroy(_groundHitEffect));
     }
 
-    public override void SetComingObejctPos(Transform parentTransform, Vector3 position)
+    public override void SetComingObejctPos(Transform parentTransform, Vector3 position) // RandomComingEnemiesGenerator에서 설정해줌
     {
         transform.SetParent(parentTransform); // 부모 설정
         transform.localPosition = position; // 빙하의 위치 설정

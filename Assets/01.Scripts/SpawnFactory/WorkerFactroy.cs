@@ -14,7 +14,6 @@ public class WorkerFactroy : EntityFactory<Worker>
     public void SetWorkerHandler()
     {
         UIManager.Instance.InitializHudTextSequence();
-        UIManager.Instance.SpawnHudText(SuccesHudText);
 
         //WorkerManager.Instance.SetWorker();
     }

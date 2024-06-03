@@ -9,14 +9,6 @@ using UnityEngine;
 
 public abstract class EntityFactory<T>: MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI _succesHudText;
-    public TextMeshProUGUI SuccesHudText => _succesHudText;
-
-    [SerializeField]
-    private TextMeshProUGUI _failHudText;
-    public TextMeshProUGUI FailHudText => _failHudText;
-
     // 외부에서 호출하는 함수 팩토리내부에서 처리할수있는 모든 처리는 여기서하자.
     public PoolableMono SpawnObject(T type, Vector3 spawnTrm)
     {
@@ -25,11 +17,6 @@ public abstract class EntityFactory<T>: MonoBehaviour
         entity.transform.rotation = Quaternion.identity;
 
         return entity;
-    }
-
-    public void SetSpawnFailHudText(string st)
-    {
-        FailHudText.SetText(st);
     }
 
     protected abstract PoolableMono Create(T _type); //각각의 팩토리에서 재정의 한다.
