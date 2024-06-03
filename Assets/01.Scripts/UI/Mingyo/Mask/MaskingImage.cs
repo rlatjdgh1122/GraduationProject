@@ -22,7 +22,7 @@ public class MaskingImage : MonoBehaviour
     private void Start()
     {
         gameObject.SetActive(false);
-        CoroutineUtil.CallWaitForSeconds(1f, null, () => { gameObject.SetActive(true); });
+        CoroutineUtil.CallWaitForSeconds(1f, () => { gameObject.SetActive(true); });
     }
 
 }

@@ -25,7 +25,7 @@ public class StrengthBuffBuilding : BuffBuilding
     {
         if (coll.gameObject.TryGetComponent(out Penguin penguin))
         {
-            CoroutineUtil.CallWaitForSeconds(OutoffRangeBuffDuration, null, () =>
+            CoroutineUtil.CallWaitForSeconds(OutoffRangeBuffDuration, () =>
             {
                 penguin.Stat.RemoveStat(GetBuffValue(), buffStatType, StatMode.Increase);
                 EndBuffEffect(coll, penguin);
@@ -50,7 +50,7 @@ public class StrengthBuffBuilding : BuffBuilding
         {
             if (coll.gameObject.TryGetComponent(out Penguin penguin))
             {
-                CoroutineUtil.CallWaitForSeconds(OutoffRangeBuffDuration, null, () =>
+                CoroutineUtil.CallWaitForSeconds(OutoffRangeBuffDuration, () =>
                 {
                     penguin.Stat.RemoveStat(GetBuffValue(), buffStatType, StatMode.Increase);
                     EndBuffEffect(coll, penguin);

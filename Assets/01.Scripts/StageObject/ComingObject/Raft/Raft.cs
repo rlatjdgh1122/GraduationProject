@@ -17,7 +17,7 @@ public class Raft : PoolableMono, IComingObject
 
     public override void Init()
     {
-        CoroutineUtil.CallWaitForSeconds(2f, null, () => _raftMovement.Move());
+        CoroutineUtil.CallWaitForSeconds(2f, () => _raftMovement.Move());
         SignalHub.OnBattlePhaseEndEvent += OnSink;
     }
 

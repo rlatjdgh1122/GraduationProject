@@ -52,7 +52,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         isMasking = true;
 
-        CoroutineUtil.CallWaitForSeconds(0.1f, null, () => UIManager.Instance.ShowPanel("Masking", true));
+        CoroutineUtil.CallWaitForSeconds(0.1f, () => UIManager.Instance.ShowPanel("Masking", true));
 
         string points = questPointsQueue.Dequeue();
 
@@ -66,7 +66,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
         {
             _cameraSystem.Look(new Vector3(onPos.x, 35.55f, onPos.z));
 
-            CoroutineUtil.CallWaitForSeconds(0.1f, null, () =>
+            CoroutineUtil.CallWaitForSeconds(0.1f, () =>
             {
                 onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
                 _maskingImage.transform.position = onPos;

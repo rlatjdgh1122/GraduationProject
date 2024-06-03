@@ -250,7 +250,7 @@ public class Penguin : Entity
     public void ChaseToTarget()
     {
         //적이 빙하가 붙자마자 콜라이더 켜지니깐 켜질때까지 기다리고 찾기
-        CoroutineUtil.CallWaitForSeconds(0.2f, null, () => FindNearestEnemy());
+        CoroutineUtil.CallWaitForSeconds(0.2f, () => FindNearestEnemy());
     }
 
     public virtual void LookTarget()

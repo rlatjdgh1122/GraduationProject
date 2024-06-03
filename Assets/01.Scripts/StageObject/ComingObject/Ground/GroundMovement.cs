@@ -39,19 +39,18 @@ public class GroundMovement : ComingObjetMovement
         
         SoundManager.Play2DSound(SoundName.GroundHit);
 
+        Define.CamDefine.Cam.ShakeCam.enabled = true;
+        Define.CamDefine.Cam.ShakeCam.m_Lens.FieldOfView = Define.CamDefine.Cam.MainCam.fieldOfView;
+
         // ∫Œµ˙»˙ ∂ß ¿Ã∆Â∆Æ / ƒ´∏ﬁ∂Û Ω¶¿Ã≈© + ªÁøÓµÂ
-        CoroutineUtil.CallWaitForSeconds(.5f, () =>
-        {
-            Define.CamDefine.Cam.ShakeCam.enabled = true;
-            Define.CamDefine.Cam.ShakeCam.m_Lens.FieldOfView = Define.CamDefine.Cam.MainCam.fieldOfView;
-        }, () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+        CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = false);
 
         NavmeshManager.Instance.NavmeshBake();
         SignalHub.OnGroundArrivedEvent?.Invoke();
         _ground.ActivateEnemies(); //¿Ã∞≈
         //CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
 
-        CoroutineUtil.CallWaitForSeconds(.5f, null, () => Destroy(_groundHitEffect));
+        CoroutineUtil.CallWaitForSeconds(.5f, () => Destroy(_groundHitEffect));
     }
 
     public override void SetComingObejctPos(Transform parentTransform, Vector3 position) // RandomComingEnemiesGeneratorø°º≠ º≥¡§«ÿ¡‹

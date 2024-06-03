@@ -18,9 +18,9 @@ public static class CoroutineUtil
         _coroutineExecutor.StartCoroutine(DoCallWaitForOneFrame(action));
     }
 
-    public static void CallWaitForSeconds(float seconds, Action beforeAction = null, Action afterAction = null) //n초 뒤에 실행
+    public static void CallWaitForSeconds(float seconds, Action afterAction) //n초 뒤에 실행
     {
-        _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, beforeAction, afterAction));
+        _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, afterAction));
     }
 
     private static IEnumerator DoCallWaitForOneFrame(Action action) // 매개변수로 받은 Action을 실행해준다.
@@ -29,9 +29,8 @@ public static class CoroutineUtil
         action?.Invoke();
     }
 
-    private static IEnumerator DoCallWaitForSeconds(float seconds, Action beforeAction, Action afterAction) // 매개변수로 받은 Action을 seconds초 후에 실행해준다.
+    private static IEnumerator DoCallWaitForSeconds(float seconds, Action afterAction) // 매개변수로 받은 Action을 seconds초 후에 실행해준다.
     {
-        beforeAction?.Invoke();
         yield return new WaitForSeconds(seconds);
         afterAction?.Invoke();
     }

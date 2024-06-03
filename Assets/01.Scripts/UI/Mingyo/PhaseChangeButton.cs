@@ -102,7 +102,7 @@ public class PhaseChangeButton : MonoBehaviour
             //�ڵ庸�ϱ� ���� �����ϰ� 0.1�� �ڿ� true���Ǳ淡 0.15�ʵڿ� ����ǰ���
 
             //�̷��Ը��� �켱���� ��Ʋ ��ŸƮ���� IsBattlePhase�� true�� ���� �Ǳ���
-            CoroutineUtil.CallWaitForSeconds(0.15f, null, () => ArmyManager.Instance.ChangedCurrentArmy());
+            CoroutineUtil.CallWaitForSeconds(0.15f, () => ArmyManager.Instance.ChangedCurrentArmy());
 
 
             OnOffButton();

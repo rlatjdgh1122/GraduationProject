@@ -95,7 +95,7 @@ public class MortarRock : Arrow
             _attackFeedback.CreateFeedback(_endPos);
             SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position);
 
-            CoroutineUtil.CallWaitForSeconds(0.7f, null, () =>
+            CoroutineUtil.CallWaitForSeconds(0.7f, () =>
             {
                 PoolManager.Instance.Push(this);
             });
