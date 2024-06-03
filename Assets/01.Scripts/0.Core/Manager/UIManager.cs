@@ -21,7 +21,10 @@ public enum UIType
     Gif,
     Credit,
     GifInfo,
-    CheckQuest
+    CheckQuest,
+    GeneralPanel,
+    None,
+    Army,
 }
 
 public class UIManager : Singleton<UIManager>
@@ -193,6 +196,11 @@ public class UIManager : Singleton<UIManager>
     #region UI Function
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            ShowPanel("ArmyUI");
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (currentPopupUI.Count <= 0)

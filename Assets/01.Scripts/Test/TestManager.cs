@@ -1,16 +1,13 @@
-using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TestManager : MonoBehaviour
 {
-    [SerializeField] private Entity _entity;
-    [SerializeField] private TargetObject _target;
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private RectTransform _text;
+    [SerializeField] private TestGroup[] _group;
+    [SerializeField] private ShieldGeneralPenguin _shield;
 
-    [SerializeField] private GameObject[] _group;
+    [SerializeField] private GameObject _camera;
+    [SerializeField] private EnemyGorilla _enemyGorilla;
 
     private int _index = 0;
 
@@ -18,15 +15,25 @@ public class TestManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            _entity.CurrentTarget = _target;
-            _canvas.gameObject.SetActive(false);
-            _text.DOAnchorPosX(0, 1.5f).SetEase(Ease.OutQuint);
+            _canvas.SetActive(false);
+            _group[_index].SetTarget();
         }
 
         if (Input.GetKeyDown(KeyCode.N))
         {
             _group[_index].gameObject.SetActive(false);
-            _group[_index++].gameObject.SetActive(true);
+            _group[++_index].gameObject.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            _shield.OnPassiveHitEvent();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            _canvas.SetActive(false);
+            _camera.SetActive(true);
         }
     }
 }

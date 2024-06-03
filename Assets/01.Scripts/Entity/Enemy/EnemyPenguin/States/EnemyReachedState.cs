@@ -43,7 +43,6 @@ public class EnemyReachedState : EnemyBaseState
     {
         base.ExitState();
 
-        _enemy.StartImmediately();
         _enemy.HealthCompo.OnHit -= OnHitHandler;
     }
 

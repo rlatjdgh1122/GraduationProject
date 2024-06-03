@@ -387,7 +387,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
         newArmy.MoveSpeed = 4f;
         newArmy.LegionName = $"{ArmiesCount + 1}군단";
-        //newArmy.IsCanReadyAttackInCurArmySoldiersList = true;
+        newArmy.IsArmyReady = false;
 
         armies.Add(newArmy);
         GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");

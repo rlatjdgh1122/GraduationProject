@@ -87,8 +87,9 @@ public class PopupUI : MonoBehaviour
         _panel.DOFade(0, _panelFadeTime);
     }
 
-    public virtual void MovePanel(float x, float y, float fadeTime)
+    public virtual void MovePanel(float x, float y, float fadeTime, bool ease = true)
     {
-        _rectTransform.DOAnchorPos(new Vector2(x, y), fadeTime).SetEase(Ease.OutBack, 0.9f);
+        var tween = _rectTransform.DOAnchorPos(new Vector2(x, y), fadeTime);
+        if (ease) tween.SetEase(Ease.OutBack, 0.9f);
     }
 }

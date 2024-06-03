@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBear : Enemy
 {
-
     protected override void Awake()
     {
         base.Awake();
@@ -28,7 +24,7 @@ public class EnemyBear : Enemy
     {
         base.Init();
 
-        StateMachine.Init(EnemyStateType.Idle);
+        StateMachine.Init(EnemyStateType.Idle); 
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();

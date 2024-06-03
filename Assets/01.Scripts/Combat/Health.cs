@@ -1,3 +1,4 @@
+using StatOperator;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,11 +9,11 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
     public int maxHealth;
     public int currentHealth;
 
-    private float armor
+    private int armor
     {
         get
         {
-            var result = _onwer.armor.GetValue() * 0.01f;
+            var result = _onwer.armor.GetValue();
             return result;
         }
     }
@@ -91,9 +92,8 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         _actionData.HitType = hitType;
         _actionData.HitTarget = hitTarget;
 
-        //float adjustedDamage = damage * (1.0f - (_armor * 0.01f));
-        float adjustedDamage = damage * (1 - armor);
-        currentHealth = (int)Mathf.Clamp(currentHealth - adjustedDamage, 0, maxHealth);
+        int finalDamage = StatCalculator.GetDamage(damage, armor);
+        currentHealth = Mathf.Clamp(currentHealth - finalDamage, 0, maxHealth);
 
         /*if (feedbackCompo.TryGetFeedback(FeedbackEnumType.Hit, out var hitF))
         {

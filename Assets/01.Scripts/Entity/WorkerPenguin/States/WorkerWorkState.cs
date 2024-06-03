@@ -45,7 +45,6 @@ public class WorkerWorkState : WorkerState<WorkerPenguinStateEnum>
 
     public override void Exit()
     {
-        _worker.StartImmediately();
         base.Exit();
     }
 }
