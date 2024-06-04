@@ -10,8 +10,8 @@ public class ComingObjIncreaseRateDataSO : ScriptableObject
     public int CommonEnemyIncreaseRate => commonEnemyIncreaseRate;
 
     [SerializeField]
-    private int bossEnemyCountProportion;
-    public int BossEnemyCountProportion => bossEnemyCountProportion;
+    private int bossEnemyIncreaseRate;
+    public int BossEnemyIncreaseRate => bossEnemyIncreaseRate;
 
     [SerializeField]
     [Tooltip("최대 curWave * groundIncreaseRate를 내림 한 만큼 빙하가 온다.")]

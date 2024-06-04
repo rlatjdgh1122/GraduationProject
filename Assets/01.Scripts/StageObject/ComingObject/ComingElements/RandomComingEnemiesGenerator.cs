@@ -45,7 +45,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         _groundConfigurer = transform.Find("GroundConfigurer").GetComponent<GroundConfigurer>();
         _raftConfigurer = transform.Find("RaftConfigurer").GetComponent<RaftConfigurer>();
 
-        SignalHub.OnGroundArrivedEvent += TutorialGenerateRaft;
+        SignalHub.OnGroundArrivedEvent += GenerateRaft;
     }
 
     private void Start()
@@ -131,36 +131,39 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         }
     }
 
+    private int GetRaftCount()
+    {
+        int raftCount = 0;
+        if (isTutorialWave) // 튜토리얼이면 정해진대로
+        {
+            raftCount = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount;
+        }
+        else // 아니면 랜덤한 값 계산해서
+        {
+            raftCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.RaftIncreaseRate);
+        }
+
+        return raftCount;
+    }
+
     private void GenerateRaft()
     {
-        if (isTutorialWave)
+        for (int i = 0; i < GetRaftCount(); i++)
         {
-            for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
-            {
-                Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
-                Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
-                float raftZ = randomRaftPos.y;
-                randomRaftPos.z = raftZ;
-                randomRaftPos.y = 0.7f;
+            Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
+            Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
+            float raftZ = randomRaftPos.y;
+            randomRaftPos.z = raftZ;
+            randomRaftPos.y = 0.7f;
 
-                raft.transform.position = randomRaftPos;
+            raft.transform.position = randomRaftPos;
 
-                raft.transform.rotation = Quaternion.identity;
-                raft.SetMoveTarget(transform.parent.parent.parent);
-                raft.SetComingObjectInfo(transform,
-                                         randomRaftPos,
-                                         _raftConfigurer.SetComingObjectElements(raft.transform));
-            };
+            raft.transform.rotation = Quaternion.identity;
+            raft.SetMoveTarget(transform.parent.parent.parent);
+            raft.SetComingObjectInfo(transform,
+                                     randomRaftPos,
+                                     _raftConfigurer.SetComingObjectElements(raft.transform));
         }
-        else
-        {
-
-        }
-       /* CoroutineUtil.CallWaitForSeconds(0.1f, null,
-            () =>
-            {
-               
-            });*/
     }
 
 
@@ -188,7 +191,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         if (curWave % 5 == 0) // 보스 웨이브면
         {
-            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.bossEnemyIncreaseRate);
+            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.BossEnemyIncreaseRate);
         }
         else // 일반 웨이브
         {
@@ -198,24 +201,10 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         return UnityEngine.Random.Range(1, maxEnemyCount);
     }
 
-    private int GetRaftCount()
-    {
-        int raftCount = 0;
-        if (isTutorialWave) // 튜토리얼이면 정해진대로
-        {
-            raftCount = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount;
-        }
-        else // 아니면 랜덤한 값 계산해서
-        {
-            raftCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.RaftIncreaseRate);
-        }
-
-        return raftCount;
-    }
 
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartPriorityEvent -= GenerateGlacier;
-        SignalHub.OnGroundArrivedEvent -= TutorialGenerateRaft;
+        SignalHub.OnGroundArrivedEvent -= GenerateRaft;
     }
 }
