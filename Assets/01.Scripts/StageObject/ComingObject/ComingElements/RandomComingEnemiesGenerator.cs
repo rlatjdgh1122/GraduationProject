@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -24,10 +25,14 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     [SerializeField]
     private TutorialGroundInfoDataSO _tutorialGroundInfoDataSO;
+    [SerializeField]
+    private ComingObjIncreaseRateDataSO _comingObjIncreaseRateDataSO;
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
     private readonly string raftName = "Raft";
+
+    private bool isTutorialWave => curWave < 10;
 
     private Ground SpawnGlaciers()
     {
@@ -102,19 +107,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         transform.rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f); // 문제가 생긴하면 아마 이것 때문일것. 기다려라.
     }
 
-    private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
-    {
-        if (makedHexagonCount == 0) { return 60; } // 근데 처음에는 3개 깔린 상태로 시작하니까 60 반환
-        return 360 / GetCurHexagonGroundsGoalCount();
-    }
-
-
-    private int GetCurHexagonGroundsGoalCount()  // 지금 만들 육각형에 필요한 빙하의 개수
-    {
-        if (makedHexagonCount == 0) { return 4; } // 근데 처음에는 3개 깔린 상태로 시작하니까 4 반환
-        return 6 * (int)Mathf.Pow(2, makedHexagonCount);
-    }
-
     private void GenerateGlacier()
     {
         if (_curHexagon_Grounds.Count == 0)
@@ -123,35 +115,47 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             AddGlacierToCurHexagon();
         }
 
-        if (curWave < 10) // 튜토리얼이면 정해진대로
+        if (isTutorialWave) // 튜토리얼이면 정해져서 나오게
         {
-            TutorialGlacierSetPos();
+            for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
+            {
+                GlacierSetPos();
+            }
         }
-        else // 아니면 랜덤으로
+        else // 아니면 랜덤으로 
         {
-            GlacierSetPos();
-            //GenerateRaft(); // 일단 걍 안 할게
+            for(int i = 0; i < GetRandomGroundCount(); i++)
+            {
+                GlacierSetPos();
+            }
         }
     }
 
-    private void TutorialGenerateRaft() // 나중에 걍 하나로 통일
+    private void GenerateRaft()
     {
-        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
+        if (isTutorialWave)
         {
-            Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
-            Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
-            float raftZ = randomRaftPos.y;
-            randomRaftPos.z = raftZ;
-            randomRaftPos.y = 0.7f;
+            for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount; i++)
+            {
+                Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
+                Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
+                float raftZ = randomRaftPos.y;
+                randomRaftPos.z = raftZ;
+                randomRaftPos.y = 0.7f;
 
-            raft.transform.position = randomRaftPos;
+                raft.transform.position = randomRaftPos;
 
-            raft.transform.rotation = Quaternion.identity;
-            raft.SetMoveTarget(transform.parent.parent.parent);
-            raft.SetComingObjectInfo(transform,
-                                     randomRaftPos,
-                                     _raftConfigurer.SetComingObjectElements(raft.transform));
-        };
+                raft.transform.rotation = Quaternion.identity;
+                raft.SetMoveTarget(transform.parent.parent.parent);
+                raft.SetComingObjectInfo(transform,
+                                         randomRaftPos,
+                                         _raftConfigurer.SetComingObjectElements(raft.transform));
+            };
+        }
+        else
+        {
+
+        }
        /* CoroutineUtil.CallWaitForSeconds(0.1f, null,
             () =>
             {
@@ -160,12 +164,53 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     }
 
 
-    private void TutorialGlacierSetPos()
+    private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
     {
-        for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
+        if (makedHexagonCount == 0) { return 60; } // 근데 처음에는 3개 깔린 상태로 시작하니까 60 반환
+        return 360 / GetCurHexagonGroundsGoalCount();
+    }
+    
+    private int GetCurHexagonGroundsGoalCount()  // 지금 만들 육각형에 필요한 빙하의 개수
+    {
+        if (makedHexagonCount == 0) { return 4; } // 근데 처음에는 3개 깔린 상태로 시작하니까 4 반환
+        return 6 * (int)Mathf.Pow(2, makedHexagonCount);
+    }
+
+    private int GetRandomGroundCount()
+    {
+        int maxGroundCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.GroundIncreaseRate);
+        return UnityEngine.Random.Range(1, maxGroundCount);
+    }
+
+    private int GetRandomEnemyCount()
+    {
+        int maxEnemyCount = 0;
+
+        if (curWave % 5 == 0) // 보스 웨이브면
         {
-            GlacierSetPos();
+            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.bossEnemyIncreaseRate);
         }
+        else // 일반 웨이브
+        {
+            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate);
+        }
+
+        return UnityEngine.Random.Range(1, maxEnemyCount);
+    }
+
+    private int GetRaftCount()
+    {
+        int raftCount = 0;
+        if (isTutorialWave) // 튜토리얼이면 정해진대로
+        {
+            raftCount = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount;
+        }
+        else // 아니면 랜덤한 값 계산해서
+        {
+            raftCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.RaftIncreaseRate);
+        }
+
+        return raftCount;
     }
 
     private void OnDisable()
