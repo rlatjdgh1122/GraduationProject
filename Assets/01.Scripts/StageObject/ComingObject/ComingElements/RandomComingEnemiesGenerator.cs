@@ -131,21 +131,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         }
     }
 
-    private int GetRaftCount()
-    {
-        int raftCount = 0;
-        if (isTutorialWave) // 튜토리얼이면 정해진대로
-        {
-            raftCount = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount;
-        }
-        else // 아니면 랜덤한 값 계산해서
-        {
-            raftCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.RaftIncreaseRate);
-        }
-
-        return raftCount;
-    }
-
     private void GenerateRaft()
     {
         for (int i = 0; i < GetRaftCount(); i++)
@@ -166,6 +151,20 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         }
     }
 
+    private int GetRaftCount()
+    {
+        int raftCount = 0;
+        if (isTutorialWave) // 튜토리얼이면 정해진대로
+        {
+            raftCount = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount;
+        }
+        else // 아니면 랜덤한 값 계산해서
+        {
+            raftCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.RaftIncreaseRate);
+        }
+
+        return raftCount;
+    }
 
     private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
     {
@@ -200,7 +199,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         return UnityEngine.Random.Range(1, maxEnemyCount);
     }
-
 
     private void OnDisable()
     {
