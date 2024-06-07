@@ -9,9 +9,9 @@ namespace ArmySystem
 
         public int SoliderCount => Soldiers.Count;
 
-        public void AddEnemy(Enemy enemy)
+        public void AddEnemy(List<Enemy> enemys)
         {
-            Soldiers.Add(enemy);
+            Soldiers = enemys;
         }
 
         public void RemoveEnemy(Enemy enemy)
