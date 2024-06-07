@@ -1,18 +1,20 @@
 
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ArmySystem
 {
     public class EnemyArmy
     {
+        public EnemyArmy(List<Enemy> soldiers)
+        {
+            Soldiers = soldiers;
+        }
+
         public List<Enemy> Soldiers = new();
 
         public int SoliderCount => Soldiers.Count;
 
-        public void AddEnemy(List<Enemy> enemys)
-        {
-            Soldiers = enemys;
-        }
 
         public void RemoveEnemy(Enemy enemy)
         {
@@ -21,7 +23,7 @@ namespace ArmySystem
 
         public void ShowOutline()
         {
-           
+
         }
 
         public void HideOutline()
@@ -31,8 +33,26 @@ namespace ArmySystem
 
     }
 
-    public class EnemyArmyManager
+    public class EnemyArmyManager : MonoBehaviour
     {
+        public List<EnemyArmy> enemyArmies = new();
 
+        public EnemyArmy CreateArmy(List<Enemy> enemies)
+        {
+            var army = new EnemyArmy(enemies);
+            enemyArmies.Add(army);
+
+            return army;
+        }
+
+        public void Hover(EnemyArmy army)
+        {
+            army.HideOutline();
+        }
+
+        public void Click()
+        {
+
+        }
     }
 }

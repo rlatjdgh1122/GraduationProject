@@ -1,3 +1,4 @@
+using ArmySystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(EnemyDeadController))]
+
 public class Enemy : Entity
 {
     [Header("Setting Values")]
@@ -17,6 +19,9 @@ public class Enemy : Entity
     protected float nexusDistance;
 
     public PassiveDataSO passiveData = null;
+
+    public EnemyArmy owner { get; set; }
+    public EnemyArmy MyArmy => owner;
 
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
@@ -176,6 +181,15 @@ public class Enemy : Entity
 
     }
 
+
+    #endregion
+
+    #region Army
+
+    public void JoinEnemyArmy(EnemyArmy army)
+    {
+        owner = army;
+    }
 
     #endregion
 }
