@@ -32,6 +32,13 @@ namespace ArmySystem
         public void RemoveEnemy(Enemy enemy)
         {
             Soldiers.Remove(enemy);
+            enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineHidden);
+
+            if (SoliderCount <= 0)
+            {
+                EnemyArmyManager.Instance.DeleteArmy(this);
+            }
+
         }
 
         #region MouseEvent
@@ -81,59 +88,5 @@ namespace ArmySystem
 
     }
 
-    public class EnemyArmyManager : Singleton<EnemyArmyManager>
-    {
-        public List<EnemyArmy> enemyArmies = new();
-        public Color MouseOverColor = Color.white;
-        public Color MouseOutColor = Color.white;
-
-        private OnValueChanged<Color> OnChangedOutlineColorEvent = null;
-
-        public EnemyArmy CreateArmy(List<Enemy> enemies)
-        {
-            var army = new EnemyArmy(enemies);
-            enemyArmies.Add(army);
-
-            OnChangedOutlineColorEvent += army.OnChangedOutlineColorHandler;
-
-            return army;
-        }
-
-        public void OnChangedOutlineColor()
-        {
-            OnChangedOutlineColorEvent?.Invoke(MouseOverColor, MouseOutColor);
-        }
-
-        #region MouseEvent
-
-        /// <summary>
-        /// hover event
-        /// </summary>
-        public void OnMouseEnter(EnemyArmy army)
-        {
-            army.OnMouseEnter();
-        }
-
-        /// <summary>
-        /// out event
-        /// </summary>
-        public void OnMouseExit(EnemyArmy army)
-        {
-            army.OnMouseExit();
-        }
-
-        #endregion
-
-        public void OnSelectEnemyArmy(EnemyArmy army)
-        {
-            enemyArmies.ObjExcept
-                (
-                        army,
-                        me => army.IsSelected = true,
-                        other => other.IsSelected = false
-                );// end ObjExcept
-
-            army.OnSelect();
-        }
-    }
+    
 }

@@ -20,8 +20,9 @@ public class Enemy : Entity
 
     public PassiveDataSO passiveData = null;
 
-    public EnemyArmy owner { get; set; }
-    public EnemyArmy MyArmy => owner;
+    public EnemyArmy _owner { get; set; }
+
+    public EnemyArmy MyArmy => _owner;
 
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
@@ -151,18 +152,10 @@ public class Enemy : Entity
             }
         }
     }
-    private void FriendlyPenguinDeadHandler()
-    {
-        //WaveManager.Instance.CheckIsEndBattlePhase();
-        //SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
-    }
 
     public void DieEventHandler()
     {
-        //SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
-        //SignalHub.OnEnemyPenguinDead?.Invoke();
         CoroutineUtil.CallWaitForSeconds(0.1f, () => WaveManager.Instance.CheckIsEndBattlePhase());
-
     }
 
     #region passive
@@ -188,7 +181,7 @@ public class Enemy : Entity
 
     public void JoinEnemyArmy(EnemyArmy army)
     {
-        owner = army;
+        _owner = army;
     }
 
     #endregion
