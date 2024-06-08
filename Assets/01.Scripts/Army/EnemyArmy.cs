@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace ArmySystem
 {
+    [System.Serializable]
     public class EnemyArmy
     {
         public EnemyArmy(List<Enemy> soldiers)
@@ -32,7 +33,8 @@ namespace ArmySystem
         public void RemoveEnemy(Enemy enemy)
         {
             Soldiers.Remove(enemy);
-            enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineHidden);
+            enemy.OutlineCompo.enabled = false;
+            //enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineHidden);
 
             if (SoliderCount <= 0)
             {
@@ -47,9 +49,10 @@ namespace ArmySystem
         {
             foreach (Enemy enemy in Soldiers)
             {
+                enemy.OutlineCompo.enabled = true;
                 if (enemy.OutlineCompo.isActiveAndEnabled)
                 {
-                    enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineAll);
+                    //.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineAll);
                     enemy.OutlineCompo.SetColor(_mouseOverColor);
                 }
             }
@@ -65,10 +68,8 @@ namespace ArmySystem
             {
                 foreach (Enemy enemy in Soldiers)
                 {
-                    if (enemy.OutlineCompo.isActiveAndEnabled)
-                    {
-                        enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineHidden);
-                    }
+                    enemy.OutlineCompo.enabled = false;
+                    //enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineHidden);
                 }
             }//end else
         }
@@ -77,8 +78,10 @@ namespace ArmySystem
         {
             foreach (Enemy enemy in Soldiers)
             {
+                enemy.OutlineCompo.enabled = true;
                 if (enemy.OutlineCompo.isActiveAndEnabled)
                 {
+                    //.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineAll);
                     enemy.OutlineCompo.SetColor(_selectColor);
                 }
             }
@@ -88,5 +91,5 @@ namespace ArmySystem
 
     }
 
-    
+
 }

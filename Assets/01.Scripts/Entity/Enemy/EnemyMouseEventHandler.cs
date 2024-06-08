@@ -1,6 +1,4 @@
 using ArmySystem;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -10,6 +8,7 @@ public class EnemyMouseEventHandler : MonoBehaviour
     [SerializeField] private Enemy _owner = null;
 
     private EnemyArmy _enemyArmy => _owner.MyArmy;
+
     private void OnMouseEnter()
     {
         _enemyArmy.OnMouseEnter();
@@ -22,6 +21,6 @@ public class EnemyMouseEventHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        _enemyArmy.OnSelect();
+        EnemyArmyManager.Instance.OnMouseDown(_enemyArmy);
     }
 }

@@ -226,9 +226,9 @@ public class Outline : MonoBehaviour
 
     public void SetOutlineMode(Mode mode)
     {
-        if ((int)outlineMode == (int)mode) return;
+        if ((int)OutlineMode == (int)mode) return;
 
-        outlineMode = mode;
+        OutlineMode = mode;
     }
 
 
