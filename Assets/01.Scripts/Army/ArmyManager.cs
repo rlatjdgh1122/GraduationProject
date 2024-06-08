@@ -346,21 +346,27 @@ public class ArmyManager : Singleton<ArmyManager>
     /// 펭귄 지우기
     /// </summary>
     /// <param name="legion"> 몇번째 군단 *owner.Legion 입력*</param>
-    /// <param name="obj"> Penguin 타입만 가능 *this 입력*</param>
+    /// <param name="penguin"> Penguin 타입만 가능 *this 입력*</param>
 
-    public void RemovePenguin(string legion, Penguin obj)
+    public void RemovePenguin(string legion, Penguin penguin)
     {
+       //군단지우는거 여기서 하는데 굳이 이렇게 할 필요없이
+       //그냥 자기 군단에서 remove함수 만들어서 하면 될듯
+       //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
+
+
+
         //증가된 군단 스탯 지우기
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
         //var Abilities = Army.Abilities;
 
-        obj.owner = (null);
+        penguin.owner = (null);
 
         //장군이라면
-        if (obj is General)
+        if (penguin is General)
         {
-            var stat = obj.ReturnGenericStat<GeneralStat>();
+            var stat = penguin.ReturnGenericStat<GeneralStat>();
             stat.GeneralDetailData.synergy.Stat.OnValidate -= Army.AddStat;
             Army.RemoveStat(Army.Ability);
 
@@ -368,13 +374,13 @@ public class ArmyManager : Singleton<ArmyManager>
 
             armies[idx].General = null;
         }
-        else if (obj is Penguin)
+        else if (penguin is Penguin)
         {
             //군단 리스트에서 제외
-            Army.Soldiers.Remove(obj);
+            Army.Soldiers.Remove(penguin);
 
             if (Army.Ability != null)
-                obj.RemoveStat(Army.Ability);
+                penguin.RemoveStat(Army.Ability);
         }
     }
 

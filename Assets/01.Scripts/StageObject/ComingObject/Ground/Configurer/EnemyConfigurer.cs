@@ -1,3 +1,4 @@
+using ArmySystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,6 +81,8 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
             spawnedEnemies.Add(spawnEnemy);
         }
+
+        EnemyArmyManager.Instance.CreateArmy(spawnedEnemies);
 
         return spawnedEnemies;
     }
