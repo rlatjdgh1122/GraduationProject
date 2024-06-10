@@ -118,8 +118,6 @@ public class NexusUIPresenter : NexusPopupUI
     public override void HidePanel()
     {
         base.HidePanel();
-
-        NexusManager.Instance.CanClick = false;
     }
 
     public void HideNexusPanel()

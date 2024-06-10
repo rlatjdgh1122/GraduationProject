@@ -8,18 +8,8 @@ public class GeneralDummyPengiun : DummyPenguin
 
     private void OnMouseDown()
     {
-        if (UIManager.Instance.CheckShowAble(UIType.Info)
-            && !UIManager.Instance.GifController.CanShow
-            && !LegionInventoryManager.Instance.CanUI
-            && !NexusManager.Instance.CanClick
-            && !TutorialManager.Instance.ShowTutorialQuest)
+        if (UIManager.Instance.CheckShowAble(UIType.Info))
         {
-            if (WaveManager.Instance.CurrentWaveCount <= 5)
-            {
-                UIManager.Instance.ShowWarningUI("튜토리얼이 진행되지 않았습니다");
-                return;
-            }
-
             PenguinManager.Instance.ShowGeneralInfoUI(this);
             OutlineCompo.enabled = true;
         }

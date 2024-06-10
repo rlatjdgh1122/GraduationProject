@@ -6,33 +6,6 @@ using UnityEngine;
 
 public class PenguinStoreUI : InitSpawnPenguinUI
 {
-    private void Start()
-    {
-        SignalHub.OnLockButtonEvent += LockButton;
-    }
-
-    public void LockButton()
-    {
-        foreach(var slot in spawnButtonList)
-        {
-            if (slot.InfoData.PenguinType == PenguinTypeEnum.Wizard) continue;
-
-            if (WaveManager.Instance.CurrentWaveCount == 2)
-            {
-                if (slot.InfoData.PenguinType != PenguinTypeEnum.Archer)
-                {
-                    slot.IsWaveLock = true;
-                }
-            }
-            else
-            {
-                slot.IsWaveLock = false;
-            }
-
-            slot.LockedButtonInEndWave();
-        }
-    }
-
     public void PenguinInformataion(DummyPenguin dummyPenguin, EntityInfoDataSO infoData, int price)
     {
         BuyPanel.PenguinInformataion(dummyPenguin, infoData, price);

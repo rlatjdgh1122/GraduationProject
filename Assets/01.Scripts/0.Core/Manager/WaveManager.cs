@@ -65,8 +65,6 @@ public class WaveManager : Singleton<WaveManager>
 
     #endregion
 
-    private bool isFirst = true;
-
     public bool OnBuildArcherTower = false;
     public bool OnBuildBuffTower = false;
 
@@ -146,12 +144,6 @@ public class WaveManager : Singleton<WaveManager>
             UIManager.Instance.ShowBossWarningUI("춘자 등장!");
         if (currentWaveCount == 10)
             UIManager.Instance.ShowBossWarningUI("보스 등장!");
-
-        if (isFirst)
-        {
-            UIManager.Instance.GifController.ShowGif(GifType.PenguinFight);
-            isFirst = false;
-        }
     }
 
     public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수

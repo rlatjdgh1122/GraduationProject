@@ -25,7 +25,6 @@ public class DefaultBuilding : BaseBuilding
 
     private ConstructionStation _constructionStation;
 
-    private bool isFirst = true;
 
     public override void Init()
     {
@@ -47,29 +46,8 @@ public class DefaultBuilding : BaseBuilding
 
     private void OnMouseDown()
     {
-        if(WaveManager.Instance.CurrentWaveCount == 3)
+        if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/)
         {
-            UIManager.Instance.ShowWarningUI("튜토리얼이 진행 중이므로 힘의 조각상만 건설할 수 있습니다");
-            return;
-        }
-
-        if (WaveManager.Instance.CurrentWaveCount == 4)
-        {
-            UIManager.Instance.ShowWarningUI("튜토리얼을 진행 중이므로 아처 타워만 건설할 수 있습니다");
-            return;
-        }
-
-        if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/
-            && !UIManager.Instance.GifController.CanShow
-            && !LegionInventoryManager.Instance.CanUI
-            && !NexusManager.Instance.CanClick
-            && !TutorialManager.Instance.ShowTutorialQuest)
-        {
-            if (isFirst)
-            {
-                UIManager.Instance.GifController.ShowGif(GifType.PenguinBuy);
-                isFirst = false;
-            }
             SpawnButton();
         }
     }
