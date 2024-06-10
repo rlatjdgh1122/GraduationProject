@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4237998614974585195}
   - component: {fileID: 4001588354396640803}
+  - component: {fileID: 221940907912116236}
   m_Layer: 0
   m_Name: EnemyArmy
   m_TagString: Untagged
@@ -47,6 +48,18 @@ MonoBehaviour:
   enemyArmies: []
   MouseOverColor: {r: 0.9845997, g: 1, b: 0, a: 1}
   MouseOutColor: {r: 1, g: 0.29305795, b: 0, a: 1}
+--- !u!114 &221940907912116236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808178439928278973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4471b79de25274fb398bdd7b76c036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4547959810243833272
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,6 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5340100820101364114}
+  - component: {fileID: 239024909951571066}
   m_Layer: 0
   m_Name: ArmyManager
   m_TagString: Untagged
@@ -78,8 +92,73 @@ Transform:
   m_Children:
   - {fileID: 136051925846402726}
   - {fileID: 4237998614974585195}
+  - {fileID: 7595820833750640948}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &239024909951571066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4547959810243833272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4ccd225ca40354e9533061e9d3a8fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
+  OnRightClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLeftClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRightClickRaycastHitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5581021162781932083}
+        m_TargetAssemblyTypeName: ArmyMovement, Assembly-CSharp
+        m_MethodName: OnClickForMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4888734614291103510}
+        m_TargetAssemblyTypeName: ClickParticleSystem, Assembly-CSharp
+        m_MethodName: OnPlayClickParticle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLeftClickRaycastHitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 221940907912116236}
+        m_TargetAssemblyTypeName: EnemyArmyMouseEventController, Assembly-CSharp
+        m_MethodName: OnRaftClickEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnClickNumberKeyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5758857968282546132
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69328257d48b08a4d9988187684e7c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   armySoldierList: []
 --- !u!114 &3077189536834508405
 MonoBehaviour:
@@ -170,5 +248,49 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f77c203f72772e428a860f1fa4fe5c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8907750623973078322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7595820833750640948}
+  - component: {fileID: 4888734614291103510}
+  m_Layer: 0
+  m_Name: ClickParticleSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7595820833750640948
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8907750623973078322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5340100820101364114}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4888734614291103510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8907750623973078322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785b0b04233679e4a814a9aec04b5826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

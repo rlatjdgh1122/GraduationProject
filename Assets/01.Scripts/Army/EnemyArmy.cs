@@ -73,7 +73,7 @@ namespace ArmySystem
             IsSelected = true;
 
             OnSelectedOutline();
-            EnemyArmyManager.Instance.OnSelect(this);
+            EnemyArmyManager.Instance.OnSelected(this);
         }
 
         public void DeSelected()

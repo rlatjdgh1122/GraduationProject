@@ -13,6 +13,7 @@ public class EnemyMouseEventController : MonoBehaviour
         else
         {
             EnemyArmyManager.Instance.DeSelected();
+            ArmyManager.Instance.SetTargetEnemyArmy(null);
         }
 
 

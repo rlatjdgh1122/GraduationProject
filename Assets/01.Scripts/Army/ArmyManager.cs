@@ -9,7 +9,6 @@ public class ArmyManager : Singleton<ArmyManager>
     [SerializeField] private List<Army> armies;
 
     public List<Army> Armies { get { return armies; } }
-    private Dictionary<KeyCode, Action> keyDictionary = new();
 
     [SerializeField] private MovefocusMode curFocusMode = MovefocusMode.Battle;
     [SerializeField] private Color battleModeOutline = Color.white;
@@ -32,13 +31,8 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
+
     public int ArmiesCount => armies.Count;
-
-    public override void Awake()
-    {
-        KeySetting();
-
-    }
     private void Start()
     {
         if (armies.Count > 0)
@@ -48,36 +42,6 @@ public class ArmyManager : Singleton<ArmyManager>
         SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
     }
 
-    private void KeySetting()
-    {
-        keyDictionary = new Dictionary<KeyCode, Action>()
-        {
-             {KeyCode.Alpha1, ()=> ChangeArmy(1) },
-             {KeyCode.Alpha2, ()=> ChangeArmy(2) },
-             {KeyCode.Alpha3, ()=> ChangeArmy(3) },
-             {KeyCode.Alpha4, ()=> ChangeArmy(4) },
-             {KeyCode.Alpha5, ()=> ChangeArmy(5) },
-             {KeyCode.Alpha6, ()=> ChangeArmy(6) },
-             {KeyCode.Alpha7, ()=> ChangeArmy(7) },
-             {KeyCode.Alpha8, ()=> ChangeArmy(8) },
-             {KeyCode.Alpha9, ()=> ChangeArmy(9) },
-             {KeyCode.A,      ()=> OnBattleModeChanged() },
-        };
-    }
-
-    private void Update()
-    {
-        if (Input.anyKeyDown)
-        {
-            foreach (var dic in keyDictionary)
-            {
-                if (Input.GetKeyDown(dic.Key))
-                {
-                    dic.Value();
-                }
-            }
-        }
-    }
 
     private void OnBattleModeChanged()
     {
@@ -107,9 +71,24 @@ public class ArmyManager : Singleton<ArmyManager>
 
     }
 
+    public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
+    {
+        Army curArmy = GetCurArmy();
+
+        if (enemyArmy == null)
+        {
+            curArmy.TargetEnemyArmy = null;
+            return;
+        }
+
+        if (curArmy.TargetEnemyArmy.Equals(enemyArmy)) return;
+
+        GetCurArmy().TargetEnemyArmy = enemyArmy;
+    }
+
     public void ChangedCurrentArmy()
     {
-        ChangeArmy(CurLegion);
+        OnChangedArmy(CurLegion);
     }
 
 
@@ -117,7 +96,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// 군단 변경
     /// </summary>
     /// <param name="legion"> 몇번째 군단</param>
-    private void ChangeArmy(int legion)
+    public void OnChangedArmy(int legion)
     {
 
         //전투 라운드가 아니면 실행안해줌
@@ -210,6 +189,8 @@ public class ArmyManager : Singleton<ArmyManager>
                    p.General.HealthCompo.OffUIUpdate?.Invoke();
                }
            }); //end IdxExcept
+
+        EnemyArmyManager.Instance.OnSelected(curArmy.TargetEnemyArmy);
 
     } //end method
 
@@ -350,9 +331,9 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public void RemovePenguin(string legion, Penguin penguin)
     {
-       //군단지우는거 여기서 하는데 굳이 이렇게 할 필요없이
-       //그냥 자기 군단에서 remove함수 만들어서 하면 될듯
-       //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
+        //군단지우는거 여기서 하는데 굳이 이렇게 할 필요없이
+        //그냥 자기 군단에서 remove함수 만들어서 하면 될듯
+        //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
 
 
 

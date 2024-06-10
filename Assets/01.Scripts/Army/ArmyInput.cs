@@ -45,6 +45,22 @@ public class ArmyInput : MonoBehaviour
         };
     }
 
+
+    private void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            foreach (var dic in keyDictionary)
+            {
+                if (Input.GetKeyDown(dic.Key))
+                {
+                    dic.Value();
+                }
+            }
+        }//end if
+
+    }
+
     public void OnRightClickEventHandler()
     {
         OnRightClickEvent?.Invoke();

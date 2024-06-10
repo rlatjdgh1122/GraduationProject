@@ -37,15 +37,27 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
         OnChangedOutlineColorEvent?.Invoke(MouseOverColor, MouseOutColor);
     }
 
-    public void OnSelect(EnemyArmy army)
+    public void OnSelected(EnemyArmy army) //군단 변경될때마다 여기에 타겟을 넣어줌
     {
-        CurrnetEnemyArmy = army;
+        if(army != null)
+        {
+            CurrnetEnemyArmy = army;
 
-        enemyArmies.ObjExcept //선택된 군단 말곤 다 선택해제해줌
-            (
-                    army,
-                    other => other.DeSelected()
-            );// end ObjExcept
+            //선택된 군단 말곤 다 선택해제해줌
+            enemyArmies.ObjExcept 
+                (
+                        army,
+                        other => other.DeSelected()
+                );// end ObjExcept
+        }//end if
+        else //타겟이 없을경우
+        {
+            foreach(EnemyArmy item in enemyArmies)
+            {
+                item.DeSelected();
+            }
+        }
+       
     }
 
     public void DeSelected()
