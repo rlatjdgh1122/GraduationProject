@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ArmySystem
@@ -34,7 +35,6 @@ namespace ArmySystem
         {
             Soldiers.Remove(enemy);
             enemy.OutlineCompo.enabled = false;
-            //enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineHidden);
 
             if (SoliderCount <= 0)
             {
@@ -43,8 +43,6 @@ namespace ArmySystem
 
         }
 
-        #region MouseEvent
-
         public void OnMouseEnter()
         {
             foreach (Enemy enemy in Soldiers)
@@ -52,7 +50,6 @@ namespace ArmySystem
                 enemy.OutlineCompo.enabled = true;
                 if (enemy.OutlineCompo.isActiveAndEnabled)
                 {
-                    //.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineAll);
                     enemy.OutlineCompo.SetColor(_mouseOverColor);
                 }
             }
@@ -62,32 +59,49 @@ namespace ArmySystem
         {
             if (IsSelected)
             {
-                OnSelect();
+                OnSelectedOutline();
             }
             else
             {
-                foreach (Enemy enemy in Soldiers)
-                {
-                    enemy.OutlineCompo.enabled = false;
-                    //enemy.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineHidden);
-                }
+                DeSelectedOutline();
+               
             }//end else
         }
 
-        public void OnSelect()
+        public void OnSelected()
+        {
+            IsSelected = true;
+
+            OnSelectedOutline();
+            EnemyArmyManager.Instance.OnSelect(this);
+        }
+
+        public void DeSelected()
+        {
+            IsSelected = false;
+
+            DeSelectedOutline();
+        }
+
+        private void OnSelectedOutline()
         {
             foreach (Enemy enemy in Soldiers)
             {
                 enemy.OutlineCompo.enabled = true;
                 if (enemy.OutlineCompo.isActiveAndEnabled)
                 {
-                    //.OutlineCompo.SetOutlineMode(Outline.Mode.OutlineAll);
                     enemy.OutlineCompo.SetColor(_selectColor);
                 }
-            }
+            }//end foreach
         }
 
-        #endregion
+        private void DeSelectedOutline()
+        {
+            foreach (Enemy enemy in Soldiers)
+            {
+                enemy.OutlineCompo.enabled = false;
+            }//end foreach
+        }
 
     }
 

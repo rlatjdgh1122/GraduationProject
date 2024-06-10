@@ -19,8 +19,8 @@ public class EnemyMouseEventHandler : MonoBehaviour
         _enemyArmy.OnMouseExit();
     }
 
-    private void OnMouseDown()
+    public void OnClick()
     {
-        EnemyArmyManager.Instance.OnMouseDown(_enemyArmy);
+        _enemyArmy.OnSelected();
     }
 }

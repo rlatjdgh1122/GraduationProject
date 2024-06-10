@@ -1,6 +1,7 @@
 using ArmySystem;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class EnemyArmyManager : Singleton<EnemyArmyManager>
@@ -10,6 +11,8 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
     public Color MouseOutColor = Color.white;
 
     private OnValueChanged<Color> OnChangedOutlineColorEvent = null;
+
+    public EnemyArmy CurrnetEnemyArmy { get; private set; } = null;
 
     public EnemyArmy CreateArmy(List<Enemy> enemies)
     {
@@ -34,37 +37,23 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
         OnChangedOutlineColorEvent?.Invoke(MouseOverColor, MouseOutColor);
     }
 
-    #region MouseEvent
-
-    /// <summary>
-    /// hover event
-    /// </summary>
-    public void OnMouseEnter(EnemyArmy army)
+    public void OnSelect(EnemyArmy army)
     {
-        army.OnMouseEnter();
-    }
+        CurrnetEnemyArmy = army;
 
-    /// <summary>
-    /// out event
-    /// </summary>
-    public void OnMouseExit(EnemyArmy army)
-    {
-        army.OnMouseExit();
-    }
-
-    public void OnMouseDown(EnemyArmy army)
-    {
-        enemyArmies.ObjExcept
+        enemyArmies.ObjExcept //선택된 군단 말곤 다 선택해제해줌
             (
                     army,
-                    me => army.IsSelected = true,
-                    other => other.IsSelected = false
+                    other => other.DeSelected()
             );// end ObjExcept
-
-        army.OnSelect();
     }
 
-    #endregion
+    public void DeSelected()
+    {
+        if (CurrnetEnemyArmy == null) return;
 
+        CurrnetEnemyArmy.DeSelected();
 
+        CurrnetEnemyArmy = null;
+    }
 }

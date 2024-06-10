@@ -16,6 +16,8 @@ namespace ArmySystem
         public List<Penguin> Soldiers = new(); //±∫¿Œ ∆Î±œµÈ
         public General General = null; //¿Â±∫
 
+        public EnemyArmy TargetEnemyArmy = null;
+
         public Ability Ability = null; //Ω√≥ ¡ˆ Ω∫≈»
 
         public void AddStat(Ability incStat)
