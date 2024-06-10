@@ -111,8 +111,6 @@ public class InstallSystem : MonoBehaviour
 
     private void PlaceStructure() // 건물을 선택하고 클릭을 눌러 설치 하려고 할때
     {
-        NexusManager.Instance.CantClickOnBuild = true;
-
         if (Physics.Raycast(_mousePointRay, Mathf.Infinity, _groundLayer))
         {
             if (_previousGround.IsInstalledBuilding &&
@@ -137,7 +135,6 @@ public class InstallSystem : MonoBehaviour
             _nexusUIPresenter.UpdateRecieverUI();
 
             UIManager.Instance.ShowWarningUI("설치 완료!");
-            NexusManager.Instance.CantClickOnBuild = false;
 
             _curBuilding?.Installed();                                    // 건물에 설치 처리 하고 위치 설정
             _curBuilding?.transform.SetParent(_previousGround.transform); // 건물에 설치 처리 하고 위치 설정

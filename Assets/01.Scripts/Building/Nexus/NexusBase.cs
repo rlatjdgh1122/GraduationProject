@@ -8,8 +8,6 @@ public class NexusBase : MonoBehaviour
 
     private LayerMask _groundLayer = 1 << 3;
 
-    private bool isFirst = true;
-
 
     private void Start()
     {
@@ -26,33 +24,10 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase
-            && !LegionInventoryManager.Instance.CanUI
-            && !UIManager.Instance.GifController.CanShow
-            && !TutorialManager.Instance.ShowTutorialQuest
-            && !NexusManager.Instance.CantClickOnBuild)
+        if (!WaveManager.Instance.IsBattlePhase)
         {
-            if (WaveManager.Instance.CurrentWaveCount <= 2)
-            {
-                UIManager.Instance.ShowWarningUI("튜토리얼이 진행되지 않았습니다");
-                return;
-            }
-
-            if(!ResourceManager.Instance.GetStone)
-            {
-                UIManager.Instance.ShowWarningUI("돌이 캐질 때까지 기다려 주세요");
-                return;
-            }
-
-            if (isFirst)
-            {
-                UIManager.Instance.GifController.ShowGif(GifType.NexusUpgrade);
-                isFirst = false;
-            }
-
-            UIManager.Instance.ShowPanel("NexusUI", true);
+            UIManager.Instance.ShowPanel("NexusUI");
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
-            NexusManager.Instance.CanClick = true;
         }
     }
 

@@ -103,8 +103,6 @@ public class DialogSystem : MonoBehaviour
         {
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
-
-            TutorialManager.Instance.ShowTutorialQuest = true;
         });
     }
 
@@ -115,14 +113,7 @@ public class DialogSystem : MonoBehaviour
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
 
-            TutorialManager.Instance.ShowTutorialQuest = false;
-
             MaskingUIManager.Instance.SetMaskingImagePos();
-
-            if (WaveManager.Instance.CurrentWaveCount == 3)
-            {
-                UIManager.Instance.GifController.ShowGif(GifType.NoisebarInfo);
-            }
         });
     }
 

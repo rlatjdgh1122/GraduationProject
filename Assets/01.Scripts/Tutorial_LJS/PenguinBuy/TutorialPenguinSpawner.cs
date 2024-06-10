@@ -20,7 +20,7 @@ public class TutorialPenguinSpawner : MonoBehaviour
 
         if( _onOutline )
         {
-            UIManager.Instance.ShowPanel("StorePanel", true);
+            UIManager.Instance.ShowPanel("StorePanel");
         }
         else
         {

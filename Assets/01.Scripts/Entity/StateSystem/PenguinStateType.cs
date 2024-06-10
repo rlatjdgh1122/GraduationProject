@@ -20,6 +20,7 @@ public enum PenguinStateType
     Dash,
     Throw,
     SpinAttack,
+    KatanaSkill,
     #endregion
 
     #region 그 외

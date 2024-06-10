@@ -11,21 +11,12 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
-    //private PenguinStoreUI _penguinSpawnUI;
-    //[SerializeField] private RectTransform _constructionStationUI;
-
-    //[SerializeField] private float onSpawnUIYPosValue = 320;
-
     private bool isSpawnUIOn;
-
-    //Vector3 _onSpawnUIVec;
-    //Vector3 _offSpawnUIVec;
 
     private Outline _outline;
 
     private ConstructionStation _constructionStation;
 
-    private bool isFirst = true;
 
     public override void Init()
     {
@@ -38,44 +29,23 @@ public class DefaultBuilding : BaseBuilding
 
         _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
         _outline = GetComponent<Outline>();
-        //_penguinSpawnUI = FindObjectOfType<PenguinStoreUI>();
 
-        //SignalHub.OnBattlePhaseStartEvent += DisableAllUI;
         SetInstalled();
         InstalledGround()?.InstallBuilding();
     }
 
     private void OnMouseDown()
     {
-        if(WaveManager.Instance.CurrentWaveCount == 3)
+        if (!WaveManager.Instance.IsBattlePhase)
         {
-            UIManager.Instance.ShowWarningUI("튜토리얼이 진행 중이므로 힘의 조각상만 건설할 수 있습니다");
-            return;
-        }
-
-        if (WaveManager.Instance.CurrentWaveCount == 4)
-        {
-            UIManager.Instance.ShowWarningUI("튜토리얼을 진행 중이므로 아처 타워만 건설할 수 있습니다");
-            return;
-        }
-
-        if (!WaveManager.Instance.IsBattlePhase/* && !InputReaderCompo.IsPointerOverUI()*/
-            && !UIManager.Instance.GifController.CanShow
-            && !LegionInventoryManager.Instance.CanUI
-            && !NexusManager.Instance.CanClick
-            && !TutorialManager.Instance.ShowTutorialQuest)
-        {
-            if (isFirst)
-            {
-                UIManager.Instance.GifController.ShowGif(GifType.PenguinBuy);
-                isFirst = false;
-            }
             SpawnButton();
         }
     }
 
     public void SpawnButton()
     {
+        if (!UIManager.Instance.CheckShowAble(UIType.Store)) return;
+
         if (isSpawnUIOn)
         {
             UIManager.Instance.HidePanel("StorePanel");
@@ -88,32 +58,10 @@ public class DefaultBuilding : BaseBuilding
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }
 
-        //StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
-
         if (_constructionStation.isSpawnUIOn)
         {
             _constructionStation.UpdateSpawnUIBool();
         }
-
-        //if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
-        //{
-        //    StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, targetVec, 0.7f, Ease.OutCubic));
-
-        //    if (_penguinSpawner.isSpawnUIOn)
-        //    {
-        //        _penguinSpawner.UpdateSpawnUIBool();
-        //    }
-        //}
-        //else
-        //{
-
-        //    StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
-
-        //    if (_constructionStation.isSpawnUIOn)
-        //    {
-        //        _constructionStation.UpdateSpawnUIBool();
-        //    }
-        //}
     }
 
     public virtual void UpdateSpawnUIBool()
@@ -134,22 +82,6 @@ public class DefaultBuilding : BaseBuilding
     {
         _outline.enabled = isSpawnUIOn;
     }
-
-    //private void DisableAllUI()
-    //{
-    //    if (isSpawnUIOn)
-    //    {
-    //        if (_defaultBuildingType == DefaultBuildingType.ConstructionStation)
-    //        {
-    //            StartCoroutine(UIManager.Instance.UIMoveDotCoroutine(_constructionStationUI, _offSpawnUIVec, 0.7f, Ease.OutCubic));
-    //        }
-    //        else
-    //        {
-    //            //_penguinSpawnUI.OnDisableStorePanel();
-    //        }
-    //    }
-        
-    //}
 
     protected override void Running()
     {

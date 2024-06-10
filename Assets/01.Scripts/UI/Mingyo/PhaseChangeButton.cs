@@ -37,57 +37,6 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
-        if (WaveManager.Instance.CurrentWaveCount == 1)
-        {
-            if (LegionInventoryManager.Instance.BuyBasicPenguinCountIn1Wave < 3)
-            {
-                UIManager.Instance.ShowWarningUI($"수박바 펭귄을 {3 - LegionInventoryManager.Instance.BuyBasicPenguinCountIn1Wave}마리 더 구매해 주세요");
-                return;
-            }
-
-            if (LegionInventoryManager.Instance.AddLegionBasicPenguinCountIn1Wave < 3)
-            {
-                UIManager.Instance.ShowWarningUI($"수박바 펭귄을 군단에 {3 - LegionInventoryManager.Instance.AddLegionBasicPenguinCountIn1Wave}마리 더 추가해 주세요");
-                return;
-            }
-        }
-
-        if (WaveManager.Instance.CurrentWaveCount == 2)
-        {
-            if (LegionInventoryManager.Instance.BuyArcherPenguinCountIn2Wave < 2)
-            {
-                UIManager.Instance.ShowWarningUI($"아처 펭귄을 구매해 주세요");
-                return;
-            }
-
-            if (LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave < 2)
-            {
-                UIManager.Instance.ShowWarningUI($"아처 펭귄을 군단에 {2 - LegionInventoryManager.Instance.AddLegionArcherPenguinCountIn2Wave}마리 더 추가해 주세요");
-                return;
-            }
-        }
-
-        if (WaveManager.Instance.CurrentWaveCount == 3 && !WaveManager.Instance.OnBuildBuffTower)
-        {
-            UIManager.Instance.ShowWarningUI("힘의 조각상을 건설해 주세요");
-            return;
-        }
-
-        if (WaveManager.Instance.CurrentWaveCount == 4 && !WaveManager.Instance.OnBuildArcherTower)
-        {
-            UIManager.Instance.ShowWarningUI("아처 타워를 건설해 주세요");
-            return;
-        }
-
-        if (WaveManager.Instance.CurrentWaveCount == 5)
-        {
-            if (ArmyManager.Instance.GetCurArmy().General == false)
-            {
-                UIManager.Instance.ShowWarningUI("군단에 군단장을 추가해 주세요");
-                return;
-            }
-        }
-
         if (ArmyManager.Instance.CheckEmpty())
         {
             UIManager.Instance.ShowWarningUI("군단에 펭귄을 추가해 주세요!");
