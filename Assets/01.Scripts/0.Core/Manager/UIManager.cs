@@ -85,48 +85,33 @@ public class UIManager : Singleton<UIManager>
     }
 
     #region popUI Logics
-    public void ShowPanel(string uiName, bool isOverlap = false)
+    public void ShowPanel(string uiName)
     {
         popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
 
-        if (!isOverlap)
+        if (!CheckShowAble(popupUI.UIGroup)) return;
+
+        for (int i = 0; i < currentPopupUI.Count; i++)
         {
-            if (uiName == "VictoryUI")
+            PopupUI ui = currentPopupUI.Peek();
+
+            if (ui.UIGroup != popupUI.UIGroup && popupUI.UIGroup != UIType.Gif)
             {
-                foreach (var name in currentPopupUI)
-                {
-                    Debug.Log(name.name);
-                }
-            }
-
-            if (!CheckShowAble(popupUI.UIGroup)) return;
-
-            for (int i = 0; i < currentPopupUI.Count; i++)
-            {
-                PopupUI ui = currentPopupUI.Peek();
-
-                if (ui.UIGroup != popupUI.UIGroup && popupUI.UIGroup != UIType.Gif)
-                {
-                    ui.HidePanel();
-                }
-            }
-
-            if (popupUI != null)
-            {
-                popupUI.ShowPanel();
-                _currentUI = popupUI;
+                ui.HidePanel();
             }
         }
-        else
+        
+        if (popupUI != null)
         {
             popupUI.ShowPanel();
-            //_currentUI = popupUI;
+            _currentUI = popupUI;
         }
     }
 
     public bool CheckShowAble(UIType type)
     {
-        return _currentUI == null || _currentUI.Transferable.Contains(type);
+        return _currentUI == null || _currentUI.Transferable.Contains(type)
+            || type == UIType.Gif;
     }
 
     public void ChangeCurrentUI()
@@ -145,24 +130,11 @@ public class UIManager : Singleton<UIManager>
     {
         if (currentPopupUI.Count <= 0) return;
 
-        var panelStackCopy = new Stack<PopupUI>(currentPopupUI);
-
-        //int size = currentPopupUI.Count;
-
-        //for(int i = 0; i < size; i++)
-        //{
-        //    currentPopupUI.TryPop(out var panel);
-        //    panel.HidePanel();
-        //}
-
-        foreach (var panel in panelStackCopy)
+        for(int i = 0; i < currentPopupUI.Count; i++)
         {
-            // 원본 스택을 수정
-            currentPopupUI.TryPop(out _);
+            currentPopupUI.TryPop(out var panel);
             panel.HidePanel();
         }
-
-        //Debug.Log("After : " +  currentPopupUI.Count);
     }
 
     public void HidePanel(string uiName)
@@ -203,40 +175,47 @@ public class UIManager : Singleton<UIManager>
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (currentPopupUI.Count <= 0)
+            if (currentPopupUI.Count > 0)
             {
-                if (popupUIDictionary.ContainsKey("EscUI"))
-                    ShowPanel("EscUI");
-            }
-            else if (currentPopupUI.Count > 0)
-            {
-                foreach (var popuis in currentPopupUI)
+                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
+                    && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
                 {
-                    if (popuis.name == "Masking" || popuis.name == "GifScreen"  || popuis.name == "CreditUI") { return; }
-                }
-
-                string name = currentPopupUI.Peek().name;
-
-                bool isNotBattleResult = name != "DefeatUI" && name != "VictoryUI" &&
-                    name != "GifScreen" && name != "Masking";
-
-                if (isNotBattleResult) //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
-                {
-                    bool isbuildingPannel = name == "BuildingPanel" || name == "NexusPanel" || // 나중에 지우소
-                        name == "Buff" || name == "Resource" || name == "Defense" || name == "Trap";
-
-                    if (isbuildingPannel)
-                    {
-                        HidePanel("NexusUI");
-                        ChangeCurrentUI();
-                        return;
-                    }
-
                     currentPopupUI.Peek().HidePanel();
                     ChangeCurrentUI();
                 }
             }
+            else
+            {
+                if (popupUIDictionary.ContainsKey("EscUI"))
+                    ShowPanel("EscUI");
+            }
         }
+
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (currentPopupUI.Count <= 0)
+        //    {
+        //        if (popupUIDictionary.ContainsKey("EscUI"))
+        //            ShowPanel("EscUI");
+        //    }
+        //    else if (currentPopupUI.Count > 0)
+        //    {
+        //        foreach (var popuis in currentPopupUI)
+        //        {
+        //            if (popuis.name == "Masking" || popuis.name == "GifScreen"  || popuis.name == "CreditUI") { return; }
+        //        }
+
+        //        string name = currentPopupUI.Peek().name;
+
+        //        bool isNotBattleResult = name != "DefeatUI" && name != "VictoryUI" && name != "GifScreen";
+
+        //        if (isNotBattleResult) //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+        //        {
+        //            currentPopupUI.Peek().HidePanel();
+        //            ChangeCurrentUI();
+        //        }
+        //    }
+        //}
     }
     #endregion
 

@@ -124,7 +124,7 @@ public class WaveManager : Singleton<WaveManager>
 
     private void GetReward() // 보상 획득 함수
     {
-        UIManager.Instance.ShowPanel("VictoryUI", true);
+        UIManager.Instance.ShowPanel("VictoryUI");
     }
 
     public void CloseWinPanel()

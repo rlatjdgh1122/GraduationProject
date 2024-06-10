@@ -43,7 +43,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
     public void OnEnableBuyPanel() //구매 패널 활성화
     {
         SignalHub.OnClickPenguinSpawnButtonEvent?.Invoke();
-        UIManager.Instance.ShowPanel("BuyPanel", true);
+        UIManager.Instance.ShowPanel("BuyPanel");
     }
 
     public void OnDisableBuyPanel()//구매 패널 비활성화
@@ -53,7 +53,7 @@ public class PenguinStoreUI : InitSpawnPenguinUI
 
     public void OnEnablePenguinInfo() //펭귄 정보 활성화
     {
-        UIManager.Instance.ShowPanel("DetailInfoPanel", true);
+        UIManager.Instance.ShowPanel("DetailInfoPanel");
     }
 
     public void OnDisablePenguinInfo() //펭귄 정보 비활성화

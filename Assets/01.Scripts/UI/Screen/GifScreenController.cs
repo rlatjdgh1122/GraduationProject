@@ -44,7 +44,7 @@ public class GifScreenController : MonoBehaviour
 
         if (gif != null)
         {
-            UIManager.Instance.ShowPanel("GifScreen", true);
+            UIManager.Instance.ShowPanel("GifScreen");
 
             timeScale = Time.timeScale;
             Time.timeScale = 0;
