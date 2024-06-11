@@ -28,8 +28,6 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
 
     private bool _isLocked = false;
 
-    public bool IsWaveLock { get; set; } = false;
-
     protected virtual void Awake()
     {
         _penguinStore = transform.parent.parent.parent.GetComponent<PenguinStoreUI>();
@@ -65,8 +63,6 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         }
     }
 
-    public void LockedButtonInEndWave() => _locked.gameObject.SetActive(IsWaveLock);
-
     public void UnLockedButton()
     {
         _isLocked = false;
@@ -88,7 +84,7 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_isLocked || IsWaveLock)
+        if(_isLocked)
         {
             UIManager.Instance.ShowWarningUI("잠겨있습니다!");
             return;
@@ -100,7 +96,6 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         }
         if(Input.GetMouseButtonDown(1)) //마우스 오른쪽 버튼
         {
-            if (WaveManager.Instance.CurrentWaveCount < 3) { return; }
             SpawnPenguinRightEventHandler();
         }
     }

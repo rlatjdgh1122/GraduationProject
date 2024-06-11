@@ -11,11 +11,15 @@ public class KatanaGeneralDashState : KatanaGeneralBaseState
     public override void Enter()
     {
         base.Enter();
+
+        AttackEnter();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        _penguin.LookTarget();
     }
 
     public override void Exit()

@@ -12,14 +12,6 @@ public class ResourceManager : Singleton<ResourceManager>
     public delegate void OnUIUpdateHandler(Resource resource, int stackCount);
     public event OnUIUpdateHandler OnUIUpdate;
 
-    public bool OnResourceUI { get; set; }
-    public bool IsGifFirst { get; set; } = true;
-
-    public bool OnlyGetOneStone { get; set; } = false;
-    public bool OnlyGetOneWood { get; set; } = false;
-
-    public bool GetStone { get; set; } = true;
-
     public override void Awake()
     {
         //resourceStack = new List<Resource>();

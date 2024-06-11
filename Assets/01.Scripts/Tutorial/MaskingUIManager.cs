@@ -52,7 +52,7 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
         isMasking = true;
 
-        CoroutineUtil.CallWaitForSeconds(0.1f, () => UIManager.Instance.ShowPanel("Masking", true));
+        CoroutineUtil.CallWaitForSeconds(0.1f, () => UIManager.Instance.ShowPanel("Masking"));
 
         string points = questPointsQueue.Dequeue();
 
