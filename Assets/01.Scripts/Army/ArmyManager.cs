@@ -81,8 +81,6 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        if (curArmy.TargetEnemyArmy.Equals(enemyArmy)) return;
-
         GetCurArmy().TargetEnemyArmy = enemyArmy;
     }
 
