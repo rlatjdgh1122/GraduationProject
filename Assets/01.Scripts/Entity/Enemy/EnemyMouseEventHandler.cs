@@ -21,7 +21,7 @@ public class EnemyMouseEventHandler : MonoBehaviour
 
     public void OnClick()
     {
-        _enemyArmy.OnSelected();
+        _enemyArmy.OnClick();
         ArmyManager.Instance.SetTargetEnemyArmy(_enemyArmy);
     }
 }

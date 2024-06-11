@@ -43,6 +43,9 @@ namespace ArmySystem
 
         }
 
+
+        #region MouseEvent
+
         public void OnMouseEnter()
         {
             foreach (Enemy enemy in Soldiers)
@@ -64,16 +67,21 @@ namespace ArmySystem
             else
             {
                 DeSelectedOutline();
-               
+
             }//end else
         }
+
+        public void OnClick()
+        {
+            EnemyArmyManager.Instance.OnSelected(this);
+        }
+
+        #endregion
 
         public void OnSelected()
         {
             IsSelected = true;
-
             OnSelectedOutline();
-            EnemyArmyManager.Instance.OnSelected(this);
         }
 
         public void DeSelected()

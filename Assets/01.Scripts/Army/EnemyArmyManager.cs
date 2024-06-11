@@ -39,25 +39,26 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
 
     public void OnSelected(EnemyArmy army) //군단 변경될때마다 여기에 타겟을 넣어줌
     {
-        if(army != null)
+        if (army != null)
         {
             CurrnetEnemyArmy = army;
 
             //선택된 군단 말곤 다 선택해제해줌
-            enemyArmies.ObjExcept 
+            enemyArmies.ObjExcept
                 (
                         army,
+                        me => me.OnSelected(),
                         other => other.DeSelected()
                 );// end ObjExcept
         }//end if
         else //타겟이 없을경우
         {
-            foreach(EnemyArmy item in enemyArmies)
+            foreach (EnemyArmy item in enemyArmies)
             {
                 item.DeSelected();
             }
         }
-       
+
     }
 
     public void DeSelected()
