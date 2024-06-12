@@ -27,7 +27,6 @@ public class GifScreenController : MonoBehaviour
 
     public int SpeedUpBtnClickCount => _speedUpBtnClickCount;
     public GifScreenDataSO GifDataSO => _gifDataSO;
-    public bool CanShow { get; private set; } = false;
     public List<float> GifSpeedList => _gifSpeedList;
 
     private void Awake()
@@ -45,10 +44,9 @@ public class GifScreenController : MonoBehaviour
 
         if (gif != null)
         {
-            UIManager.Instance.ShowPanel("GifScreen", true);
+            UIManager.Instance.ShowPanel("GifScreen");
 
             timeScale = Time.timeScale;
-            CanShow = true;
             Time.timeScale = 0;
 
             _videoPlayer.clip = gif.GifClip;
@@ -70,7 +68,6 @@ public class GifScreenController : MonoBehaviour
         _videoPlayer.clip = null;
 
         _videoPlayer.Stop();
-        CanShow = false;
         UIManager.Instance.HidePanel("GifScreen");
 
         Time.timeScale = timeScale;

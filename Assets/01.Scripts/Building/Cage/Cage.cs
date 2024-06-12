@@ -41,7 +41,7 @@ public class Cage : PoolableMono
 
     private void OnMouseDown()
     {
-        if (!_isClick && !WaveManager.Instance.IsBattlePhase && !TutorialManager.Instance.ShowTutorialQuest)
+        if (!_isClick && !WaveManager.Instance.IsBattlePhase)
         {
             SignalHub.OnDefaultBuilingClickEvent.Invoke();
 
