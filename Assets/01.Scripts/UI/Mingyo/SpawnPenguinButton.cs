@@ -44,8 +44,6 @@ public class SpawnPenguinButton : MonoBehaviour, IPointerDownHandler, IPointerEn
         _dummyPenguin = dummyPenguin;
         _price = price;
 
-        gameObject.name = $"{infoData.PenguinName} 구매 버튼";
-
         _isLocked = isLocked;
     }
 
