@@ -96,7 +96,7 @@ public class State
         _triggerCalled = true;
 
         //if (_penguin.WaitForCommandToArmyCalled)
-            //_penguin.MoveToMouseClickPositon();
+        //_penguin.MoveToMouseClickPositon();
     }
 
     protected void MustMoveEnter()
@@ -151,6 +151,23 @@ public class State
         return true;
     }
 
+    protected void CheckCommandModeForMovement()
+    {
+        if (_penguin.MovefocusMode == MovefocusMode.Command)
+        {
+            if (_penguin.NavAgent.velocity.magnitude > 0.05f)
+                _stateMachine.ChangeState(PenguinStateType.Move);
+        }//end command
+    }
+
+    protected void CheckCommandModeForChase()
+    {
+        if (_penguin.MovefocusMode == MovefocusMode.Battle)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Chase);
+        }//end Battle
+    }
+
     protected void DeadTarget()
     {
         var prevTarget = _penguin.CurrentTarget;
@@ -175,7 +192,7 @@ public class State
 
     public virtual void UpdateState()
     {
-        if (_penguin.ArmyTriggerCalled)
+        if (!_penguin.PenguinTriggerCalled && _penguin.ArmyTriggerCalled)
         {
             _penguin.StateMachine.ChangeState(PenguinStateType.MustMove);
         }

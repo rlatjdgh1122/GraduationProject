@@ -8,7 +8,7 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
 {
     public List<EnemyArmy> enemyArmies = new();
     public Color MouseOverColor = Color.white;
-    public Color MouseOutColor = Color.white;
+    public Color SelectedColor = Color.white;
 
     private OnValueChanged<Color> OnChangedOutlineColorEvent = null;
 
@@ -34,7 +34,7 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
 
     public void OnChangedOutlineColor()
     {
-        OnChangedOutlineColorEvent?.Invoke(MouseOverColor, MouseOutColor);
+        OnChangedOutlineColorEvent?.Invoke(MouseOverColor, SelectedColor);
     }
 
     public void OnSelected(EnemyArmy army) //군단 변경될때마다 여기에 타겟을 넣어줌

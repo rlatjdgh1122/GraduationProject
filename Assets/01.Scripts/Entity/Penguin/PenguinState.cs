@@ -91,8 +91,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
     protected void MoveEnter()
     {
-        //if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
-
         _triggerCalled = true;
 
         if (_penguin.WaitForCommandToArmyCalled)

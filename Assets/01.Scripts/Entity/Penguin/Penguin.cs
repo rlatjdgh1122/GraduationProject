@@ -83,9 +83,11 @@ public class Penguin : Entity
     public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(prevMousePos, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
 
 
+    private Army owner = null;
 
-    public Army owner { get; set; }
     public Army MyArmy => owner;
+
+    public MovefocusMode MovefocusMode => MyArmy.MovefocusMode;
 
     private EffectPlayer _strengthBuffEffect;
     public EffectPlayer StrengthBuffEffect => _strengthBuffEffect;
@@ -142,6 +144,8 @@ public class Penguin : Entity
 
         if (_strengthBuffEffect)
             _strengthBuffEffect?.ParticleStop();
+
+        NavAgent.updateRotation = false;
     }
 
     protected override void Update()

@@ -15,7 +15,6 @@ public class EnemyMouseEventController : MonoBehaviour
             EnemyArmyManager.Instance.DeSelected();
             ArmyManager.Instance.SetTargetEnemyArmy(null);
         }
-
-
     }
+
 }

@@ -25,6 +25,10 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public int ArmiesCount => armies.Count;
 
+    public Army CurArmy
+    => armies[curArmyIdx < 0 ? 0 : curArmyIdx];
+
+
     private void Start()
     {
         if (armies.Count > 0)
@@ -35,15 +39,24 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {
-        Army curArmy = GetCurArmy();
-
+        //여기부분 필요 없을수도
         if (enemyArmy == null)
         {
-            curArmy.TargetEnemyArmy = null;
+            CurArmy.TargetEnemyArmy = null;
+            CurArmy.MovefocusMode = MovefocusMode.Command;
             return;
         }
 
-        GetCurArmy().TargetEnemyArmy = enemyArmy;
+        CurArmy.TargetEnemyArmy = enemyArmy;
+        CurArmy.MovefocusMode = MovefocusMode.Battle;
+    }
+
+    /// <summary>
+    /// 움직일 경우엔 타겟을 명령모드로 변경
+    /// </summary>
+    public void SetMoveForcusCommand()
+    {
+        CurArmy.MovefocusMode = MovefocusMode.Command;
     }
 
     public void ChangedCurrentArmy()
@@ -115,7 +128,7 @@ public class ArmyManager : Singleton<ArmyManager>
                 //curArmy set battleMode
                 p.Soldiers.ForEach(s =>
                 {
-                   
+
                 });
             },
 
@@ -144,11 +157,6 @@ public class ArmyManager : Singleton<ArmyManager>
     /// 현재 선택된 Army를 리던
     /// </summary>
     /// <returns> Army를 리던</returns>
-    public Army GetCurArmy()
-    {
-        var idx = curArmyIdx < 0 ? 0 : curArmyIdx;
-        return armies[idx];
-    }
 
     public Army GetArmy(int legion)
     {
@@ -288,7 +296,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var Army = armies[idx];
         //var Abilities = Army.Abilities;
 
-        penguin.owner = (null);
+        penguin.SetOwner(null);
 
         //장군이라면
         if (penguin is General)

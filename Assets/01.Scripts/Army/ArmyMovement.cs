@@ -42,7 +42,7 @@ public class ArmyMovement : MonoBehaviour
 
     private void OnModifyCurArmyHnadler()
     {
-        curArmy = ArmyManager.Instance.GetCurArmy();
+        curArmy = ArmyManager.Instance.CurArmy;
         SetArmyNumber();
     }
 
