@@ -22,7 +22,7 @@ public class PenguinIdleState : State
         if (_penguin.NavAgent.velocity.magnitude > 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Move);
 
-        if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Battle && _penguin.MyArmy.IsArmyReady)
+     /*   if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Battle && _penguin.MyArmy.IsArmyReady)*/
         {
             if (_penguin.IsTargetInInnerRange)
                 _stateMachine.ChangeState(PenguinStateType.Chase);

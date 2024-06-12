@@ -26,12 +26,12 @@ public class PenguinBlockState : State
         base.UpdateState();
 
         _penguin.LookTarget();
-
+/*
         if (_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }
-        else
+        else*/
         {
             //사거리가 멀어지면 맞으러 감
             if (!_penguin.IsTargetInAttackRange)

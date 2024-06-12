@@ -87,17 +87,6 @@ public class Penguin : Entity
     public Army owner { get; set; }
     public Army MyArmy => owner;
 
-    public MovefocusMode MoveFocusMode
-    {
-        get
-        {
-            if (owner != null)
-                return owner.MoveFocusMode;
-
-            return MovefocusMode.Battle;
-        }
-    }
-
     private EffectPlayer _strengthBuffEffect;
     public EffectPlayer StrengthBuffEffect => _strengthBuffEffect;
 

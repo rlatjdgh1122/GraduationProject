@@ -10,14 +10,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public List<Army> Armies { get { return armies; } }
 
-    [SerializeField] private MovefocusMode curFocusMode = MovefocusMode.Battle;
-    [SerializeField] private Color battleModeOutline = Color.white;
-    [SerializeField] private Color commandModeOutline = Color.white;
-
-    public MovefocusMode CurFocusMode => curFocusMode;
-
-    private Color GetOutlineColor => curFocusMode == MovefocusMode.Command ? commandModeOutline : battleModeOutline;
-
     private int curArmyIdx = -1;
 
     public int CurLegion
@@ -31,44 +23,14 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
-
     public int ArmiesCount => armies.Count;
+
     private void Start()
     {
         if (armies.Count > 0)
             armies.Clear();
 
         CreateArmy();
-        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
-    }
-
-
-    private void OnBattleModeChanged()
-    {
-        if (!WaveManager.Instance.IsBattlePhase) return;
-
-        curFocusMode = curFocusMode == MovefocusMode.Command ? MovefocusMode.Battle : MovefocusMode.Command;
-        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
-
-        var curArmy = GetCurArmy();
-        curArmy.MoveFocusMode = curFocusMode;
-
-        curArmy.Soldiers.ForEach(s =>
-        {
-            s.OutlineCompo?.SetColor(GetOutlineColor);
-
-            if (curFocusMode == MovefocusMode.Battle)
-                s.FindNearestEnemy();
-        });
-
-        if (curArmy.General)
-        {
-            curArmy.General.OutlineCompo?.SetColor(GetOutlineColor);
-
-            if (curFocusMode == MovefocusMode.Battle)
-                curArmy.General.FindNearestEnemy();
-        }
-
     }
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
@@ -114,8 +76,6 @@ public class ArmyManager : Singleton<ArmyManager>
         curArmy.Soldiers.ForEach(s =>
         {
             s.OutlineCompo.enabled = true;
-            s.OutlineCompo.SetColor(GetOutlineColor);
-
             s.HealthCompo.IsAlwaysShowUI = true;
             s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
@@ -125,8 +85,6 @@ public class ArmyManager : Singleton<ArmyManager>
             var GeneralHealtCompo = General.HealthCompo;
 
             General.OutlineCompo.enabled = true;
-            General.OutlineCompo.SetColor(GetOutlineColor);
-
             GeneralHealtCompo.IsAlwaysShowUI = true;
             GeneralHealtCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
         }
@@ -155,19 +113,9 @@ public class ArmyManager : Singleton<ArmyManager>
             p => //선택된 군단은 아웃라인을 켜줌
             {
                 //curArmy set battleMode
-                p.MoveFocusMode = curFocusMode;
-
-                var color = curFocusMode == MovefocusMode.Command ? commandModeOutline : battleModeOutline;
-
-
                 p.Soldiers.ForEach(s =>
                 {
-                    s.OutlineCompo?.SetColor(color);
-
-                    if (CurFocusMode == MovefocusMode.Battle)
-                    {
-                        s.FindNearestEnemy();
-                    }
+                   
                 });
             },
 

@@ -16,11 +16,11 @@ public class ShieldChaseState : ShieldBaseState
     {
         base.UpdateState();
 
-        if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
+  /*      if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
         }
-        else
+        else*/
         {
             if (_penguin.CurrentTarget != null)
                 _penguin.MoveToCurrentTarget();

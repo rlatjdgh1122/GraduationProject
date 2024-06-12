@@ -71,12 +71,6 @@ public class State
         //굳이 필요한가?
         _triggerCalled = true;
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-        {
-            _penguin.ArmyTriggerCalled = false;
-            _penguin.WaitForCommandToArmyCalled = false;
-        }
-
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
 
@@ -145,18 +139,6 @@ public class State
     }
 
     #endregion
-
-    /// <summary>
-    /// 배틀모드일 때 유저가 마우스 클릭을 했다면
-    /// </summary>
-    protected bool IsArmyCalledIn_BattleMode()
-       => _penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Battle;
-
-    /// <summary>
-    /// 명령모드일 때 유저가 마우스 클릭을 했다면
-    /// </summary>
-    protected bool IsArmyCalledIn_CommandMode()
-        => _penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Command;
 
     /// <summary>
     /// 타겟이 없다면

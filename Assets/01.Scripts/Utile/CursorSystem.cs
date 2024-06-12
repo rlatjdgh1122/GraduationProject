@@ -11,21 +11,18 @@ public class CursorSystem : MonoBehaviour
     [SerializeField] private Texture2D _battleCursor;
     [SerializeField] private Texture2D _nomalCursor;
 
-    MovefocusMode _currentMode;
-
-    private void OnEnable()
+  /*  private void OnEnable()
     {
-        SignalHub.OnBattleModeChanged += ChangeCursorIcon;
         SignalHub.OnBattlePhaseStartEvent += ChangeCursorIconOnStart;
         SignalHub.OnBattlePhaseEndEvent += ChangeCursorIconToNomal; 
     }
 
     private void OnDisable()
     {
-        SignalHub.OnBattleModeChanged -= ChangeCursorIcon;
         SignalHub.OnBattlePhaseStartEvent -= ChangeCursorIconOnStart;
         SignalHub.OnBattlePhaseEndEvent -= ChangeCursorIconToNomal;
     }
+
     private void ChangeCursorIcon(MovefocusMode cursorMode)
     {
         if (cursorMode == MovefocusMode.Command && WaveManager.Instance.IsBattlePhase)
@@ -65,5 +62,5 @@ public class CursorSystem : MonoBehaviour
     {
         Vector2 cursorOffset = new Vector2(_nomalCursor.width / 2, _nomalCursor.height / 2);
         Cursor.SetCursor(_nomalCursor, cursorOffset, CursorMode.Auto);
-    }
+    }*/
 }

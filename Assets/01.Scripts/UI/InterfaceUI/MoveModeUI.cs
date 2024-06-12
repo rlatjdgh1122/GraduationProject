@@ -33,9 +33,8 @@ public class MoveModeUI : MonoBehaviour
     private CanvasGroup _canvasGroup = null;
     private RectTransform _trm = null;
 
-    private void OnEnable()
+  /*  private void OnEnable()
     {
-        SignalHub.OnBattleModeChanged += OnBattleModeChangedHandler;
         SignalHub.OnBattlePhaseStartEvent += OnBattleStartHandler;
         SignalHub.OnBattlePhaseEndEvent += OnBattleEndHandler;
     }
@@ -88,5 +87,5 @@ public class MoveModeUI : MonoBehaviour
         SignalHub.OnBattleModeChanged -= OnBattleModeChangedHandler;
         SignalHub.OnBattlePhaseStartEvent -= OnBattleStartHandler;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEndHandler;
-    }
+    }*/
 }

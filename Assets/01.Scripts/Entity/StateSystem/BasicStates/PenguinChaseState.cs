@@ -17,11 +17,11 @@ public class PenguinChaseState : State
     {
         base.UpdateState();
 
-        if(_penguin.MoveFocusMode == MovefocusMode.Command)
+     /*   if(_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }
-        else
+        else*/
         {
             if (_penguin.CurrentTarget != null)
                 _penguin.MoveToCurrentTarget();

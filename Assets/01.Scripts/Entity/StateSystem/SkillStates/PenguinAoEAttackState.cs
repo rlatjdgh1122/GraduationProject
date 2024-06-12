@@ -40,7 +40,7 @@ public class PenguinAoEAttackState : State
     {
         base.AnimationTrigger();
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Command)
+        //if (_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }

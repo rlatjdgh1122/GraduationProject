@@ -21,7 +21,7 @@ public class PenguinStunState : State
 
         _penguin.LookTarget();
 
-        if (IsArmyCalledIn_BattleMode())
+      
         {
             if (_triggerCalled)
             {
@@ -31,7 +31,7 @@ public class PenguinStunState : State
             }
         }
 
-        if (IsArmyCalledIn_CommandMode())
+
         {
             if (_penguin.WaitForCommandToArmyCalled)
             {
