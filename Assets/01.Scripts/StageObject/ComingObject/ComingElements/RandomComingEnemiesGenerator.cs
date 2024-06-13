@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RandomComingEnemiesGenerator : MonoBehaviour
 {
     // 빙하와 육각형은 다른 것이다. 빙하들이 모여서 육각형을 만드는 거임
-
     [SerializeField]
     private GameObject _glacierPrefab; // 빙하 프리펩
     [SerializeField]
@@ -89,22 +89,25 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void GlacierSetPos()
     {
+        //transform.rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
+
         // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨
-        Ground curground = _curHexagon_Grounds.Dequeue();
-        curground.ActivateGround();
+        Ground curGround = _curHexagon_Grounds.Dequeue();
+        curGround.gameObject.SetActive(true);
 
         float rotateValue = _rotateValues.Dequeue();
+        // rotate가 제대로 되지 않음
+        Debug.Log($"Before: {transform.rotation}");
         transform.Rotate(Vector3.up * rotateValue);
+        Debug.Log($"RotateValue: {Vector3.up * rotateValue}");
+        //Debug.Break();
+        Debug.Log($"After: {transform.rotation}");
 
-        curground.gameObject.SetActive(true);
-
-        Vector3 groundPos = new Vector3(transform.localPosition.x, 0f, _spawnDistance * (makedHexagonCount + 1));
-
-        curground.SetComingObjectInfo(transform,
-                                      groundPos,
-                                      _groundConfigurer.SetComingObjectElements(curground.transform));
-
-        transform.rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f); // 문제가 생긴하면 아마 이것 때문일것. 기다려라.
+        Vector3 groundPos = new Vector3(transform.localPosition.x, transform.localPosition.y, _spawnDistance * (makedHexagonCount + 1));
+        curGround.SetComingObjectInfo(_groundConfigurer.SetComingObjectElements(curGround.transform),
+                                      transform,
+                                      groundPos);
+        curGround.ActivateGround();
     }
 
     private void GenerateGlacier()
@@ -115,25 +118,32 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             AddGlacierToCurHexagon();
         }
 
-        if (isTutorialWave) // 튜토리얼이면 정해져서 나오게
+        int groundCount = GetGroundCount();
+        for (int i = 0; i < groundCount; i++)
         {
-            for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
-            {
-                GlacierSetPos();
-            }
+            GlacierSetPos();
         }
-        else // 아니면 랜덤으로 
-        {
-            for(int i = 0; i < GetRandomGroundCount(); i++)
-            {
-                GlacierSetPos();
-            }
-        }
+
+        //if (isTutorialWave) // 튜토리얼이면 정해져서 나오게
+        //{
+        //    for (int i = 0; i < _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount; i++)
+        //    {
+        //        GlacierSetPos();
+        //    }
+        //}
+        //else // 아니면 랜덤으로 
+        //{
+        //    for(int i = 0; i < GetGroundCount(); i++)
+        //    {
+        //        GlacierSetPos();
+        //    }
+        //}
     }
 
     private void GenerateRaft()
     {
-        for (int i = 0; i < GetRaftCount(); i++)
+        int raftCount = GetRaftCount();
+        for (int i = 0; i < raftCount; i++)
         {
             Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
             Vector3 randomRaftPos = UnityEngine.Random.insideUnitCircle.normalized * 80;
@@ -141,13 +151,13 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             randomRaftPos.z = raftZ;
             randomRaftPos.y = 0.7f;
 
-            raft.transform.position = randomRaftPos;
+            //raft.transform.position = randomRaftPos;
 
             raft.transform.rotation = Quaternion.identity;
             raft.SetMoveTarget(transform.parent.parent.parent);
-            raft.SetComingObjectInfo(transform,
-                                     randomRaftPos,
-                                     _raftConfigurer.SetComingObjectElements(raft.transform));
+            raft.SetComingObjectInfo(_raftConfigurer.SetComingObjectElements(raft.transform),
+                                      transform,
+                                      randomRaftPos);
         }
     }
 
@@ -160,7 +170,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         }
         else // 아니면 랜덤한 값 계산해서
         {
-            raftCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.RaftIncreaseRate);
+            raftCount = Mathf.Clamp(raftCount,0, Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.RaftIncreaseRate));
         }
 
         return raftCount;
@@ -178,26 +188,22 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         return 6 * (int)Mathf.Pow(2, makedHexagonCount);
     }
 
-    private int GetRandomGroundCount()
+    private int GetGroundCount()
     {
-        int maxGroundCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.GroundIncreaseRate);
-        return UnityEngine.Random.Range(1, maxGroundCount);
-    }
+        int groundCount = 0;
 
-    private int GetRandomEnemyCount()
-    {
-        int maxEnemyCount = 0;
-
-        if (curWave % 5 == 0) // 보스 웨이브면
+        if (isTutorialWave) // 튜토리얼이면 정해진대로
         {
-            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.BossEnemyIncreaseRate);
+            groundCount = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingGroundsCount;
         }
-        else // 일반 웨이브
+        else // 아니면 랜덤
         {
-            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate);
+            int maxGroundCount = 0;
+            maxGroundCount = Mathf.Clamp(maxGroundCount, 1, Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.GroundIncreaseRate));
+            groundCount = UnityEngine.Random.Range(1, maxGroundCount);
         }
 
-        return UnityEngine.Random.Range(1, maxEnemyCount);
+        return groundCount;
     }
 
     private void OnDisable()

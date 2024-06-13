@@ -21,10 +21,9 @@ public class Raft : PoolableMono, IComingObject
         SignalHub.OnBattlePhaseEndEvent += OnSink;
     }
 
-    public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
+    public void SetComingObjectInfo(ComingElements groundElements, Transform parentTransform, Vector3 position)
     {
-        _raftMovement.SetComingObejctPos(parentTransform,
-                                         position);
+        _raftMovement.SetComingObejctPos(parentTransform, position);
         SetEnemies(groundElements.Enemies);
     }
 

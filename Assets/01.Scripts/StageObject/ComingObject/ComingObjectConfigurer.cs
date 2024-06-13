@@ -8,16 +8,19 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
     [SerializeField]
     protected ComingElementsDataSO _comingElementsDataSO;
 
+    [SerializeField]
+    protected ComingObjIncreaseRateDataSO _comingObjIncreaseRateDataSO;
+
     protected List<Vector3> _previousElementsPositions = new List<Vector3>();
 
-    public virtual ComingElements SetComingObjectElements(Transform groundTrm, bool isRaft = false)
+    public virtual ComingElements SetComingObjectElements(Transform groundTrm)
     {
-        Debug.Log($"{gameObject} ComingObjClear");
         _previousElementsPositions.Clear();
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
                                                               _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
-                                                              _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray());
+                                                              _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
+                                                              _comingObjIncreaseRateDataSO);
 
         //ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
         //                                                               _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
@@ -26,6 +29,6 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
         //                                                         _comingElementsDataSO.NormalRewardPrefab.name,
         //                                                         _comingElementsDataSO.BossRewardPrefab.name);
 
-        return new ComingElements(enemyConfigurer.SetEnemy(_previousElementsPositions, isRaft));
+        return new ComingElements(enemyConfigurer.SetEnemy(_previousElementsPositions));
     }
 }

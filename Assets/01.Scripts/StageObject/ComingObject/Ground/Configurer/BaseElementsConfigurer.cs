@@ -47,26 +47,13 @@ public abstract class BaseElementsConfigurer
         return randomPos;
     }
 
-    protected void SetGroundElementsPosition(GameObject spawnedElement, Transform transform, List<Vector3> previousElementsPositions)
+    protected virtual void SetGroundElementsPosition(GameObject spawnedElement, Transform transform, List<Vector3> previousElementsPositions)
     {
         spawnedElement.transform.SetParent(transform);
 
         Vector3 resourcePos = GetGroundRandomPosition(previousElementsPositions);
 
         spawnedElement.transform.localPosition = resourcePos;
-        spawnedElement.transform.localScale = Vector3.one;
-    }
-
-    protected void SetRaftElementsPosition(GameObject spawnedElement, Transform transform)
-    {
-        spawnedElement.transform.SetParent(transform);
-
-        Vector3 elementPos = Vector3.one;
-        //elementPos *= 0.2f;
-        elementPos.y = setposY;
-
-
-        spawnedElement.transform.localPosition = elementPos;
         spawnedElement.transform.localScale = Vector3.one;
     }
 
