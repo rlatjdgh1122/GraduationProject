@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class InitSpawnPenguinUI : MonoBehaviour, ICreateSlotUI
+public class InitSpawnPenguinUI : PopupUI, ICreateSlotUI
 {
     #region Component
 
@@ -22,18 +22,18 @@ public class InitSpawnPenguinUI : MonoBehaviour, ICreateSlotUI
     [SerializeField] private Transform _spawnPenguinButtonParent;
     [SerializeField] private SpawnPenguinButton _spawnPenguinButtonPrefab;
     [SerializeField] protected List<PenguinTypeEnum> _slotLockType;
-    [SerializeField] private List<Transform> _spawnPoints;
 
     protected Dictionary<PenguinTypeEnum, SpawnPenguinButton> lockButtonDicntionary = new();
     protected Dictionary<PenguinTypeEnum, PenguinInfoDataSO> penguinInfoDictionary = new();
 
-    protected List<SpawnPenguinButton> spawnButtonList = new();
     private List<DummyPenguin> _soliderPenguinList = new();
 
     protected UnitInventory unitInventory;
 
-    public void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         PenguinFactory = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
         BuyPanel = transform.Find("BuyPanel").GetComponent<BuyPanel>();
         infoPanel = transform.Find("DetailInfoPanel").GetComponent<InfoPanel>();
@@ -45,7 +45,7 @@ public class InitSpawnPenguinUI : MonoBehaviour, ICreateSlotUI
 
     private void Start()
     {
-        foreach(var locked in lockButtonDicntionary)
+        foreach (var locked in lockButtonDicntionary)
         {
             unitInventory.LockSlot(locked.Key);
         }
@@ -72,17 +72,13 @@ public class InitSpawnPenguinUI : MonoBehaviour, ICreateSlotUI
 
     public void CreateSlot()
     {
-        for (int i = 0; i < _soliderPenguinList.Count; i++)
+        foreach (var spawnObj in _soliderPenguinList)
         {
-            var dummyPenguin = _soliderPenguinList[i];
-            var UIinfo = dummyPenguin.NotCloneInfo;
+            var dummyPenguin = spawnObj;
+            var UIinfo = spawnObj.NotCloneInfo;
 
 
             SpawnPenguinButton btn = Instantiate(_spawnPenguinButtonPrefab, _spawnPenguinButtonParent);
-
-            btn.transform.position = _spawnPoints[i].position;
-
-            spawnButtonList.Add(btn);
 
             if (CheckSlotLock(UIinfo.PenguinType))
             {
