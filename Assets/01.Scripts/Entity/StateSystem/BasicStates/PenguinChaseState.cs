@@ -30,6 +30,7 @@ public class PenguinChaseState : State
         else IsTargetNull(PenguinStateType.Idle);
 
         CheckCommandModeForMovement();
+        CheckCommandModeForChase();
     }
 
     public override void ExitState()

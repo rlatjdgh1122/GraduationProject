@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyArmies: []
   MouseOverColor: {r: 0.9845997, g: 1, b: 0, a: 1}
-  MouseOutColor: {r: 1, g: 0.29305795, b: 0, a: 1}
+  SelectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &221940907912116236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,10 +110,34 @@ MonoBehaviour:
   _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
   OnRightClickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5581021162781932083}
+        m_TargetAssemblyTypeName: ArmyMovement, Assembly-CSharp
+        m_MethodName: OnCalledArmyTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLeftClickEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5581021162781932083}
+        m_TargetAssemblyTypeName: ArmyMovement, Assembly-CSharp
+        m_MethodName: OnCalledArmyTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightClickRaycastHitEvent:
     m_PersistentCalls:
       m_Calls:
@@ -141,6 +165,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7276620049884887589}
+        m_TargetAssemblyTypeName: ArmyManager, Assembly-CSharp
+        m_MethodName: SetMoveForcusCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLeftClickRaycastHitEvent:
     m_PersistentCalls:
       m_Calls:
@@ -158,7 +194,19 @@ MonoBehaviour:
         m_CallState: 2
   OnClickNumberKeyEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7276620049884887589}
+        m_TargetAssemblyTypeName: ArmyManager, Assembly-CSharp
+        m_MethodName: OnChangedArmy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5758857968282546132
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,9 +255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armies: []
-  curFocusMode: 1
-  battleModeOutline: {r: 1, g: 0.19954026, b: 0, a: 1}
-  commandModeOutline: {r: 0.098977804, g: 1, b: 0, a: 1}
 --- !u!114 &5581021162781932083
 MonoBehaviour:
   m_ObjectHideFlags: 0

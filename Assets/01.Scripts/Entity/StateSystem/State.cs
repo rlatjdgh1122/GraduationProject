@@ -25,7 +25,6 @@ public class State
         _penguin.StopImmediately();
 
         _penguin.PenguinTriggerCalled = false;
-        _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
     }
@@ -37,29 +36,30 @@ public class State
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
+        _penguin.ArmyTriggerCalled = false;
         _penguin.PenguinTriggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
         _penguin.StopImmediately();
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
@@ -70,18 +70,19 @@ public class State
     {
         //굳이 필요한가?
         _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
 
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
 
@@ -94,6 +95,7 @@ public class State
     {
         //if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
         _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
 
         //if (_penguin.WaitForCommandToArmyCalled)
         //_penguin.MoveToMouseClickPositon();
@@ -153,6 +155,7 @@ public class State
 
     protected void CheckCommandModeForMovement()
     {
+        if (!_penguin.ArmyTriggerCalled) return;
         if (_penguin.MovefocusMode == MovefocusMode.Command)
         {
             if (_penguin.NavAgent.velocity.magnitude > 0.05f)
@@ -162,17 +165,20 @@ public class State
 
     protected void CheckCommandModeForChase()
     {
+        if (!_penguin.ArmyTriggerCalled) return;
+
         if (_penguin.MovefocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(PenguinStateType.Chase);
         }//end Battle
     }
 
+
     protected void DeadTarget()
     {
         var prevTarget = _penguin.CurrentTarget;
 
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
 
         if (prevTarget != null)
         {
@@ -192,10 +198,7 @@ public class State
 
     public virtual void UpdateState()
     {
-        if (!_penguin.PenguinTriggerCalled && _penguin.ArmyTriggerCalled)
-        {
-            _penguin.StateMachine.ChangeState(PenguinStateType.MustMove);
-        }
+
     }
 
     public virtual void ExitState()

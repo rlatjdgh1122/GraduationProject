@@ -18,7 +18,7 @@ public class PenguinBlockState : State
         _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
     }
 
     public override void UpdateState()

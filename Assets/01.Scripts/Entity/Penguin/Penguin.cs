@@ -99,7 +99,7 @@ public class Penguin : Entity
         SignalHub.OnGroundArrivedEvent += ChaseToTarget;
         SignalHub.OnRaftArrivedEvent += ChaseToTarget;
 
-      
+
     }
     private void OnDisable()
     {
@@ -123,7 +123,7 @@ public class Penguin : Entity
     }
 
     private readonly string _penguinEffect = "PenguinDamageUp";
-    
+
     protected override void Start()
     {
         base.Start();
@@ -145,7 +145,7 @@ public class Penguin : Entity
         if (_strengthBuffEffect)
             _strengthBuffEffect?.ParticleStop();
 
-        NavAgent.updateRotation = false;
+        //NavAgent.updateRotation = false;
     }
 
     protected override void Update()
@@ -210,7 +210,7 @@ public class Penguin : Entity
 
     protected void FindTarget()
     {
-        FindNearestEnemy();
+        FindNearestEnemyInTargetArmy();
     }
 
     public void SetOwner(Army army)
@@ -235,6 +235,11 @@ public class Penguin : Entity
 
     }
 
+    public void FindNearestEnemyInTargetArmy()
+    {
+        CurrentTarget = MyArmy.TargetEnemyArmy.FindNearestEnemy(transform);
+    }
+
     public void FindNearestEnemy()
     {
         CurrentTarget = FindNearestTarget<Enemy>(50f, TargetLayer);
@@ -243,7 +248,7 @@ public class Penguin : Entity
     public void ChaseToTarget()
     {
         //적이 빙하가 붙자마자 콜라이더 켜지니깐 켜질때까지 기다리고 찾기
-        CoroutineUtil.CallWaitForSeconds(0.2f, () => FindNearestEnemy());
+        //CoroutineUtil.CallWaitForSeconds(0.2f, () => FindNearestEnemy());
     }
 
     public virtual void LookTarget()
@@ -297,11 +302,13 @@ public class Penguin : Entity
         if (NavAgent.isActiveAndEnabled)
         {
             NavAgent.isStopped = false;
-            /*
-                        if (movingCoroutine != null)
-                        {
-                            StopCoroutine(movingCoroutine);
-                        }*/
+
+            if (movingCoroutine != null)
+            {
+                StopCoroutine(movingCoroutine);
+                MoveToMouseClick(transform.position);
+
+            }
 
             if (prevMousePos != Vector3.zero)
             {
@@ -311,28 +318,33 @@ public class Penguin : Entity
                 MoveToMouseClick(mousePos + SeatPos);
         }
     }
+
+    private bool IsCheck = false;
     private IEnumerator Moving()
     {
         float currentTime = 0f;
         float t = 0f;
 
         Vector3 movePos = Quaternion.Euler(0, Angle, 0) * SeatPos;
-
+        Vector3 finalPos = curMousePos + movePos;
         float distance = Vector3.Distance(prevMousePos, curMousePos);
         float totalTime = distance / moveSpeed;
 
         while (currentTime <= totalTime)
         {
+            //if (IsCheck) break;
             t = currentTime / totalTime;
 
             Vector3 frameMousePos = Vector3.Lerp(prevMousePos, curMousePos, t);
-            Vector3 finalPos = frameMousePos + movePos;
+            Vector3 Pos = frameMousePos + movePos;
 
-            MoveToMouseClick(finalPos);
-
+            MoveToMouseClick(Pos);
             currentTime += Time.deltaTime;
+
             yield return null;
         }
+
+        MoveToMouseClick(finalPos);
         //Debug.Log("움직임 끝");
     }
 

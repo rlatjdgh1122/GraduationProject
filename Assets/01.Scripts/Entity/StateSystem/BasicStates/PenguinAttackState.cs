@@ -24,17 +24,11 @@ public class PenguinAttackState : State
 
         if (_triggerCalled) //АјАн
         {
-            _stateMachine.ChangeState(PenguinStateType.Chase);
-
             IsTargetNull(PenguinStateType.Idle);
         }
 
-        if (_penguin.ArmyTriggerCalled)
-        {
-            _penguin.StateMachine.ChangeState(PenguinStateType.MustMove);
-        }
-
         CheckCommandModeForMovement();
+        CheckCommandModeForChase();
     }
 
     public override void ExitState()

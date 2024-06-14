@@ -71,6 +71,15 @@ public class ArmyMovement : MonoBehaviour
         WaitForAllTrueCoutine = StartCoroutine(Movement_Corou(hit.point));
     }
 
+    public void OnCalledArmyTrigger()
+    {
+        if (armySoldierList.Count <= 0) return;
+        foreach (var penguin in armySoldierList)
+        {
+            penguin.ArmyTriggerCalled = true;
+        }
+    }
+
     private IEnumerator Movement_Corou(Vector3 mousePos)
     {
         if (armySoldierList.Count <= 0)

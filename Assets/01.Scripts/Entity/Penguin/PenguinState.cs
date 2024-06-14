@@ -24,7 +24,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
         _penguin.StopImmediately();
         _penguin.CurrentTarget = null;
-        _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
     }
@@ -36,28 +35,29 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
+        _penguin.ArmyTriggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
         _penguin.StopImmediately();
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
@@ -75,12 +75,12 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
 
@@ -141,7 +141,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
         var prevTarget = _penguin.CurrentTarget;
 
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
 
         if (prevTarget != null)
         {
@@ -154,6 +154,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void FindTarget()
     {
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
     }
 }

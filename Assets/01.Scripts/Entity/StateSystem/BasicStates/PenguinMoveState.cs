@@ -20,6 +20,7 @@ public class PenguinMoveState : State
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Idle);
 
+        CheckCommandModeForMovement();
         CheckCommandModeForChase();
     }
 

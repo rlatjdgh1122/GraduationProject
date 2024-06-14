@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ArmySystem
 {
@@ -111,6 +112,24 @@ namespace ArmySystem
             }//end foreach
         }
 
+
+        public Enemy FindNearestEnemy(Transform trm)
+        {
+            Enemy target = null;
+            float maxDistance = 0f;
+
+            foreach (Enemy enemy in Soldiers)
+            {
+                float distanceToTarget = Vector3.Distance(trm.position, enemy.transform.position);
+                if (distanceToTarget > maxDistance)
+                {
+                    target = enemy;
+                    maxDistance = distanceToTarget;
+                }
+            }//end foreach
+
+            return target;
+        }
     }
 
 
