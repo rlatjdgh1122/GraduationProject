@@ -10,17 +10,17 @@ public class GeneralRandomPanel : ArmyComponentUI
     [SerializeField] private RectTransform _rect;
     [SerializeField] private ParticleImage _particle;
     [SerializeField] private ParticleImage _smallParticle;
-    [SerializeField] private GeneralRandomPanelEffect _effect;
     [SerializeField] private GameObject _iconSlot;
     [SerializeField] private GameObject _questionMark;
 
-    private void Update()
+    [Header("Components")]
+    [SerializeField] private GeneralRandomPanelEffect _effect;
+    [SerializeField] private GeneralRandomResultPanel _resultPanel;
+
+    public void StartGamble()
     {
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            ShowPanel();
-            MoveSlot();
-        }
+        ShowPanel();
+        MoveSlot();
     }
 
     public void MoveSlot()
@@ -33,13 +33,18 @@ public class GeneralRandomPanel : ArmyComponentUI
     {
         _particle.Play();
         _smallParticle.Play();
+        _rect.anchoredPosition = new Vector2(0, 3f);
         _iconSlot.SetActive(false);
         _questionMark.SetActive(false);
+
+        _resultPanel.ShowPanel();
     }
 
     public override void ShowPanel()
     {
         base.ShowPanel();
+        _iconSlot.SetActive(true);
+        _questionMark.SetActive(true);
     }
 
     public override void HidePanel()

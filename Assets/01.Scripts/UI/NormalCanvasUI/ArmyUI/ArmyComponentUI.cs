@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArmyComponentUI : PopupUI
@@ -11,8 +9,9 @@ public class ArmyComponentUI : PopupUI
 
     public static event Action<GeneralStat> OnShowGeneralInfo;
     public static event Action OnHideGeneralInfo;
+    public static event Action OnUpdateState;
 
-    protected void ShowGeneralInfo(GeneralStat data)
+    public void ShowGeneralInfo(GeneralStat data)
     {
         OnShowGeneralInfo?.Invoke(data);
     }
@@ -20,5 +19,10 @@ public class ArmyComponentUI : PopupUI
     public void HideGeneralInfo()
     {
         OnHideGeneralInfo?.Invoke();
+    }
+
+    public void UpdateState()
+    {
+        OnUpdateState?.Invoke();
     }
 }

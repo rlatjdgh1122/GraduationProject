@@ -78,12 +78,12 @@ public class DefaultBuilding : BaseBuilding
     {
         if (isSpawnUIOn)
         {
-            UIManager.Instance.HidePanel("StorePanel");
+            UIManager.Instance.HidePanel("ArmyUI");
             ChangeSpawnUIBool(false);
         }
         else
         {
-            UIManager.Instance.ShowPanel("StorePanel");
+            UIManager.Instance.ShowPanel("ArmyUI");
             ChangeSpawnUIBool(true);
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }
