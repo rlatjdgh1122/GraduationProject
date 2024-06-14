@@ -6,6 +6,8 @@
 ### 🤩 2024 PlayX4 경기게임마이스터고등학교 부스 전시
 ### 🤩 2024 안양시 진로페스티벌 전시  
 
+https://store.onstove.com/ko/games/3574 <- 스토브 인디 게임 다운로드 링크입니다!
+
 # 아래 사진을 클릭하신다면 영상을 보실 수 있습니다.  
 
 [![IU(아이유) _ Into the I-LAND](http://img.youtube.com/vi/cxYR76_1fW0/0.jpg)](https://youtu.be/cxYR76_1fW0?si=d53z0KIfGfh_qI83) 
@@ -53,8 +55,5 @@
 ## [***텍스트를 클릭하시면 더욱 상세한 정보를 보실 수 있습니다***](https://www.notion.so/Project-PENGDOM-a1f55978fafa498a8f32bfb3dfc7dc6a?pvs=21)
 
 
-   
-### 빌드본 입니다
-[게임 다운로드 (4월에 마지막으로 빌드됨)](https://drive.google.com/file/d/1x6UtX_dTzoT2ef06jUlLnYx_mtqweOSb/view)
 
 </aside>
