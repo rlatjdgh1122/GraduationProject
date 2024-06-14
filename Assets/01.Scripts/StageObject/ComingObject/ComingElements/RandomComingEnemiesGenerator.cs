@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -33,6 +34,9 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private readonly string raftName = "Raft";
 
     private bool isTutorialWave => curWave < 10;
+
+    [SerializeField]
+    private int angle;
 
     private Ground SpawnGlaciers()
     {
@@ -89,21 +93,16 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void GlacierSetPos()
     {
-        //transform.rotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
-
+        //transform.localRotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
         // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨
         Ground curGround = _curHexagon_Grounds.Dequeue();
         curGround.gameObject.SetActive(true);
 
-        float rotateValue = _rotateValues.Dequeue();
-        // rotate가 제대로 되지 않음
-        Debug.Log($"Before: {transform.rotation}");
-        transform.Rotate(Vector3.up * rotateValue);
-        Debug.Log($"RotateValue: {Vector3.up * rotateValue}");
-        //Debug.Break();
-        Debug.Log($"After: {transform.rotation}");
+        float rotateValue = _rotateValues.Dequeue() + angle;
+        Vector3 direction = Quaternion.Euler(0, rotateValue, 0) * transform.forward;
 
-        Vector3 groundPos = new Vector3(transform.localPosition.x, transform.localPosition.y, _spawnDistance * (makedHexagonCount + 1));
+        //Vector3 groundPos = new Vector3(transform.localPosition.x, transform.localPosition.y, );
+        Vector3 groundPos = transform.localPosition + direction * _spawnDistance * (makedHexagonCount + 1);
         curGround.SetComingObjectInfo(_groundConfigurer.SetComingObjectElements(curGround.transform),
                                       transform,
                                       groundPos);
@@ -121,6 +120,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         int groundCount = GetGroundCount();
         for (int i = 0; i < groundCount; i++)
         {
+            float randTime = UnityEngine.Random.Range(1, 3);
             GlacierSetPos();
         }
 
@@ -184,6 +184,8 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     
     private int GetCurHexagonGroundsGoalCount()  // 지금 만들 육각형에 필요한 빙하의 개수
     {
+        // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨 <- 이거 해야됨
+
         if (makedHexagonCount == 0) { return 4; } // 근데 처음에는 3개 깔린 상태로 시작하니까 4 반환
         return 6 * (int)Mathf.Pow(2, makedHexagonCount);
     }

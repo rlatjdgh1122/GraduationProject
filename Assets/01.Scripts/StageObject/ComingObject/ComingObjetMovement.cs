@@ -99,6 +99,7 @@ public abstract class ComingObjetMovement : MonoBehaviour
     public void SetComingObejctPos(Transform parentTransform, Vector3 position)
     {
         transform.SetParent(parentTransform); // 부모 설정
+        //transform.SetParent(null); // 부모 설정
         transform.localPosition = position; // 빙하의 위치 설정
 
         // 중앙과 히트 포인트 사이의 거리 계산
