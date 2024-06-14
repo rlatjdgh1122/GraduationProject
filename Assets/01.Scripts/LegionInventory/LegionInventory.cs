@@ -105,8 +105,6 @@ public class LegionInventory : LegionUI
         ImportHpValue();
     }
 
-    //private void PenguinTakeDamage(int idx, float hp) => slotList[idx].HpValue(hp);
-
     public void LegionRegistration(int idx, EntityInfoDataSO data)
     {
         if (currentDictionary.ContainsKey(idx))
@@ -124,21 +122,21 @@ public class LegionInventory : LegionUI
         currentLegionList.Add(data);
         currentDictionary.Add(idx, data);
 
-        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+        //int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
 
-        if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
-        if (questIdx == 1)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
+        //if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
+        //if (questIdx == 1)
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
 
-        if (questIdx == 5)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
+        //if (questIdx == 5)
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
 
         CheckType(data);
 

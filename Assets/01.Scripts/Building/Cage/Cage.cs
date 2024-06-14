@@ -45,7 +45,7 @@ public class Cage : PoolableMono
         {
             SignalHub.OnDefaultBuilingClickEvent.Invoke();
 
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+            //TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
 
             StartCoroutine(DissolveCoroutine());
 
