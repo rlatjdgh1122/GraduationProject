@@ -8,7 +8,7 @@ public class InitialUnitInventory : MonoBehaviour, ICreateSlotUI
     protected Dictionary<EntityInfoDataSO, UnitSlotUI> penguinDictionary = new();
     protected Dictionary<PenguinTypeEnum, UnitSlotUI> lockButtonDicntionary = new();
 
-    public List<DummyPenguin> _infoDataSOList = new();
+    private List<DummyPenguin> _infoDataSOList = new();
 
     [SerializeField]
     private UnitSlotUI _slotPrefab;
@@ -48,7 +48,10 @@ public class InitialUnitInventory : MonoBehaviour, ICreateSlotUI
 
             var UIinfo = so.NotCloneInfo;
 
-            lockButtonDicntionary.Add(UIinfo.PenguinType, slot);
+            if (!lockButtonDicntionary.ContainsKey(UIinfo.PenguinType))
+            {
+                lockButtonDicntionary.Add(UIinfo.PenguinType, slot);
+            }
 
             slot.Create(UIinfo);
 

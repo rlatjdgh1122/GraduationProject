@@ -24,8 +24,8 @@ public class ShieldMoveState : ShieldBaseState
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
 
-        if (_penguin.IsTargetInInnerRange)
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+        CheckCommandModeForMovement();
+        CheckCommandModeForChase();
     }
 
     public override void Exit()

@@ -42,8 +42,6 @@ public class UnitSlotUI : SlotUI
             _generalImg.DOFade(1, 0);
         }
 
-        gameObject.name = $"{data.PenguinName} ½½·Ô";
-
         UpdateSlot();
     }
 
