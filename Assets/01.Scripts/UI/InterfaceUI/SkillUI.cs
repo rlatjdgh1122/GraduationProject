@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class SkillUI : MonoBehaviour
 
     private Vector3 _startTrm;
     private Transform _skillUITrm;
+    private TextMeshProUGUI _legionNameText;
 
     private Image _generalIcon;
     private Image _skillCoolTimeImage;
@@ -24,6 +26,7 @@ public class SkillUI : MonoBehaviour
 
         _generalIcon = _skillUITrm.transform.Find("GeneralIcon").GetComponent<Image>();
         _skillCoolTimeImage = _skillUITrm.transform.Find("CoolTimeUI").GetComponent<Image>();
+        _legionNameText = _skillUITrm.transform.Find("LegionNameText").GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -68,6 +71,8 @@ public class SkillUI : MonoBehaviour
 
             _generalIcon.sprite = generalIcon;
         }
+
+        _legionNameText.text = $"{ArmyManager.Instance.CurLegion} ±º´Ü";
     }
 
     public void UseSkill(float coolTime)
