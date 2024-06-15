@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyArmies: []
   MouseOverColor: {r: 0.9845997, g: 1, b: 0, a: 1}
-  SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+  SelectedColor: {r: 1, g: 0.4002924, b: 0, a: 1}
 --- !u!114 &221940907912116236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +60,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4471b79de25274fb398bdd7b76c036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnClickToEnemyArmyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5581021162781932083}
+        m_TargetAssemblyTypeName: ArmyMovement, Assembly-CSharp
+        m_MethodName: OnCalledArmyTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4547959810243833272
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,19 +140,7 @@ MonoBehaviour:
         m_CallState: 2
   OnLeftClickEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5581021162781932083}
-        m_TargetAssemblyTypeName: ArmyMovement, Assembly-CSharp
-        m_MethodName: OnCalledArmyTrigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnRightClickRaycastHitEvent:
     m_PersistentCalls:
       m_Calls:
@@ -168,6 +171,18 @@ MonoBehaviour:
       - m_Target: {fileID: 7276620049884887589}
         m_TargetAssemblyTypeName: ArmyManager, Assembly-CSharp
         m_MethodName: SetMoveForcusCommand
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4001588354396640803}
+        m_TargetAssemblyTypeName: EnemyArmyManager, Assembly-CSharp
+        m_MethodName: DeSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
