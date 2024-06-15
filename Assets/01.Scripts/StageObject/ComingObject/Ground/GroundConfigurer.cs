@@ -7,13 +7,14 @@ using UnityEngine;
 
 public class GroundConfigurer : ComingObjectConfigurer
 {
-    public override ComingElements SetComingObjectElements(Transform groundTrm, bool isRaft = false)
+    public override ComingElements SetComingObjectElements(Transform groundTrm)
     {
         _previousElementsPositions.Clear();
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
                                                               _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
-                                                              _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray());
+                                                              _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
+                                                              _comingObjIncreaseRateDataSO);
 
         ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
                                                                        _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
@@ -23,7 +24,7 @@ public class GroundConfigurer : ComingObjectConfigurer
                                                                  _comingElementsDataSO.BossRewardPrefab.name,
                                                                  _comingElementsDataSO.MagicCagePrefab.name);
 
-        return new GroundElements(enemyConfigurer.SetEnemy(_previousElementsPositions, isRaft),
+        return new GroundElements(enemyConfigurer.SetEnemy(_previousElementsPositions),
                                   resourceConfigurer.SetResource(_previousElementsPositions),
                                   rewardConfigurer.SetReward(_previousElementsPositions));
     }

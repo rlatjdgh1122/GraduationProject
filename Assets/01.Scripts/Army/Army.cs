@@ -9,12 +9,14 @@ namespace ArmySystem
         public float MoveSpeed;
         public string LegionName; //몇번째 군단
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
-        public MovefocusMode MoveFocusMode; //모드 바꾸기
+        public MovefocusMode MovefocusMode = MovefocusMode.Command;
         public ArmyFollowCam FollowCam = null; //군단 오브젝트
         public ArmyData Info; //정보
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들
         public General General = null; //장군
+
+        public EnemyArmy TargetEnemyArmy = null;
 
         public Ability Ability = null; //시너지 스탯
 

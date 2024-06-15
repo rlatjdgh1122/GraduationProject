@@ -16,7 +16,7 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
 
         if (_penguin.CurrentTarget != null)
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
@@ -32,11 +32,11 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Command)
+ /*       if (_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
         }
-        else
+        else*/
         {
             //사거리가 멀어지면 맞으러 감
             if (!_penguin.IsTargetInAttackRange)

@@ -6,6 +6,7 @@ public class ArmyMainUI : PopupUI
 {
     [Header("Components")]
     public ArmyInfoPanel infoPanel;
+    public GeneralSlotPanel generalSlotPanel;
     private DummyPenguinFactory _factory;
 
     public override void Awake()
@@ -19,7 +20,8 @@ public class ArmyMainUI : PopupUI
         foreach (var compo in components)
         {
             compo.factory = _factory;
-            compo.infoPanel = infoPanel;
+            compo.generalSlotPanel = generalSlotPanel;
+            //compo.infoPanel = infoPanel;
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RaftConfigurer : ComingObjectConfigurer
 {
-    public override ComingElements SetComingObjectElements(Transform groundTrm, bool isRaft = true)
+    public override ComingElements SetComingObjectElements(Transform groundTrm)
     {
         _previousElementsPositions.Clear();
 
@@ -13,9 +13,10 @@ public class RaftConfigurer : ComingObjectConfigurer
         (
             groundTrm,
             _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
-            _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray()
+            _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
+            _comingObjIncreaseRateDataSO
         );
 
-        return new RaftElements(enemyConfigurer.SetEnemy(_previousElementsPositions, isRaft));
+        return new RaftElements(enemyConfigurer.SetEnemy(_previousElementsPositions));
     }
 }

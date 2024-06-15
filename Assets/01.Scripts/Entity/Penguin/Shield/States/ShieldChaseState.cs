@@ -16,24 +16,18 @@ public class ShieldChaseState : ShieldBaseState
     {
         base.UpdateState();
 
-        if (_penguin.MoveFocusMode == ArmySystem.MovefocusMode.Command)
-        {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-        }
-        else
-        {
-            if (_penguin.CurrentTarget != null)
-                _penguin.MoveToCurrentTarget();
+        if (_penguin.CurrentTarget != null)
+            _penguin.MoveToCurrentTarget();
 
-            if (_penguin.IsTargetInAttackRange)
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
+        if (_penguin.IsTargetInAttackRange)
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
 
-            else IsTargetNull(ShieldPenguinStateEnum.Idle);
-        }
+        else IsTargetNull(ShieldPenguinStateEnum.Idle);
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
+
+public override void Exit()
+{
+    base.Exit();
+}
 }

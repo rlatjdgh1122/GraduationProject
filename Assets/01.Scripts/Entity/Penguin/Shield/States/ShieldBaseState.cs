@@ -11,11 +11,6 @@
     public override void UpdateState()
     {
         base.UpdateState();
-
-        if (_penguin.ArmyTriggerCalled)
-        {
-            _penguin.StateMachine.ChangeState(PenguinStateType.MustMove);
-        }
     }
 
     public override void Exit()
