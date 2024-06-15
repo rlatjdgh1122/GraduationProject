@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ShieldBlockState : ShieldBaseState
 {
-    int StunCount = 1;
+    private int _currentBlockCnt = 0;
+
     public ShieldBlockState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
@@ -13,10 +14,9 @@ public class ShieldBlockState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
 
         if (_penguin.CurrentTarget != null)
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
@@ -32,32 +32,30 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Command)
-        {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-        }
-        else
-        {
-            //사거리가 멀어지면 맞으러 감
-            if (!_penguin.IsTargetInAttackRange)
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+        //사거리가 멀어지면 맞으러 감
+        if (!_penguin.IsTargetInAttackRange)
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
 
-            IsTargetNull(ShieldPenguinStateEnum.Idle);
-        }
+        IsTargetNull(ShieldPenguinStateEnum.Idle);
+
+        CheckCommandModeForChase();
+        CheckCommandModeForMovement();
+
     }
 
     private void ImpactShield()
     {
-        if (StunCount > 0 && _penguin.CheckHealthRatioPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
+        _currentBlockCnt++;
+
+        if (_currentBlockCnt >= _penguin.passiveData.HitCount)
         {
             _penguin?.OnPassiveHealthRatioEvent();
-            StunCount--;
+            _currentBlockCnt = 0;
         }
         else
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Impact);
         }
-
     }
 
     public override void Exit()

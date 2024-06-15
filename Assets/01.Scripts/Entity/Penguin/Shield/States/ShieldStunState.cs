@@ -23,26 +23,19 @@ public class ShieldStunState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if(_penguin.MoveFocusMode == MovefocusMode.Command)
+        if (_triggerCalled) //АјАн
         {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-        }
-        else
-        {
-            if (_triggerCalled)
-            {
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
-
-                if (_penguin.CurrentTarget == null)
-                    _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-            }
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
         }
 
+        CheckCommandModeForMovement();
+        CheckCommandModeForChase();
     }
 
     public override void Exit()
     {
-        _penguin.AnimatorCompo.speed = 1;
         base.Exit();
+
+        AttackExit();
     }
 }

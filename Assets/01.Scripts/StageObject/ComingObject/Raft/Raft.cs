@@ -21,10 +21,9 @@ public class Raft : PoolableMono, IComingObject
         SignalHub.OnBattlePhaseEndEvent += OnSink;
     }
 
-    public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
+    public void SetComingObjectInfo(ComingElements groundElements, Transform parentTransform, Vector3 position)
     {
-        _raftMovement.SetComingObejctPos(parentTransform,
-                                         position);
+        _raftMovement.SetComingObejctPos(parentTransform, position);
         SetEnemies(groundElements.Enemies);
     }
 
@@ -32,13 +31,6 @@ public class Raft : PoolableMono, IComingObject
     {
         if (_enemies.Count > 0) _enemies.Clear();
         _enemies = enemies;
-
-        for (int i = 0; i <  enemies.Count; i++)
-        {
-            _enemies[i].gameObject.transform.localScale = Vector3.one;
-            _enemies[i].gameObject.transform.localScale *= 3;
-            _enemies[i].transform.localPosition = new Vector3(0f, 2f, 0f);
-        }
     }
 
     private void OnSink()
@@ -79,12 +71,6 @@ public class Raft : PoolableMono, IComingObject
     public void SetMoveTarget(Transform trm)
     {
         _raftMovement.SetMoveTarget(trm);
-
-
-        transform.localPosition = new Vector3(transform.localPosition.x,
-                                              38f,
-                                              transform.localPosition.z);
-
     }
 
     private void OnDisable()

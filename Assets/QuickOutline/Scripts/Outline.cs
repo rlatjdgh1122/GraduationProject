@@ -103,7 +103,7 @@ public class Outline : MonoBehaviour
         {
             renderers = GetComponentsInChildren<Renderer>().ToList();
 
-            foreach(var ren  in ExceptRenderer)
+            foreach (var ren in ExceptRenderer)
             {
                 renderers.Remove(ren);
             }
@@ -219,7 +219,16 @@ public class Outline : MonoBehaviour
 
     public void SetColor(Color color)
     {
+        if (outlineColor.Equals(color)) return;
+
         OutlineColor = color;
+    }
+
+    public void SetOutlineMode(Mode mode)
+    {
+        if ((int)OutlineMode == (int)mode) return;
+
+        OutlineMode = mode;
     }
 
 

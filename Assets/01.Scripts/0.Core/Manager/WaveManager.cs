@@ -150,17 +150,17 @@ public class WaveManager : Singleton<WaveManager>
     {
         isWin = _isWin;
 
-        int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
-        bool isDone = questIdx == 0 || questIdx == 1 || questIdx == 2 || questIdx == 3 || questIdx == 4 || questIdx == 5;
-
-        if (isDone) // 일단 퀘스트
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
-        }
-        else if (questIdx == 5)
-        {
-            TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        }
+        //int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
+        //bool isDone = questIdx == 0 || questIdx == 1 || questIdx == 2 || questIdx == 3 || questIdx == 4 || questIdx == 5;
+        //
+        //if (isDone) // 일단 퀘스트
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
+        //}
+        //else if (questIdx == 5)
+        //{
+        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+        //}
 
         SignalHub.OnBattlePhaseEndEvent?.Invoke();
     }

@@ -24,7 +24,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
         _penguin.StopImmediately();
         _penguin.CurrentTarget = null;
-        _penguin.ArmyTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
     }
@@ -36,28 +35,29 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
             _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
 
         _triggerCalled = false;
+        _penguin.ArmyTriggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
         _penguin.StopImmediately();
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
         //이렇게 하면 Attack애니메이션 말고도 딴 애니메이션까지 attackSpeed로 설정됨
@@ -69,24 +69,19 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
         //굳이 필요한가?
         _triggerCalled = true;
-
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-        {
-            _penguin.ArmyTriggerCalled = false;
-            _penguin.WaitForCommandToArmyCalled = false;
-        }
+        _penguin.ArmyTriggerCalled = false;
 
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
 
         if (!_penguin.TargetLock)
         {
-            _penguin.FindNearestEnemy();
+            _penguin.FindNearestEnemyInTargetArmy();
         }
         else
         {
             if (_penguin.CurrentTarget == null)
-                _penguin.FindNearestEnemy();
+                _penguin.FindNearestEnemyInTargetArmy();
         }
 
 
@@ -97,8 +92,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
     protected void MoveEnter()
     {
-        //if (_penguin.MoveFocusMode != MovefocusMode.Battle) return;
-
         _triggerCalled = true;
 
         if (_penguin.WaitForCommandToArmyCalled)
@@ -135,18 +128,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     #endregion
 
     /// <summary>
-    /// 배틀모드일 때 유저가 마우스 클릭을 했다면
-    /// </summary>
-    protected bool IsArmyCalledIn_BattleMode()
-       => _penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Battle;
-
-    /// <summary>
-    /// 명령모드일 때 유저가 마우스 클릭을 했다면
-    /// </summary>
-    protected bool IsArmyCalledIn_CommandMode()
-        => _penguin.ArmyTriggerCalled && _penguin.MoveFocusMode == MovefocusMode.Command;
-
-    /// <summary>
     /// 타겟이 없다면
     /// </summary>
     /// <param name="stateEnum"> 이 상태로 체인지</param>
@@ -156,12 +137,12 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _stateMachine.ChangeState(stateEnum);
         return true;
     }
-
+   
     protected void DeadTarget()
     {
         var prevTarget = _penguin.CurrentTarget;
 
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
 
         if (prevTarget != null)
         {
@@ -174,6 +155,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     }
     protected void FindTarget()
     {
-        _penguin.FindNearestEnemy();
+        _penguin.FindNearestEnemyInTargetArmy();
     }
 }

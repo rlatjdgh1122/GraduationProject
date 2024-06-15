@@ -1,3 +1,4 @@
+using ArmySystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,20 +10,26 @@ public class EnemyConfigurer : BaseElementsConfigurer
     private string[] _enemyNames;
     private string[] _bossNames;
 
-    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames) : base(transform)
+    private int curWave => WaveManager.Instance.CurrentWaveCount;
+
+    private ComingObjIncreaseRateDataSO _comingObjIncreaseRateDataSO;
+    private EnemyArmySpawnPatternsSO _enemyArmySpawnPatternsSO;
+
+    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames, ComingObjIncreaseRateDataSO comingObjIncreaseRateDataSO, EnemyArmySpawnPatternsSO enemyArmySpawnPatternsSO) : base(transform)
     {
         _enemyNames = enemyNames;
 
         _bossNames = bossNames;
+
+        _comingObjIncreaseRateDataSO = comingObjIncreaseRateDataSO;
+        _enemyArmySpawnPatternsSO = enemyArmySpawnPatternsSO;
     }
 
-    public List<Enemy> SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
+    public List<Enemy> SetEnemy(List<Vector3> previousElementsPositions)
     {
-        float enemyCountProportion = 0.5f;
-
         List<Enemy> spawnedEnemies = new List<Enemy>();
 
-        if (isBossWave)
+        if (isBossWave && _bossNames != null)
         {
             //걍 하드코딩함
             Enemy spawnBoss;
@@ -38,48 +45,35 @@ public class EnemyConfigurer : BaseElementsConfigurer
             SetEnemyNav(spawnBoss);
             SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
 
-            enemyCountProportion = 0.25f; // 보스 나오면 짜바리들은 조금만 나오게
             spawnedEnemies.Add(spawnBoss);
         }
 
-        int minEnemyCount = 1;
-        int maxEnemyCount = 10;
+        int randomIdx;
 
-        if (isRaft) { maxEnemyCount = 1; }
+        if (WaveManager.Instance.CurrentWaveCount < 5) // 튜토리얼이면 자폭병 안 나오게
+        {
+            randomIdx = Random.Range(0, _enemyNames.Length - 1);
+        }
+        else
+        {
+            randomIdx = Random.Range(0, _enemyNames.Length);
+        }
 
-        int enemyCount = GetRandomElementsCount(minEnemyCount, maxEnemyCount, enemyCountProportion);
+        int enemyCount = randomIdx == _enemyNames.Length ? 2 : GetRandomEnemyCount(); // 폭탄병이면 일단 2마리만 나오게. 아니면 So에서 설정한대로 랜덤
 
         for (int i = 0; i < enemyCount; i++)
         {
-            int randomIdx;
-
-            if (WaveManager.Instance.CurrentWaveCount < 5) // 튜토리얼이면 자폭병 안 나오게
-            {
-                randomIdx = Random.Range(0, _enemyNames.Length - 1);
-            }
-            else
-            {
-                randomIdx = Random.Range(0, _enemyNames.Length);
-            }
-
             string enemyName = _enemyNames[randomIdx];
             Enemy spawnEnemy = PoolManager.Instance.Pop(enemyName) as Enemy;
 
             SetEnemyNav(spawnEnemy);
 
-            if (isRaft)
-            {
-                SetRaftElementsPosition(spawnEnemy.gameObject, transform);
-                spawnEnemy.transform.rotation = Quaternion.identity;
-                spawnEnemy.transform.position += new Vector3(0, 1f, 0f);
-            }
-            else
-            {
-                SetGroundElementsPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
-            }
-
+            //SetGroundElementsPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
             spawnedEnemies.Add(spawnEnemy);
         }
+
+        EnemyArmyManager.Instance.CreateArmy(spawnedEnemies);
+        SetEnemyPos(spawnedEnemies);
 
         return spawnedEnemies;
     }
@@ -89,5 +83,41 @@ public class EnemyConfigurer : BaseElementsConfigurer
         spawnEnemy.IsMove = false;
         spawnEnemy.NavAgent.enabled = false;
         spawnEnemy.ColliderCompo.enabled = false;
+    }
+
+    private int GetRandomEnemyCount()
+    {
+        int maxEnemyCount = 0;      
+
+        if (curWave % 5 == 0) // 보스 웨이브면
+        {
+            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.BossEnemyIncreaseRate);
+        }
+        else // 일반 웨이브
+        {
+            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate);
+        }
+
+        return maxEnemyCount >= 2 ? Random.Range(2, maxEnemyCount) : 2; //최소 2마리는 나오게 함
+    }
+
+    private void SetEnemyPos(List<Enemy> spawnEnemies)
+    {
+        EnemyArmySpawnPattern spawnPattern = GetEnemyArmySpawnPattern(spawnEnemies.Count);
+
+        for (int i = 0; i < spawnEnemies.Count; i++)
+        {
+            GameObject spawnedEnemy = spawnEnemies[i].gameObject;
+
+            spawnedEnemy.transform.SetParent(transform);
+
+            spawnedEnemy.transform.localPosition = spawnPattern.EnemyArmySpawnPoints[i].position + new Vector3(0f, 1.85f, 0f);
+            spawnedEnemy.transform.localScale = Vector3.one;
+        }
+    }
+
+    private EnemyArmySpawnPattern GetEnemyArmySpawnPattern(int count)
+    {
+        return _enemyArmySpawnPatternsSO.EnemyArmySpawnPatterns[count - 2];
     }
 }

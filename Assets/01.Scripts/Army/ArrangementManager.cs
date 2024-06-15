@@ -9,17 +9,19 @@ public class ArrangementManager : Singleton<ArrangementManager>
 
     [Header("배치 거리"), Range(0.5f, 3f)]
     public float distance = 1;
-    private int width = 5;
-    private int length = 7;
+    public int width = 5;
+    public int length = 7;
 
     private List<Vector3> seatPosList = new();
     private List<EntityInfoDataSO> prevSaveDataList = new();
     private List<EntityInfoDataSO> addDataList = new();
     private List<EntityInfoDataSO> removeDataList = new();
+
     public override void Awake()
     {
         Setting();
     }
+
     private void Setting()
     {
         int CLNum = length / 2 + (length % 2 == 0 ? 0 : 1); //7 => 4

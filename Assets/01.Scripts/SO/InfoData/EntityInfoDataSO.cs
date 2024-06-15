@@ -33,6 +33,10 @@ public class EntityInfoDataSO : ScriptableObject
     [Range(0f, 1f)] public float atk;
     [Range(0f, 1f)] public float range;
 
+    public string hpRank;
+    public string atkRank;
+    public string rangeRank;
+
     public string LegionName { get; set; } = "소속된 군단 없음";
     public int SlotIdx { get; set; }
 

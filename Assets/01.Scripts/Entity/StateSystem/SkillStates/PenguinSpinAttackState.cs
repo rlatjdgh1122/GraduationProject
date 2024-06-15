@@ -45,11 +45,11 @@ public class PenguinSpinAttackState : State
     {
         base.AnimationTrigger();
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Command)
+        /*if (_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }
-        else
+        else*/
             _stateMachine.ChangeState(PenguinStateType.Impact);
     }
 }

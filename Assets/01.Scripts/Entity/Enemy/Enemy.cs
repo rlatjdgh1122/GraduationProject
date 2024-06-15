@@ -1,3 +1,4 @@
+using ArmySystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(EnemyDeadController))]
+
 public class Enemy : Entity
 {
     [Header("Setting Values")]
@@ -17,6 +19,10 @@ public class Enemy : Entity
     protected float nexusDistance;
 
     public PassiveDataSO passiveData = null;
+
+    public EnemyArmy _owner { get; set; }
+
+    public EnemyArmy MyArmy => _owner;
 
     #region componenets
     public EntityAttackData AttackCompo { get; private set; }
@@ -146,18 +152,10 @@ public class Enemy : Entity
             }
         }
     }
-    private void FriendlyPenguinDeadHandler()
-    {
-        //WaveManager.Instance.CheckIsEndBattlePhase();
-        //SignalHub.OnEnemyPenguinDead -= FriendlyPenguinDeadHandler;
-    }
 
     public void DieEventHandler()
     {
-        //SignalHub.OnEnemyPenguinDead += FriendlyPenguinDeadHandler;
-        //SignalHub.OnEnemyPenguinDead?.Invoke();
         CoroutineUtil.CallWaitForSeconds(0.1f, () => WaveManager.Instance.CheckIsEndBattlePhase());
-
     }
 
     #region passive
@@ -176,6 +174,15 @@ public class Enemy : Entity
 
     }
 
+
+    #endregion
+
+    #region Army
+
+    public void JoinEnemyArmy(EnemyArmy army)
+    {
+        _owner = army;
+    }
 
     #endregion
 }
