@@ -113,8 +113,6 @@ public static class ExtensionMethod
 
     #endregion
 
-
-
     #region RectTransform
     // RectTransform 참조를 저장하는 딕셔너리
     // static으로 선언하여 프로그램이 시작할 때 한번만 메모리에 할당 되게 함. 또한 static 이므로 모든 인스턴스에서 데이터를 공유함.

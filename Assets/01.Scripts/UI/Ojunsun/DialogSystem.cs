@@ -113,7 +113,7 @@ public class DialogSystem : MonoBehaviour
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
 
-            MaskingUIManager.Instance.SetMaskingImagePos();
+            MaskingUIManager.Instance?.SetMaskingImagePos();
         });
     }
 

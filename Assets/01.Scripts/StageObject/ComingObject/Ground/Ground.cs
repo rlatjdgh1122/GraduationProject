@@ -97,15 +97,13 @@ public class Ground : MonoBehaviour, IComingObject
 
     public void ActivateGround()
     {
-        SignalHub.OnBattlePhaseStartEvent += GroundMoveHandler;
-        SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
+        GroundMoveHandler();
         //SignalHub.OnGroundArrivedEvent += ActivateEnemies;
     }
 
-    public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements)
+    public void SetComingObjectInfo(ComingElements groundElements, Transform parentTransform, Vector3 position)
     {
-        _groundMove.SetComingObejctPos(parentTransform,
-                                 position);
+        _groundMove.SetComingObejctPos(parentTransform, position);
 
         SetEnemies(groundElements.Enemies);
     }
@@ -118,7 +116,6 @@ public class Ground : MonoBehaviour, IComingObject
 
     private void OnBattleEnd()
     {
-
         foreach (var enemy in _enemies)
         {
             PoolManager.Instance.Push(enemy);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IComingObject
 {
-    public void SetComingObjectInfo(Transform parentTransform, Vector3 position, ComingElements groundElements);
+    public void SetComingObjectInfo(ComingElements groundElements, Transform parentTransform, Vector3 position);
     public void SetEnemies(List<Enemy> enemies);
     public void SetMoveTarget(Transform trm);
 }
