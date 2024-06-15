@@ -13,21 +13,23 @@ public class EnemyConfigurer : BaseElementsConfigurer
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
     private ComingObjIncreaseRateDataSO _comingObjIncreaseRateDataSO;
+    private EnemyArmySpawnPatternsSO _enemyArmySpawnPatternsSO;
 
-    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames, ComingObjIncreaseRateDataSO comingObjIncreaseRateDataSO) : base(transform)
+    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames, ComingObjIncreaseRateDataSO comingObjIncreaseRateDataSO, EnemyArmySpawnPatternsSO enemyArmySpawnPatternsSO) : base(transform)
     {
         _enemyNames = enemyNames;
 
         _bossNames = bossNames;
 
         _comingObjIncreaseRateDataSO = comingObjIncreaseRateDataSO;
+        _enemyArmySpawnPatternsSO = enemyArmySpawnPatternsSO;
     }
 
     public List<Enemy> SetEnemy(List<Vector3> previousElementsPositions)
     {
         List<Enemy> spawnedEnemies = new List<Enemy>();
 
-        if (isBossWave)
+        if (isBossWave && _bossNames != null)
         {
             //걍 하드코딩함
             Enemy spawnBoss;
@@ -66,11 +68,12 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
             SetEnemyNav(spawnEnemy);
 
-            SetGroundElementsPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
+            //SetGroundElementsPosition(spawnEnemy.gameObject, transform, previousElementsPositions);
             spawnedEnemies.Add(spawnEnemy);
         }
 
         EnemyArmyManager.Instance.CreateArmy(spawnedEnemies);
+        SetEnemyPos(spawnedEnemies);
 
         return spawnedEnemies;
     }
@@ -80,15 +83,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
         spawnEnemy.IsMove = false;
         spawnEnemy.NavAgent.enabled = false;
         spawnEnemy.ColliderCompo.enabled = false;
-    }
-
-    protected override void SetGroundElementsPosition(GameObject spawnedElement, Transform transform, List<Vector3> previousElementsPositions)
-    {
-        // 여기서 군단으로 나오는 것 해야함
-        spawnedElement.transform.SetParent(transform);
-
-        spawnedElement.transform.localPosition = new Vector3(0f, 1.85f, 0f);
-        spawnedElement.transform.localScale = Vector3.one;
     }
 
     private int GetRandomEnemyCount()
@@ -104,6 +98,26 @@ public class EnemyConfigurer : BaseElementsConfigurer
             maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate);
         }
 
-        return Random.Range(1, maxEnemyCount);
+        return maxEnemyCount >= 2 ? Random.Range(2, maxEnemyCount) : 2; //최소 2마리는 나오게 함
+    }
+
+    private void SetEnemyPos(List<Enemy> spawnEnemies)
+    {
+        EnemyArmySpawnPattern spawnPattern = GetEnemyArmySpawnPattern(spawnEnemies.Count);
+
+        for (int i = 0; i < spawnEnemies.Count; i++)
+        {
+            GameObject spawnedEnemy = spawnEnemies[i].gameObject;
+
+            spawnedEnemy.transform.SetParent(transform);
+
+            spawnedEnemy.transform.localPosition = spawnPattern.EnemyArmySpawnPoints[i].position + new Vector3(0f, 1.85f, 0f);
+            spawnedEnemy.transform.localScale = Vector3.one;
+        }
+    }
+
+    private EnemyArmySpawnPattern GetEnemyArmySpawnPattern(int count)
+    {
+        return _enemyArmySpawnPatternsSO.EnemyArmySpawnPatterns[count - 2];
     }
 }

@@ -14,7 +14,8 @@ public class GroundConfigurer : ComingObjectConfigurer
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
                                                               _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
                                                               _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
-                                                              _comingObjIncreaseRateDataSO);
+                                                              _comingObjIncreaseRateDataSO,
+                                                              _enemyArmySpawnPatternsSO);
 
         ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
                                                                        _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
