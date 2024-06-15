@@ -16,13 +16,20 @@ public class ShieldChaseState : ShieldBaseState
     {
         base.UpdateState();
 
+        //무조건 현재 적한테 이동
         if (_penguin.CurrentTarget != null)
             _penguin.MoveToCurrentTarget();
 
+
         if (_penguin.IsTargetInAttackRange)
+        {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Block);
+        }
 
         else IsTargetNull(ShieldPenguinStateEnum.Idle);
+
+        CheckCommandModeForMovement();
+        CheckCommandModeForChase();
     }
 
 

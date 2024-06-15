@@ -32,18 +32,15 @@ public class ShieldBlockState : ShieldBaseState
 
         _penguin.LookTarget();
 
- /*       if (_penguin.MoveFocusMode == MovefocusMode.Command)
-        {
-            _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
-        }
-        else*/
-        {
-            //사거리가 멀어지면 맞으러 감
-            if (!_penguin.IsTargetInAttackRange)
-                _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
+        //사거리가 멀어지면 맞으러 감
+        if (!_penguin.IsTargetInAttackRange)
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
 
-            IsTargetNull(ShieldPenguinStateEnum.Idle);
-        }
+        IsTargetNull(ShieldPenguinStateEnum.Idle);
+
+        CheckCommandModeForChase();
+        CheckCommandModeForMovement();
+
     }
 
     private void ImpactShield()
