@@ -31,12 +31,6 @@ public class Raft : PoolableMono, IComingObject
     {
         if (_enemies.Count > 0) _enemies.Clear();
         _enemies = enemies;
-
-        for (int i = 0; i <  enemies.Count; i++)
-        {
-            _enemies[i].gameObject.transform.localScale = Vector3.one;
-            _enemies[i].transform.localPosition = new Vector3(0f, 2f, 0f);
-        }
     }
 
     private void OnSink()

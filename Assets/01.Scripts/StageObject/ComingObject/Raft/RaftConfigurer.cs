@@ -13,8 +13,9 @@ public class RaftConfigurer : ComingObjectConfigurer
         (
             groundTrm,
             _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
-            _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
-            _comingObjIncreaseRateDataSO
+            null,
+            _comingObjIncreaseRateDataSO,
+            _enemyArmySpawnPatternsSO
         );
 
         return new RaftElements(enemyConfigurer.SetEnemy(_previousElementsPositions));

@@ -37,27 +37,42 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
-        if (ArmyManager.Instance.CheckEmpty())
-        {
-            UIManager.Instance.ShowWarningUI("군단에 펭귄을 추가해 주세요!");
-        }
-        else
-        {
-            WaveManager.Instance.BattlePhaseStartEventHandler();
-            SoundManager.Play2DSound(SoundName.StartFight);
-            NoiseManager.Instance.SaveNoise();
+        WaveManager.Instance.BattlePhaseStartEventHandler();
+        SoundManager.Play2DSound(SoundName.StartFight);
+        NoiseManager.Instance.SaveNoise();
 
-            //IsBattlePhase�� true�϶��� ChangedArmy�� ������ �� �մµ�
-            //�ڵ庸�ϱ� ���� �����ϰ� 0.1�� �ڿ� true���Ǳ淡 0.15�ʵڿ� ����ǰ���
+        //IsBattlePhase�� true�϶��� ChangedArmy�� ������ �� �մµ�
+        //�ڵ庸�ϱ� ���� �����ϰ� 0.1�� �ڿ� true���Ǳ淡 0.15�ʵڿ� ����ǰ���
 
-            //�̷��Ը��� �켱���� ��Ʋ ��ŸƮ���� IsBattlePhase�� true�� ���� �Ǳ���
-            CoroutineUtil.CallWaitForSeconds(0.15f, () => ArmyManager.Instance.ChangedCurrentArmy());
+        //�̷��Ը��� �켱���� ��Ʋ ��ŸƮ���� IsBattlePhase�� true�� ���� �Ǳ���
+        CoroutineUtil.CallWaitForSeconds(0.15f, () => ArmyManager.Instance.ChangedCurrentArmy());
 
 
-            OnOffButton();
+        OnOffButton();
 
-            UIManager.Instance.HideAllPanel();
-        }
+        UIManager.Instance.HideAllPanel();
+
+        //if (ArmyManager.Instance.CheckEmpty())
+        //{
+        //    UIManager.Instance.ShowWarningUI("군단에 펭귄을 추가해 주세요!");
+        //}
+        //else
+        //{
+        //    WaveManager.Instance.BattlePhaseStartEventHandler();
+        //    SoundManager.Play2DSound(SoundName.StartFight);
+        //    NoiseManager.Instance.SaveNoise();
+
+        //    //IsBattlePhase�� true�϶��� ChangedArmy�� ������ �� �մµ�
+        //    //�ڵ庸�ϱ� ���� �����ϰ� 0.1�� �ڿ� true���Ǳ淡 0.15�ʵڿ� ����ǰ���
+
+        //    //�̷��Ը��� �켱���� ��Ʋ ��ŸƮ���� IsBattlePhase�� true�� ���� �Ǳ���
+        //    CoroutineUtil.CallWaitForSeconds(0.15f, () => ArmyManager.Instance.ChangedCurrentArmy());
+
+
+        //    OnOffButton();
+
+        //    UIManager.Instance.HideAllPanel();
+        //}
     }
     private void OnOffButton()
     {
