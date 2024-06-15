@@ -7,6 +7,7 @@ public class EnemyDeadController : EntityDeadController<Enemy>
         base.OnDied();
 
         _owner.DieEventHandler();
+        _owner.MyArmy.RemoveEnemy(_owner);
     }
 
     public override void OnResurrected()

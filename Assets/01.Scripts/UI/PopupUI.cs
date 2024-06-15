@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,9 @@ public class PopupUI : MonoBehaviour
 {
     [Header("Popup Setting")] [Space(10f)]
     [SerializeField]
-    private float _panelFadeTime;
+    protected float _panelFadeTime;
     [SerializeField]
-    private float _panelDelayTime;
+    protected float _panelDelayTime;
 
     [Space(10f)]
     [SerializeField]
@@ -28,6 +29,7 @@ public class PopupUI : MonoBehaviour
     protected RectTransform _rectTransform;
 
     private Coroutine _showCoroutine = null;
+    private Coroutine _moveCoroutine = null;
     private Coroutine _showAndHideCoroutine = null;
 
 
@@ -57,7 +59,7 @@ public class PopupUI : MonoBehaviour
         UIManager.Instance.currentPopupUI.Push(this);
         SoundManager.Play2DSound(_soundName);
         _panel.blocksRaycasts = true;
-        _panel.DOFade(1, _panelFadeTime).SetUpdate(true);
+        _panel.DOFade(1, _panelFadeTime).SetUpdate(true).SetEase(Ease.InSine);
     }
 
     public virtual void HidePanel()
@@ -89,6 +91,15 @@ public class PopupUI : MonoBehaviour
 
     public virtual void MovePanel(float x, float y, float fadeTime, bool ease = true)
     {
+        if (_moveCoroutine != null)
+            StopCoroutine(_moveCoroutine);
+
+        _moveCoroutine = StartCoroutine(MovePanelCoroutine(_panelDelayTime, x, y, fadeTime, ease));     
+    }
+
+    private IEnumerator MovePanelCoroutine(float waitTime, float x, float y, float fadeTime, bool ease = true)
+    {
+        yield return new WaitForSeconds(waitTime);
         var tween = _rectTransform.DOAnchorPos(new Vector2(x, y), fadeTime);
         if (ease) tween.SetEase(Ease.OutBack, 0.9f);
     }

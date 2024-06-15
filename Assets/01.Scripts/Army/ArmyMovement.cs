@@ -6,8 +6,6 @@ using ArmySystem;
 
 public class ArmyMovement : MonoBehaviour
 {
-    [SerializeField] private InputReader _inputReader;
-    private ParticleSystem ClickParticle;
     private Army curArmy = null;
     public List<Penguin> armySoldierList = new();
 
@@ -27,18 +25,14 @@ public class ArmyMovement : MonoBehaviour
     {
         SignalHub.OnArmyChanged += OnArmyChangedHandler;
         SignalHub.OnModifyCurArmy += OnModifyCurArmyHnadler;
-        _inputReader.RightClickEvent += OnClickForMovement;
+
     }
     private void OnDisable()
     {
         SignalHub.OnArmyChanged -= OnArmyChangedHandler;
         SignalHub.OnModifyCurArmy -= OnModifyCurArmyHnadler;
-        _inputReader.RightClickEvent -= OnClickForMovement;
     }
-    private void Awake()
-    {
-        ClickParticle = GameObject.Find("ClickParticle").GetComponent<ParticleSystem>();
-    }
+   
 
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
@@ -48,7 +42,7 @@ public class ArmyMovement : MonoBehaviour
 
     private void OnModifyCurArmyHnadler()
     {
-        curArmy = ArmyManager.Instance.GetCurArmy();
+        curArmy = ArmyManager.Instance.CurArmy;
         SetArmyNumber();
     }
 
@@ -71,16 +65,18 @@ public class ArmyMovement : MonoBehaviour
         }
     }
 
-    public void OnClickForMovement()
+    public void OnClickForMovement(RaycastHit hit)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(RayCasts.MousePointRay, out hit))
-        {
-            if (WaitForAllTrueCoutine != null) StopCoroutine(WaitForAllTrueCoutine);
-            WaitForAllTrueCoutine = StartCoroutine(Movement_Corou(hit.point));
+        if (WaitForAllTrueCoutine != null) StopCoroutine(WaitForAllTrueCoutine);
+        WaitForAllTrueCoutine = StartCoroutine(Movement_Corou(hit.point));
+    }
 
-            ClickParticle.transform.position = hit.point + new Vector3(0, 0.1f, 0);
-            ClickParticle.Play();
+    public void OnCalledArmyTrigger()
+    {
+        if (armySoldierList.Count <= 0) return;
+        foreach (var penguin in armySoldierList)
+        {
+            penguin.ArmyTriggerCalled = true;
         }
     }
 

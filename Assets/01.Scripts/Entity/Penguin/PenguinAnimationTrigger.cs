@@ -59,11 +59,11 @@ public class PenguinAnimationTrigger : MonoBehaviour
         var value = parmeter.Split(' ');
         try
         {
-            float.TryParse(value[0], out float knbValue);
-            float.TryParse(value[1], out float stunValue);
-
-            //Debug.Log($"{knbValue} {stunValue}");
-            _penguin.AttackCompo.AoEAttack(knbValue, stunValue);
+            if (float.TryParse(value[0], out float knbValue)
+               && float.TryParse(value[1], out float stunValue))
+            {
+                _penguin.AttackCompo.AoEAttack(knbValue, stunValue);
+            }
         }
         catch
         {
@@ -79,11 +79,11 @@ public class PenguinAnimationTrigger : MonoBehaviour
         var value = parmeter.Split(' ');
         try
         {
-            float.TryParse(value[0], out float knbValue);
-            float.TryParse(value[1], out float stunValue);
-
-            //Debug.Log($"{knbValue} {stunValue}");
-            _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
+            if (float.TryParse(value[0], out float knbValue)
+                && float.TryParse(value[1], out float stunValue))
+            {
+                _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
+            }
         }
         catch
         {
@@ -134,7 +134,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
     private void AnimationEndTrigger()
     {
         _penguin.AnimationTrigger();
-        //OnAttackTriggerEvent?.Invoke();
+        OnAttackTriggerEvent?.Invoke();
     }
 
     public void DashEndTrigger()

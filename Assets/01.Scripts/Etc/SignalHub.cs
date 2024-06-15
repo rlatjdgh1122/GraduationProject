@@ -6,7 +6,6 @@ public delegate void OnValueChanged<T>(T prevValue , T curValue);
 public delegate void OnValueUpdated<T>(T value);
 
 public delegate void ChangedArmy(Army prevArmy, Army newArmy);
-public delegate void ChangedBattleMode(MovefocusMode mode);
 
 public delegate void ModifyArmyInfo();
 
@@ -52,10 +51,7 @@ public static class SignalHub
     /// 1번 2번 눌러 군단 변경될 때 호출
     /// </summary>
     public static ChangedArmy OnArmyChanged;
-    /// <summary>
-    /// A키를 눌러 배틀모드를 바꿀 때 호출
-    /// </summary>
-    public static ChangedBattleMode OnBattleModeChanged;
+
     /// <summary>
     /// 군단에 추가 되거나 삭제 되는 둥 군단에 정보가 수정될 때 호출
     /// </summary>

@@ -19,7 +19,7 @@ public class PenguinKatanaSkillState : State
 
     public override void UpdateState()
     {
-        base.UpdateState();
+        //base.UpdateState();
 
         if (_triggerCalled)
         {

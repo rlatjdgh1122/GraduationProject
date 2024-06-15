@@ -33,12 +33,14 @@ public class Worker : Entity
     #region 이동 관련
     public void MoveToTarget()
     {
+        NavAgent.isStopped = false;
         NavAgent.SetDestination(CurrentTarget.transform.position);
     }
 
 
     public void MoveToNexus()
     {
+        NavAgent.isStopped = false;
         NavAgent.SetDestination(WorkerHomeTrm.transform.position);
     }
 

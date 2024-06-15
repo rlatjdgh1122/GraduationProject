@@ -1,7 +1,6 @@
 using ArmySystem;
 
 public class PenguinMoveState : State
-
 {
     public PenguinMoveState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
@@ -21,11 +20,8 @@ public class PenguinMoveState : State
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Idle);
 
-        if (_penguin.MoveFocusMode == MovefocusMode.Battle)
-        {
-            if (_penguin.IsTargetInInnerRange)
-                _stateMachine.ChangeState(PenguinStateType.Chase);
-        }
+        CheckCommandModeForMovement();
+        CheckCommandModeForChase();
     }
 
     public override void ExitState()

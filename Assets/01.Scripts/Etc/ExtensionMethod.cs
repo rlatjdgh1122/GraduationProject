@@ -61,13 +61,34 @@ public static class ExtensionMethod
     /// <param name="thisAction"> 나의 액션</param>
     /// <param name="otherAction"> 나머지의 액션</param>
     public static void ObjExcept<T>(this List<T> list, T obj,
-        Action<T> thisAction = null, Action<T> otherAction = null)
+        Action<T> thisAction, Action<T> otherAction)
     {
         foreach (var i in list)
         {
             if (i.Equals(obj))
             {
                 thisAction?.Invoke(i);
+            }
+            else
+            {
+                otherAction?.Invoke(i);
+            }
+        }
+    }
+    /// <summary>
+    /// 나를 제외한 나머지만 동작
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="obj"> 오브젝트를 나로 설정</param>
+    /// <param name="otherAction"> 나머지의 액션</param>
+    public static void ObjExcept<T>(this List<T> list, T obj, Action<T> otherAction)
+    {
+        foreach (var i in list)
+        {
+            if (i.Equals(obj))
+            {
+
             }
             else
             {

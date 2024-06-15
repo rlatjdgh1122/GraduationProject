@@ -23,11 +23,11 @@ public class ShieldStunState : ShieldBaseState
 
         _penguin.LookTarget();
 
-        if(_penguin.MoveFocusMode == MovefocusMode.Command)
+      /*  if(_penguin.MoveFocusMode == MovefocusMode.Command)
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Idle);
         }
-        else
+        else*/
         {
             if (_triggerCalled)
             {

@@ -9,15 +9,6 @@ public class ArmyManager : Singleton<ArmyManager>
     [SerializeField] private List<Army> armies;
 
     public List<Army> Armies { get { return armies; } }
-    private Dictionary<KeyCode, Action> keyDictionary = new();
-
-    [SerializeField] private MovefocusMode curFocusMode = MovefocusMode.Battle;
-    [SerializeField] private Color battleModeOutline = Color.white;
-    [SerializeField] private Color commandModeOutline = Color.white;
-
-    public MovefocusMode CurFocusMode => curFocusMode;
-
-    private Color GetOutlineColor => curFocusMode == MovefocusMode.Command ? commandModeOutline : battleModeOutline;
 
     private int curArmyIdx = -1;
 
@@ -34,82 +25,43 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public int ArmiesCount => armies.Count;
 
-    public override void Awake()
-    {
-        KeySetting();
+    public Army CurArmy
+    => armies[curArmyIdx < 0 ? 0 : curArmyIdx];
 
-    }
+
     private void Start()
     {
         if (armies.Count > 0)
             armies.Clear();
 
         CreateArmy();
-        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
     }
 
-    private void KeySetting()
+    public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {
-        keyDictionary = new Dictionary<KeyCode, Action>()
+        //여기부분 필요 없을수도
+        if (enemyArmy == null)
         {
-             {KeyCode.Alpha1, ()=> ChangeArmy(1) },
-             {KeyCode.Alpha2, ()=> ChangeArmy(2) },
-             {KeyCode.Alpha3, ()=> ChangeArmy(3) },
-             {KeyCode.Alpha4, ()=> ChangeArmy(4) },
-             {KeyCode.Alpha5, ()=> ChangeArmy(5) },
-             {KeyCode.Alpha6, ()=> ChangeArmy(6) },
-             {KeyCode.Alpha7, ()=> ChangeArmy(7) },
-             {KeyCode.Alpha8, ()=> ChangeArmy(8) },
-             {KeyCode.Alpha9, ()=> ChangeArmy(9) },
-             {KeyCode.A,      ()=> OnBattleModeChanged() },
-        };
-    }
-
-    private void Update()
-    {
-        if (Input.anyKeyDown)
-        {
-            foreach (var dic in keyDictionary)
-            {
-                if (Input.GetKeyDown(dic.Key))
-                {
-                    dic.Value();
-                }
-            }
-        }
-    }
-
-    private void OnBattleModeChanged()
-    {
-        if (!WaveManager.Instance.IsBattlePhase) return;
-
-        curFocusMode = curFocusMode == MovefocusMode.Command ? MovefocusMode.Battle : MovefocusMode.Command;
-        SignalHub.OnBattleModeChanged?.Invoke(curFocusMode);
-
-        var curArmy = GetCurArmy();
-        curArmy.MoveFocusMode = curFocusMode;
-
-        curArmy.Soldiers.ForEach(s =>
-        {
-            s.OutlineCompo?.SetColor(GetOutlineColor);
-
-            if (curFocusMode == MovefocusMode.Battle)
-                s.FindNearestEnemy();
-        });
-
-        if (curArmy.General)
-        {
-            curArmy.General.OutlineCompo?.SetColor(GetOutlineColor);
-
-            if (curFocusMode == MovefocusMode.Battle)
-                curArmy.General.FindNearestEnemy();
+            CurArmy.TargetEnemyArmy = null;
+            CurArmy.MovefocusMode = MovefocusMode.Command;
+            return;
         }
 
+        CurArmy.TargetEnemyArmy = enemyArmy;
+        CurArmy.MovefocusMode = MovefocusMode.Battle;
+    }
+
+    /// <summary>
+    /// 움직일 경우엔 타겟을 명령모드로 변경
+    /// </summary>
+    public void SetMoveForcusCommand(RaycastHit hit)
+    {
+        CurArmy.MovefocusMode = MovefocusMode.Command;
     }
 
     public void ChangedCurrentArmy()
     {
-        ChangeArmy(CurLegion);
+        OnChangedArmy(CurLegion);
     }
 
 
@@ -117,7 +69,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// 군단 변경
     /// </summary>
     /// <param name="legion"> 몇번째 군단</param>
-    private void ChangeArmy(int legion)
+    public void OnChangedArmy(int legion)
     {
 
         //전투 라운드가 아니면 실행안해줌
@@ -137,8 +89,6 @@ public class ArmyManager : Singleton<ArmyManager>
         curArmy.Soldiers.ForEach(s =>
         {
             s.OutlineCompo.enabled = true;
-            s.OutlineCompo.SetColor(GetOutlineColor);
-
             s.HealthCompo.IsAlwaysShowUI = true;
             s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
@@ -148,8 +98,6 @@ public class ArmyManager : Singleton<ArmyManager>
             var GeneralHealtCompo = General.HealthCompo;
 
             General.OutlineCompo.enabled = true;
-            General.OutlineCompo.SetColor(GetOutlineColor);
-
             GeneralHealtCompo.IsAlwaysShowUI = true;
             GeneralHealtCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
         }
@@ -178,19 +126,9 @@ public class ArmyManager : Singleton<ArmyManager>
             p => //선택된 군단은 아웃라인을 켜줌
             {
                 //curArmy set battleMode
-                p.MoveFocusMode = curFocusMode;
-
-                var color = curFocusMode == MovefocusMode.Command ? commandModeOutline : battleModeOutline;
-
-
                 p.Soldiers.ForEach(s =>
                 {
-                    s.OutlineCompo?.SetColor(color);
 
-                    if (CurFocusMode == MovefocusMode.Battle)
-                    {
-                        s.FindNearestEnemy();
-                    }
                 });
             },
 
@@ -211,17 +149,14 @@ public class ArmyManager : Singleton<ArmyManager>
                }
            }); //end IdxExcept
 
+        EnemyArmyManager.Instance.OnSelected(curArmy.TargetEnemyArmy);
+
     } //end method
 
     /// <summary>
     /// 현재 선택된 Army를 리던
     /// </summary>
     /// <returns> Army를 리던</returns>
-    public Army GetCurArmy()
-    {
-        var idx = curArmyIdx < 0 ? 0 : curArmyIdx;
-        return armies[idx];
-    }
 
     public Army GetArmy(int legion)
     {
@@ -346,21 +281,27 @@ public class ArmyManager : Singleton<ArmyManager>
     /// 펭귄 지우기
     /// </summary>
     /// <param name="legion"> 몇번째 군단 *owner.Legion 입력*</param>
-    /// <param name="obj"> Penguin 타입만 가능 *this 입력*</param>
+    /// <param name="penguin"> Penguin 타입만 가능 *this 입력*</param>
 
-    public void RemovePenguin(string legion, Penguin obj)
+    public void RemovePenguin(string legion, Penguin penguin)
     {
+        //군단지우는거 여기서 하는데 굳이 이렇게 할 필요없이
+        //그냥 자기 군단에서 remove함수 만들어서 하면 될듯
+        //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
+
+
+
         //증가된 군단 스탯 지우기
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
         //var Abilities = Army.Abilities;
 
-        obj.owner = (null);
+        penguin.SetOwner(null);
 
         //장군이라면
-        if (obj is General)
+        if (penguin is General)
         {
-            var stat = obj.ReturnGenericStat<GeneralStat>();
+            var stat = penguin.ReturnGenericStat<GeneralStat>();
             stat.GeneralDetailData.synergy.Stat.OnValidate -= Army.AddStat;
             Army.RemoveStat(Army.Ability);
 
@@ -368,13 +309,13 @@ public class ArmyManager : Singleton<ArmyManager>
 
             armies[idx].General = null;
         }
-        else if (obj is Penguin)
+        else if (penguin is Penguin)
         {
             //군단 리스트에서 제외
-            Army.Soldiers.Remove(obj);
+            Army.Soldiers.Remove(penguin);
 
             if (Army.Ability != null)
-                obj.RemoveStat(Army.Ability);
+                penguin.RemoveStat(Army.Ability);
         }
     }
 
