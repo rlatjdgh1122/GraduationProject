@@ -1,6 +1,10 @@
+using ArmySystem;
+
 public class PenguinKatanaSkillState : State
 {
     private General General => _penguin as General;
+
+    private MovefocusMode prevMode = MovefocusMode.Command;
 
     public PenguinKatanaSkillState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
@@ -10,8 +14,10 @@ public class PenguinKatanaSkillState : State
     {
         base.EnterState();
 
+        _penguin.StopImmediately();
         _penguin.LookTargetImmediately();
-        AttackEnter();
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        //AttackEnter();
 
         _triggerCalled = false;
         General.skill.PlaySkill();
@@ -23,7 +29,7 @@ public class PenguinKatanaSkillState : State
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(PenguinStateType.Chase);
+            //_stateMachine.ChangeState(PenguinStateType.Chase);
 
             IsTargetNull(PenguinStateType.Idle);
         }
@@ -31,7 +37,7 @@ public class PenguinKatanaSkillState : State
 
     public override void ExitState()
     {
-        AttackExit();
+        _penguin.MyArmy.MovefocusMode = prevMode;
 
         base.ExitState();
     }

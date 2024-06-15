@@ -47,6 +47,7 @@ public class PenguinAttackState : State
             _penguin?.OnPassiveAttackEvent();
 
             curAttackCount = 0;
+            Debug.Log((this as State).GetHashCode());
         }
     }
 }

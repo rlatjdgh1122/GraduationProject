@@ -265,9 +265,18 @@ public class Penguin : Entity
 
     public virtual void LookTargetImmediately()
     {
-        if (CurrentTarget != null)
+        /* if (CurrentTarget != null)
+         {
+             Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
+
+             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+             transform.rotation = targetRotation;
+         }*/
+
+        if (MousePos != null)
         {
-            Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
+            Vector3 directionToTarget = MousePos - transform.position;
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 

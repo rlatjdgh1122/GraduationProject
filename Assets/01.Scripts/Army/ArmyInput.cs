@@ -1,3 +1,4 @@
+using ArmySystem;
 using Define.RayCast;
 using System;
 using System.Collections;
@@ -63,14 +64,19 @@ public class ArmyInput : MonoBehaviour
 
     public void OnRightClickEventHandler()
     {
+        if (ArmyManager.Instance.CurArmy.MovefocusMode == MovefocusMode.Stop) return;
+
         OnRightClickEvent?.Invoke();
 
         RaycastHit? hit = GetRaycasHit();
         if (hit != null) 
             OnRightClickRaycastHitEvent?.Invoke(hit.Value);
     }
+
     public void OnLeftClickEventHandler()
     {
+        if (ArmyManager.Instance.CurArmy.MovefocusMode == MovefocusMode.Stop) return;
+        
         OnLeftClickEvent?.Invoke();
 
         RaycastHit? hit = GetRaycasHit();
