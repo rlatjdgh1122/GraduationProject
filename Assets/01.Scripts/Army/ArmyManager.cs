@@ -40,12 +40,12 @@ public class ArmyManager : Singleton<ArmyManager>
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {
         //여기부분 필요 없을수도
-        if (enemyArmy == null)
+        /*if (enemyArmy == null)
         {
             CurArmy.TargetEnemyArmy = null;
             CurArmy.MovefocusMode = MovefocusMode.Command;
             return;
-        }
+        }*/
 
         CurArmy.TargetEnemyArmy = enemyArmy;
         CurArmy.MovefocusMode = MovefocusMode.Battle;
@@ -54,7 +54,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <summary>
     /// 움직일 경우엔 타겟을 명령모드로 변경
     /// </summary>
-    public void SetMoveForcusCommand(RaycastHit hit)
+    public void SetMoveForcusCommand(RaycastHit hit = default)
     {
         CurArmy.MovefocusMode = MovefocusMode.Command;
     }

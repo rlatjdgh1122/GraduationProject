@@ -69,6 +69,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
         //굳이 필요한가?
         _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
 
         //굳이 필요한가?
         //가장 가까운 타겟을 찾음
@@ -136,7 +137,7 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _stateMachine.ChangeState(stateEnum);
         return true;
     }
-
+   
     protected void DeadTarget()
     {
         var prevTarget = _penguin.CurrentTarget;

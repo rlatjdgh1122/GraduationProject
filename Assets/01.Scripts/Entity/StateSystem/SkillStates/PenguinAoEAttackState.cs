@@ -24,10 +24,11 @@ public class PenguinAoEAttackState : State
 
         if (_triggerCalled) //АјАн
         {
-            _stateMachine.ChangeState(PenguinStateType.Chase);
-
             IsTargetNull(PenguinStateType.Idle);
         }
+
+        CheckCommandModeForMovement();
+        CheckCommandModeForChase();
     }
     public override void ExitState()
     {
