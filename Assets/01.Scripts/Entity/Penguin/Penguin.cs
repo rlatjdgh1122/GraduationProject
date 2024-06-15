@@ -306,8 +306,7 @@ public class Penguin : Entity
             if (movingCoroutine != null)
             {
                 StopCoroutine(movingCoroutine);
-                MoveToMouseClick(transform.position);
-
+                //MoveToMouseClick(transform.position);
             }
 
             if (prevMousePos != Vector3.zero)
@@ -332,7 +331,6 @@ public class Penguin : Entity
 
         while (currentTime <= totalTime)
         {
-            //if (IsCheck) break;
             t = currentTime / totalTime;
 
             Vector3 frameMousePos = Vector3.Lerp(prevMousePos, curMousePos, t);

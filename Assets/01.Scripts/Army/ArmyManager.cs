@@ -54,7 +54,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <summary>
     /// 움직일 경우엔 타겟을 명령모드로 변경
     /// </summary>
-    public void SetMoveForcusCommand()
+    public void SetMoveForcusCommand(RaycastHit hit)
     {
         CurArmy.MovefocusMode = MovefocusMode.Command;
     }
