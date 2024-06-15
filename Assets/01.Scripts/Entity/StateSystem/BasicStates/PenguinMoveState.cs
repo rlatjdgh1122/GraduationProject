@@ -22,6 +22,11 @@ public class PenguinMoveState : State
 
         CheckCommandModeForMovement();
         CheckCommandModeForChase();
+
+        if (_penguin.MovefocusMode == MovefocusMode.Stop)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }
     }
 
     public override void ExitState()
