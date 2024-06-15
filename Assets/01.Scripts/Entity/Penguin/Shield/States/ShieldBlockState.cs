@@ -14,7 +14,6 @@ public class ShieldBlockState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _currentBlockCnt++;
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
         _penguin.FindNearestEnemyInTargetArmy();
@@ -46,7 +45,9 @@ public class ShieldBlockState : ShieldBaseState
 
     private void ImpactShield()
     {
-        if (_currentBlockCnt >= _penguin.MaxImapactCount)
+        _currentBlockCnt++;
+
+        if (_currentBlockCnt >= _penguin.passiveData.HitCount)
         {
             _penguin?.OnPassiveHealthRatioEvent();
             _currentBlockCnt = 0;
