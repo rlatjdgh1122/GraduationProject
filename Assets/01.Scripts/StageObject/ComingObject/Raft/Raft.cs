@@ -35,7 +35,6 @@ public class Raft : PoolableMono, IComingObject
         for (int i = 0; i <  enemies.Count; i++)
         {
             _enemies[i].gameObject.transform.localScale = Vector3.one;
-            _enemies[i].gameObject.transform.localScale *= 3;
             _enemies[i].transform.localPosition = new Vector3(0f, 2f, 0f);
         }
     }
@@ -78,12 +77,6 @@ public class Raft : PoolableMono, IComingObject
     public void SetMoveTarget(Transform trm)
     {
         _raftMovement.SetMoveTarget(trm);
-
-
-        transform.localPosition = new Vector3(transform.localPosition.x,
-                                              38f,
-                                              transform.localPosition.z);
-
     }
 
     private void OnDisable()

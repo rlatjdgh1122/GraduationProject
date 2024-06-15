@@ -139,9 +139,10 @@ public class UIManager : Singleton<UIManager>
 
     public void HidePanel(string uiName)
     {
-        popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI);
-
-        popupUI.HidePanel();
+        if (popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI))
+        {
+            popupUI.HidePanel();
+        }
 
         ChangeCurrentUI();
     }

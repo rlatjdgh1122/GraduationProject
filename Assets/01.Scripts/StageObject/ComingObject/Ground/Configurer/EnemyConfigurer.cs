@@ -98,7 +98,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         }
         else // 일반 웨이브
         {
-            maxEnemyCount = Mathf.Clamp(maxEnemyCount, 1, Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate));
+            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate);
         }
 
         return Random.Range(1, maxEnemyCount);

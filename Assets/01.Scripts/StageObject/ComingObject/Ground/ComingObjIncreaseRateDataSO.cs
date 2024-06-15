@@ -7,22 +7,22 @@ public class ComingObjIncreaseRateDataSO : ScriptableObject
 {
     [SerializeField]
     [Tooltip("최대 curWave * commonEnemyIncreaseRate를 내림 한 만큼 적이 온다.")]
-    private int commonEnemyIncreaseRate;
-    public int CommonEnemyIncreaseRate => commonEnemyIncreaseRate;
+    private float commonEnemyIncreaseRate;
+    public float CommonEnemyIncreaseRate => commonEnemyIncreaseRate;
 
     [SerializeField]
     [Tooltip("최대 curWave * bossEnemyIncreaseRate를 내림 한 만큼 적이 온다.")]
-    private int bossEnemyIncreaseRate;
-    public int BossEnemyIncreaseRate => bossEnemyIncreaseRate;
+    private float bossEnemyIncreaseRate;
+    public float BossEnemyIncreaseRate => bossEnemyIncreaseRate;
 
     [SerializeField]
     [Tooltip("최대 curWave * groundIncreaseRate를 내림 한 만큼 빙하가 온다.")]
-    private int groundIncreaseRate;
-    public int GroundIncreaseRate => groundIncreaseRate;
+    private float groundIncreaseRate;
+    public float GroundIncreaseRate => groundIncreaseRate;
 
     [SerializeField]
     [Tooltip("최대 curWave * groundIncreaseRate를 내림 한 만큼 Raft(사라지는 빙하)가 온다.")]
-    private int raftIncreaseRate;
-    public int RaftIncreaseRate => raftIncreaseRate;
+    private float raftIncreaseRate;
+    public float RaftIncreaseRate => raftIncreaseRate;
 
 }
