@@ -117,7 +117,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         curGround.gameObject.SetActive(true);
 
         float rotateValue = RotateValues.Dequeue() + angle;
-        Debug.Log(rotateValue);
         Vector3 direction = Quaternion.Euler(0, rotateValue, 0) * -transform.forward;
 
         //Vector3 groundPos = new Vector3(transform.localPosition.x, transform.localPosition.y, );

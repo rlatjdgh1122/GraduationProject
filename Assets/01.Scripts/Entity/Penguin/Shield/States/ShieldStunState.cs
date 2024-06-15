@@ -25,7 +25,7 @@ public class ShieldStunState : ShieldBaseState
 
         if (_triggerCalled) //АјАн
         {
-            IsTargetNull(ShieldPenguinStateEnum.Idle);
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.Chase);
         }
 
         CheckCommandModeForMovement();
@@ -34,7 +34,8 @@ public class ShieldStunState : ShieldBaseState
 
     public override void Exit()
     {
-        _penguin.AnimatorCompo.speed = 1;
         base.Exit();
+
+        AttackExit();
     }
 }

@@ -142,11 +142,11 @@ public class InstallSystem : MonoBehaviour
             _previousGround?.InstallBuilding(); // 땅에 설치 처리
             StopInstall(); // 설치 중 상태를 벗어나기 위한 StopInstall
 
-            if (TutorialManager.Instance.CurTutoQuestIdx == 2 ||
-                TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
-            {
-                TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-            }
+            //if (TutorialManager.Instance.CurTutoQuestIdx == 2 ||
+            //    TutorialManager.Instance.CurTutoQuestIdx == 3) //일단 퀘스트
+            //{
+            //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
+            //}
             isInstalling = false;
         }
     }

@@ -49,7 +49,7 @@ public class TimeLineHolder : MonoBehaviour
     {
         yield return new WaitForSeconds(4.5f);
         Debug.Log("지금이니~");
-        TutorialManager.Instance.StartCurTutorialQuest();
+        //TutorialManager.Instance.StartCurTutorialQuest();
     }
 
     private void AfterBattleWave()

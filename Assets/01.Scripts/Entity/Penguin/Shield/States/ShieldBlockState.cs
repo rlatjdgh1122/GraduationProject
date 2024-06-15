@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ShieldBlockState : ShieldBaseState
 {
-    int StunCount = 1;
+    private int _currentBlockCnt = 0;
+
     public ShieldBlockState(Penguin penguin, EntityStateMachine<ShieldPenguinStateEnum, Penguin> stateMachine, string animBoolName)
         : base(penguin, stateMachine, animBoolName)
     {
@@ -13,7 +14,7 @@ public class ShieldBlockState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-
+        _currentBlockCnt++;
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
         _penguin.FindNearestEnemyInTargetArmy();
@@ -45,16 +46,15 @@ public class ShieldBlockState : ShieldBaseState
 
     private void ImpactShield()
     {
-        if (StunCount > 0 && _penguin.CheckHealthRatioPassive(_penguin.HealthCompo.maxHealth, _penguin.HealthCompo.currentHealth))
+        if (_currentBlockCnt >= _penguin.MaxImapactCount)
         {
             _penguin?.OnPassiveHealthRatioEvent();
-            StunCount--;
+            _currentBlockCnt = 0;
         }
         else
         {
             _stateMachine.ChangeState(ShieldPenguinStateEnum.Impact);
         }
-
     }
 
     public override void Exit()
