@@ -17,9 +17,7 @@ public class PenguinKatanaSkillState : State
         base.EnterState();
 
         prevMode = _penguin.MyArmy.MovefocusMode;
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
 
-        UnityEngine.Debug.Log(_penguin.NavAgent.velocity);
         _penguin.LookTargetImmediately();
 
         //AttackEnter();
@@ -33,6 +31,7 @@ public class PenguinKatanaSkillState : State
         base.UpdateState();
 
         _penguin.StopImmediately();
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
 
         if (_triggerCalled)
         {

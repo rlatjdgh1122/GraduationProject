@@ -91,6 +91,7 @@ public abstract class Entity : TargetObject
         {
             if (NavAgent.isActiveAndEnabled)
             {
+                NavAgent.SetDestination(transform.position);
                 NavAgent.velocity = Vector3.zero;
                 NavAgent.isStopped = true;
             }
