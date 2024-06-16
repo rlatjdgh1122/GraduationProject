@@ -1,6 +1,12 @@
+using ArmySystem;
+using System.Diagnostics;
+using System.Security.Cryptography;
+
 public class PenguinKatanaSkillState : State
 {
     private General General => _penguin as General;
+
+    private MovefocusMode prevMode = MovefocusMode.Command;
 
     public PenguinKatanaSkillState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
@@ -10,28 +16,40 @@ public class PenguinKatanaSkillState : State
     {
         base.EnterState();
 
+        prevMode = _penguin.MyArmy.MovefocusMode;
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+
+        UnityEngine.Debug.Log(_penguin.NavAgent.velocity);
         _penguin.LookTargetImmediately();
-        AttackEnter();
+
+        //AttackEnter();
 
         _triggerCalled = false;
-        General.skill.PlaySkill();
+        General.Skill.PlaySkill();
     }
 
     public override void UpdateState()
     {
-        //base.UpdateState();
+        base.UpdateState();
+
+        _penguin.StopImmediately();
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(PenguinStateType.Chase);
-
-            IsTargetNull(PenguinStateType.Idle);
+            if (_penguin.IsTargetInAttackRange)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Attack);
+            }
+            else
+            {
+                _stateMachine.ChangeState(PenguinStateType.Idle);
+            }
         }
     }
 
     public override void ExitState()
     {
-        AttackExit();
+        _penguin.MyArmy.MovefocusMode = prevMode;
 
         base.ExitState();
     }

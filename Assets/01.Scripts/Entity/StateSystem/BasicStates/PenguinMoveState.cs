@@ -20,8 +20,13 @@ public class PenguinMoveState : State
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Idle);
 
-        CheckCommandModeForMovement();
-        CheckCommandModeForChase();
+        //CheckCommandModeForMovement();
+        CheckBattleModeForChase();
+
+        if (_penguin.MovefocusMode == MovefocusMode.Stop)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }
     }
 
     public override void ExitState()

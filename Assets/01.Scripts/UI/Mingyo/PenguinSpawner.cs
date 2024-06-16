@@ -20,6 +20,7 @@ public enum PenguinTypeEnum
     Wizard,
     SumoGeneral,
     Kunai,
+    LanceGeneral,
 }
 
 public class PenguinSpawner : DefaultBuilding

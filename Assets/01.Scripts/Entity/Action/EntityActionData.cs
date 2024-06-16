@@ -11,4 +11,6 @@ public class EntityActionData : MonoBehaviour
 
     //³ª ¶§¸°³ð
     public TargetObject HitTarget;
+
+    public int HitCount = 0;
 }

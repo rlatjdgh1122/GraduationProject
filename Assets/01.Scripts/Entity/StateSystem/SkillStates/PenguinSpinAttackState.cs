@@ -14,8 +14,8 @@ public class PenguinSpinAttackState : State
     public override void EnterState()
     {
         base.EnterState();
-        general.skill.IsAvaliable = false;
-        AttackEnter();
+        general.Skill.IsAvaliable = false;
+        //AttackEnter();
     }
 
     public override void UpdateState()
@@ -37,8 +37,8 @@ public class PenguinSpinAttackState : State
     public override void ExitState()
     {
         base.ExitState();
-        general.skill.IsAvaliable = true;
-        AttackExit();
+        general.Skill.IsAvaliable = true;
+        //AttackExit();
     }
 
     public override void AnimationTrigger()
