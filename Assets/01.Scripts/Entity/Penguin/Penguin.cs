@@ -94,8 +94,6 @@ public class Penguin : Entity
 
     public bool TargetLock = false; //첫 타겟 그대로 쭉 때리게 할 것인가?
 
-    public int MaxImapactCount = 0;
-
     private void OnEnable()
     {
         SignalHub.OnGroundArrivedEvent += ChaseToTarget;
