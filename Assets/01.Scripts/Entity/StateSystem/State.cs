@@ -159,6 +159,7 @@ public class State
     protected void CheckCommandModeForMovement()
     {
         if (!_penguin.ArmyTriggerCalled) return;
+
         if (_penguin.MovefocusMode == MovefocusMode.Command)
         {
             if (_penguin.NavAgent.velocity.magnitude > 0.05f)

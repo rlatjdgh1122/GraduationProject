@@ -360,7 +360,7 @@ public class Penguin : Entity
             yield return null;
         }
 
-        MoveToMouseClick(finalPos);
+        //MoveToMouseClick(finalPos);
         //Debug.Log("움직임 끝");
     }
 
@@ -381,6 +381,23 @@ public class Penguin : Entity
         {
             NavAgent.isStopped = false;
             NavAgent?.SetDestination(MousePos + SeatPos);
+        }
+    }
+
+    public override void StopImmediately()
+    {
+        if (NavAgent != null)
+        {
+            if (NavAgent.isActiveAndEnabled)
+            {
+                if (movingCoroutine != null)
+                {
+                    StopCoroutine(movingCoroutine);
+                }
+
+                NavAgent.velocity = Vector3.zero;
+                NavAgent.isStopped = true;
+            }
         }
     }
     #endregion
