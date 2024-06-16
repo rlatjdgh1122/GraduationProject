@@ -32,7 +32,7 @@ public class PenguinChaseState : State
 
 
         CheckCommandModeForMovement();
-        CheckCommandModeForChase();
+        CheckBattleModeForChase();
 
         if(_penguin.MovefocusMode == MovefocusMode.Stop)
         {

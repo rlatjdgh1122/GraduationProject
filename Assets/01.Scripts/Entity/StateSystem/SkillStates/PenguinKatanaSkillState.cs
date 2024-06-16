@@ -1,4 +1,6 @@
 using ArmySystem;
+using System.Diagnostics;
+using System.Security.Cryptography;
 
 public class PenguinKatanaSkillState : State
 {
@@ -14,20 +16,22 @@ public class PenguinKatanaSkillState : State
     {
         base.EnterState();
 
-        _penguin.StopImmediately();
-        _penguin.LookTargetImmediately();
-
         prevMode = _penguin.MyArmy.MovefocusMode;
         _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+
+        _penguin.StopImmediately();
+        UnityEngine.Debug.Log(_penguin.NavAgent.velocity);
+        _penguin.LookTargetImmediately();
+
         //AttackEnter();
 
         _triggerCalled = false;
-        General.skill.PlaySkill();
+        General.Skill.PlaySkill();
     }
 
     public override void UpdateState()
     {
-        //base.UpdateState();
+        base.UpdateState();
 
         if (_triggerCalled)
         {

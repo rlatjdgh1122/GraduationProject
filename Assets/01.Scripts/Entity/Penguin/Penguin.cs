@@ -265,24 +265,26 @@ public class Penguin : Entity
 
     public virtual void LookTargetImmediately()
     {
-        /* if (CurrentTarget != null)
-         {
-             Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0)); // 객체의 높이에서 평면 설정
 
-             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-             transform.rotation = targetRotation;
-         }*/
-
-        if (MousePos != null)
+        if (groundPlane.Raycast(ray, out float distance))
         {
-            Vector3 directionToTarget = MousePos - transform.position;
+            Vector3 mouseWorldPosition = ray.GetPoint(distance);
 
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            // 현재 객체가 마우스 위치를 바라보도록 회전
+            Vector3 directionToTarget = mouseWorldPosition - transform.position;
+            directionToTarget.y = 0; // 객체가 수평 방향으로만 회전
 
-            transform.rotation = targetRotation;
-        }
+            if (directionToTarget != Vector3.zero) // 방향이 (0, 0, 0)이 아닌 경우에만 회전
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                transform.rotation = targetRotation;
+            }
+
+        }//end if
     }
+
     public virtual void StateInit() { }
 
     #endregion

@@ -4,6 +4,6 @@ public class SumoAnimationTrigger : PenguinAnimationTrigger
 
     private void ThrowTrigger()
     {
-        Sumo.skill.PlaySkill();
+        Sumo.Skill.PlaySkill();
     }
 }

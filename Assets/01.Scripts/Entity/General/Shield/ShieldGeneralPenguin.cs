@@ -51,6 +51,11 @@ public class ShieldGeneralPenguin : General
 
     public override void OnPassiveHitEvent()
     {
+        //StateMachine.ChangeState(PenguinStateType.SpinAttack);
+    }
+
+    public override void OnSkillEvent()
+    {
         StateMachine.ChangeState(PenguinStateType.SpinAttack);
     }
 

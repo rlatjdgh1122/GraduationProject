@@ -163,7 +163,7 @@ public class State
         }//end command
     }
 
-    protected void CheckCommandModeForChase()
+    protected void CheckBattleModeForChase()
     {
         if (!_penguin.ArmyTriggerCalled) return;
 

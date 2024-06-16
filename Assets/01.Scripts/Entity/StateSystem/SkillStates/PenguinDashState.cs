@@ -20,7 +20,7 @@ public class PenguinDashState : State
         else if (_penguin.IsTargetInThrowRange)
         {
             _triggerCalled = false;
-            General.skill.PlaySkill();
+            General.Skill.PlaySkill();
         }
     }
 
@@ -30,7 +30,7 @@ public class PenguinDashState : State
 
         if (_triggerCalled) 
         {
-            if (General.skill.CanUseSkill)
+            if (General.Skill.CanUseSkill)
             {
                 _stateMachine.ChangeState(PenguinStateType.Dash);
             }

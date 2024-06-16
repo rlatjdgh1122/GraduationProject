@@ -38,7 +38,7 @@ public class PenguinBlockState : State
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }
 
-        CheckCommandModeForChase();
+        CheckBattleModeForChase();
         CheckCommandModeForMovement();
 
     }//end method

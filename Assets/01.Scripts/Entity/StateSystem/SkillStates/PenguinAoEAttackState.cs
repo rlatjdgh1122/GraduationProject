@@ -28,7 +28,7 @@ public class PenguinAoEAttackState : State
         }
 
         CheckCommandModeForMovement();
-        CheckCommandModeForChase();
+        CheckBattleModeForChase();
     }
     public override void ExitState()
     {
