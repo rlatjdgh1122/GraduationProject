@@ -85,13 +85,12 @@ public abstract class Entity : TargetObject
         }
     }
 
-    public void StopImmediately()
+    public virtual void StopImmediately()
     {
         if (NavAgent != null)
         {
             if (NavAgent.isActiveAndEnabled)
             {
-                NavAgent.SetDestination(transform.position);
                 NavAgent.velocity = Vector3.zero;
                 NavAgent.isStopped = true;
             }

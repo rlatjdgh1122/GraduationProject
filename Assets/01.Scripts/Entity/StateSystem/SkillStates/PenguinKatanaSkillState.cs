@@ -20,8 +20,6 @@ public class PenguinKatanaSkillState : State
 
         _penguin.LookTargetImmediately();
 
-        //AttackEnter();
-
         _triggerCalled = false;
         General.Skill.PlaySkill();
     }
@@ -30,8 +28,8 @@ public class PenguinKatanaSkillState : State
     {
         base.UpdateState();
 
-        _penguin.StopImmediately();
         _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();
 
         if (_triggerCalled)
         {
