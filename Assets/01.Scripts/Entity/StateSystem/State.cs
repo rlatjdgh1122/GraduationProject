@@ -27,6 +27,9 @@ public class State
         _penguin.PenguinTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
+
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Command;
+        //_penguin.FindNearestEnemyInTargetArmy();
     }
 
     protected void AttackEnter()

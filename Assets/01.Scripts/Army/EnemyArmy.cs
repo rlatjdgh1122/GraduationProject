@@ -119,6 +119,8 @@ namespace ArmySystem
 
         public Enemy FindNearestEnemy(Transform trm)
         {
+            if(IsNull) return null;
+
             Enemy target = null;
             float maxDistance = 0f;
 
