@@ -6,7 +6,8 @@ public enum BuildingType
     Defense,
     Buff,
     Resource,
-    Trap
+    Trap,
+    SynergyBuilding
 }
 
 public enum DefaultBuildingType

@@ -1245,6 +1245,8 @@ GameObject:
   - component: {fileID: 4276294786457857153}
   - component: {fileID: 7940031000225661979}
   - component: {fileID: 4857002244918980278}
+  - component: {fileID: 198384644487298013}
+  - component: {fileID: 7326076268116210583}
   m_Layer: 19
   m_Name: LanceSynergyBuilding
   m_TagString: Untagged
@@ -1397,6 +1399,49 @@ MonoBehaviour:
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!156049354 &198384644487298013
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7103321200030991216}
+  m_Enabled: 1
+  m_CellSize: {x: 0.001, y: 1, z: 0.001}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 1
+  m_CellSwizzle: 0
+--- !u!114 &7326076268116210583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7103321200030991216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629bded1ccba37d4ea6c9ef6f708b9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterStat: {fileID: 11400000, guid: 7bad8412995a3c54aa185f9c5ebca770, type: 2}
+  CurrentTarget: {fileID: 0}
+  _maxDetectEnemy: 5
+  resourceType: 0
+  _noiseValue: 0
+  _maxNoiseValue: 0
+  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
+  _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
+    type: 2}
+  _installedFinText: {fileID: 0}
+  BuildingInfoCompo:
+    <ID>k__BackingField: 6
+    GridCompo: {fileID: 0}
+    <TransparencyMat>k__BackingField: {fileID: 2100000, guid: 79dc316bddf0f9a46a2a2f4213747b5f,
+      type: 2}
+    <GreenTransparencyMat>k__BackingField: {fileID: 2100000, guid: 5e93cf41d481700479a54a7af3fbfb12,
+      type: 2}
+    <RedTransparencyMat>k__BackingField: {fileID: 2100000, guid: 4de9e48b9ee9c9f449077b90a716a0d9,
+      type: 2}
 --- !u!1 &7181154434603641402
 GameObject:
   m_ObjectHideFlags: 0
