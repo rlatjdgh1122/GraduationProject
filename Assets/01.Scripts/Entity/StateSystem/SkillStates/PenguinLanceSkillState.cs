@@ -14,7 +14,7 @@ public class PenguinLanceSkillState : State
         AttackEnter();
 
         _triggerCalled = false;
-        General.skill.PlaySkill();
+        General.Skill.PlaySkill();
     }
 
     public override void UpdateState()

@@ -816,6 +816,65 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2923873657912223969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2155979888445672343}
+  - component: {fileID: 1471066703662880979}
+  - component: {fileID: 4157810168064121475}
+  m_Layer: 11
+  m_Name: SkillTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2155979888445672343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2923873657912223969}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.14275758, y: 0.2847035, z: -0.62824285}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1803484644075588461}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1471066703662880979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2923873657912223969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf36f7584252654894083276b5e9f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _decisions: {fileID: 4157810168064121475}
+--- !u!114 &4157810168064121475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2923873657912223969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d15accef23a076847a9f092f04c15ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxCoolTime: 3
 --- !u!1 &2947232043845186649
 GameObject:
   m_ObjectHideFlags: 0
@@ -6105,6 +6164,7 @@ Transform:
   m_Children:
   - {fileID: 6866142751908429840}
   - {fileID: 2401302121122987304}
+  - {fileID: 2155979888445672343}
   - {fileID: 6283471212528761909}
   - {fileID: 6958130547842186940}
   - {fileID: 3874260292112625796}
@@ -6141,8 +6201,7 @@ MonoBehaviour:
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
   TargetLock: 0
-  skill: {fileID: 0}
-  canSpinAttack: 0
+  Skill: {fileID: 0}
 --- !u!114 &6754457386563218381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6232,6 +6291,7 @@ MonoBehaviour:
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
   HitTarget: {fileID: 0}
+  HitCount: 0
 --- !u!143 &3272370833692327550
 CharacterController:
   m_ObjectHideFlags: 0
@@ -11984,7 +12044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectRange: 3
-  _hitType: 18
+  _hitType: 1
   TargetLayer:
     serializedVersion: 2
     m_Bits: 4096
