@@ -177,7 +177,7 @@ public class InstallSystem : MonoBehaviour
             if (_previousGround == null ||
                 curGround != _previousGround)
             {
-                _previousGround?.UpdateOutlineColor(OutlineColorType.None);
+                UpdateGroundColor(curGround);
             }
 
             if (_curBuilding.BuildingItemInfoCompo.BuildingTypeEnum == // 함정 건물이면 그냥 마우스 따라가게 
@@ -189,7 +189,6 @@ public class InstallSystem : MonoBehaviour
             else
             {
                 MoveSelectBuilding(curGround);
-                UpdateGroundColor(curGround);
             }
 
             _previousGround = curGround;
