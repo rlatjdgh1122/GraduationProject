@@ -815,15 +815,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2932027695112230104}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05135296, y: -0.091199145, z: -0.02325312, w: -0.9942359}
-  m_LocalPosition: {x: -2.3, y: -16.4, z: -10.8}
+  m_LocalRotation: {x: 0.22782008, y: 0.033691727, z: 0.017273674, w: -0.97296685}
+  m_LocalPosition: {x: 0.7, y: -16.6, z: -6.2}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7730960325280043299}
   - {fileID: 6104657252359889989}
   m_Father: {fileID: 4996277327119267993}
-  m_LocalEulerAnglesHint: {x: -6.105, y: 10.369, z: 2.125}
+  m_LocalEulerAnglesHint: {x: -26.391, y: -3.693, z: -1.168}
 --- !u!1 &2947232043845186649
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,6 +978,64 @@ Transform:
   - {fileID: 2195780349268001617}
   m_Father: {fileID: 760619059829925969}
   m_LocalEulerAnglesHint: {x: -51.82077, y: 8.298203, z: -5.720776}
+--- !u!1 &3491358126292587876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3401559308091731944}
+  - component: {fileID: 692056585459299104}
+  - component: {fileID: 2756548047829783889}
+  m_Layer: 0
+  m_Name: LancePrickChargingFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3401559308091731944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3491358126292587876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1803484644075588461}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &692056585459299104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3491358126292587876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbd454181294564f8f5c6a52e4411b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectEndTime: 1
+--- !u!114 &2756548047829783889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3491358126292587876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada02887f1b371b448dabef21b4fab2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3645492756215340967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,6 +1244,7 @@ Transform:
   - {fileID: 2115194252908833627}
   - {fileID: 6867260167692335180}
   - {fileID: 3584663933594753014}
+  - {fileID: 3401559308091731944}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1259662200772309469
@@ -8956,10 +9015,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAvaliable: 1
   CanUseSkill: 0
+  _prickDelay: 1.3
+  canPrick: 0
   OnPrickEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3459221329004593963}
+        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnChargingEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2756548047829783889}
         m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
         m_MethodName: PlayFeedback
         m_Mode: 1

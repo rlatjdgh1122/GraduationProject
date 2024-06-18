@@ -17,7 +17,7 @@ public class LancePrickEffectFeedback : EffectFeedback
             effect.transform.SetParent(ownerTrm);
 
             effect.transform.position = gameObject.transform.position;
-            effect.transform.rotation = gameObject.transform.rotation;
+            effect.transform.rotation = gameObject.transform.rotation * Quaternion.Euler(0, -90, 0);
             effect.StartPlay(_effectEndTime);
 
             return true;
