@@ -9,6 +9,7 @@ public class State
     protected NavMeshAgent _navAgent;
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
+    protected MovefocusMode prevMode = MovefocusMode.Command;
 
     public State(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName)
     {
@@ -144,6 +145,11 @@ public class State
     }
 
     #endregion
+
+    protected bool IsPrevMoveMode(MovefocusMode mode)
+    {
+        return prevMode.Equals(mode);
+    }
 
     /// <summary>
     /// 타겟이 없다면

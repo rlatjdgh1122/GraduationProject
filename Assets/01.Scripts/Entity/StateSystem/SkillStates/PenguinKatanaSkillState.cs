@@ -6,8 +6,6 @@ public class PenguinKatanaSkillState : State
 {
     private General General => _penguin as General;
 
-    private MovefocusMode prevMode = MovefocusMode.Command;
-
     public PenguinKatanaSkillState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -26,10 +24,7 @@ public class PenguinKatanaSkillState : State
         General.Skill.PlaySkill();
     }
 
-    protected bool IsPrevMoveMode(MovefocusMode mode)
-    {
-
-    }
+   
 
     public override void UpdateState()
     {
