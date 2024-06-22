@@ -20,7 +20,7 @@ public class PenguinIdleState : State
     {
         base.UpdateState();
 
-        CheckCommandModeForChase();
+        CheckBattleModeForChase();
         CheckCommandModeForMovement();
     }
 

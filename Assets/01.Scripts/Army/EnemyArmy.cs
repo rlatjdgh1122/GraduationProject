@@ -26,6 +26,7 @@ namespace ArmySystem
         private Color _mouseOverColor = Color.white;
         private Color _selectColor = Color.white;
 
+        public bool IsNull => Soldiers == null;
         public void OnChangedOutlineColorHandler(Color overColor, Color selectColor)
         {
             _mouseOverColor = overColor;
@@ -108,13 +109,18 @@ namespace ArmySystem
         {
             foreach (Enemy enemy in Soldiers)
             {
-                enemy.OutlineCompo.enabled = false;
+                if (enemy.OutlineCompo != null)
+                {
+                    enemy.OutlineCompo.enabled = false;
+                }
             }//end foreach
         }
 
 
         public Enemy FindNearestEnemy(Transform trm)
         {
+            if(IsNull) return null;
+
             Enemy target = null;
             float maxDistance = 0f;
 

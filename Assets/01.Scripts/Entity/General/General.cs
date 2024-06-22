@@ -3,29 +3,34 @@ using UnityEngine;
 
 public class General : Penguin, ISkillable
 {
-    public Skill skill;
+    public Skill Skill = null;
 
-    public bool canSpinAttack = false;
-
-    public Action<Penguin> OnSynergyEvent = null;
-
+    private SkillTransition _skillTransition = null;
     public virtual void OnSkillEvent() { }
 
     protected override void Awake()
     {
         base.Awake();
 
-        skill = transform.Find("SkillManager").GetComponent<Skill>();
-        skill?.SetOwner(this);
+        Skill = transform.Find("SkillManager").GetComponent<Skill>();
+        Skill?.SetOwner(this);
+
+        _skillTransition = transform.Find("SkillTransition").GetComponent<SkillTransition>();
+        _skillTransition.SetUp(transform);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        if(Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            OnSkillEvent();
+            if (_skillTransition.CheckDecisions())
+            {
+                OnSkillEvent();
+
+                _skillTransition.Init();
+            }
         }
     }
 

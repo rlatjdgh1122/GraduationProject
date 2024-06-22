@@ -29,8 +29,15 @@ public class PenguinChaseState : State
 
         else IsTargetNull(PenguinStateType.Idle);
 
+
+
         CheckCommandModeForMovement();
-        CheckCommandModeForChase();
+        CheckBattleModeForChase();
+
+        if(_penguin.MovefocusMode == MovefocusMode.Stop)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }
     }
 
     public override void ExitState()
@@ -39,4 +46,6 @@ public class PenguinChaseState : State
 
         ChaseExit();
     }
+
+
 }

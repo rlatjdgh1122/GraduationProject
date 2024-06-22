@@ -241,6 +241,7 @@ Transform:
   m_Children:
   - {fileID: 4604767814572587710}
   - {fileID: 7397905508107940483}
+  - {fileID: 7635146418485432975}
   - {fileID: 714508245776511778}
   - {fileID: 1286407087631224509}
   - {fileID: 5838933379830730431}
@@ -276,8 +277,7 @@ MonoBehaviour:
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
   TargetLock: 0
-  skill: {fileID: 6756343767113240760}
-  canSpinAttack: 0
+  Skill: {fileID: 0}
 --- !u!114 &8035068806920498670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +367,7 @@ MonoBehaviour:
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
   HitTarget: {fileID: 0}
+  HitCount: 0
 --- !u!143 &7676095365540152507
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6418,6 +6419,65 @@ Transform:
   - {fileID: 3139949782596038691}
   m_Father: {fileID: 2731391792795735867}
   m_LocalEulerAnglesHint: {x: 42.75764, y: -33.381653, z: -36.16339}
+--- !u!1 &1638032897724616544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7635146418485432975}
+  - component: {fileID: 2155939426473561966}
+  - component: {fileID: 343659334846705608}
+  m_Layer: 11
+  m_Name: SkillTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7635146418485432975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638032897724616544}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 62794630576868994}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2155939426473561966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638032897724616544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf36f7584252654894083276b5e9f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _decisions: {fileID: 343659334846705608}
+--- !u!114 &343659334846705608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638032897724616544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20fca806893eee745bff35063df417e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHitCount: 5
 --- !u!1 &1795980452795138088
 GameObject:
   m_ObjectHideFlags: 0

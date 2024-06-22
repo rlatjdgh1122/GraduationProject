@@ -12,7 +12,7 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
 
     private OnValueChanged<Color> OnChangedOutlineColorEvent = null;
 
-    public EnemyArmy CurrnetEnemyArmy { get; private set; } = null;
+    private EnemyArmy CurrnetEnemyArmy = null;
 
     public EnemyArmy CreateArmy(List<Enemy> enemies)
     {

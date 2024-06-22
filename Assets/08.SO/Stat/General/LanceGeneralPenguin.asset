@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04348fb9e9eb8db46a71e2797ad70a3b, type: 3}
+  m_Name: LanceGeneralPenguin
+  m_EditorClassIdentifier: 
+  maxHealth:
+    _baseValue: 250
+    _fewTimes: 1
+    _finalValue: 250
+    increases: 
+    decreases: 
+  armor:
+    _baseValue: 10
+    _fewTimes: 1
+    _finalValue: 5
+    increases: 
+    decreases: 
+  evasion:
+    _baseValue: 5
+    _fewTimes: 1
+    _finalValue: 5
+    increases: 
+    decreases: 
+  tenacity:
+    _baseValue: 0
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  magicResistance:
+    _baseValue: 0
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  strength:
+    _baseValue: 0
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  agility:
+    _baseValue: 0
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  intelligence:
+    _baseValue: 0
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  vitality:
+    _baseValue: 0
+    _fewTimes: NaN
+    _finalValue: 0
+    increases: 
+    decreases: 
+  damage:
+    _baseValue: 15
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  criticalChance:
+    _baseValue: 15
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  criticalValue:
+    _baseValue: 50
+    _fewTimes: 0
+    _finalValue: 0
+    increases: 
+    decreases: 
+  GeneralDetailData:
+    IsAvailable: 0
+    level: 1
+    levelUpPrice:
+      _baseValue: 1000
+      _fewTimes: 0
+      _finalValue: 0
+      increases: 
+      decreases: 
+    levelUpIncreaseValue: 20
+    abilities:
+    - abilityName: "\uBC29\uC5B4\uB825"
+      statType: 256
+      statMode: 0
+      value: 50
+    - abilityName: "\uB370\uBBF8\uC9C0"
+      statType: 1024
+      statMode: 0
+      value: 50
+    synergy:
+      _level: 1
+      synergyName: "\uC9C8\uD48D"
+      type: 2
+      Stat:
+        abilityName: "\uD06C\uB9AC\uD2F0\uCEEC \uD655\uB960"
+        statType: 2048
+        statMode: 0
+        value: 30
+      increaseValue: 1
+  InfoData: {fileID: 11400000, guid: 7fcb4ae47953ed741907037e20037ef3, type: 2}

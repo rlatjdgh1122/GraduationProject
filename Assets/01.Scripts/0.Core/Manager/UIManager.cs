@@ -223,15 +223,15 @@ public class UIManager : Singleton<UIManager>
     #region Alt tap
     private void OnApplicationFocus(bool hasFocus)
     {
-        if (isFirst) { isFirst = false; return; } //맨 처음 화면이 켜져있을 때 esc창이 나오는걸 방지
-
-        if (currentPopupUI.TryPeek(out var result))
-            if (result.name == "VictoryUI") return;
-
-        if (hasFocus)
-        {
-            _escButtonController?.ShowEscPanel();
-        }
+        //if (isFirst) { isFirst = false; return; } //맨 처음 화면이 켜져있을 때 esc창이 나오는걸 방지
+        //
+        //if (currentPopupUI.TryPeek(out var result))
+        //    if (result.name == "VictoryUI") return;
+        //
+        //if (hasFocus)
+        //{
+        //    _escButtonController?.ShowEscPanel();
+        //}
     }
     #endregion
 

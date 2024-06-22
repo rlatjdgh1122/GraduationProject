@@ -85,7 +85,7 @@ public abstract class Entity : TargetObject
         }
     }
 
-    public void StopImmediately()
+    public virtual void StopImmediately()
     {
         if (NavAgent != null)
         {
@@ -97,16 +97,5 @@ public abstract class Entity : TargetObject
         }
     }
 
-   /* public void StartImmediately()
-    {
-        if (NavAgent != null)
-        {
-            if (NavAgent.isActiveAndEnabled)
-            {
-                NavAgent.isStopped = false;
-            }
-
-        }
-    }*/
     #endregion
 }

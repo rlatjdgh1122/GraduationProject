@@ -27,6 +27,9 @@ public class State
         _penguin.PenguinTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
         _penguin.WaitForCommandToArmyCalled = true;
+
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Command;
+        //_penguin.FindNearestEnemyInTargetArmy();
     }
 
     protected void AttackEnter()
@@ -156,6 +159,7 @@ public class State
     protected void CheckCommandModeForMovement()
     {
         if (!_penguin.ArmyTriggerCalled) return;
+
         if (_penguin.MovefocusMode == MovefocusMode.Command)
         {
             if (_penguin.NavAgent.velocity.magnitude > 0.05f)
@@ -163,7 +167,7 @@ public class State
         }//end command
     }
 
-    protected void CheckCommandModeForChase()
+    protected void CheckBattleModeForChase()
     {
         if (!_penguin.ArmyTriggerCalled) return;
 

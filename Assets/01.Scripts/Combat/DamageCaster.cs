@@ -205,14 +205,14 @@ public class DamageCaster : MonoBehaviour
                     {
                         health.ApplyHitType(HitType.DashHit);
                         health.OnDashDeathEvent?.Invoke();
-                        General.skill.CanUseSkill = true;
+                        General.Skill.CanUseSkill = true;
                         _hitType = HitType.KatanaHit;
                         return;
                     }
                 }
                 else
                 {
-                    General.skill.CanUseSkill = false;
+                    General.Skill.CanUseSkill = false;
                     int damage = _owner.Stat.damage.GetValue() * 2;
                     health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
                 }
