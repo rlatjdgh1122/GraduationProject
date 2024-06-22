@@ -72,6 +72,29 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 찌르기 궁극기
+    /// </summary>
+    public void AoEPrickTrigger(string parmeter)
+    {
+        OnAoEAttackTriggerEvent?.Invoke();
+
+        var value = parmeter.Split(' ');
+        try
+        {
+            if (float.TryParse(value[0], out float knbValue)
+               && float.TryParse(value[1], out float stunValue))
+            {
+                _penguin.AttackCompo.AoEPrickAttack(knbValue, stunValue);
+            }
+        }
+        catch
+        {
+            Debug.LogError($"Put values ​​for the parameters. target : {transform.parent.name}, AoEAttackTrigger");
+        }
+
+    }
+
     public void AttackTrigger(string parmeter)
     {
         OnAttackTriggerEvent?.Invoke();
