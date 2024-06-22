@@ -17,6 +17,8 @@ public class PenguinKatanaSkillState : State
         base.EnterState();
 
         prevMode = _penguin.MyArmy.MovefocusMode;
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();
 
         _penguin.LookTargetImmediately();
 
@@ -24,12 +26,14 @@ public class PenguinKatanaSkillState : State
         General.Skill.PlaySkill();
     }
 
+    protected bool IsPrevMoveMode(MovefocusMode mode)
+    {
+
+    }
+
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
-        _penguin.StopImmediately();
 
         if (_triggerCalled)
         {
