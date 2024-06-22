@@ -194,7 +194,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         return rotateValue;
     }
 
-
     private int GetRaftCount()
     {
         int raftCount = 0;
