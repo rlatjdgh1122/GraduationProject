@@ -1262,7 +1262,6 @@ MonoBehaviour:
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
   TargetLock: 0
-  MaxImapactCount: 2
 --- !u!114 &6242188954284128527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,6 +1339,7 @@ MonoBehaviour:
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
   HitTarget: {fileID: 0}
+  HitCount: 0
 --- !u!143 &7537666919579573879
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1377,7 +1377,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.23
   m_Speed: 1
-  m_Acceleration: 20
+  m_Acceleration: 200
   avoidancePriority: 50
   m_AngularSpeed: 480
   m_StoppingDistance: 0
