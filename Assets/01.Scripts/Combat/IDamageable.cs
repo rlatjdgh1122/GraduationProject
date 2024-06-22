@@ -22,6 +22,7 @@ public enum HitType
     MortarGroundStrikeHit,
     DashHit,
     KatanaHit,
+    LanceHit,
 }
 
 public interface IDamageable
