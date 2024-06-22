@@ -35,7 +35,7 @@ public class HoverGround : MonoBehaviour
         //_material.SetColor("_EmissionColor", _changeColor);
         _material.SetVector("_EmissionColor", new Vector4(_changeColor.r, _changeColor.g, _changeColor.b, 10));
 
-        _text.DOFade(1, _duration);
+        _text.DOColor(_changeColor, _duration);
 
         transform.DOLocalMoveZ(-1, _duration);
     }
@@ -47,7 +47,7 @@ public class HoverGround : MonoBehaviour
         //_material.SetColor("_EmissionColor", _noramlColor);
         _material.SetColor("_EmissionColor", Color.black);
 
-        _text.DOFade(0, _duration);
+        _text.DOColor(Color.gray, _duration);
         transform.DOLocalMoveZ(_zPos, _duration);
     }
 
