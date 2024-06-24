@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -94,6 +95,36 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
+
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
+                health.Knockback(knbValue, raycastHit.normal);
+                health.Stun(stunValue);
+
+            }
+        }
+    }
+
+    public void CasePrickDamage(float knbValue = 0f, float stunValue = 0f)
+    {
+        Vector3 capsuleStart = transform.position;
+        Vector3 capsuleEnd = transform.position + transform.forward * 2f;
+        float capsuleRadius = 1f; 
+
+        var Colls = Physics.OverlapCapsule(capsuleStart, capsuleEnd, capsuleRadius, TargetLayer);
+
+        foreach (var col in Colls)
+        {
+            RaycastHit raycastHit;
+
+            var dir = (col.transform.position - transform.position).normalized;
+            dir.y = 0;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+
+            if (raycastSuccess
+                && raycastHit.collider.TryGetComponent<Health>(out Health health))
+            {
+                int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
                 health.Knockback(knbValue, raycastHit.normal);
