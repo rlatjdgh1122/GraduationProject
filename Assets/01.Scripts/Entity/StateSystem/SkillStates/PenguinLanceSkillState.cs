@@ -1,3 +1,5 @@
+using ArmySystem;
+
 public class PenguinLanceSkillState : State
 {
     private General General => _penguin as General;
@@ -10,8 +12,11 @@ public class PenguinLanceSkillState : State
     {
         base.EnterState();
 
+        prevMode = _penguin.MyArmy.MovefocusMode;
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();
+
         _penguin.LookTargetImmediately();
-        AttackEnter();
 
         _triggerCalled = false;
         General.Skill.PlaySkill();
@@ -23,15 +28,20 @@ public class PenguinLanceSkillState : State
 
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(PenguinStateType.Chase);
-
-            IsTargetNull(PenguinStateType.Idle);
+            if (_penguin.IsTargetInAttackRange)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Attack);
+            }
+            else
+            {
+                _stateMachine.ChangeState(PenguinStateType.Idle);
+            }
         }
     }
 
     public override void ExitState()
     {
-        AttackExit();
+        _penguin.MyArmy.MovefocusMode = prevMode;
 
         base.ExitState();
     }

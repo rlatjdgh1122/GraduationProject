@@ -43,6 +43,7 @@ public class Penguin : Entity
         }
     }
     private Vector3 _seatPos = Vector3.zero; //���ܿ��� ��ġ�� �ڸ� OK?
+
     private float Angle
     {
         get
@@ -52,19 +53,21 @@ public class Penguin : Entity
             if (prevMousePos != Vector3.zero && vec != Vector3.zero)
             {
                 float value = Quaternion.FromToRotation(Vector3.forward, vec).eulerAngles.y;
-                value = (value > 180f) ? value - 360f : value; // ��ȯ
+                value = (value > 180f) ? value - 360f : value;
                 return value; // -180 ~ 180
             }
-            else //ó�� �������� ��
+            else
             {
                 Vector3 v = (curMousePos - transform.position);
 
                 float value = Quaternion.FromToRotation(Vector3.forward, v).eulerAngles.y;
-                value = (value > 180f) ? value - 360f : value; // ��ȯ
+                value = (value > 180f) ? value - 360f : value;
                 return value; // -180 ~ 180
             }
         }
     }
+
+
     public Vector3 SeatPos
     {
         get
@@ -80,6 +83,7 @@ public class Penguin : Entity
     public EntityAttackData AttackCompo { get; private set; }
     public PenguinStateMachine StateMachine { get; private set; }
     #endregion
+
     public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(prevMousePos, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
 
 
@@ -321,18 +325,20 @@ public class Penguin : Entity
         {
             NavAgent.isStopped = false;
 
-            if (movingCoroutine != null)
-            {
-                StopCoroutine(movingCoroutine);
-                //MoveToMouseClick(transform.position);
-            }
+            LookCamera();
+            MoveToMouseClick(MousePos + SeatPos);
+        }
+    }
 
-            if (prevMousePos != Vector3.zero)
-            {
-                movingCoroutine = StartCoroutine(Moving());
-            }
-            else
-                MoveToMouseClick(mousePos + SeatPos);
+    private void LookCamera()
+    {
+        if (MousePos != null)
+        {
+            Vector3 directionToTarget = MousePos - transform.position;
+            directionToTarget.y = 0;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
         }
     }
 
@@ -359,9 +365,6 @@ public class Penguin : Entity
 
             yield return null;
         }
-
-        //MoveToMouseClick(finalPos);
-        //Debug.Log("움직임 끝");
     }
 
     private void MoveToMouseClick(Vector3 pos)
@@ -370,6 +373,7 @@ public class Penguin : Entity
         {
             if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) return;
 
+            NavAgent.SetDestination(transform.position);
             NavAgent.isStopped = false;
             NavAgent.SetDestination(pos);
         }
