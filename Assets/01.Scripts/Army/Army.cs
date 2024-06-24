@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -60,6 +61,49 @@ namespace ArmySystem
             {
                 solider.RemoveStat(value, type, mode);
             }
+        }
+
+
+
+        public Enemy FindNearestEnemy(Penguin penguin)
+        {
+            if (TargetEnemyArmy == null || TargetEnemyArmy.IsNull) return null;
+
+            Enemy closestEnemy = null;
+            Enemy closestUntargetedEnemy = null;
+            double closestDistance = double.MaxValue;
+            double closestUntargetedDistance = double.MaxValue;
+
+            foreach (Enemy enemy in TargetEnemyArmy.Soldiers)
+            {
+                double distance = Vector3.Distance(penguin.transform.position, enemy.transform.position);
+
+                if (distance < closestDistance)
+                {
+                    closestEnemy = enemy;
+                    closestDistance = distance;
+                }
+
+                if (distance < closestUntargetedDistance && !IsEnemyTargetedByMyArmy(enemy))
+                {
+                    closestUntargetedEnemy = enemy;
+                    closestUntargetedDistance = distance;
+                }
+            }
+
+            return closestUntargetedEnemy ?? closestEnemy;
+        }
+
+        private bool IsEnemyTargetedByMyArmy(Enemy enemy)
+        {
+            foreach (Penguin soldier in Soldiers)
+            {
+                if (soldier.CurrentTarget == enemy)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool CheckEmpty()

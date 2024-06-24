@@ -241,14 +241,7 @@ public class Penguin : Entity
 
     public void FindNearestEnemyInTargetArmy()
     {
-        if (MyArmy.TargetEnemyArmy != null)
-        {
-            CurrentTarget = MyArmy.TargetEnemyArmy.FindNearestEnemy(transform);
-        }
-        else
-        {
-            CurrentTarget = null;
-        }
+        CurrentTarget = MyArmy.FindNearestEnemy(this);
     }
 
     public void FindNearestEnemy()
