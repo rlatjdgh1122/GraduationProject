@@ -47,7 +47,11 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
     {
         _selectData = selectSO;
 
-        _unitInfo.ShowInformation(_selectData);
+        //_unitInfo.ShowInformation(_selectData);
+    }
+    public void ShowInfoData(EntityInfoDataSO infoDataSO)
+    {
+        _unitInfo.ShowInformation(infoDataSO);
     }
     public void RemoveStack()
     {
