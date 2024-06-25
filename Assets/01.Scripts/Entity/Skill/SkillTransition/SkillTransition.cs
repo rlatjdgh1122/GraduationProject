@@ -5,20 +5,25 @@ using UnityEngine;
 public class SkillTransition : MonoBehaviour
 {
     [SerializeField]
-    private SKillDecision _decisions;
+    private SKillDecision _decision;
 
     public void SetUp(Transform parentRoot)
     {
-        _decisions.SetUp(parentRoot);
+        _decision.SetUp(parentRoot);
     }
 
-    public bool CheckDecisions()
+    public bool CheckDecision()
     {
-        return _decisions.MakeDecision();
+        return _decision.MakeDecision();
     }
 
-    public void Init()
+    public void Reset()
     {
-        _decisions.Init();
+        _decision.ResetValue();
+    }
+
+    public float GetDecisionValue()
+    {
+        return _decision.GetDecisionValue();
     }
 }

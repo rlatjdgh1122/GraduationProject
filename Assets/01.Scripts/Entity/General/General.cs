@@ -4,8 +4,8 @@ using UnityEngine;
 public class General : Penguin, ISkillable
 {
     public Skill Skill = null;
+    public SkillTransition SkillTransition = null;
 
-    private SkillTransition _skillTransition = null;
     public virtual void OnSkillEvent() { }
 
     protected override void Awake()
@@ -15,8 +15,8 @@ public class General : Penguin, ISkillable
         Skill = transform.Find("SkillManager").GetComponent<Skill>();
         Skill?.SetOwner(this);
 
-        _skillTransition = transform.Find("SkillTransition").GetComponent<SkillTransition>();
-        _skillTransition.SetUp(transform);
+        SkillTransition = transform.Find("SkillTransition").GetComponent<SkillTransition>();
+        SkillTransition.SetUp(transform);
     }
 
     protected override void Update()
@@ -25,11 +25,11 @@ public class General : Penguin, ISkillable
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            if (_skillTransition.CheckDecisions())
+            if (SkillTransition.CheckDecision())
             {
                 OnSkillEvent();
 
-                _skillTransition.Init();
+                SkillTransition.Reset();
             }
         }
     }

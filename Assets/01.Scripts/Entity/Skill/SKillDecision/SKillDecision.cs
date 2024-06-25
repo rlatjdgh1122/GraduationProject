@@ -10,6 +10,9 @@ public abstract class SKillDecision : MonoBehaviour
     }
 
     public abstract bool MakeDecision();
-    public abstract void Init();
+
+    public abstract void ResetValue();
+
+    public abstract float GetDecisionValue();
 }
 

@@ -21,9 +21,19 @@ namespace ArmySystem
 
         public Ability Ability = null; //Ω√≥ ¡ˆ Ω∫≈»
 
+        public SkillTransition SkillTransition = null;
+
+        public void SetGeneral(General general)
+        {
+            General = general;
+            SkillTransition = general.Skill.SkillTransition;
+        }
+
+        #region Stat
+
         public void AddStat(Ability incStat)
         {
-            if(Ability != null)
+            if (Ability != null)
             {
                 Ability prevAbility = Ability.DeepCopy();
                 RemoveStat(prevAbility);
@@ -39,7 +49,7 @@ namespace ArmySystem
         {
             if (incStat == null) return;
 
-           RemoveStat(incStat.value, incStat.statType, incStat.statMode);
+            RemoveStat(incStat.value, incStat.statType, incStat.statMode);
             //RemoveStat(5, StatType.Armor, StatMode.Increase);
         }
 
@@ -63,8 +73,9 @@ namespace ArmySystem
             }
         }
 
+        #endregion
 
-
+        #region Find Enemy
         public Enemy FindNearestEnemy(Penguin penguin)
         {
             if (TargetEnemyArmy == null || TargetEnemyArmy.IsNull) return null;
@@ -105,6 +116,8 @@ namespace ArmySystem
             }
             return false;
         }
+
+        #endregion
 
         public bool CheckEmpty()
         {

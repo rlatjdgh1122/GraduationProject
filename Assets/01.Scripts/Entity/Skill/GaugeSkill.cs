@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class GaugeSkill : Skill
 {
-    [SerializeField] private float _targetValue;  
+    [SerializeField] private float _targetValue;
     public float HitValue = 0;
 
     public UnityEvent<float, float> OnHitValueChanged;
