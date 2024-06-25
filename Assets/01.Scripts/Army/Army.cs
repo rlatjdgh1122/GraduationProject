@@ -1,3 +1,4 @@
+using SynergySystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace ArmySystem
     [System.Serializable]
     public class Army
     {
+        public SynergySystem.SynergyType SynergyType;
+
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
 

@@ -107,7 +107,7 @@ public class PenguinManager
     //게임 매니저에서 등록
     public void Setting(SoldierRegisterSO soldierTypeListSO)
     {
-        foreach (var Soldier in soldierTypeListSO.soldierTypes)
+        foreach (var Soldier in soldierTypeListSO.Data)
         {
             var type = Soldier.Type;
             //생성되지않은 펭귄 프리팹을 등록해줌
