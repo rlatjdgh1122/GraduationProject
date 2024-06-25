@@ -107,8 +107,9 @@ public class DamageCaster : MonoBehaviour
     public void CasePrickDamage(float knbValue = 0f, float stunValue = 0f)
     {
         Vector3 capsuleStart = transform.position;
-        Vector3 capsuleEnd = transform.position + transform.forward * 2f;
-        float capsuleRadius = 1f; 
+        Vector3 capsuleEnd = transform.position + transform.forward * 7f;
+        float capsuleRadius = 1f;
+        Debug.Log($"시작점 : {capsuleStart}, 끝 지점 : {capsuleEnd}, 부모 : {transform.parent}");
 
         var Colls = Physics.OverlapCapsule(capsuleStart, capsuleEnd, capsuleRadius, TargetLayer);
 
@@ -119,7 +120,7 @@ public class DamageCaster : MonoBehaviour
             var dir = (col.transform.position - transform.position).normalized;
             dir.y = 0;
 
-            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange, TargetLayer);
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange * 2f, TargetLayer);
 
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
@@ -133,6 +134,7 @@ public class DamageCaster : MonoBehaviour
             }
         }
     }
+
 
     /// <summary>
     /// 단일 데미지
@@ -305,7 +307,7 @@ public class DamageCaster : MonoBehaviour
             int selfDamage = _owner.Stat.damage.GetValue();
             selfDamageable.ApplyDamage(selfDamage * 2, transform.position, _owner.transform.position, _hitType, _owner); //혹시나 안죽을까봐 본인한테는 데미지 2배로
         }
-        
+
         foreach (Collider collider in colliders)
         {
             IDamageable damageable = collider.GetComponent<IDamageable>();
