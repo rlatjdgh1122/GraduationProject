@@ -22,6 +22,6 @@ public class CoolTimeDecsion : SKillDecision
 
     public override float GetDecisionValue()
     {
-        throw new System.NotImplementedException();
+        return 
     }
 }

@@ -7,11 +7,38 @@ namespace ArmySystem
     [System.Serializable]
     public class Army
     {
-        public float MoveSpeed;
-        public string LegionName; //몇번째 군단
+        private float _moveSpeed = 4f;
+        private string _legionName = string.Empty;
+
+        public float MoveSpeed
+        {
+            get => _moveSpeed;
+
+            set
+            {
+                _moveSpeed = value;
+                OnMoveSpeedUpdated?.Invoke(_moveSpeed);
+            }
+        }
+
+
+        public string LegionName //몇번째 군단
+        {
+            get => _legionName;
+
+            set
+            {
+                OnLegionNameChanged?.Invoke(_legionName, value);
+                _legionName = value;
+            }
+        }
+
+        public OnValueChanged<string> OnLegionNameChanged = null;
+        public OnValueUpdated<float> OnMoveSpeedUpdated = null;
+
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
-        public ArmyFollowCam FollowCam = null; //군단 오브젝트
+        public ArmyFollowCam FollowCam = null; //군단 캠
         public ArmyData Info; //정보
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들

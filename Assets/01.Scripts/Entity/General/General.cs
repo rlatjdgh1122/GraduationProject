@@ -4,7 +4,6 @@ using UnityEngine;
 public class General : Penguin, ISkillable
 {
     public Skill Skill = null;
-    public SkillTransition SkillTransition = null;
 
     public virtual void OnSkillEvent() { }
 
@@ -15,27 +14,31 @@ public class General : Penguin, ISkillable
         Skill = transform.Find("SkillManager").GetComponent<Skill>();
         Skill?.SetOwner(this);
 
-        SkillTransition = transform.Find("SkillTransition").GetComponent<SkillTransition>();
-        SkillTransition.SetUp(transform);
+        
     }
 
     protected override void Update()
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (SkillTransition.CheckDecision())
-            {
-                OnSkillEvent();
-
-                SkillTransition.Reset();
-            }
-        }
+        OnPlaySkill();
     }
 
     protected override void Start()
     {
         base.Start();
+    }
+
+    private void OnPlaySkill()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (Skill.SkillTransition.CheckDecision())
+            {
+                OnSkillEvent();
+
+                Skill.SkillTransition.Reset();
+            }
+        }
     }
 }
