@@ -21,23 +21,30 @@ public class PenguinChaseState : State
         if (_penguin.CurrentTarget != null)
             _penguin.MoveToCurrentTarget();
 
-
         if (_penguin.IsTargetInAttackRange)
         {
             _stateMachine.ChangeState(PenguinStateType.Attack);
         }
-
+        else if (_stateMachine.IsPrevState(PenguinStateType.Attack) == false)
+        {
+            if (_penguin.MovefocusMode == MovefocusMode.Stop)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Idle);
+            }
+        }
         else IsTargetNull(PenguinStateType.Idle);
 
+       /* if (_stateMachine.IsPrevState(PenguinStateType.Attack) == false) //이전 상태가 attack이 아니라면
+        {
+            if (_penguin.MovefocusMode == MovefocusMode.Stop)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Idle);
+            }
 
+        }//end if*/
 
         CheckCommandModeForMovement();
         CheckBattleModeForChase();
-
-        if(_penguin.MovefocusMode == MovefocusMode.Stop)
-        {
-            _stateMachine.ChangeState(PenguinStateType.Idle);
-        }
     }
 
     public override void ExitState()

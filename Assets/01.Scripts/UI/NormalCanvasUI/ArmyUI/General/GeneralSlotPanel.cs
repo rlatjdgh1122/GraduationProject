@@ -30,7 +30,8 @@ public class GeneralSlotPanel : ArmyComponentUI
 
     private void SetSlotData()
     {
-        for (int i = 0; i < _slots.Length; i++)
+        int length = Mathf.Min(_slots.Length, GeneralManager.Instance.GeneralList.Count);
+        for (int i = 0; i < length; i++)
         {
             if (GeneralManager.Instance.GeneralList[i] != null)
                 _slots[i].GeneralData = GeneralManager.Instance.GeneralList[i];

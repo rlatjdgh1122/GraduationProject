@@ -15,8 +15,8 @@ public class LegionUI : InitLegionInventory
     {
         base.Awake();
 
-        _generalCountText = transform.Find("LegionCount/GeneralCount").GetComponent<TextMeshProUGUI>();
-        _soliderCountText = transform.Find("LegionCount/SoliderCount").GetComponent<TextMeshProUGUI>();
+        //_generalCountText = transform.Find("LegionCount/GeneralCount").GetComponent<TextMeshProUGUI>();
+        //_soliderCountText = transform.Find("LegionCount/SoliderCount").GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
