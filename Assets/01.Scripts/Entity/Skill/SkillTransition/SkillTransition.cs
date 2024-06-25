@@ -30,13 +30,13 @@ public class SkillTransition : MonoBehaviour
         return _decision.MakeDecision();
     }
 
-    public void Reset()
+    public void OnUsed()
     {
-        _decision.ResetValue();
+        _decision.OnUsed();
     }
 
-    public float GetDecisionValue()
+    public void LevelUp()
     {
-        return _decision.GetDecisionValue();
+        _decision.LevelUp();
     }
 }

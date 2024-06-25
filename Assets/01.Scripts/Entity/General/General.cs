@@ -37,7 +37,7 @@ public class General : Penguin, ISkillable
             {
                 OnSkillEvent();
 
-                Skill.SkillTransition.Reset();
+                Skill.SkillTransition.OnUsed();
             }
         }
     }

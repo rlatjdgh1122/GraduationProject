@@ -10,7 +10,7 @@ public class CoolTimeDecsion : SKillDecision
         _lastCoolTime = -MaxCoolTime; //처음엔 사용가능하게
     }
 
-    public override void ResetValue()
+    public override void OnUsed()
     {
         _lastCoolTime = Time.time;
     }
@@ -20,8 +20,8 @@ public class CoolTimeDecsion : SKillDecision
         return _lastCoolTime + MaxCoolTime <= Time.time;
     }
 
-    public override float GetDecisionValue()
+    public override void LevelUp()
     {
-        return 
+
     }
 }
