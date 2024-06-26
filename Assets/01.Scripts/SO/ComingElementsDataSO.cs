@@ -10,7 +10,7 @@ public class ComingElementsDataSO : ScriptableObject
     {
         get
         {
-            if (_enmies.Count == 0)
+            if (_enmies == null)
             {
                 _enmies = new Dictionary<int, List<GameObject>>
                 {

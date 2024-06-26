@@ -39,7 +39,7 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
 
     protected string[] GetSpawnEnemis()
     {
-        int spawnEnemisType = (int)(WaveManager.Instance.CurrentWaveCount * 10f);
+        int spawnEnemisType = (int)(WaveManager.Instance.CurrentWaveCount * 0.1f);
 
         Debug.Log(spawnEnemisType);
 
