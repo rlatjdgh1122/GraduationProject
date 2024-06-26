@@ -41,8 +41,6 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
     {
         int spawnEnemisType = (int)(WaveManager.Instance.CurrentWaveCount * 0.1f);
 
-        Debug.Log(spawnEnemisType);
-
         return _comingElementsDataSO.Enmies[spawnEnemisType].Select(prefab => prefab.name).ToArray();
     }
 }
