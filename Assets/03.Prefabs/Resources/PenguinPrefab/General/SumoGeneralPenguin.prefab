@@ -1062,6 +1062,7 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 4096
+  moveSpeed: 4
   attackSpeed: 1
   passiveData: {fileID: 11400000, guid: 75747c8d8703b624da64c9b263147ae1, type: 2}
   ArmyTriggerCalled: 0
@@ -1170,7 +1171,6 @@ MonoBehaviour:
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
   HitTarget: {fileID: 0}
-  HitCount: 0
 --- !u!143 &1087998016549553910
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3067,7 +3067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf36f7584252654894083276b5e9f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisions: {fileID: 8652837050922286568}
+  _decision: {fileID: 8652837050922286568}
 --- !u!114 &8652837050922286568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3080,7 +3080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fca806893eee745bff35063df417e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHitCount: 3
+  InitMaxHitCount: 10
 --- !u!1 &8517151973171539828
 GameObject:
   m_ObjectHideFlags: 0

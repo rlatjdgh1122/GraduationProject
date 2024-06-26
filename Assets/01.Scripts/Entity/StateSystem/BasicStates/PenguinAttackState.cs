@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PenguinAttackState : State
 {
-    private int curAttackCount = 0;
 
     public PenguinAttackState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
@@ -47,11 +46,11 @@ public class PenguinAttackState : State
     {
         base.AnimationTrigger();
 
-        if (_penguin.CheckAttackPassive(++curAttackCount))
+        int curCount = _entityActionData.AddAttackCount();
+
+        if (_penguin.CheckAttackPassive(curCount))
         {
             _penguin?.OnPassiveAttackEvent();
-
-            curAttackCount = 0;
         }
     }
 }

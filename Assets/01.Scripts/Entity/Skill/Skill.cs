@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(SkillActionData))]
 public abstract class Skill : MonoBehaviour
 {
     protected Entity _owner;
@@ -18,8 +19,10 @@ public abstract class Skill : MonoBehaviour
     public virtual void SetOwner(Entity owner)
     {
         _owner = owner;
-        SkillTransition = owner.transform.Find("SkillTransition").GetComponent<SkillTransition>();
-        SkillTransition.SetUp(owner.transform);
+
+        //고릴라도 이거 쓰고있길래 일단 따로 빼놨음
+        SkillTransition = transform?.Find("SkillTransition").GetComponent<SkillTransition>();
+        SkillTransition?.SetUp(owner.transform);
     }
 
     public virtual void PlaySkill()
