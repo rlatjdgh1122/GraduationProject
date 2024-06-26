@@ -8,7 +8,7 @@ namespace ArmySystem
     [System.Serializable]
     public class Army
     {
-        public SynergySystem.SynergyType SynergyType;
+        public SynergyType SynergyType;
 
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
@@ -51,12 +51,12 @@ namespace ArmySystem
 
         public Ability Ability = null; //Ω√≥ ¡ˆ Ω∫≈»
 
-        public SkillTransition SkillTransition = null;
+        public SkillTransition SkillManager = null;
 
         public void SetGeneral(General general)
         {
             General = general;
-            SkillTransition = general.Skill.SkillTransition;
+            SkillManager = general.Skill.SkillTransition;
         }
 
         #region Stat
