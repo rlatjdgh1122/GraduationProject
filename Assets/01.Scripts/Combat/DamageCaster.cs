@@ -109,7 +109,6 @@ public class DamageCaster : MonoBehaviour
         Vector3 capsuleStart = transform.position;
         Vector3 capsuleEnd = transform.position + transform.forward * 7f;
         float capsuleRadius = 1f;
-        Debug.Log($"시작점 : {capsuleStart}, 끝 지점 : {capsuleEnd}, 부모 : {transform.parent}");
 
         var Colls = Physics.OverlapCapsule(capsuleStart, capsuleEnd, capsuleRadius, TargetLayer);
 
