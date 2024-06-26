@@ -12,5 +12,16 @@ public class EntityActionData : MonoBehaviour
     //³ª ¶§¸°³ð
     public TargetObject HitTarget;
 
-    public int HitCount = 0;
+    private int _hitCount = 0;
+    public int HitCount
+    {
+        get => _hitCount;
+        set
+        {
+            _hitCount = value;
+            OnHitCountUpdated?.Invoke(_hitCount);
+        }
+    }
+
+    public OnValueUpdated<int> OnHitCountUpdated = null;
 }

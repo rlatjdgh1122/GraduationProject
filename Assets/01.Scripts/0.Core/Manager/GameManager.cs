@@ -64,6 +64,7 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField]
     private PoolingListSO _poolingListSO;
+
     [SerializeField]
     private SoldierRegisterSO _soldierRegisterSO;
 
