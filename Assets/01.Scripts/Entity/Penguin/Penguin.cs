@@ -6,18 +6,7 @@ using UnityEngine;
 public class Penguin : Entity
 {
 
-    public float moveSpeed
-    {
-        get
-        {
-            if (owner is not null)
-            {
-                return owner.MoveSpeed;
-            }
-
-            return 4f;
-        }
-    }
+    public float moveSpeed = 4f;
 
     public float attackSpeed = 1f;
 
@@ -103,8 +92,8 @@ public class Penguin : Entity
         SignalHub.OnGroundArrivedEvent += ChaseToTarget;
         SignalHub.OnRaftArrivedEvent += ChaseToTarget;
 
-
     }
+
     private void OnDisable()
     {
         SignalHub.OnGroundArrivedEvent -= ChaseToTarget;
@@ -219,16 +208,33 @@ public class Penguin : Entity
 
     public void SetOwner(Army army)
     {
+        if (owner != null)
+        {
+            owner.OnMoveSpeedUpdated -= OnMoveSpeedUpdatedHandler;
+        }
+
         owner = army;
+
+        if (owner != null)
+        {
+            owner.OnMoveSpeedUpdated += OnMoveSpeedUpdatedHandler;
+        }
+    }
+
+
+    private void OnMoveSpeedUpdatedHandler(float value)
+    {
+        moveSpeed = value;
 
         if (NavAgent != null)
         {
             NavAgent.speed = moveSpeed;
         }
-
     }
 
+
     #region State Method
+
     public virtual void AnimationTrigger()
     {
 

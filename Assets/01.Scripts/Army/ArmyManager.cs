@@ -320,7 +320,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <summary>
     /// 새로운 군단 생성
     /// </summary>
-    public void CreateArmy()
+    public Army CreateArmy()
     {
         Army newArmy = new Army();
 
@@ -338,6 +338,7 @@ public class ArmyManager : Singleton<ArmyManager>
         armyFollowCam.Obj = followCam;
         newArmy.FollowCam = armyFollowCam;
 
+        return newArmy;
     }
 
     #endregion

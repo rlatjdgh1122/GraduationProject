@@ -12,8 +12,8 @@ public class SettingSoldierType
     public EntityInfoDataSO InfoData;
 }
 
-[CreateAssetMenu(menuName = "SO/SoldierType/list")]
+[CreateAssetMenu(menuName = "SO/Register/Solider")]
 public class SoldierRegisterSO : ScriptableObject
 {
-    public List<SettingSoldierType> soldierTypes;
+    public List<SettingSoldierType> Data = new();
 }

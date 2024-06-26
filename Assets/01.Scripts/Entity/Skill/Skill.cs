@@ -5,6 +5,8 @@ public abstract class Skill : MonoBehaviour
 {
     protected Entity _owner;
 
+    public SkillTransition SkillTransition { get; private set; } = null;
+
     #region events
     public Action OnSkillStart = null;
     public Action OnSkillCompleted = null;
@@ -16,6 +18,8 @@ public abstract class Skill : MonoBehaviour
     public virtual void SetOwner(Entity owner)
     {
         _owner = owner;
+        SkillTransition = owner.transform.Find("SkillTransition").GetComponent<SkillTransition>();
+        SkillTransition.SetUp(owner.transform);
     }
 
     public virtual void PlaySkill()
