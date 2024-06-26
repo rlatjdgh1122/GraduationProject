@@ -13,9 +13,14 @@ public class General : Penguin, ISkillable
         base.Awake();
 
         Skill = transform.Find("SkillManager").GetComponent<Skill>();
-        Skill?.SetOwner(this);
+    }
 
+    protected override void Start()
+    {
+        base.Start();
         
+        //호출순서 땜에 일부러 스타트에서 실행
+        Skill?.SetOwner(this);
     }
 
     protected override void Update()
@@ -23,11 +28,6 @@ public class General : Penguin, ISkillable
         base.Update();
 
         OnPlaySkill();
-    }
-
-    protected override void Start()
-    {
-        base.Start();
     }
 
     private void OnPlaySkill()

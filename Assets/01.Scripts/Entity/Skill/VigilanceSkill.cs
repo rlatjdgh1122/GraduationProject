@@ -42,6 +42,6 @@ public class VigilanceSkill : Skill
     {
         // Stun Range
         // 0.7 -> 1.4 -> 2.1...
-        Gorilla.DamageCasterCompo.CaseAoEDamage((0.7f * Gorilla.CurrentLevel), 0, 0, _stunValue);
+        Gorilla.DamageCasterCompo.CaseAoEDamage((0.7f * _skillActionData.SkillUsedCount), 0, 0, _stunValue);
     }
 }

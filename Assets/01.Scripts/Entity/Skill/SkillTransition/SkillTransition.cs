@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class SkillTransition : MonoBehaviour
 {
-    [SerializeField]
-    private List<SKillDecision> _decisions = new();
+    [SerializeField] private List<SKillDecision> _decisions = new();
+
+    //코드 호출순서 땜에 
+    [HideInInspector] public bool IsReady = false;
 
     // 스킬 사용 시 발생하는 이벤트
     public Action OnSkillUsedEvent = null;
 
     // 스킬 사용 가능 시 발생하는 이벤트
     public Action OnSkillReadyEvent = null;
+
 
     private void Awake()
     {
@@ -26,6 +29,8 @@ public class SkillTransition : MonoBehaviour
             decision.SetUp(parentRoot);
 
         }//end foreach
+
+        IsReady = true;
     }
 
     public bool CheckDecision()

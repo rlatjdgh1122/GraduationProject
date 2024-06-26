@@ -763,7 +763,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1803484644075588461}
+  m_Father: {fileID: 6283471212528761909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1471066703662880979
 MonoBehaviour:
@@ -777,7 +777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf36f7584252654894083276b5e9f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decision: {fileID: 4157810168064121475}
+  _decisions: []
+  IsReady: 0
 --- !u!114 &4157810168064121475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,7 +1236,6 @@ Transform:
   m_Children:
   - {fileID: 6866142751908429840}
   - {fileID: 2401302121122987304}
-  - {fileID: 2155979888445672343}
   - {fileID: 6283471212528761909}
   - {fileID: 6958130547842186940}
   - {fileID: 3874260292112625796}
@@ -8979,6 +8979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6283471212528761909}
   - component: {fileID: 4512060727764249909}
+  - component: {fileID: 3080738105554693442}
   m_Layer: 11
   m_Name: SkillManager
   m_TagString: Untagged
@@ -8998,7 +8999,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2155979888445672343}
   m_Father: {fileID: 1803484644075588461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4512060727764249909
@@ -9047,6 +9049,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3080738105554693442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102164252000800483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47c08b9fa9ad0e4a94fa95340f41630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillUsedCount: 0
 --- !u!1 &9184431711980993059
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,6 +50,8 @@ public class EnemyReachedState : EnemyBaseState
     {
         base.AnimationTrigger();
 
+        _entityActionData.AddAttackCount();
+
         //공격끝나고 적탐색
         _enemy.FindNearestTarget();
     }

@@ -21,6 +21,8 @@ public class AutoSkillCast : MonoBehaviour
     }
     private void Update()
     {
+        //if (!_skillTranstion.IsReady) return;
+
         if (_skillTranstion.CheckDecision())
         {
             OnSkillUsedEvent?.Invoke();
