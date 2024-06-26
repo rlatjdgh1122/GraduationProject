@@ -16,8 +16,9 @@ public class LunarEclipseUI : MonoBehaviour
     private float _localMoveXValue;
 
     [SerializeField] private Image _glowImge;
-    [SerializeField] private Image _blackMoonImage;
     [SerializeField] private Image _redMoonImage;
+
+    [SerializeField] private float _duration;
 
     private CanvasGroup _canvasGroup;
 
@@ -29,9 +30,7 @@ public class LunarEclipseUI : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Y))
-            StartEclipse(2f);
-        if (Input.GetKeyDown(KeyCode.X))
-            EndEclipse(1f);
+            StartEclipse(_duration);
     }
 
     public void StartEclipse(float duration)
@@ -39,11 +38,13 @@ public class LunarEclipseUI : MonoBehaviour
         UIManager.Instance.InitializHudTextSequence();
 
         UIManager.Instance.HudTextSequence
-            .Append(_canvasGroup.DOFade(1, 0.5f))
-            .Join(_blackMoonImage.transform.DOLocalMoveX(0, duration))
-            .Join(_blackMoonImage.DOFade(1, 0.5f))
-            .Join(_glowImge.DOColor(_afterGlow, 3.5f))
-            .Append(_redMoonImage.DOFade(1, duration));
+            .Append(_canvasGroup.DOFade(1, 0.7f))
+            .Join(_redMoonImage.DOFade(1, 0.5f))
+            .Join(_redMoonImage.transform.DOLocalMoveX(0, duration))
+            .Join(_redMoonImage.DOColor(Color.white, 5f))
+            .Join(_glowImge.DOColor(_afterGlow, duration))
+            .AppendInterval(2.3f) //나중에 이부분 지워야함
+            .AppendCallback(() => EndEclipse(duration));
     }
 
     public void EndEclipse(float duration)
@@ -52,9 +53,9 @@ public class LunarEclipseUI : MonoBehaviour
 
         UIManager.Instance.HudTextSequence
             .Append(_redMoonImage.DOFade(0, duration))
-            .Join(_blackMoonImage.DOFade(0, 0.5f))
-            .Join(_blackMoonImage.transform.DOLocalMoveX(_localMoveXValue, duration))
-            .Join(_glowImge.DOColor(_beforeGlow, 3.5f))
-            .Append(_canvasGroup.DOFade(0, 0.5f));
+            .Join(_redMoonImage.transform.DOLocalMoveX(_localMoveXValue, duration))
+            .Join(_glowImge.DOColor(_beforeGlow, duration))
+            .Join(_canvasGroup.DOFade(0, duration))
+            .Append(_redMoonImage.transform.DOLocalMoveX(-_localMoveXValue,0)); //다시 원래 자리로 옮기기
     }
 }

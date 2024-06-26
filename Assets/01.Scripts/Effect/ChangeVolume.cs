@@ -15,13 +15,16 @@ public enum VolumeType
 }
 
 //나중에 타입 종류가 많아지면 SO로 빼자
+///
 [Serializable]
 public class TypeOfVolumeProfile
 {
     public VolumeType Type;
     public Volume Volume;
+
     public float WaitTime;
     public float ChangingDuration;
+    public float returnDuratiion;
 }
 
 public class ChangeVolume : MonoBehaviour
@@ -30,13 +33,21 @@ public class ChangeVolume : MonoBehaviour
     private List<TypeOfVolumeProfile> _volumeProfileList = new List<TypeOfVolumeProfile>();
 
     private Dictionary<VolumeType, Coroutine> _activeCoroutines = new Dictionary<VolumeType, Coroutine>();
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            ChangeVolumeEffect(VolumeType.LunarEclipse, 3f, true);
+            ChangeVolumeEffect(VolumeType.LunarEclipse, 3f);
         }
     }
+
+    /// <summary>
+    /// 현재 Volume을 바꾸고 싶은 Volume으로 Lerp 하면서 바뀜
+    /// </summary>
+    /// <param name="volumeType">바꾸고 싶은 Volume 타입</param>
+    /// <param name="duration">지속 시간</param>
+    /// <param name="loop">유지 여부</param>
     public void ChangeVolumeEffect(VolumeType volumeType, float duration, bool loop = false)
     {
         var profile = _volumeProfileList.FirstOrDefault(p => p.Type == volumeType);
@@ -50,7 +61,7 @@ public class ChangeVolume : MonoBehaviour
             }
 
             // 새로운 코루틴을 시작하고 Dictionary에 저장
-            _activeCoroutines[volumeType] = StartCoroutine(ChangeVolumeRoutine(profile.Volume, profile.WaitTime, profile.ChangingDuration, duration, loop));
+            _activeCoroutines[volumeType] = StartCoroutine(ChangeVolumeRoutine(profile.Volume, profile.WaitTime, profile.ChangingDuration, duration, profile.returnDuratiion, loop));
         }
         else
         {
@@ -58,7 +69,7 @@ public class ChangeVolume : MonoBehaviour
         }
     }
 
-    private IEnumerator ChangeVolumeRoutine(Volume volume, float waitTime, float changeDuration, float duration, bool loop)
+    private IEnumerator ChangeVolumeRoutine(Volume volume, float waitTime, float changeDuration, float duration, float returnDuration, bool loop)
     {
         yield return new WaitForSeconds(waitTime);
 
@@ -67,7 +78,7 @@ public class ChangeVolume : MonoBehaviour
         if (!loop)
         {
             yield return new WaitForSeconds(duration);
-            yield return LerpVolumeWeight(volume, 1, 0, changeDuration);
+            yield return LerpVolumeWeight(volume, 1, 0, returnDuration);
         }
     }
 
