@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +14,13 @@ public enum VolumeType
     Test2,
 }
 
-//³ªÁß¿¡ Å¸ÀÔ Á¾·ù°¡ ¸¹¾ÆÁö¸é SO·Î »©ÀÚ
+//ë‚˜ì¤‘ì— íƒ€ì… ì¢…ë¥˜ê°€ ë§ì•„ì§€ë©´ SOë¡œ ë¹¼ì
 [Serializable]
 public class TypeOfVolumeProfile
 {
     public VolumeType Type;
     public Volume Volume;
+    public float WaitTime;
     public float ChangingDuration;
 }
 
@@ -29,42 +30,27 @@ public class ChangeVolume : MonoBehaviour
     private List<TypeOfVolumeProfile> _volumeProfileList = new List<TypeOfVolumeProfile>();
 
     private Dictionary<VolumeType, Coroutine> _activeCoroutines = new Dictionary<VolumeType, Coroutine>();
-
-#if UNITY_EDITOR
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
-            Debug.Log("µğ¹ö±×¿ëÀÔ´Ï´ç³ªÁß¿¡Áö¿öÁÖ¼¼¿ë");
-            ChangeVolumeEffect(VolumeType.LunarEclipse, 3f);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Debug.Log("µğ¹ö±×¿ëÀÔ´Ï´ç³ªÁß¿¡Áö¿öÁÖ¼¼¿ë");
-            ChangeVolumeEffect(VolumeType.Test1, 3f, true);
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Debug.Log("µğ¹ö±×¿ëÀÔ´Ï´ç³ªÁß¿¡Áö¿öÁÖ¼¼¿ë");
-            ChangeVolumeEffect(VolumeType.Test2, 5f);
+            ChangeVolumeEffect(VolumeType.LunarEclipse, 3f, true);
         }
     }
-#endif
-
     public void ChangeVolumeEffect(VolumeType volumeType, float duration, bool loop = false)
     {
         var profile = _volumeProfileList.FirstOrDefault(p => p.Type == volumeType);
 
         if (profile != null && profile.Volume != null)
         {
-            // ÀÌÀü¿¡ ½ÇÇà ÁßÀÎ ÄÚ·çÆ¾ÀÌ ÀÖÀ¸¸é ÁßÁö
+            // ì´ì „ì— ì‹¤í–‰ ì¤‘ì¸ ì½”ë£¨í‹´ì´ ìˆìœ¼ë©´ ì¤‘ì§€
             if (_activeCoroutines.ContainsKey(volumeType) && _activeCoroutines[volumeType] != null)
             {
                 StopCoroutine(_activeCoroutines[volumeType]);
             }
 
-            // »õ·Î¿î ÄÚ·çÆ¾À» ½ÃÀÛÇÏ°í Dictionary¿¡ ÀúÀå
-            _activeCoroutines[volumeType] = StartCoroutine(ChangeVolumeRoutine(profile.Volume, profile.ChangingDuration, duration, loop));
+            // ìƒˆë¡œìš´ ì½”ë£¨í‹´ì„ ì‹œì‘í•˜ê³  Dictionaryì— ì €ì¥
+            _activeCoroutines[volumeType] = StartCoroutine(ChangeVolumeRoutine(profile.Volume, profile.WaitTime, profile.ChangingDuration, duration, loop));
         }
         else
         {
@@ -72,8 +58,10 @@ public class ChangeVolume : MonoBehaviour
         }
     }
 
-    private IEnumerator ChangeVolumeRoutine(Volume volume, float changeDuration, float duration, bool loop)
+    private IEnumerator ChangeVolumeRoutine(Volume volume, float waitTime, float changeDuration, float duration, bool loop)
     {
+        yield return new WaitForSeconds(waitTime);
+
         yield return LerpVolumeWeight(volume, 0, 1, changeDuration);
 
         if (!loop)

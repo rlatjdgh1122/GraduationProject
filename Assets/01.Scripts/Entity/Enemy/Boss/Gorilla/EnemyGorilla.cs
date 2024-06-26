@@ -27,7 +27,7 @@ public class EnemyGorilla : Enemy
     {
         base.Awake();
 
-        VigilanceSkill = transform.Find("SkillManager").GetComponent<Skill>();
+        VigilanceSkill = transform.Find("SkillEvent").GetComponent<Skill>();
 
         VigilanceSkill.SetOwner(this);
     }
@@ -48,6 +48,11 @@ public class EnemyGorilla : Enemy
     {
         if (++CurrentLevel > _vigilanceMaxLevel) return;
 
+        StateMachine.ChangeState(EnemyStateType.ChestHit);
+    }
+
+    public void OnSkillEvent()
+    {
         StateMachine.ChangeState(EnemyStateType.ChestHit);
     }
 

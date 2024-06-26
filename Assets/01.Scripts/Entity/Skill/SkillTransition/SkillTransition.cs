@@ -6,7 +6,7 @@ using UnityEngine;
 public class SkillTransition : MonoBehaviour
 {
     [SerializeField]
-    private SKillDecision _decision;
+    private List<SKillDecision> _decisions = new();
 
     // 스킬 사용 시 발생하는 이벤트
     public Action OnSkillUsedEvent = null;
@@ -14,29 +14,50 @@ public class SkillTransition : MonoBehaviour
     // 스킬 사용 가능 시 발생하는 이벤트
     public Action OnSkillReadyEvent = null;
 
-
     private void Awake()
     {
-        _decision = GetComponent<SKillDecision>();
+        GetComponents(_decisions);
     }
 
     public void SetUp(Transform parentRoot)
     {
-        _decision.SetUp(parentRoot);
+        foreach (SKillDecision decision in _decisions)
+        {
+            decision.SetUp(parentRoot);
+
+        }//end foreach
     }
 
     public bool CheckDecision()
     {
-        return _decision.MakeDecision();
+        bool result = false;
+
+        foreach (SKillDecision decision in _decisions)
+        {
+            result = decision.MakeDecision();
+
+            if (result == false) break;
+
+        }//end foreach
+
+        return result;
     }
 
     public void OnUsed()
     {
-        _decision.OnUsed();
+        foreach (SKillDecision decision in _decisions)
+        {
+            decision.OnUsed();
+
+        }//end foreach
     }
 
     public void LevelUp()
     {
-        _decision.LevelUp();
+        foreach (SKillDecision decision in _decisions)
+        {
+            decision.LevelUp();
+
+        }//end foreach
     }
 }

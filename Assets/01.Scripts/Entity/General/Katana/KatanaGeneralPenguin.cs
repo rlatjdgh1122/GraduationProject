@@ -31,12 +31,17 @@ public class KatanaGeneralPenguin : General
 
     public override void OnPassiveAttackEvent()
     {
-        //StateMachine.ChangeState(PenguinStateType.Dash);
+        Debug.Log("잘되네요");
     }
 
     public override void OnSkillEvent()
     {
         StateMachine.ChangeState(PenguinStateType.KatanaSkill);
+    }
+
+    public override void OnUltimateEvent()
+    {
+
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
