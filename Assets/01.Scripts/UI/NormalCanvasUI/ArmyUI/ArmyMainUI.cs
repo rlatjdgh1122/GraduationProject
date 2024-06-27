@@ -7,7 +7,6 @@ public class ArmyMainUI : PopupUI
     [Header("Components")]
     public ArmyInfoPanel infoPanel;
     public GeneralSlotPanel generalSlotPanel;
-    public LegionGeneralSelectPanel legionGeneralPanel;
     private DummyPenguinFactory _factory;
 
     public override void Awake()
@@ -22,7 +21,6 @@ public class ArmyMainUI : PopupUI
         {
             compo.factory = _factory;
             compo.generalSlotPanel = generalSlotPanel;
-            compo.legionGeneralSlot = legionGeneralPanel;
             //compo.infoPanel = infoPanel;
         }
     }

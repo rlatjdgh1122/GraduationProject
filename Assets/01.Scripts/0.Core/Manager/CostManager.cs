@@ -47,17 +47,16 @@ public class CostManager : Singleton<CostManager>
     /// <param name="price">가격</param>
     public void SubtractFromCurrentCost(float price) //현재 재화에서 빼기
     {
-        if (CheckRemainingCost(price))
-        {
-            SoundManager.Play2DSound(_buySound);
-
-            _currentCost -= price;
-            _costUI.SubtractCost(-Mathf.Abs(price));
-        }
-        else
+        if (!CheckRemainingCost(price))
         {
             UIManager.Instance.ShowWarningUI("재화가 부족합니다.");
+            return;
         }
+
+        SoundManager.Play2DSound(_buySound);
+
+        _currentCost -= price;
+        _costUI.SubtractCost(-Mathf.Abs(price));
     }
 
     /// <summary>
