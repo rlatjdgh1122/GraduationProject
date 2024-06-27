@@ -10,8 +10,32 @@ namespace ArmySystem
     {
         public SynergyType SynergyType;
 
+        public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
+        public MovefocusMode MovefocusMode = MovefocusMode.Command;
+        public ArmyUIInfo Info; //정보
+
+        public List<Penguin> Soldiers = new(); //군인 펭귄들
+        public General General = null; //장군
+
+        public EnemyArmy TargetEnemyArmy = null;
+        public Ability Ability = null; //시너지 스탯
+
+        public SkillController SkillController = null;
+
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
+
+        public bool IsSynergy
+        {
+            get
+            {
+                if (!General) return false;
+                return General.SynergyType.Equals(SynergyType);
+            }
+        }
+
+
+        #region Property
 
         public float MoveSpeed
         {
@@ -24,7 +48,6 @@ namespace ArmySystem
             }
         }
 
-
         public string LegionName //몇번째 군단
         {
             get => _legionName;
@@ -36,27 +59,28 @@ namespace ArmySystem
             }
         }
 
-        public OnValueChanged<string> OnLegionNameChanged = null;
+        #endregion
+
+        #region EventHandler
+
         public OnValueUpdated<float> OnMoveSpeedUpdated = null;
+        public OnValueChanged<string> OnLegionNameChanged = null;
 
-        public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
-        public MovefocusMode MovefocusMode = MovefocusMode.Command;
-        public ArmyFollowCam FollowCam = null; //군단 캠
-        public ArmyUIInfo Info; //정보
+        #endregion
 
-        public List<Penguin> Soldiers = new(); //군인 펭귄들
-        public General General = null; //장군
+        //장군이 추가될때
+        //스킬이
 
-        public EnemyArmy TargetEnemyArmy = null;
-
-        public Ability Ability = null; //시너지 스탯
-
-        public SkillController SkillController = null;
-
-        public void SetGeneral(General general)
+        public void AddGeneral(General general)
         {
             General = general;
             SkillController = general.Skill.SkillController;
+        }
+
+        public void RemoveGeneral()
+        {
+            General = null;
+            SkillController = null;
         }
 
         #region Stat

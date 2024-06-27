@@ -17,12 +17,6 @@ public class StatusSlot : MonoBehaviour
     [SerializeField] private Image _skillImage;
     [SerializeField] private Image _ultimateImage;
 
-    [SerializeField] private Sprite tt;
-    [SerializeField] private Sprite yy;
-    [SerializeField] private Sprite uu;
-    [SerializeField] private Sprite ee;
-    [SerializeField] private Sprite ss;
-    [SerializeField] private Sprite rr;
 
     private Image[] _penguinIconList;
 
@@ -34,28 +28,6 @@ public class StatusSlot : MonoBehaviour
 
     public void SetArmy(Army army)
     {
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            ArmyUIInfo info = new ArmyUIInfo
-            (
-                tt,yy,uu,2, "시기다른 랩퍼"
-            );
-
-            ChangeLegionHandler(info);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            ArmyUIInfo info = new ArmyUIInfo
-            (
-                ee, ss, rr, 4, "최예원"
-            );
-
-            ChangeLegionHandler(info);
-        }
     }
 
     /// <summary>

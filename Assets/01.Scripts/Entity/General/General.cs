@@ -1,8 +1,11 @@
+using SynergySystem;
 using System;
 using UnityEngine;
 
 public class General : Penguin, ISkillable
 {
+    public SynergyType SynergyType = SynergyType.None;
+
     public Skill Skill { get; private set; } = null;
     public Skill Ultimate { get; private set; } = null;
 

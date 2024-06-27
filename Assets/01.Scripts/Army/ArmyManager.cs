@@ -329,15 +329,6 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.IsArmyReady = false;
 
         armies.Add(newArmy);
-        GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");
-        ArmyFollowCam armyFollowCam = new ArmyFollowCam();
-
-        //위치 초기화
-        followCam.transform.position = new Vector3(4.18f, 20f, 1.8f);
-
-        armyFollowCam.Obj = followCam;
-        newArmy.FollowCam = armyFollowCam;
-
         return newArmy;
     }
 
