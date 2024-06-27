@@ -50,7 +50,10 @@ public class GroundMovement : ComingObjetMovement
         NavmeshManager.Instance.NavmeshBake();
         SignalHub.OnGroundArrivedEvent?.Invoke();
         _ground.ActivateEnemies(); //이거
+        // 만약 첫번째 땅이라면 부숴진 빙하 생성
         GeneratBrokenGroundEvent?.Invoke();
+        // 액션 초기화
+        GeneratBrokenGroundEvent = null;
         //CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
 
         CoroutineUtil.CallWaitForSeconds(.5f, () => Destroy(_groundHitEffect));
