@@ -104,6 +104,9 @@ public class DamageCaster : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 찌르기 광역 공격
+    /// </summary>
     public void CasePrickDamage(float knbValue = 0f, float stunValue = 0f)
     {
         Vector3 capsuleStart = transform.position;
