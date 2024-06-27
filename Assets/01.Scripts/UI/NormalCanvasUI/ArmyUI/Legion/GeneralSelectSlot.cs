@@ -10,6 +10,7 @@ public class GeneralSelectSlot : ArmyComponentUI
     private Image _icon;
     private Image _lockedPanel;
     private TextMeshProUGUI _text;
+    private LegionGeneralSelectPanel _legionGeneralPanel;
 
     private void Start()
     {
@@ -17,10 +18,11 @@ public class GeneralSelectSlot : ArmyComponentUI
         _lockedPanel = transform.Find("Lock").GetComponent<Image>();
         _purchaseButton = GetComponent<Button>();
         _text = transform.Find("text").GetComponent<TextMeshProUGUI>();
+        _legionGeneralPanel = transform.parent.GetComponent<LegionGeneralSelectPanel>();
 
         _icon.sprite = GeneralData.InfoData.PenguinIcon;
-        _purchaseButton.onClick.AddListener(() => legionGeneralSlot.SetSlot(GeneralData.InfoData));
-        _purchaseButton.onClick.AddListener(legionGeneralSlot.HidePanel);
+        _purchaseButton.onClick.AddListener(() => _legionGeneralPanel.SetSlot(GeneralData.InfoData));
+        _purchaseButton.onClick.AddListener(_legionGeneralPanel.HidePanel);
 
         GeneralData = GeneralManager.Instance.GeneralList[Index];
 
