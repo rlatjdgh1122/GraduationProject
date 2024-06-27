@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class General : Penguin, ISkillable
 {
-    public Skill Skill = null;
-    public Skill Ultimate = null;
+    public Skill Skill { get; private set; } = null;
+    public Skill Ultimate { get; private set; } = null;
 
     public virtual void OnSkillEvent() { }
     public virtual void OnUltimateEvent() { }

@@ -61,10 +61,6 @@ public class StatusSlot : MonoBehaviour
     /// <summary>
     /// 선택한 군단의 아이콘, 스킬 아이콘, 궁극기 아이콘, 군단 내 펭귄의 수 받기
     /// </summary>
-    /// <param name="synergySprite">군단 아이콘</param>
-    /// <param name="skillSprite">스킬 아이콘</param>
-    /// <param name="ultimateSprite">궁극기 아이콘</param>
-    /// <param name="penguinCount">군단 내 펭귄의 수 받기</param>
     public void ChangeLegionHandler(ArmyUIInfo armyInfo)
     {
         ChangeSkillsInCurrentUI(armyInfo);
