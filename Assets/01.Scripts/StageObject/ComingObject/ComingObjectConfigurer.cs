@@ -20,12 +20,11 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
     {
         _previousElementsPositions.Clear();
 
-
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
                                                               GetSpawnEnemis(),
                                                               _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
                                                               _comingObjIncreaseRateDataSO,
-                                                              _enemyArmySpawnPatternsSO); ;
+                                                              _enemyArmySpawnPatternsSO);
 
         //ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
         //                                                               _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());

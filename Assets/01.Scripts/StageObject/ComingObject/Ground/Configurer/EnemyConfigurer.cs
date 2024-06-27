@@ -74,7 +74,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
         EnemyArmyManager.Instance.CreateArmy(spawnedEnemies);
         SetEnemyPos(spawnedEnemies);
-
+        Debug.Log($"{curWave}: {spawnedEnemies.Count}");
         return spawnedEnemies;
     }
 

@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 // 죽는걸 Dead상태로 처리하면 호출 순서 문제로
 // DeadTarget에서 타겟을 찾을 때 죽은 엔티티도 찾는 문제가 생김
-public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
+public abstract class EntityDeadController<T> : PoolableMono, IDeadable
     where T : Entity
 {
     protected readonly int HASH_DEAD = Animator.StringToHash("Dead");
@@ -42,6 +42,8 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
         _owner.IsDead = true;
         //엔티티 스크립트 꺼줌
         _owner.enabled = false;
+
+        SignalHub.OnBattlePhaseEndEvent += PushObj;
     }
 
     public virtual void OnResurrected()
@@ -61,5 +63,15 @@ public abstract class EntityDeadController<T> : MonoBehaviour, IDeadable
         _owner.IsDead = false;
         //엔티티 스크립트 켜줌
         _owner.enabled = true;
+    }
+
+    protected virtual void PushObj()
+    {
+        PoolManager.Instance.Push(_owner);
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= PushObj;
     }
 }

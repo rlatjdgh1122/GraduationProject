@@ -19,6 +19,7 @@ public class Raft : PoolableMono, IComingObject
     {
         CoroutineUtil.CallWaitForSeconds(2f, () => _raftMovement.Move());
         SignalHub.OnBattlePhaseEndEvent += OnSink;
+        SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
     }
 
     public void SetComingObjectInfo(ComingElements groundElements, Transform parentTransform, Vector3 position)
@@ -29,17 +30,12 @@ public class Raft : PoolableMono, IComingObject
 
     public void SetEnemies(List<Enemy> enemies)
     {
-        if (_enemies.Count > 0) _enemies.Clear();
+        if (_enemies.Count > 0) { _enemies.Clear(); }
         _enemies = enemies;
     }
 
     private void OnSink()
     {
-        foreach(Enemy enemy in _enemies)
-        {
-            PoolManager.Instance.Push(enemy);
-        }
-
         transform.DOMoveY(-15f, 1f).OnComplete(() =>
         {
             NavmeshManager.Instance.NavmeshBake();
@@ -76,5 +72,17 @@ public class Raft : PoolableMono, IComingObject
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseEndEvent -= OnSink;
+    }
+
+    private void OnBattleEnd()
+    {
+        foreach (var enemy in _enemies)
+        {
+            PoolManager.Instance.Push(enemy);
+        }
+
+        SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
+
+        if (_enemies.Count > 0) _enemies.Clear();
     }
 }
