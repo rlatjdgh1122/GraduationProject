@@ -19,23 +19,24 @@ public class CheckHitDecision : SKillDecision
 
     private void OnDisable()
     {
-        if (_actionData != null)
-            _actionData.OnHitCountUpdated -= OnHitCountUpdatedHandler;
+        if (_entityActionData)
+            _entityActionData.OnHitCountUpdated -= OnHitCountUpdatedHandler;
     }
 
     public override void SetUp(Transform parentRoot)
     {
         base.SetUp(parentRoot);
 
-        _actionData.OnHitCountUpdated += OnHitCountUpdatedHandler;
+        _entityActionData.OnHitCountUpdated += OnHitCountUpdatedHandler;
     }
 
     private void OnHitCountUpdatedHandler(int value) //맞을때마다 체크
     {
-        if (_checkSkillReady == false) return;
+        if (!_checkSkillReady) return;
 
         if (MakeDecision()) //스킬사용 조건이 처음 만족할때 한번 실행
         {
+            _skillActionData.AddSkillUsedCount();
             OnSkillReadyEvent?.Invoke();
             _checkSkillReady = false;
         }
@@ -46,13 +47,13 @@ public class CheckHitDecision : SKillDecision
         OnSkillUsedEvent?.Invoke();
 
         _hitCount = 0;
-        _saveHitCount = _actionData.HitCount;
+        _saveHitCount = _entityActionData.HitCount;
         _checkSkillReady = true;
     }
 
     public override bool MakeDecision()
     {
-        return _hitCount + _maxHitCount <= _actionData.HitCount - _saveHitCount;
+        return _hitCount + _maxHitCount <= _entityActionData.HitCount - _saveHitCount;
     }
 
     public override void LevelUp()

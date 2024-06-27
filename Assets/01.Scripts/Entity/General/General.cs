@@ -6,15 +6,21 @@ public class General : Penguin, ISkillable
     public Skill Skill = null;
 
     public virtual void OnSkillEvent() { }
+    public virtual void OnUltimateEvent() { }
 
     protected override void Awake()
     {
         base.Awake();
 
         Skill = transform.Find("SkillManager").GetComponent<Skill>();
-        Skill?.SetOwner(this);
+    }
 
+    protected override void Start()
+    {
+        base.Start();
         
+        //호출순서 땜에 일부러 스타트에서 실행
+        Skill?.SetOwner(this);
     }
 
     protected override void Update()
@@ -24,18 +30,23 @@ public class General : Penguin, ISkillable
         OnPlaySkill();
     }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     private void OnPlaySkill()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (Skill.SkillTransition.CheckDecision())
             {
                 OnSkillEvent();
+
+                Skill.SkillTransition.OnUsed();
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            if (Skill.SkillTransition.CheckDecision())
+            {
+                OnUltimateEvent();
 
                 Skill.SkillTransition.OnUsed();
             }

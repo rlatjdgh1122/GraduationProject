@@ -568,6 +568,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5009357140171146289}
   - component: {fileID: 4989972160373657364}
+  - component: {fileID: 344640295214911548}
   m_Layer: 11
   m_Name: SkillManager
   m_TagString: Untagged
@@ -587,7 +588,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2694187794288896683}
   m_Father: {fileID: 8094541072355702688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4989972160373657364
@@ -606,6 +608,19 @@ MonoBehaviour:
   CanUseSkill: 0
   _throwDelay: 1.3
   _throwValue: 2
+--- !u!114 &344640295214911548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596417947583072193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47c08b9fa9ad0e4a94fa95340f41630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillUsedCount: 0
 --- !u!1 &3619444142348808694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1031,7 +1046,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8979639016740869431}
-  - {fileID: 2694187794288896683}
   - {fileID: 5009357140171146289}
   - {fileID: 3596188564076614388}
   - {fileID: 7002471783404722480}
@@ -1062,6 +1076,7 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 4096
+  moveSpeed: 4
   attackSpeed: 1
   passiveData: {fileID: 11400000, guid: 75747c8d8703b624da64c9b263147ae1, type: 2}
   ArmyTriggerCalled: 0
@@ -1170,7 +1185,6 @@ MonoBehaviour:
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
   HitTarget: {fileID: 0}
-  HitCount: 0
 --- !u!143 &1087998016549553910
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3053,7 +3067,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8094541072355702688}
+  m_Father: {fileID: 5009357140171146289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6008275316766840700
 MonoBehaviour:
@@ -3067,7 +3081,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf36f7584252654894083276b5e9f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisions: {fileID: 8652837050922286568}
+  _decisions: []
+  IsReady: 0
 --- !u!114 &8652837050922286568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3080,7 +3095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fca806893eee745bff35063df417e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHitCount: 3
+  InitMaxHitCount: 10
 --- !u!1 &8517151973171539828
 GameObject:
   m_ObjectHideFlags: 0

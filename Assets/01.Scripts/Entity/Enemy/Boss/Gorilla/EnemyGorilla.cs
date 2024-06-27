@@ -17,24 +17,20 @@ public enum EnemyGorillaStateEnum
 
 public class EnemyGorilla : Enemy
 {
-    [SerializeField] private int _vigilanceMaxLevel = 5;
-
     public Skill VigilanceSkill { get; private set; }
-
-    public int CurrentLevel { get; private set; } = 0;
 
     protected override void Awake()
     {
         base.Awake();
 
         VigilanceSkill = transform.Find("SkillManager").GetComponent<Skill>();
-
-        VigilanceSkill.SetOwner(this);
     }
 
     protected override void Start()
     {
         base.Start();
+
+        VigilanceSkill.SetOwner(this);
 
         StateMachine.Init(EnemyStateType.Idle);
     }
@@ -44,10 +40,8 @@ public class EnemyGorilla : Enemy
         StateMachine.CurrentState.UpdateState();
     }
 
-    public override void OnPassiveAttackEvent()
+    public void OnSkillEvent()
     {
-        if (++CurrentLevel > _vigilanceMaxLevel) return;
-
         StateMachine.ChangeState(EnemyStateType.ChestHit);
     }
 

@@ -56,6 +56,9 @@ public class EnemyAttackState : EnemyBaseState
     {
         base.AnimationTrigger();
 
+        _entityActionData.AddAttackCount();
+
+        //이거 안쓸수도
         if (_enemy.CheckAttackEventPassive(++curAttackCount))
         {
             _enemy.OnPassiveAttackEvent();
