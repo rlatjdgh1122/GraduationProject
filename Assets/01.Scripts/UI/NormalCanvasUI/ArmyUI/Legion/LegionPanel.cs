@@ -8,8 +8,9 @@ public class LegionPanel : PopupUI
     public int CurrentIndex = 0;
 
     public int CurrentSlotCount => _soldierSlotList.Count;
-    private EntityInfoDataSO _info; //일단 저장해놓음
+    public EntityInfoDataSO SoldierlInfo; //일단 저장해놓음
     private List<LegionSoldierSlot> _soldierSlotList;
+    public List<LegionSoldierSlot> SoldierSlotList => _soldierSlotList;
 
     public override void Awake()
     {
@@ -20,7 +21,7 @@ public class LegionPanel : PopupUI
 
     public void SetSlots(EntityInfoDataSO info)
     {
-        _info = info;
+        SoldierlInfo = info;
 
         foreach (LegionSoldierSlot slot in _soldierSlotList)
         {
