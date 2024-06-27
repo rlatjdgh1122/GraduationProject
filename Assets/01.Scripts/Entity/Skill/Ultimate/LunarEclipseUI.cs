@@ -41,7 +41,7 @@ public class LunarEclipseUI : MonoBehaviour
             .Append(_canvasGroup.DOFade(1, 0.7f))
             .Join(_redMoonImage.DOFade(1, 0.5f))
             .Join(_redMoonImage.transform.DOLocalMoveX(0, duration))
-            .Join(_redMoonImage.DOColor(Color.white, 5f))
+            .Join(_redMoonImage.DOColor(Color.white, 7f))
             .Join(_glowImge.DOColor(_afterGlow, duration))
             .AppendInterval(2.3f) //나중에 이부분 지워야함
             .AppendCallback(() => EndEclipse(duration));
@@ -55,6 +55,7 @@ public class LunarEclipseUI : MonoBehaviour
             .Append(_redMoonImage.DOFade(0, duration))
             .Join(_redMoonImage.transform.DOLocalMoveX(_localMoveXValue, duration))
             .Join(_glowImge.DOColor(_beforeGlow, duration))
+            .Join(_redMoonImage.DOColor(Color.black, 7f))
             .Join(_canvasGroup.DOFade(0, duration))
             .Append(_redMoonImage.transform.DOLocalMoveX(-_localMoveXValue,0)); //다시 원래 자리로 옮기기
     }
