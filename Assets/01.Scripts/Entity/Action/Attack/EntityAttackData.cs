@@ -18,6 +18,11 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
+    public virtual void AoEPrickAttack(float knbValue, float stunValue, float range = 0)
+    {
+
+    }
+
     public virtual void MeleeAttack(float knbValue, float stunValue)
     {
 
@@ -39,6 +44,11 @@ public class EntityAttackData : MonoBehaviour
     }
 
     public virtual void MagicAttack(Vector3 targetPos)
+    {
+
+    }
+
+    public virtual void TruckAttack(Vector3 mousePos)
     {
 
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class DamageCaster : MonoBehaviour
 {
@@ -102,6 +103,40 @@ public class DamageCaster : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 찌르기 광역 공격
+    /// </summary>
+    public void CasePrickDamage(float knbValue = 0f, float stunValue = 0f)
+    {
+        Vector3 capsuleStart = transform.position;
+        Vector3 capsuleEnd = transform.position + transform.forward * 7f;
+        float capsuleRadius = 1f;
+
+        var Colls = Physics.OverlapCapsule(capsuleStart, capsuleEnd, capsuleRadius, TargetLayer);
+
+        foreach (var col in Colls)
+        {
+            RaycastHit raycastHit;
+
+            var dir = (col.transform.position - transform.position).normalized;
+            dir.y = 0;
+
+            bool raycastSuccess = Physics.Raycast(transform.position, dir, out raycastHit, _detectRange * 2f, TargetLayer);
+
+            if (raycastSuccess
+                && raycastHit.collider.TryGetComponent<Health>(out Health health))
+            {
+                int damage = _owner.Stat.damage.GetValue();
+
+                health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
+                health.Knockback(knbValue, raycastHit.normal);
+                health.Stun(stunValue);
+
+            }
+        }
+    }
+
 
     /// <summary>
     /// 단일 데미지
@@ -274,7 +309,7 @@ public class DamageCaster : MonoBehaviour
             int selfDamage = _owner.Stat.damage.GetValue();
             selfDamageable.ApplyDamage(selfDamage * 2, transform.position, _owner.transform.position, _hitType, _owner); //혹시나 안죽을까봐 본인한테는 데미지 2배로
         }
-        
+
         foreach (Collider collider in colliders)
         {
             IDamageable damageable = collider.GetComponent<IDamageable>();

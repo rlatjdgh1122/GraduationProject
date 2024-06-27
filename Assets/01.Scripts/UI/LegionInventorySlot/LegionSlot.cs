@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using DG.Tweening;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class LegionSlot : LegionSlotUI
 {

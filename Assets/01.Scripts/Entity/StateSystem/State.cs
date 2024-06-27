@@ -5,17 +5,23 @@ using ArmySystem;
 public class State
 {
     protected PenguinStateMachine _stateMachine;
+    protected EntityActionData _entityActionData;
     protected Penguin _penguin;
     protected NavMeshAgent _navAgent;
     protected int _animBoolHash;
     protected bool _triggerCalled = true;
+    protected MovefocusMode prevMode = MovefocusMode.Command;
 
     public State(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName)
     {
+        _animBoolHash = Animator.StringToHash(animationBoolName);
+
         _penguin = penguin;
         _stateMachine = stateMachine;
-        _animBoolHash = Animator.StringToHash(animationBoolName);
-        _navAgent = _penguin.NavAgent;
+
+        _entityActionData = penguin.GetComponent<EntityActionData>();
+        _navAgent = _penguin.GetComponent<NavMeshAgent>();
+
     }
 
     #region Enter
@@ -145,6 +151,11 @@ public class State
 
     #endregion
 
+    protected bool IsPrevMoveMode(MovefocusMode mode)
+    {
+        return prevMode.Equals(mode);
+    }
+
     /// <summary>
     /// 타겟이 없다면
     /// </summary>
@@ -197,7 +208,7 @@ public class State
     public virtual void EnterState()
     {
         _penguin.AnimatorCompo.SetBool(_animBoolHash, true); //들어오면 내 애니메이션을 활성화 해주는 것
-        _navAgent = _penguin.NavAgent;
+
     }
 
     public virtual void UpdateState()

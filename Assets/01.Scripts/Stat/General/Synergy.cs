@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum SynergyType
+public enum SynergyEnum
 {
     Will,
     Bless,
@@ -14,7 +14,7 @@ public class Synergy
 {
     [SerializeField] private int _level = 1;
     public string synergyName;
-    public SynergyType type;
+    public SynergyEnum type;
     public Ability Stat;
 
 

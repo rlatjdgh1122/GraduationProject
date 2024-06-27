@@ -289,8 +289,6 @@ public class ArmyManager : Singleton<ArmyManager>
         //그냥 자기 군단에서 remove함수 만들어서 하면 될듯
         //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
 
-
-
         //증가된 군단 스탯 지우기
         int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[idx];
@@ -322,7 +320,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <summary>
     /// 새로운 군단 생성
     /// </summary>
-    public void CreateArmy()
+    public Army CreateArmy()
     {
         Army newArmy = new Army();
 
@@ -340,6 +338,7 @@ public class ArmyManager : Singleton<ArmyManager>
         armyFollowCam.Obj = followCam;
         newArmy.FollowCam = armyFollowCam;
 
+        return newArmy;
     }
 
     #endregion

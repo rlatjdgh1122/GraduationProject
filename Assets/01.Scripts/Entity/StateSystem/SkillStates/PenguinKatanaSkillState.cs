@@ -6,8 +6,6 @@ public class PenguinKatanaSkillState : State
 {
     private General General => _penguin as General;
 
-    private MovefocusMode prevMode = MovefocusMode.Command;
-
     public PenguinKatanaSkillState(Penguin penguin, PenguinStateMachine stateMachine, string animationBoolName) : base(penguin, stateMachine, animationBoolName)
     {
     }
@@ -17,6 +15,8 @@ public class PenguinKatanaSkillState : State
         base.EnterState();
 
         prevMode = _penguin.MyArmy.MovefocusMode;
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();
 
         _penguin.LookTargetImmediately();
 
@@ -24,12 +24,11 @@ public class PenguinKatanaSkillState : State
         General.Skill.PlaySkill();
     }
 
+   
+
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
-        _penguin.StopImmediately();
 
         if (_triggerCalled)
         {

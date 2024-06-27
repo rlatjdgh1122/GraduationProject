@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LanceChargingEffectFeedback : EffectFeedback
@@ -12,7 +11,7 @@ public class LanceChargingEffectFeedback : EffectFeedback
 
     public override bool StartFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop("LacnePrickChargingEffect") as EffectPlayer;
+        EffectPlayer effect = PoolManager.Instance.Pop("LancePrickChargingEffect") as EffectPlayer;
         if (effect != null)
         {
             effect.transform.SetParent(ownerTrm);

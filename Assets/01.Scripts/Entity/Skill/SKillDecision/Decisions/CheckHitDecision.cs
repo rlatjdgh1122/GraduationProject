@@ -1,21 +1,40 @@
+using SkillSystem;
+using System;
+using UnityEngine;
+using UnityEngine.Events;
+
 public class CheckHitDecision : SKillDecision
 {
-    public int MaxHitCount = 3;
+    private bool _checkSkillReady = true;
 
-    private int _hitCount = 0;
-
-    private void Start()
+    protected override void OnHit(int hitCount)
     {
-        _hitCount = -MaxHitCount; //처음에도 사용가능하게
+        if (!_checkSkillReady) return;
+
+        OnSkillActionEnterEvent?.Invoke();
+
+        if (MakeDecision()) //스킬사용 조건이 처음 만족할때 한번 실행
+        {
+            _checkSkillReady = false;
+        }
     }
 
-    public override void Init()
+    public override void OnUsed()
     {
-        _hitCount = _actionData.HitCount;
+        OnSkillUsedEvent?.Invoke();
+
+        skillActionData.AddSkillUsedCount();
+        saveValue = entityActionData.HitCount;
+        _checkSkillReady = true;
     }
 
     public override bool MakeDecision()
     {
-        return _hitCount + MaxHitCount <= _actionData.HitCount;
+        return maxValue + saveValue <= entityActionData.HitCount;
+    }
+
+    public override void LevelUp(int value)
+    {
+        maxValue -= value;
     }
 }

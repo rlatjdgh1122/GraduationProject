@@ -91,7 +91,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         _actionData.HitNormal = normal;
         _actionData.HitType = hitType;
         _actionData.HitTarget = hitTarget;
-        _actionData.HitCount += 1;
+        _actionData.AddHitCount();
 
         int finalDamage = StatCalculator.GetDamage(damage, armor);
         currentHealth = Mathf.Clamp(currentHealth - finalDamage, 0, maxHealth);
