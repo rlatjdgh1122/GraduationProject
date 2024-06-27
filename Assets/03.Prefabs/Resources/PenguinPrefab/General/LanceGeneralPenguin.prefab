@@ -378,6 +378,75 @@ Transform:
   - {fileID: 3887770019721905735}
   m_Father: {fileID: 2195780349268001617}
   m_LocalEulerAnglesHint: {x: 4.0078697, y: -5.1676874, z: -12.472519}
+--- !u!1 &1658049304495314172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3853824182919147735}
+  - component: {fileID: 733462272407297153}
+  - component: {fileID: 1381230231132906793}
+  m_Layer: 11
+  m_Name: UltimateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3853824182919147735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658049304495314172}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.7650354, y: 0.35475835, z: -0.44643626}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 879462760532843130}
+  m_Father: {fileID: 1803484644075588461}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &733462272407297153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658049304495314172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47c08b9fa9ad0e4a94fa95340f41630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillUsedCount: 0
+--- !u!114 &1381230231132906793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658049304495314172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0933c83776ba0e47917c2222df9cebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAvaliable: 1
+  CanUseSkill: 0
+  _dashDelay: 0
+  canDash: 0
+  OnSlashEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1742341914476758304
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +810,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2155979888445672343}
-  - component: {fileID: 1471066703662880979}
+  - component: {fileID: 3078122215514536316}
   - component: {fileID: 4157810168064121475}
   m_Layer: 11
   m_Name: SkillTransition
@@ -765,7 +834,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6283471212528761909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1471066703662880979
+--- !u!114 &3078122215514536316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -774,11 +843,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2923873657912223969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cf36f7584252654894083276b5e9f86, type: 3}
+  m_Script: {fileID: 11500000, guid: d616efbdd8cbf824aac227cf0cebd5ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisions: []
-  IsReady: 0
+  _skillDecision: {fileID: 0}
+  _unvariableDecisions: []
 --- !u!114 &4157810168064121475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,7 +860,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15accef23a076847a9f092f04c15ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxCoolTime: 3
+  _decisionType: 1
+  _canUsedskillInitially: 1
+  _initMaxVaue: 5
 --- !u!1 &2932027695112230104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,6 +1308,7 @@ Transform:
   - {fileID: 6866142751908429840}
   - {fileID: 2401302121122987304}
   - {fileID: 6283471212528761909}
+  - {fileID: 3853824182919147735}
   - {fileID: 6958130547842186940}
   - {fileID: 3874260292112625796}
   - {fileID: 6555376721528569305}
@@ -1275,6 +1347,7 @@ MonoBehaviour:
   SuccessfulToArmyCalled: 0
   TargetLock: 0
   Skill: {fileID: 0}
+  Ultimate: {fileID: 0}
 --- !u!114 &6754457386563218381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8059,6 +8132,68 @@ Transform:
   - {fileID: 5602413417462100583}
   m_Father: {fileID: 7267025368959013954}
   m_LocalEulerAnglesHint: {x: 71.92439, y: 21.512415, z: 20.343716}
+--- !u!1 &6610430464076816473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 879462760532843130}
+  - component: {fileID: 2775802289095042840}
+  - component: {fileID: 1150573076114874067}
+  m_Layer: 11
+  m_Name: SkillTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &879462760532843130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610430464076816473}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3853824182919147735}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2775802289095042840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610430464076816473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d616efbdd8cbf824aac227cf0cebd5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillDecision: {fileID: 0}
+  _unvariableDecisions: []
+--- !u!114 &1150573076114874067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610430464076816473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c227f0da9618e14ca0eb682341e9d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _decisionType: 5
+  _canUsedskillInitially: 1
+  _initMaxVaue: 5
 --- !u!1 &6733581184728388741
 GameObject:
   m_ObjectHideFlags: 0

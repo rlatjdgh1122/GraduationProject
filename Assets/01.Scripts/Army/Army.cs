@@ -51,12 +51,12 @@ namespace ArmySystem
 
         public Ability Ability = null; //시너지 스탯
 
-        public SkillTransition SkillManager = null;
+        public SkillController SkillController = null;
 
         public void SetGeneral(General general)
         {
             General = general;
-            SkillManager = general.Skill.SkillTransition;
+            SkillController = general.Skill.SkillController;
         }
 
         #region Stat

@@ -300,6 +300,68 @@ Transform:
   - {fileID: 8464051075026571655}
   m_Father: {fileID: 7962890222364954107}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1769851090214580706
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4716042764137287172}
+  - component: {fileID: 2534610474711795626}
+  - component: {fileID: 7635626774282687820}
+  m_Layer: 11
+  m_Name: SkillTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4716042764137287172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769851090214580706}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7901420517870172205}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2534610474711795626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769851090214580706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d616efbdd8cbf824aac227cf0cebd5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillDecision: {fileID: 0}
+  _unvariableDecisions: []
+--- !u!114 &7635626774282687820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769851090214580706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c227f0da9618e14ca0eb682341e9d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _decisionType: 5
+  _canUsedskillInitially: 1
+  _initMaxVaue: 5
 --- !u!1 &1806207080305141940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,6 +1109,7 @@ Transform:
   m_Children:
   - {fileID: 8979639016740869431}
   - {fileID: 5009357140171146289}
+  - {fileID: 7901420517870172205}
   - {fileID: 3596188564076614388}
   - {fileID: 7002471783404722480}
   - {fileID: 3755944351556092073}
@@ -1084,6 +1147,7 @@ MonoBehaviour:
   SuccessfulToArmyCalled: 0
   TargetLock: 1
   Skill: {fileID: 0}
+  Ultimate: {fileID: 0}
 --- !u!114 &5568844490623652785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2430,6 +2494,75 @@ Transform:
   - {fileID: 1364205800388246171}
   m_Father: {fileID: 401393477716192036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6459348233513984202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7901420517870172205}
+  - component: {fileID: 885436172288794994}
+  - component: {fileID: 4512545010655929129}
+  m_Layer: 11
+  m_Name: UltimateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7901420517870172205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459348233513984202}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.12000005, y: 0.07005485, z: -0.45333356}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4716042764137287172}
+  m_Father: {fileID: 8094541072355702688}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &885436172288794994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459348233513984202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47c08b9fa9ad0e4a94fa95340f41630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillUsedCount: 0
+--- !u!114 &4512545010655929129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459348233513984202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0933c83776ba0e47917c2222df9cebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAvaliable: 1
+  CanUseSkill: 0
+  _dashDelay: 0
+  canDash: 0
+  OnSlashEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6733960343976784956
 GameObject:
   m_ObjectHideFlags: 0
@@ -3045,7 +3178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2694187794288896683}
-  - component: {fileID: 6008275316766840700}
+  - component: {fileID: 588839725482079567}
   - component: {fileID: 8652837050922286568}
   m_Layer: 11
   m_Name: SkillTransition
@@ -3069,7 +3202,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5009357140171146289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6008275316766840700
+--- !u!114 &588839725482079567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3078,11 +3211,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8425243495178953714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cf36f7584252654894083276b5e9f86, type: 3}
+  m_Script: {fileID: 11500000, guid: d616efbdd8cbf824aac227cf0cebd5ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisions: []
-  IsReady: 0
+  _skillDecision: {fileID: 0}
+  _unvariableDecisions: []
 --- !u!114 &8652837050922286568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3095,7 +3228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fca806893eee745bff35063df417e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitMaxHitCount: 10
+  _decisionType: 0
+  _canUsedskillInitially: 1
+  _initMaxVaue: 5
 --- !u!1 &8517151973171539828
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,14 +7,14 @@ using UnityEngine.UIElements;
 
 public class AutoSkillCast : MonoBehaviour
 {
-    public SkillTransition _skillTranstion = null;
+    public SkillController SkillController = null;
     [SerializeField] private UnityEvent OnSkillUsedEvent = null;
 
     private void Start()
     {
-        if (!_skillTranstion)
+        if (!SkillController)
         {
-            Debug.LogError("스킬 트렌지션을 넣주세요");
+            Debug.LogError("스킬 컨트롤러를 넣주세요");
 
             return;
         }
@@ -23,7 +23,7 @@ public class AutoSkillCast : MonoBehaviour
     {
         //if (!_skillTranstion.IsReady) return;
 
-        if (_skillTranstion.CheckDecision())
+        if (SkillController.CheckDecision())
         {
             OnSkillUsedEvent?.Invoke();
             OnUsed();
@@ -35,6 +35,6 @@ public class AutoSkillCast : MonoBehaviour
     /// </summary>
     private void OnUsed()
     {
-        _skillTranstion.OnUsed();
+        SkillController.OnUsed();
     }
 }
