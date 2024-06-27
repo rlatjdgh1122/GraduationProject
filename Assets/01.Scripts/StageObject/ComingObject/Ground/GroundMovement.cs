@@ -10,6 +10,9 @@ public class GroundMovement : ComingObjetMovement
     [SerializeField] private GameObject _groundHitEffect;
 
     private Ground _ground;
+
+    public event System.Action GeneratBrokenGroundEvent;
+
     protected override void Awake()
     {
         base.Awake();
@@ -37,17 +40,17 @@ public class GroundMovement : ComingObjetMovement
     {
         _groundHitEffect = Instantiate(_groundHitEffect, GetClosestPointToCenter(), Quaternion.LookRotation(transform.position - GetClosestPointToCenter()));
         
-        SoundManager.Play2DSound(SoundName.GroundHit);
-
         Define.CamDefine.Cam.ShakeCam.enabled = true;
         Define.CamDefine.Cam.ShakeCam.m_Lens.FieldOfView = Define.CamDefine.Cam.MainCam.fieldOfView;
 
         // ºÎµúÈú ¶§ ÀÌÆåÆ® / Ä«¸Þ¶ó ½¦ÀÌÅ© + »ç¿îµå
         CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+        SoundManager.Play2DSound(SoundName.GroundHit);
 
         NavmeshManager.Instance.NavmeshBake();
         SignalHub.OnGroundArrivedEvent?.Invoke();
         _ground.ActivateEnemies(); //ÀÌ°Å
+        GeneratBrokenGroundEvent?.Invoke();
         //CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
 
         CoroutineUtil.CallWaitForSeconds(.5f, () => Destroy(_groundHitEffect));
