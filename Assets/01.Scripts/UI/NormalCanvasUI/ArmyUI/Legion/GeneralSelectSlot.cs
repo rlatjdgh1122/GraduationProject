@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GeneralSelectSlot : ArmyComponentUI
-{
+{  
     public GeneralStat GeneralData;
+    public int Index;
     private Button _purchaseButton;
     private Image _icon;
     private Image _lockedPanel;
@@ -12,8 +13,6 @@ public class GeneralSelectSlot : ArmyComponentUI
 
     private void Start()
     {
-        OnUpdateState += UpdateUI;
-
         _icon = transform.Find("Icon").GetComponent<Image>();
         _lockedPanel = transform.Find("Lock").GetComponent<Image>();
         _purchaseButton = GetComponent<Button>();
@@ -22,6 +21,10 @@ public class GeneralSelectSlot : ArmyComponentUI
         _icon.sprite = GeneralData.InfoData.PenguinIcon;
         _purchaseButton.onClick.AddListener(() => legionGeneralSlot.SetSlot(GeneralData.InfoData));
         _purchaseButton.onClick.AddListener(legionGeneralSlot.HidePanel);
+
+        GeneralData = GeneralManager.Instance.GeneralList[Index];
+
+        OnUpdateState += UpdateUI;
     }
 
     public void UpdateUI()

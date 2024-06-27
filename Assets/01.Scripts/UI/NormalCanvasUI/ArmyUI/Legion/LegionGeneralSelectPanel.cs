@@ -28,7 +28,6 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
     public override void ShowPanel()
     {
         base.ShowPanel();
-
         UpdateState();
     }
 }
