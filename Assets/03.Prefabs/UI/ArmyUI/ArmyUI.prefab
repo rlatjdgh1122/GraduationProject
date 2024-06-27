@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3739169696160793314}
+      - m_Target: {fileID: 2105620825220662323}
         m_TargetAssemblyTypeName: GeneralMainPanel, Assembly-CSharp
         m_MethodName: MoveMainPanel
         m_Mode: 4
@@ -1124,7 +1124,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 807933676835316846}
+      - m_Target: {fileID: 8586457855507815260}
         m_TargetAssemblyTypeName: LegionMainPanel, Assembly-CSharp
         m_MethodName: MoveMainPanel
         m_Mode: 4
@@ -5044,7 +5044,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 807933676835316846}
+      - m_Target: {fileID: 8586457855507815260}
         m_TargetAssemblyTypeName: LegionMainPanel, Assembly-CSharp
         m_MethodName: MoveMainPanel
         m_Mode: 4
@@ -5056,7 +5056,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3739169696160793314}
+      - m_Target: {fileID: 2105620825220662323}
         m_TargetAssemblyTypeName: GeneralMainPanel, Assembly-CSharp
         m_MethodName: MoveMainPanel
         m_Mode: 4
@@ -8312,6 +8312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7940750297025571288}
   - component: {fileID: 3739169696160793314}
+  - component: {fileID: 2105620825220662323}
   m_Layer: 5
   m_Name: GeneralPanel
   m_TagString: Untagged
@@ -8343,6 +8344,23 @@ RectTransform:
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3739169696160793314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4979126940216266152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4646801339200e743866787367acfd34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panelFadeTime: 0.8
+  _panelDelayTime: 0
+  _transferable: 
+  _soundName: 100
+  _uiGroup: 0
+--- !u!114 &2105620825220662323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10626,6 +10644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1772885212069987176}
   - component: {fileID: 807933676835316846}
+  - component: {fileID: 8586457855507815260}
   m_Layer: 5
   m_Name: LegionPanel
   m_TagString: Untagged
@@ -10657,6 +10676,23 @@ RectTransform:
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &807933676835316846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6209974785761248330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08021cc68737f5946856b9b3bcfe1313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panelFadeTime: 0.8
+  _panelDelayTime: 0
+  _transferable: 
+  _soundName: 100
+  _uiGroup: 0
+--- !u!114 &8586457855507815260
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15760,6 +15796,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3206898010767873576}
     m_Modifications:
+    - target: {fileID: 741278932133497007, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: Index
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2276147146721860757, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: Index
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2822984831750132252, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: m_Pivot.x
