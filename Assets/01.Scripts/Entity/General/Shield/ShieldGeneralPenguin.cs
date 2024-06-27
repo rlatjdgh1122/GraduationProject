@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Events;
 
 public class ShieldGeneralPenguin : General
@@ -57,6 +58,11 @@ public class ShieldGeneralPenguin : General
     public override void OnSkillEvent()
     {
         StateMachine.ChangeState(PenguinStateType.SpinAttack);
+    }
+
+    public override void OnUltimateEvent()
+    {
+        Debug.Log("잘되네요");
     }
 
     public void OnBlockEvent()

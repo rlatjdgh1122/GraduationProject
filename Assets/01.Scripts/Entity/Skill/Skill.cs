@@ -6,8 +6,7 @@ public abstract class Skill : MonoBehaviour
 {
     protected Entity _owner;
 
-    public SkillTransition SkillTransition { get; private set; } = null;
-
+    public SkillController SkillController { get; private set; } = null;
     protected EntityActionData _entityActionData { get; private set; } = null;
     protected SkillActionData _skillActionData { get; private set; } = null;
 
@@ -25,8 +24,8 @@ public abstract class Skill : MonoBehaviour
 
         _entityActionData = owner.GetComponent<EntityActionData>();
         _skillActionData = transform.GetComponent<SkillActionData>();
-        SkillTransition = transform.Find("SkillTransition").GetComponent<SkillTransition>();
-        SkillTransition.SetUp(owner.transform);
+        SkillController = transform.Find("SkillTransition").GetComponent<SkillController>();
+        SkillController.SetUp(owner.transform);
     }
 
     public virtual void PlaySkill()
