@@ -4683,8 +4683,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3475682324167621298}
-  - component: {fileID: 8100009160161910926}
   - component: {fileID: 893358589025647411}
+  - component: {fileID: 2227704978662980762}
   m_Layer: 11
   m_Name: UltimateManager
   m_TagString: Untagged
@@ -4708,52 +4708,6 @@ Transform:
   - {fileID: 7946405842082333594}
   m_Father: {fileID: 750781293710279106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8100009160161910926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416971991974222877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0933c83776ba0e47917c2222df9cebd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsAvaliable: 1
-  CanUseSkill: 0
-  _dashDelay: 2
-  canDash: 0
-  OnSlashEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 309429975311839252}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDashEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 630625754818673844}
-        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
-        m_MethodName: PlayFeedback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &893358589025647411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4767,6 +4721,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillUsedCount: 0
+--- !u!114 &2227704978662980762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416971991974222877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61e9a6114197e94b96f976e3ec8fba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAvaliable: 1
+  CanUseSkill: 0
+  OnStartEclipseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1607483426666290894}
+        m_TargetAssemblyTypeName: LunarEclipseUI, Assembly-CSharp
+        m_MethodName: StartEclipse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4429433079090978060
 GameObject:
   m_ObjectHideFlags: 0
@@ -5885,7 +5868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fca806893eee745bff35063df417e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 2
   _canUsedskillInitially: 1
   _initMaxVaue: 5
 --- !u!1 &6263904523860978404
@@ -6374,6 +6356,9 @@ MonoBehaviour:
   _glowImge: {fileID: 6735745974044738300}
   _redMoonImage: {fileID: 9037540919979295561}
   _duration: 4
+  OnEndEclipseEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!225 &6646207624798851263
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7488,7 +7473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c227f0da9618e14ca0eb682341e9d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 5
   _canUsedskillInitially: 1
   _initMaxVaue: 5
 --- !u!1 &8460291791944462452

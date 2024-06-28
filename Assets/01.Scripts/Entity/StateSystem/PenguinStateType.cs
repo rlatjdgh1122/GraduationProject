@@ -22,6 +22,9 @@ public enum PenguinStateType
     SpinAttack,
     KatanaSkill,
     LanceSkill,
+
+
+    KatanaUltimate,
     #endregion
 
     #region 그 외

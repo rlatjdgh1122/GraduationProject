@@ -1,7 +1,9 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class LunarEclipseUI : MonoBehaviour
@@ -22,34 +24,33 @@ public class LunarEclipseUI : MonoBehaviour
 
     private CanvasGroup _canvasGroup;
 
+    [SerializeField]
+    private UnityEvent OnEndEclipseEvent;
+
     private void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Y))
-            StartEclipse(_duration);
-    }
-
-    public void StartEclipse(float duration)
+    public void StartEclipse()
     {
         UIManager.Instance.InitializHudTextSequence();
 
         UIManager.Instance.HudTextSequence
             .Append(_canvasGroup.DOFade(1, 0.7f))
             .Join(_redMoonImage.DOFade(1, 0.5f))
-            .Join(_redMoonImage.transform.DOLocalMoveX(0, duration))
+            .Join(_redMoonImage.transform.DOLocalMoveX(0, _duration))
             .Join(_redMoonImage.DOColor(Color.white, 7f))
-            .Join(_glowImge.DOColor(_afterGlow, duration))
+            .Join(_glowImge.DOColor(_afterGlow, _duration))
             .AppendInterval(2.3f) //나중에 이부분 지워야함
-            .AppendCallback(() => EndEclipse(duration));
+            .AppendCallback(() => EndEclipse(_duration));
     }
 
     public void EndEclipse(float duration)
     {
         UIManager.Instance.InitializHudTextSequence();
+
+        OnEndEclipseEvent?.Invoke();
 
         UIManager.Instance.HudTextSequence
             .Append(_redMoonImage.DOFade(0, duration))
