@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class StatusSlot : MonoBehaviour
 {
-    private Army _army = null;
+    protected Army myArmy = null;
 
     [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
 
@@ -28,6 +28,11 @@ public class StatusSlot : MonoBehaviour
 
     public void SetArmy(Army army)
     {
+    }
+
+    public void Init()
+    {
+        //½ºÅ³UI¶û ±Ã±Ø±âUI Init½ÃÄÑÁÜ
     }
 
     /// <summary>
