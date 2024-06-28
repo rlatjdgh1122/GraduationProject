@@ -1,11 +1,8 @@
 using Define;
 using DG.Tweening;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public static class ExtensionMethod
 {
