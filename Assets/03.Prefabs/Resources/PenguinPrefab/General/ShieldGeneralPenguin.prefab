@@ -6268,8 +6268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d616efbdd8cbf824aac227cf0cebd5ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisions: []
-  IsReady: 0
+  _skillDecision: {fileID: 0}
+  _unvariableDecisions: []
 --- !u!114 &43228168071312372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6282,8 +6282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c227f0da9618e14ca0eb682341e9d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 5
-  InitMaxWaveCount: 1
+  _canUsedskillInitially: 1
+  _initMaxVaue: 5
 --- !u!1 &1519512383810758956
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,8 +6526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d616efbdd8cbf824aac227cf0cebd5ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisions: []
-  IsReady: 0
+  _skillDecision: {fileID: 0}
+  _unvariableDecisions: []
 --- !u!114 &343659334846705608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6540,8 +6540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fca806893eee745bff35063df417e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 2
-  InitMaxHitCount: 3
+  _canUsedskillInitially: 1
+  _initMaxVaue: 5
 --- !u!1 &1795980452795138088
 GameObject:
   m_ObjectHideFlags: 0
@@ -8392,8 +8392,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 606348143627799951}
-  - component: {fileID: 461026594536553531}
   - component: {fileID: 615692305423048903}
+  - component: {fileID: 461026594536553531}
   m_Layer: 11
   m_Name: UltimateManager
   m_TagString: Untagged
@@ -8417,19 +8417,6 @@ Transform:
   - {fileID: 4659260669816035652}
   m_Father: {fileID: 62794630576868994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &461026594536553531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7389204510806917076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a47c08b9fa9ad0e4a94fa95340f41630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SkillUsedCount: 0
 --- !u!114 &615692305423048903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8452,6 +8439,19 @@ MonoBehaviour:
   OnDashEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &461026594536553531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7389204510806917076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47c08b9fa9ad0e4a94fa95340f41630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillUsedCount: 0
 --- !u!1 &7624625092596897888
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class LegionSoldierSlot : MonoBehaviour
 {
     private Image _icon;
+    public bool IsBonus = false;
 
     private void Awake()
     {
