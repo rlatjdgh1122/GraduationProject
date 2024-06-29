@@ -16,7 +16,9 @@ public class LegionPanel : PopupUI
     {
         base.Awake();
 
-        _soldierSlotList = GetComponentsInChildren<LegionSoldierSlot>().ToList();
+        _soldierSlotList = GetComponentsInChildren<LegionSoldierSlot>()
+                            .Where(slot => !slot.IsBonus)
+                            .ToList();
     }
 
     public void SetSlots(EntityInfoDataSO info)

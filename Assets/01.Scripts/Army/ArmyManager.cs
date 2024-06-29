@@ -8,6 +8,7 @@ public class ArmyManager : Singleton<ArmyManager>
 {
     [SerializeField] private List<Army> armies;
 
+    public General G;
     public List<Army> Armies { get { return armies; } }
 
     private int curArmyIdx = -1;
@@ -34,19 +35,23 @@ public class ArmyManager : Singleton<ArmyManager>
         if (armies.Count > 0)
             armies.Clear();
 
-        CreateArmy();
+        //CreateArmy();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            var army = CreateArmy();
+            var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
+            s.SetOwner(army);
+            army.General = s;
+            SignalHub.OnModifyCurArmy();
+        }
     }
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {
-        //여기부분 필요 없을수도
-        /*if (enemyArmy == null)
-        {
-            CurArmy.TargetEnemyArmy = null;
-            CurArmy.MovefocusMode = MovefocusMode.Command;
-            return;
-        }*/
-
         CurArmy.TargetEnemyArmy = enemyArmy;
         CurArmy.MovefocusMode = MovefocusMode.Battle;
     }
@@ -329,15 +334,6 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.IsArmyReady = false;
 
         armies.Add(newArmy);
-        GameObject followCam = new GameObject($"{newArmy.LegionName}Legion_FollowCam");
-        ArmyFollowCam armyFollowCam = new ArmyFollowCam();
-
-        //위치 초기화
-        followCam.transform.position = new Vector3(4.18f, 20f, 1.8f);
-
-        armyFollowCam.Obj = followCam;
-        newArmy.FollowCam = armyFollowCam;
-
         return newArmy;
     }
 

@@ -8392,8 +8392,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 606348143627799951}
+  - component: {fileID: 615692305423048903}
   - component: {fileID: 461026594536553531}
-  - component: {fileID: 2123348383157823338}
   m_Layer: 11
   m_Name: UltimateManager
   m_TagString: Untagged
@@ -8417,6 +8417,28 @@ Transform:
   - {fileID: 4659260669816035652}
   m_Father: {fileID: 62794630576868994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &615692305423048903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7389204510806917076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0933c83776ba0e47917c2222df9cebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAvaliable: 1
+  CanUseSkill: 0
+  _dashDelay: 0
+  canDash: 0
+  OnSlashEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &461026594536553531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8430,23 +8452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillUsedCount: 0
---- !u!114 &2123348383157823338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7389204510806917076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c57fd500ad5b83640b3eb61507b01869, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsAvaliable: 1
-  CanUseSkill: 0
-  OnSpawnPrisonEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7624625092596897888
 GameObject:
   m_ObjectHideFlags: 0

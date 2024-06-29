@@ -1,11 +1,8 @@
 using Define;
 using DG.Tweening;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public static class ExtensionMethod
 {
@@ -19,8 +16,18 @@ public static class ExtensionMethod
 
     #region Dictionary
 
-    public static void TryClear<key, value>(this Dictionary<key, value> dic)
+    public static void TryClear<key, value>(this Dictionary<key, value> dic, Action<value> action = null)
     {
+        if (action != null)
+        {
+            foreach (var item in dic)
+            {
+                action?.Invoke(item.Value);
+            }
+
+        }//end if
+         
+
         if (dic.Count > 0) dic.Clear();
     }
 
@@ -106,8 +113,16 @@ public static class ExtensionMethod
     }
 
 
-    public static void TryClear<T>(this List<T> list)
+    public static void TryClear<T>(this List<T> list, Action<T> action = null)
     {
+        if (action != null)
+        {
+            foreach (var item in list)
+            {
+                action?.Invoke(item);
+            }
+        } //end if
+
         if (list.Count > 0) list.Clear();
     }
 

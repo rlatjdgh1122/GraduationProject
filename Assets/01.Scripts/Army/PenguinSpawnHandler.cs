@@ -4,6 +4,7 @@ using UnityEngine;
 public class PenguinSpawnHandler : MonoBehaviour
 {
     private Coroutine _spawnDummyPenguinCorouine = null;
+    public bool Test = true;
 
     private void Awake()
     {
@@ -15,6 +16,9 @@ public class PenguinSpawnHandler : MonoBehaviour
     /// </summary>
     private void DummyToPenguinSwapHandler()
     {
+        if (Test) return;
+
+
         if (_spawnDummyPenguinCorouine != null)
             StopCoroutine(_spawnDummyPenguinCorouine);
 
@@ -53,6 +57,8 @@ public class PenguinSpawnHandler : MonoBehaviour
     /// </summary>
     private void PenguinToDummySwapHandler()
     {
+        if (Test) return;
+
         var soldierPenguinList = PenguinManager.Instance.SoldierPenguinList;
 
         foreach (var penguin in soldierPenguinList)
