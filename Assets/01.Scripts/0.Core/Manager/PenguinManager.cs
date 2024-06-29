@@ -87,6 +87,7 @@ public class PenguinManager
     public int SoldierPenguinCount => SoldierPenguinList.Count;
     #endregion
 
+    public DummyPenguinFactory DummyFactoryCompo { get; set; }
     public CameraSystem CameraCompo { get; set; }
     public DummyPenguinCamera DummyPenguinCameraCompo { get; set; }
 
@@ -94,6 +95,11 @@ public class PenguinManager
     private List<DummyPenguinListItem> _itemDummyPenguinList = new();
 
     #region  GetComponent
+
+    public void GetComponent_DummyFactory(DummyPenguinFactory compo)
+    {
+        DummyFactoryCompo = compo;
+    }
     public void GetComponent_CameraSystem(CameraSystem compo)
     {
         CameraCompo = compo;
@@ -276,9 +282,24 @@ public class PenguinManager
 
         return resultDummy;
     }
+
+    public DummyPenguin FindDummyPenguin<T>(T info) where T : EntityInfoDataSO
+    {
+        return DummyFactoryCompo.FindDummyPenguin(info);
+    }
+
+    public T SpawnDummyPenguinHandler<T>(T dummyPenguin) where T : DummyPenguin
+    {
+        return DummyFactoryCompo.SpawnDummyPenguinHandler(dummyPenguin);
+    }
+
+    public void SpawnDummyPenguinByInfoData<T>(T info) where T : EntityInfoDataSO
+    {
+        DummyFactoryCompo.SpawnDummyPenguinByInfoData(info);
+    }
     #endregion
 
-    #region Penguin Return
+        #region Penguin Return
     public Penguin GetPenguinByInfoData(EntityInfoDataSO data)
     {
         Penguin resultPenguin = null;
