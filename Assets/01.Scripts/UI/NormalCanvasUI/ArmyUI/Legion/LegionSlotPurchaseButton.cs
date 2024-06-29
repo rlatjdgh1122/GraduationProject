@@ -19,7 +19,6 @@ public class LegionSlotPurchaseButton : MonoBehaviour
     private void Start()
     {
         _slot.gameObject.SetActive(false);
-
         _purchaseButton.onClick.AddListener(Purchase);
     }
 
