@@ -256,6 +256,7 @@ public class PenguinManager
     #endregion
 
     #region DummyPenguin Return
+
     public DummyPenguin GetDummyByInfoData(EntityInfoDataSO infoData)
     {
         DummyPenguin resultDummy = null;

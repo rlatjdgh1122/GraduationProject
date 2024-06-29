@@ -3,6 +3,12 @@ using SynergySystem;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 스탯 UI들을 관리해주는 클래스
+/// </summary>
+/// 1. 전투시작 시 선택된 모든 군단의 정보를 가져옴
+/// 2. 가져온 것을 바탕으로 UI를 생성
+/// 2-1. 처음에는 1군단이 선택되게
 public class StatusSlotContainer : MonoBehaviour
 {
     [SerializeField] private StatusSlotRegisterSO StatusSlotRegisterSO = null;
@@ -16,12 +22,13 @@ public class StatusSlotContainer : MonoBehaviour
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartEvent -= ApplyStatusSlot;
-        SignalHub.OnArmyChanged += OnChangedArmyHandler;
+        SignalHub.OnArmyChanged -= OnChangedArmyHandler;
     }
 
     private void Awake()
     {
         SignalHub.OnBattlePhaseStartEvent += ApplyStatusSlot;
+        SignalHub.OnArmyChanged += OnChangedArmyHandler;
     }
 
     private void Start()
@@ -48,6 +55,7 @@ public class StatusSlotContainer : MonoBehaviour
         foreach (var item in _armies)
         {
             StatusSlot slot = CreateSlot(item);
+            slot.SetArmy(item);
             slot.Init();
 
             _armyToSlotDic.Add(item, slot);

@@ -127,16 +127,7 @@ public class ArmyManager : Singleton<ArmyManager>
         armies.IdxExcept
             (
             Idx,
-
-            p => //선택된 군단은 아웃라인을 켜줌
-            {
-                //curArmy set battleMode
-                p.Soldiers.ForEach(s =>
-                {
-
-                });
-            },
-
+           null,
            p => //선택되지 않은 나머지 군단은 아웃라인을 켜줌
            {
                p.Soldiers.ForEach(s =>
@@ -234,7 +225,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var Army = armies[idx];
 
         obj.SetOwner(Army);
-        Army.Soldiers.Add(obj);
+        Army.AddSolider(obj);
 
         if (Army.Ability != null)
         {
@@ -267,7 +258,8 @@ public class ArmyManager : Singleton<ArmyManager>
         }
 
         obj.SetOwner(Army);
-        Army.General = obj;
+        Army.AddGeneral(obj);
+
         var stat = obj.ReturnGenericStat<GeneralStat>();
 
 
@@ -310,12 +302,12 @@ public class ArmyManager : Singleton<ArmyManager>
 
             Army.Ability = null;
 
-            armies[idx].General = null;
+            armies[idx].RemoveGeneral();
         }
         else if (penguin is Penguin)
         {
             //군단 리스트에서 제외
-            Army.Soldiers.Remove(penguin);
+            Army.RemoveSolider(penguin);
 
             if (Army.Ability != null)
                 penguin.RemoveStat(Army.Ability);

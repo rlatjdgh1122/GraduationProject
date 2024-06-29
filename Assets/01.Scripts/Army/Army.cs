@@ -1,6 +1,7 @@
 using SynergySystem;
 using System;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace ArmySystem
@@ -12,7 +13,6 @@ namespace ArmySystem
 
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
-        public ArmyUIInfo Info; //정보
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들
         public General General = null; //장군
@@ -22,6 +22,7 @@ namespace ArmySystem
 
         public SkillController SkillController = null;
 
+        private ArmyUIInfo _info;
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
 
@@ -56,6 +57,18 @@ namespace ArmySystem
             {
                 OnLegionNameChanged?.Invoke(_legionName, value);
                 _legionName = value;
+                Info =;
+            }
+        }
+
+        public ArmyUIInfo Info  //정보
+        {
+            get => _info;
+
+            set
+            {
+                _info = value;
+                OnArmyUIInfoUpdated?.Invoke(_info);
             }
         }
 
@@ -65,22 +78,42 @@ namespace ArmySystem
 
         public OnValueUpdated<float> OnMoveSpeedUpdated = null;
         public OnValueChanged<string> OnLegionNameChanged = null;
+        public OnValueUpdated<ArmyUIInfo> OnArmyUIInfoUpdated = null;
 
         #endregion
 
         //장군이 추가될때
         //스킬이
 
+
+        public void AddSolider(Penguin penguin)
+        {
+            Soldiers.Add(penguin);
+
+            Info.AddCount();
+        }
+
         public void AddGeneral(General general)
         {
             General = general;
             SkillController = general.Skill.SkillController;
+
+            Info.AddCount();
+        }
+
+        public void RemoveSolider(Penguin penguin)
+        {
+            Soldiers.Remove(penguin);
+
+            Info.RemoveCount();
         }
 
         public void RemoveGeneral()
         {
             General = null;
             SkillController = null;
+
+            Info.RemoveCount();
         }
 
         #region Stat
