@@ -860,7 +860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15accef23a076847a9f092f04c15ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 1
   _canUsedskillInitially: 1
   _initMaxVaue: 5
 --- !u!1 &2932027695112230104
@@ -1279,12 +1278,12 @@ GameObject:
   - component: {fileID: 1259662200772309469}
   - component: {fileID: 6754457386563218381}
   - component: {fileID: 1220039262539490087}
-  - component: {fileID: 9191769746117047965}
   - component: {fileID: 3272370833692327550}
   - component: {fileID: 8779371958052094014}
   - component: {fileID: 4462256570231873784}
   - component: {fileID: 2921526320681223402}
   - component: {fileID: 7486456667509507464}
+  - component: {fileID: 5533250412365201003}
   m_Layer: 11
   m_Name: LanceGeneralPenguin
   m_TagString: Untagged
@@ -1317,6 +1316,7 @@ Transform:
   - {fileID: 6867260167692335180}
   - {fileID: 3584663933594753014}
   - {fileID: 3401559308091731944}
+  - {fileID: 5052645130802007776}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1259662200772309469
@@ -1421,22 +1421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f0b49ab804d8e4ab7bb886c7dd5143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9191769746117047965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4420975851131247216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9896306ed17fc8a40b1819cd5ce85f24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HitPoint: {x: 0, y: 0, z: 0}
-  HitNormal: {x: 0, y: 0, z: 0}
-  HitType: 0
-  HitTarget: {fileID: 0}
 --- !u!143 &3272370833692327550
 CharacterController:
   m_ObjectHideFlags: 0
@@ -7111,6 +7095,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5533250412365201003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4420975851131247216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7acff38ff3d7949b6c77280103755c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _truck: {fileID: 0}
+  _truckPos: {fileID: 0}
 --- !u!1 &4488488979108740553
 GameObject:
   m_ObjectHideFlags: 0
@@ -7508,6 +7506,50 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5368302605227699721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5052645130802007776}
+  - component: {fileID: 7966867783419094646}
+  m_Layer: 0
+  m_Name: LanceUltTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5052645130802007776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368302605227699721}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1803484644075588461}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7966867783419094646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368302605227699721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57703ef9ce401cb46b3c68457a64525e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5541065216844836969
 GameObject:
   m_ObjectHideFlags: 0
@@ -8191,7 +8233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c227f0da9618e14ca0eb682341e9d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 5
   _canUsedskillInitially: 1
   _initMaxVaue: 5
 --- !u!1 &6733581184728388741
@@ -8462,6 +8503,7 @@ Transform:
   m_Children:
   - {fileID: 3129340068198663652}
   - {fileID: 5686944121921955009}
+  - {fileID: 2548103746084344125}
   m_Father: {fileID: 1803484644075588461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5225723269430086154
@@ -8591,6 +8633,37 @@ Transform:
   - {fileID: 76918067074538724}
   m_Father: {fileID: 4166766108630044887}
   m_LocalEulerAnglesHint: {x: 17.852385, y: 3.8657768, z: 23.80725}
+--- !u!1 &7748428322090402495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2548103746084344125}
+  m_Layer: 0
+  m_Name: TruckPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2548103746084344125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748428322090402495}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6866142751908429840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7792989972182563103
 GameObject:
   m_ObjectHideFlags: 0

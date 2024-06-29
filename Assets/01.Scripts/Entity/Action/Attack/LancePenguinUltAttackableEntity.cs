@@ -5,8 +5,8 @@ using UnityEngine;
 public class LancePenguinUltAttackableEntity : EntityAttackData
 {
     [Header("MagicAttack Info")]
-    [SerializeField] private LanceUltTruck _lanceUltTruck;
-    [SerializeField] private Transform _spawnPos;
+    [SerializeField] private LanceUltTruck _truck;
+    [SerializeField] private Transform _truckPos;
 
     protected override void Awake()
     {
@@ -15,11 +15,11 @@ public class LancePenguinUltAttackableEntity : EntityAttackData
 
     public override void TruckAttack(Vector3 mousePos)
     {
-        _spawnPos.LookAt(new Vector3(0, mousePos.y, 0));
+        _truckPos.LookAt(mousePos);
 
-        LanceUltTruck truck = PoolManager.Instance.Pop(_lanceUltTruck.name) as LanceUltTruck;
-        
+        LanceUltTruck truck = Instantiate(_truck, _truckPos.transform.position, _truckPos.transform.rotation);
+
         truck.Setting(owner, DamageCasterCompo.TargetLayer);
-        truck.TruckMove(mousePos);
+        truck.TruckMove();
     }
 }
