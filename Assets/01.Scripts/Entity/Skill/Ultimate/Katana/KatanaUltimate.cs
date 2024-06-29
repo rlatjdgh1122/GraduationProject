@@ -13,7 +13,7 @@ public class KatanaUltimate : Skill
     {
         base.SetOwner(owner);
 
-        _changeVolume = FindAnyObjectByType<ChangeVolume>();
+        _changeVolume = FindAnyObjectByType<ChangeVolume>(); // 스레기같은 방법이니까 나중에 바꿔야됨
     }
 
     public override void PlaySkill()
