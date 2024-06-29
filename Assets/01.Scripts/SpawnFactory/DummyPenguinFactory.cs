@@ -6,6 +6,16 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
     protected int spawnZIdx = 0;
     protected int spawnXIdx = 0;
 
+    private List<DummyPenguin> _dummyPenguinList = new();
+
+    private void Awake()
+    {
+        PenguinManager.Instance.GetComponent_DummyFactory(this);
+
+        var penguin = Resources.LoadAll<DummyPenguin>("PenguinPrefab/Dummy");
+        _dummyPenguinList = new(penguin);
+    }
+
     private void OnEnable()
     {
         SignalHub.OnGroundArrivedEvent += ResetPTInfo;
@@ -14,6 +24,11 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
     public void OnDisable()
     {
         SignalHub.OnGroundArrivedEvent -= ResetPTInfo;
+    }
+
+    public DummyPenguin FindDummyPenguin<T>(T info) where T : EntityInfoDataSO
+    {
+        return _dummyPenguinList.Find(penguin => penguin.NotCloneInfo.PenguinType == info.PenguinType);
     }
 
     /// <summary>

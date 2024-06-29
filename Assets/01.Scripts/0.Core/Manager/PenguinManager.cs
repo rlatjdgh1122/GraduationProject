@@ -87,6 +87,7 @@ public class PenguinManager
     public int SoldierPenguinCount => SoldierPenguinList.Count;
     #endregion
 
+    public DummyPenguinFactory DummyFactoryCompo { get; set; }
     public CameraSystem CameraCompo { get; set; }
     public DummyPenguinCamera DummyPenguinCameraCompo { get; set; }
 
@@ -94,6 +95,11 @@ public class PenguinManager
     private List<DummyPenguinListItem> _itemDummyPenguinList = new();
 
     #region  GetComponent
+
+    public void GetComponent_DummyFactory(DummyPenguinFactory compo)
+    {
+        DummyFactoryCompo = compo;
+    }
     public void GetComponent_CameraSystem(CameraSystem compo)
     {
         CameraCompo = compo;
