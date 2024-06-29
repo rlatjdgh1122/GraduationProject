@@ -21,7 +21,7 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
         _previousElementsPositions.Clear();
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
-                                                              _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
+                                                              GetSpawnEnemis(),
                                                               _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
                                                               _comingObjIncreaseRateDataSO,
                                                               _enemyArmySpawnPatternsSO);
@@ -34,5 +34,12 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
         //                                                         _comingElementsDataSO.BossRewardPrefab.name);
 
         return new ComingElements(enemyConfigurer.SetEnemy(_previousElementsPositions));
+    }
+
+    protected string[] GetSpawnEnemis()
+    {
+        int spawnEnemisType = (int)(WaveManager.Instance.CurrentWaveCount * 0.1f);
+
+        return _comingElementsDataSO.Enmies[spawnEnemisType].Select(prefab => prefab.name).ToArray();
     }
 }

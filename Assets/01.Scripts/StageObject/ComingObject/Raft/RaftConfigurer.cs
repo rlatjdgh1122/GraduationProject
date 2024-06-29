@@ -12,7 +12,7 @@ public class RaftConfigurer : ComingObjectConfigurer
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer
         (
             groundTrm,
-            _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
+            GetSpawnEnemis(),
             null,
             _comingObjIncreaseRateDataSO,
             _enemyArmySpawnPatternsSO

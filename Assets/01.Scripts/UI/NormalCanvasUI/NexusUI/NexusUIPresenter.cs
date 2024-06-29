@@ -72,10 +72,12 @@ public class NexusUIPresenter : NexusPopupUI
         }
     }
 
-    public void OnAdmitBuildingPanel()
+    public void OnAdmitDefenseBuildingPanel()
     {
-        UIManager.Instance.ShowPanel("BuildingPanel");
+        UIManager.Instance.ShowPanel("DefenceBuildingPanel");
+
         UIManager.Instance.HidePanel("NexusPanel");
+        UIManager.Instance.HidePanel("SynergyBuildingPanel");
         //UIManager.Instance.MovePanel("NexusPanel", -2500, 0, 0.7f);
         //UIManager.Instance.MovePanel("BuildingPanel", 0, 0, 0.7f);
     }
@@ -83,9 +85,19 @@ public class NexusUIPresenter : NexusPopupUI
     public void OnAdmitNexusPanel()
     {
         UIManager.Instance.ShowPanel("NexusPanel");
-        UIManager.Instance.HidePanel("BuildingPanel");
+
+        UIManager.Instance.HidePanel("DefenceBuildingPanel");
+        UIManager.Instance.HidePanel("SynergyBuildingPanel");
         //UIManager.Instance.MovePanel("NexusPanel", 0, 0, 0.7f);
         //UIManager.Instance.MovePanel("BuildingPanel", 2500, 0, 0.7f);
+    }
+
+    public void OnAdmitSynergyBuildingPanel()
+    {
+        UIManager.Instance.ShowPanel("SynergyBuildingPanel");
+
+        UIManager.Instance.HidePanel("DefenceBuildingPanel");
+        UIManager.Instance.HidePanel("NexusPanel");
     }
     #endregion
 

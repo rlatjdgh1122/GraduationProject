@@ -66,7 +66,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private void OnEnable()
     {
         SignalHub.OnBattlePhaseEndEvent += ResetRotateHashSet;
-        SignalHub.OnGroundArrivedEvent += GenerateRaft;
         SignalHub.OnBattlePhaseStartPriorityEvent += GenerateGlacier;
     }
 
@@ -109,7 +108,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         makedHexagonCount++;
     }
 
-    private void GlacierSetPos()
+    private void SetGround(int i)
     {
         //transform.localRotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
         // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨
@@ -124,7 +123,13 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         curGround.SetComingObjectInfo(_groundConfigurer.SetComingObjectElements(curGround.transform),
                                       transform,
                                       groundPos);
+
         curGround.ActivateGround();
+
+        if(i  == 0) // 첫번째 빙하만 도착했을 때 raft생성하도록
+        {
+            curGround.GroundMove.GeneratBrokenGroundEvent += GenerateRaft;
+        }
     }
 
     private void GenerateGlacier()
@@ -136,9 +141,10 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         }
 
         int groundCount = GetGroundCount();
+
         for (int i = 0; i < groundCount; i++)
         {
-            GlacierSetPos();
+            SetGround(i);
         }
     }
 
@@ -194,7 +200,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         return rotateValue;
     }
 
-
     private int GetRaftCount()
     {
         int raftCount = 0;
@@ -246,7 +251,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         SignalHub.OnBattlePhaseEndEvent -= ResetRotateHashSet;
         SignalHub.OnBattlePhaseStartPriorityEvent -= GenerateGlacier;
-        SignalHub.OnGroundArrivedEvent -= GenerateRaft;
     }
 
     private void ResetRotateHashSet()

@@ -43,10 +43,10 @@ public abstract class BaseBuilding : WorkableObject
     private bool isInstalled = false;
     public bool IsInstalled => isInstalled;
 
-    private Material[] _meshNormalMats;
+    private Material[][] _meshNormalMats;
     protected MeshRenderer[] _meshRenderers;
 
-    private Material[] _skinNormalMats;
+    private Material[][] _skinNormalMats;
     protected SkinnedMeshRenderer[] _skinRenderers;
 
     private bool isInstalling = false;
@@ -80,17 +80,17 @@ public abstract class BaseBuilding : WorkableObject
         _meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         _skinRenderers = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        _meshNormalMats = new Material[_meshRenderers.Length];
-        _skinNormalMats = new Material[_skinRenderers.Length];
+        _meshNormalMats = new Material[_meshRenderers.Length][];
+        _skinNormalMats = new Material[_skinRenderers.Length][];
 
         for (int i = 0; i < _meshRenderers.Length; i++)
         {
-            _meshNormalMats[i] = _meshRenderers[i].material;
+            _meshNormalMats[i] = _meshRenderers[i].materials;
         }
 
         for (int i = 0; i < _skinRenderers.Length; i++)
         {
-            _skinNormalMats[i] = _skinRenderers[i].material;
+            _skinNormalMats[i] = _skinRenderers[i].materials;
         }
 
         BuildingInfoCompo.GridCompo = GetComponent<Grid>();
@@ -189,51 +189,90 @@ public abstract class BaseBuilding : WorkableObject
         {
             for (int i = 0; i < _meshRenderers.Length; i++)
             {
-                _meshRenderers[i].material = BuildingInfoCompo.GreenTransparencyMat;
+                Material[] mats = _meshRenderers[i].materials;
+                for (int j = 0; j < mats.Length; j++)
+                {
+                    mats[j] = BuildingInfoCompo.GreenTransparencyMat;
+                }
+                _meshRenderers[i].materials = mats;
             }
 
             for (int i = 0; i < _skinRenderers.Length; i++)
             {
-                _skinRenderers[i].material = BuildingInfoCompo.GreenTransparencyMat;
+                Material[] mats = _skinRenderers[i].materials;
+                for (int j = 0; j < mats.Length; j++)
+                {
+                    mats[j] = BuildingInfoCompo.GreenTransparencyMat;
+                }
+                _skinRenderers[i].materials = mats;
             }
         }
         else if (colorType == OutlineColorType.Red)
         {
             for (int i = 0; i < _meshRenderers.Length; i++)
             {
-                _meshRenderers[i].material = BuildingInfoCompo.RedTransparencyMat;
+                Material[] mats = _meshRenderers[i].materials;
+                for (int j = 0; j < mats.Length; j++)
+                {
+                    mats[j] = BuildingInfoCompo.RedTransparencyMat;
+                }
+                _meshRenderers[i].materials = mats;
             }
 
             for (int i = 0; i < _skinRenderers.Length; i++)
             {
-                _skinRenderers[i].material = BuildingInfoCompo.RedTransparencyMat;
+                Material[] mats = _skinRenderers[i].materials;
+                for (int j = 0; j < mats.Length; j++)
+                {
+                    mats[j] = BuildingInfoCompo.RedTransparencyMat;
+                }
+                _skinRenderers[i].materials = mats;
             }
         }
         else
         {
             for (int i = 0; i < _meshRenderers.Length; i++)
             {
-                _meshRenderers[i].material = BuildingInfoCompo.TransparencyMat;
+                Material[] mats = _meshRenderers[i].materials;
+                for (int j = 0; j < mats.Length; j++)
+                {
+                    mats[j] = BuildingInfoCompo.TransparencyMat;
+                }
+                _meshRenderers[i].materials = mats;
             }
 
             for (int i = 0; i < _skinRenderers.Length; i++)
             {
-                _skinRenderers[i].material = BuildingInfoCompo.TransparencyMat;
+                Material[] mats = _skinRenderers[i].materials;
+                for (int j = 0; j < mats.Length; j++)
+                {
+                    mats[j] = BuildingInfoCompo.TransparencyMat;
+                }
+                _skinRenderers[i].materials = mats;
             }
         }
-
     }
 
     public void MatChangeToNormal()
     {
         for (int i = 0; i < _meshRenderers.Length; i++)
         {
-            _meshRenderers[i].material = _meshNormalMats[i];
+            Material[] mats = _meshRenderers[i].materials;
+            for (int j = 0; j < mats.Length; j++)
+            {
+                mats[j] = _meshNormalMats[i][j];
+            }
+            _meshRenderers[i].materials = mats;
         }
 
         for (int i = 0; i < _skinRenderers.Length; i++)
         {
-            _skinRenderers[i].material = _skinNormalMats[i];
+            Material[] mats = _skinRenderers[i].materials;
+            for (int j = 0; j < mats.Length; j++)
+            {
+                mats[j] = _meshNormalMats[i][j];
+            }
+            _skinRenderers[i].materials = mats;
         }
     }
 

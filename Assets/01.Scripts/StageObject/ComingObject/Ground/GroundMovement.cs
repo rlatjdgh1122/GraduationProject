@@ -10,6 +10,9 @@ public class GroundMovement : ComingObjetMovement
     [SerializeField] private GameObject _groundHitEffect;
 
     private Ground _ground;
+
+    public event System.Action GeneratBrokenGroundEvent;
+
     protected override void Awake()
     {
         base.Awake();
@@ -37,17 +40,20 @@ public class GroundMovement : ComingObjetMovement
     {
         _groundHitEffect = Instantiate(_groundHitEffect, GetClosestPointToCenter(), Quaternion.LookRotation(transform.position - GetClosestPointToCenter()));
         
-        SoundManager.Play2DSound(SoundName.GroundHit);
-
         Define.CamDefine.Cam.ShakeCam.enabled = true;
         Define.CamDefine.Cam.ShakeCam.m_Lens.FieldOfView = Define.CamDefine.Cam.MainCam.fieldOfView;
 
         // 부딪힐 때 이펙트 / 카메라 쉐이크 + 사운드
         CoroutineUtil.CallWaitForSeconds(.5f, () => Define.CamDefine.Cam.ShakeCam.enabled = false);
+        SoundManager.Play2DSound(SoundName.GroundHit);
 
         NavmeshManager.Instance.NavmeshBake();
         SignalHub.OnGroundArrivedEvent?.Invoke();
         _ground.ActivateEnemies(); //이거
+        // 만약 첫번째 땅이라면 부숴진 빙하 생성
+        GeneratBrokenGroundEvent?.Invoke();
+        // 액션 초기화
+        GeneratBrokenGroundEvent = null;
         //CoroutineUtil.CallWaitForSeconds(0.1f, null, () => SignalHub.OnGroundArrivedEvent?.Invoke());
 
         CoroutineUtil.CallWaitForSeconds(.5f, () => Destroy(_groundHitEffect));

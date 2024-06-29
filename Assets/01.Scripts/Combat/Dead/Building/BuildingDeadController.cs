@@ -12,7 +12,7 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
     [SerializeField]
     private Transform _nonBrokenBuilding;
     [SerializeField]
-    private DeadBuillding _brokenBuilding;
+    private DeadBuilding _brokenBuilding;
 
     private void Awake()
     {

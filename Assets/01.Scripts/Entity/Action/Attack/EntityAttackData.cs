@@ -48,6 +48,11 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
+    public virtual void TruckAttack(Vector3 mousePos)
+    {
+
+    }
+
     public virtual void SpecialAttack(float aFewTimes)
     {
 

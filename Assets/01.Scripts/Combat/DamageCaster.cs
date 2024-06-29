@@ -104,12 +104,14 @@ public class DamageCaster : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 찌르기 광역 공격
+    /// </summary>
     public void CasePrickDamage(float knbValue = 0f, float stunValue = 0f)
     {
         Vector3 capsuleStart = transform.position;
         Vector3 capsuleEnd = transform.position + transform.forward * 7f;
         float capsuleRadius = 1f;
-        Debug.Log($"시작점 : {capsuleStart}, 끝 지점 : {capsuleEnd}, 부모 : {transform.parent}");
 
         var Colls = Physics.OverlapCapsule(capsuleStart, capsuleEnd, capsuleRadius, TargetLayer);
 

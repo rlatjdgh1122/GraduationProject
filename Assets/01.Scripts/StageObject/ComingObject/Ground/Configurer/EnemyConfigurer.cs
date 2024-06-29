@@ -50,7 +50,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
         int randomIdx;
 
-        if (WaveManager.Instance.CurrentWaveCount < 5) // 튜토리얼이면 자폭병 안 나오게
+        if (curWave < 5) // 튜토리얼이면 자폭병 안 나오게
         {
             randomIdx = Random.Range(0, _enemyNames.Length - 1);
         }
@@ -74,7 +74,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
         EnemyArmyManager.Instance.CreateArmy(spawnedEnemies);
         SetEnemyPos(spawnedEnemies);
-
+        Debug.Log($"{curWave}: {spawnedEnemies.Count}");
         return spawnedEnemies;
     }
 
@@ -87,7 +87,10 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
     private int GetRandomEnemyCount()
     {
-        int maxEnemyCount = 0;      
+        int maxEnemyCount = 0;
+        int minEnemyCount = (int)(curWave * 0.335f); // 3라운드쯤마다 최소 생성되는 펭귄의 수도 1씩 늘어남
+
+        if(minEnemyCount < 2) { minEnemyCount = 2; } //최소 2마리는 나오게 함
 
         if (curWave % 5 == 0) // 보스 웨이브면
         {
@@ -98,7 +101,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
             maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate);
         }
 
-        return maxEnemyCount >= 2 ? Random.Range(2, maxEnemyCount) : 2; //최소 2마리는 나오게 함
+        return Random.Range(minEnemyCount, maxEnemyCount); 
     }
 
     private void SetEnemyPos(List<Enemy> spawnEnemies)

@@ -86,7 +86,7 @@ public class InstallSystem : MonoBehaviour
         _cancelInstallBuildingText.gameObject.SetActive(true); // 설치 취소 안내 텍스트 켜줌
     }
 
-    private void StopInstall() // 설치가 끝나거나 esc를 눌러 취소하면 실행되는 함수
+    private void StopInstall() // 설치가 끝나거나 x를 눌러 취소하면 실행되는 함수
     {
         selectedBuildingIDX = -1; // idx 바꿔주고
 
@@ -174,13 +174,12 @@ public class InstallSystem : MonoBehaviour
 
             Ground curGround = _groundDic[hashCode];
 
-            //if (_previousGround == null ||
-            //    curGround != _previousGround)
-            //{
-            //    _previousGround?.UpdateOutlineColor(OutlineColorType.None);
-            //}
+            if (_previousGround == null ||
+                curGround != _previousGround)
+            {
+                UpdateGroundColor(curGround);
+            }
 
-            // 
             if (_curBuilding.BuildingItemInfoCompo.BuildingTypeEnum == // 함정 건물이면 그냥 마우스 따라가게 
                 BuildingType.Trap)
             {
@@ -190,7 +189,6 @@ public class InstallSystem : MonoBehaviour
             else
             {
                 MoveSelectBuilding(curGround);
-                UpdateGroundColor(curGround);
             }
 
             _previousGround = curGround;

@@ -110,17 +110,12 @@ public class Ground : MonoBehaviour, IComingObject
 
     public void SetEnemies(List<Enemy> enemies)
     {
-        if (_enemies.Count > 0) _enemies.Clear();
+        if (_enemies.Count > 0) { _enemies.Clear(); }
         _enemies = enemies;
     }
 
     private void OnBattleEnd()
     {
-        foreach (var enemy in _enemies)
-        {
-            PoolManager.Instance.Push(enemy);
-        }
-
         SignalHub.OnBattlePhaseStartEvent -= GroundMoveHandler;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
         //SignalHub.OnGroundArrivedEvent -= ActivateEnemies;

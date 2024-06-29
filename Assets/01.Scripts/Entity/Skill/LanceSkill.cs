@@ -20,7 +20,7 @@ public class LanceSkill : Skill
 
     public override void PlaySkill()
     {
-        Prick(_prickDelay);   
+        Prick(_prickDelay);
     }
 
     public void Prick(float delay)

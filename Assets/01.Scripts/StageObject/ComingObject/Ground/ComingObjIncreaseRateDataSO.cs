@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/ComingObj")]
 public class ComingObjIncreaseRateDataSO : ScriptableObject
-{
+{ 
     [SerializeField]
     [Tooltip("최대 curWave * commonEnemyIncreaseRate를 내림 한 만큼 적이 온다.")]
     private float commonEnemyIncreaseRate;

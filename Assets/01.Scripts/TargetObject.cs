@@ -34,7 +34,6 @@ public abstract class TargetObject : PoolableMono
     }
     public Health HealthCompo { get; private set; }
 
-
     private IDeadable _deadCompo = null;
 
     private Transform nexusTrm = null;

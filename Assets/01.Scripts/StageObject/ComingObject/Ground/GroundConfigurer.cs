@@ -12,7 +12,7 @@ public class GroundConfigurer : ComingObjectConfigurer
         _previousElementsPositions.Clear();
 
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
-                                                              _comingElementsDataSO.EnemiesList.Select(prefab => prefab.name).ToArray(),
+                                                              GetSpawnEnemis(),
                                                               _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
                                                               _comingObjIncreaseRateDataSO,
                                                               _enemyArmySpawnPatternsSO);
