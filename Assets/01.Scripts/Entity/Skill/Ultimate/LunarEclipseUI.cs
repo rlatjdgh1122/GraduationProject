@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class LunarEclipseUI : MonoBehaviour
+public class LunarEclipseUI : WorldUI
 {
     [SerializeField]
     private Color _beforeGlow;
@@ -22,14 +22,17 @@ public class LunarEclipseUI : MonoBehaviour
 
     [SerializeField] private float _duration;
 
-    private CanvasGroup _canvasGroup;
-
     [SerializeField]
     private UnityEvent OnEndEclipseEvent;
 
-    private void Awake()
+    public override void Update()
     {
-        _canvasGroup = GetComponent<CanvasGroup>();
+        base.Update();
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            StartEclipse();
+        }
     }
 
     public void StartEclipse()
@@ -37,7 +40,7 @@ public class LunarEclipseUI : MonoBehaviour
         UIManager.Instance.InitializHudTextSequence();
 
         UIManager.Instance.HudTextSequence
-            .Append(_canvasGroup.DOFade(1, 0.7f))
+            .Append(canvas.DOFade(1, 0.7f))
             .Join(_redMoonImage.DOFade(1, 0.5f))
             .Join(_redMoonImage.transform.DOLocalMoveX(0, _duration))
             .Join(_redMoonImage.DOColor(Color.white, 7f))
@@ -57,7 +60,7 @@ public class LunarEclipseUI : MonoBehaviour
             .Join(_redMoonImage.transform.DOLocalMoveX(_localMoveXValue, duration))
             .Join(_glowImge.DOColor(_beforeGlow, duration))
             .Join(_redMoonImage.DOColor(Color.black, 7f))
-            .Join(_canvasGroup.DOFade(0, duration))
+            .Join(canvas.DOFade(0, duration))
             .Append(_redMoonImage.transform.DOLocalMoveX(-_localMoveXValue,0)); //다시 원래 자리로 옮기기
     }
 }

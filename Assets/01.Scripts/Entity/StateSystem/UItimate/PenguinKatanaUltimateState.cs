@@ -13,7 +13,7 @@ public class PenguinKatanaUltimateState : State
 
     public override void EnterState()
     {
-        base.EnterState();
+        //base.EnterState();
 
         //prevMode = _penguin.MyArmy.MovefocusMode;
         //_penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
@@ -21,7 +21,7 @@ public class PenguinKatanaUltimateState : State
 
         //_penguin.LookTargetImmediately();
 
-        _triggerCalled = false;
+        //_triggerCalled = false;
         General.Ultimate.PlaySkill();
 
         if (_penguin.IsTargetInAttackRange)
@@ -37,7 +37,7 @@ public class PenguinKatanaUltimateState : State
     public override void ExitState()
     {
         //_penguin.MyArmy.MovefocusMode = prevMode;
-
-        base.ExitState();
+        Debug.Log("ExitState");
+        //base.ExitState();
     }
 }
