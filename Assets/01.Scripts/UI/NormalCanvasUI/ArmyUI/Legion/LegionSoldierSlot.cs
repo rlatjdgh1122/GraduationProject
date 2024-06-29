@@ -15,9 +15,7 @@ public class LegionSoldierSlot : MonoBehaviour
 
     public void SetSlot(EntityInfoDataSO info)
     {
-        DummyPenguin penguin = PenguinManager.Instance.DummyFactoryCompo.FindDummyPenguin(info);
-        Debug.Log($"SetSlot : { penguin.GetInstanceID()}");
-        PenguinManager.Instance.DummyFactoryCompo.SpawnDummyPenguinHandler(penguin);
+        PenguinManager.Instance.SpawnDummyPenguinByInfoData(info);
 
         _icon.gameObject.SetActive(true);
         _icon.sprite = info.PenguinIcon;
