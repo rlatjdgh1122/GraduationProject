@@ -24,9 +24,11 @@ public class LegionSlotPurchaseButton : MonoBehaviour
 
     private void Purchase()
     {
-        CostManager.Instance.SubtractFromCurrentCost(350);
-        _slot.gameObject.SetActive(true);
-        _legionPanel.SoldierSlotList.Add(_slot);
-        _slot.SetSlot(_legionPanel.SoldierlInfo);
+        CostManager.Instance.SubtractFromCurrentCost(350, () =>
+        {
+            _slot.gameObject.SetActive(true);
+            _legionPanel.SoldierSlotList.Add(_slot);
+            _slot.SetSlot(_legionPanel.SoldierlInfo);
+        });
     }
 }

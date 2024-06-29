@@ -11,18 +11,7 @@ public class CostManager : Singleton<CostManager>
 {
     private float _currentCost;
 
-    public float Cost
-    {
-        get
-        {
-            return _currentCost;
-        }
-        set
-        {
-            _currentCost = value;
-            _costUI.OnlyCurrentCostView(value);
-        }
-    }
+    public float Cost => _currentCost;
 
     [SerializeField] private SoundName _buySound = SoundName.Buy;
 
@@ -37,15 +26,22 @@ public class CostManager : Singleton<CostManager>
 
         _costUI = FindObjectOfType<CostUI>();
 
-        Cost = _defaultCost;
-        _costUI.OnlyCurrentCostView(Cost);
+        AddFromCurrentCost(_defaultCost);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            AddFromCurrentCost(100);
+        }
     }
 
     /// <summary>
     /// 현재 재화에서 가격을 빼주기
     /// </summary>
     /// <param name="price">가격</param>
-    public void SubtractFromCurrentCost(float price) //현재 재화에서 빼기
+    public void SubtractFromCurrentCost(float price, Action onSuccesAction = null) //현재 재화에서 빼기
     {
         if (!CheckRemainingCost(price))
         {
@@ -56,7 +52,9 @@ public class CostManager : Singleton<CostManager>
         SoundManager.Play2DSound(_buySound);
 
         _currentCost -= price;
-        _costUI.SubtractCost(-Mathf.Abs(price));
+        _costUI.ChangeCost();
+
+        onSuccesAction?.Invoke();
     }
 
     /// <summary>
@@ -86,7 +84,7 @@ public class CostManager : Singleton<CostManager>
         }
         else 
         {
-            _costUI.AddCost(value);
+            _costUI.ChangeCost();
             AddCost(value);
         }
     }

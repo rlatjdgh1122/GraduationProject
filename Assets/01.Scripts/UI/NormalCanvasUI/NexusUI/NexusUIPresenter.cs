@@ -57,11 +57,6 @@ public class NexusUIPresenter : NexusPopupUI
 
         _nexusUpgradePanel.ShowPanel();
         UpdateRecieverUI();
-
-        //if (TutorialManager.Instance.CurTutoQuestIdx == 4) //일단 퀘스트
-        //{
-        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);        
-        //}
     }
 
     public void UpdateRecieverUI()
