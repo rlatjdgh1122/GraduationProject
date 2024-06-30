@@ -29,17 +29,17 @@ public class StatusSlot : MonoBehaviour
 
     private void OnRegister()
     {
-        myArmy.OnArmyUIInfoChanged += OnUIInfoChangedHandler;
+        myArmy.OnArmyUIInfoUpdated += OnUIInfoUpdatedHandler;
     }
 
-   
+    private void OnUIInfoUpdatedHandler(ArmyUIInfo value)
+    {
+        
+    }
+
     protected void OffRegister()
     {
 
-    }
-    private void OnUIInfoChangedHandler(ArmyUIInfo prevValue, ArmyUIInfo curValue)
-    {
-        
     }
 
 

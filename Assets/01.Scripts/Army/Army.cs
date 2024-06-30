@@ -57,7 +57,6 @@ namespace ArmySystem
             {
                 OnLegionNameChanged?.Invoke(_legionName, value);
                 _legionName = value;
-                Info =;
             }
         }
 
@@ -90,6 +89,7 @@ namespace ArmySystem
         {
             Soldiers.Add(penguin);
 
+            OnArmyUIInfoUpdated = Info.OnValueUpdated;
             Info.AddCount();
         }
 
