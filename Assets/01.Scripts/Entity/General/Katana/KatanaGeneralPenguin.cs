@@ -41,7 +41,7 @@ public class KatanaGeneralPenguin : General
 
     public override void OnUltimateEvent()
     {
-
+        StateMachine.ChangeState(PenguinStateType.KatanaUltimate);
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();

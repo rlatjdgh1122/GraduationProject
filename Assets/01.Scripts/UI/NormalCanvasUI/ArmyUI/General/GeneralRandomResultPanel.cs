@@ -39,6 +39,8 @@ public class GeneralRandomResultPanel : ArmyComponentUI
         _ownGeneralList.Add(_currentGeneral);
         _generalList.Remove(_currentGeneral);
 
+        PenguinManager.Instance.SpawnDummyPenguinByInfoData(_currentGeneral.InfoData);
+
         _infoButton.onClick.AddListener(() => ShowGeneralInfo(_currentGeneral));
     }
 

@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 1
 --- !u!222 &5163158727040193708
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -386,18 +387,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 7263099487407230357}
           m_ObjectArgumentAssemblyTypeName: LegionPanel, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4470370406719211016}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -681,6 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 1
 --- !u!222 &9138874394519677255
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1491,6 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 0
 --- !u!222 &4537871279458446722
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1596,6 +1587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 0
 --- !u!222 &8323306670289869390
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1986,6 +1978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 1
 --- !u!222 &1218998155785847441
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2179,7 +2172,6 @@ MonoBehaviour:
   infoPanel: {fileID: 0}
   generalSlotPanel: {fileID: 0}
   factory: {fileID: 0}
-  legionGeneralSlot: {fileID: 0}
   GeneralData: {fileID: 11400000, guid: 64e0587224e8a5a41abef5e27cabfcc4, type: 2}
   Index: 0
 --- !u!222 &1205808463956375383
@@ -2957,7 +2949,6 @@ MonoBehaviour:
   infoPanel: {fileID: 0}
   generalSlotPanel: {fileID: 0}
   factory: {fileID: 0}
-  legionGeneralSlot: {fileID: 0}
   GeneralData: {fileID: 11400000, guid: 2991b4ac1e297aa42bf315927cd07597, type: 2}
   Index: 2
 --- !u!222 &7618872949574585659
@@ -3618,7 +3609,6 @@ MonoBehaviour:
   infoPanel: {fileID: 0}
   generalSlotPanel: {fileID: 0}
   factory: {fileID: 0}
-  legionGeneralSlot: {fileID: 0}
   GeneralInfo: {fileID: 0}
   _generalSlot: {fileID: 5493653901678868469}
 --- !u!222 &9154650980654553954
@@ -4381,7 +4371,6 @@ MonoBehaviour:
   infoPanel: {fileID: 0}
   generalSlotPanel: {fileID: 0}
   factory: {fileID: 0}
-  legionGeneralSlot: {fileID: 0}
   GeneralData: {fileID: 11400000, guid: af97d1f0f8cd79b41a58d33a8cfedd70, type: 2}
   Index: 1
 --- !u!222 &2363355964335613373
@@ -4591,6 +4580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 0
 --- !u!222 &4070997901329181323
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4906,6 +4896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 1
 --- !u!222 &5853004737219959875
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5221,6 +5212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 1
 --- !u!222 &5359656097098057053
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5401,6 +5393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 0
 --- !u!222 &6104767921365384838
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5656,6 +5649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 1
 --- !u!222 &3810276644022949405
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5859,6 +5853,7 @@ MonoBehaviour:
   _uiGroup: 0
   CurrentIndex: 0
   SoldierlInfo: {fileID: 0}
+  _lockedTrm: {fileID: 1500519006595493935}
 --- !u!222 &6797980180522186640
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6621,6 +6616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 0
 --- !u!222 &6186093361298860301
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6726,6 +6722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e221beddb7dc22e43a243538b0f6d60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBonus: 0
 --- !u!222 &5168405045458306281
 CanvasRenderer:
   m_ObjectHideFlags: 0

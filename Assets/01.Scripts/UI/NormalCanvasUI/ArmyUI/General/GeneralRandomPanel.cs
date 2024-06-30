@@ -19,8 +19,11 @@ public class GeneralRandomPanel : ArmyComponentUI
 
     public void StartGamble()
     {
-        ShowPanel();
-        MoveSlot();
+        CostManager.Instance.SubtractFromCurrentCost(1500, () =>
+        {
+            ShowPanel();
+            MoveSlot();
+        });
     }
 
     public void MoveSlot()

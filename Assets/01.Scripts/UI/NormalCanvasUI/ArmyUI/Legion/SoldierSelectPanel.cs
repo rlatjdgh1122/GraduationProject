@@ -16,15 +16,20 @@ public class SoldierSelectPanel : PopupUI
 
     public void Setting(LegionPanel legion)
     {
-        currentPanel = legion;
-
-        foreach (SoldierSelectSlot slot in _slots)
+        CostManager.Instance.SubtractFromCurrentCost(500 , () =>
         {
-            slot.parentPanel = this;
-            slot.SetButtonListener();
-        }
+            currentPanel = legion;
 
-        ShowPanel();
+            currentPanel.UnlockedLegion();
+
+            foreach (SoldierSelectSlot slot in _slots)
+            {
+                slot.parentPanel = this;
+                slot.SetButtonListener();
+            }
+
+            ShowPanel();
+        });
     }
 
     public override void HidePanel()

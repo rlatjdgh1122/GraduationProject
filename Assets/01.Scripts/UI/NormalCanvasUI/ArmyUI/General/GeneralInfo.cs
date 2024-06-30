@@ -15,13 +15,10 @@ public class GeneralInfo
 
     public void OnPurchase()
     {
-        if (CostManager.Instance.Cost >= _generalData.InfoData.Price)
+        CostManager.Instance.SubtractFromCurrentCost(_generalData.InfoData.Price, () =>
         {
             var spawnDummy = _penguinFactory.SpawnDummyPenguinHandler(_dummyPenguin);
             spawnDummy.Stat = _generalData;
-            //LegionInventoryManager.Instance.AddPenguin(_generalData.InfoData);
-
-            CostManager.Instance.Cost -= _generalData.InfoData.Price;
-        }
+        });
     }
 }

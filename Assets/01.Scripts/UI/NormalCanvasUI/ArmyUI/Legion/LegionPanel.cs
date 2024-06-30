@@ -12,12 +12,18 @@ public class LegionPanel : PopupUI
     private List<LegionSoldierSlot> _soldierSlotList;
     public List<LegionSoldierSlot> SoldierSlotList => _soldierSlotList;
 
+    [SerializeField] private RectTransform _lockedTrm;
+
     public override void Awake()
     {
         base.Awake();
 
-        _soldierSlotList = GetComponentsInChildren<LegionSoldierSlot>().ToList();
+        _soldierSlotList = GetComponentsInChildren<LegionSoldierSlot>()
+                            .Where(slot => !slot.IsBonus)
+                            .ToList();
     }
+
+    public void UnlockedLegion() => _lockedTrm.gameObject.SetActive(false);
 
     public void SetSlots(EntityInfoDataSO info)
     {

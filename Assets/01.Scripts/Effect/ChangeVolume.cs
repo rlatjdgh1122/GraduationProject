@@ -34,14 +34,6 @@ public class ChangeVolume : MonoBehaviour
 
     private Dictionary<VolumeType, Coroutine> _activeCoroutines = new Dictionary<VolumeType, Coroutine>();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            ChangeVolumeEffect(VolumeType.LunarEclipse, 3f);
-        }
-    }
-
     /// <summary>
     /// 현재 Volume을 바꾸고 싶은 Volume으로 Lerp 하면서 바뀜
     /// </summary>
