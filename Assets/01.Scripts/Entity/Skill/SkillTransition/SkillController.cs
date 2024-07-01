@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class SkillController : MonoBehaviour
 {
-
     [SerializeField] private SKillDecision _skillDecision = null;
     [SerializeField] private List<UnvariableSkillDecision> _unvariableDecisions = new();
 

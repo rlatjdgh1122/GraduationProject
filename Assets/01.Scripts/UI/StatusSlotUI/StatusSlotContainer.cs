@@ -1,7 +1,9 @@
 using ArmySystem;
+using SkillSystem;
 using SynergySystem;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 스탯 UI들을 관리해주는 클래스
@@ -11,10 +13,11 @@ using UnityEngine;
 /// 2-1. 처음에는 1군단이 선택되게
 public class StatusSlotContainer : MonoBehaviour
 {
-    [SerializeField] private StatusSlotRegisterSO StatusSlotRegisterSO = null;
-    [SerializeField] private SelectedStatusSlot _selectedStatusSlot = null;
+    [SerializeField] private StatusSlotRegisterSO statusSlotRegisterSO = null;
+    [SerializeField] private StatusSlot statusSlotPrefab = null;
+    [SerializeField] private Transform slotperentTrm = null;
 
-    private Dictionary<SynergyType, StatusSlot> _synergyTypeToSlotDic = new();
+    private Dictionary<SynergyType, Image> _synergyTypeToImageDic = new();
     private Dictionary<Army, StatusSlot> _armyToSlotDic = new();
 
     private List<Army> _armies => ArmyManager.Instance.Armies;
@@ -33,16 +36,16 @@ public class StatusSlotContainer : MonoBehaviour
 
     private void Start()
     {
-        foreach (var item in StatusSlotRegisterSO.Data)
+        foreach (var item in statusSlotRegisterSO.Data)
         {
-            _synergyTypeToSlotDic.Add(item.SynergyType, item.Slot);
+            _synergyTypeToImageDic.Add(item.SynergyType, item.SynergyImage);
 
         }//end foreach
     }
 
-    private void OnChangedArmyHandler(Army prevArmy, Army newArmy)
+    private void OnChangedArmyHandler(Army prevArmy, Army newArmy) //
     {
-        _selectedStatusSlot = _armyToSlotDic[newArmy] as SelectedStatusSlot;
+        //_selectedStatusSlot = _armyToSlotDic[newArmy] as SelectedStatusSlot;
     }
 
     private void ApplyStatusSlot()
@@ -60,7 +63,7 @@ public class StatusSlotContainer : MonoBehaviour
         {
             StatusSlot slot = CreateSlot(item);
             slot.Init();
-                
+
             _armyToSlotDic.Add(item, slot);
 
         }//end foreach
@@ -68,12 +71,13 @@ public class StatusSlotContainer : MonoBehaviour
 
     private StatusSlot CreateSlot(Army army)
     {
-        var newSlot = Instantiate(GetSlotBySynergyType(army.SynergyType), transform);
+        Image synergyIamge = GetSlotBySynergyType(army.SynergyType);
+        StatusSlot newSlot = Instantiate(statusSlotPrefab, slotperentTrm);
         army.GetInfo().Add(newSlot);
 
         return newSlot;
     }
 
-    private StatusSlot GetSlotBySynergyType(SynergyType type) => _synergyTypeToSlotDic[type];
+    private Image GetSlotBySynergyType(SynergyType type) => _synergyTypeToImageDic[type];
 
 }

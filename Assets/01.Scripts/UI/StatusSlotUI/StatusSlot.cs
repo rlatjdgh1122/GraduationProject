@@ -1,5 +1,6 @@
 using ArmySystem;
 using DG.Tweening;
+using SkillSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,11 +14,10 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     [SerializeField] protected Image skillImage = null;
     [SerializeField] protected Image ultimateImage = null;
 
-    [SerializeField] protected SkillUI skillUI = null;
-    [SerializeField] protected SkillUI UltimateUI = null;
+    protected DecisionType decision = DecisionType.None;
+    protected Image skill
 
     protected virtual void Awake() { }
-
 
     public virtual void Init()
     {
@@ -26,9 +26,10 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         UltimateUI.Init();
     }
 
-    public void ChangedValue(ArmyUIInfo n)
+    public virtual void ChangedValue(ArmyUIInfo newValue)
     {
-        //가지무침
-        Debug.Log(n.ArmyName);
+        synergyImage.sprite = newValue.SynergySprite;
+        skillImage.sprite = newValue.SkillSprite;
+        ultimateImage.sprite = newValue.UltimateSprite;
     }
 }

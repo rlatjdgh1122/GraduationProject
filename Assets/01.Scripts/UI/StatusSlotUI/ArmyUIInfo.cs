@@ -1,60 +1,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public interface IValueChanger<T>
+public class ArmyUIInfo : IValueChanger<ArmyUIInfo>
 {
+    public List<IValueChangeUnit<ArmyUIInfo>> Units { get; set; } = new();
 
-    public List<IValueChangeUnit<T>> Units { get; set; }
+    public ArmyUIInfo Value { get => this; }
 
-    public T Value
+    private string _armyName = string.Empty;   //이름 바뀔때마다 달라짐
+    private Sprite _synergySprite = null;      //처음에 병사에 따라 정해지고 장군이 있을때 바뀜
+    private Sprite _skillSprite = null;        //장군 바뀔때 바뀜
+    private Sprite _ultimateSprite = null;     //처음에 정해지고 안바뀜
+    private int _penguinCount = 0;             //군단 병사 수에 따라 달라짐
+
+
+    #region event property
+
+    public Sprite SynergySprite
     {
-        get;
-        set;
-    }
-
-    public void ChangedValue()
-    {
-
-        foreach (var item in Units)
+        get => _synergySprite;
+        set
         {
-
-            item.ChangedValue(Value);
-
+            _synergySprite = value;
+            (this as IValueChanger<ArmyUIInfo>).ChangedValue();
         }
     }
 
-    public void Add(IValueChangeUnit<T> v)
+    public Sprite SkillSprite
     {
-
-        Units.Add(v);
-
+        get => _skillSprite;
+        set
+        {
+            _skillSprite = value;
+            (this as IValueChanger<ArmyUIInfo>).ChangedValue();
+        }
     }
 
-    public void Remove(IValueChangeUnit<T> v)
+    public Sprite UltimateSprite
     {
-
-        Units.Remove(v);
-
+        get => _ultimateSprite;
+        set
+        {
+            _ultimateSprite = value;
+            (this as IValueChanger<ArmyUIInfo>).ChangedValue();
+        }
     }
 
-}
+    public int PenguinCount
+    {
+        get => _penguinCount;
+        set
+        {
+            _penguinCount = value;
+            (this as IValueChanger<ArmyUIInfo>).ChangedValue();
+        }
+    }
 
-public interface IValueChangeUnit<T>
-{
-    public void ChangedValue(T n);
-
-}
-
-public class ArmyUIInfo : IValueChanger<ArmyUIInfo>
-{
-    private string _armyName;
-
-    public Sprite SynergySprite = null; //처음에 병사에 따라 정해지고 장군이 있을때 바뀜
-    public Sprite SkillSprite = null; //장군 바뀔때 바뀜
-    public Sprite UltimateSprite = null; //처음에 정해지고 안바뀜
-    public int PenguinCount = 0; //군단 병사 수에 따라 달라짐
-    public string ArmyName  //이름 바뀔때마다 달라짐
+    public string ArmyName
     {
         get => _armyName;
         set
@@ -64,9 +66,7 @@ public class ArmyUIInfo : IValueChanger<ArmyUIInfo>
         }
     }
 
-    public List<IValueChangeUnit<ArmyUIInfo>> Units { get; set; } = new();
-
-    public ArmyUIInfo Value { get; set; } = null;
+    #endregion
 
     public void AddCount(int value = 1)
     {
