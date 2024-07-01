@@ -13,10 +13,13 @@ public class LegionSoldierSlot : MonoBehaviour
         _icon.gameObject.SetActive(false);
     }
 
-    public void SetSlot(EntityInfoDataSO info)
+    public void SetSlot(EntityInfoDataSO info, int idx)
     {
-        PenguinManager.Instance.SpawnDummyPenguinByInfoData(info);
+        DummyPenguin dummy = PenguinManager.Instance.SpawnDummyPenguinByInfoData(info);
+        Penguin penguin = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, idx);
+        PenguinManager.Instance.DummyToPenguinMapping(dummy, penguin);
 
+        ArmyManager.Instance.JoinArmyToSoldier("1±º´Ü", penguin);
         _icon.gameObject.SetActive(true);
         _icon.sprite = info.PenguinIcon;
     }

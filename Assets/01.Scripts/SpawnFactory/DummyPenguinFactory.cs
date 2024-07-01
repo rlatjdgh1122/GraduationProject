@@ -59,11 +59,11 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
         return spawnPenguin;
     }
 
-    public void SpawnDummyPenguinByInfoData<T>(T info) where T : EntityInfoDataSO
+    public DummyPenguin SpawnDummyPenguinByInfoData<T>(T info) where T : EntityInfoDataSO
     {
         var penguin = FindDummyPenguin(info);
 
-        SpawnDummyPenguinHandler(penguin);
+        return SpawnDummyPenguinHandler(penguin);
     }
     private void ResetPTInfo()
     {

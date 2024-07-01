@@ -35,7 +35,7 @@ public class ArmyManager : Singleton<ArmyManager>
         if (armies.Count > 0)
             armies.Clear();
 
-        //CreateArmy();
+        CreateArmy();
     }
 
     private void Update()

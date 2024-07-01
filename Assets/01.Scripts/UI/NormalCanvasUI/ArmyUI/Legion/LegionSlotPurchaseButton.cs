@@ -22,13 +22,13 @@ public class LegionSlotPurchaseButton : MonoBehaviour
         _purchaseButton.onClick.AddListener(Purchase);
     }
 
-    private void Purchase()
+    private void Purchase() //»õ½½·Ô Ãß°¡
     {
         CostManager.Instance.SubtractFromCurrentCost(350, () =>
         {
             _slot.gameObject.SetActive(true);
             _legionPanel.SoldierSlotList.Add(_slot);
-            _slot.SetSlot(_legionPanel.SoldierlInfo);
+            _slot.SetSlot(_legionPanel.SoldierlInfo,10);
         });
     }
 }
