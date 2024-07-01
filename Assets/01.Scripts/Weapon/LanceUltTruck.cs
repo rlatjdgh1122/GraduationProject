@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class LanceUltTruck : PoolableMono
 {
     [SerializeField]
     private float _truckSpeed;
-
+    private float _stunValue;
+    
+    private int _groundLayer = 0;
     private Rigidbody _rigid;
     private DamageCaster _damageCaster;
 
@@ -14,6 +17,15 @@ public class LanceUltTruck : PoolableMono
     {
         _rigid = GetComponent<Rigidbody>();
         _damageCaster = GetComponent<DamageCaster>();
+        _groundLayer = 1 << LayerMask.NameToLayer("Ground");
+    }
+
+    private void Update()
+    {
+        if (!IsPositionValid(transform.position))
+        {
+            StartCoroutine(WaterFallTruck());
+        }
     }
 
     public void Setting(Entity owner, LayerMask layer)
@@ -22,15 +34,30 @@ public class LanceUltTruck : PoolableMono
         _damageCaster.TargetLayer = layer;
     }
 
-    public void TruckMove(Vector3 mousePos)
+    private bool IsPositionValid(Vector3 position)
     {
-        StartCoroutine(WaitAnim(mousePos));
+        return Physics.Raycast(position, new Vector3(0, -1f, 0), 5f, _groundLayer);
     }
 
-    IEnumerator WaitAnim(Vector3 mousePos)
+    public void TruckMove()
     {
-        yield return new WaitForSeconds(1.3f);
-        _rigid.AddForce(mousePos * _truckSpeed, ForceMode.Impulse);
+        StartCoroutine(WaitForAnim());
+    }
+
+    IEnumerator WaterFallTruck()
+    {
+        _rigid.useGravity = true;
+
+        yield return new WaitForSeconds(1.5f);
+
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator WaitForAnim()
+    {
+        _rigid.AddForce(transform.forward * 4, ForceMode.Impulse);
+        yield return new WaitForSeconds(1.5f);
+        _rigid.AddForce(transform.forward * _truckSpeed, ForceMode.Impulse);
     }
 
     private void OnTriggerEnter(Collider coll)
@@ -43,10 +70,8 @@ public class LanceUltTruck : PoolableMono
 
     private void Explode()
     {
-        // 메테오 폭발 로직 추가
-        _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
-        //Destroy(this.gameObject);
-        PoolManager.Instance.Push(this);
+        // 트럭 폭발 로직 추가
+        _damageCaster.CastTruckDamage(_stunValue, transform.position, _damageCaster.TargetLayer);
+        Destroy(this.gameObject);
     }
 }
-

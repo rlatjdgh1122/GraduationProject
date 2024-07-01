@@ -44,5 +44,10 @@ public class LanceGeneralPenguin : General
         StateMachine.ChangeState(PenguinStateType.LanceSkill);
     }
 
+    public override void OnUltimateEvent()
+    {
+        StateMachine.ChangeState(PenguinStateType.LanceUltimate);
+    }
+
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }
