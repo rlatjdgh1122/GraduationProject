@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
+
+
 namespace ArmySystem
 {
+
+
     [System.Serializable]
     public class Army
     {
@@ -21,8 +25,8 @@ namespace ArmySystem
         public Ability Ability = null; //시너지 스탯
 
         public SkillController SkillController = null;
+        public ArmyUIInfo Info = new();
 
-        private ArmyUIInfo _info;
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
 
@@ -60,36 +64,26 @@ namespace ArmySystem
             }
         }
 
-        public ArmyUIInfo Info  //정보
-        {
-            get => _info;
-
-            set
-            {
-                _info = value;
-                OnArmyUIInfoUpdated?.Invoke(_info);
-            }
-        }
-
         #endregion
 
         #region EventHandler
 
         public OnValueUpdated<float> OnMoveSpeedUpdated = null;
         public OnValueChanged<string> OnLegionNameChanged = null;
-        public OnValueUpdated<ArmyUIInfo> OnArmyUIInfoUpdated = null;
 
         #endregion
 
         //장군이 추가될때
         //스킬이
 
+        public void AAA(string armyName)
+        {
+            Info.ArmyName = armyName;
+        }
 
         public void AddSolider(Penguin penguin)
         {
             Soldiers.Add(penguin);
-
-            OnArmyUIInfoUpdated = Info.OnValueUpdated;
             Info.AddCount();
         }
 
@@ -213,5 +207,9 @@ namespace ArmySystem
             return false;
         }
 
+        public IValueChanger<ArmyUIInfo> GetInfo()
+        {
+            return Info;
+        }
     }
 }

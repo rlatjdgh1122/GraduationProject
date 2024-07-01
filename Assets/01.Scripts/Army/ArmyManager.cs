@@ -48,6 +48,11 @@ public class ArmyManager : Singleton<ArmyManager>
             army.General = s;
             SignalHub.OnModifyCurArmy();
         }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            armies[0].AAA("최대원");
+        }
     }
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
@@ -324,6 +329,7 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.MoveSpeed = 4f;
         newArmy.LegionName = $"{ArmiesCount + 1}군단";
         newArmy.IsArmyReady = false;
+        newArmy.SynergyType = SynergySystem.SynergyType.Police;
 
         armies.Add(newArmy);
         return newArmy;

@@ -43,21 +43,24 @@ public class StatusSlotContainer : MonoBehaviour
     private void OnChangedArmyHandler(Army prevArmy, Army newArmy)
     {
         _selectedStatusSlot = _armyToSlotDic[newArmy] as SelectedStatusSlot;
-        _selectedStatusSlot.SetArmy(prevArmy);
     }
 
     private void ApplyStatusSlot()
     {
         //지금은 오브젝트를 삭제해주는데 나중에 UI만 체인지 되게
         //오브젝트 지우는건 _armies의 카운트가 이전 카운트보다 적을때만
-        _armyToSlotDic.TryClear(p => Destroy(p));
+        _armyToSlotDic.TryClear((k, v) =>
+        {
+            (k as IValueChanger<ArmyUIInfo>).Remove(v);
+            Destroy(v);
+
+        });
 
         foreach (var item in _armies)
         {
             StatusSlot slot = CreateSlot(item);
-            slot.SetArmy(item);
             slot.Init();
-
+                
             _armyToSlotDic.Add(item, slot);
 
         }//end foreach
@@ -65,8 +68,8 @@ public class StatusSlotContainer : MonoBehaviour
 
     private StatusSlot CreateSlot(Army army)
     {
-        var newSlot = GameObject.Instantiate(GetSlotBySynergyType(army.SynergyType), transform);
-        newSlot.SetArmy(army);
+        var newSlot = Instantiate(GetSlotBySynergyType(army.SynergyType), transform);
+        army.GetInfo().Add(newSlot);
 
         return newSlot;
     }

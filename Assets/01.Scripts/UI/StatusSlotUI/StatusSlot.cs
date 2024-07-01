@@ -7,40 +7,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatusSlot : MonoBehaviour
+public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 {
-    protected Army myArmy = null;
-
-    [SerializeField] protected Image synergyImage  = null;
-    [SerializeField] protected Image skillImage    = null;
+    [SerializeField] protected Image synergyImage = null;
+    [SerializeField] protected Image skillImage = null;
     [SerializeField] protected Image ultimateImage = null;
 
     [SerializeField] protected SkillUI skillUI = null;
     [SerializeField] protected SkillUI UltimateUI = null;
 
     protected virtual void Awake() { }
-
-    public void SetArmy(Army army)
-    {
-        myArmy = army;
-
-        OnRegister();
-    }
-
-    private void OnRegister()
-    {
-        myArmy.OnArmyUIInfoUpdated += OnUIInfoUpdatedHandler;
-    }
-
-    private void OnUIInfoUpdatedHandler(ArmyUIInfo value)
-    {
-        
-    }
-
-    protected void OffRegister()
-    {
-
-    }
 
 
     public virtual void Init()
@@ -50,5 +26,9 @@ public class StatusSlot : MonoBehaviour
         UltimateUI.Init();
     }
 
-
+    public void ChangedValue(ArmyUIInfo n)
+    {
+        //가지무침
+        Debug.Log(n.ArmyName);
+    }
 }
