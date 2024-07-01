@@ -8,8 +8,8 @@ public class SkillInput : MonoBehaviour
 
     private bool CanPlaySkill()
     {
-        return _curSelectGeneral != null &&
-               WaveManager.Instance.IsBattlePhase;
+        return _curSelectGeneral != null; /* && 디버깅 하기 위해 주석 처리함. 나중에는 주석 풀 것.
+               WaveManager.Instance.IsBattlePhase; */
     }
 
     private void OnEnable()
