@@ -6,6 +6,13 @@ using UnityEngine.Events;
 
 public class KatanaUltimate : Skill
 {
+    [Range(0, 100)]
+    [SerializeField]
+    private int buffValue;
+
+    [SerializeField]
+    private StatType _buffStatType;
+
     public UnityEvent OnStartEclipseEvent;
 
     private ChangeVolume _changeVolume;
@@ -26,5 +33,17 @@ public class KatanaUltimate : Skill
     {
         OnStartEclipseEvent?.Invoke();
         _changeVolume.ChangeVolumeEffect(VolumeType.LunarEclipse, 3f);
+        AddStat();
+        CoroutineUtil.CallWaitForSeconds(4, () => RemoveStat()); //LunarEclipseUI에서 4길래 4로 함
+    }
+
+    private void AddStat()
+    {
+        _myArmy.Soldiers.ForEach(s => s.Stat.AddStat(buffValue, _buffStatType, StatMode.Increase));
+    }
+
+    private void RemoveStat()
+    {
+        _myArmy.Soldiers.ForEach(s => s.Stat.RemoveStat(buffValue, _buffStatType, StatMode.Increase));
     }
 }
