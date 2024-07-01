@@ -39,11 +39,21 @@ public class KatanaUltimate : Skill
 
     private void AddStat()
     {
-        _myArmy.Soldiers.ForEach(s => s.Stat.AddStat(buffValue, _buffStatType, StatMode.Increase));
+        _myArmy.General.AddStat(buffValue, _buffStatType, StatMode.Increase);
+        foreach (Penguin penguin in _myArmy.Soldiers)
+        {
+            penguin.Stat.AddStat(buffValue, _buffStatType, StatMode.Increase);
+            //penguin.StrengthBuffEffect?.ParticleStart();
+        }
     }
 
     private void RemoveStat()
     {
-        _myArmy.Soldiers.ForEach(s => s.Stat.RemoveStat(buffValue, _buffStatType, StatMode.Increase));
+        _myArmy.General.RemoveStat(buffValue, _buffStatType, StatMode.Increase);
+        foreach (Penguin penguin in _myArmy.Soldiers)
+        {
+            penguin.Stat.RemoveStat(buffValue, _buffStatType, StatMode.Increase);
+            //penguin.StrengthBuffEffect?.ParticleStop();
+        }
     }
 }
