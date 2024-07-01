@@ -1,3 +1,4 @@
+using ArmySystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,14 @@ public class KatanaUltimate : Skill
 
     private ChangeVolume _changeVolume;
 
+    Army _myArmy = null;
+
     public override void SetOwner(Entity owner)
     {
         base.SetOwner(owner);
+
+        General general = owner as General;
+        _myArmy = general.MyArmy;
 
         _changeVolume = FindAnyObjectByType<ChangeVolume>(); // 스레기같은 방법이니까 나중에 바꿔야됨
     }
