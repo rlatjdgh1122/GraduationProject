@@ -27,7 +27,13 @@ public class ArmyManager : Singleton<ArmyManager>
     public int ArmiesCount => armies.Count;
 
     public Army CurArmy
-    => armies[curArmyIdx < 0 ? 0 : curArmyIdx];
+    {
+        get
+        {
+            if (armies.Count <= 0) return null;
+            return armies[curArmyIdx < 0 ? 0 : curArmyIdx];
+        }
+    }
 
 
     private void Start()
