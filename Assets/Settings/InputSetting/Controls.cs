@@ -35,6 +35,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill"",
+                    ""type"": ""Button"",
+                    ""id"": ""c612378a-eefe-46a1-9fb5-0504cbd94fad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ultimate"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca87ed93-f92c-41ae-9bd0-8eac4d52357b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -46,6 +64,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""MouseRightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1062a4e-a051-432a-a2c7-f2631d89c1c2"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ca7d5df-129f-4e99-92f3-010f3ff6b658"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""Ultimate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -162,6 +202,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Penguin
         m_Penguin = asset.FindActionMap("Penguin", throwIfNotFound: true);
         m_Penguin_MouseRightClick = m_Penguin.FindAction("MouseRightClick", throwIfNotFound: true);
+        m_Penguin_Skill = m_Penguin.FindAction("Skill", throwIfNotFound: true);
+        m_Penguin_Ultimate = m_Penguin.FindAction("Ultimate", throwIfNotFound: true);
         // Building
         m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
         m_Building_MouseLeftClick = m_Building.FindAction("MouseLeftClick", throwIfNotFound: true);
@@ -230,11 +272,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Penguin;
     private List<IPenguinActions> m_PenguinActionsCallbackInterfaces = new List<IPenguinActions>();
     private readonly InputAction m_Penguin_MouseRightClick;
+    private readonly InputAction m_Penguin_Skill;
+    private readonly InputAction m_Penguin_Ultimate;
     public struct PenguinActions
     {
         private @Controls m_Wrapper;
         public PenguinActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseRightClick => m_Wrapper.m_Penguin_MouseRightClick;
+        public InputAction @Skill => m_Wrapper.m_Penguin_Skill;
+        public InputAction @Ultimate => m_Wrapper.m_Penguin_Ultimate;
         public InputActionMap Get() { return m_Wrapper.m_Penguin; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -247,6 +293,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @MouseRightClick.started += instance.OnMouseRightClick;
             @MouseRightClick.performed += instance.OnMouseRightClick;
             @MouseRightClick.canceled += instance.OnMouseRightClick;
+            @Skill.started += instance.OnSkill;
+            @Skill.performed += instance.OnSkill;
+            @Skill.canceled += instance.OnSkill;
+            @Ultimate.started += instance.OnUltimate;
+            @Ultimate.performed += instance.OnUltimate;
+            @Ultimate.canceled += instance.OnUltimate;
         }
 
         private void UnregisterCallbacks(IPenguinActions instance)
@@ -254,6 +306,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @MouseRightClick.started -= instance.OnMouseRightClick;
             @MouseRightClick.performed -= instance.OnMouseRightClick;
             @MouseRightClick.canceled -= instance.OnMouseRightClick;
+            @Skill.started -= instance.OnSkill;
+            @Skill.performed -= instance.OnSkill;
+            @Skill.canceled -= instance.OnSkill;
+            @Ultimate.started -= instance.OnUltimate;
+            @Ultimate.performed -= instance.OnUltimate;
+            @Ultimate.canceled -= instance.OnUltimate;
         }
 
         public void RemoveCallbacks(IPenguinActions instance)
@@ -353,6 +411,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IPenguinActions
     {
         void OnMouseRightClick(InputAction.CallbackContext context);
+        void OnSkill(InputAction.CallbackContext context);
+        void OnUltimate(InputAction.CallbackContext context);
     }
     public interface IBuildingActions
     {
