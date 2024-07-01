@@ -11,28 +11,21 @@ public class LanceUltSkill : MonoBehaviour
         _lanceUltEntity = transform.parent.GetComponent<LancePenguinUltAttackableEntity>();
     }
 
-    private void Update()
+    public void LanceUltimate()
     {
-        if(Input.GetKeyDown(KeyCode.Y))
-        {
-            _lanceUltEntity.TruckAttack(LookMouse());
-        }
+        Debug.Log("찌이이이이르으으으기");
+        _lanceUltEntity.TruckAttack(LookMouse());
     }
 
     private Vector3 LookMouse()
     {
-        // 마우스 위치를 가져와서 월드 좌표로 변환
-        Vector3 mouseScreenPosition = Input.mousePosition;
-        mouseScreenPosition.z = Camera.main.transform.position.y - transform.root.position.y; // 카메라와 오브젝트의 Y축 차이를 Z축으로 설정
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0)); // 객체의 높이에서 평면 설정
 
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-
-        // 플레이어 위치
-        Vector3 playerPosition = transform.root.position;
-
-        // 플레이어 기준으로 마우스 위치의 방향 벡터를 계산
-        Vector3 direction = (mouseWorldPosition - playerPosition).normalized;
-
-        return direction;
+        if (groundPlane.Raycast(ray, out float distance))
+        {
+            return ray.GetPoint(distance); // 마우스의 월드 위치 반환
+        }
+        return Vector3.zero; // 평면을 교차하지 않는 경우
     }
 }

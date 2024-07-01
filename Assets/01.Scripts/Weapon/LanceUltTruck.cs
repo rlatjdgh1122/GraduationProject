@@ -7,7 +7,8 @@ public class LanceUltTruck : PoolableMono
 {
     [SerializeField]
     private float _truckSpeed;
-
+    private float _stunValue;
+    
     private int _groundLayer = 0;
     private Rigidbody _rigid;
     private DamageCaster _damageCaster;
@@ -21,10 +22,26 @@ public class LanceUltTruck : PoolableMono
 
     private void Update()
     {
-        if (IsPositionValid(transform.position))
+        if (!IsPositionValid(transform.position))
         {
             StartCoroutine(WaterFallTruck());
         }
+    }
+
+    public void Setting(Entity owner, LayerMask layer)
+    {
+        _damageCaster.SetOwner(owner);
+        _damageCaster.TargetLayer = layer;
+    }
+
+    private bool IsPositionValid(Vector3 position)
+    {
+        return Physics.Raycast(position, new Vector3(0, -1f, 0), 5f, _groundLayer);
+    }
+
+    public void TruckMove()
+    {
+        StartCoroutine(WaitForAnim());
     }
 
     IEnumerator WaterFallTruck()
@@ -35,23 +52,13 @@ public class LanceUltTruck : PoolableMono
 
         Destroy(this.gameObject);
     }
-    
-    public void TruckMove()
-    {
-        StartCoroutine(WaitAnim());
-    }
 
-    IEnumerator WaitAnim()
+    IEnumerator WaitForAnim()
     {
-        yield return new WaitForSeconds(1.3f);
+        _rigid.AddForce(transform.forward * 4, ForceMode.Impulse);
+        yield return new WaitForSeconds(1.5f);
         _rigid.AddForce(transform.forward * _truckSpeed, ForceMode.Impulse);
     }
-    public void Setting(Entity owner, LayerMask layer)
-    {
-        _damageCaster.SetOwner(owner);
-        _damageCaster.TargetLayer = layer;
-    }
-
 
     private void OnTriggerEnter(Collider coll)
     {
@@ -64,13 +71,7 @@ public class LanceUltTruck : PoolableMono
     private void Explode()
     {
         // 트럭 폭발 로직 추가
-        _damageCaster.CastMeteorDamage(transform.position, _damageCaster.TargetLayer);
+        _damageCaster.CastTruckDamage(_stunValue, transform.position, _damageCaster.TargetLayer);
         Destroy(this.gameObject);
     }
-
-    private bool IsPositionValid(Vector3 position)
-    {
-        return Physics.Raycast(position, new Vector3(0, -1, 0), 5f, _groundLayer);
-    }
 }
-

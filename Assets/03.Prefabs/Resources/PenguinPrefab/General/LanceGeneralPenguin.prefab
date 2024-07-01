@@ -441,7 +441,19 @@ MonoBehaviour:
   CanUseSkill: 0
   OnSpawnTruckEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7966867783419094646}
+        m_TargetAssemblyTypeName: LanceUltSkill, Assembly-CSharp
+        m_MethodName: LanceUltimate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1742341914476758304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,6 +1291,7 @@ GameObject:
   - component: {fileID: 2921526320681223402}
   - component: {fileID: 7486456667509507464}
   - component: {fileID: 5533250412365201003}
+  - component: {fileID: 6690169447078365013}
   m_Layer: 11
   m_Name: LanceGeneralPenguin
   m_TagString: Untagged
@@ -1341,8 +1354,7 @@ MonoBehaviour:
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
   TargetLock: 0
-  Skill: {fileID: 0}
-  Ultimate: {fileID: 0}
+  SynergyType: 0
 --- !u!114 &6754457386563218381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1368,7 +1380,19 @@ MonoBehaviour:
       m_Calls: []
   OnDeathEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5199930914537952342}
+        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDashDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -7102,8 +7126,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7acff38ff3d7949b6c77280103755c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _truck: {fileID: 0}
-  _truckPos: {fileID: 0}
+  _truck: {fileID: 6251874042168775128, guid: 135050d23b1251941876ac2843e03be4, type: 3}
+  _truckPos: {fileID: 2548103746084344125}
+--- !u!114 &6690169447078365013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4420975851131247216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9896306ed17fc8a40b1819cd5ce85f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitPoint: {x: 0, y: 0, z: 0}
+  HitNormal: {x: 0, y: 0, z: 0}
+  HitType: 0
+  HitTarget: {fileID: 0}
 --- !u!1 &4488488979108740553
 GameObject:
   m_ObjectHideFlags: 0
@@ -8229,7 +8269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canUsedskillInitially: 1
-  _initMaxVaue: 5
+  _initMaxVaue: 0
 --- !u!1 &6733581184728388741
 GameObject:
   m_ObjectHideFlags: 0
@@ -8653,7 +8693,7 @@ Transform:
   m_GameObject: {fileID: 7748428322090402495}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 150, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
