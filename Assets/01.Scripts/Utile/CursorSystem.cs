@@ -35,6 +35,7 @@ public class CursorSystem : MonoBehaviour
             Vector2 cursorOffset = new Vector2(_battleCursor.width / 2, _battleCursor.height / 2);
             Cursor.SetCursor(_battleCursor, cursorOffset, CursorMode.Auto);
         }
+        }
         else
         {
             Vector2 cursorOffset = new Vector2(_nomalCursor.width / 2, _nomalCursor.height / 2);
