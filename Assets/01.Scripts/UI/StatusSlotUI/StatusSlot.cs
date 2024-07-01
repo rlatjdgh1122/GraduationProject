@@ -10,26 +10,24 @@ using UnityEngine.UI;
 
 public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 {
-    [SerializeField] protected Image synergyImage = null;
-    [SerializeField] protected Image skillImage = null;
-    [SerializeField] protected Image ultimateImage = null;
+    [SerializeField] protected Image synergyIcon = null;
+    [SerializeField] protected Image skillIcon = null;
+    [SerializeField] protected Image ultimateIcon = null;
 
     protected DecisionType decision = DecisionType.None;
-    protected Image skill
+    protected Image skillImage = null;
 
     protected virtual void Awake() { }
 
     public virtual void Init()
     {
         //½ºÅ³UI¶û ±Ã±Ø±âUI Init½ÃÄÑÁÜ
-        skillUI.Init();
-        UltimateUI.Init();
     }
 
     public virtual void ChangedValue(ArmyUIInfo newValue)
     {
-        synergyImage.sprite = newValue.SynergySprite;
+        synergyIcon.sprite = newValue.SynergySprite;
         skillImage.sprite = newValue.SkillSprite;
-        ultimateImage.sprite = newValue.UltimateSprite;
+        ultimateIcon.sprite = newValue.UltimateSprite;
     }
 }

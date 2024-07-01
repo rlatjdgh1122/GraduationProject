@@ -11,6 +11,7 @@ public class SynergySettingData
     public Image SynergyImage;
 }
 
+[System.Serializable]
 public class GeneralSettingData
 {
     public GeneralType GeneralType;
@@ -21,6 +22,7 @@ public class GeneralSettingData
 [CreateAssetMenu(menuName = "SO/Register/StatusSolt")]
 public class StatusSlotRegisterSO : ScriptableObject
 {
-    public List<SynergySettingData> Data = new();
+    public List<SynergySettingData> SynergyData = new();
+    public List<GeneralSettingData> GeneralData = new();
 }
 

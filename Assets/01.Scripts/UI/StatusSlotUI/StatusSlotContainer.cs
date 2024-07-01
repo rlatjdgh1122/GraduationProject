@@ -36,9 +36,9 @@ public class StatusSlotContainer : MonoBehaviour
 
     private void Start()
     {
-        foreach (var item in statusSlotRegisterSO.Data)
+        foreach (var item in statusSlotRegisterSO.GeneralData)
         {
-            _synergyTypeToImageDic.Add(item.SynergyType, item.SynergyImage);
+            _synergyTypeToImageDic.Add(item.SkillImage, item.);
 
         }//end foreach
     }
