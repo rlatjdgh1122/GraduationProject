@@ -20,7 +20,6 @@ public class SoldierSelectSlot : MonoBehaviour
     {
         _selectButton.onClick.RemoveAllListeners();
         _selectButton.onClick.AddListener(() => parentPanel.currentPanel.SetSlots(_infoSO));
-        _selectButton.onClick.AddListener(() => CostManager.Instance.SubtractFromCurrentCost(500));
         _selectButton.onClick.AddListener(parentPanel.HidePanel);
     }
 

@@ -12,20 +12,27 @@ public class LegionPanel : PopupUI
     private List<LegionSoldierSlot> _soldierSlotList;
     public List<LegionSoldierSlot> SoldierSlotList => _soldierSlotList;
 
+    [SerializeField] private RectTransform _lockedTrm;
+
     public override void Awake()
     {
         base.Awake();
 
-        _soldierSlotList = GetComponentsInChildren<LegionSoldierSlot>().ToList();
+        _soldierSlotList = GetComponentsInChildren<LegionSoldierSlot>()
+                            .Where(slot => !slot.IsBonus)
+                            .ToList();
     }
+
+    public void UnlockedLegion() => _lockedTrm.gameObject.SetActive(false);
 
     public void SetSlots(EntityInfoDataSO info)
     {
         SoldierlInfo = info;
-
+        int i = 0;
         foreach (LegionSoldierSlot slot in _soldierSlotList)
         {
-            slot.SetSlot(info);
+            //여기서 자리를 예외처리해줌 일단은 이렇게 하고 나중에 수정
+            slot.SetSlot(info, i++);
         }
     }
 

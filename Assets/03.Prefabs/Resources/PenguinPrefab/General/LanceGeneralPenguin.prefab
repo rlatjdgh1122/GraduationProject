@@ -388,7 +388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3853824182919147735}
   - component: {fileID: 733462272407297153}
-  - component: {fileID: 1381230231132906793}
+  - component: {fileID: 2259785750152767143}
   m_Layer: 11
   m_Name: UltimateManager
   m_TagString: Untagged
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillUsedCount: 0
---- !u!114 &1381230231132906793
+--- !u!114 &2259785750152767143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -434,17 +434,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1658049304495314172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0933c83776ba0e47917c2222df9cebd, type: 3}
+  m_Script: {fileID: 11500000, guid: 267b0719eac714649a69c42f862c497f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsAvaliable: 1
   CanUseSkill: 0
-  _dashDelay: 0
-  canDash: 0
-  OnSlashEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDashEvent:
+  OnSpawnTruckEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1742341914476758304
@@ -860,7 +855,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15accef23a076847a9f092f04c15ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 1
   _canUsedskillInitially: 1
   _initMaxVaue: 5
 --- !u!1 &2932027695112230104
@@ -8191,7 +8185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c227f0da9618e14ca0eb682341e9d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decisionType: 5
   _canUsedskillInitially: 1
   _initMaxVaue: 5
 --- !u!1 &6733581184728388741

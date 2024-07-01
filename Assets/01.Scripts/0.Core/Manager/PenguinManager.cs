@@ -59,6 +59,12 @@ public class PenguinManager
     private Dictionary<Penguin, DummyPenguin> penguinToDummyDic = new();
     private Dictionary<DummyPenguin, Penguin> dummyToPenguinDic = new();
 
+    public void DummyToPenguinMapping(DummyPenguin d, Penguin p)
+    {
+        penguinToDummyDic[p] = d;
+        dummyToPenguinDic[d] = p;
+    }
+
     private Dictionary<EntityInfoDataSO, Penguin> infoDataToPenguinDic = new();
     private Dictionary<Penguin, EntityInfoDataSO> penguinToInfoDataDic = new();
 
@@ -87,6 +93,7 @@ public class PenguinManager
     public int SoldierPenguinCount => SoldierPenguinList.Count;
     #endregion
 
+    public DummyPenguinFactory DummyFactoryCompo { get; set; }
     public CameraSystem CameraCompo { get; set; }
     public DummyPenguinCamera DummyPenguinCameraCompo { get; set; }
 
@@ -94,6 +101,11 @@ public class PenguinManager
     private List<DummyPenguinListItem> _itemDummyPenguinList = new();
 
     #region  GetComponent
+
+    public void GetComponent_DummyFactory(DummyPenguinFactory compo)
+    {
+        DummyFactoryCompo = compo;
+    }
     public void GetComponent_CameraSystem(CameraSystem compo)
     {
         CameraCompo = compo;
@@ -125,11 +137,20 @@ public class PenguinManager
     {
         _itemDummyPenguinList.Add(new DummyPenguinListItem
         {
-            IsHaveOwner = false,
+            //IsHaveOwner = false, 
+            IsHaveOwner = true, //일단은 이렇게
             dummyPenguin = obj
         });
         DummyPenguinList.Add(obj);
-        NotBelongDummyPenguinList.Add(obj);
+        //NotBelongDummyPenguinList.Add(obj);
+        BelongDummyPenguinList.Add(obj); //일단은 이렇게해서 처음에 사면 어
+
+    }
+
+    //여기서 군단 이름에 따라 오너 설정해주기
+    public void SetOwnerByLegionName(string legionName, bool isHaveOwner)
+    {
+
     }
 
     public void AddGeneralStat(PenguinTypeEnum type, GeneralStat stat)
@@ -277,6 +298,21 @@ public class PenguinManager
 
         return resultDummy;
     }
+
+    public DummyPenguin FindDummyPenguin<T>(T info) where T : EntityInfoDataSO
+    {
+        return DummyFactoryCompo.FindDummyPenguin(info);
+    }
+
+    public T SpawnDummyPenguinHandler<T>(T dummyPenguin) where T : DummyPenguin
+    {
+        return DummyFactoryCompo.SpawnDummyPenguinHandler(dummyPenguin);
+    }
+
+    public DummyPenguin SpawnDummyPenguinByInfoData<T>(T info) where T : EntityInfoDataSO
+    {
+        return DummyFactoryCompo.SpawnDummyPenguinByInfoData(info);
+    }
     #endregion
 
     #region Penguin Return
@@ -356,6 +392,7 @@ public class PenguinManager
 
     #region ApplyData
 
+    //이거 안씀
     public void ApplySaveData(List<EntityInfoDataSO> addDataList, List<EntityInfoDataSO> removeDataList)
     {
         foreach (var data in removeDataList)
@@ -529,7 +566,7 @@ public class PenguinManager
     /// <param name="dummy"></param>
     public void ShowPenguinInfoUI(DummyPenguin dummy)
     {
-        var defaultInfo = dummy.DefaultInfo;
+        var defaultInfo = dummy.CloneInfo;
         var infoData = GetInfoDataByDummyPenguin<PenguinInfoDataSO>(dummy);
 
         if (infoData == null)

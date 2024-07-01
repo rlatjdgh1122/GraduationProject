@@ -7,7 +7,6 @@ public class CostUI : MonoBehaviour
 {
     [Header("Input UI")]
     [SerializeField] private TextMeshProUGUI _currentCostText;
-    [SerializeField] private TextMeshProUGUI _addCostText;
     [SerializeField] private Image _fishIcon;
     [SerializeField] private CostParticle _costParticleImage;
 
@@ -46,7 +45,7 @@ public class CostUI : MonoBehaviour
         }
         _particleImage.Position(startPosition);
         _particleImage.PlayParticle();
-        AddCost(_cost);
+        ChangeCost();
     }
 
     #region ParticleImage
@@ -63,32 +62,9 @@ public class CostUI : MonoBehaviour
     }
     #endregion
 
-
-    public void AddCost(int value)
-    {
-        Color plusColor = new Color(0, 255, 0); //임시
-        _addCostText.color = plusColor;
-        _addCostText.text = $"+{value}";
-
-        ChangeCost();
-    }
-    public void SubtractCost(float value)
-    {
-        Color minusColor = new Color(255, 0, 0); //임시
-        _addCostText.color = minusColor;
-        _addCostText.text = $"{value}";
-
-        ChangeCost();
-    }
     public void ChangeCost()
     {
-        _addCostText.alpha = 1;
-
-        _addCostText.DOFade(0, 0.6f)
-            .OnComplete(() =>
-            {
-                _currentCostText.text = $"{CostManager.Instance.Cost}";
-            });
+        _currentCostText.text = $"{CostManager.Instance.Cost}";
     }
 
     public void OnlyCurrentCostView(float cost)

@@ -147,6 +147,16 @@ public class ArrangementManager : Singleton<ArrangementManager>
         PenguinManager.Instance.AddInfoDataMapping(data, spawnPenguin);
     }
 
+    public Penguin SpawnPenguin(EntityInfoDataSO cloneData, int slotIdx)
+    {
+        Penguin spawnPenguin = PenguinManager.Instance.SpawnSoldier(cloneData.PenguinType, SpawnPoint.position, seatPosList[slotIdx]);
+
+        PenguinManager.Instance.AddSoliderPenguin(spawnPenguin);
+        PenguinManager.Instance.AddInfoDataMapping(cloneData, spawnPenguin);
+
+        return spawnPenguin;
+    }
+
     private void RemovePenguin(string _legionName, Penguin penguin)
     {
         PenguinManager.Instance.RemoveSoliderPenguin(penguin);

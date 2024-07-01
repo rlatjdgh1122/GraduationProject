@@ -16,17 +16,6 @@ public class GeneralUIPresenter : PopupUI
     public Ability selectedAbility;
 
     private DummyPenguinFactory _penguinFactory;
-    private float currentCost
-    {
-        get
-        {
-            return CostManager.Instance.Cost;
-        }
-        set
-        {
-            CostManager.Instance.Cost = value;
-        }
-    }
 
     public override void Awake()
     {
@@ -51,7 +40,7 @@ public class GeneralUIPresenter : PopupUI
 
         Debug.Log("구매 완료");
 
-        if (currentCost >= currentGeneralStat.InfoData.Price)
+        CostManager.Instance.SubtractFromCurrentCost(currentGeneralStat.InfoData.Price, () =>
         {
             PurchaseGeneral();
 
@@ -64,18 +53,13 @@ public class GeneralUIPresenter : PopupUI
 
             LegionInventoryManager.Instance.AddPenguin(general.InfoData);
 
-            currentCost -= currentGeneralStat.InfoData.Price;
             _currentView.SetUpgradeUI(currentGeneralStat);
 
             //if (TutorialManager.Instance.CurTutoQuestIdx == 6) //일단 퀘스트
             //{
             //    TutorialManager.Instance.CurTutorialProgressQuest();
             //}
-        }
-        else
-        {
-            UIManager.Instance.ShowWarningUI($"재화가 부족합니다!");
-        }
+        });
     }
 
     private void PurchaseGeneral()
@@ -92,20 +76,16 @@ public class GeneralUIPresenter : PopupUI
 
     public void Upgrade()
     {
-        if (currentCost >= currentGeneralStat.GeneralDetailData.levelUpPrice.GetValue())
+        CostManager.Instance.SubtractFromCurrentCost(currentGeneralStat.GeneralDetailData.levelUpPrice.GetValue(), () =>
         {
             ShowBoxes();
-        }
-        else
-        {
-            UIManager.Instance.ShowWarningUI("재화가 부족합니다");
-        }
+        });
     }
 
     private void UpgradeGeneral()
     {
         currentGeneralStat.Level++;
-        currentCost -= currentGeneralStat.GeneralDetailData.levelUpPrice.GetValue();
+        CostManager.Instance.SubtractFromCurrentCost(currentGeneralStat.GeneralDetailData.levelUpPrice.GetValue());
         _currentView.UpdateUpgradeUI(currentGeneralStat);
     }
     #endregion
@@ -123,7 +103,6 @@ public class GeneralUIPresenter : PopupUI
     {
         currentGeneralStat.GeneralDetailData.synergy.level++;
         UpgradeGeneral();
-        //SetRandom();
         HideBoxes();
     }
 
