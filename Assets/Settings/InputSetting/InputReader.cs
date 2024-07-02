@@ -42,7 +42,7 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
 
     public void OnMouseLeftClick(InputAction.CallbackContext context)
     {
-        if(context.performed /*&& IsPointerOverUI()*/)
+        if (context.performed /*&& IsPointerOverUI()*/)
         {
             OnLeftClickEvent?.Invoke();
         }
