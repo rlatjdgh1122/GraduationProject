@@ -8,15 +8,17 @@ using UnityEngine.UI;
 public class SynergySettingData
 {
     public SynergyType SynergyType;
-    public Image SynergyImage;
+    public UltimateType UltimateType;
+    public Sprite UltimateIcon;
+    public Sprite SynergyIcon;
 }
 
 [System.Serializable]
 public class GeneralSettingData
 {
     public GeneralType GeneralType;
-    public DecisionType DecisionType;
-    public Image SkillImage;
+    public SkillType SkillType;
+    public Sprite SkillIcon;
 }
 
 [CreateAssetMenu(menuName = "SO/Register/StatusSolt")]

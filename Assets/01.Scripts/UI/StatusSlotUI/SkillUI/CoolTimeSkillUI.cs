@@ -5,15 +5,6 @@ using UnityEngine.Events;
 
 public class CoolTimeSkillUI : SkillUI
 {
-    private void Start()
-    {
-        OnChangedMaxValue(5);
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J)) OnChangedMaxValue(value - 1);
-        if (Input.GetKeyDown(KeyCode.K)) OnSkillUsed();
-    }
 
     public override void OnSkillUsed()
     {

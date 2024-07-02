@@ -2,6 +2,7 @@ using ArmySystem;
 using SkillSystem;
 using SynergySystem;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,8 @@ public class StatusSlotContainer : MonoBehaviour
     [SerializeField] private StatusSlot statusSlotPrefab = null;
     [SerializeField] private Transform slotperentTrm = null;
 
-    private Dictionary<SynergyType, Image> _synergyTypeToImageDic = new();
+    private Dictionary<SynergyType, (UltimateType, Sprite, Sprite)> _synergyTypeToDataDic = new();
+    private Dictionary<GeneralType, (SkillType, Sprite)> _generalTypeToDataDic = new();
     private Dictionary<Army, StatusSlot> _armyToSlotDic = new();
 
     private List<Army> _armies => ArmyManager.Instance.Armies;
@@ -36,14 +38,21 @@ public class StatusSlotContainer : MonoBehaviour
 
     private void Start()
     {
+        foreach (var item in statusSlotRegisterSO.SynergyData)
+        {
+            _synergyTypeToDataDic.Add(item.SynergyType, (item.UltimateType, item.UltimateIcon, item.SynergyIcon));
+
+
+        }//end foreach
+
         foreach (var item in statusSlotRegisterSO.GeneralData)
         {
-            _synergyTypeToImageDic.Add(item.SkillImage, item.);
+            _generalTypeToDataDic.Add(item.GeneralType, (item.SkillType, item.SkillIcon));
 
         }//end foreach
     }
 
-    private void OnChangedArmyHandler(Army prevArmy, Army newArmy) //
+    private void OnChangedArmyHandler(Army prevArmy, Army newArmy)
     {
         //_selectedStatusSlot = _armyToSlotDic[newArmy] as SelectedStatusSlot;
     }
@@ -59,25 +68,45 @@ public class StatusSlotContainer : MonoBehaviour
 
         });
 
-        foreach (var item in _armies)
+        foreach (var army in _armies)
         {
-            StatusSlot slot = CreateSlot(item);
+            StatusSlot slot = CreateSlot(army);
+            var synergyData = GetDataBySynergyType(army.SynergyType);
+
+            slot.SetSynergyUI(synergyData.Item2);
+            
+            //임시
+            slot.SetUltimateUI(synergyData.Item1, synergyData.Item3);
+
+            if (army.General != null) //장군이 있을때
+            {
+                var generalData = GetDataByGeneralType(army.General.GeneralType);
+                slot.SetSkillUI(generalData.Item1, generalData.Item2);
+
+                if (army.IsSynergy) //시너지 활성화 될 때
+                {
+                    //slot.SetUltimateUI(synergyData.Item1, synergyData.Item3);
+                }
+            }
+
+            slot.SetArmy(army);
             slot.Init();
 
-            _armyToSlotDic.Add(item, slot);
+            _armyToSlotDic.Add(army, slot);
 
         }//end foreach
     }
 
     private StatusSlot CreateSlot(Army army)
     {
-        Image synergyIamge = GetSlotBySynergyType(army.SynergyType);
         StatusSlot newSlot = Instantiate(statusSlotPrefab, slotperentTrm);
         army.GetInfo().Add(newSlot);
 
         return newSlot;
     }
 
-    private Image GetSlotBySynergyType(SynergyType type) => _synergyTypeToImageDic[type];
+    private (UltimateType, Sprite, Sprite) GetDataBySynergyType(SynergyType type) => _synergyTypeToDataDic[type];
+
+    private (SkillType, Sprite) GetDataByGeneralType(GeneralType type) => _generalTypeToDataDic[type];
 
 }

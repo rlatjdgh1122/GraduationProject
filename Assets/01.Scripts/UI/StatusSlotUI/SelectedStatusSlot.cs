@@ -75,15 +75,15 @@ public class SelectedStatusSlot : StatusSlot
     private void ChangeSkillsInCurrentUI(ArmyUIInfo armyInfo)
     {
         synergyIcon.sprite = armyInfo.SynergySprite;
-        skillImage.sprite = armyInfo.SkillSprite;
+        skillIcon.sprite = armyInfo.SkillSprite;
         ultimateIcon.sprite = armyInfo.UltimateSprite;
 
         ImageTransparent(synergyIcon);
-        ImageTransparent(skillImage);
+        ImageTransparent(skillIcon);
         ImageTransparent(ultimateIcon);
 
         synergyIcon.DOFade(1, 0.5f);
-        skillImage.DOFade(1, 0.5f);
+        skillIcon.DOFade(1, 0.5f);
         ultimateIcon.DOFade(1, 0.5f);
     }
 

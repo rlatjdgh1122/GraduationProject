@@ -25,6 +25,7 @@ namespace ArmySystem
         public Ability Ability = null; //시너지 스탯
 
         public SkillController SkillController = null;
+        public SkillController UltimateController = null;
         public ArmyUIInfo Info = new();
 
         private float _moveSpeed = 4f;
@@ -91,6 +92,7 @@ namespace ArmySystem
         {
             General = general;
             SkillController = general.Skill.SkillController;
+            UltimateController = general.Ultimate.SkillController;
 
             Info.AddCount();
         }
