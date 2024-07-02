@@ -213,7 +213,6 @@ public class InstallSystem : MonoBehaviour
     private void UpdateGroundColor(Ground curGround) // 땅의 Outline 색을 바꿔주는 함수
     {
         _previousGround?.UpdateOutlineColor(OutlineColorType.None);
-        Debug.Log(_previousGround?.IsInstalledBuilding);
 
         if (curGround.IsInstalledBuilding)
         {

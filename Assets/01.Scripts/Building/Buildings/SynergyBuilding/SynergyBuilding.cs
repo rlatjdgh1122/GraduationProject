@@ -9,6 +9,8 @@ public class SynergyBuilding : BaseBuilding
 
     protected override void Awake()
     {
+        base.Awake();
+
         _buildingPanel = UIManager.Instance.canvasTrm.GetComponentInChildren<BuildingUI>();
         _health = GetComponent<Health>();
 
