@@ -29,42 +29,4 @@ public class General : Penguin, ISkillable
         Skill?.SetOwner(this);
         Ultimate?.SetOwner(this);
     }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        OnPlaySkill();
-        OnPlayUltimateSkill();
-    }
-
-    private void OnPlaySkill()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (Skill.SkillController.CheckDecision())
-            {
-                OnSkillEvent();
-
-                Skill.SkillController.OnUsed();
-            }
-
-        }//end if
-    }
-
-    private void OnPlayUltimateSkill()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (Ultimate.SkillController.CheckDecision())
-            {
-                OnUltimateEvent();
-
-                Ultimate.SkillController.OnUsed();
-            }
-
-        }//end if
-    }
-
-   
 }

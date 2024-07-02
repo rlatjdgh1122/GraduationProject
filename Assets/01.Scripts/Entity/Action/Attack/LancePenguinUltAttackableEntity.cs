@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LancePenguinUltAttackableEntity : EntityAttackData
 {
-    [Header("MagicAttack Info")]
-    [SerializeField] private LanceUltTruck _lanceUltTruck;
-    [SerializeField] private Transform _spawnPos;
+    [Header("TruckAttack Info")]
+    [SerializeField] private LanceUltTruck _truck;
+    [SerializeField] private Transform _truckPos;
 
     protected override void Awake()
     {
@@ -15,11 +15,18 @@ public class LancePenguinUltAttackableEntity : EntityAttackData
 
     public override void TruckAttack(Vector3 mousePos)
     {
-        _spawnPos.LookAt(new Vector3(0, mousePos.y, 0));
+        Vector3 direction = mousePos - _truckPos.position;
+        direction.y = 0; // 수평 방향으로만 회전하도록 Y축을 0으로 설정
 
-        LanceUltTruck truck = PoolManager.Instance.Pop(_lanceUltTruck.name) as LanceUltTruck;
-        
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            _truckPos.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+        }
+
+        LanceUltTruck truck = Instantiate(_truck, _truckPos.transform.position, _truckPos.transform.rotation);
+
         truck.Setting(owner, DamageCasterCompo.TargetLayer);
-        truck.TruckMove(mousePos);
+        truck.TruckMove();
     }
 }

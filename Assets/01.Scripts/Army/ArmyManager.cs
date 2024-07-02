@@ -35,6 +35,15 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
+    private SkillInput _skillInput;
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        _skillInput = GetComponent<SkillInput>();
+    }
+
 
     private void Start()
     {
@@ -52,6 +61,7 @@ public class ArmyManager : Singleton<ArmyManager>
             var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
             s.SetOwner(army);
             army.General = s;
+            _skillInput.SelectGeneral(s);
             SignalHub.OnModifyCurArmy();
         }
 
@@ -158,6 +168,8 @@ public class ArmyManager : Singleton<ArmyManager>
 
         EnemyArmyManager.Instance.OnSelected(curArmy.TargetEnemyArmy);
 
+        _skillInput.SelectGeneral(General); // SkillInput에 선택된 장군을 보냄
+        Debug.Log($"Select: {General}");
     } //end method
 
     /// <summary>

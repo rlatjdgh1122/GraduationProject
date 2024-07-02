@@ -14,6 +14,9 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
     public event Action OnEBtnEvent;
     public event Action OnQBtnEvent;
 
+    public event Action OnSkillEvent;
+    public event Action OnUltimateEvent;
+
     private Controls _controls;
 
     private void OnEnable()
@@ -39,7 +42,7 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
 
     public void OnMouseLeftClick(InputAction.CallbackContext context)
     {
-        if(context.performed /*&& IsPointerOverUI()*/)
+        if (context.performed /*&& IsPointerOverUI()*/)
         {
             OnLeftClickEvent?.Invoke();
         }
@@ -84,5 +87,18 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
         //}
 
         return results.Count > 0;
+    }
+
+    public void OnSkill(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnSkillEvent?.Invoke();
+        }
+    }
+
+    public void OnUltimate(InputAction.CallbackContext context)
+    {
+        OnUltimateEvent?.Invoke();
     }
 }
