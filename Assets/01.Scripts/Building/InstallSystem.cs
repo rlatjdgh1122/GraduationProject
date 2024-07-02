@@ -224,4 +224,12 @@ public class InstallSystem : MonoBehaviour
 
         }
     }
+
+    private void OnDisable()
+    {
+        _inputReader.OnLeftClickEvent -= PlaceStructure;
+        _inputReader.OnEscEvent -= StopInstall;
+        _inputReader.OnEBtnEvent -= RightRotateBuilding;
+        _inputReader.OnQBtnEvent -= LeftRotateBuilding;
+    }
 }
