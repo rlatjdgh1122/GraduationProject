@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class LegionPanel : PopupUI
 {
+    public int LegionNumber;
+    public string LegionName;
+
     public RectTransform PanelTrm => _rectTransform;
     public int CurrentIndex = 0;
 
@@ -33,6 +37,15 @@ public class LegionPanel : PopupUI
         {
             //여기서 자리를 예외처리해줌 일단은 이렇게 하고 나중에 수정
             slot.SetSlot(info, i++);
+        }
+    }
+
+    public void SetLegionData(string name, int idx)
+    {
+        foreach (LegionSoldierSlot slot in _soldierSlotList)
+        {
+            slot.LegionName = name;
+            slot.LegionIdx = idx;
         }
     }
 

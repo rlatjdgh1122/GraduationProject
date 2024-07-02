@@ -452,12 +452,12 @@ public class PenguinManager
     {
         if (jobType == PenguinJobType.Solider)
         {
-            ArmyManager.Instance.JoinArmyToSoldier(legionName, penguin);
+            //ArmyManager.Instance.JoinArmyToSoldier(legionName, penguin);
         }
 
         else if (jobType == PenguinJobType.General)
         {
-            ArmyManager.Instance.JoinArmyToGeneral(legionName, penguin as General);
+            //ArmyManager.Instance.JoinArmyToGeneral(legionName, penguin as General);
         }
     }
 

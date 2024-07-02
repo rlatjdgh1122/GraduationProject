@@ -6,6 +6,10 @@ public class LegionSoldierSlot : MonoBehaviour
     private Image _icon;
     public bool IsBonus = false;
 
+    public string LegionName { get; set; } = "";
+
+    public int LegionIdx { get; set; } = 0;
+
     private void Awake()
     {
         _icon = transform.Find("Icon").GetComponent<Image>();
@@ -13,13 +17,13 @@ public class LegionSoldierSlot : MonoBehaviour
         _icon.gameObject.SetActive(false);
     }
 
-    public void SetSlot(EntityInfoDataSO info, int idx)
+    public void SetSlot(EntityInfoDataSO info, int spawnIdx)
     {
         DummyPenguin dummy = PenguinManager.Instance.SpawnDummyPenguinByInfoData(info);
-        Penguin penguin = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, idx);
+        Penguin penguin = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, spawnIdx);
         PenguinManager.Instance.DummyToPenguinMapping(dummy, penguin);
 
-        ArmyManager.Instance.JoinArmyToSoldier("1±º´Ü", penguin);
+        ArmyManager.Instance.JoinArmyToSoldier(LegionName, LegionIdx, penguin);
         _icon.gameObject.SetActive(true);
         _icon.sprite = info.PenguinIcon;
     }

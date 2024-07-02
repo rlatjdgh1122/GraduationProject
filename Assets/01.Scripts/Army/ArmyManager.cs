@@ -2,6 +2,7 @@ using ArmySystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArmyManager : Singleton<ArmyManager>
@@ -44,14 +45,14 @@ public class ArmyManager : Singleton<ArmyManager>
         if (armies.Count > 0)
             armies.Clear();
 
-        CreateArmy();
+        //CreateArmy();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            var army = CreateArmy();
+            var army = CreateArmy("1군단");
             var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
             s.SetOwner(army);
             army.General = s;
@@ -233,17 +234,17 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <summary>
     /// 장군을 제외한 펭귄을 군단에 넣는 함수
     /// </summary>  
-    /// <param name="legion"> 몇번째 군단</param>
+    /// <param name="legionName"> 군단 이름 </param>
+    /// <param name="legionIdx"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
-    public void JoinArmyToSoldier(string legion, Penguin obj) //들어가고 싶은 군단, 군인펭귄
+    public void JoinArmyToSoldier(string legionName, int legionIdx, Penguin obj) //들어가고 싶은 군단, 군인펭귄
     {
-        if (armies.Find(p => p.LegionName == legion) == null)
+        if (armies.Find(p => p.LegionName == legionName) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
-        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
-        var Army = armies[idx];
+        var Army = armies[legionIdx];
 
         obj.SetOwner(Army);
         Army.Soldiers.Add(obj);
@@ -259,22 +260,23 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <summary>
     /// 장군펭귄을 군단에 넣는 함수
     /// </summary>
-    /// <param name="legion"> 몇번째 군단</param>
+    /// <param name="legionName">군단 이름</param>
+    /// <param name="legionIdx"> 몇번째 군단</param>
     /// <param name="obj"> Penguin 타입만 가능</param>
-    public void JoinArmyToGeneral(string legion, General obj) //들어가고 싶은 군단, 장군펭귄
+    public void JoinArmyToGeneral(string legionName, int legionIdx, General obj) //들어가고 싶은 군단, 장군펭귄
     {
-        if (armies.Find(p => p.LegionName == legion) == null)
+        if (armies.Find(p => p.LegionName == legionName) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
 
-        var Idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
-        var Army = armies[Idx];
+        //var Idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[legionIdx];
 
         if (Army.General != null)
         {
-            Debug.Log($"현재 {legion}군단에는 장군이 존재합니다.");
+            Debug.Log($"현재 {legionName}군단에는 장군이 존재합니다.");
             return;
         }
 
@@ -307,8 +309,8 @@ public class ArmyManager : Singleton<ArmyManager>
         //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
 
         //증가된 군단 스탯 지우기
-        int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
-        var Army = armies[idx];
+        //int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
+        var Army = armies[penguin.MyArmy.LegionIdx];
         //var Abilities = Army.Abilities;
 
         penguin.SetOwner(null);
@@ -319,10 +321,9 @@ public class ArmyManager : Singleton<ArmyManager>
             var stat = penguin.ReturnGenericStat<GeneralStat>();
             stat.GeneralDetailData.synergy.Stat.OnValidate -= Army.AddStat;
             Army.RemoveStat(Army.Ability);
-
             Army.Ability = null;
 
-            armies[idx].General = null;
+            Army.General = null;
         }
         else if (penguin is Penguin)
         {
@@ -337,12 +338,13 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <summary>
     /// 새로운 군단 생성
     /// </summary>
-    public Army CreateArmy()
+    public Army CreateArmy(string armyName)
     {
         Army newArmy = new Army();
 
+        newArmy.LegionIdx = armies.Count;
         newArmy.MoveSpeed = 4f;
-        newArmy.LegionName = $"{ArmiesCount + 1}군단";
+        newArmy.LegionName = armyName;
         newArmy.IsArmyReady = false;
 
         armies.Add(newArmy);

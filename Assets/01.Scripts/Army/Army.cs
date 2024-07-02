@@ -10,6 +10,7 @@ namespace ArmySystem
     {
         public SynergyType SynergyType;
 
+        public int LegionIdx = 0;
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
         public ArmyUIInfo Info; //정보

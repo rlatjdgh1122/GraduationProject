@@ -31,7 +31,7 @@ public class CostManager : Singleton<CostManager>
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.O))
+        if(Input.GetKeyDown(KeyCode.A))
         {
             AddFromCurrentCost(100);
         }
