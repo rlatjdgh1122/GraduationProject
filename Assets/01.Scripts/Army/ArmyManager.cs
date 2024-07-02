@@ -1,4 +1,5 @@
 using ArmySystem;
+using SynergySystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -183,6 +184,11 @@ public class ArmyManager : Singleton<ArmyManager>
         return armies[legion - 1];
     }
 
+    public void SetArmySynergy(int legionIdx, SynergyType synergyType)
+    {
+        armies[legionIdx].SynergyType = synergyType;
+    }
+
     #region 스탯 부분
     /// <summary>
     /// 현재 선택된 군단의 스탯을 상승 및 감소 
@@ -312,9 +318,7 @@ public class ArmyManager : Singleton<ArmyManager>
         //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
 
         //증가된 군단 스탯 지우기
-        //int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[penguin.MyArmy.LegionIdx];
-        //var Abilities = Army.Abilities;
 
         penguin.SetOwner(null);
 
@@ -325,8 +329,8 @@ public class ArmyManager : Singleton<ArmyManager>
             stat.GeneralDetailData.synergy.Stat.OnValidate -= Army.AddStat;
             Army.RemoveStat(Army.Ability);
             Army.Ability = null;
-            
-            armies[idx].RemoveGeneral();
+
+            Army.RemoveGeneral();
         }
         else if (penguin is Penguin)
         {
@@ -364,4 +368,6 @@ public class ArmyManager : Singleton<ArmyManager>
         bool result = armies.All(x => x.CheckEmpty());
         return result;
     }
+
+   
 }
