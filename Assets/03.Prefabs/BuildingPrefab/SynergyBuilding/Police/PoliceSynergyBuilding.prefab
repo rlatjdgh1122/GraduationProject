@@ -749,6 +749,8 @@ GameObject:
   - component: {fileID: 7442304487718761357}
   - component: {fileID: 2768638443725691373}
   - component: {fileID: 7547894896197414631}
+  - component: {fileID: -4136219728019303066}
+  - component: {fileID: -3777062680749713116}
   m_Layer: 19
   m_Name: PoliceSynergyBuilding
   m_TagString: Untagged
@@ -878,4 +880,46 @@ MonoBehaviour:
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
   HitTarget: {fileID: 0}
-  HitCount: 0
+--- !u!156049354 &-4136219728019303066
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497374006227146879}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
+--- !u!114 &-3777062680749713116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497374006227146879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629bded1ccba37d4ea6c9ef6f708b9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterStat: {fileID: 11400000, guid: 294e5c8e3f77c8845a404ba9caa6fd29, type: 2}
+  CurrentTarget: {fileID: 0}
+  _maxDetectEnemy: 5
+  resourceType: 0
+  _noiseValue: 0
+  _maxNoiseValue: 0
+  _inputReader: {fileID: 11400000, guid: 589152b36b6dd3944bdf84593c967708, type: 2}
+  _buildingDatabaseSO: {fileID: 11400000, guid: ab01cc5288975674d946c59008c4a909,
+    type: 2}
+  _installedFinText: {fileID: 0}
+  BuildingInfoCompo:
+    <ID>k__BackingField: 7
+    GridCompo: {fileID: 0}
+    <TransparencyMat>k__BackingField: {fileID: 2100000, guid: 79dc316bddf0f9a46a2a2f4213747b5f,
+      type: 2}
+    <GreenTransparencyMat>k__BackingField: {fileID: 2100000, guid: 5e93cf41d481700479a54a7af3fbfb12,
+      type: 2}
+    <RedTransparencyMat>k__BackingField: {fileID: 2100000, guid: 4de9e48b9ee9c9f449077b90a716a0d9,
+      type: 2}
