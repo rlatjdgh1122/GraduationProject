@@ -169,6 +169,11 @@ public class UIManager : Singleton<UIManager>
     #region UI Function
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ShowPanel("BuildingUI");
+        }
+
         if (Input.GetKeyDown(KeyCode.V))
         {
             ShowPanel("ArmyUI");
