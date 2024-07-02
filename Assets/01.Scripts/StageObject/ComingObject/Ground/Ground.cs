@@ -11,6 +11,7 @@ public enum OutlineColorType
 [RequireComponent(typeof(Outline))]
 public class Ground : MonoBehaviour, IComingObject
 {
+    [SerializeField]
     private bool isInstalledBuilding;
 
     public bool IsInstalledBuilding => isInstalledBuilding;

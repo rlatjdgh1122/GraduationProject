@@ -212,6 +212,9 @@ public class InstallSystem : MonoBehaviour
 
     private void UpdateGroundColor(Ground curGround) // ¶¥ÀÇ Outline »öÀ» ¹Ù²ãÁÖ´Â ÇÔ¼ö
     {
+        _previousGround?.UpdateOutlineColor(OutlineColorType.None);
+        Debug.Log(_previousGround?.IsInstalledBuilding);
+
         if (curGround.IsInstalledBuilding)
         {
             curGround.UpdateOutlineColor(OutlineColorType.Red);
@@ -221,15 +224,6 @@ public class InstallSystem : MonoBehaviour
         {
             curGround.UpdateOutlineColor(OutlineColorType.Green);   
             _curBuilding.ChangeToTransparencyMat(OutlineColorType.Green);
-
-        }
-    }
-
-    private void OnDisable()
-    {
-        _inputReader.OnLeftClickEvent -= PlaceStructure;
-        _inputReader.OnEscEvent -= StopInstall;
-        _inputReader.OnEBtnEvent -= RightRotateBuilding;
-        _inputReader.OnQBtnEvent -= LeftRotateBuilding;
+        } 
     }
 }
