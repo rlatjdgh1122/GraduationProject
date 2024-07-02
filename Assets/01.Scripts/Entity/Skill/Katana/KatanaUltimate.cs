@@ -34,26 +34,31 @@ public class KatanaUltimate : Skill
         OnStartEclipseEvent?.Invoke();
         _changeVolume.ChangeVolumeEffect(VolumeType.LunarEclipse, 3f);
         AddStat();
-        CoroutineUtil.CallWaitForSeconds(4, () => RemoveStat()); //LunarEclipseUI에서 4길래 4로 함
+        CoroutineUtil.CallWaitForSeconds(4, () => RemoveStat()); // LunarEclipseUI에서 4길래 4로 함
     }
 
     private void AddStat()
     {
         _myArmy.General.AddStat(buffValue, _buffStatType, StatMode.Increase);
+        _myArmy.General.StrengthBuffEffect?.ParticleStart();
+
         foreach (Penguin penguin in _myArmy.Soldiers)
         {
             penguin.Stat.AddStat(buffValue, _buffStatType, StatMode.Increase);
-            //penguin.StrengthBuffEffect?.ParticleStart();
+            Debug.Log(penguin.StrengthBuffEffect);
+            penguin.StrengthBuffEffect?.ParticleStart();
         }
     }
 
     private void RemoveStat()
     {
         _myArmy.General.RemoveStat(buffValue, _buffStatType, StatMode.Increase);
+        _myArmy.General.StrengthBuffEffect?.ParticleStop();
+
         foreach (Penguin penguin in _myArmy.Soldiers)
         {
             penguin.Stat.RemoveStat(buffValue, _buffStatType, StatMode.Increase);
-            //penguin.StrengthBuffEffect?.ParticleStop();
+            penguin.StrengthBuffEffect?.ParticleStop();
         }
     }
 }
