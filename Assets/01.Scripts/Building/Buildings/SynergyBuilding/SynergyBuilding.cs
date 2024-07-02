@@ -11,8 +11,6 @@ public class SynergyBuilding : BaseBuilding
         base.Awake();
 
         _buildingPanel = UIManager.Instance.canvasTrm.GetComponentInChildren<BuildingUI>();
-        Debug.Log($"{gameObject}: {HealthCompo.maxHealth}");
-        Debug.Log($"{gameObject}: {HealthCompo.currentHealth}");
     }
 
     protected override void Running()
