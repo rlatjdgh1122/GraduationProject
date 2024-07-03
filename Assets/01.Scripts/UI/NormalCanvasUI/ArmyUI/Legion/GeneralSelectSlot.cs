@@ -22,7 +22,6 @@ public class GeneralSelectSlot : ArmyComponentUI
 
         _icon.sprite = GeneralData.InfoData.PenguinIcon;
         _purchaseButton.onClick.AddListener(() => _legionGeneralPanel.SetSlot(GeneralData.InfoData));
-        _purchaseButton.onClick.AddListener(_legionGeneralPanel.HidePanel);
 
         GeneralData = GeneralManager.Instance.GeneralList[Index];
 
