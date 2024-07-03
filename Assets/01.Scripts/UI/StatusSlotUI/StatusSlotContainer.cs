@@ -27,12 +27,14 @@ public class StatusSlotContainer : MonoBehaviour
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartEvent -= ApplyStatusSlot;
+        SignalHub.OnBattlePhaseEndEvent -= DestoryStatusSlot;
         SignalHub.OnArmyChanged -= OnChangedArmyHandler;
     }
 
     private void Awake()
     {
         SignalHub.OnBattlePhaseStartEvent += ApplyStatusSlot;
+        SignalHub.OnBattlePhaseEndEvent += DestoryStatusSlot;
         SignalHub.OnArmyChanged += OnChangedArmyHandler;
     }
 
@@ -57,7 +59,7 @@ public class StatusSlotContainer : MonoBehaviour
         //_selectedStatusSlot = _armyToSlotDic[newArmy] as SelectedStatusSlot;
     }
 
-    private void ApplyStatusSlot()
+    private void DestoryStatusSlot()
     {
         //지금은 오브젝트를 삭제해주는데 나중에 UI만 체인지 되게
         //오브젝트 지우는건 _armies의 카운트가 이전 카운트보다 적을때만
@@ -67,7 +69,10 @@ public class StatusSlotContainer : MonoBehaviour
             Destroy(v);
 
         });
+    }
 
+    private void ApplyStatusSlot()
+    {
         foreach (var army in _armies)
         {
             StatusSlot slot = CreateSlot(army);

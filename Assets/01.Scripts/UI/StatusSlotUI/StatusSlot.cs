@@ -55,6 +55,8 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.SkillController.OnSkillUsedEvent += skillUI.OnSkillUsed;
             _army.SkillController.OnChangedMaxValueEvent += skillUI.OnChangedMaxValue;
             _army.SkillController.OnSkillActionEnterEvent += skillUI.OnSkillActionEnter;
+
+            _army.SkillController.Init();
         }
 
         if (ultimateUI != null)
@@ -62,6 +64,8 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.UltimateController.OnSkillUsedEvent += ultimateUI.OnUltimateUsed;
             _army.UltimateController.OnChangedMaxValueEvent += ultimateUI.OnChangedMaxValue;
             _army.UltimateController.OnSkillActionEnterEvent += ultimateUI.OnUltimateActionEnter;
+
+            _army.UltimateController.Init();
         }
     }
 

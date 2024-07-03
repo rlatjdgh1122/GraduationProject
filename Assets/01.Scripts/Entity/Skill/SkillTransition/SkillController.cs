@@ -28,6 +28,11 @@ public class SkillController : MonoBehaviour
 
     }
 
+    public void Init()
+    {
+        _skillDecision.Init();
+    }
+
     public void SetUp(Transform parentRoot)
     {
         foreach (ISkillDecision decision in _allDecisions)
@@ -70,16 +75,16 @@ public class SkillController : MonoBehaviour
 
     public void OnRegister()
     {
-        OnChangedMaxValueEvent += _skillDecision.OnChangedMaxValueEvent;
-        OnSkillActionEnterEvent += OnSkillActionEnterEvent;
-        OnSkillUsedEvent += OnSkillUsedEvent;
+        _skillDecision.OnChangedMaxValueEvent += OnChangedMaxValueEvent;
+        _skillDecision.OnSkillActionEnterEvent += OnSkillActionEnterEvent;
+        _skillDecision.OnSkillUsedEvent += OnSkillUsedEvent;
     }
 
     public void OffRegister()
     {
-        OnChangedMaxValueEvent -= _skillDecision.OnChangedMaxValueEvent;
-        OnSkillActionEnterEvent -= OnSkillActionEnterEvent;
-        OnSkillUsedEvent -= OnSkillUsedEvent;
+        _skillDecision.OnChangedMaxValueEvent -= OnChangedMaxValueEvent;
+        _skillDecision.OnSkillActionEnterEvent -= OnSkillActionEnterEvent;
+        _skillDecision.OnSkillUsedEvent -= OnSkillUsedEvent;
     }
 
     private void OnDisable()

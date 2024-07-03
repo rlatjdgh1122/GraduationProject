@@ -28,7 +28,6 @@ public class PenguinSpawnHandler : MonoBehaviour
         foreach (var dummy in belongDummyPenguinList)
         {
             var trm = dummy.transform;
-            Debug.Log($"스폰 : {dummy.GetInstanceID()}");
 
             var penguin = PenguinManager.Instance.GetPenguinByDummyPenguin(dummy);
             //실제 펭귄에 대한 세팅을 해줌

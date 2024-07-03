@@ -4,7 +4,7 @@ namespace SkillSystem
     {
         None = 0,
         CoolTime,
-        ACtionEnter,
+        ActionEnter,
     }
 
     public enum UltimateType

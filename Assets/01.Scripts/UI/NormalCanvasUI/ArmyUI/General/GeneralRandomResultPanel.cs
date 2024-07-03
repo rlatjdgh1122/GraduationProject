@@ -40,7 +40,6 @@ public class GeneralRandomResultPanel : ArmyComponentUI
         _generalList.Remove(_currentGeneral);
 
         DummyPenguin dummy = PenguinManager.Instance.SpawnDummyPenguinByInfoData(_currentGeneral.InfoData);
-        Debug.Log($"장군 더미 생성함 : {dummy.GetInstanceID()}");
         PenguinManager.Instance.InsertGeneralDummyPenguin(dummy);
 
         _infoButton.onClick.AddListener(() => ShowGeneralInfo(_currentGeneral));

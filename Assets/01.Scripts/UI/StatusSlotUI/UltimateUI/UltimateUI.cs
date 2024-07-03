@@ -24,13 +24,13 @@ public abstract class UltimateUI : MonoBehaviour
 
     public void Init()
     {
-        bliendGauge.fillAmount = 1f;
-        currentFillAmount = 1f;
+
     }
 
     public virtual void OnUltimateUsed()
     {
-        Init();
+        bliendGauge.fillAmount = 1f;
+        currentFillAmount = 1f;
     }
 
     public virtual void OnUltimateActionEnter() { }

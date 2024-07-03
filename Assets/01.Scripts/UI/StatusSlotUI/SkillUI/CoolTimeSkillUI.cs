@@ -22,13 +22,13 @@ public class CoolTimeSkillUI : SkillUI
         {
             elapsedTime += Time.deltaTime;
             currentFillAmount = 1f - (elapsedTime / duration); // 남은 시간 비율 계산
-            blinedGauge.fillAmount = currentFillAmount; // 게이지 값 업데이트
+            bliendGauge.fillAmount = currentFillAmount; // 게이지 값 업데이트
 
             yield return null;
         }
 
         // 쿨타임이 끝나면 게이지를 0으로 설정
-        blinedGauge.fillAmount = 0f;
+        bliendGauge.fillAmount = 0f;
         currentFillAmount = 0f;
 
         OnSkillReadyEvent?.Invoke();

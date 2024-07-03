@@ -33,10 +33,16 @@ namespace SkillSystem
 
         private void Start()
         {
-            _maxValue = _initMaxVaue;
+            maxValue = _initMaxVaue;
 
             if (_canUsedskillInitially) //처음엔 사용가능하게
-                saveValue = -_maxValue;
+                saveValue = -maxValue;
+        }
+
+        public virtual void Init()
+        {
+            maxValue = _initMaxVaue;
+            OnChangedMaxValueEvent?.Invoke(_maxValue);
         }
 
         public virtual void SetUp(Transform parentRoot)

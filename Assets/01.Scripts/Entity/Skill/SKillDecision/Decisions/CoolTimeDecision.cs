@@ -5,6 +5,8 @@ public class CoolTimeDecsion : SKillDecision
 {
     public override void OnUsed()
     {
+        OnSkillUsedEvent?.Invoke();
+
         saveValue = Time.time;
     }
 

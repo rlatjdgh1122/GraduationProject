@@ -40,7 +40,6 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
     private void CreateArmy()
     {
         DummyPenguin dummy = PenguinManager.Instance.FindGeneralDummyPenguin(GeneralInfo.PenguinType);
-        Debug.Log($"장군 더미 가져옴 : {dummy.GetInstanceID()}");
         General general = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, 18) as General;
         PenguinManager.Instance.DummyToPenguinMapping(dummy, general);
 

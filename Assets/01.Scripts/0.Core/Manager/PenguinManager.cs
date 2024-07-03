@@ -63,6 +63,9 @@ public class PenguinManager
     {
         penguinToDummyDic[p] = d;
         dummyToPenguinDic[d] = p;
+
+        NotBelongDummyPenguinList.Remove(d);
+        BelongDummyPenguinList.Add(d);
     }
 
     private Dictionary<EntityInfoDataSO, Penguin> infoDataToPenguinDic = new();
@@ -143,8 +146,8 @@ public class PenguinManager
             dummyPenguin = obj
         });
         DummyPenguinList.Add(obj);
-        //NotBelongDummyPenguinList.Add(obj);
-        BelongDummyPenguinList.Add(obj); //일단은 이렇게해서 처음에 사면 어
+        NotBelongDummyPenguinList.Add(obj);
+        //BelongDummyPenguinList.Add(obj); //일단은 이렇게해서 처음에 사면 어
 
     }
 
@@ -317,7 +320,7 @@ public class PenguinManager
 
     public void InsertGeneralDummyPenguin(DummyPenguin penguin)
     {
-        if(!GeneralDummyPenguinList.Contains(penguin))
+        if (!GeneralDummyPenguinList.Contains(penguin))
             GeneralDummyPenguinList.Add(penguin);
     }
 
