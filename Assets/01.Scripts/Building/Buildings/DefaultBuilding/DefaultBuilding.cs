@@ -11,23 +11,11 @@ public class DefaultBuilding : BaseBuilding
 
     [SerializeField] DefaultBuildingType _defaultBuildingType;
 
-    private bool isSpawnUIOn;
-
     private Outline _outline;
-
-    private ConstructionStation _constructionStation;
-
-
-    public override void Init()
-    {
-        isSpawnUIOn = false;
-    }
 
     protected override void Awake()
     {
         base.Awake();
-
-        _constructionStation = FindAnyObjectByType<ConstructionStation>().GetComponent<ConstructionStation>();
         _outline = GetComponent<Outline>();
 
         SetInstalled();
@@ -42,46 +30,22 @@ public class DefaultBuilding : BaseBuilding
         }
     }
 
+    private void OnMouseEnter()
+    {
+        OutlineActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        OutlineActive(false);
+    }
+
     public void SpawnButton()
     {
-        if (!UIManager.Instance.CheckShowAble(UIType.Store)) return;
-
-        if (isSpawnUIOn)
-        {
-            UIManager.Instance.HidePanel("StorePanel");
-            ChangeSpawnUIBool(false);
-        }
-        else
-        {
-            UIManager.Instance.ShowPanel("StorePanel");
-            ChangeSpawnUIBool(true);
-            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
-        }
-
-        if (_constructionStation.isSpawnUIOn)
-        {
-            _constructionStation.UpdateSpawnUIBool();
-        }
+        UIManager.Instance.ShowPanel("ArmyUI");
     }
 
-    public virtual void UpdateSpawnUIBool()
-    {
-        isSpawnUIOn = isSpawnUIOn ? false : true;
-
-        BuildingOutline();
-    }
-
-    public void ChangeSpawnUIBool(bool value)
-    {
-        isSpawnUIOn = value;
-
-        BuildingOutline();
-    }
-
-    private void BuildingOutline()
-    {
-        _outline.enabled = isSpawnUIOn;
-    }
+    public void OutlineActive(bool value) => _outline.enabled = value;
 
     protected override void Running()
     {

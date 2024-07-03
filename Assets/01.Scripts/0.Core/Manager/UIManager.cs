@@ -52,8 +52,6 @@ public class UIManager : Singleton<UIManager>
 
     public Sequence HudTextSequence;
 
-    private EscButtonController _escButtonController;
-
     public void InitializHudTextSequence()
     {
         HudTextSequence?.Kill(); // 기존 시퀀스를 중단
@@ -80,8 +78,6 @@ public class UIManager : Singleton<UIManager>
                 Debug.LogWarning($"중복 키 : {popupUI.name}");
             }
         }
-
-        _escButtonController = FindObjectOfType<EscButtonController>();
     }
 
     #region popUI Logics
@@ -178,11 +174,6 @@ public class UIManager : Singleton<UIManager>
         if (Input.GetKeyDown(KeyCode.C))
         {
             ShowPanel("BuildingUI");
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            ShowPanel("ArmyUI");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
