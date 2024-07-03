@@ -1,3 +1,4 @@
+using ArmySystem;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,12 +6,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectedStatusSlot : StatusSlot
+public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 {
     [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
-    private Image[] _penguinIconList;
+    [SerializeField] private Transform _UITrm = null;
 
-    protected override void Awake()
+    protected SkillUI skillUI = null;
+    protected UltimateUI ultimateUI = null;
+
+    private Image[] _penguinIconList;
+    private Army _army = null;
+
+    private void Awake()
     {
         Transform penguinIconParent = transform.Find("SoliderIcon");
         _penguinIconList = penguinIconParent.GetComponentsInChildren<Image>();
@@ -18,14 +25,31 @@ public class SelectedStatusSlot : StatusSlot
 
     //군단이 바뀔때마다 정보에 따라 실햄(이준서가 만든 그거)
 
-    //군단수가 바뀔때 이벤트 연결
-    //군단 이름 바뀔때 이벤트 연결
-
-    public override void Init()
+    public void ChangedSlot(StatusSlot slot, Army army)
     {
-        base.Init();
+        _army = army;
+        //스킬이랑 궁극기 복사해서 연결하고
+        //레지스터로 연결해줌
+        if (slot.SkillUI)
+        {
+            GameObject obj = Instantiate(slot.SkillUI.gameObject, _UITrm);
+        }
 
-        //군단 이름 바뀐거 적용
+        if (slot.SkillUI)
+        {
+
+        }
+        //군단일므 바꿔줌
+        LegionNameChangedHandler(army.LegionName);
+    }
+
+    /// <summary>
+    /// 군단 정보가 바뀔때
+    /// </summary>
+    /// <param name="newValue"></param>
+    public void ChangedValue(ArmyUIInfo newValue)
+    {
+        EnablePenguinInSelectLegion(newValue.PenguinCount);
     }
 
     /// <summary>
@@ -37,6 +61,7 @@ public class SelectedStatusSlot : StatusSlot
         EnablePenguinInSelectLegion(armyInfo.PenguinCount);
         LegionNameChangedHandler(armyInfo.ArmyName);
     }
+
 
     private void LegionNameChangedHandler(string armyName)
     {
@@ -74,7 +99,7 @@ public class SelectedStatusSlot : StatusSlot
     /// </summary>
     private void ChangeSkillsInCurrentUI(ArmyUIInfo armyInfo)
     {
-        synergyIcon.sprite = armyInfo.SynergySprite;
+     /*   synergyIcon.sprite = armyInfo.SynergySprite;
         skillIcon.sprite = armyInfo.SkillSprite;
         ultimateIcon.sprite = armyInfo.UltimateSprite;
 
@@ -84,7 +109,7 @@ public class SelectedStatusSlot : StatusSlot
 
         synergyIcon.DOFade(1, 0.5f);
         skillIcon.DOFade(1, 0.5f);
-        ultimateIcon.DOFade(1, 0.5f);
+        ultimateIcon.DOFade(1, 0.5f);*/
     }
 
     /// <summary>
@@ -99,4 +124,6 @@ public class SelectedStatusSlot : StatusSlot
 
         image.color = alpha;
     }
+
+
 }

@@ -137,6 +137,12 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    public void ResetPanel()
+    {
+        HideAllPanel();
+        _currentUI = null;
+    }
+
     public void HidePanel(string uiName)
     {
         if (popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI))
