@@ -11,14 +11,14 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 {
     [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
 
-    [SerializeField] private Image _skillImage = null;
     [SerializeField] private Image _synergyImage = null;
+    [SerializeField] private Image _skillImage = null;
     [SerializeField] private Image _ultimateImage = null;
 
     [SerializeField] private Transform _UITrm = null;
+    [SerializeField] private SelectedSlotSkillUI SkillUI = null;
 
-    protected SelectedSlotSkillUI skillUI = null;
-    protected UltimateUI ultimateUI = null;
+    protected UltimateUI UltimateUI = null;
 
     private Image[] _penguinIconList;
     private Army _army = null;
@@ -29,22 +29,62 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         _penguinIconList = penguinIconParent.GetComponentsInChildren<Image>();
     }
 
-    //군단이 바뀔때마다 정보에 따라 실햄(이준서가 만든 그거)
+    private void OffRegister(Army army)
+    {
+        if (SkillUI != null)
+        {
+            army.SkillController.OnSkillUsedEvent -= SkillUI.OnSkillUsed;
+            army.SkillController.OnChangedMaxValueEvent -= SkillUI.OnChangedMaxValue;
+            army.SkillController.OnSkillActionEnterEvent -= SkillUI.OnSkillActionEnter;
+            army.SkillController.OnSkillReadyEvent -= SkillUI.OnSkillReady;
+        }
 
+        if (UltimateUI != null)
+        {
+            army.UltimateController.OnSkillUsedEvent -= UltimateUI.OnUltimateUsed;
+            army.UltimateController.OnChangedMaxValueEvent -= UltimateUI.OnChangedMaxValue;
+            army.UltimateController.OnSkillActionEnterEvent -= UltimateUI.OnUltimateActionEnter;
+            //_army.UltimateController.OnSkillReadyEvent -= UltimateUI.OnSkillReady;
+        }
+    }
+
+    private void OnRegister(Army army)
+    {
+        if (SkillUI != null)
+        {
+            army.SkillController.OnSkillUsedEvent += SkillUI.OnSkillUsed;
+            army.SkillController.OnChangedMaxValueEvent += SkillUI.OnChangedMaxValue;
+            army.SkillController.OnSkillActionEnterEvent += SkillUI.OnSkillActionEnter;
+            army.SkillController.OnSkillReadyEvent += SkillUI.OnSkillReady;
+        }
+
+        if (UltimateUI != null)
+        {
+            army.UltimateController.OnSkillUsedEvent += UltimateUI.OnUltimateUsed;
+            army.UltimateController.OnChangedMaxValueEvent += UltimateUI.OnChangedMaxValue;
+            army.UltimateController.OnSkillActionEnterEvent += UltimateUI.OnUltimateActionEnter;
+        }
+    }
     public void SetArmy(Army army)
     {
+        if (_army != null)
+        {
+            OffRegister(_army);
+        }
         _army = army;
-        //스킬이랑 궁극기 복사해서 연결하고
         //레지스터로 연결해줌
+        OnRegister(_army);
+
         //군단일므 바꿔줌
         LegionNameChangedHandler(army.LegionName);
     }
 
-    public void SetSkillUI(float fillAmount, SkillType skillType, Sprite image)
+
+    public void SetSkillUI(float currentValue, float fillAmount, SkillType skillType, Sprite image)
     {
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
-        skillUI.Setting(fillAmount, skillType);
+        SkillUI.Setting(currentValue, fillAmount, skillType);
         _skillImage.sprite = image;
 
     }

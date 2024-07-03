@@ -10,7 +10,7 @@ public abstract class SkillUI : MonoBehaviour
     protected Image bliendGauge = null;
 
     protected int value = 0;
-    protected float currntValue = 0f;
+    public float CurrntValue = 0f;
     public float CurrentFillAmount = 0;
 
     protected virtual void Awake()

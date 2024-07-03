@@ -8,11 +8,10 @@ public class SelectedSlotSkillUI : SkillUI
 {
     private SkillType skillType = SkillType.None;
 
-    public void Setting(float _currentFillAmount, SkillType _skillType)
+    public void Setting(float _currentValue, float _currentFillAmount, SkillType _skillType)
     {
         skillType = _skillType;
-        SkillImage.sprite = image;
-
+        CurrntValue = _currentValue;
         CurrentFillAmount = _currentFillAmount;
         bliendGauge.fillAmount = CurrentFillAmount;
     }
@@ -21,7 +20,7 @@ public class SelectedSlotSkillUI : SkillUI
     {
         base.OnSkillUsed();
 
-        currntValue = 0f;
+        CurrntValue = 0f;
     }
 
     public override void OnSkillActionEnter()
@@ -30,11 +29,11 @@ public class SelectedSlotSkillUI : SkillUI
 
         if (skillType == SkillType.CoolTime) //ÄðÅ¸ÀÓ
         {
-            currntValue += Time.deltaTime;
+            CurrntValue += Time.deltaTime;
 
-            if (currntValue < value)
+            if (CurrntValue < value)
             {
-                CurrentFillAmount = 1f - (currntValue / value);
+                CurrentFillAmount = 1f - (CurrntValue / value);
             }
         }
 

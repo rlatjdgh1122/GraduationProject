@@ -9,17 +9,17 @@ public class CoolTimeSkillUI : SkillUI
     {
         base.OnSkillUsed();
 
-        currntValue = 0f;
+        CurrntValue = 0f;
     }
 
     public override void OnSkillActionEnter()
     {
         base.OnSkillActionEnter();
 
-        currntValue += Time.deltaTime;
-        if (currntValue < value)
+        CurrntValue += Time.deltaTime;
+        if (CurrntValue < value)
         {
-            CurrentFillAmount = 1f - (currntValue / value);
+            CurrentFillAmount = 1f - (CurrntValue / value);
             bliendGauge.fillAmount = CurrentFillAmount;
 
         }//end if

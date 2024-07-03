@@ -64,17 +64,19 @@ public class StatusSlotContainer : MonoBehaviour
         }
 
         newArmy.GetInfo().Add(_selectedStatusSlot);
+        _selectedStatusSlot.SetArmy(newArmy);
+
         StatusSlot slot = _armyToSlotDic[newArmy];
         var synergyData = _synergyTypeToDataDic[newArmy.SynergyType];
 
-        if (slot.SkillUI)
+        SkillUI slotSkillUI = slot.SkillUI;
+        if (slotSkillUI)
         {
             var generalData = _generalTypeToDataDic[newArmy.General.GeneralType];
-            _selectedStatusSlot.SetSkillUI(slot.SkillUI.CurrentFillAmount, generalData.Item1, generalData.Item2);
+            _selectedStatusSlot.SetSkillUI(slotSkillUI.CurrntValue, slotSkillUI.CurrentFillAmount, generalData.Item1, generalData.Item2);
         }
 
         _selectedStatusSlot.SetSynergyUI(synergyData.Item3);
-        _selectedStatusSlot.SetArmy(newArmy);
     }
 
     private void DestoryStatusSlot()
