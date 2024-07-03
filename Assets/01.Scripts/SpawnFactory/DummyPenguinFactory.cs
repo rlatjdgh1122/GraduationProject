@@ -55,7 +55,7 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
         T spawnPenguin = SpawnObject(dummyPenguin, spawnVec) as T;
 
         PenguinManager.Instance.AddDummyPenguin(spawnPenguin); // 리스트에 추가
-
+        Debug.Log($"하 : {spawnPenguin.GetInstanceID()}");
         return spawnPenguin;
     }
 

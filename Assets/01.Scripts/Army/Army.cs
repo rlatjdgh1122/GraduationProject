@@ -75,34 +75,27 @@ namespace ArmySystem
 
         #endregion
 
-        //장군이 추가될때
-        //스킬이
-
-        public void AAA(string armyName)
-        {
-            Info.ArmyName = armyName;
-        }
-
         public void AddSolider(Penguin penguin)
         {
             Soldiers.Add(penguin);
-            Info.AddCount();
+            Info.AddPenguinCount();
         }
 
         public void AddGeneral(General general)
         {
             General = general;
+
             SkillController = general.Skill.SkillController;
             UltimateController = general.Ultimate.SkillController;
 
-            Info.AddCount();
+            Info.AddPenguinCount();
         }
 
         public void RemoveSolider(Penguin penguin)
         {
             Soldiers.Remove(penguin);
 
-            Info.RemoveCount();
+            Info.RemovePenguinCount();
         }
 
         public void RemoveGeneral()
@@ -110,7 +103,7 @@ namespace ArmySystem
             General = null;
             SkillController = null;
 
-            Info.RemoveCount();
+            Info.RemovePenguinCount();
         }
 
         #region Stat

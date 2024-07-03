@@ -68,12 +68,12 @@ public class ArmyUIInfo : IValueChanger<ArmyUIInfo>
 
     #endregion
 
-    public void AddCount(int value = 1)
+    public void AddPenguinCount(int value = 1)
     {
         PenguinCount += value;
     }
 
-    public void RemoveCount(int value = 1)
+    public void RemovePenguinCount(int value = 1)
     {
         PenguinCount -= value;
     }

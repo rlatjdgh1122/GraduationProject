@@ -28,9 +28,9 @@ public class PenguinSpawnHandler : MonoBehaviour
         foreach (var dummy in belongDummyPenguinList)
         {
             var trm = dummy.transform;
+            Debug.Log($"Ω∫∆˘ : {dummy.GetInstanceID()}");
 
             var penguin = PenguinManager.Instance.GetPenguinByDummyPenguin(dummy);
-
             //Ω«¡¶ ∆Î±œø° ¥Î«— ºº∆√¿ª «ÿ¡‹
             penguin.gameObject.SetActive(true);
             penguin.transform.position = trm.position;

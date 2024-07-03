@@ -12,6 +12,7 @@ public class ActionEnterSkillUI : SkillUI
 
     public override void OnSkillActionEnter()
     {
+        Debug.Log("으악!");
         currentFillAmount -= 1f / value; // value에 따라 비율 감소
         blinedGauge.fillAmount = currentFillAmount;
     }

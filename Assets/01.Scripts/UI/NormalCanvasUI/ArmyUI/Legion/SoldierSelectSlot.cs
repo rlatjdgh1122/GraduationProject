@@ -30,7 +30,7 @@ public class SoldierSelectSlot : MonoBehaviour
     private void SetArmySynergy()
     {
         //parentPanel.currentPanel.LegionNumber은 1군단이면 1이 담겨잇음
-        ArmyManager.Instance.SetArmySynergy(parentPanel.currentPanel.LegionNumber, _synergyType);
+        ArmyManager.Instance.SetArmySynergy(parentPanel.currentPanel.LegionIdx, _synergyType);
     }
 
     public void OnShowInfo()

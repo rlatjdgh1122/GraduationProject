@@ -73,7 +73,7 @@ public class StatusSlotContainer : MonoBehaviour
             StatusSlot slot = CreateSlot(army);
             var synergyData = GetDataBySynergyType(army.SynergyType);
 
-            slot.SetSynergyUI(synergyData.Item2);
+            slot.SetSynergyUI(synergyData.Item3);
             if (army.General != null) //장군이 있을때
             {
                 var generalData = GetDataByGeneralType(army.General.GeneralType);
@@ -81,7 +81,7 @@ public class StatusSlotContainer : MonoBehaviour
 
                 if (army.IsSynergy) //시너지 활성화 될 때
                 {
-                    slot.SetUltimateUI(synergyData.Item1, synergyData.Item3);
+                    slot.SetUltimateUI(synergyData.Item1, synergyData.Item2);
                 }
             }
 

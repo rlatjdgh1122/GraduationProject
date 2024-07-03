@@ -321,9 +321,9 @@ public class PenguinManager
             GeneralDummyPenguinList.Add(penguin);
     }
 
-    public DummyPenguin FindGeneralDummyPenguin<T>(T info) where T : EntityInfoDataSO
+    public DummyPenguin FindGeneralDummyPenguin(PenguinTypeEnum type)
     {
-        return GeneralDummyPenguinList.Find(dummyPenguinInfo => dummyPenguinInfo.NotCloneInfo.PenguinType == info.PenguinType);
+        return GeneralDummyPenguinList.Find(dummyPenguinInfo => dummyPenguinInfo.NotCloneInfo.PenguinType == type);
     }
     #endregion
 

@@ -66,11 +66,6 @@ public class ArmyManager : Singleton<ArmyManager>
             _skillInput.SelectGeneral(s);
             SignalHub.OnModifyCurArmy();
         }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            armies[0].AAA("최대원");
-        }
     }
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
