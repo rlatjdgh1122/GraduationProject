@@ -24,8 +24,6 @@ public class PenguinKatanaSkillState : State
         General.Skill.PlaySkill();
     }
 
-   
-
     public override void UpdateState()
     {
         base.UpdateState();

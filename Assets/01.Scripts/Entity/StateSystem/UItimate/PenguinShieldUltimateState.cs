@@ -13,39 +13,31 @@ public class PenguinShieldUltimateState : State
 
     public override void EnterState()
     {
-        base.EnterState();
+        //base.EnterState();
 
-        prevMode = _penguin.MyArmy.MovefocusMode;
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
-        _penguin.StopImmediately();
+        //prevMode = _penguin.MyArmy.MovefocusMode;
+        //_penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        //_penguin.StopImmediately();
 
-        _penguin.LookTargetImmediately();
+        //_penguin.LookTargetImmediately();
 
-        _triggerCalled = false;
+        //_triggerCalled = false;
         General.Ultimate.PlaySkill();
+
+        if (_penguin.IsTargetInAttackRange)
+        {
+            _stateMachine.ChangeState(PenguinStateType.Attack);
+        }
+        else
+        {
+            _stateMachine.ChangeState(PenguinStateType.Idle);
+        }
     }
 
     public override void ExitState()
     {
-        _penguin.MyArmy.MovefocusMode = prevMode;
-
-        base.ExitState();
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-        if (_triggerCalled)
-        {
-            if (_penguin.IsTargetInAttackRange)
-            {
-                _stateMachine.ChangeState(PenguinStateType.Attack);
-            }
-            else
-            {
-                _stateMachine.ChangeState(PenguinStateType.Idle);
-            }
-        }
+        //_penguin.MyArmy.MovefocusMode = prevMode;
+        Debug.Log("ExitState");
+        //base.ExitState();
     }
 }

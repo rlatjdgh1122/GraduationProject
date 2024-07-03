@@ -39,9 +39,4 @@ public class PenguinSpawner : DefaultBuilding
     {
         base.Running();
     }
-
-    public override void UpdateSpawnUIBool()
-    {
-        base.UpdateSpawnUIBool();
-    }
 }

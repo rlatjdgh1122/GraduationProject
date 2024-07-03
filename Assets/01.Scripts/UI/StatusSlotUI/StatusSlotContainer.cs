@@ -17,6 +17,7 @@ public class StatusSlotContainer : MonoBehaviour
     [SerializeField] private StatusSlotRegisterSO statusSlotRegisterSO = null;
     [SerializeField] private StatusSlot statusSlotPrefab = null;
     [SerializeField] private Transform slotperentTrm = null;
+    [SerializeField] private SelectedStatusSlot _selectedStatusSlot = null;
 
     private Dictionary<SynergyType, (UltimateType, Sprite, Sprite)> _synergyTypeToDataDic = new();
     private Dictionary<GeneralType, (SkillType, Sprite)> _generalTypeToDataDic = new();
@@ -56,7 +57,14 @@ public class StatusSlotContainer : MonoBehaviour
 
     private void OnChangedArmyHandler(Army prevArmy, Army newArmy)
     {
-        //_selectedStatusSlot = _armyToSlotDic[newArmy] as SelectedStatusSlot;
+        if (prevArmy != null)
+        {
+            prevArmy.GetInfo().Remove(_selectedStatusSlot);
+
+        }
+
+        newArmy.GetInfo().Add(_selectedStatusSlot);
+        _selectedStatusSlot.ChangedSlot(_armyToSlotDic[newArmy], newArmy);
     }
 
     private void DestoryStatusSlot()
@@ -67,7 +75,6 @@ public class StatusSlotContainer : MonoBehaviour
         {
             (k as IValueChanger<ArmyUIInfo>).Remove(v);
             Destroy(v);
-
         });
     }
 

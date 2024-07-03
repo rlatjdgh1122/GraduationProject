@@ -19,8 +19,8 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     [SerializeField] private GameObject _skillUIObj = null;
     [SerializeField] private GameObject _ultimateUIObj = null;
 
-    protected SkillUI skillUI = null;
-    protected UltimateUI ultimateUI = null;
+    public SkillUI SkillUI = null;
+    public UltimateUI UltimateUI = null;
 
     protected DecisionType decision = DecisionType.None;
 
@@ -33,37 +33,37 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     private void OffRegister()
     {
-        if (skillUI != null)
+        if (SkillUI != null)
         {
-            _army.SkillController.OnSkillUsedEvent -= skillUI.OnSkillUsed;
-            _army.SkillController.OnChangedMaxValueEvent -= skillUI.OnChangedMaxValue;
-            _army.SkillController.OnSkillActionEnterEvent -= skillUI.OnSkillActionEnter;
+            _army.SkillController.OnSkillUsedEvent -= SkillUI.OnSkillUsed;
+            _army.SkillController.OnChangedMaxValueEvent -= SkillUI.OnChangedMaxValue;
+            _army.SkillController.OnSkillActionEnterEvent -= SkillUI.OnSkillActionEnter;
         }
 
-        if (ultimateUI != null)
+        if (UltimateUI != null)
         {
-            _army.UltimateController.OnSkillUsedEvent -= ultimateUI.OnUltimateUsed;
-            _army.UltimateController.OnChangedMaxValueEvent -= ultimateUI.OnChangedMaxValue;
-            _army.UltimateController.OnSkillActionEnterEvent -= ultimateUI.OnUltimateActionEnter;
+            _army.UltimateController.OnSkillUsedEvent -= UltimateUI.OnUltimateUsed;
+            _army.UltimateController.OnChangedMaxValueEvent -= UltimateUI.OnChangedMaxValue;
+            _army.UltimateController.OnSkillActionEnterEvent -= UltimateUI.OnUltimateActionEnter;
         }
     }
 
     public void OnRegister()
     {
-        if (skillUI != null)
+        if (SkillUI != null)
         {
-            _army.SkillController.OnSkillUsedEvent += skillUI.OnSkillUsed;
-            _army.SkillController.OnChangedMaxValueEvent += skillUI.OnChangedMaxValue;
-            _army.SkillController.OnSkillActionEnterEvent += skillUI.OnSkillActionEnter;
+            _army.SkillController.OnSkillUsedEvent += SkillUI.OnSkillUsed;
+            _army.SkillController.OnChangedMaxValueEvent += SkillUI.OnChangedMaxValue;
+            _army.SkillController.OnSkillActionEnterEvent += SkillUI.OnSkillActionEnter;
 
             _army.SkillController.Init();
         }
 
-        if (ultimateUI != null)
+        if (UltimateUI != null)
         {
-            _army.UltimateController.OnSkillUsedEvent += ultimateUI.OnUltimateUsed;
-            _army.UltimateController.OnChangedMaxValueEvent += ultimateUI.OnChangedMaxValue;
-            _army.UltimateController.OnSkillActionEnterEvent += ultimateUI.OnUltimateActionEnter;
+            _army.UltimateController.OnSkillUsedEvent += UltimateUI.OnUltimateUsed;
+            _army.UltimateController.OnChangedMaxValueEvent += UltimateUI.OnChangedMaxValue;
+            _army.UltimateController.OnSkillActionEnterEvent += UltimateUI.OnUltimateActionEnter;
 
             _army.UltimateController.Init();
         }
@@ -89,7 +89,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         string typeName = type.ToString();
         Type t = Type.GetType($"{typeName}UltimateUI");
         Component compo = _ultimateUIObj.AddComponent(t);
-        ultimateUI = compo as UltimateUI;
+        UltimateUI = compo as UltimateUI;
     }
 
 
@@ -102,14 +102,14 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         string typeName = type.ToString();
         Type t = Type.GetType($"{typeName}SkillUI");
         Component compo = _skillUIObj.AddComponent(t);
-        skillUI = compo as SkillUI;
+        SkillUI = compo as SkillUI;
     }
 
     public virtual void Init()
     {
         //스킬UI랑 궁극기UI Init시켜줌
-        skillUI?.Init();
-        ultimateUI?.Init();
+        SkillUI?.Init();
+        UltimateUI?.Init();
     }
 
     public virtual void ChangedValue(ArmyUIInfo newValue)

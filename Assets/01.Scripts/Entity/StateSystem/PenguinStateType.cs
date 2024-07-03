@@ -26,6 +26,7 @@ public enum PenguinStateType
 
     KatanaUltimate,
     LanceUltimate,
+    ShieldUltimate,
     #endregion
 
     #region 그 외

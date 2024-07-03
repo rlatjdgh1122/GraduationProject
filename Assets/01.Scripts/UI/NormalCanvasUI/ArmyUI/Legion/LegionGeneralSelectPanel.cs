@@ -26,6 +26,7 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
             UIManager.Instance.ShowWarningUI($"{legionName}에 이미 포함되어 있습니다");
             return;
         }
+
         _selectGeneralDictionary.Add(info, _legionPanel.LegionName);
 
         GeneralInfo = info;

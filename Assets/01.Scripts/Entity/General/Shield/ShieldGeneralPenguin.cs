@@ -62,7 +62,7 @@ public class ShieldGeneralPenguin : General
 
     public override void OnUltimateEvent()
     {
-        Debug.Log("잘되네요");
+        StateMachine.ChangeState(PenguinStateType.ShieldUltimate);
     }
 
     public void OnBlockEvent()
