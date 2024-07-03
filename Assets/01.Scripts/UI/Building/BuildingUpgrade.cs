@@ -27,7 +27,7 @@ public class BuildingUpgrade : PopupUI
 
     private void Start()
     {
-        ShowPanel();
+        //ShowPanel();
 
         _costText.text = _upgradeCost.ToString();
     }
