@@ -19,10 +19,10 @@ public class ModifyLegionPanel : PopupUI
         base.Awake();
 
         _legionNameText = transform.Find("ModifyLegionName").GetComponent<TextMeshProUGUI>();
-        _modifyLegionButton = transform.Find("ModifyButton").GetComponent<Button>();
+        //_modifyLegionButton = transform.Find("ModifyButton").GetComponent<Button>();
 
-        _modifyLegionButton.onClick.RemoveAllListeners();
-        _modifyLegionButton.onClick.AddListener(() => ModifyLegion());
+        //_modifyLegionButton.onClick.RemoveAllListeners();
+        //_modifyLegionButton.onClick.AddListener(() => ModifyLegion());
     }
 
     private void OnEnable()
