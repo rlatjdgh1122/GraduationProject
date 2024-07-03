@@ -77,11 +77,6 @@ public class CameraSystem : MonoBehaviour
 
     private void LateUpdate()
     {
-        foreach(var ui in UIManager.Instance.currentPopupUI)
-        {
-            Debug.Log(ui.name);
-        }
-
         if (!canMoving)
         {
             if (isRotating) { isRotating = false; }

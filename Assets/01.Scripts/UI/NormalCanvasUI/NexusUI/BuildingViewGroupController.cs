@@ -26,7 +26,7 @@ public class BuildingViewGroupController : MonoBehaviour
         {
             if (group.Category != viewGroup.Category)
             {
-                UIManager.Instance.HidePanel($"{group.Category}");
+                group.HidePanel();
             }    
         }
 
