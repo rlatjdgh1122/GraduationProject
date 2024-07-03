@@ -10,7 +10,7 @@ public class Pool<T> where T : PoolableMono
 
     public Pool(T prefab, Transform parent, int count)
     {
-        _prefab = prefab;
+        _prefab = prefab;  
         _parent = parent;
 
         for (int i = 0; i < count; i++)
