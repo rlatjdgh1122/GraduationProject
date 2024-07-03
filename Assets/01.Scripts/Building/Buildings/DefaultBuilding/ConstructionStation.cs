@@ -19,9 +19,4 @@ public class ConstructionStation : DefaultBuilding
     {
         base.Running();
     }
-
-    public override void UpdateSpawnUIBool()
-    {
-        base.UpdateSpawnUIBool();
-    }
 }
