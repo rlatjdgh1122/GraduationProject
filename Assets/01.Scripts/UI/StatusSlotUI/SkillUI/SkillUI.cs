@@ -10,7 +10,8 @@ public abstract class SkillUI : MonoBehaviour
     protected Image bliendGauge = null;
 
     protected int value = 0;
-    protected float currentFillAmount = 0;
+    protected float currntValue = 0f;
+    public float CurrentFillAmount = 0;
 
     protected virtual void Awake()
     {
@@ -30,8 +31,13 @@ public abstract class SkillUI : MonoBehaviour
     public virtual void OnSkillUsed()
     {
         bliendGauge.fillAmount = 1f;
-        currentFillAmount = 1f;
+        CurrentFillAmount = 1f;
     }
 
     public virtual void OnSkillActionEnter() { }
+
+    public virtual void OnSkillReady()
+    {
+        OnSkillReadyEvent?.Invoke();
+    }
 }

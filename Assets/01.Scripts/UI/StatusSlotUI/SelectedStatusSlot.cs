@@ -1,5 +1,6 @@
 using ArmySystem;
 using DG.Tweening;
+using SkillSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,9 +10,14 @@ using UnityEngine.UI;
 public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 {
     [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
+
+    [SerializeField] private Image _skillImage = null;
+    [SerializeField] private Image _synergyImage = null;
+    [SerializeField] private Image _ultimateImage = null;
+
     [SerializeField] private Transform _UITrm = null;
 
-    protected SkillUI skillUI = null;
+    protected SelectedSlotSkillUI skillUI = null;
     protected UltimateUI ultimateUI = null;
 
     private Image[] _penguinIconList;
@@ -25,22 +31,30 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     //군단이 바뀔때마다 정보에 따라 실햄(이준서가 만든 그거)
 
-    public void ChangedSlot(StatusSlot slot, Army army)
+    public void SetArmy(Army army)
     {
         _army = army;
         //스킬이랑 궁극기 복사해서 연결하고
         //레지스터로 연결해줌
-        if (slot.SkillUI)
-        {
-            GameObject obj = Instantiate(slot.SkillUI.gameObject, _UITrm);
-        }
-
-        if (slot.SkillUI)
-        {
-
-        }
         //군단일므 바꿔줌
         LegionNameChangedHandler(army.LegionName);
+    }
+
+    public void SetSkillUI(float fillAmount, SkillType skillType, Sprite image)
+    {
+        //여기까지 왔다면 장군이 있다는거
+        //여기서 스킬 연결하자
+        skillUI.Setting(fillAmount, skillType);
+        _skillImage.sprite = image;
+
+    }
+
+    public void SetSynergyUI(Sprite image)
+    {
+        //여기까지 왔다면 장군이 있다는거
+        //여기서 스킬 연결하자
+        _synergyImage.sprite = image;
+
     }
 
     /// <summary>
@@ -99,17 +113,17 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     /// </summary>
     private void ChangeSkillsInCurrentUI(ArmyUIInfo armyInfo)
     {
-     /*   synergyIcon.sprite = armyInfo.SynergySprite;
-        skillIcon.sprite = armyInfo.SkillSprite;
-        ultimateIcon.sprite = armyInfo.UltimateSprite;
+        /*   synergyIcon.sprite = armyInfo.SynergySprite;
+           skillIcon.sprite = armyInfo.SkillSprite;
+           ultimateIcon.sprite = armyInfo.UltimateSprite;
 
-        ImageTransparent(synergyIcon);
-        ImageTransparent(skillIcon);
-        ImageTransparent(ultimateIcon);
+           ImageTransparent(synergyIcon);
+           ImageTransparent(skillIcon);
+           ImageTransparent(ultimateIcon);
 
-        synergyIcon.DOFade(1, 0.5f);
-        skillIcon.DOFade(1, 0.5f);
-        ultimateIcon.DOFade(1, 0.5f);*/
+           synergyIcon.DOFade(1, 0.5f);
+           skillIcon.DOFade(1, 0.5f);
+           ultimateIcon.DOFade(1, 0.5f);*/
     }
 
     /// <summary>

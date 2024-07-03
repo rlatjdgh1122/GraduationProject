@@ -11,6 +11,8 @@ public class SkillController : MonoBehaviour
 
     private List<ISkillDecision> _allDecisions = new();
 
+    public Action OnSkillReadyEvent = null;
+
     // 스킬 사용 시 발생하는 이벤트
     public Action OnSkillUsedEvent = null;
 
@@ -78,6 +80,7 @@ public class SkillController : MonoBehaviour
         _skillDecision.OnChangedMaxValueEvent += OnChangedMaxValueEvent;
         _skillDecision.OnSkillActionEnterEvent += OnSkillActionEnterEvent;
         _skillDecision.OnSkillUsedEvent += OnSkillUsedEvent;
+        _skillDecision.OnSkillReadyEvent += OnSkillReadyEvent;
     }
 
     public void OffRegister()
@@ -85,6 +88,7 @@ public class SkillController : MonoBehaviour
         _skillDecision.OnChangedMaxValueEvent -= OnChangedMaxValueEvent;
         _skillDecision.OnSkillActionEnterEvent -= OnSkillActionEnterEvent;
         _skillDecision.OnSkillUsedEvent -= OnSkillUsedEvent;
+        _skillDecision.OnSkillReadyEvent -= OnSkillReadyEvent;
     }
 
     private void OnDisable()

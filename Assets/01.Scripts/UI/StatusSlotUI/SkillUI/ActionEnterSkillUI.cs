@@ -12,8 +12,8 @@ public class ActionEnterSkillUI : SkillUI
 
     public override void OnSkillActionEnter()
     {
-        currentFillAmount -= 1f / value; // value에 따라 비율 감소
-        bliendGauge.fillAmount = currentFillAmount;
+        CurrentFillAmount -= 1f / value; // value에 따라 비율 감소
+        bliendGauge.fillAmount = CurrentFillAmount;
     }
 
 }
