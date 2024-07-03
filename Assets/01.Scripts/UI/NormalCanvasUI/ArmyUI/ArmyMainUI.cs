@@ -24,4 +24,11 @@ public class ArmyMainUI : PopupUI
             //compo.infoPanel = infoPanel;
         }
     }
+
+    public void HideArmyUI()
+    {
+        HidePanel();
+
+        UIManager.Instance.ResetPanel();
+    }
 }
