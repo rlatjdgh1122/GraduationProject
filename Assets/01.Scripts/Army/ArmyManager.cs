@@ -55,18 +55,18 @@ public class ArmyManager : Singleton<ArmyManager>
         //CreateArmy();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            var army = CreateArmy("1군단");
-            var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
-            s.SetOwner(army);
-            army.General = s;
-            _skillInput.SelectGeneral(s);
-            SignalHub.OnModifyCurArmy();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        var army = CreateArmy("1군단");
+    //        var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
+    //        s.SetOwner(army);
+    //        army.General = s;
+    //        _skillInput.SelectGeneral(s);
+    //        SignalHub.OnModifyCurArmy();
+    //    }
+    //}
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {

@@ -490,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 1521280029408772971}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -2.93, y: -2.14, z: 9.42}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -515,10 +515,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Height: 2
+  m_Radius: 3.656639
+  m_Height: 7.313278
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0.031126022, y: 0.49999952, z: -0.13239956}
 --- !u!114 &2022436521415925496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1842,6 +1842,7 @@ GameObject:
   - component: {fileID: 213502241397231819}
   - component: {fileID: 1807684455055304711}
   - component: {fileID: 8495907083747960534}
+  - component: {fileID: 4165943717244824768}
   m_Layer: 12
   m_Name: Bear_LJS
   m_TagString: Untagged
@@ -2089,6 +2090,27 @@ CapsuleCollider:
   m_Height: 3.5
   m_Direction: 2
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4165943717244824768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6186144316036918896}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 1
+  precomputeOutline: 0
+  IncludingChildren: 1
+  bakeKeys: []
+  bakeValues: []
+  renderers: []
+  ExceptRenderer: []
 --- !u!1 &6288274593364168463
 GameObject:
   m_ObjectHideFlags: 0
