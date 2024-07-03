@@ -278,8 +278,7 @@ MonoBehaviour:
   WaitForCommandToArmyCalled: 1
   SuccessfulToArmyCalled: 0
   TargetLock: 0
-  Skill: {fileID: 5666389680005495140}
-  Ultimate: {fileID: 0}
+  SynergyType: 0
 --- !u!114 &8035068806920498670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8394,6 +8393,7 @@ GameObject:
   - component: {fileID: 606348143627799951}
   - component: {fileID: 461026594536553531}
   - component: {fileID: 5092474273697825207}
+  - component: {fileID: 137209683416382262}
   m_Layer: 11
   m_Name: UltimateManager
   m_TagString: Untagged
@@ -8446,7 +8446,36 @@ MonoBehaviour:
   CanUseSkill: 0
   OnSpawnPrisonEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 137209683416382262}
+        m_TargetAssemblyTypeName: ShieldSkillHandler, Assembly-CSharp
+        m_MethodName: PlaySkill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &137209683416382262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7389204510806917076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88e8f2a7b697bc4aa5a37ea25704af1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cagePrefab: {fileID: 5596040774476183540, guid: 730cf9cd4ab625e4f910a95e9a1ed876,
+    type: 3}
+  _range: 25
+  _delayBetweenDrops: 0.5
+  _stunTime: 4
 --- !u!1 &7624625092596897888
 GameObject:
   m_ObjectHideFlags: 0
