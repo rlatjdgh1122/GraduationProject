@@ -52,4 +52,9 @@ public class BuildingUI : PopupUI
     {
         base.HidePanel();
     }
+
+    public void HideBuildingUI()
+    {
+        UIManager.Instance.HidePanel("BuildingUI");
+    }
 }
