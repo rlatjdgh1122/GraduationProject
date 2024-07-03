@@ -38,8 +38,6 @@ public class UIManager : Singleton<UIManager>
     private WarningUI _warningUI;
     private BossWarningUI _bossWarningUI;
 
-    private bool isFirst = true;
-
     public Dictionary<string, PopupUI> popupUIDictionary = new();
     //public Dictionary<string, WorldUI> worldUIDictionary = new Dictionary<string, WorldUI>();
 
@@ -51,8 +49,6 @@ public class UIManager : Singleton<UIManager>
     private PopupUI _currentUI;
 
     public Sequence HudTextSequence;
-
-    private EscButtonController _escButtonController;
 
     public void InitializHudTextSequence()
     {
@@ -80,8 +76,6 @@ public class UIManager : Singleton<UIManager>
                 Debug.LogWarning($"중복 키 : {popupUI.name}");
             }
         }
-
-        _escButtonController = FindObjectOfType<EscButtonController>();
     }
 
     #region popUI Logics
@@ -180,28 +174,23 @@ public class UIManager : Singleton<UIManager>
             ShowPanel("BuildingUI");
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            ShowPanel("ArmyUI");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (currentPopupUI.Count > 0)
-            {
-                if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
-                    && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
-                {
-                    currentPopupUI.Peek().HidePanel();
-                    ChangeCurrentUI();
-                }
-            }
-            else
-            {
-                if (popupUIDictionary.ContainsKey("EscUI"))
-                    ShowPanel("EscUI");
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (currentPopupUI.Count > 0)
+        //    {
+        //        if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
+        //            && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+        //        {
+        //            currentPopupUI.Peek().HidePanel();
+        //            ChangeCurrentUI();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (popupUIDictionary.ContainsKey("EscUI"))
+        //            ShowPanel("EscUI");
+        //    }
+        //}
 
         //if (Input.GetKeyDown(KeyCode.Escape))
         //{

@@ -5,14 +5,12 @@ using UnityEngine;
 public class SynergyBuilding : BaseBuilding
 {
     private BuildingUI _buildingPanel;
-    private Health _health;
 
     protected override void Awake()
     {
-        _buildingPanel = UIManager.Instance.canvasTrm.GetComponentInChildren<BuildingUI>();
-        _health = GetComponent<Health>();
+        base.Awake();
 
-        _health.SetHealth(_characterStat);
+        _buildingPanel = UIManager.Instance.canvasTrm.GetComponentInChildren<BuildingUI>();
     }
 
     protected override void Running()
@@ -26,7 +24,7 @@ public class SynergyBuilding : BaseBuilding
         {
             UIManager.Instance.ShowPanel("BuildingUI");
             _buildingPanel.BuildingStat = (SynergyBuildingStat)_characterStat;
-            _buildingPanel.BuildingHealth = _health;
+            _buildingPanel.BuildingHealth = HealthCompo;
 
             _buildingPanel.SetStat();
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
