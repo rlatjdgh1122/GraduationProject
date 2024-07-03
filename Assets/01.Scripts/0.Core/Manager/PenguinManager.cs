@@ -87,6 +87,7 @@ public class PenguinManager
     /// ±º´Ü¿¡ ¼Ò¼ÓµÈ ´õ¹Ì Æë±Ï
     /// </summary>
     public List<DummyPenguin> NotBelongDummyPenguinList = new();
+    public List<DummyPenguin> GeneralDummyPenguinList = new();
 
     public List<Penguin> SoldierPenguinList = new();
     public int DummyPenguinCount => DummyPenguinList.Count;
@@ -312,6 +313,17 @@ public class PenguinManager
     public DummyPenguin SpawnDummyPenguinByInfoData<T>(T info) where T : EntityInfoDataSO
     {
         return DummyFactoryCompo.SpawnDummyPenguinByInfoData(info);
+    }
+
+    public void InsertGeneralDummyPenguin(DummyPenguin penguin)
+    {
+        if(!GeneralDummyPenguinList.Contains(penguin))
+            GeneralDummyPenguinList.Add(penguin);
+    }
+
+    public DummyPenguin FindGeneralDummyPenguin<T>(T info) where T : EntityInfoDataSO
+    {
+        return GeneralDummyPenguinList.Find(dummyPenguinInfo => dummyPenguinInfo.NotCloneInfo.PenguinType == info.PenguinType);
     }
     #endregion
 

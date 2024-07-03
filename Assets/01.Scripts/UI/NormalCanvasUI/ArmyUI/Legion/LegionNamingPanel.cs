@@ -35,7 +35,7 @@ public class LegionNamingPanel : PopupUI
     //군단 이름 쓰고 엔터 누르거나 확인 버튼 눌렀을 때 군단 이름 오류 체크
     private void OnValue(string str)
     {
-        if(LegionErrorCheck(str))
+        if (LegionErrorCheck(str))
             _legionName = str;
     }
 
@@ -85,7 +85,7 @@ public class LegionNamingPanel : PopupUI
         return !_legionNameList.Contains(text);
     }
 
-#endregion
+    #endregion
 
     /// <summary>
     /// 군단 이름 수정
@@ -93,7 +93,7 @@ public class LegionNamingPanel : PopupUI
     /// <param name="currentLegionName"></param>
     public void ModifyLegionName(string currentLegionNumber)
     {
-        if(_legionNameList.Contains(currentLegionNumber)) //만약 군단 이름이 포함되어 있다면 지워준다
+        if (_legionNameList.Contains(currentLegionNumber)) //만약 군단 이름이 포함되어 있다면 지워준다
         {
             _legionNameList.Remove(currentLegionNumber);
         }
@@ -112,7 +112,11 @@ public class LegionNamingPanel : PopupUI
         OnLegionNameNamingEvent?.Invoke(CurrentPanel);
 
         Army army = ArmyManager.Instance.CreateArmy(_legionName);
-        CurrentPanel.SetLegionData(_legionName, army.LegionIdx);
+
+        CurrentPanel.SetLegionIdx(army.LegionIdx);
+        CurrentPanel.SetLegionName(army.LegionName);
+
+        CurrentPanel.SetLegionData();
 
         ResetPanel();
 
