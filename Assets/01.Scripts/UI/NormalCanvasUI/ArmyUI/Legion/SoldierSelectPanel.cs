@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class SoldierSelectPanel : PopupUI
 {
+    [SerializeField] private LegionNamingPanel _legionNamePanel;
+
+    [SerializeField] private Transform _soliderPanel;
     private SoldierSelectSlot[] _slots;
+
     [HideInInspector] public LegionPanel currentPanel;
 
     public override void Awake()
     {  
         base.Awake();
 
-        _slots = GetComponentsInChildren<SoldierSelectSlot>();
+        _slots = _soliderPanel.GetComponentsInChildren<SoldierSelectSlot>();
     }
 
     public void Setting(LegionPanel legion)
@@ -22,6 +26,9 @@ public class SoldierSelectPanel : PopupUI
 
             currentPanel.UnlockedLegion();
 
+            _legionNamePanel.CurrentPanel = currentPanel;
+            _legionNamePanel.ParentPanel = this;
+
             foreach (SoldierSelectSlot slot in _slots)
             {
                 slot.parentPanel = this;
@@ -29,8 +36,12 @@ public class SoldierSelectPanel : PopupUI
             }
 
             ShowPanel();
+            _legionNamePanel.ShowPanel();
+            SetActive(false);
         });
     }
+
+    public void SetActive(bool active) => _soliderPanel.gameObject.SetActive(active);
 
     public override void HidePanel()
     {

@@ -37,12 +37,12 @@ public class PhaseChangeButton : MonoBehaviour
 
     public void ChangePhase()
     {
-        if (ArmyManager.Instance.CheckEmpty())
-        {
-            UIManager.Instance.ShowWarningUI("군단에 펭귄을 추가해 주세요!");
-
-            return;
-        }
+        //if (ArmyManager.Instance.CheckEmpty())
+        //{
+        //    UIManager.Instance.ShowWarningUI("군단에 펭귄을 추가해 주세요!");
+        //
+        //    return;
+        //}
 
         WaveManager.Instance.BattlePhaseStartEventHandler();
         SoundManager.Play2DSound(SoundName.StartFight);

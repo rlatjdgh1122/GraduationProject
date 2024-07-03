@@ -20,7 +20,7 @@ public class DummyPenguin : PoolableMono
 
     public PenguinInfoDataSO NotCloneInfo => _defaultInfo;
 
-    public PenguinInfoDataSO DefaultInfo { get; private set; } = null;
+    public PenguinInfoDataSO CloneInfo { get; private set; } = null;
 
     private int MaxNumberOfDumbAnim = 3;
     public bool IsGoToHouse { get; set; } = false;
@@ -53,8 +53,8 @@ public class DummyPenguin : PoolableMono
         Setting();
 
 
-        DefaultInfo = Instantiate(_defaultInfo);
-        DefaultInfo.Setting();
+        CloneInfo = Instantiate(_defaultInfo);
+        CloneInfo.Setting();
     }
 
     private void Setting()

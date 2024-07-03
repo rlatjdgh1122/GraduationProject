@@ -5,19 +5,45 @@ using UnityEngine;
 
 public class LegionGeneralSelectPanel : ArmyComponentUI
 {
+    private Dictionary<GeneralInfoDataSO, string> _selectGeneralDictionary = new();
+
     [HideInInspector] public GeneralInfoDataSO GeneralInfo; //일단 저장해놓음
     [SerializeField] private LegionGeneralSlot _generalSlot;
+
+    private LegionPanel _legionPanel;
 
     public override void Awake()
     {
         base.Awake();
+
+        _legionPanel = transform.parent.GetComponent<LegionPanel>();
     }
 
     public void SetSlot(GeneralInfoDataSO info)
     {
+        if (_selectGeneralDictionary.TryGetValue(info, out string legionName))
+        {
+            UIManager.Instance.ShowWarningUI($"{legionName}에 이미 포함되어 있습니다");
+            return;
+        }
+        _selectGeneralDictionary.Add(info, _legionPanel.LegionName);
+
         GeneralInfo = info;
 
+        CreateArmy();
+
         _generalSlot.SetSlot(GeneralInfo);
+
+        HidePanel();
+    }
+
+    private void CreateArmy()
+    {
+        DummyPenguin dummy = PenguinManager.Instance.FindGeneralDummyPenguin(GeneralInfo);
+        Penguin penguin = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, 18);
+        PenguinManager.Instance.DummyToPenguinMapping(dummy, penguin);
+
+        ArmyManager.Instance.JoinArmyToSoldier(_legionPanel.LegionName, _legionPanel.LegionIdx, penguin);
     }
 
     public override void HidePanel()

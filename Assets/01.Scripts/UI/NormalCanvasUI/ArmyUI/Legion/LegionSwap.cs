@@ -1,12 +1,17 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LegionSwap : PopupUI
 {
+    public LegionPanel CurrentPanel;
+
     [SerializeField] private List<LegionPanel> _legionList;
     private bool _isAnimating = false; 
+
+    public Action<LegionPanel> OnSwapLegionEvent = null;
 
     public override void Awake()
     {
@@ -75,11 +80,17 @@ public class LegionSwap : PopupUI
             if (panel.CurrentIndex == 0)
             {
                 panel.PanelTrm.DOScale(new Vector3(2.2f, 2.2f, 1), 0.3f);
+                CurrentPanel = panel;
             }
             else
             {
                 panel.PanelTrm.DOScale(new Vector3(1.8f, 1.8f, 1), 0.3f);
             }
+        }
+
+        if(CurrentPanel != null)
+        {
+            OnSwapLegionEvent?.Invoke(CurrentPanel);
         }
     }
 }

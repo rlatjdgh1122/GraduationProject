@@ -1,11 +1,6 @@
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using static UnityEngine.Rendering.DebugUI;
 
 public class CostManager : Singleton<CostManager>
 {
@@ -31,7 +26,7 @@ public class CostManager : Singleton<CostManager>
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.O))
+        if(Input.GetKey(KeyCode.O))
         {
             AddFromCurrentCost(100);
         }
