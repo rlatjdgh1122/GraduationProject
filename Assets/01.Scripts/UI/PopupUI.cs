@@ -56,6 +56,7 @@ public class PopupUI : MonoBehaviour
     private IEnumerator ShowPanelCoroutine(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
+        Debug.Log(this.name);
         UIManager.Instance.currentPopupUI.Push(this);
         SoundManager.Play2DSound(_soundName);
         _panel.blocksRaycasts = true;
