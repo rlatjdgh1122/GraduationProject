@@ -20,7 +20,7 @@ public class CostManager : Singleton<CostManager>
         base.Awake();
 
         _costUI = FindObjectOfType<CostUI>();
-
+        _currentCost = _defaultCost;
         AddFromCurrentCost(_defaultCost);
     }
 

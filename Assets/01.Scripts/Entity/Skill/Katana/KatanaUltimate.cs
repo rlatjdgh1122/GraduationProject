@@ -34,7 +34,7 @@ public class KatanaUltimate : Skill
         OnStartEclipseEvent?.Invoke();
         _changeVolume.ChangeVolumeEffect(VolumeType.LunarEclipse, 3f);
         AddStat();
-        CoroutineUtil.CallWaitForSeconds(7, () => RemoveStat()); // LunarEclipseUI에서 4길래 4로 함
+        CoroutineUtil.CallWaitForSeconds(9, () => RemoveStat()); // LunarEclipseUI에서 4길래 4로 함
     }
 
     private void AddStat()
