@@ -58,7 +58,6 @@ public abstract class BaseBuilding : WorkableObject
     protected LayerMask _groundLayer = 1 << 3;
 
     private BattlePhaseStartEvent _phaseStartSubscriptionAction;
-
     public Ground InstalledGround()
     {
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
@@ -172,7 +171,7 @@ public abstract class BaseBuilding : WorkableObject
     {
         if (isInstalled)
         {
-            Running(); // ��ġ �Ǹ� ���� ����
+            Running(); //   ġ  Ǹ           
         }
     }
 
@@ -257,21 +256,13 @@ public abstract class BaseBuilding : WorkableObject
     {
         for (int i = 0; i < _meshRenderers.Length; i++)
         {
-            Material[] mats = _meshRenderers[i].materials;
-            for (int j = 0; j < mats.Length; j++)
-            {
-                mats[j] = _meshNormalMats[i][j];
-            }
+            Material[] mats = _meshNormalMats[i];
             _meshRenderers[i].materials = mats;
         }
 
         for (int i = 0; i < _skinRenderers.Length; i++)
         {
-            Material[] mats = _skinRenderers[i].materials;
-            for (int j = 0; j < mats.Length; j++)
-            {
-                mats[j] = _skinNormalMats[i][j];
-            }
+            Material[] mats = _skinNormalMats[i];
             _skinRenderers[i].materials = mats;
         }
     }

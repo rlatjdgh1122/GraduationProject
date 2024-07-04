@@ -65,10 +65,5 @@ public class ShieldGeneralPenguin : General
         StateMachine.ChangeState(PenguinStateType.ShieldUltimate);
     }
 
-    public void OnBlockEvent()
-    {
-        StateMachine.ChangeState(PenguinStateType.Block);
-    }
-
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 }

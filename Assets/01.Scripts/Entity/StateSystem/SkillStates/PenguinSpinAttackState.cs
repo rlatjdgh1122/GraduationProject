@@ -13,6 +13,7 @@ public class PenguinSpinAttackState : State
 
     public override void EnterState()
     {
+        Debug.Log("EnterSpinAttackState");
         base.EnterState();
         general.Skill.IsAvaliable = false;
         //AttackEnter();
@@ -20,6 +21,7 @@ public class PenguinSpinAttackState : State
 
     public override void UpdateState()
     {
+        Debug.Log("UpdateSpinAttackState");
         base.UpdateState();
 
         _penguin.LookTarget();
@@ -36,6 +38,7 @@ public class PenguinSpinAttackState : State
 
     public override void ExitState()
     {
+        Debug.Log("ExitSpinAttackState");
         base.ExitState();
         general.Skill.IsAvaliable = true;
         //AttackExit();
