@@ -15,7 +15,7 @@ public class PenguinSpinAttackState : State
     {
         base.EnterState();
         general.Skill.IsAvaliable = false;
-        //AttackEnter();
+        AttackEnter();
     }
 
     public override void UpdateState()

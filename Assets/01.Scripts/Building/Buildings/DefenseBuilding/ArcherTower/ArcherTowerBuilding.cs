@@ -12,20 +12,15 @@ public class ArcherTowerBuilding : DefenseBuilding
         base.Awake();
 
         _archerPenguins = transform.GetComponentsInChildren<ArcherTowerPenguin>();
-        SetUpPenguinsCompo(FOV.ViewRadius, true);
+        SetUpPenguinsCompo(FOV.ViewRadius);
 
     }
 
-    private void SetUpPenguinsCompo(float attackDistance, bool isFirst = false)
+    private void SetUpPenguinsCompo(float attackDistance)
     {
         for (int i = 0; i < _archerPenguins.Length; i++)
         {
             _archerPenguins[i].attackDistance = attackDistance;
-
-            if (isFirst)
-            {
-                _archerPenguins[i].gameObject.SetActive(false);
-            }
         }
     }
 
