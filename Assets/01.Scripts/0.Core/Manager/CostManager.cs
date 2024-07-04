@@ -26,10 +26,10 @@ public class CostManager : Singleton<CostManager>
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.O))
+       /* if(Input.GetKey(KeyCode.O))
         {
             AddFromCurrentCost(100);
-        }
+        }*/
     }
 
     /// <summary>

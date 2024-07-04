@@ -13,7 +13,7 @@ public class ResourceManager : Singleton<ResourceManager>
     public delegate void OnUIUpdateHandler(Resource resource, int stackCount);
     public event OnUIUpdateHandler OnUIUpdate;
 
-    public List<ResourceDataSO> list = new();
+    //public List<ResourceDataSO> list = new();
 
     public override void Awake()
     {
@@ -23,14 +23,14 @@ public class ResourceManager : Singleton<ResourceManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        /*if (Input.GetKeyDown(KeyCode.N))
         {
             AddResource(list[0], 5);
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
             AddResource(list[1], 5);
-        }
+        }*/
     }
 
     public void AddResource(ResourceDataSO resourceData, int count)
