@@ -10,7 +10,6 @@ namespace SkillSystem
     {
         private bool _canUsedSkill = true;
 
-       
         protected override void OnDisable()
         {
             base.OnDisable();
