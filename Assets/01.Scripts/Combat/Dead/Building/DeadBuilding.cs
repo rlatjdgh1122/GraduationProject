@@ -18,19 +18,12 @@ public class DeadBuilding : MonoBehaviour
         _visualRenderers = transform.Find("Visual")?.GetComponentsInChildren<MeshRenderer>();
     }
 
-    private void OnEnable()
+    public virtual void BrokenBuilding()
     {
-        SignalHub.OnBattlePhaseEndEvent += DisolveBuilding;
-    }
+        ParentBuilding.BuildingItemInfoCompo.CurrentInstallCount -= 1;
+        GameObject.Find(ParentBuilding.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
 
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseEndEvent -= DisolveBuilding;
-    }
-
-    public virtual void DisolveBuilding()
-    {
-        if(_visualRenderers != null)
+        if (_visualRenderers != null)
         {
             foreach (var mat in _visualRenderers)
             {
