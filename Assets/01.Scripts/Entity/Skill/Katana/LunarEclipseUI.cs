@@ -25,21 +25,19 @@ public class LunarEclipseUI : WorldUI
     [SerializeField]
     private UnityEvent OnEndEclipseEvent;
 
+    public Sequence HudTextSequence;
+
     public override void Update()
     {
         base.Update();
-
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            StartEclipse();
-        }
     }
 
     public void StartEclipse()
     {
-        UIManager.Instance.InitializHudTextSequence();
+        HudTextSequence?.Kill(); // 기존 시퀀스를 중단
+        HudTextSequence = DOTween.Sequence(); // 새로운 시퀀스 할당
 
-        UIManager.Instance.HudTextSequence
+        HudTextSequence
             .Append(canvas.DOFade(1, 0.7f))
             .Join(_redMoonImage.DOFade(1, 0.5f))
             .Join(_redMoonImage.transform.DOLocalMoveX(0, _duration))
@@ -51,11 +49,12 @@ public class LunarEclipseUI : WorldUI
 
     public void EndEclipse(float duration)
     {
-        UIManager.Instance.InitializHudTextSequence();
+        HudTextSequence?.Kill(); // 기존 시퀀스를 중단
+        HudTextSequence = DOTween.Sequence(); // 새로운 시퀀스 할당
 
         OnEndEclipseEvent?.Invoke();
 
-        UIManager.Instance.HudTextSequence
+        HudTextSequence
             .Append(_redMoonImage.DOFade(0, duration))
             .Join(_redMoonImage.transform.DOLocalMoveX(_localMoveXValue, duration))
             .Join(_glowImge.DOColor(_beforeGlow, duration))
