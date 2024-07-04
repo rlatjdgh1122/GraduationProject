@@ -29,12 +29,6 @@ public class CheckHitDecision : SKillDecision
         _checkSkillReady = true;
     }
 
-    private void D()
-    {
-
-
-    }
-
     public override bool MakeDecision()
     {
         return maxValue + saveValue <= entityActionData.HitCount;

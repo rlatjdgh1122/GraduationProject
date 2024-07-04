@@ -66,6 +66,7 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
     {
         IsDie = false;
 
+        _owner.HealthCompo.IsDead = false;
         brokenBuilding.gameObject.SetActive(false);
         _nonBrokenBuilding.gameObject.SetActive(true);
     }

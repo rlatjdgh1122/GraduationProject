@@ -88,7 +88,7 @@ public class StatusSlotContainer : MonoBehaviour
 
         _selectedStatusSlot.SetSynergyUI(synergyData.Item3);
 
-        _selectedTrm.localPosition = new Vector3(-850, 150 + 65 * newArmy.LegionIdx, 0);
+        _selectedTrm.localPosition = new Vector3(-850, 150 + 65 * (_armies.Count - (newArmy.LegionIdx + 1)), 0);
     }
 
     private void DestoryStatusSlot()

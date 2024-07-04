@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BuildingUI : PopupUI
 {
@@ -12,11 +13,14 @@ public class BuildingUI : PopupUI
 
     private BuildingUIComponent[] _repairPanels;
 
+    private BuildingRepairPanel[] _repairPanel;
+
     public override void Awake()
     {
         base.Awake();
 
         _repairPanels = transform.GetComponentsInChildren<BuildingUIComponent>();
+        _repairPanel = transform.GetComponentsInChildren<BuildingRepairPanel>();
     }
 
     public void SetStat()
@@ -57,6 +61,9 @@ public class BuildingUI : PopupUI
 
     public void HideBuildingUI()
     {
-        UIManager.Instance.HidePanel("BuildingUI");
+        //UIManager.Instance.HidePanel("BuildingUI");
+        HidePanel();
+
+        UIManager.Instance.ResetPanel();
     }
 }
