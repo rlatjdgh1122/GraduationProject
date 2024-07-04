@@ -14,7 +14,6 @@ public class PenguinBlockState : State
     public override void EnterState()
     {
         base.EnterState();
-
         _triggerCalled = false;
         _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
@@ -24,7 +23,6 @@ public class PenguinBlockState : State
     public override void UpdateState()
     {
         base.UpdateState();
-
         _penguin.LookTarget();
         //사거리가 멀어지면 맞으러 감
         if (!_penguin.IsTargetInAttackRange)
