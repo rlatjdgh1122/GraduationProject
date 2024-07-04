@@ -85,7 +85,7 @@ public class StatusSlotContainer : MonoBehaviour
         //오브젝트 지우는건 _armies의 카운트가 이전 카운트보다 적을때만
         _armyToSlotDic.TryClear((k, v) =>
         {
-            (k as IValueChanger<ArmyUIInfo>).Remove(v);
+            //(k as IValueChanger<ArmyUIInfo>).Remove(v);
             Destroy(v);
         });
     }
@@ -120,7 +120,7 @@ public class StatusSlotContainer : MonoBehaviour
     private StatusSlot CreateSlot(Army army)
     {
         StatusSlot newSlot = Instantiate(statusSlotPrefab, slotperentTrm);
-        army.GetInfo().Add(newSlot);
+        //army.GetInfo().Add(newSlot);
 
         return newSlot;
     }

@@ -24,4 +24,13 @@ public class CoolTimeSkillUI : SkillUI
 
         }//end if
     }
+
+    public override void OnSkillReady()
+    {
+        base.OnSkillReady();
+
+        CurrntValue = value;
+        CurrentFillAmount = 0f;
+        bliendGauge.fillAmount = CurrentFillAmount;
+    }
 }

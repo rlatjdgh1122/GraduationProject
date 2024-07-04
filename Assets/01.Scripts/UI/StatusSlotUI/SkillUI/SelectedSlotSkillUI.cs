@@ -44,4 +44,13 @@ public class SelectedSlotSkillUI : SkillUI
 
         bliendGauge.fillAmount = CurrentFillAmount;
     }
+
+    public override void OnSkillReady()
+    {
+        base.OnSkillReady();
+
+        CurrntValue = value;
+        CurrentFillAmount = 0f;
+        bliendGauge.fillAmount = CurrentFillAmount;
+    }
 }

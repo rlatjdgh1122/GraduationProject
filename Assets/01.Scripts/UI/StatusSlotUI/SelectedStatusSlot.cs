@@ -16,7 +16,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     [SerializeField] private Image _ultimateImage = null;
 
     [SerializeField] private Transform _UITrm = null;
-    [SerializeField] private SelectedSlotSkillUI SkillUI = null;
+    [SerializeField] private SelectedSlotSkillUI _skillUI = null;
 
     protected UltimateUI UltimateUI = null;
 
@@ -31,12 +31,12 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     private void OffRegister(Army army)
     {
-        if (SkillUI != null)
+        if (_skillUI != null)
         {
-            army.SkillController.OnSkillUsedEvent -= SkillUI.OnSkillUsed;
-            army.SkillController.OnChangedMaxValueEvent -= SkillUI.OnChangedMaxValue;
-            army.SkillController.OnSkillActionEnterEvent -= SkillUI.OnSkillActionEnter;
-            army.SkillController.OnSkillReadyEvent -= SkillUI.OnSkillReady;
+            army.SkillController.OnSkillUsedEvent -= _skillUI.OnSkillUsed;
+            army.SkillController.OnChangedMaxValueEvent -= _skillUI.OnChangedMaxValue;
+            army.SkillController.OnSkillActionEnterEvent -= _skillUI.OnSkillActionEnter;
+            army.SkillController.OnSkillReadyEvent -= _skillUI.OnSkillReady;
         }
 
         if (UltimateUI != null)
@@ -50,12 +50,14 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     private void OnRegister(Army army)
     {
-        if (SkillUI != null)
+        if (_skillUI != null)
         {
-            army.SkillController.OnSkillUsedEvent += SkillUI.OnSkillUsed;
-            army.SkillController.OnChangedMaxValueEvent += SkillUI.OnChangedMaxValue;
-            army.SkillController.OnSkillActionEnterEvent += SkillUI.OnSkillActionEnter;
-            army.SkillController.OnSkillReadyEvent += SkillUI.OnSkillReady;
+            army.SkillController.OnSkillUsedEvent += _skillUI.OnSkillUsed;
+            army.SkillController.OnChangedMaxValueEvent += _skillUI.OnChangedMaxValue;
+            army.SkillController.OnSkillActionEnterEvent += _skillUI.OnSkillActionEnter;
+            army.SkillController.OnSkillReadyEvent += _skillUI.OnSkillReady;
+
+            _army.SkillController.Init();
         }
 
         if (UltimateUI != null)
@@ -77,6 +79,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
         //군단일므 바꿔줌
         LegionNameChangedHandler(army.LegionName);
+        EnablePenguinInSelectLegion(army.Info.PenguinCount);
     }
 
 
@@ -84,7 +87,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     {
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
-        SkillUI.Setting(currentValue, fillAmount, skillType);
+        _skillUI.Setting(currentValue, fillAmount, skillType);
         _skillImage.sprite = image;
 
     }
