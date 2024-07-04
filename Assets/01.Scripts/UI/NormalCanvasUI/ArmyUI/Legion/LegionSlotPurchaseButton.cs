@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class LegionSlotPurchaseButton : MonoBehaviour
 {
+    [SerializeField] private int idx = 0;
     private LegionSoldierSlot _slot;
     private Button _purchaseButton;
     private LegionPanel _legionPanel;
+
+    private int[] IdxArry = new int[] { 6, 7, 8, 26, 27, 28 };
 
     private void Awake()
     {
@@ -28,7 +31,7 @@ public class LegionSlotPurchaseButton : MonoBehaviour
         {
             _slot.gameObject.SetActive(true);
             _legionPanel.SoldierSlotList.Add(_slot);
-            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName, 10);
+            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName, IdxArry[idx]);
         });
     }
 }
