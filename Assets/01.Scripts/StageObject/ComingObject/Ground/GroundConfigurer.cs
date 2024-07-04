@@ -22,8 +22,7 @@ public class GroundConfigurer : ComingObjectConfigurer
 
         RewardConfigurer rewardConfigurer = new RewardConfigurer(groundTrm,
                                                                  _comingElementsDataSO.NormalRewardPrefab.name,
-                                                                 _comingElementsDataSO.BossRewardPrefab.name,
-                                                                 _comingElementsDataSO.MagicCagePrefab.name);
+                                                                 _comingElementsDataSO.BossRewardPrefab.name);
 
         return new GroundElements(enemyConfigurer.SetEnemy(_previousElementsPositions),
                                   resourceConfigurer.SetResource(_previousElementsPositions),
