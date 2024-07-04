@@ -14,18 +14,13 @@ namespace SkillSystem
         protected override void OnDisable()
         {
             base.OnDisable();
-
-            SignalHub.OnBattlePhaseStartEvent -= WaveStart;
-        }
-
-        private void OnEnable()
-        {
-            SignalHub.OnBattlePhaseStartEvent += WaveStart;
         }
 
         public void WaveStart()  
         {
             //웨이브 돌때마다 스킬 사용 가능하게
+            SignalHub.OnBattlePhaseStartEvent -= WaveStart;
+
             _canUsedSkill = true;
         }
 
@@ -34,6 +29,8 @@ namespace SkillSystem
             OnSkillUsedEvent?.Invoke();
 
             saveValue = WaveManager.Instance.CurrentWaveCount;
+
+            SignalHub.OnBattlePhaseStartEvent += WaveStart;
 
             //한번 사용하면 못쓰게
             _canUsedSkill = false;

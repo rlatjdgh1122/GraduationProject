@@ -34,7 +34,6 @@ public class SkillInput : MonoBehaviour
     {
         if (!CanPlaySkill()) { return; }
         if (!_curSelectGeneral.IsSynergy) return;
-
         if (_curSelectGeneral.Ultimate.SkillController.CheckDecision())
         {
             _curSelectGeneral.OnUltimateEvent();
