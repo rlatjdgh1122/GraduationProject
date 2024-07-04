@@ -8,15 +8,22 @@ namespace SkillSystem
 {
     public class CheckWaveCountDecision : SKillDecision
     {
-
         private bool _canUsedSkill = true;
 
-        private void Awake()
+       
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            SignalHub.OnBattlePhaseStartEvent -= WaveStart;
+        }
+
+        private void OnEnable()
         {
             SignalHub.OnBattlePhaseStartEvent += WaveStart;
         }
 
-        private void WaveStart()
+        public void WaveStart()  
         {
             //웨이브 돌때마다 스킬 사용 가능하게
             _canUsedSkill = true;
@@ -26,7 +33,7 @@ namespace SkillSystem
         {
             OnSkillUsedEvent?.Invoke();
 
-            saveValue += WaveManager.Instance.CurrentWaveCount;
+            saveValue = WaveManager.Instance.CurrentWaveCount;
 
             //한번 사용하면 못쓰게
             _canUsedSkill = false;
@@ -39,18 +46,13 @@ namespace SkillSystem
             return maxValue + saveValue <= WaveManager.Instance.CurrentWaveCount;
         }
 
-        public override void LevelUp(int value)  
+        public override void LevelUp(int value)
         {
 
             maxValue -= value;
         }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-
-            SignalHub.OnBattlePhaseStartEvent -= WaveStart;
-        }
+        
     }
 }
 

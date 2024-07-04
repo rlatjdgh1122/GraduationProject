@@ -18,6 +18,7 @@ public class StatusSlotContainer : MonoBehaviour
     [SerializeField] private StatusSlot statusSlotPrefab = null;
     [SerializeField] private Transform slotperentTrm = null;
     [SerializeField] private SelectedStatusSlot _selectedStatusSlot = null;
+    [SerializeField] private RectTransform _selectedTrm = null;
 
     private Dictionary<SynergyType, (UltimateType, Sprite, Sprite)> _synergyTypeToDataDic = new();
     private Dictionary<GeneralType, (SkillType, Sprite)> _generalTypeToDataDic = new();
@@ -86,6 +87,8 @@ public class StatusSlotContainer : MonoBehaviour
         }
 
         _selectedStatusSlot.SetSynergyUI(synergyData.Item3);
+
+        _selectedTrm.localPosition = new Vector3(-850, 150 + 65 * newArmy.LegionIdx, 0);
     }
 
     private void DestoryStatusSlot()
@@ -99,11 +102,13 @@ public class StatusSlotContainer : MonoBehaviour
         });
 
         _canvasGroup.alpha = 0f;
+        _selectedTrm.gameObject.SetActive(false);
     }
 
     private void ApplyStatusSlot()
     {
         _canvasGroup.alpha = 1f;
+        _selectedTrm.gameObject.SetActive(true);
 
         foreach (var army in _armies)
         {

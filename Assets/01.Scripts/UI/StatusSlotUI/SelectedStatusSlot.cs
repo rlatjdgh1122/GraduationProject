@@ -89,8 +89,8 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         _skillImage.sprite = _lockSprite;
         _ultimateImage.sprite = _lockSprite;    
 
-        _skillUI.Setting(0f, 1f, SkillType.None);
-        _ultimateUI.Setting(1f);
+        _skillUI.Setting(0f, 0f, SkillType.None);
+        _ultimateUI.Setting(0f);
     }
 
 
