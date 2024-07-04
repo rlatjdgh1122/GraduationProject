@@ -15,6 +15,7 @@ public class CheckHitDecision : SKillDecision
 
         if (MakeDecision()) //스킬사용 조건이 처음 만족할때 한번 실행
         {
+            OnSkillReadyEvent?.Invoke();
             _checkSkillReady = false;
         }
     }
@@ -26,6 +27,12 @@ public class CheckHitDecision : SKillDecision
         skillActionData.AddSkillUsedCount();
         saveValue = entityActionData.HitCount;
         _checkSkillReady = true;
+    }
+
+    private void D()
+    {
+
+
     }
 
     public override bool MakeDecision()

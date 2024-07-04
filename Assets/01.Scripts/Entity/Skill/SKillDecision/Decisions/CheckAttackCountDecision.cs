@@ -16,6 +16,7 @@ namespace SkillSystem
 
             if (MakeDecision()) // 스킬 사용 조건이 처음 만족할 때 한 번 실행
             {
+                OnSkillReadyEvent?.Invoke();
                 _checkSkillReady = false;
             }
         }

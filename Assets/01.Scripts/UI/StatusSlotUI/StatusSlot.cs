@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.SkillController.OnSkillUsedEvent -= SkillUI.OnSkillUsed;
             _army.SkillController.OnChangedMaxValueEvent -= SkillUI.OnChangedMaxValue;
             _army.SkillController.OnSkillActionEnterEvent -= SkillUI.OnSkillActionEnter;
+            _army.SkillController.OnSkillReadyEvent -= SkillUI.OnSkillReady;
         }
 
         if (UltimateUI != null)
@@ -45,6 +47,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.UltimateController.OnSkillUsedEvent -= UltimateUI.OnUltimateUsed;
             _army.UltimateController.OnChangedMaxValueEvent -= UltimateUI.OnChangedMaxValue;
             _army.UltimateController.OnSkillActionEnterEvent -= UltimateUI.OnUltimateActionEnter;
+            //_army.UltimateController.OnSkillReadyEvent -= UltimateUI.OnSkillReady;
         }
     }
 
@@ -55,6 +58,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.SkillController.OnSkillUsedEvent += SkillUI.OnSkillUsed;
             _army.SkillController.OnChangedMaxValueEvent += SkillUI.OnChangedMaxValue;
             _army.SkillController.OnSkillActionEnterEvent += SkillUI.OnSkillActionEnter;
+            _army.SkillController.OnSkillReadyEvent += SkillUI.OnSkillReady;
 
             _army.SkillController.Init();
         }

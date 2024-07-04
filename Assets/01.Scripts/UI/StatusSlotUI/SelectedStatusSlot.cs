@@ -1,5 +1,6 @@
 using ArmySystem;
 using DG.Tweening;
+using SkillSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,10 +10,16 @@ using UnityEngine.UI;
 public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 {
     [SerializeField] private TextMeshProUGUI _legionNameTxt = null;
-    [SerializeField] private Transform _UITrm = null;
 
-    protected SkillUI skillUI = null;
-    protected UltimateUI ultimateUI = null;
+    [SerializeField] private Image _synergyImage = null;
+    [SerializeField] private Image _skillImage = null;
+    [SerializeField] private Image _ultimateImage = null;
+
+    [SerializeField] private Sprite _lockSprite = null;
+
+    [SerializeField] private Transform _UITrm = null;
+    [SerializeField] private SelectedSlotSkillUI _skillUI = null;
+    [SerializeField] private SelectedSlotUltimateUI _ultimateUI = null;
 
     private Image[] _penguinIconList;
     private Army _army = null;
@@ -23,24 +30,91 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         _penguinIconList = penguinIconParent.GetComponentsInChildren<Image>();
     }
 
-    //군단이 바뀔때마다 정보에 따라 실햄(이준서가 만든 그거)
-
-    public void ChangedSlot(StatusSlot slot, Army army)
+    private void OffRegister(Army army)
     {
+        if (!army.General) return;
+
+        if (_skillUI != null)
+        {
+            army.SkillController.OnSkillUsedEvent -= _skillUI.OnSkillUsed;
+            army.SkillController.OnChangedMaxValueEvent -= _skillUI.OnChangedMaxValue;
+            army.SkillController.OnSkillActionEnterEvent -= _skillUI.OnSkillActionEnter;
+            army.SkillController.OnSkillReadyEvent -= _skillUI.OnSkillReady;
+        }
+
+        if (_ultimateUI != null)
+        {
+            army.UltimateController.OnSkillUsedEvent -= _ultimateUI.OnUltimateUsed;
+            army.UltimateController.OnChangedMaxValueEvent -= _ultimateUI.OnChangedMaxValue;
+            army.UltimateController.OnSkillActionEnterEvent -= _ultimateUI.OnUltimateActionEnter;
+            //_army.UltimateController.OnSkillReadyEvent -= UltimateUI.OnSkillReady;
+        }
+    }
+
+    private void OnRegister(Army army)
+    {
+        if (!army.General) return;
+
+        if (_skillUI != null)
+        {
+            army.SkillController.OnSkillUsedEvent += _skillUI.OnSkillUsed;
+            army.SkillController.OnChangedMaxValueEvent += _skillUI.OnChangedMaxValue;
+            army.SkillController.OnSkillActionEnterEvent += _skillUI.OnSkillActionEnter;
+            army.SkillController.OnSkillReadyEvent += _skillUI.OnSkillReady;
+
+            _army.SkillController.Init();
+        }
+
+        if (_ultimateUI != null)
+        {
+            army.UltimateController.OnSkillUsedEvent += _ultimateUI.OnUltimateUsed;
+            army.UltimateController.OnChangedMaxValueEvent += _ultimateUI.OnChangedMaxValue;
+            army.UltimateController.OnSkillActionEnterEvent += _ultimateUI.OnUltimateActionEnter;
+        }
+    }
+    public void SetArmy(Army army)
+    {
+        if (_army != null)
+        {
+            OffRegister(_army);
+        }
         _army = army;
-        //스킬이랑 궁극기 복사해서 연결하고
         //레지스터로 연결해줌
-        if (slot.SkillUI)
-        {
-            GameObject obj = Instantiate(slot.SkillUI.gameObject, _UITrm);
-        }
+        OnRegister(_army);
 
-        if (slot.SkillUI)
-        {
-
-        }
         //군단일므 바꿔줌
         LegionNameChangedHandler(army.LegionName);
+        EnablePenguinInSelectLegion(army.Info.PenguinCount);
+
+        _skillImage.sprite = _lockSprite;
+        _ultimateImage.sprite = _lockSprite;    
+
+        _skillUI.Setting(0f, 1f, SkillType.None);
+        _ultimateUI.Setting(1f);
+    }
+
+
+    public void SetSkillUI(float currentValue, float fillAmount, SkillType skillType, Sprite image)
+    {
+        //여기까지 왔다면 장군이 있다는거
+        //여기서 스킬 연결하자
+        _skillUI.Setting(currentValue, fillAmount, skillType);
+        _skillImage.sprite = image;
+
+    }
+    public void SetUltimateUI(float fillAmount, Sprite image)
+    {
+        _ultimateUI.Setting(fillAmount);
+        _ultimateImage.sprite = image;
+    }
+
+
+    public void SetSynergyUI(Sprite image)
+    {
+        //여기까지 왔다면 장군이 있다는거
+        //여기서 스킬 연결하자
+        _synergyImage.sprite = image;
+
     }
 
     /// <summary>
@@ -99,17 +173,17 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     /// </summary>
     private void ChangeSkillsInCurrentUI(ArmyUIInfo armyInfo)
     {
-     /*   synergyIcon.sprite = armyInfo.SynergySprite;
-        skillIcon.sprite = armyInfo.SkillSprite;
-        ultimateIcon.sprite = armyInfo.UltimateSprite;
+        /*   synergyIcon.sprite = armyInfo.SynergySprite;
+           skillIcon.sprite = armyInfo.SkillSprite;
+           ultimateIcon.sprite = armyInfo.UltimateSprite;
 
-        ImageTransparent(synergyIcon);
-        ImageTransparent(skillIcon);
-        ImageTransparent(ultimateIcon);
+           ImageTransparent(synergyIcon);
+           ImageTransparent(skillIcon);
+           ImageTransparent(ultimateIcon);
 
-        synergyIcon.DOFade(1, 0.5f);
-        skillIcon.DOFade(1, 0.5f);
-        ultimateIcon.DOFade(1, 0.5f);*/
+           synergyIcon.DOFade(1, 0.5f);
+           skillIcon.DOFade(1, 0.5f);
+           ultimateIcon.DOFade(1, 0.5f);*/
     }
 
     /// <summary>

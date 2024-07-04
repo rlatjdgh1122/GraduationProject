@@ -11,6 +11,7 @@ namespace SkillSystem
         [SerializeField] private bool _canUsedskillInitially = true;
         [SerializeField] private int _initMaxVaue = 5;
 
+        public Action OnSkillReadyEvent = null;
         public Action OnSkillUsedEvent = null;
         public Action OnSkillActionEnterEvent = null;
         public Action<int> OnChangedMaxValueEvent = null;

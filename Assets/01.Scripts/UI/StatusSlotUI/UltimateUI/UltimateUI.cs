@@ -9,8 +9,8 @@ public abstract class UltimateUI : MonoBehaviour
     [SerializeField] protected UnityEvent OnUltimateReadyEvent = null;
     protected Image bliendGauge = null;
 
-    protected int value = 0;
-    protected float currentFillAmount = 0;
+    public int Value = 0;
+    public float CurrentFillAmount = 0;
 
     protected virtual void Awake()
     {
@@ -19,7 +19,7 @@ public abstract class UltimateUI : MonoBehaviour
 
     public void OnChangedMaxValue(int maxValue)
     {
-        value = maxValue;
+        Value = maxValue;
     }
 
     public void Init()
@@ -30,7 +30,7 @@ public abstract class UltimateUI : MonoBehaviour
     public virtual void OnUltimateUsed()
     {
         bliendGauge.fillAmount = 1f;
-        currentFillAmount = 1f;
+        CurrentFillAmount = 1f;
     }
 
     public virtual void OnUltimateActionEnter() { }

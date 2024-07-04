@@ -23,6 +23,7 @@ public class StatusSlotContainer : MonoBehaviour
     private Dictionary<GeneralType, (SkillType, Sprite)> _generalTypeToDataDic = new();
     private Dictionary<Army, StatusSlot> _armyToSlotDic = new();
 
+    private CanvasGroup _canvasGroup = null;
     private List<Army> _armies => ArmyManager.Instance.Armies;
 
     private void OnDisable()
@@ -37,6 +38,8 @@ public class StatusSlotContainer : MonoBehaviour
         SignalHub.OnBattlePhaseStartEvent += ApplyStatusSlot;
         SignalHub.OnBattlePhaseEndEvent += DestoryStatusSlot;
         SignalHub.OnArmyChanged += OnChangedArmyHandler;
+
+        _canvasGroup = _selectedStatusSlot.GetComponent<CanvasGroup>();
     }
 
     private void Start()
@@ -64,7 +67,25 @@ public class StatusSlotContainer : MonoBehaviour
         }
 
         newArmy.GetInfo().Add(_selectedStatusSlot);
-        _selectedStatusSlot.ChangedSlot(_armyToSlotDic[newArmy], newArmy);
+        _selectedStatusSlot.SetArmy(newArmy);
+
+        StatusSlot slot = _armyToSlotDic[newArmy];
+        var synergyData = _synergyTypeToDataDic[newArmy.SynergyType];
+
+        SkillUI slotSkillUI = slot.SkillUI;
+        UltimateUI slotUltimateUI = slot.UltimateUI;
+        if (slotSkillUI)
+        {
+            var generalData = _generalTypeToDataDic[newArmy.General.GeneralType];
+            _selectedStatusSlot.SetSkillUI(slotSkillUI.CurrntValue, slotSkillUI.CurrentFillAmount, generalData.Item1, generalData.Item2);
+        }
+
+        if (slotUltimateUI)
+        {
+            _selectedStatusSlot.SetUltimateUI(slotUltimateUI.CurrentFillAmount, synergyData.Item2);
+        }
+
+        _selectedStatusSlot.SetSynergyUI(synergyData.Item3);
     }
 
     private void DestoryStatusSlot()
@@ -73,13 +94,17 @@ public class StatusSlotContainer : MonoBehaviour
         //오브젝트 지우는건 _armies의 카운트가 이전 카운트보다 적을때만
         _armyToSlotDic.TryClear((k, v) =>
         {
-            (k as IValueChanger<ArmyUIInfo>).Remove(v);
-            Destroy(v);
+            //(k as IValueChanger<ArmyUIInfo>).Remove(v);
+            Destroy(v.gameObject);
         });
+
+        _canvasGroup.alpha = 0f;
     }
 
     private void ApplyStatusSlot()
     {
+        _canvasGroup.alpha = 1f;
+
         foreach (var army in _armies)
         {
             StatusSlot slot = CreateSlot(army);
@@ -108,7 +133,7 @@ public class StatusSlotContainer : MonoBehaviour
     private StatusSlot CreateSlot(Army army)
     {
         StatusSlot newSlot = Instantiate(statusSlotPrefab, slotperentTrm);
-        army.GetInfo().Add(newSlot);
+        //army.GetInfo().Add(newSlot);
 
         return newSlot;
     }
