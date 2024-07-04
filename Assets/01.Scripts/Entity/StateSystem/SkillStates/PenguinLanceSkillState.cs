@@ -26,6 +26,8 @@ public class PenguinLanceSkillState : State
     public override void UpdateState()
     {
         //base.UpdateState();
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();
 
         if (_triggerCalled)
         {

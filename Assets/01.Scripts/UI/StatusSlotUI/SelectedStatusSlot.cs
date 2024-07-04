@@ -15,10 +15,11 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     [SerializeField] private Image _skillImage = null;
     [SerializeField] private Image _ultimateImage = null;
 
+    [SerializeField] private Sprite _lockSprite = null;
+
     [SerializeField] private Transform _UITrm = null;
     [SerializeField] private SelectedSlotSkillUI _skillUI = null;
-
-    protected UltimateUI UltimateUI = null;
+    [SerializeField] private SelectedSlotUltimateUI _ultimateUI = null;
 
     private Image[] _penguinIconList;
     private Army _army = null;
@@ -31,6 +32,8 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     private void OffRegister(Army army)
     {
+        if (!army.General) return;
+
         if (_skillUI != null)
         {
             army.SkillController.OnSkillUsedEvent -= _skillUI.OnSkillUsed;
@@ -39,17 +42,19 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             army.SkillController.OnSkillReadyEvent -= _skillUI.OnSkillReady;
         }
 
-        if (UltimateUI != null)
+        if (_ultimateUI != null)
         {
-            army.UltimateController.OnSkillUsedEvent -= UltimateUI.OnUltimateUsed;
-            army.UltimateController.OnChangedMaxValueEvent -= UltimateUI.OnChangedMaxValue;
-            army.UltimateController.OnSkillActionEnterEvent -= UltimateUI.OnUltimateActionEnter;
+            army.UltimateController.OnSkillUsedEvent -= _ultimateUI.OnUltimateUsed;
+            army.UltimateController.OnChangedMaxValueEvent -= _ultimateUI.OnChangedMaxValue;
+            army.UltimateController.OnSkillActionEnterEvent -= _ultimateUI.OnUltimateActionEnter;
             //_army.UltimateController.OnSkillReadyEvent -= UltimateUI.OnSkillReady;
         }
     }
 
     private void OnRegister(Army army)
     {
+        if (!army.General) return;
+
         if (_skillUI != null)
         {
             army.SkillController.OnSkillUsedEvent += _skillUI.OnSkillUsed;
@@ -60,11 +65,11 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.SkillController.Init();
         }
 
-        if (UltimateUI != null)
+        if (_ultimateUI != null)
         {
-            army.UltimateController.OnSkillUsedEvent += UltimateUI.OnUltimateUsed;
-            army.UltimateController.OnChangedMaxValueEvent += UltimateUI.OnChangedMaxValue;
-            army.UltimateController.OnSkillActionEnterEvent += UltimateUI.OnUltimateActionEnter;
+            army.UltimateController.OnSkillUsedEvent += _ultimateUI.OnUltimateUsed;
+            army.UltimateController.OnChangedMaxValueEvent += _ultimateUI.OnChangedMaxValue;
+            army.UltimateController.OnSkillActionEnterEvent += _ultimateUI.OnUltimateActionEnter;
         }
     }
     public void SetArmy(Army army)
@@ -80,6 +85,12 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         //±∫¥‹¿œπ« πŸ≤„¡‹
         LegionNameChangedHandler(army.LegionName);
         EnablePenguinInSelectLegion(army.Info.PenguinCount);
+
+        _skillImage.sprite = _lockSprite;
+        _ultimateImage.sprite = _lockSprite;    
+
+        _skillUI.Setting(0f, 1f, SkillType.None);
+        _ultimateUI.Setting(1f);
     }
 
 
@@ -91,6 +102,12 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         _skillImage.sprite = image;
 
     }
+    public void SetUltimateUI(float fillAmount, Sprite image)
+    {
+        _ultimateUI.Setting(fillAmount);
+        _ultimateImage.sprite = image;
+    }
+
 
     public void SetSynergyUI(Sprite image)
     {

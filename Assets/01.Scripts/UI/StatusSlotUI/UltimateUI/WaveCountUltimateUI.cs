@@ -11,7 +11,7 @@ public class WaveCountUltimateUI : UltimateUI
 
     public override void OnUltimateActionEnter()
     {
-        currentFillAmount -= 1f / value; // value에 따라 비율 감소
-        bliendGauge.fillAmount = currentFillAmount;
+        CurrentFillAmount -= 1f / Value; // value에 따라 비율 감소
+        bliendGauge.fillAmount = CurrentFillAmount;
     }
 }
