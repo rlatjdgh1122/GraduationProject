@@ -14,7 +14,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     [SerializeField]
     private float _spawnDistance;
 
-    private int makedHexagonCount = -1; // 만들어진 육각형의 개수
+    private int makedHexagonCount = -1;
 
     private Queue<Ground> _curHexagon_Grounds = new Queue<Ground>();
     private Queue<Ground> _allGrounds = new Queue<Ground>(); // 나중에 Queue나 stack으로 할 수도
@@ -27,7 +27,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         {
             if (_rotateValues.Count == 0)
             {
-                Debug.Log("null");
                 AddGlacierToCurHexagon();
             }
             return _rotateValues;
@@ -104,8 +103,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         {
             _rotateValues.Enqueue(rotateValueArray[i]);
         }
-
-        makedHexagonCount++;
     }
 
     private void SetGround(int i)
@@ -160,7 +157,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             float rotateValue = GetRandRotateValue();
 
             Vector3 direction = Quaternion.Euler(0, rotateValue, 0) * transform.forward;
-            Vector3 groundPos = transform.localPosition + direction * _spawnDistance * (makedHexagonCount + 1);
+            Vector3 raftPos = transform.localPosition + direction * _spawnDistance * (makedHexagonCount + 1);
 
             //raft.transform.position = randomRaftPos;
 
@@ -168,7 +165,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             raft.SetMoveTarget(transform.parent.parent.parent);
             raft.SetComingObjectInfo(_raftConfigurer.SetComingObjectElements(raft.transform),
                                       transform,
-                                      groundPos);
+                                      raftPos);
         }
     }
 
@@ -221,7 +218,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         return 360 / GetCurHexagonGroundsGoalCount(makedHexagonCount);
     }
     
-    private int GetCurHexagonGroundsGoalCount(float _makedHexagonCount)  // 지금 만들 육각형에 필요한 빙하의 개수
+    private int GetCurHexagonGroundsGoalCount(int _makedHexagonCount)  // 지금 만들 육각형에 필요한 빙하의 개수
     {
         // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨 <- 이거 해야됨
 

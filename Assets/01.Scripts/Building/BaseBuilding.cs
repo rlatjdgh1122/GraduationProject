@@ -270,7 +270,7 @@ public abstract class BaseBuilding : WorkableObject
             Material[] mats = _skinRenderers[i].materials;
             for (int j = 0; j < mats.Length; j++)
             {
-                mats[j] = _meshNormalMats[i][j];
+                mats[j] = _skinNormalMats[i][j];
             }
             _skinRenderers[i].materials = mats;
         }
