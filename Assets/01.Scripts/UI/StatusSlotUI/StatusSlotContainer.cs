@@ -109,6 +109,7 @@ public class StatusSlotContainer : MonoBehaviour
     {
         _canvasGroup.alpha = 1f;
         _selectedTrm.gameObject.SetActive(true);
+        _selectedStatusSlot.Init();
 
         foreach (var army in _armies)
         {

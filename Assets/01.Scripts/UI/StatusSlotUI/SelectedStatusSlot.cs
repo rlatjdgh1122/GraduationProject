@@ -72,6 +72,13 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             army.UltimateController.OnSkillActionEnterEvent += _ultimateUI.OnUltimateActionEnter;
         }
     }
+
+    public void Init()
+    {
+        _skillUI.Setting(0f, 0f, SkillType.None);
+        _ultimateUI.Setting(0f);
+    }
+
     public void SetArmy(Army army)
     {
         if (_army != null)
