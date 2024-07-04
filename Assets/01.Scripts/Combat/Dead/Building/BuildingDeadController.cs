@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where T : BaseBuilding
 {
@@ -12,7 +11,9 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
     [SerializeField]
     private Transform _nonBrokenBuilding;
     [SerializeField]
-    private DeadBuilding _brokenBuilding;
+    protected DeadBuilding brokenBuilding;
+
+    public bool IsDie { get; set; }
 
     private void Awake()
     {
@@ -20,18 +21,63 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
         _colider = GetComponent<Collider>();
     }
 
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseEndEvent += brokenBuilding.BrokenBuilding;
+        SignalHub.OnBattlePhaseEndEvent += BuildingCompoOn;
+        SignalHub.OnBattlePhaseStartEvent += BuildingCompoOff;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= brokenBuilding.BrokenBuilding;
+        SignalHub.OnBattlePhaseEndEvent -= BuildingCompoOn;
+        SignalHub.OnBattlePhaseStartEvent -= BuildingCompoOff;
+    }
+
     public virtual void OnDied()
     {
         _owner.InstalledGround()?.UnInstallBuilding();
 
-        _owner.enabled = false;
-        _colider.enabled = false;
+        IsDie = true;
+        
+        BuildingCompoOff();
 
-        _brokenBuilding.gameObject.SetActive(true);
+        brokenBuilding.gameObject.SetActive(true);
         _nonBrokenBuilding.gameObject.SetActive(false);
+    }
+
+    public void BuildingCompoOff()
+    {
+        if(IsDie)
+        {
+            _owner.enabled = false;
+            _colider.enabled = false;
+        }
+    }
+
+    public void BuildingCompoOn()
+    {
+        _owner.enabled = true;
+        _colider.enabled = true;
+    }
+
+    public void FixBuilding()
+    {
+        IsDie = false;
+
+        brokenBuilding.gameObject.SetActive(false);
+        _nonBrokenBuilding.gameObject.SetActive(true);
+    }
+
+    public void DestroyBuilding()
+    {
+        _owner.InstalledGround()?.UnInstallBuilding();
 
         _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
         GameObject.Find(_owner.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
+
+        PoolManager.Instance.Push(_owner);
     }
 
     public virtual void OnResurrected()

@@ -169,11 +169,6 @@ public class UIManager : Singleton<UIManager>
     #region UI Function
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            ShowPanel("BuildingUI");
-        }
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //if (currentPopupUI.Count > 0)
@@ -187,7 +182,7 @@ public class UIManager : Singleton<UIManager>
             //}
             //else
             {
-                if (popupUIDictionary.ContainsKey("EscUI"))
+                if (currentPopupUI.Count <= 0 && popupUIDictionary.ContainsKey("EscUI"))
                     ShowPanel("EscUI");
             }
         }

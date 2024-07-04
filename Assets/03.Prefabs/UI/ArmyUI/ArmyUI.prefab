@@ -992,7 +992,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 282.442, y: 1623}
+  m_AnchoredPosition: {x: 648, y: 1623}
   m_SizeDelta: {x: 329.153, y: 120.008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5440874990111764803
@@ -1608,7 +1608,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755687933402730845}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -2907,6 +2907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _synergyType: 0
   _infoSO: {fileID: 11400000, guid: 8935111dccd5bce48a00953b97df6bd6, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &2553581001626012646
@@ -5757,7 +5758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 648.2229, y: 1623}
+  m_AnchoredPosition: {x: 282.442, y: 1623}
   m_SizeDelta: {x: 329.153, y: 120.008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2340610076992280873
@@ -7970,6 +7971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _synergyType: 0
   _infoSO: {fileID: 11400000, guid: 7af39911ad28aaa4b9c79a1c6c38da1c, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &4256053143243890986
@@ -9147,6 +9149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _synergyType: 0
   _infoSO: {fileID: 11400000, guid: 5b56615f33db28343a4be7bf09a326af, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &901305073108101774
@@ -13225,6 +13228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3206898010767873576}
+  - component: {fileID: 5348896915912364597}
   - component: {fileID: 3393552248501764146}
   m_Layer: 5
   m_Name: Legions
@@ -13257,6 +13261,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5348896915912364597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7230006219785927839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a5c08f1661aec4ba9e384b54bb1ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []
 --- !u!114 &3393552248501764146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13486,6 +13503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _synergyType: 0
   _infoSO: {fileID: 11400000, guid: 8ca706b8392d1ad4bb005c9c78e0d4fd, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &3185333319316123201
@@ -14045,6 +14063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _synergyType: 0
   _infoSO: {fileID: 11400000, guid: d4f7e5829d55d7a41988559a69047d60, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &1266269190392317929
@@ -17612,6 +17631,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
+      propertyPath: GeneralSelectSlotList
+      value: 
+      objectReference: {fileID: 5348896915912364597}
+    - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
       propertyPath: _transferable.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -17947,6 +17971,11 @@ PrefabInstance:
       propertyPath: _uiGroup
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: GeneralSelectSlotList
+      value: 
+      objectReference: {fileID: 5348896915912364597}
     - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: _transferable.Array.size
@@ -18557,6 +18586,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
+      propertyPath: GeneralSelectSlotList
+      value: 
+      objectReference: {fileID: 5348896915912364597}
+    - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
       propertyPath: _transferable.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -19024,6 +19058,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
+      propertyPath: GeneralSelectSlotList
+      value: 
+      objectReference: {fileID: 5348896915912364597}
+    - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
       propertyPath: _transferable.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -19052,6 +19091,46 @@ PrefabInstance:
       propertyPath: _transferable.Array.data[4]
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 66566293342014619}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229219760705556768, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5690206025295291734, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -19061,6 +19140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LegionPanel01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986605389360777850, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9201257997080551302, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
@@ -19102,6 +19186,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19fd86e57b02da14197f6c01b612d2e7, type: 3}
+--- !u!1 &66566293342014619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7818154493450937403, guid: 19fd86e57b02da14197f6c01b612d2e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 7823834085803829408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &601337368688256309 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
@@ -19742,6 +19832,11 @@ PrefabInstance:
       propertyPath: _uiGroup
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: GeneralSelectSlotList
+      value: 
+      objectReference: {fileID: 5348896915912364597}
     - target: {fileID: 3172811002767121535, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: _transferable.Array.size

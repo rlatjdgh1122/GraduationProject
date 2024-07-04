@@ -134,8 +134,6 @@ public class InstallSystem : MonoBehaviour
             _curBuilding.BuildingItemInfoCompo.CurrentInstallCount++;
             _nexusUIPresenter.UpdateRecieverUI();
 
-            UIManager.Instance.ShowWarningUI("설치 완료!");
-
             _curBuilding?.Installed();                                    // 건물에 설치 처리 하고 위치 설정
             _curBuilding?.transform.SetParent(_previousGround.transform); // 건물에 설치 처리 하고 위치 설정
 

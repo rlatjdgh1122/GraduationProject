@@ -21,6 +21,8 @@ public class BuildingRepairPopup : BuildingUIComponent
         ResourceManager.Instance.RemoveAllResources(15, () =>
         {
             buildingHealth.currentHealth = buildingHealth.maxHealth;
+            synergyBuilding.DeadController.FixBuilding();
+
             HidePanel();
         });
     }

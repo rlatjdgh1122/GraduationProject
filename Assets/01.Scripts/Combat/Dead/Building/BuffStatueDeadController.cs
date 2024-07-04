@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BuffStatueDeadController : BuildingDeadController<BuffBuilding>
 {
-
     public override void OnDied()
     {
         base.OnDied();

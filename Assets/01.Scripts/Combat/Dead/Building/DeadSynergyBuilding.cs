@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class DeadSynergyBuilding : DeadBuilding
 {
-    
+    public override void BrokenBuilding()
+    {
+    }
 }

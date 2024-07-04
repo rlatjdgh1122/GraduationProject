@@ -13,10 +13,24 @@ public class ResourceManager : Singleton<ResourceManager>
     public delegate void OnUIUpdateHandler(Resource resource, int stackCount);
     public event OnUIUpdateHandler OnUIUpdate;
 
+    public List<ResourceDataSO> list = new();
+
     public override void Awake()
     {
         //resourceStack = new List<Resource>();
         resourceDictionary = new Dictionary<ResourceDataSO, Resource>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            AddResource(list[0], 5);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            AddResource(list[1], 5);
+        }
     }
 
     public void AddResource(ResourceDataSO resourceData, int count)

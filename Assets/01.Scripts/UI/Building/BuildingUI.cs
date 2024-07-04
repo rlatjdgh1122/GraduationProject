@@ -5,6 +5,7 @@ using UnityEngine;
 public class BuildingUI : PopupUI
 {
     [HideInInspector] public SynergyBuildingStat BuildingStat;
+    [HideInInspector] public SynergyBuilding SynergyBuilding;
     [HideInInspector] public Health BuildingHealth;
 
     [SerializeField] private List<GameObject> _panels;
@@ -39,6 +40,7 @@ public class BuildingUI : PopupUI
         foreach (BuildingUIComponent panel in _repairPanels)
         {
             panel.buildingStat = BuildingStat;
+            panel.synergyBuilding = SynergyBuilding;
             panel.buildingHealth = BuildingHealth;
         }
     }
