@@ -27,8 +27,6 @@ public class BuildingUpgrade : PopupUI
 
     private void Start()
     {
-        //ShowPanel();
-
         _costText.text = _upgradeCost.ToString();
     }
 
@@ -59,6 +57,7 @@ public class BuildingUpgrade : PopupUI
     public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
     {
         base.MovePanel(x, y, fadeTime, ease);
+        ShowPanel();
     }
 
     public override void ShowPanel()

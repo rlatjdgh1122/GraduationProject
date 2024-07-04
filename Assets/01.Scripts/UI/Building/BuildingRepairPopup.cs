@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BuildingRepairPopup : BuildingUIComponent
 {
+    private BuildingRepairPanel _parent;
     private Button _repairButton;
 
     public override void Awake()
@@ -12,6 +13,7 @@ public class BuildingRepairPopup : BuildingUIComponent
         base.Awake();
 
         _repairButton = transform.Find("Popup/InteractionButton").GetComponent<Button>();
+        _parent = transform.parent.GetComponent<BuildingRepairPanel>();
 
         _repairButton.onClick.AddListener(OnRepair);
     }
@@ -20,7 +22,7 @@ public class BuildingRepairPopup : BuildingUIComponent
     {
         ResourceManager.Instance.RemoveAllResources(15, () =>
         {
-            buildingHealth.currentHealth = buildingHealth.maxHealth;
+            buildingHealth.ApplyHeal(100);
             synergyBuilding.DeadController.FixBuilding();
 
             HidePanel();
