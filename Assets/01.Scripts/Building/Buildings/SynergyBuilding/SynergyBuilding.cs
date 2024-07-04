@@ -20,7 +20,7 @@ public class SynergyBuilding : BaseBuilding
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && IsInstalled)
         {
             UIManager.Instance.ShowPanel("BuildingUI");
             _buildingPanel.BuildingStat = (SynergyBuildingStat)_characterStat;
