@@ -29,6 +29,8 @@ public class MaskingUIManager : Singleton<MaskingUIManager>
 
     public override void Awake()
     {
+        Debug.Log(gameObject);
+
         _maskingImage = FindObjectOfType<MaskingImage>();
         _cameraSystem = FindObjectOfType<CameraSystem>();
 
