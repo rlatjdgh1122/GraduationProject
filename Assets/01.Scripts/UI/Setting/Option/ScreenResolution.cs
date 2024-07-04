@@ -28,6 +28,8 @@ public class ScreenResolution : MonoBehaviour
         _screenModeDropDown.onValueChanged.AddListener((optionNumber) => CheckScreenMode(optionNumber));
 
         ResolutionInit();
+
+        Screen.SetResolution(1920, 1080, _screenMode);
     }
 
     private void ResolutionInit()
