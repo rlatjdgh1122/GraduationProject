@@ -40,11 +40,11 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
 
     private void CreateArmy()
     {
-        DummyPenguin dummy = PenguinManager.Instance.FindGeneralDummyPenguin(GeneralInfo);
-        Penguin penguin = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, 18);
-        PenguinManager.Instance.DummyToPenguinMapping(dummy, penguin);
+        DummyPenguin dummy = PenguinManager.Instance.FindGeneralDummyPenguin(GeneralInfo.PenguinType);
+        General general = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, 18) as General;
+        PenguinManager.Instance.DummyToPenguinMapping(dummy, general);
 
-        ArmyManager.Instance.JoinArmyToSoldier(_legionPanel.LegionName, _legionPanel.LegionIdx, penguin);
+        ArmyManager.Instance.JoinArmyToGeneral(_legionPanel.LegionName, _legionPanel.LegionIdx, general);
     }
 
     public override void HidePanel()

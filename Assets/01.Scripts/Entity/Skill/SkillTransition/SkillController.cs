@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class SkillController : MonoBehaviour
 {
-
     [SerializeField] private SKillDecision _skillDecision = null;
     [SerializeField] private List<UnvariableSkillDecision> _unvariableDecisions = new();
 
@@ -27,6 +26,11 @@ public class SkillController : MonoBehaviour
         GetComponents(_unvariableDecisions);
         GetComponents(_allDecisions);
 
+    }
+
+    public void Init()
+    {
+        _skillDecision.Init();
     }
 
     public void SetUp(Transform parentRoot)
@@ -71,16 +75,16 @@ public class SkillController : MonoBehaviour
 
     public void OnRegister()
     {
-        OnChangedMaxValueEvent += _skillDecision.OnChangedMaxValueEvent;
-        OnSkillActionEnterEvent += OnSkillActionEnterEvent;
-        OnSkillUsedEvent += OnSkillUsedEvent;
+        _skillDecision.OnChangedMaxValueEvent += OnChangedMaxValueEvent;
+        _skillDecision.OnSkillActionEnterEvent += OnSkillActionEnterEvent;
+        _skillDecision.OnSkillUsedEvent += OnSkillUsedEvent;
     }
 
     public void OffRegister()
     {
-        OnChangedMaxValueEvent -= _skillDecision.OnChangedMaxValueEvent;
-        OnSkillActionEnterEvent -= OnSkillActionEnterEvent;
-        OnSkillUsedEvent -= OnSkillUsedEvent;
+        _skillDecision.OnChangedMaxValueEvent -= OnChangedMaxValueEvent;
+        _skillDecision.OnSkillActionEnterEvent -= OnSkillActionEnterEvent;
+        _skillDecision.OnSkillUsedEvent -= OnSkillUsedEvent;
     }
 
     private void OnDisable()

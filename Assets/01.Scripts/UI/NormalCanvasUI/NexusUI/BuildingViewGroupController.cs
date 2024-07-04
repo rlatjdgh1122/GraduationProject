@@ -13,10 +13,10 @@ public class BuildingViewGroupController : MonoBehaviour
         _buildingViewGroups = GetComponentsInChildren<BuildingViewGroup>().ToList();
     }
 
-    private void Start()
-    {
-        SwapElements(_buildingViewGroups[0]);
-    }
+    //private void Start()
+    //{
+    //    SwapElements(_buildingViewGroups[0]);
+    //}
 
     public void SwapElements(BuildingViewGroup viewGroup)
     {
@@ -26,7 +26,7 @@ public class BuildingViewGroupController : MonoBehaviour
         {
             if (group.Category != viewGroup.Category)
             {
-                UIManager.Instance.HidePanel($"{group.Category}");
+                group.HidePanel();
             }    
         }
 

@@ -7,10 +7,15 @@ using UnityEngine.UI;
 public abstract class SkillUI : MonoBehaviour
 {
     [SerializeField] protected UnityEvent OnSkillReadyEvent = null;
-    [SerializeField] protected Image blinedGauge = null;
+    protected Image bliendGauge = null;
 
     protected int value = 0;
     protected float currentFillAmount = 0;
+
+    protected virtual void Awake()
+    {
+        bliendGauge = transform.Find("BliendGauge").GetComponent<Image>();
+    }
 
     public void OnChangedMaxValue(int maxValue)
     {
@@ -19,13 +24,13 @@ public abstract class SkillUI : MonoBehaviour
 
     public void Init()
     {
-        blinedGauge.fillAmount = 1f;
-        currentFillAmount = 1f;
+
     }
 
     public virtual void OnSkillUsed()
     {
-        Init();
+        bliendGauge.fillAmount = 1f;
+        currentFillAmount = 1f;
     }
 
     public virtual void OnSkillActionEnter() { }

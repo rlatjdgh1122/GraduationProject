@@ -18,13 +18,17 @@ public abstract class Skill : MonoBehaviour
     public bool IsAvaliable = true;
     public bool CanUseSkill = false;
 
+    private void Awake()
+    {
+        SkillController = transform.Find("SkillTransition").GetComponent<SkillController>();
+    }
+
     public virtual void SetOwner(Entity owner)
     {
         _owner = owner;
 
         _entityActionData = owner.GetComponent<EntityActionData>();
         _skillActionData = transform.GetComponent<SkillActionData>();
-        SkillController = transform.Find("SkillTransition").GetComponent<SkillController>();
         SkillController.SetUp(owner.transform);
     }
 

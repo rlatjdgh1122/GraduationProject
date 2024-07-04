@@ -80,6 +80,15 @@ public class Penguin : Entity
 
     public Army MyArmy => owner;
 
+    public bool IsSynergy
+    {
+        get
+        {
+            if (MyArmy == null) return false;
+            return MyArmy.IsSynergy;
+        }
+    }
+
     public MovefocusMode MovefocusMode => MyArmy.MovefocusMode;
 
     private EffectPlayer _strengthBuffEffect;

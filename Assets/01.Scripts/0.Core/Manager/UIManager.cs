@@ -174,23 +174,23 @@ public class UIManager : Singleton<UIManager>
             ShowPanel("BuildingUI");
         }
 
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    if (currentPopupUI.Count > 0)
-        //    {
-        //        if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
-        //            && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
-        //        {
-        //            currentPopupUI.Peek().HidePanel();
-        //            ChangeCurrentUI();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (popupUIDictionary.ContainsKey("EscUI"))
-        //            ShowPanel("EscUI");
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //if (currentPopupUI.Count > 0)
+            //{
+            //    if (currentPopupUI.Peek().name != "DefeatUI" && currentPopupUI.Peek().name != "VictoryUI"
+            //        && currentPopupUI.Peek().name != "GifScreen") //승리 시 UI와 패배 시 UI는 닫을 수 없게 설정
+            //    {
+            //        currentPopupUI.Peek().HidePanel();
+            //        ChangeCurrentUI();
+            //    }
+            //}
+            //else
+            {
+                if (popupUIDictionary.ContainsKey("EscUI"))
+                    ShowPanel("EscUI");
+            }
+        }
 
         //if (Input.GetKeyDown(KeyCode.Escape))
         //{

@@ -30,7 +30,6 @@ public class PenguinSpawnHandler : MonoBehaviour
             var trm = dummy.transform;
 
             var penguin = PenguinManager.Instance.GetPenguinByDummyPenguin(dummy);
-
             //Ω«¡¶ ∆Î±œø° ¥Î«— ºº∆√¿ª «ÿ¡‹
             penguin.gameObject.SetActive(true);
             penguin.transform.position = trm.position;

@@ -1,4 +1,5 @@
 using ArmySystem;
+using SynergySystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,13 @@ public class ArmyManager : Singleton<ArmyManager>
     public int ArmiesCount => armies.Count;
 
     public Army CurArmy
-    => armies[curArmyIdx < 0 ? 0 : curArmyIdx];
+    {
+        get
+        {
+            if (armies.Count <= 0) return null;
+            return armies[curArmyIdx < 0 ? 0 : curArmyIdx];
+        }
+    }
 
     private SkillInput _skillInput;
 
@@ -48,18 +55,18 @@ public class ArmyManager : Singleton<ArmyManager>
         //CreateArmy();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            var army = CreateArmy("1군단");
-            var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
-            s.SetOwner(army);
-            army.General = s;
-            _skillInput.SelectGeneral(s);
-            SignalHub.OnModifyCurArmy();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        var army = CreateArmy("1군단");
+    //        var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
+    //        s.SetOwner(army);
+    //        army.General = s;
+    //        _skillInput.SelectGeneral(s);
+    //        SignalHub.OnModifyCurArmy();
+    //    }
+    //}
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {
@@ -138,16 +145,7 @@ public class ArmyManager : Singleton<ArmyManager>
         armies.IdxExcept
             (
             Idx,
-
-            p => //선택된 군단은 아웃라인을 켜줌
-            {
-                //curArmy set battleMode
-                p.Soldiers.ForEach(s =>
-                {
-
-                });
-            },
-
+           null,
            p => //선택되지 않은 나머지 군단은 아웃라인을 켜줌
            {
                p.Soldiers.ForEach(s =>
@@ -178,6 +176,11 @@ public class ArmyManager : Singleton<ArmyManager>
     public Army GetArmy(int legion)
     {
         return armies[legion - 1];
+    }
+
+    public void SetArmySynergy(int legionIdx, SynergyType synergyType)
+    {
+        armies[legionIdx].SynergyType = synergyType;
     }
 
     #region 스탯 부분
@@ -246,7 +249,7 @@ public class ArmyManager : Singleton<ArmyManager>
         var Army = armies[legionIdx];
 
         obj.SetOwner(Army);
-        Army.Soldiers.Add(obj);
+        Army.AddSolider(obj);
 
         if (Army.Ability != null)
         {
@@ -280,7 +283,8 @@ public class ArmyManager : Singleton<ArmyManager>
         }
 
         obj.SetOwner(Army);
-        Army.General = obj;
+        Army.AddGeneral(obj);
+
         var stat = obj.ReturnGenericStat<GeneralStat>();
 
 
@@ -308,9 +312,7 @@ public class ArmyManager : Singleton<ArmyManager>
         //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
 
         //증가된 군단 스탯 지우기
-        //int idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[penguin.MyArmy.LegionIdx];
-        //var Abilities = Army.Abilities;
 
         penguin.SetOwner(null);
 
@@ -322,12 +324,12 @@ public class ArmyManager : Singleton<ArmyManager>
             Army.RemoveStat(Army.Ability);
             Army.Ability = null;
 
-            Army.General = null;
+            Army.RemoveGeneral();
         }
         else if (penguin is Penguin)
         {
             //군단 리스트에서 제외
-            Army.Soldiers.Remove(penguin);
+            Army.RemoveSolider(penguin);
 
             if (Army.Ability != null)
                 penguin.RemoveStat(Army.Ability);
@@ -345,6 +347,7 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.MoveSpeed = 4f;
         newArmy.LegionName = armyName;
         newArmy.IsArmyReady = false;
+        newArmy.SynergyType = SynergySystem.SynergyType.Police;
 
         armies.Add(newArmy);
         return newArmy;
@@ -359,4 +362,6 @@ public class ArmyManager : Singleton<ArmyManager>
         bool result = armies.All(x => x.CheckEmpty());
         return result;
     }
+
+   
 }

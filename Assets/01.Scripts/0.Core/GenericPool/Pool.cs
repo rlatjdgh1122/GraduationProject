@@ -10,16 +10,18 @@ public class Pool<T> where T : PoolableMono
 
     public Pool(T prefab, Transform parent, int count)
     {
-        _prefab = prefab;
+        _prefab = prefab;  
         _parent = parent;
 
         for (int i = 0; i < count; i++)
         {
+
             T obj = GameObject.Instantiate(prefab, _parent.position, _parent.rotation);
             obj.gameObject.name = obj.gameObject.name.Replace("(Clone)", "");
             obj.gameObject.SetActive(false);
             _pool.Push(obj);
-        }
+
+        }//end for
     }
 
     public T Pop()

@@ -1,10 +1,15 @@
 using SynergySystem;
 using System;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+
+
 
 namespace ArmySystem
 {
+
+
     [System.Serializable]
     public class Army
     {
@@ -13,7 +18,6 @@ namespace ArmySystem
         public int LegionIdx = 0;
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
-        public ArmyUIInfo Info; //정보
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들
         public General General = null; //장군
@@ -22,6 +26,8 @@ namespace ArmySystem
         public Ability Ability = null; //시너지 스탯
 
         public SkillController SkillController = null;
+        public SkillController UltimateController = null;
+        public ArmyUIInfo Info = new();
 
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
@@ -69,19 +75,35 @@ namespace ArmySystem
 
         #endregion
 
-        //장군이 추가될때
-        //스킬이
+        public void AddSolider(Penguin penguin)
+        {
+            Soldiers.Add(penguin);
+            Info.AddPenguinCount();
+        }
 
         public void AddGeneral(General general)
         {
             General = general;
+
             SkillController = general.Skill.SkillController;
+            UltimateController = general.Ultimate.SkillController;
+
+            Info.AddPenguinCount();
+        }
+
+        public void RemoveSolider(Penguin penguin)
+        {
+            Soldiers.Remove(penguin);
+
+            Info.RemovePenguinCount();
         }
 
         public void RemoveGeneral()
         {
             General = null;
             SkillController = null;
+
+            Info.RemovePenguinCount();
         }
 
         #region Stat
@@ -181,5 +203,9 @@ namespace ArmySystem
             return false;
         }
 
+        public IValueChanger<ArmyUIInfo> GetInfo()
+        {
+            return Info;
+        }
     }
 }

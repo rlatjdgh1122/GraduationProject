@@ -5,41 +5,48 @@ using UnityEngine.Events;
 
 public class CoolTimeSkillUI : SkillUI
 {
-    private void Start()
+    public float cooltimeDuration; // 쿨타임 지속 시간
+    private float elapsedTime;
+    private bool isCoolingDown;
+
+    void Start()
     {
-        OnChangedMaxValue(5);
+        elapsedTime = 0f;
+        isCoolingDown = false;
     }
-    private void Update()
+
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J)) OnChangedMaxValue(value - 1);
-        if (Input.GetKeyDown(KeyCode.K)) OnSkillUsed();
+        if (isCoolingDown)
+        {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime < cooltimeDuration)
+            {
+                currentFillAmount = 1f - (elapsedTime / cooltimeDuration); // 남은 시간 비율 계산
+                bliendGauge.fillAmount = currentFillAmount; // 게이지 값 업데이트
+            }
+            else
+            {
+                // 쿨타임이 끝나면 게이지를 0으로 설정하고 쿨타임 종료
+                bliendGauge.fillAmount = 0f;
+                currentFillAmount = 0f;
+                isCoolingDown = false;
+
+                OnSkillReadyEvent?.Invoke();
+            }
+        }
     }
 
     public override void OnSkillUsed()
     {
         base.OnSkillUsed();
 
-        StartCoroutine(CooltimeCoroutine());
+        StartCooldown();
     }
 
-    private IEnumerator CooltimeCoroutine()
+    private void StartCooldown()
     {
-        float duration = value; // 쿨타임 지속 시간
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            currentFillAmount = 1f - (elapsedTime / duration); // 남은 시간 비율 계산
-            blinedGauge.fillAmount = currentFillAmount; // 게이지 값 업데이트
-
-            yield return null;
-        }
-
-        // 쿨타임이 끝나면 게이지를 0으로 설정
-        blinedGauge.fillAmount = 0f;
-        currentFillAmount = 0f;
-
-        OnSkillReadyEvent?.Invoke();
+        elapsedTime = 0f;
+        isCoolingDown = true;
     }
 }
