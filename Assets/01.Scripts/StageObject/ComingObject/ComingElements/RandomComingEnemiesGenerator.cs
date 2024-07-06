@@ -108,7 +108,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private void SetGround(int i)
     {
         //transform.localRotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
-        // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨
         Ground curGround = _curHexagon_Grounds.Dequeue();
         curGround.gameObject.SetActive(true);
 
@@ -131,16 +130,22 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void GenerateGlacier()
     {
+        int groundCount = GetGroundCount();
+
         if (_curHexagon_Grounds.Count == 0)
         {
             makedHexagonCount++;
             AddGlacierToCurHexagon();
         }
 
-        int groundCount = GetGroundCount();
-
         for (int i = 0; i < groundCount; i++)
         {
+            if (_curHexagon_Grounds.Count == 0)
+            {
+                Debug.LogError("빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨 생성 가능한 만큼만 하겠음");
+                return;
+            }
+
             SetGround(i);
         }
     }
