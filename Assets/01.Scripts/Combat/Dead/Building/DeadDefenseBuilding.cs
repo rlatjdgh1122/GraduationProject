@@ -41,8 +41,6 @@ public class DeadDefenseBuilding : DeadBuilding
                 mat.material.DOFloat(-5, "_DissolveHeight", _disolveDuration);
             }
 
-            ResetDisolveMat();
-
             StartCoroutine(DisolveCoroutine());
         }
         else
@@ -54,7 +52,7 @@ public class DeadDefenseBuilding : DeadBuilding
     private IEnumerator DisolveCoroutine()
     {
         yield return new WaitForSeconds(_disolveDuration + 1f);
-
+        ResetDisolveMat();
         PushBuilding();
     }
 

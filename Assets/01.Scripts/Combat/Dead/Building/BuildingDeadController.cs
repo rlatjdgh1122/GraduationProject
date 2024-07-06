@@ -27,12 +27,9 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
 
     public void DestroyBuilding()
     {
-        _owner.InstalledGround()?.UnInstallBuilding();
+        ResetUI();
 
-        _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
-        GameObject.Find(_owner.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
-
-        Init();
+        ResetBuilding();
 
         PoolManager.Instance.Push(_owner);
     }
@@ -58,10 +55,21 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
         _colider.enabled = true;
     }
 
-    protected void Init()
+    private void ResetUI()
     {
+        _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
+        GameObject.Find(_owner.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
+    }
+
+    protected virtual void ResetBuilding()
+    {
+        _owner.InstalledGround()?.UnInstallBuilding();
+
         SetBuildingCondition(false);
         BuildingCompoOn();
+
+        _owner.ResetNoise();
+        _owner.HealthCompo.ResetHealth();
     }
 
     public virtual void OnResurrected()
