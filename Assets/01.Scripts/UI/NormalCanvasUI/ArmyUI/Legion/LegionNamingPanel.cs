@@ -47,7 +47,7 @@ public class LegionNamingPanel : PopupUI
             SetErrorMessage("특수기호가 포함되어 있습니다!");
             _canNamingLegion = false;
         }
-        else if (name.Length <= 1)
+        else if (name.Length < 1)
         {
             SetErrorMessage("최소 1글자 이상 입력해주세요!");
             _canNamingLegion = false;
