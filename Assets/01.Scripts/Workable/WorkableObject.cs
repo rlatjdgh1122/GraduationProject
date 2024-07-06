@@ -32,6 +32,13 @@ public class WorkableObject : TargetObject
         ActionData = GetComponent<EntityActionData>();
     }
 
+    public override void Init()
+    {
+        base.Init();
+
+        _currentNoiseValue = 0;
+    }
+
     protected override void HandleHit()
     {
 
