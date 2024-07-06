@@ -361,7 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6643905738766887026}
-  - component: {fileID: 3104976432651454873}
+  - component: {fileID: 7539066681637166942}
   m_Layer: 19
   m_Name: BrokenEvent
   m_TagString: Untagged
@@ -386,7 +386,7 @@ Transform:
   - {fileID: 8767813224321544692}
   m_Father: {fileID: 7386991321097425313}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3104976432651454873
+--- !u!114 &7539066681637166942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -395,10 +395,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 815112940301378420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0cf7f64fee8b004a8ef2100b9137f08, type: 3}
+  m_Script: {fileID: 11500000, guid: 712ee0d25d22e75409ef47303f83e0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disolveDuration: 1.3
+  _disolveDuration: 5
 --- !u!1 &853994464082898758
 GameObject:
   m_ObjectHideFlags: 0
@@ -12617,7 +12617,7 @@ GameObject:
   - component: {fileID: 3154745532205694356}
   - component: {fileID: 5651710013477756690}
   - component: {fileID: 810055416098890755}
-  - component: {fileID: -9035185120275507805}
+  - component: {fileID: 179374681405904512}
   m_Layer: 19
   m_Name: ArcherTower
   m_TagString: Untagged
@@ -12835,7 +12835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f8cd890b4984f42a5034ea925e60ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-9035185120275507805
+--- !u!114 &179374681405904512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12844,11 +12844,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6540469605114991844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d72ec85a9e013f43874730541dadba7, type: 3}
+  m_Script: {fileID: 11500000, guid: d333b3a3caa00f44997ee5b51fad710a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nonBrokenBuilding: {fileID: 5976669950651008692}
-  brokenBuilding: {fileID: 3104976432651454873}
+  nonBrokenBuilding: {fileID: 5976669950651008692}
+  brokenBuilding: {fileID: 7539066681637166942}
 --- !u!1 &6588380504112972365
 GameObject:
   m_ObjectHideFlags: 0

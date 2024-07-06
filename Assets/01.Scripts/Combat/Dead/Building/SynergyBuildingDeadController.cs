@@ -1,16 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class SynergyBuildingDeadController : BuildingDeadController<SynergyBuilding>
 {
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseStartEvent += BuildingCompoOff;
+        SignalHub.OnBattlePhaseEndEvent += BuildingCompoOn;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartEvent -= BuildingCompoOff;
+        SignalHub.OnBattlePhaseEndEvent -= BuildingCompoOn;
+    }
+
     public override void OnDied()
     {
         base.OnDied();
     }
 
-    public override void OnResurrected()
+    public void FixBuilding()
     {
-        base.OnResurrected();
-    }
+        _owner.HealthCompo.IsDead = false;
+
+        SetBuildingCondition(false);
+    }    
 }
