@@ -22,8 +22,8 @@ public class BuildingRepairPopup : BuildingUIComponent
     {
         ResourceManager.Instance.RemoveAllResources(15, () =>
         {
-            buildingHealth.ApplyHeal(100);
             synergyBuilding.DeadController.FixBuilding();
+            buildingHealth.ApplyHeal(100);
 
             HidePanel();
         });

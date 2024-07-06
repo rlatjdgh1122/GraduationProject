@@ -18,7 +18,7 @@ public class WorkableObject : TargetObject
     [SerializeField] private float _maxNoiseValue;
     public float MaxNoiseValue => _maxNoiseValue;
 
-    private float _currentNoiseValue = 0;
+    private float _currentNoiseValue;
     public float CurrentNoiseValue => _currentNoiseValue;
 
     public EntityActionData ActionData { get; private set; }
@@ -32,16 +32,14 @@ public class WorkableObject : TargetObject
         ActionData = GetComponent<EntityActionData>();
     }
 
-    public override void Init()
-    {
-        base.Init();
-
-        _currentNoiseValue = 0;
-    }
-
     protected override void HandleHit()
     {
 
+    }
+
+    public void ResetNoise()
+    {
+        _currentNoiseValue = 0;
     }
 
     public void IncreaseCurrentNoise()

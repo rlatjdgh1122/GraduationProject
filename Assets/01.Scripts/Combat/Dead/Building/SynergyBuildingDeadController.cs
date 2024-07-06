@@ -24,7 +24,7 @@ public class SynergyBuildingDeadController : BuildingDeadController<SynergyBuild
 
     public void FixBuilding()
     {
-        _owner.HealthCompo.IsDead = false;
+        _owner.HealthCompo.ResetHealth();
 
         SetBuildingCondition(false);
     }    
