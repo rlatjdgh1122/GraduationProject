@@ -1,8 +1,5 @@
-using SkillSystem;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SkillSystem
 {
@@ -40,7 +37,15 @@ namespace SkillSystem
                 saveValue = -maxValue;
         }
 
-        public virtual void Init()
+        private void OnEnable()
+        {
+            SignalHub.OnBattlePhaseStartEvent += Init;
+        }
+
+        protected abstract void Init();
+
+        //start보다 먼저 실행되더라
+        public virtual void InitMaxValue()
         {
             maxValue = _initMaxVaue;
             OnChangedMaxValueEvent?.Invoke(_maxValue);
@@ -93,6 +98,7 @@ namespace SkillSystem
 
         protected virtual void OnDisable()
         {
+            SignalHub.OnBattlePhaseStartEvent -= Init;
             if (entityActionData)
             {
                 OffRegister();

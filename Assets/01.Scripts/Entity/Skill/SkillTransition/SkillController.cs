@@ -32,7 +32,7 @@ public class SkillController : MonoBehaviour
 
     public void Init()
     {
-        _skillDecision.Init();
+        _skillDecision.InitMaxValue();
     }
 
     public void SetUp(Transform parentRoot)

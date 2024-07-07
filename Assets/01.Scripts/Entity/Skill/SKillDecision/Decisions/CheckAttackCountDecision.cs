@@ -8,6 +8,12 @@ namespace SkillSystem
 
         private bool _checkSkillReady = true;
 
+        protected override void Init()
+        {
+            saveValue = entityActionData.AttackCount;
+            _checkSkillReady = true;
+        }
+
         protected override void OnAttack(int attackCount)
         {
             if (!_checkSkillReady) return;
