@@ -16,23 +16,13 @@ public class EnemyMoveState : EnemyBaseState
     {
         base.UpdateState();
 
-        /* prev
-        if (!_enemy.IsTargetInInnerRange)
-        {
-            if (_enemy.IsReachedNexus)
-                _stateMachine.ChangeState(EnemyStateType.Reached); 
-        }
-
-        else
-            _stateMachine.ChangeState(EnemyStateType.Chase); 
-            */
         _enemy.MoveToNexus();
 
         if (_enemy.IsReachedNexus)
-            _stateMachine.ChangeState(EnemyStateType.Reached); //���� ��Ÿ� ���� ���Դ� -> Reached (�ؼ��� ����)
+            _stateMachine.ChangeState(EnemyStateType.Reached);
 
         if (_enemy.IsTargetInInnerRange)
-            _stateMachine.ChangeState(EnemyStateType.Chase); //���� ��Ÿ� ���� ���Դ� -> chase (�÷��̾� ������)
+            _stateMachine.ChangeState(EnemyStateType.Chase);
     }
 
     public override void ExitState()

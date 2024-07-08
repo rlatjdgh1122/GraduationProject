@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Data.Common;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -90,7 +91,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
         }
         catch
         {
-            Debug.LogError($"Put values ​​for the parameters. target : {transform.parent.name}, AoEAttackTrigger");
+
         }
 
     }
@@ -99,20 +100,19 @@ public class PenguinAnimationTrigger : MonoBehaviour
     {
         OnAttackTriggerEvent?.Invoke();
 
-        var value = parmeter.Split(' ');
-        try
-        {
-            if (float.TryParse(value[0], out float knbValue)
-                && float.TryParse(value[1], out float stunValue))
-            {
-                _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
-            }
-        }
-        catch
+        if (string.IsNullOrWhiteSpace(parmeter))
         {
             Debug.LogError($"Put values ​​for the parameters. target : {transform.parent.name}, AttackTrigger");
+            return;
         }
 
+        var value = parmeter.Split(' ');
+
+        if (float.TryParse(value[0], out float knbValue)
+            && float.TryParse(value[1], out float stunValue))
+        {
+            _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
+        }
     }
 
     public void DashAttackTrigger()
