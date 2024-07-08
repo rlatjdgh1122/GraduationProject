@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldSkillHandler : MonoBehaviour
+public class ShieldUltimateHandler : MonoBehaviour
 {
     [SerializeField] private GameObject _cagePrefab;
     [SerializeField] private float _range;
