@@ -8,77 +8,68 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
 
     protected Collider _colider;
 
-    [SerializeField]
-    private Transform _nonBrokenBuilding;
-    [SerializeField]
-    protected DeadBuilding brokenBuilding;
+    [SerializeField] protected Transform nonBrokenBuilding;
+    [SerializeField] protected DeadBuilding brokenBuilding;
 
-    public bool IsDie { get; set; }
-
-    private void Awake()
+    protected virtual void Awake()
     {
         _owner = GetComponent<T>();
         _colider = GetComponent<Collider>();
-    }
-
-    private void OnEnable()
-    {
-        SignalHub.OnBattlePhaseEndEvent += brokenBuilding.BrokenBuilding;
-        SignalHub.OnBattlePhaseEndEvent += BuildingCompoOn;
-        SignalHub.OnBattlePhaseStartEvent += BuildingCompoOff;
-    }
-
-    private void OnDisable()
-    {
-        SignalHub.OnBattlePhaseEndEvent -= brokenBuilding.BrokenBuilding;
-        SignalHub.OnBattlePhaseEndEvent -= BuildingCompoOn;
-        SignalHub.OnBattlePhaseStartEvent -= BuildingCompoOff;
-    }
+    }    
 
     public virtual void OnDied()
     {
-        _owner.InstalledGround()?.UnInstallBuilding();
+        SetBuildingCondition(true);
 
-        IsDie = true;
-        
-        BuildingCompoOff();
-
-        brokenBuilding.gameObject.SetActive(true);
-        _nonBrokenBuilding.gameObject.SetActive(false);
+        _owner.enabled = false;
+        _colider.enabled = false;
     }
 
-    public void BuildingCompoOff()
+    public void DestroyBuilding()
     {
-        if(IsDie)
+        ResetUI();
+
+        ResetBuilding();
+
+        PoolManager.Instance.Push(_owner);
+    }
+
+    protected virtual void SetBuildingCondition(bool isDead)
+    {
+        nonBrokenBuilding.gameObject.SetActive(!isDead);
+        brokenBuilding.gameObject.SetActive(isDead);
+    }
+
+    protected virtual void BuildingCompoOff()
+    {
+        if (_owner.HealthCompo.IsDead)
         {
             _owner.enabled = false;
             _colider.enabled = false;
         }
     }
 
-    public void BuildingCompoOn()
+    protected void BuildingCompoOn()
     {
         _owner.enabled = true;
         _colider.enabled = true;
     }
 
-    public void FixBuilding()
+    private void ResetUI()
     {
-        IsDie = false;
-
-        _owner.HealthCompo.IsDead = false;
-        brokenBuilding.gameObject.SetActive(false);
-        _nonBrokenBuilding.gameObject.SetActive(true);
+        _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
+        GameObject.Find(_owner.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
     }
 
-    public void DestroyBuilding()
+    protected virtual void ResetBuilding()
     {
         _owner.InstalledGround()?.UnInstallBuilding();
 
-        _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
-        GameObject.Find(_owner.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
+        SetBuildingCondition(false);
+        BuildingCompoOn();
 
-        PoolManager.Instance.Push(_owner);
+        _owner.ResetNoise();
+        _owner.HealthCompo.ResetHealth();
     }
 
     public virtual void OnResurrected()

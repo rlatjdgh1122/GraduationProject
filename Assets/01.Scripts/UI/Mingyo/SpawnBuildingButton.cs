@@ -110,6 +110,7 @@ public class SpawnBuildingButton : MonoBehaviour
     private void ButtonCooldown(BaseBuilding spawnBuilding, BuildingItemInfo info) // 버튼 누르면 실행될 함수
     {
         UIManager.Instance.HidePanel("NexusUI");
+        UIManager.Instance.HideAllPanel();
 
         _buildingFactory.SpawnBuildingHandler(spawnBuilding, info);
     }

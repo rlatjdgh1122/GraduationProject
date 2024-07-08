@@ -37326,7 +37326,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7229692880190659867}
-  - component: {fileID: 8047016480190518978}
+  - component: {fileID: 3398017737379167069}
   m_Layer: 19
   m_Name: BrokenEvent
   m_TagString: Untagged
@@ -37350,7 +37350,7 @@ Transform:
   - {fileID: 1855610277507102731}
   m_Father: {fileID: 187358286627756631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8047016480190518978
+--- !u!114 &3398017737379167069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37359,10 +37359,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6206513838850952480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0cf7f64fee8b004a8ef2100b9137f08, type: 3}
+  m_Script: {fileID: 11500000, guid: 712ee0d25d22e75409ef47303f83e0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disolveDuration: 1.3
+  _disolveDuration: 5
 --- !u!1 &6217121672842120363
 GameObject:
   m_ObjectHideFlags: 0
@@ -38075,7 +38075,7 @@ GameObject:
   - component: {fileID: 2784336708232331575}
   - component: {fileID: 4301404278305045225}
   - component: {fileID: 3988667966935956856}
-  - component: {fileID: 3660120355349940761}
+  - component: {fileID: 5489016996080852456}
   m_Layer: 19
   m_Name: Mortar
   m_TagString: Untagged
@@ -38282,7 +38282,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.166693, y: 1.6621112, z: 2.216033}
   m_Center: {x: 0.28224355, y: 0.33105537, z: -0.60801625}
---- !u!114 &3660120355349940761
+--- !u!114 &5489016996080852456
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38291,11 +38291,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6841486384569458009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa29ad058effdc94d899542b4dd785a0, type: 3}
+  m_Script: {fileID: 11500000, guid: d333b3a3caa00f44997ee5b51fad710a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nonBrokenBuilding: {fileID: 1193364125117914120}
-  brokenBuilding: {fileID: 8047016480190518978}
+  nonBrokenBuilding: {fileID: 1193364125117914120}
+  brokenBuilding: {fileID: 3398017737379167069}
 --- !u!1 &6871327566550025585
 GameObject:
   m_ObjectHideFlags: 0

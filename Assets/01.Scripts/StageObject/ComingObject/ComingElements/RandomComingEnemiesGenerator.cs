@@ -91,7 +91,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         for (int i = 0; i < GetCurHexagonGroundsGoalCount(makedHexagonCount); i++)
         {
-            rotateValueArray[i] = GetCurAngleBetweenGlacier() * i;
+            rotateValueArray[i] = GetCurAngleBetweenGlacier(makedHexagonCount) * i;
             Ground ground = SpawnGlaciers();
             _curHexagon_Grounds.Enqueue(ground);
         }
@@ -108,7 +108,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private void SetGround(int i)
     {
         //transform.localRotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
-        // 나중에 랜덤으로 여러 빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨
         Ground curGround = _curHexagon_Grounds.Dequeue();
         curGround.gameObject.SetActive(true);
 
@@ -131,16 +130,22 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private void GenerateGlacier()
     {
+        int groundCount = GetGroundCount();
+
         if (_curHexagon_Grounds.Count == 0)
         {
             makedHexagonCount++;
             AddGlacierToCurHexagon();
         }
 
-        int groundCount = GetGroundCount();
-
         for (int i = 0; i < groundCount; i++)
         {
+            if (_curHexagon_Grounds.Count == 0)
+            {
+                Debug.LogError("빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨 생성 가능한 만큼만 하겠음");
+                return;
+            }
+
             SetGround(i);
         }
     }
@@ -180,18 +185,23 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         if (_prevRotateValues.Count >= rotateValues.Length)
         {
             int nextHexagonGroundsGoalCount = GetCurHexagonGroundsGoalCount(makedHexagonCount + 1);
+
             rotateValues = new float[nextHexagonGroundsGoalCount];
+
             for (int i = 0; i < nextHexagonGroundsGoalCount; i++)
             {
-                rotateValues[i] = GetCurAngleBetweenGlacier() * i; // 다음 RotateValues로
+                float curAngleBetweenGlacier = GetCurAngleBetweenGlacier(makedHexagonCount + 1);
+                rotateValues[i] = curAngleBetweenGlacier * i; // 다음 RotateValues로
             }
         }
 
         // 그전에 썼던거 다시 안 쓰도록
         do
         {
-            rotateValue = rotateValues[UnityEngine.Random.Range(0, rotateValues.Length)] + angle;
+            rotateValue = rotateValues[UnityEngine.Random.Range(0, rotateValues.Length)];
         } while (_prevRotateValues.Contains(rotateValue));
+
+        Debug.Log(rotateValue);
 
         _prevRotateValues.Add(rotateValue);
         return rotateValue;
@@ -212,10 +222,10 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         return raftCount;
     }
 
-    private float GetCurAngleBetweenGlacier() // 현재 나올 빙하들 사이의 각도
+    private float GetCurAngleBetweenGlacier(int _makedHexagonCount) // 현재 나올 빙하들 사이의 각도
     {
-        if (makedHexagonCount == 0) { return 60; } // 근데 처음에는 3개 깔린 상태로 시작하니까 60 반환
-        return 360 / GetCurHexagonGroundsGoalCount(makedHexagonCount);
+        if (_makedHexagonCount == 0) { return 60; } // 근데 처음에는 3개 깔린 상태로 시작하니까 60 반환
+        return 360 / GetCurHexagonGroundsGoalCount(_makedHexagonCount);
     }
     
     private int GetCurHexagonGroundsGoalCount(int _makedHexagonCount)  // 지금 만들 육각형에 필요한 빙하의 개수
