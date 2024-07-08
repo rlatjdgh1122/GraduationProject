@@ -33,14 +33,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         {
             //걍 하드코딩함
             Enemy spawnBoss;
-            if (WaveManager.Instance.CurrentWaveCount == 5)
-            {
-                spawnBoss = PoolManager.Instance.Pop(_bossNames[0]) as Enemy;
-            }
-            else
-            {
-                spawnBoss = PoolManager.Instance.Pop(_bossNames[1]) as Enemy;
-            }
+            spawnBoss = PoolManager.Instance.Pop(_bossNames[(WaveManager.Instance.CurrentWaveCount / 5) - 1]) as Enemy;
 
             SetEnemyNav(spawnBoss);
             SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);

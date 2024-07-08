@@ -22,6 +22,14 @@ public class CreditsUI : PopupUI
         _exitButton = transform.Find("ExitButton").GetComponent<CanvasGroup>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            UIManager.Instance.ShowPanel("CreditUI");
+        }
+    }
+
     public override void ShowPanel()
     {
         base.ShowPanel();
