@@ -7,21 +7,21 @@ public class EnemyMouseEventHandler : MonoBehaviour
 {
     [SerializeField] private Enemy _owner = null;
 
-    private EnemyArmy _enemyArmy => _owner.MyArmy;
+    public EnemyArmy EnemyArmy => _owner.MyArmy;
 
     private void OnMouseEnter()
     {
-        _enemyArmy.OnMouseEnter();
+        EnemyArmy.OnMouseEnter();
     }
 
     private void OnMouseExit()
     {
-        _enemyArmy.OnMouseExit();
+        EnemyArmy.OnMouseExit();
     }
 
     public void OnClick()
     {
-        _enemyArmy.OnClick();
-        ArmyManager.Instance.SetTargetEnemyArmy(_enemyArmy);
+        EnemyArmy.OnClick();
+        ArmyManager.Instance.SetTargetEnemyArmy(EnemyArmy);
     }
 }
