@@ -207,5 +207,10 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         IsDead = true;
     }
 
+    public void ResetHealth()
+    {
+        IsDead = false;
 
+        currentHealth = maxHealth;
+    }
 }

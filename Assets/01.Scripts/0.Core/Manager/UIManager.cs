@@ -129,6 +129,8 @@ public class UIManager : Singleton<UIManager>
             currentPopupUI.TryPop(out var panel);
             panel.HidePanel();
         }
+
+        ChangeCurrentUI();
     }
 
     public void ResetPanel()
