@@ -23,11 +23,6 @@ public class ResourceDeadController : MonoBehaviour, IDeadable
         _collider.enabled = false;
 
         _visual.SetActive(false);
-
-        if (WaveManager.Instance.CurrentWaveCount < 5)
-        {
-            CoroutineUtil.CallWaitForOneFrame(() => MaskingUIManager.Instance.SetMaskingImagePos());
-        }
     }
 
     public void OnResurrected()

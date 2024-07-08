@@ -8,145 +8,147 @@ using UnityEngine.UI;
 
 public class MaskingUIManager : Singleton<MaskingUIManager>
 {
-    private MaskingImage _maskingImage;
+    //private MaskingImage _maskingImage;
 
-    private Transform _curMaskingUiTrms;
-    private Transform _prevMaskingUiParentTrms;
+    //private Transform _curMaskingUiTrms;
+    //private Transform _prevMaskingUiParentTrms;
 
-    private int _maskingTrmIdx = 0;
+    //private int _maskingTrmIdx = 0;
 
-    private int maskingUIIdx;
+    //private int maskingUIIdx;
 
-    [SerializeField]
-    private List<TransformMaskPointsByQuest> pointsByQuests = new List<TransformMaskPointsByQuest>();
+    //[SerializeField]
+    //private List<TransformMaskPointsByQuest> pointsByQuests = new List<TransformMaskPointsByQuest>();
 
-    Queue<string> questPointsQueue = new Queue<string>();
+    //Queue<string> questPointsQueue = new Queue<string>();
 
-    CameraSystem _cameraSystem;
+    //CameraSystem _cameraSystem;
 
-    private bool isMasking;
-    public bool IsMasking => isMasking;
+    //private bool isMasking;
+    //public bool IsMasking => isMasking;
 
-    public override void Awake()
-    {
-        _maskingImage = FindObjectOfType<MaskingImage>();
-        _cameraSystem = FindObjectOfType<CameraSystem>();
+    //public override void Awake()
+    //{
+    //    Debug.Log(gameObject);
 
-        foreach (var trm in pointsByQuests[0].MaskPointTransforms)
-        {
-            questPointsQueue.Enqueue(trm);
-        }
+    //    _maskingImage = FindObjectOfType<MaskingImage>();
+    //    _cameraSystem = FindObjectOfType<CameraSystem>();
 
-        maskingUIIdx = 1;
-    }
+    //    foreach (var trm in pointsByQuests[0].MaskPointTransforms)
+    //    {
+    //        questPointsQueue.Enqueue(trm);
+    //    }
 
-    public void SetMaskingImagePos() // 시간없으니 일단 이따구로 스레기처럼 함 
-    {
-        if (questPointsQueue.Count == 0)
-        {
-            foreach (var trm in pointsByQuests[maskingUIIdx++].MaskPointTransforms)
-            {
-                questPointsQueue.Enqueue(trm);
-            }
-        }
+    //    maskingUIIdx = 1;
+    //}
 
-        isMasking = true;
+    //public void SetMaskingImagePos() // 시간없으니 일단 이따구로 스레기처럼 함 
+    //{
+    //    if (questPointsQueue.Count == 0)
+    //    {
+    //        foreach (var trm in pointsByQuests[maskingUIIdx++].MaskPointTransforms)
+    //        {
+    //            questPointsQueue.Enqueue(trm);
+    //        }
+    //    }
 
-        CoroutineUtil.CallWaitForSeconds(0.1f, () => UIManager.Instance.ShowPanel("Masking"));
+    //    isMasking = true;
 
-        string points = questPointsQueue.Dequeue();
+    //    CoroutineUtil.CallWaitForSeconds(0.1f, () => UIManager.Instance.ShowPanel("Masking"));
 
-        Debug.Log(points);
+    //    string points = questPointsQueue.Dequeue();
 
-        Transform OnTrm = GameObject.Find(points).transform;
+    //    Debug.Log(points);
 
-        Vector3 onPos = OnTrm.position;
+    //    Transform OnTrm = GameObject.Find(points).transform;
 
-        if (!OnTrm.TryGetComponent(out RectTransform rect)) // ui가 아니면
-        {
-            _cameraSystem.Look(new Vector3(onPos.x, 35.55f, onPos.z));
+    //    Vector3 onPos = OnTrm.position;
 
-            CoroutineUtil.CallWaitForSeconds(0.1f, () =>
-            {
-                onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
-                _maskingImage.transform.position = onPos;
-            });
-            SignalHub.OnDefaultBuilingClickEvent += OffMaskingImageObj;
-        }
-        else // UI 면
-        {
-            _curMaskingUiTrms = OnTrm;
-            _maskingTrmIdx = _curMaskingUiTrms.GetSiblingIndex(); //부모한테 몇번째 어 그거
-            _prevMaskingUiParentTrms = OnTrm.parent;
+    //    if (!OnTrm.TryGetComponent(out RectTransform rect)) // ui가 아니면
+    //    {
+    //        _cameraSystem.Look(new Vector3(onPos.x, 35.55f, onPos.z));
 
-            OnTrm.transform.SetParent(_maskingImage.ButtonTrm);
+    //        CoroutineUtil.CallWaitForSeconds(0.1f, () =>
+    //        {
+    //            onPos = Camera.main.WorldToScreenPoint(OnTrm.position);
+    //            _maskingImage.transform.position = onPos;
+    //        });
+    //        SignalHub.OnDefaultBuilingClickEvent += OffMaskingImageObj;
+    //    }
+    //    else // UI 면
+    //    {
+    //        _curMaskingUiTrms = OnTrm;
+    //        _maskingTrmIdx = _curMaskingUiTrms.GetSiblingIndex(); //부모한테 몇번째 어 그거
+    //        _prevMaskingUiParentTrms = OnTrm.parent;
 
-            if (OnTrm.TryGetComponent(out Button btn))
-            {
-                Button button = OnTrm.GetComponent<Button>();
-                button.onClick.AddListener(OffMaskingButtonUI);
-            }
-            else
-            {
-                SignalHub.OnClickPenguinSpawnButtonEvent += OffMaskingImageUI;
+    //        OnTrm.transform.SetParent(_maskingImage.ButtonTrm);
 
-            }
-        }
+    //        if (OnTrm.TryGetComponent(out Button btn))
+    //        {
+    //            Button button = OnTrm.GetComponent<Button>();
+    //            button.onClick.AddListener(OffMaskingButtonUI);
+    //        }
+    //        else
+    //        {
+    //            SignalHub.OnClickPenguinSpawnButtonEvent += OffMaskingImageUI;
 
-        _cameraSystem.ResetFOV();
-        _maskingImage.transform.position = onPos;
-    }
+    //        }
+    //    }
+
+    //    _cameraSystem.ResetFOV();
+    //    _maskingImage.transform.position = onPos;
+    //}
     
-    private void OffMaskingUI()
-    {
-        _curMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
-        _curMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
-    }
+    //private void OffMaskingUI()
+    //{
+    //    _curMaskingUiTrms.SetParent(_prevMaskingUiParentTrms);
+    //    _curMaskingUiTrms.SetSiblingIndex(_maskingTrmIdx);
+    //}
 
-    public void OffMaskingButtonUI()
-    {
-        OffMaskingUI();
+    //public void OffMaskingButtonUI()
+    //{
+    //    OffMaskingUI();
 
-        Button btn = _curMaskingUiTrms.GetComponent<Button>();
-        btn.onClick.RemoveListener(OffMaskingButtonUI);
+    //    Button btn = _curMaskingUiTrms.GetComponent<Button>();
+    //    btn.onClick.RemoveListener(OffMaskingButtonUI);
 
-        OffMask();
-    }
+    //    OffMask();
+    //}
 
-    public void OffMaskingImageUI()
-    {
-        OffMaskingUI();
+    //public void OffMaskingImageUI()
+    //{
+    //    OffMaskingUI();
 
-        SignalHub.OnClickPenguinSpawnButtonEvent -= OffMaskingImageUI;
+    //    SignalHub.OnClickPenguinSpawnButtonEvent -= OffMaskingImageUI;
 
-        OffMask();
-    }
+    //    OffMask();
+    //}
 
-    private void OffMaskingImageObj()
-    {
-        SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
+    //private void OffMaskingImageObj()
+    //{
+    //    SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
 
-        OffMask();
-    }
+    //    OffMask();
+    //}
 
-    private void OffMask()
-    {
-        UIManager.Instance.HidePanel("Masking");
+    //private void OffMask()
+    //{
+    //    UIManager.Instance.HidePanel("Masking");
 
-        if (questPointsQueue.Count != 0)
-        {
-            SetMaskingImagePos();
-            return;
-        }
+    //    if (questPointsQueue.Count != 0)
+    //    {
+    //        SetMaskingImagePos();
+    //        return;
+    //    }
 
-        isMasking = false;
-    }
+    //    isMasking = false;
+    //}
 
-    public bool IsArrowSignPoint(int idx) { return maskingUIIdx == idx; }
+    //public bool IsArrowSignPoint(int idx) { return maskingUIIdx == idx; }
 
-    private void OnDisable()
-    {
-        SignalHub.OnClickPenguinSpawnButtonEvent -= OffMaskingImageUI;
-        SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
-    }
+    //private void OnDisable()
+    //{
+    //    SignalHub.OnClickPenguinSpawnButtonEvent -= OffMaskingImageUI;
+    //    SignalHub.OnDefaultBuilingClickEvent -= OffMaskingImageObj;
+    //}
 }

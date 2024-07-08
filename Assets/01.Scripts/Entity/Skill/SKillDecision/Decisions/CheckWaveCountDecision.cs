@@ -24,7 +24,6 @@ namespace SkillSystem
         {
             //웨이브 돌때마다 스킬 사용 가능하게
             SignalHub.OnBattlePhaseStartEvent -= WaveStart;
-            Debug.Log("아초기화!!!!");
             _canUsedSkill = true;
         }
 
@@ -35,7 +34,6 @@ namespace SkillSystem
             saveValue = WaveManager.Instance.CurrentWaveCount;
 
             SignalHub.OnBattlePhaseStartEvent += WaveStart;
-            Debug.Log("아초기화할겁니다이제");
 
             //한번 사용하면 못쓰게
             _canUsedSkill = false;
