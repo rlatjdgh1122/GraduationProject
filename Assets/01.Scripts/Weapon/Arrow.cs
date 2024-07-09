@@ -7,7 +7,7 @@ public class Arrow : PoolableMono
 {
     [SerializeField] private float _bulletPower;
 
-    private Rigidbody _rigid;
+    protected Rigidbody _rigid;
     protected DamageCaster _damageCaster;
 
     private Coroutine WaitForDestroyCorountine = null;
@@ -31,7 +31,7 @@ public class Arrow : PoolableMono
         _damageCaster.TargetLayer = layer;
     }
 
-    public void Fire(Vector3 dir)
+    public virtual void Fire(Vector3 dir)
     {
         _rigid.AddForce(dir * _bulletPower, ForceMode.Impulse);
     }
