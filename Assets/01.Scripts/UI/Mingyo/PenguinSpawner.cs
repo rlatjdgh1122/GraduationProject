@@ -21,6 +21,7 @@ public enum PenguinTypeEnum
     SumoGeneral,
     Kunai,
     LanceGeneral,
+    SingijeonGeneral,
 }
 
 public class PenguinSpawner : DefaultBuilding
