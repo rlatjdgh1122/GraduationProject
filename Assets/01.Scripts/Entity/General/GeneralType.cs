@@ -4,4 +4,5 @@ public enum GeneralType
     Shield,
     Lance,
     Katana,
+    Singijeon
 }

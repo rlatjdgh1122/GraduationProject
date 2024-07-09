@@ -3,8 +3,8 @@ using UnityEngine;
 public class RangeAttackableEntity : EntityAttackData
 {
     [Header("RangeAttack Info")]
-    [SerializeField] private Arrow _arrowPrefab;
-    [SerializeField] private Transform _firePos;
+    [SerializeField] protected Arrow _arrowPrefab;
+    [SerializeField] protected Transform _firePos;
 
     protected override void Awake()
     {
