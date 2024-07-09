@@ -6,16 +6,6 @@ using UnityEngine;
 public class ComingObjIncreaseRateDataSO : ScriptableObject
 { 
     [SerializeField]
-    [Tooltip("최대 curWave * commonEnemyIncreaseRate를 내림 한 만큼 적이 온다.")]
-    private float commonEnemyIncreaseRate;
-    public float CommonEnemyIncreaseRate => commonEnemyIncreaseRate;
-
-    [SerializeField]
-    [Tooltip("최대 curWave * bossEnemyIncreaseRate를 내림 한 만큼 적이 온다.")]
-    private float bossEnemyIncreaseRate;
-    public float BossEnemyIncreaseRate => bossEnemyIncreaseRate;
-
-    [SerializeField]
     [Tooltip("최대 curWave * groundIncreaseRate를 내림 한 만큼 빙하가 온다.")]
     private float groundIncreaseRate;
     public float GroundIncreaseRate => groundIncreaseRate;

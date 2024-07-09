@@ -9,9 +9,6 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
     protected ComingElementsDataSO _comingElementsDataSO;
 
     [SerializeField]
-    protected ComingObjIncreaseRateDataSO _comingObjIncreaseRateDataSO;
-
-    [SerializeField]
     protected EnemyArmySpawnPatternsSO _enemyArmySpawnPatternsSO;
 
     protected List<Vector3> _previousElementsPositions = new List<Vector3>();
@@ -23,7 +20,6 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
         EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
                                                               GetSpawnEnemis(),
                                                               _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
-                                                              _comingObjIncreaseRateDataSO,
                                                               _enemyArmySpawnPatternsSO);
 
         //ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,

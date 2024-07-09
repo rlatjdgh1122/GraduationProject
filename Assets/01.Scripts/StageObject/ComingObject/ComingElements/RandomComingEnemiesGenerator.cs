@@ -201,8 +201,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             rotateValue = rotateValues[UnityEngine.Random.Range(0, rotateValues.Length)];
         } while (_prevRotateValues.Contains(rotateValue));
 
-        Debug.Log(rotateValue);
-
         _prevRotateValues.Add(rotateValue);
         return rotateValue;
     }

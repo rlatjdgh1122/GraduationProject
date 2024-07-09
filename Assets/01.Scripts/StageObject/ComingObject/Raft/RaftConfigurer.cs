@@ -14,7 +14,6 @@ public class RaftConfigurer : ComingObjectConfigurer
             groundTrm,
             GetSpawnEnemis(),
             null,
-            _comingObjIncreaseRateDataSO,
             _enemyArmySpawnPatternsSO
         );
 
