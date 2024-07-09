@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SoldierSelectPanel : PopupUI
 {
-    [SerializeField] private LegionNamingPanel _legionNamePanel;
+    //[SerializeField] private LegionNamingPanel _legionNamePanel;
 
     [SerializeField] private Transform _soliderPanel;
     private SoldierSelectSlot[] _slots;
 
     [HideInInspector] public LegionPanel currentPanel;
+
+    public float currentCost = 500f;
+
+    [SerializeField]  
+    private TextMeshProUGUI[] _costTexts;
 
     public override void Awake()
     {  
@@ -20,14 +26,14 @@ public class SoldierSelectPanel : PopupUI
 
     public void Setting(LegionPanel legion)
     {
-        CostManager.Instance.SubtractFromCurrentCost(500 , () =>
+        CostManager.Instance.SubtractFromCurrentCost(currentCost += 100, () =>
         {
             currentPanel = legion;
 
             currentPanel.UnlockedLegion();
 
-            _legionNamePanel.CurrentPanel = currentPanel;
-            _legionNamePanel.ParentPanel = this;
+            //_legionNamePanel.CurrentPanel = currentPanel;
+            //_legionNamePanel.ParentPanel = this;
 
             foreach (SoldierSelectSlot slot in _slots)
             {
@@ -36,8 +42,13 @@ public class SoldierSelectPanel : PopupUI
             }
 
             ShowPanel();
-            _legionNamePanel.ShowPanel();
-            SetActive(false);
+            //_legionNamePanel.ShowPanel();
+            //SetActive(false);
+
+            foreach (var txt in _costTexts)
+            {
+                txt.text = $"{currentCost + 100}";
+            }
         });
     }
 
