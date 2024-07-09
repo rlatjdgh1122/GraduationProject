@@ -6,6 +6,11 @@ public class CoolTimeDecsion : SKillDecision
 {
     //private WaitForSeconds HeartBeat = new WaitForSeconds(0.05f);
 
+    protected override void Init()
+    {
+        saveValue = Time.time;
+    }
+
     public override void OnUsed()
     {
         OnSkillUsedEvent?.Invoke();
@@ -39,4 +44,6 @@ public class CoolTimeDecsion : SKillDecision
         //스킬 사용 가능
         OnSkillReadyEvent?.Invoke();
     }
+
+    
 }

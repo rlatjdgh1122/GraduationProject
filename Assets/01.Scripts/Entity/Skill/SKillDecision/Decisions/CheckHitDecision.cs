@@ -7,6 +7,12 @@ public class CheckHitDecision : SKillDecision
 {
     private bool _checkSkillReady = true;
 
+    protected override void Init()
+    {
+        saveValue = entityActionData.HitCount;
+        _checkSkillReady = true;
+    }
+
     protected override void OnHit(int hitCount)
     {
         if (!_checkSkillReady) return;

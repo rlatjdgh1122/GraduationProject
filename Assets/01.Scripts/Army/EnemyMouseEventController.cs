@@ -7,19 +7,15 @@ public class EnemyMouseEventController : MonoBehaviour
 {
 
     public UnityEvent OnClickToEnemyArmyEvent = null;
-    public void OnRaftClickEvent(RaycastHit hit)
+    public void OnLaftClickEvent(RaycastHit hit)
     {
         if (hit.collider.transform.TryGetComponent(out EnemyMouseEventHandler compo))
         {
+            if (ArmyManager.Instance.CurArmy.TargetEnemyArmy == compo.EnemyArmy) return;
+
             compo.OnClick();
             OnClickToEnemyArmyEvent?.Invoke();
-        }//end if
-
-        /*else
-        {
-            EnemyArmyManager.Instance.DeSelected();
-            ArmyManager.Instance.SetMoveForcusCommand();
-        }*/
+        }
     }
 
 }
