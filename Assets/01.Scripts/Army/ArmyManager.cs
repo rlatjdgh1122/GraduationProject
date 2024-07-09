@@ -13,6 +13,7 @@ public class ArmyManager : Singleton<ArmyManager>
     public General G;
     public List<Army> Armies { get { return armies; } }
 
+    private int prevArmyIdx = -1;
     private int curArmyIdx = -1;
 
     public int CurLegion
@@ -44,6 +45,37 @@ public class ArmyManager : Singleton<ArmyManager>
         base.Awake();
 
         _skillInput = GetComponent<SkillInput>();
+    }
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseStartEvent += OnBattleStart;
+        SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseStartEvent -= OnBattleStart;
+        SignalHub.OnBattlePhaseEndEvent -= OnBattleEnd;
+    }
+
+    private void OnBattleStart()
+    {
+        var prevArmy = armies[prevArmyIdx > 0 ? prevArmyIdx : 0];
+        var curArmy = armies[curArmyIdx > 0 ? curArmyIdx : 0];
+
+        CoroutineUtil.CallWaitForSeconds(0.01f,
+
+            () =>
+            {
+                SignalHub.OnArmyChanged.Invoke(prevArmy, curArmy);
+                _skillInput.SelectGeneral(curArmy.General);
+            });
+
+    }
+
+    private void OnBattleEnd()
+    {
+
     }
 
 
@@ -141,10 +173,10 @@ public class ArmyManager : Singleton<ArmyManager>
         else
             UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 선택");
 
-        var prevIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
+        prevArmyIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
         curArmyIdx = Idx;
 
-        SignalHub.OnArmyChanged.Invoke(armies[prevIdx], armies[Idx]);
+        SignalHub.OnArmyChanged.Invoke(armies[prevArmyIdx], armies[curArmyIdx]);
 
         armies.IdxExcept
             (
