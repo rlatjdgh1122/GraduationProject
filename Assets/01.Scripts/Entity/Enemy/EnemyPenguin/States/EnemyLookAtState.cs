@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EnemyLookAtState : EnemyBaseState
 {
-    //이 값이 높을수록 판정이 후함
-    private readonly float AngleThreshold = 0.9f;
+    private readonly float AngleThreshold = 5f; 
 
     public EnemyLookAtState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
@@ -23,7 +22,7 @@ public class EnemyLookAtState : EnemyBaseState
     {
         base.UpdateState();
 
-        //_enemy.LookTarget();
+        _enemy.LookTarget();
 
         //감지사거리 안에 있을때
         if (_enemy.IsTargetInInnerRange)
@@ -54,18 +53,30 @@ public class EnemyLookAtState : EnemyBaseState
         base.ExitState();
     }
 
-    private bool IsFacingTarget()
+    /*private bool IsFacingTarget()
     {
-        _enemy.LookTarget();
-
         Vector3 enemyForward = _enemy.transform.forward;
 
-        Vector3 directionToTarget = (_enemy.CurrentTarget.transform.position - _enemy.transform.position).normalized;
+        Vector3 directionToTarget = (_enemy.CurrentTarget.transform.position - _enemy.transform.position).normalized;   
 
         //내적
         float dotProduct = Vector3.Dot(enemyForward, directionToTarget);
 
         return dotProduct > AngleThreshold;
+    }*/
+
+    private bool IsFacingTarget()
+    {
+        Vector3 enemyForward = _enemy.transform.forward;
+        Vector3 directionToTarget = (_enemy.CurrentTarget.transform.position - _enemy.transform.position).normalized;
+
+        // 두 벡터 사이의 각도를 계산
+        float angleToTarget = Vector3.Angle(enemyForward, directionToTarget);
+
+        // 임계값 설정 (예: 30도)
+
+        // 각도를 사용하여 임계값과 비교
+        return angleToTarget <= AngleThreshold;
     }
 
 }
