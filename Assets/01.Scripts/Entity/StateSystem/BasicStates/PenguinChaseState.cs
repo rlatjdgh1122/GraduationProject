@@ -17,9 +17,14 @@ public class PenguinChaseState : State
     {
         base.UpdateState();
 
-        //무조건 현재 적한테 이동
-        if (_penguin.CurrentTarget != null)
-            _penguin.MoveToCurrentTarget();
+
+        //이동상태가 된게 아니라면 무조건 타겟한테 가게
+        if (!CheckCommandModeForMovement())
+        {
+            if (_penguin.CurrentTarget != null)
+                _penguin.MoveToCurrentTarget();
+        }
+        CheckBattleModeForChase();
 
         if (_penguin.IsTargetInAttackRange)
         {
@@ -34,17 +39,6 @@ public class PenguinChaseState : State
         }
         else IsTargetNull(PenguinStateType.Idle);
 
-       /* if (_stateMachine.IsPrevState(PenguinStateType.Attack) == false) //이전 상태가 attack이 아니라면
-        {
-            if (_penguin.MovefocusMode == MovefocusMode.Stop)
-            {
-                _stateMachine.ChangeState(PenguinStateType.Idle);
-            }
-
-        }//end if*/
-
-        CheckCommandModeForMovement();
-        CheckBattleModeForChase();
     }
 
     public override void ExitState()

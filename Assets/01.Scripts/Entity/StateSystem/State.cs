@@ -167,25 +167,35 @@ public class State
         return true;
     }
 
-    protected void CheckCommandModeForMovement()
+    protected bool CheckCommandModeForMovement()
     {
-        if (!_penguin.ArmyTriggerCalled) return;
+        if (!_penguin.ArmyTriggerCalled) return false;
 
         if (_penguin.MovefocusMode == MovefocusMode.Command)
         {
             if (_penguin.NavAgent.velocity.magnitude > 0.05f)
+            {
                 _stateMachine.ChangeState(PenguinStateType.Move);
+
+                return true;
+            }
         }//end command
+
+        return false;
     }
 
-    protected void CheckBattleModeForChase()
+    protected bool CheckBattleModeForChase()
     {
-        if (!_penguin.ArmyTriggerCalled) return;
+        if (!_penguin.ArmyTriggerCalled) return false;
 
         if (_penguin.MovefocusMode == MovefocusMode.Battle)
         {
             _stateMachine.ChangeState(PenguinStateType.Chase);
+
+            return true;
         }//end Battle
+
+        return false;
     }
 
 

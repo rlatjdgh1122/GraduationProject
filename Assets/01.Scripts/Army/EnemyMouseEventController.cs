@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class EnemyMouseEventController : MonoBehaviour
 {
-
     public UnityEvent OnClickToEnemyArmyEvent = null;
+
     public void OnLaftClickEvent(RaycastHit hit)
     {
         if (hit.collider.transform.TryGetComponent(out EnemyMouseEventHandler compo))
@@ -16,6 +16,15 @@ public class EnemyMouseEventController : MonoBehaviour
             compo.OnClick();
             OnClickToEnemyArmyEvent?.Invoke();
         }
+        else
+        {
+            ArmyManager.Instance.SetTargetEnemyArmy(null);
+        }
+    }
+
+    public void OnRightClickEvent()
+    {
+        ArmyManager.Instance.SetTargetEnemyArmy(null);
     }
 
 }
