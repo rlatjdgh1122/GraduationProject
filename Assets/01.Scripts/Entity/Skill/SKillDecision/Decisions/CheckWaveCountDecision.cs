@@ -9,6 +9,11 @@ namespace SkillSystem
     public class CheckWaveCountDecision : SKillDecision
     {
         private bool _canUsedSkill = true;
+         protected override void Init()
+        {
+            saveValue = WaveManager.Instance.CurrentWaveCount;
+            _canUsedSkill = true;
+        }
 
         protected override void OnDisable()
         {
