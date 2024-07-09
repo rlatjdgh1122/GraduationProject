@@ -71,8 +71,12 @@ public class ArmyManager : Singleton<ArmyManager>
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {
         CurArmy.TargetEnemyArmy = enemyArmy;
-        CurArmy.MovefocusMode = MovefocusMode.Battle;
+
+        if (enemyArmy != null) //타겟을 null로 할 경우를 예외처리
+            CurArmy.MovefocusMode = MovefocusMode.Battle;
     }
+
+
 
     /// <summary>
     /// 움직일 경우엔 타겟을 명령모드로 변경
@@ -363,5 +367,5 @@ public class ArmyManager : Singleton<ArmyManager>
         return result;
     }
 
-   
+
 }

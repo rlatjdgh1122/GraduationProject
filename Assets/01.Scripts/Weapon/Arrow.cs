@@ -10,11 +10,19 @@ public class Arrow : PoolableMono
     private Rigidbody _rigid;
     protected DamageCaster _damageCaster;
 
+    private Coroutine WaitForDestroyCorountine = null;
+
+    private void OnDestroy()
+    {
+        if (WaitForDestroyCorountine != null)
+            StopCoroutine(WaitForDestroyCorountine);
+    }
+
     private void OnEnable()
     {
         _rigid = GetComponent<Rigidbody>();
         _damageCaster = GetComponent<DamageCaster>();
-        StartCoroutine(WaitForDestroy());
+        WaitForDestroyCorountine = StartCoroutine(WaitForDestroy());
     }
 
     public virtual void Setting(TargetObject owner, LayerMask layer)

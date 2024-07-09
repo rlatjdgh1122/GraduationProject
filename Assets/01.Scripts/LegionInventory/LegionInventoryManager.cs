@@ -38,6 +38,8 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
         _penguinSituation = FindObjectOfType<PenguinSituationUI>();
     }
 
+
+
     /// <summary>
     /// ������ ������
     /// </summary>
@@ -79,7 +81,7 @@ public class LegionInventoryManager : Singleton<LegionInventoryManager>
 
     public void DeadLegionPenguin(string legionName, int slotIdx, bool retire = false)
     {
-        _legionInven.DeadPenguin(legionName, slotIdx, retire);
+        _legionInven.RemovePenguin(legionName, slotIdx, retire);
     }
 
     /// <summary>

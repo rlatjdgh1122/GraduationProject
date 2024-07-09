@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LegionSlotPurchaseButton : MonoBehaviour
 {
+    public PlusSlotPanel _slotPanel;
+
     [SerializeField] private int idx = 0;
     private LegionSoldierSlot _slot;
     private Button _purchaseButton;
@@ -22,10 +24,16 @@ public class LegionSlotPurchaseButton : MonoBehaviour
     private void Start()
     {
         _slot.gameObject.SetActive(false);
-        _purchaseButton.onClick.AddListener(Purchase);
+        _purchaseButton.onClick.AddListener(ShowSlotPanel);
     }
 
-    private void Purchase() //»õ½½·Ô Ãß°¡
+    public void ShowSlotPanel()
+    {
+        _slotPanel.Setting(this);
+        _slotPanel.ShowPanel();
+    }
+
+    public void Purchase() //»õ½½·Ô Ãß°¡
     {
         CostManager.Instance.SubtractFromCurrentCost(350, () =>
         {

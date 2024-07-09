@@ -8,18 +8,16 @@ public class LegionInventory : LegionUI
     /// </summary>
     public void UndoLegion()
     {
-        foreach (var data in currentRemovePenguinList) //군단에서 지웠는데 저장 취소하면
+        foreach (var data in currentRemovePenguinList)
         {
-
-            //인벤에 들어간 펭귄을 빼줘
-            legion.RemovePenguin(PenguinManager.Instance.GetDefaultInfoDataByType(data.PenguinType));
+            legion.RemovePenguin(data);
         }
-        foreach (var data in currentLegionList) //군단에 추가했는데 저장 취소하면
+
+        foreach (var data in currentLegionList)
         {
             if (!savedLegionList.Contains(data))
             {
-                //인벤에 들어간 펭귄을 더해줘
-                legion.AddPenguin(PenguinManager.Instance.GetDefaultInfoDataByType(data.PenguinType));
+                legion.AddPenguin(data);
             }
         }
     }
@@ -45,12 +43,12 @@ public class LegionInventory : LegionUI
             }
         }
 
-        ArrangementManager.Instance.ApplySaveData(savedLegionList);
-        //SignalHub.OnModifyCurArmy?.Invoke();
-
         ResetLegion();
     }
 
+    /// <summary>
+    /// 현재 군단 데이터 및 슬롯 초기화
+    /// </summary>
     private void ResetLegion()
     {
         foreach (var list in slotList)
@@ -72,78 +70,56 @@ public class LegionInventory : LegionUI
         currentGeneral = 0;
     }
 
+    /// <summary>
+    /// 군단 바꾸기
+    /// </summary>
+    /// <param name="name">바뀔 군단 이름</param>
     public void ChangeLegion(string name)
     {
         ResetLegion();
 
         if (savedLegionList == null) return;
 
-        foreach (var list in savedLegionList.Where(list => list.LegionName == name))
+        //저장된 군단 데이터 중 군단 이름이 매개변수 string과 같다면
+        foreach (var data in savedLegionList.Where(list => list.LegionName == name))
         {
-            slotList[list.SlotIdx].EnterSlot(list);
-            currentLegionList.Add(list);
+            slotList[data.SlotIdx].EnterSlot(data);
+            currentLegionList.Add(data);
 
-            if (!currentDictionary.ContainsKey(list.SlotIdx))
+            if (!currentDictionary.ContainsKey(data.SlotIdx))
             {
-                currentDictionary.Add(list.SlotIdx, list);
+                currentDictionary.Add(data.SlotIdx, data);
 
-                //var penguin = PenguinManager.Instance.GetPenguinByInfoData(list);
-
-                //float curHp = penguin.HealthCompo.currentHealth ;
-                //float maxHp = penguin.HealthCompo.maxHealth;
-
-                //float hpPercent = curHp / maxHp;
-
-                //PenguinTakeDamage(list.SlotIdx, hpPercent);
+                CheckType(data);
             }
-            else break;
-
-            CheckType(list);
         }
-
-        LegionCountTextSetting();
-        ImportHpValue();
     }
 
+    /// <summary>
+    /// 군단에 데이터 등록하기
+    /// </summary>
+    /// <param name="idx">현재 군단의 슬롯 위치</param>
+    /// <param name="data">등록할 데이터</param>
     public void LegionRegistration(int idx, EntityInfoDataSO data)
     {
-        if (currentDictionary.ContainsKey(idx))
-        {
-            return;
-        }
-
-        data = Instantiate(data);
+        if (currentDictionary.ContainsKey(idx)) return;
 
         data.LegionName = legion.LegionList[legion.CurrentLegion].Name;
         data.SlotIdx = idx;
 
-        slotList[idx].HpValue(1);
-
         currentLegionList.Add(data);
         currentDictionary.Add(idx, data);
 
-        //int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
-
-        //if (questIdx == 0 && data.PenguinType == PenguinTypeEnum.Basic)
-        //{
-        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        //}
-        //if (questIdx == 1)
-        //{
-        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        //}
-
-        //if (questIdx == 5)
-        //{
-        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        //}
-
         CheckType(data);
-
-        LegionCountTextSetting();
     }
 
-    public void DeadPenguin(string legionName, int slotIdx, bool retire = false)
+    /// <summary>
+    /// 펭귄을 저장된 군단에서 뺴주기
+    /// </summary>
+    /// <param name="legionName">죽은 펭귄이 속한 군단 이름</param>
+    /// <param name="slotIdx">속한 군단의 슬롯 위치</param>
+    /// <param name="retire">유저 스스로 뺀건지 죽어서 빠진건지</param>
+    public void RemovePenguin(string legionName, int slotIdx, bool retire = false)
     {
         var saveList = savedLegionList.ToList();
 
@@ -161,58 +137,42 @@ public class LegionInventory : LegionUI
                 if (saveData.JobType == PenguinJobType.General) currentGeneral--;
                 else currentPenguinCnt--;
             }
-        }//end foreach
+        }
         
         LegionCountTextSetting();
     }
 
+    /// <summary>
+    /// 현재 군단에서 데이터 빼기
+    /// </summary>
+    /// <param name="idx">현재 군단의 슬롯 위치</param>
     public void RemovePenguinInCurrentLegion(int idx)
     {
-        if (currentDictionary.TryGetValue(idx, out EntityInfoDataSO curData))
+        if (currentDictionary.TryGetValue(idx, out EntityInfoDataSO data))
         {
-            var penguin = PenguinManager.Instance.GetPenguinByInfoData(curData);
+            legion.AddPenguin(data);
 
-            float hpPercent = 1;
+            currentLegionList.Remove(data);
+            currentDictionary.Remove(idx);
 
-            if (penguin != null)
-            {
-                float curHp = penguin.HealthCompo.currentHealth;
-                float maxHp = penguin.HealthCompo.maxHealth;
+            currentRemovePenguinList.Add(data);
 
-                hpPercent = curHp / maxHp;
-            }
+            slotList[idx].ExitSlot(null);
 
-            if (hpPercent >= 1) //피가 풀피면
-            {
-                legion.AddPenguin(PenguinManager.Instance.GetDefaultInfoDataByType(curData.PenguinType));
-
-                currentLegionList.Remove(curData);
-                currentDictionary.Remove(idx);
-
-                currentRemovePenguinList.Add(curData);
-
-                slotList[idx].ExitSlot(null);
-
-                if (curData.JobType == PenguinJobType.General) currentGeneral--;
-                else
-                {
-                    currentPenguinCnt--;
-                    currentRemovePenguinCnt++;
-                }
-            }
+            if (data.JobType == PenguinJobType.General) currentGeneral--;
             else
             {
-                UIManager.Instance.ShowWarningUI("펭귄의 체력이 닳아있습니다!");
-
-                legion.ShowPenguinSituation(curData, hpPercent);
-
-                return;
+                currentPenguinCnt--;
+                currentRemovePenguinCnt++;
             }
         }
-
-        LegionCountTextSetting();
     }
 
+    /// <summary>
+    /// 군단 이름 바꾸기
+    /// </summary>
+    /// <param name="beforeName">바꾸기 전의 군단 이름</param>
+    /// <param name="afterName">바꾼 후 군단 이름</param>
     public void ChangeLegionNameInSaveData(string beforeName, string afterName)
     {
         foreach (var list in savedLegionList.Where(list => list.LegionName == beforeName))
