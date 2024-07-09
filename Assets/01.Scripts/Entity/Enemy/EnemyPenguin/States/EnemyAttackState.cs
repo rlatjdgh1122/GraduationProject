@@ -25,15 +25,9 @@ public class EnemyAttackState : EnemyBaseState
     {
         base.UpdateState();
 
-        _enemy.LookTarget();
-
-        if (_triggerCalled) //공격이 한 차례 끝났을 때,
+        if (_triggerCalled) //공격 이후
         {
-            if (_enemy.IsTargetInInnerRange)
-                _stateMachine.ChangeState(EnemyStateType.Chase); //사거리 안에 타겟 플레이어가 있다 -> 따라가
-
-            else // 감지 사거리 내에서 벗어났다 -> Move (넥서스쪽으로)
-                _stateMachine.ChangeState(EnemyStateType.Move);
+            _stateMachine.ChangeState(EnemyStateType.LookAt);
         }
 
     }

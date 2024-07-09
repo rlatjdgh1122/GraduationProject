@@ -4,10 +4,11 @@
     Idle,
     Move,
     Chase,
-    MustChase,
+    MustChase, //안씀
     Attack,
     Reached,
-    Jump,
+    Jump, //안씀
+    LookAt,
     #endregion
 
     #region gorilla
