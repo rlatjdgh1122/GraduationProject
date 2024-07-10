@@ -11,18 +11,20 @@ public class BuildingUI : PopupUI
 
     private BuildingUIComponent[] _repairPanels;
 
+    private BuildingUpgrade _buildingUpgrade;
+
     public override void Awake()
     {
         base.Awake();
 
         _repairPanels = transform.GetComponentsInChildren<BuildingUIComponent>();
+        _buildingUpgrade = transform.GetComponentInChildren<BuildingUpgrade>();
     }
 
     public void SetStat()
     {
         foreach (BuildingUIComponent panel in _repairPanels)
         {
-            panel.infoData        = InfoData;
             panel.buildingHealth  = BuildingHealth;
             panel.synergyBuilding = SynergyBuilding;
         }
@@ -33,6 +35,8 @@ public class BuildingUI : PopupUI
         InfoData = infoData;
 
         UIManager.Instance.ShowPanel("BuildingUI");
+        _buildingUpgrade.ShowPanel();
+        _buildingUpgrade.InitSlot(infoData);
     }
 
     public void HideBuildingUI()
@@ -40,5 +44,12 @@ public class BuildingUI : PopupUI
         HidePanel();
 
         UIManager.Instance.ResetPanel();
+    }
+
+    public override void HidePanel()
+    {
+        base.HidePanel();
+
+        _buildingUpgrade.ClosePanel();
     }
 }

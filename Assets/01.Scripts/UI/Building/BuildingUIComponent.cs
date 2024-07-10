@@ -19,6 +19,8 @@ public class BuildingUIComponent : MonoBehaviour
     private Coroutine showCoroutine = null;
     private Coroutine _moveCoroutine = null;
     private Coroutine showAndHideCoroutine = null;
+    public SynergyBuilding synergyBuilding { get; set; }
+    public Health buildingHealth { get; set; }
 
     public virtual void Awake()
     {
@@ -82,8 +84,4 @@ public class BuildingUIComponent : MonoBehaviour
         var tween = rectTransform.DOAnchorPos(new Vector2(x, y), fadeTime);
         if (ease) tween.SetEase(Ease.OutBack, 0.9f);
     }
-
-    public SynergyBuildingInfoDataSO infoData { get; set; }
-    public SynergyBuilding synergyBuilding { get; set; }
-    public Health buildingHealth { get; set; }
 }

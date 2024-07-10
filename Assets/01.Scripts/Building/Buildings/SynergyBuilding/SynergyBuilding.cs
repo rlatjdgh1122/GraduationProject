@@ -31,10 +31,11 @@ public class SynergyBuilding : BaseBuilding
     {
         if (!WaveManager.Instance.IsBattlePhase && _isFirst)
         {
-            _buildingPanel.ShowBuildingUI(_infoDataSO);
-
-            _buildingPanel.BuildingHealth = HealthCompo;
             _buildingPanel.SynergyBuilding = this;
+            _buildingPanel.BuildingHealth = HealthCompo;
+
+            _buildingPanel.SetStat();
+            _buildingPanel.ShowBuildingUI(_infoDataSO);
 
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }

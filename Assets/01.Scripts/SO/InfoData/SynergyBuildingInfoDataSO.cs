@@ -24,4 +24,9 @@ public class SynergyBuildingInfoDataSO : ScriptableObject
 
     [Header("Synergy Abilties")]
     public List<UpgradeInfo> BuildingAbilityList = new();
+
+    public BuildingNecessaryResourceData ReturnNeedResource(int index, ResourceType needResourceType)
+    {
+        return BuildingAbilityList[index].UpgradePriceList.Find(resource => resource.NecessaryResource.resourceData.resourceType == needResourceType);
+    }
 }

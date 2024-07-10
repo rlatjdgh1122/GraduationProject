@@ -23,18 +23,27 @@ public class BuildingUpgradeSlot : MonoBehaviour
         _upgradeText = transform.Find("Panel/SynergyDescript").GetComponent<TextMeshProUGUI>();
     }
 
-    public void Init(int level, Color levelColor, string upgradeDescription)
+    public void CreateSlot(int level, Color levelColor)
     {
         _level = level;
         _levelColor = levelColor;
+    }
+
+    public void Init(string upgradeDescription)
+    {
         _upgradeDescription = upgradeDescription;
     }
 
     public void UpdateSlot()
     {
         _levelText.color = _levelColor;
-        _levelText.text = $"{_level + 1}";
+        _levelText.text = $"·¹º§ {_level + 1}";
         _upgradeText.text = _upgradeDescription;
+    }
+
+    public void OnLock()
+    {
+        _lockPanel.alpha = 1;
     }
 
     public void OnUnlock()

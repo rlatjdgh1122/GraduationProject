@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Content: {fileID: 2448558516223360595}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -505,11 +505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d17b0234fbf51449ba21e1ef7400ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0.3
-  _panelDelayTime: 0
-  _transferable: 060000000600000006000000
-  _soundName: 100
-  _uiGroup: 6
+  panelFadeTime: 0
+  panelDelayTime: 0
 --- !u!222 &1410059184216051886
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -804,9 +801,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644589771776594779}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &706322884431222038
 GameObject:
@@ -1559,11 +1556,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7210605551642981259}
+  m_Father: {fileID: 1880359006200955843}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -128.5, y: 57.4}
+  m_AnchoredPosition: {x: -51.19995, y: 0.040863037}
   m_SizeDelta: {x: 51.768, y: 38.8484}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6982515180564348114
@@ -1657,11 +1654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ae950b4a60318438dc11c56d00fd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0.6
-  _panelDelayTime: 0
-  _transferable: 060000000600000006000000
-  _soundName: 16
-  _uiGroup: 6
+  panelFadeTime: 0.6
+  panelDelayTime: 0
+  _upgradeSlotPrefab: {fileID: 8791726221276593520, guid: b94d7bb550d8be0468346daebe79b957,
+    type: 3}
   _colorOfUpgradeList:
   - {r: 0.67657787, g: 0.6784314, b: 0.03529411, a: 1}
   - {r: 0.6784314, g: 0.5966018, b: 0.03529411, a: 1}
@@ -1670,7 +1666,7 @@ MonoBehaviour:
   - {r: 0.6784314, g: 0.2721436, b: 0.03529411, a: 1}
   - {r: 0.6784314, g: 0.03529411, b: 0.06549361, a: 1}
   - {r: 0.6784314, g: 0.03529411, b: 0.16809218, a: 1}
-  UpgradeList: []
+  _upgradeSlotParent: {fileID: 2448558516223360595}
 --- !u!225 &2233545962815653966
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1803,8 +1799,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7162032738362750177}
   m_HandleRect: {fileID: 4791007876293607939}
   m_Direction: 2
-  m_Value: -0.0000062016525
-  m_Size: 0.7341233
+  m_Value: -0.000000059638204
+  m_Size: 0.43503565
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1996,11 +1992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3626b8922a249b741a8663abb2a80bc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0.3
-  _panelDelayTime: 0
-  _transferable: 060000000600000006000000
-  _soundName: 100
-  _uiGroup: 6
+  panelFadeTime: 0
+  panelDelayTime: 0
 --- !u!222 &2268641325135763181
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2505,7 +2498,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1863919081958043798}
   m_Father: {fileID: 4506326421946176853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3063,6 +3057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4065750035926317709}
   - component: {fileID: 2131093072752195317}
+  - component: {fileID: 3111253919912167788}
   m_Layer: 5
   m_Name: RepairPanel
   m_TagString: Untagged
@@ -3109,11 +3104,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dec4ea2926c4214fa5b8a2e08071e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0.6
-  _panelDelayTime: 0
-  _transferable: 060000000600000006000000
-  _soundName: 16
-  _uiGroup: 6
+  panelFadeTime: 0.6
+  panelDelayTime: 0
+--- !u!225 &3111253919912167788
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4453636721614530816}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4546982585218487174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,11 +3509,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7210605551642981259}
+  m_Father: {fileID: 9003986132431956673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -46, y: 56.554}
+  m_AnchoredPosition: {x: -51.099976, y: -0.80506897}
   m_SizeDelta: {x: 65.0439, y: 48.8111}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6557770541052190394
@@ -3716,8 +3720,6 @@ RectTransform:
   m_Children:
   - {fileID: 1594948137074755363}
   - {fileID: 2716449498234979649}
-  - {fileID: 3507711874076233200}
-  - {fileID: 1863919081958043798}
   m_Father: {fileID: 4506326421946176853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4604,8 +4606,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 142.70634}
-  m_SizeDelta: {x: 0, y: 536.7355}
+  m_AnchoredPosition: {x: 0, y: 511.7119}
+  m_SizeDelta: {x: 0, y: 905.7419}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5739768983489756841
 MonoBehaviour:
@@ -4622,7 +4624,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 143
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 20.12
@@ -6161,7 +6163,7 @@ GameObject:
   - component: {fileID: 8097367165645954453}
   - component: {fileID: 5529474046583220333}
   m_Layer: 5
-  m_Name: NeedWoodCos
+  m_Name: NeedWoodCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6178,7 +6180,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3507711874076233200}
   m_Father: {fileID: 4506326421946176853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
