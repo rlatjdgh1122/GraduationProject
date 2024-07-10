@@ -13,6 +13,7 @@ public class General : Penguin, ISkillable
     public virtual void OnSkillEvent() { }
     public virtual void OnUltimateEvent() { }
 
+
     protected override void Awake()
     {
         base.Awake();

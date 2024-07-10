@@ -145,7 +145,7 @@ public class DamageCaster : MonoBehaviour
     public bool CastDamage(float knbValue = 0f, float stunValue = 0f)
     {
         RaycastHit raycastHit;
-        //var dir = (_owner.CurrentTarget.transform.position - transform.position).normalized;
+
         bool raycastSuccess = Physics.Raycast(transform.position, transform.forward, out raycastHit, _detectRange, TargetLayer);
 
         if (raycastSuccess

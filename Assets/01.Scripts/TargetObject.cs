@@ -94,7 +94,6 @@ public abstract class TargetObject : PoolableMono
 
         float maxDistance = 300f;
 
-        // 넥서스 기준으로 주변 객체 검색
         int count = Physics.OverlapSphereNonAlloc(transform.position, checkRange, _targetColliders, mask);
 
         for (int i = 0; i < count; ++i)
