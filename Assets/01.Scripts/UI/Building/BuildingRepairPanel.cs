@@ -13,7 +13,7 @@ public class BuildingRepairPanel : BuildingUIComponent
 
     public void OnMovePanel(float x)
     {
-        MovePanel(x, 0, _panelFadeTime);
+        MovePanel(x, 0, panelFadeTime);
     }
 
     public override void MovePanel(float x, float y, float fadeTime, bool ease = true)

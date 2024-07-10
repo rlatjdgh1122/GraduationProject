@@ -139,6 +139,16 @@ public class UIManager : Singleton<UIManager>
         _currentUI = null;
     }
 
+    public T GetPopupUI<T>(string uiName) where T : PopupUI
+    {
+        if(popupUIDictionary.TryGetValue(uiName, out var popupUI))
+        {
+            return popupUI as T;
+        }
+
+        return null;
+    }
+
     public void HidePanel(string uiName)
     {
         if (popupUIDictionary.TryGetValue(uiName, out PopupUI popupUI))

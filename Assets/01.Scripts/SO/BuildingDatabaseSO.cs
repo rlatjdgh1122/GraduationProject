@@ -115,6 +115,4 @@ public class BuildingItemInfo
 public class BuildingDatabaseSO : ScriptableObject
 {
     public List<BuildingItemInfo> BuildingItems = null;
-
-    public List<SynergyBuildingInfoData> SynergyBuildingInfoList = new();
 }

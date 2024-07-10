@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SynergyBuilding : BaseBuilding
 {
+    [SerializeField] private SynergyBuildingInfoDataSO _infoDataSO;
     public SynergyBuildingDeadController DeadController { get; set; }
 
     private BuildingUI _buildingPanel;
@@ -12,8 +13,12 @@ public class SynergyBuilding : BaseBuilding
     {
         base.Awake();
 
-        _buildingPanel = UIManager.Instance.canvasTrm.GetComponentInChildren<BuildingUI>();
         DeadController = GetComponent<SynergyBuildingDeadController>();
+    }
+
+    protected override void Start()
+    {
+        _buildingPanel = UIManager.Instance.GetPopupUI<BuildingUI>("BuildingUI");        
     }
 
     protected override void Running()
@@ -26,12 +31,11 @@ public class SynergyBuilding : BaseBuilding
     {
         if (!WaveManager.Instance.IsBattlePhase && _isFirst)
         {
-            UIManager.Instance.ShowPanel("BuildingUI");
-            _buildingPanel.BuildingStat = (SynergyBuildingStat)_characterStat;
+            _buildingPanel.ShowBuildingUI(_infoDataSO);
+
             _buildingPanel.BuildingHealth = HealthCompo;
             _buildingPanel.SynergyBuilding = this;
 
-            _buildingPanel.SetStat();
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }
 

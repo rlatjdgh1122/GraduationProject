@@ -138,6 +138,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 221940907912116236}
+        m_TargetAssemblyTypeName: EnemyMouseEventController, Assembly-CSharp
+        m_MethodName: OnRightClickEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLeftClickEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -180,10 +192,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4001588354396640803}
-        m_TargetAssemblyTypeName: EnemyArmyManager, Assembly-CSharp
-        m_MethodName: DeSelected
-        m_Mode: 1
+      - m_Target: {fileID: 221940907912116236}
+        m_TargetAssemblyTypeName: EnemyMouseEventController, Assembly-CSharp
+        m_MethodName: OnLaftClickEvent
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -196,8 +208,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 221940907912116236}
-        m_TargetAssemblyTypeName: EnemyArmyMouseEventController, Assembly-CSharp
-        m_MethodName: OnRaftClickEvent
+        m_TargetAssemblyTypeName: EnemyMouseEventController, Assembly-CSharp
+        m_MethodName: OnLaftClickEvent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -297,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec4ccb35d4659a41a13f18c2bd02189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1.5
+  distance: 1
   width: 5
   length: 7
 --- !u!114 &5915532844250695125
@@ -312,7 +324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f77c203f72772e428a860f1fa4fe5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Test: 1
 --- !u!114 &6409838579320332300
 MonoBehaviour:
   m_ObjectHideFlags: 0
