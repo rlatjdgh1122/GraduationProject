@@ -164,6 +164,8 @@ namespace ArmySystem
 
             foreach (Enemy enemy in TargetEnemyArmy.Soldiers)
             {
+                if (enemy == null) continue;
+
                 double distance = Vector3.Distance(penguin.transform.position, enemy.transform.position);
 
                 if (distance < closestDistance)

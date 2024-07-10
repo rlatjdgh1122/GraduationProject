@@ -71,6 +71,7 @@ namespace ArmySystem
                 DeSelectedOutline();
 
             }//end else
+
         }
 
         public void OnClick()
