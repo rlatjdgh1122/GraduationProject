@@ -4111,8 +4111,11 @@ MonoBehaviour:
   _transferable: 1000000010000000100000001000000010000000
   _soundName: 100
   _uiGroup: 16
+  _legionNamePanel: {fileID: 0}
   _soliderPanel: {fileID: 4616138856662289970}
   currentPanel: {fileID: 0}
+  currentCost: 500
+  _costTexts: []
 --- !u!222 &816147544622493496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18915,11 +18918,22 @@ PrefabInstance:
       propertyPath: _transferable.Array.data[4]
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 1293271130499695326, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: _uiGroup
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2276147146721860757, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: _uiGroup
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 2276147146721860757, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: GeneralData
+      value: 
+      objectReference: {fileID: 11400000, guid: 23e5cc963a6a61647a7783e2fbc2c23c,
+        type: 2}
     - target: {fileID: 2276147146721860757, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: _transferable.Array.size
@@ -19135,6 +19149,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1720808280247524946}
+    - target: {fileID: 6394552531909308726, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
+        type: 3}
     - target: {fileID: 7371418065076591101, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: m_Name
