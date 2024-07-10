@@ -1,4 +1,4 @@
- using ArmySystem;
+using ArmySystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +24,7 @@ public class PenguinAoEAttackState : State
 
         if (_triggerCalled) //АјАн
         {
-            IsTargetNull(PenguinStateType.Idle);
+            _stateMachine.ChangeState(PenguinStateType.Attack);
         }
 
         CheckCommandModeForMovement();
@@ -41,9 +41,5 @@ public class PenguinAoEAttackState : State
     {
         base.AnimationTrigger();
 
-        //if (_penguin.MoveFocusMode == MovefocusMode.Command)
-        {
-            _stateMachine.ChangeState(PenguinStateType.Idle);
-        }
     }
 }

@@ -25,6 +25,8 @@ public class Enemy : Entity
     public EnemyArmy MyArmy => _owner;
 
     #region componenets
+    public EnemyMouseEventHandler MouseHandlerCompo { get; private set; }
+
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
 
@@ -74,6 +76,7 @@ public class Enemy : Entity
         }
 
         AttackCompo = GetComponent<EntityAttackData>();
+        MouseHandlerCompo = transform.Find("MouseEventHandler").GetComponent<EnemyMouseEventHandler>();
         NexusTarget = GameManager.Instance.NexusTrm.GetComponent<Nexus>();
 
         if (passiveData != null)

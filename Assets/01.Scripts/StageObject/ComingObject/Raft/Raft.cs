@@ -59,6 +59,7 @@ public class Raft : PoolableMono, IComingObject
             enemy.IsMove = true;
             enemy.ColliderCompo.enabled = true;
             enemy.NavAgent.enabled = true;
+            enemy.MouseHandlerCompo.SetColiderActive(true);
             //enemy.StateMachine.ChangeState(EnemyStateType.Move);
             enemy.FindNearestTarget();
         }

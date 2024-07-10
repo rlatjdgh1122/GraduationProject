@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
 
-public class EnemyDeadController : EntityDeadController<Enemy>  
+public class EnemyDeadController : EntityDeadController<Enemy>
 {
+
     public override void OnDied()
     {
         base.OnDied();
 
-        _owner.DieEventHandler();
         _owner.MyArmy.RemoveEnemy(_owner);
+        _owner.DieEventHandler();
+
+        _owner.MouseHandlerCompo.SetColiderActive(false);
     }
 
     public override void OnResurrected()
     {
         //체력 다시 채움
         _owner.HealthCompo.SetHealth(_owner.Stat);
+
+        _owner.MouseHandlerCompo.SetColiderActive(true);
 
         _anim.speed = 1f;
         //애니메이션 켜줌
