@@ -172,13 +172,22 @@ public class Penguin : Entity
         {
             string typeName = state.ToString();
             Type t = Type.GetType($"Penguin{typeName}State");
-            State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
-            if (newState == null)
+            try
             {
-                Debug.LogError($"There is no script : {state}");
-                return;
+                State newState = Activator.CreateInstance(t, this, StateMachine, typeName) as State;
+
+                if (newState == null)
+                {
+                    Debug.LogError($"There is no script : {state}");
+                    return;
+                }
+                StateMachine.AddState(state, newState);
             }
-            StateMachine.AddState(state, newState);
+            catch
+            {
+
+            }
+
         }
     }
 

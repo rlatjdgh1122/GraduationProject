@@ -28,20 +28,6 @@ public class MortarRock : Arrow
         _damageCaster.TargetLayer = layer;
     }
 
-    private Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
-    {
-        float parabolaHeight = ParabolaFunc(height, t);
-
-        var mid = Vector3.Lerp(start, end, t);
-
-        return new Vector3(mid.x, parabolaHeight + Mathf.Lerp(start.y, end.y, t), mid.z);
-    }
-
-    private float ParabolaFunc(float height, float t)
-    {
-        return  -4 * height * t * t + 4 * height * t;
-    }
-
     public IEnumerator BulletMove(Vector3 startPos, Vector3 endPos)
     {
         timer = 0;
@@ -63,7 +49,7 @@ public class MortarRock : Arrow
                 break;
             } 
             timer += Time.deltaTime;
-            Vector3 tempPos = Parabola(startPos, endPos, height, timer);
+            Vector3 tempPos = Parabola.GetParabola(startPos, endPos, height, timer);
             transform.position = tempPos;
             transform.rotation = Quaternion.Euler(0, timer * 720f, 0);
             yield return new WaitForEndOfFrame();

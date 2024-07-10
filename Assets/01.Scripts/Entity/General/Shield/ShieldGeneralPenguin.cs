@@ -42,19 +42,6 @@ public class ShieldGeneralPenguin : General
         //}
     }
 
-    public override void OnPassiveHealthRatioEvent()
-    {
-        StateMachine.ChangeState(PenguinStateType.Impact);
-        PenguinTriggerCalled = true;
-
-        //spinattack Exit에서 PenguinTriggerCalled를 true로 바꿈
-    }
-
-    public override void OnPassiveHitEvent()
-    {
-        //StateMachine.ChangeState(PenguinStateType.SpinAttack);
-    }
-
     public override void OnSkillEvent()
     {
         StateMachine.ChangeState(PenguinStateType.SpinAttack);

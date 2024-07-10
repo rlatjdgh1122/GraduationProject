@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SoldierSelectPanel : PopupUI
@@ -11,8 +12,13 @@ public class SoldierSelectPanel : PopupUI
 
     [HideInInspector] public LegionPanel currentPanel;
 
+    public float currentCost = 500f;
+
+    [SerializeField]
+    private TextMeshProUGUI[] _costTexts;
+
     public override void Awake()
-    {  
+    {
         base.Awake();
 
         _slots = _soliderPanel.GetComponentsInChildren<SoldierSelectSlot>();
@@ -20,7 +26,7 @@ public class SoldierSelectPanel : PopupUI
 
     public void Setting(LegionPanel legion)
     {
-        CostManager.Instance.SubtractFromCurrentCost(500 , () =>
+        CostManager.Instance.SubtractFromCurrentCost(currentCost += 100, () =>
         {
             currentPanel = legion;
 
@@ -38,6 +44,11 @@ public class SoldierSelectPanel : PopupUI
             ShowPanel();
             _legionNamePanel.ShowPanel();
             SetActive(false);
+
+            foreach (var txt in _costTexts)
+            {
+                txt.text = $"{currentCost + 100}";
+            }
         });
     }
 

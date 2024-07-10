@@ -12,16 +12,14 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
-    private ComingObjIncreaseRateDataSO _comingObjIncreaseRateDataSO;
     private EnemyArmySpawnPatternsSO _enemyArmySpawnPatternsSO;
 
-    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames, ComingObjIncreaseRateDataSO comingObjIncreaseRateDataSO, EnemyArmySpawnPatternsSO enemyArmySpawnPatternsSO) : base(transform)
+    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames, EnemyArmySpawnPatternsSO enemyArmySpawnPatternsSO) : base(transform)
     {
         _enemyNames = enemyNames;
 
         _bossNames = bossNames;
 
-        _comingObjIncreaseRateDataSO = comingObjIncreaseRateDataSO;
         _enemyArmySpawnPatternsSO = enemyArmySpawnPatternsSO;
     }
 
@@ -79,21 +77,10 @@ public class EnemyConfigurer : BaseElementsConfigurer
 
     private int GetRandomEnemyCount()
     {
-        int maxEnemyCount = 0;
-        int minEnemyCount = (int)(curWave * 0.335f); // 3라운드쯤마다 최소 생성되는 펭귄의 수도 1씩 늘어남
-
-        if(minEnemyCount < 2) { minEnemyCount = 2; } //최소 2마리는 나오게 함
-
-        if (curWave % 5 == 0) // 보스 웨이브면
-        {
-            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.BossEnemyIncreaseRate);
-        }
-        else // 일반 웨이브
-        {
-            maxEnemyCount = Mathf.CeilToInt(curWave * _comingObjIncreaseRateDataSO.CommonEnemyIncreaseRate);
-        }
-
-        return Random.Range(minEnemyCount, maxEnemyCount); 
+        int waveCount = curWave;
+        waveCount %= 6;
+        int enemyCount = waveCount + 1;
+        return enemyCount;
     }
 
     private void SetEnemyPos(List<Enemy> spawnEnemies)
