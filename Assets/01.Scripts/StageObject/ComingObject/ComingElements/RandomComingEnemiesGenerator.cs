@@ -191,7 +191,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
             for (int i = 0; i < nextHexagonGroundsGoalCount; i++)
             {
                 float curAngleBetweenGlacier = GetCurAngleBetweenGlacier(makedHexagonCount + 1);
-                rotateValues[i] = curAngleBetweenGlacier * i + angle; // 다음 RotateValues로
+                rotateValues[i] = curAngleBetweenGlacier * i; // 다음 RotateValues로
             }
         }
 
