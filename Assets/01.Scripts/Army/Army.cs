@@ -155,39 +155,58 @@ namespace ArmySystem
         #region Find Enemy
         public Enemy FindNearestEnemy(Penguin penguin)
         {
-            if (TargetEnemyArmy == null || TargetEnemyArmy.IsNull) return null;
+            if (TargetEnemyArmy == null) return null;
+            if (TargetEnemyArmy.Soldiers == null) return null;
+            if (TargetEnemyArmy.Soldiers.Count <= 0) return null;
 
             Enemy closestEnemy = null;
             Enemy closestUntargetedEnemy = null;
             double closestDistance = double.MaxValue;
             double closestUntargetedDistance = double.MaxValue;
 
-            foreach (Enemy enemy in TargetEnemyArmy.Soldiers)
+            try
             {
-                if (enemy == null) continue;
-
-                double distance = Vector3.Distance(penguin.transform.position, enemy.transform.position);
-
-                if (distance < closestDistance)
+                // Soldiers 리스트를 순회하며 가장 가까운 적을 찾음
+                foreach (Enemy enemy in TargetEnemyArmy.Soldiers)
                 {
-                    closestEnemy = enemy;
-                    closestDistance = distance;
+                    // enemy가 null인 경우를 확인
+                    if (enemy == null) continue;
+
+                    double distance = Vector3.Distance(penguin.transform.position, enemy.transform.position);
+
+                    if (distance < closestDistance)
+                    {
+                        closestEnemy = enemy;
+                        closestDistance = distance;
+                    }
+
+                    if (distance < closestUntargetedDistance && !IsEnemyTargetedByMyArmy(enemy))
+                    {
+                        closestUntargetedEnemy = enemy;
+                        closestUntargetedDistance = distance;
+                    }
                 }
 
-                if (distance < closestUntargetedDistance && !IsEnemyTargetedByMyArmy(enemy))
-                {
-                    closestUntargetedEnemy = enemy;
-                    closestUntargetedDistance = distance;
-                }
+                // 가장 가까운 타겟이 지정되지 않은 적 또는 가장 가까운 적 반환
+                return closestUntargetedEnemy ?? closestEnemy;
+            }
+            catch (NullReferenceException ex)
+            {
+                return null;
             }
 
-            return closestUntargetedEnemy ?? closestEnemy;
         }
+
 
         private bool IsEnemyTargetedByMyArmy(Enemy enemy)
         {
+            if (TargetEnemyArmy.Soldiers == null) return false;
+
             foreach (Penguin soldier in Soldiers)
             {
+                // enemy가 null인 경우를 확인
+                if (enemy == null) continue;
+
                 if (soldier.CurrentTarget == enemy)
                 {
                     return true;
