@@ -37,7 +37,6 @@ public class PenguinLanceUltimateState : State
     public override void ExitState()
     {
         //_penguin.MyArmy.MovefocusMode = prevMode;
-        Debug.Log("ExitState");
         //base.ExitState();
     }
 }

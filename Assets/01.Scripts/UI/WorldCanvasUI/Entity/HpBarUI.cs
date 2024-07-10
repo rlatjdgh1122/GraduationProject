@@ -17,7 +17,7 @@ public class HpBarUI : WorldUI
     {
         base.Awake();
 
-        _health = transform.root?.GetComponent<Health>();
+        _health = transform.root.GetComponent<Health>();
     }
 
     public override void Update()

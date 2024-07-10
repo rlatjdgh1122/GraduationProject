@@ -39,6 +39,7 @@ public class Arrow : PoolableMono
     private IEnumerator WaitForDestroy()
     {
         yield return new WaitForSeconds(4);
+        //PoolManager.Instance.Push(this);
         Destroy(this.gameObject);
     }
 
@@ -46,6 +47,7 @@ public class Arrow : PoolableMono
     {
         if (_damageCaster.CastArrowDamage(coll, _damageCaster.TargetLayer))
         {
+            //PoolManager.Instance.Push(this);
             Destroy(this.gameObject);
         }
     }
