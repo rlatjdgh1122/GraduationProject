@@ -20,7 +20,7 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
             _firePos.LookAt(new Vector3(curtarget.transform.position.x,
             curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
 
-            SingijeonArrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
+            Arrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation);
             //Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
             //arrow.transform.position = _firePos.position;
             //arrow.transform.rotation = Quaternion.Euler(_firePos.transform.forward);

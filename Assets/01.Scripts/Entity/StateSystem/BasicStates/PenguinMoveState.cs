@@ -17,11 +17,11 @@ public class PenguinMoveState : State
     {
         base.UpdateState();
 
+        CheckBattleModeForChase();
+
         if (_penguin.NavAgent.velocity.magnitude < 0.05f)
             _stateMachine.ChangeState(PenguinStateType.Idle);
 
-        //CheckCommandModeForMovement();
-        CheckBattleModeForChase();
 
         if (_penguin.MovefocusMode == MovefocusMode.Stop)
         {
