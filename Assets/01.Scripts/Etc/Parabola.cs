@@ -43,11 +43,12 @@ public static class Parabola
         {
             monoBehaviour.gameObject.SetActive(false); // ¹Ýµå½Ã ¹Ù²ã
         }
+        Debug.Log("Destroy");
         action?.Invoke();
     }
 
     private static bool IsActive(MonoBehaviour monoBehaviour, float maxTime, float curTime)
     {
-        return monoBehaviour.transform.position.y <= -3f && curTime < maxTime && monoBehaviour.gameObject.activeInHierarchy;
+        return curTime < maxTime && monoBehaviour.gameObject.activeInHierarchy;
     }
 }

@@ -12,8 +12,6 @@ public class PenguinAttackState : State
     {
         base.EnterState();
 
-        Debug.Log("EnterAttack");
-
         AttackEnter();
     }
 
@@ -29,8 +27,10 @@ public class PenguinAttackState : State
             {
                 _stateMachine.ChangeState(PenguinStateType.Chase);
             }
-            else IsTargetNull(PenguinStateType.Idle);
-
+            else
+            {
+                IsTargetNull(PenguinStateType.Idle);
+            }
         }
 
         CheckCommandModeForMovement();
@@ -40,8 +40,6 @@ public class PenguinAttackState : State
     public override void ExitState()
     {
         base.ExitState();
-
-        Debug.Log("ExitAttack");
 
         AttackExit();
     }
