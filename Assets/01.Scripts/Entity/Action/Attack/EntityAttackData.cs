@@ -38,7 +38,7 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
-    public virtual void RangeAttack(Vector3 targetPos)
+    public virtual void RangeAttack()
     {
 
     }

@@ -11,7 +11,7 @@ public class RangeAttackableEntity : EntityAttackData
         base.Awake();
     }
 
-    public override void RangeAttack(Vector3 targetPos)
+    public override void RangeAttack()
     {
         Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
         arrow.transform.position = _firePos.transform.position;

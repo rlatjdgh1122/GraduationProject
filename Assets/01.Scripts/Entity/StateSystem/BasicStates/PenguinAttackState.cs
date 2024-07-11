@@ -12,6 +12,8 @@ public class PenguinAttackState : State
     {
         base.EnterState();
 
+        Debug.Log("EnterAttack");
+
         AttackEnter();
     }
 
@@ -38,6 +40,8 @@ public class PenguinAttackState : State
     public override void ExitState()
     {
         base.ExitState();
+
+        Debug.Log("ExitAttack");
 
         AttackExit();
     }

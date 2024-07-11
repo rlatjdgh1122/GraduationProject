@@ -124,11 +124,11 @@ public class PenguinAnimationTrigger : MonoBehaviour
     {
         if (_penguin.CurrentTarget != null)
         {
-            _penguin.AttackCompo?.RangeAttack(_penguin.CurrentTarget.transform.position);
+            _penguin.AttackCompo?.RangeAttack();
         }
         else
         {
-            _penguin?.AttackCompo?.RangeAttack(_penguin.transform.forward);
+            _penguin?.AttackCompo?.RangeAttack();
         }
         OnRangeAttackTriggerEvent?.Invoke();
 
