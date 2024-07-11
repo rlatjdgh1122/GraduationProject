@@ -60,7 +60,7 @@ public class EnemyAnimationTrigger : MonoBehaviour
     protected virtual void RangeAttackTrigger()
     {
         OnAttackSoundEvent?.Invoke();
-        _enemy.AttackCompo.RangeAttack(transform.forward);
+        _enemy.AttackCompo.RangeAttack();
     }
 
     protected virtual void MagicAttackTrigger()

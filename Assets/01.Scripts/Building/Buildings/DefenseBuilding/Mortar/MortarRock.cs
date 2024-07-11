@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MortarRock : Arrow
+public class MortarRock : Arrow, IParabolicProjectile
 {
     private float timer;
     private MortarExplosionEffect _attackFeedback;
@@ -28,43 +28,6 @@ public class MortarRock : Arrow
         _damageCaster.TargetLayer = layer;
     }
 
-    public IEnumerator BulletMove(Vector3 startPos, Vector3 endPos)
-    {
-        timer = 0;
-        _endPos = endPos;
-        isDestoried = false;
-
-        _mortarAttackRangeSprite.SetActive(true);
-        _mortarAttackRangeSprite.transform.position = endPos;
-        _mortarAttackRangeSprite.transform.SetParent(null);
-
-        float distance = Vector3.Distance(startPos, endPos);
-
-        float height = distance * 0.2f;
-
-        while (!isDestoried)
-        {
-            if (transform.position.y <= -3f) // -1보다 작아지면 바다에 빠진 것
-            {
-                break;
-            } 
-            timer += Time.deltaTime;
-            Vector3 tempPos = Parabola.GetParabola(startPos, endPos, height, timer);
-            transform.position = tempPos;
-            transform.rotation = Quaternion.Euler(0, timer * 720f, 0);
-            yield return new WaitForEndOfFrame();
-        }
-
-        if (!isDestoried)
-        {
-            isDestoried = true;
-            _mortarAttackRangeSprite.transform.SetParent(transform);
-            _mortarAttackRangeSprite.SetActive(false);
-            PoolManager.Instance.Push(this);
-        }
-        yield return null;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         DestroyRock();
@@ -88,7 +51,12 @@ public class MortarRock : Arrow
         }
     }
 
-    private void OnDisable()
+    public void ExecuteAttack(Vector3 startPosition, Vector3 targetPosition, float maxTime, bool isPool)
     {
+        _mortarAttackRangeSprite.SetActive(true);
+        _mortarAttackRangeSprite.transform.position = targetPosition;
+        _mortarAttackRangeSprite.transform.SetParent(null);
+
+        StartCoroutine(Parabola.ParabolaMove(this, startPosition, targetPosition, maxTime, isPool, true, DestroyRock));
     }
 }

@@ -27,8 +27,10 @@ public class PenguinAttackState : State
             {
                 _stateMachine.ChangeState(PenguinStateType.Chase);
             }
-            else IsTargetNull(PenguinStateType.Idle);
-
+            else
+            {
+                IsTargetNull(PenguinStateType.Idle);
+            }
         }
 
         CheckCommandModeForMovement();

@@ -25,6 +25,7 @@ public class PenguinChaseState : State
                 _penguin.MoveToCurrentTarget();
         }
 
+
         if (!CheckBattleModeForChase())
         {
             if (_penguin.IsTargetInAttackRange)
@@ -40,6 +41,8 @@ public class PenguinChaseState : State
             }
             else IsTargetNull(PenguinStateType.Idle);
         }
+
+        IsTargetNull(PenguinStateType.Idle);
 
     }
 

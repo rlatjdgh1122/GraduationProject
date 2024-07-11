@@ -105,7 +105,7 @@ public class MortarBuilding : DefenseBuilding
 
         if (_currentTarget != null)
         {
-            StartCoroutine(rock.BulletMove(rock.transform.position, _currentTarget.position));
+            rock.ExecuteAttack(_firePos.position, _currentTarget.position, 10f, true);
         }
 
 

@@ -69,30 +69,29 @@ public class NexusUIPresenter : NexusPopupUI
 
     public void OnAdmitDefenseBuildingPanel()
     {
-        UIManager.Instance.HidePanel("NexusPanel");
-        UIManager.Instance.HidePanel("SynergyBuildingPanel");
-
         UIManager.Instance.ShowPanel("DefenceBuildingPanel");
-        //UIManager.Instance.MovePanel("NexusPanel", -2500, 0, 0.7f);
-        //UIManager.Instance.MovePanel("BuildingPanel", 0, 0, 0.7f);
+
+        UIManager.Instance.MovePanel("NexusPanel", -2500, 0, 0.7f);
+        UIManager.Instance.MovePanel("SynergyBuildingPanel", 2500, 0, 0.7f);
+        UIManager.Instance.MovePanel("DefenceBuildingPanel", 0, 0, 0.7f);
     }
 
     public void OnAdmitNexusPanel()
     {
-        UIManager.Instance.HidePanel("DefenceBuildingPanel");
-        UIManager.Instance.HidePanel("SynergyBuildingPanel");
-
         UIManager.Instance.ShowPanel("NexusPanel");
-        //UIManager.Instance.MovePanel("NexusPanel", 0, 0, 0.7f);
-        //UIManager.Instance.MovePanel("BuildingPanel", 2500, 0, 0.7f);
+
+        UIManager.Instance.MovePanel("DefenceBuildingPanel", 2500, 0, 0.7f);
+        UIManager.Instance.MovePanel("SynergyBuildingPanel", 5000, 0, 0.7f);
+        UIManager.Instance.MovePanel("NexusPanel", 0, 0, 0.7f);
     }
 
     public void OnAdmitSynergyBuildingPanel()
     {
-        UIManager.Instance.HidePanel("DefenceBuildingPanel");
-        UIManager.Instance.HidePanel("NexusPanel");
-
         UIManager.Instance.ShowPanel("SynergyBuildingPanel");
+
+        UIManager.Instance.MovePanel("NexusPanel", -2500, 0, 0.7f);
+        UIManager.Instance.MovePanel("DefenceBuildingPanel", 2500, 0, 0.7f);
+        UIManager.Instance.MovePanel("SynergyBuildingPanel", 0, 0, 0.7f);
     }
     #endregion
 
