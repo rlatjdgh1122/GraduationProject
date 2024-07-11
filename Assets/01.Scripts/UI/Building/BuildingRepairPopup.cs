@@ -20,13 +20,10 @@ public class BuildingRepairPopup : BuildingUIComponent
 
     private void OnRepair()
     {
-        ResourceManager.Instance.RemoveAllResources(15, () =>
-        {
-            synergyBuilding.DeadController.FixBuilding();
-            buildingHealth.ApplyHeal(100);
+        synergyBuilding.DeadController.FixBuilding();
+        buildingHealth.ApplyHeal(100);
 
-            HidePanel();
-        });
+        HidePanel();
     }
 
     public override void HidePanel()

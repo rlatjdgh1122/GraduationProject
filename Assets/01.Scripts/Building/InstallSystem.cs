@@ -119,17 +119,8 @@ public class InstallSystem : MonoBehaviour
                 UIManager.Instance.ShowWarningUI("이미 설치되어 있습니다");
                 return;
             }
-
-            foreach (var resource in _curBuilding.BuildingItemInfoCompo.NecessaryResource) // 필요한 자원들
-            {
-                ResourceManager.Instance.resourceDictionary.TryGetValue(resource.NecessaryResource.resourceData, out var saveResource);
-
-                if (saveResource != null && saveResource.stackSize >= resource.NecessaryResourceCount)
-                {
-                    ResourceManager.Instance.RemoveResource(resource.NecessaryResource.resourceData, resource.NecessaryResourceCount);
-                }
-            }
-
+            
+            ResourceManager.Instance.RemoveResource(_curBuilding.BuildingItemInfoCompo.NecessaryResource);
 
             _curBuilding.BuildingItemInfoCompo.CurrentInstallCount++;
             _nexusUIPresenter.UpdateRecieverUI();

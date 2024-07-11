@@ -26,10 +26,9 @@ public class SynergyBuilding : BaseBuilding
 
     }
 
-    private bool _isFirst = false;
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && _isFirst)
+        if (!WaveManager.Instance.IsBattlePhase)
         {
             _buildingPanel.SynergyBuilding = this;
             _buildingPanel.BuildingHealth = HealthCompo;
@@ -39,7 +38,10 @@ public class SynergyBuilding : BaseBuilding
 
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }
+    }
 
-        _isFirst = true;
+    public void SynergyBuff(Ability ability)
+    {
+        Debug.Log(ability);
     }
 }

@@ -1,7 +1,15 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.iOS;
 using UnityEngine;
+
+[Serializable]
+public struct NeedResource
+{
+    public ResourceType Type;
+    public int Count;
+}
 
 public class ResourceManager : Singleton<ResourceManager>
 {
@@ -13,7 +21,9 @@ public class ResourceManager : Singleton<ResourceManager>
     public delegate void OnUIUpdateHandler(Resource resource, int stackCount);
     public event OnUIUpdateHandler OnUIUpdate;
 
-    public List<ResourceDataSO> list = new();
+    [SerializeField] private List<ResourceDataSO> _typeByResourceDataList = new();
+
+    
 
     public override void Awake()
     {
@@ -25,11 +35,11 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            AddResource(list[0], 5);
+            AddResource(_typeByResourceDataList[0], 5);
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            AddResource(list[1], 5);
+            AddResource(_typeByResourceDataList[1], 5);
         }
     }
 
@@ -67,38 +77,49 @@ public class ResourceManager : Singleton<ResourceManager>
         }
     }
 
-    public void RemoveAllResources(int count = 1, Action onSuccesAction = null) //내가 썼지만 미치도록 무식한 방법이다. 나중에 고치도록 하자.
+    public ResourceDataSO TypeToResourceDataSO(ResourceType type)
     {
-        if (resourceStack[0].stackSize < count || resourceStack[1].stackSize < count)
+        return _typeByResourceDataList.Find(data => data.resourceType == type);
+    }
+
+    public bool CheckAllResources(NeedResource[] resourceDataArray)
+    {
+        for (int i = 0; i < resourceDataArray.Length; i++)
         {
-            UIManager.Instance.ShowWarningUI("재화가 부족합니다.");
-            return;
+            var data = TypeToResourceDataSO(resourceDataArray[i].Type);
+            resourceDictionary.TryGetValue(data, out var saveResource);
+
+            if (saveResource == null || saveResource.stackSize < resourceDataArray[i].Count)
+            {
+                return false; // 조건을 만족하지 않는 경우 false 반환
+            }
+        }
+        return true; // 모든 조건을 만족하는 경우 true 반환
+    }
+
+
+    public void RemoveResource(NeedResource[] resourceDataArray, Action onSuccesAction = null, Action onFailAction = null)
+    {
+        foreach (var resourceData in resourceDataArray)
+        {
+            var data = TypeToResourceDataSO(resourceData.Type);
+            resourceDictionary.TryGetValue(data, out var saveResource);
+
+            if (saveResource == null || saveResource.stackSize < resourceData.Count)
+            {
+                onFailAction?.Invoke();
+                return;
+            }
         }
 
-        if (resourceStack[0].stackSize <= count)
+        // 모든 자원이 충분히 있다면 자원 제거 작업 수행
+        foreach (var resourceData in resourceDataArray)
         {
-            resourceStack.Remove(resourceStack[0]);
-            resourceDictionary.Remove(resourceStack[0].resourceData);
-            OnUIUpdate(null, 0);
-        }
-        else
-        {
-            resourceStack[0].RemoveStack(count);
-            OnUIUpdate(resourceStack[0], count);
-        }
-
-        if (resourceStack[1].stackSize <= count)
-        {
-            resourceStack.Remove(resourceStack[1]);
-            resourceDictionary.Remove(resourceStack[1].resourceData);
-            OnUIUpdate(null, 0);
-        }
-        else
-        {
-            resourceStack[1].RemoveStack(count);
-            OnUIUpdate(resourceStack[1], count);
+            var data = TypeToResourceDataSO(resourceData.Type);
+            RemoveResource(data, resourceData.Count);
         }
 
         onSuccesAction?.Invoke();
     }
+
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class UpgradeInfo
 {
-    public List<BuildingNecessaryResourceData> UpgradePriceList = new();
+    public NeedResource[] UpgradePriceArr;
 
     [TextArea]
     public string BuildingUpgradeDescription;
@@ -24,9 +24,4 @@ public class SynergyBuildingInfoDataSO : ScriptableObject
 
     [Header("Synergy Abilties")]
     public List<UpgradeInfo> BuildingAbilityList = new();
-
-    public BuildingNecessaryResourceData ReturnNeedResource(int index, ResourceType needResourceType)
-    {
-        return BuildingAbilityList[index].UpgradePriceList.Find(resource => resource.NecessaryResource.resourceData.resourceType == needResourceType);
-    }
 }

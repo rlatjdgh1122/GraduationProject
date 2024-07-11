@@ -15,14 +15,4 @@ public class BuildingRepairPanel : BuildingUIComponent
     {
         MovePanel(x, 0, panelFadeTime);
     }
-
-    public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
-    {
-        base.MovePanel(x, y, fadeTime, ease);
-    }
-
-    public override void ShowPanel()
-    {
-        base.ShowPanel();
-    }
 }

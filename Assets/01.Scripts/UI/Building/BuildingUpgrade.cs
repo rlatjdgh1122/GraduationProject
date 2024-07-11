@@ -47,22 +47,41 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
 
     public void OnPurchaseUpgrade()
     {
+        if(buildingHealth.IsDead)
+        {
+            UIManager.Instance.ShowWarningUI("건물이 부서졌습니다!");
+            return;
+        }
+
+        if (_level >= _infoData.BuildingAbilityList.Count) return;
+
+        if (!ResourceManager.Instance.CheckAllResources(_infoData.BuildingAbilityList[_level].UpgradePriceArr))
+        {
+            UIManager.Instance.ShowWarningUI("자원이 부족합니다!");
+            return;
+        }
+
+        ResourceManager.Instance.RemoveResource(_infoData.BuildingAbilityList[_level].UpgradePriceArr, () =>
+        {
+            OnClickEvent();
+        });
+    }
+
+    private void OnClickEvent()
+    {
         _level++;
+
         UpdateUpgradeInfo();
         UpdateSlot();
         _slotList[_level - 1].OnUnlock();
         UpdateResourceTextForSlot(_level);
+
+        synergyBuilding.SynergyBuff(_infoData.BuildingAbilityList[_level - 1].BuildingAbility);
     }
 
     public void OnMovePanel(float x)
     {
         MovePanel(x, 0, panelFadeTime);
-    }
-
-    public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
-    {
-        base.MovePanel(x, y, fadeTime, ease);
-        ShowPanel();
     }
 
     public void InitSlot(SynergyBuildingInfoDataSO data)
@@ -78,9 +97,12 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
             _slotList[i].Init(ability);
         }
 
-        for (int i = 0; i < _level; i++)
+        if (buildingHealth.IsDead)
         {
-            _slotList[i].OnUnlock();
+            for (int i = 0; i < _level; i++)
+            {
+                _slotList[i].OnUnlock();
+            }
         }
 
         UpdateSlot();
@@ -122,12 +144,21 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
         }
     }
 
-    private void UpdateResourceTextForSlot(int index)
+    private void UpdateResourceTextForSlot(int index) //만약 자원 종류를 더 추가한다면 이 부분 바꿔야함
     {
-        var woodResource = _infoData.ReturnNeedResource(index, ResourceType.Wood).NecessaryResourceCount;
-        var stoneResource = _infoData.ReturnNeedResource(index, ResourceType.Stone).NecessaryResourceCount;
-        UpdateResourceText(_woodText, woodResource);
-        UpdateResourceText(_stoneText, stoneResource);
+        if (index >= _infoData.BuildingAbilityList.Count) return;
+
+        foreach (var data in _infoData.BuildingAbilityList[index].UpgradePriceArr)
+        {
+            if(data.Type == ResourceType.Stone)
+            {
+                UpdateResourceText(_stoneText, data.Count);
+            }
+            else
+            {
+                UpdateResourceText(_woodText, data.Count);
+            }
+        }
     }
 
     private void UpdateResourceText(TextMeshProUGUI textComponent, int resourceCount)
