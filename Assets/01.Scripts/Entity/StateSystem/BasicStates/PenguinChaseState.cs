@@ -24,20 +24,22 @@ public class PenguinChaseState : State
             if (_penguin.CurrentTarget != null)
                 _penguin.MoveToCurrentTarget();
         }
-        CheckBattleModeForChase();
 
-        if (_penguin.IsTargetInAttackRange)
+        if (!CheckBattleModeForChase())
         {
-            _stateMachine.ChangeState(PenguinStateType.Attack);
-        }
-        else if (_stateMachine.IsPrevState(PenguinStateType.Attack) == false)
-        {
-            if (_penguin.MovefocusMode == MovefocusMode.Stop)
+            if (_penguin.IsTargetInAttackRange)
             {
-                _stateMachine.ChangeState(PenguinStateType.Idle);
+                _stateMachine.ChangeState(PenguinStateType.Attack);
             }
+            else if (_stateMachine.IsPrevState(PenguinStateType.Attack) == false)
+            {
+                if (_penguin.MovefocusMode == MovefocusMode.Stop)
+                {
+                    _stateMachine.ChangeState(PenguinStateType.Idle);
+                }
+            }
+            else IsTargetNull(PenguinStateType.Idle);
         }
-        else IsTargetNull(PenguinStateType.Idle);
 
     }
 

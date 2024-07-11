@@ -140,7 +140,7 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
 
         if (currentHealth <= 0)
         {
-            Dead();
+            Dead(); 
         }
     }
 

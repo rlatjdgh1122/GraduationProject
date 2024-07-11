@@ -8,14 +8,16 @@ public class NexusBase : MonoBehaviour
 
     private LayerMask _groundLayer = 1 << 3;
 
-
-    private void Start()
+    private void Awake()
     {
         _nexusStat = NexusManager.Instance.NexusStat;
 
         _health = GetComponent<Health>();
         _health.SetHealth(_nexusStat);
+    }
 
+    private void Start()
+    {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
             hit.collider.transform.parent.GetComponent<Ground>().InstallBuilding();

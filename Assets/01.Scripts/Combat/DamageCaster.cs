@@ -166,9 +166,9 @@ public class DamageCaster : MonoBehaviour
                 damage = (int)adjustedDamage;
             }
 
-            health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
-            health.Knockback(knbValue, raycastHit.normal);
-            health.Stun(stunValue);
+            health?.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
+            health?.Knockback(knbValue, raycastHit.normal);
+            health?.Stun(stunValue);
 
             _hitType = originType;
             return true;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using ArmySystem;
+using System;
 
 public class State
 {
@@ -203,15 +204,22 @@ public class State
     {
         var prevTarget = _penguin.CurrentTarget;
 
-        _penguin.FindNearestEnemyInTargetArmy();
+        try
+        {
+            _penguin.FindNearestEnemyInTargetArmy();
 
-        if (prevTarget != null)
-        {
-            prevTarget.HealthCompo.OnDied -= DeadTarget;
+            if (prevTarget != null)
+            {
+                prevTarget.HealthCompo.OnDied -= DeadTarget;
+            }
+            if (_penguin.CurrentTarget != null)
+            {
+                _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+            }
         }
-        if (_penguin.CurrentTarget != null)
+        catch (NullReferenceException ex)
         {
-            _penguin.CurrentTarget.HealthCompo.OnDied += DeadTarget;
+            //Debug.LogError("NullReferenceException caught in DeadTarget: " + ex.Message);
         }
     }
 
