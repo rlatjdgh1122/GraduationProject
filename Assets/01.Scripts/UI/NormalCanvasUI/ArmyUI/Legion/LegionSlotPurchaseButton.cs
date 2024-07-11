@@ -12,8 +12,6 @@ public class LegionSlotPurchaseButton : MonoBehaviour
     private Button _purchaseButton;
     private LegionPanel _legionPanel;
 
-    private int[] IdxArry = new int[] { 6, 7, 8, 26, 27, 28 };
-
     private void Awake()
     {
         _slot = GetComponentInChildren<LegionSoldierSlot>();
@@ -39,7 +37,7 @@ public class LegionSlotPurchaseButton : MonoBehaviour
         {
             _slot.gameObject.SetActive(true);
             _legionPanel.SoldierSlotList.Add(_slot);
-            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName, IdxArry[idx]);
+            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName, idx);
         });
     }
 }
