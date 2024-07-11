@@ -73,6 +73,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         spawnEnemy.IsMove = false;
         spawnEnemy.NavAgent.enabled = false;
         spawnEnemy.ColliderCompo.enabled = false;
+        spawnEnemy.MouseHandlerCompo.SetColiderActive(false);
     }
 
     private int GetRandomEnemyCount()

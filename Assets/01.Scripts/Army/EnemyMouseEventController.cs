@@ -16,10 +16,12 @@ public class EnemyMouseEventController : MonoBehaviour
             compo.OnClick();
             OnClickToEnemyArmyEvent?.Invoke();
         }
-        else
+
+        /*else //허공을 클릭할 경우
         {
             ArmyManager.Instance.SetTargetEnemyArmy(null);
-        }
+            EnemyArmyManager.Instance.DeSelected();
+        }*/
     }
 
     public void OnRightClickEvent()

@@ -7,7 +7,14 @@ public class EnemyMouseEventHandler : MonoBehaviour
 {
     [SerializeField] private Enemy _owner = null;
 
+    private CapsuleCollider _coliderCompo = null;
+
     public EnemyArmy EnemyArmy => _owner.MyArmy;
+
+    private void Awake()
+    {
+        _coliderCompo = GetComponent<CapsuleCollider>();
+    }
 
     private void OnMouseEnter()
     {
@@ -24,4 +31,6 @@ public class EnemyMouseEventHandler : MonoBehaviour
         EnemyArmy.OnClick();
         ArmyManager.Instance.SetTargetEnemyArmy(EnemyArmy);
     }
+
+    public void SetColiderActive(bool active) => _coliderCompo.enabled = active;
 }

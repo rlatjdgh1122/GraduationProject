@@ -111,7 +111,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
         if (float.TryParse(value[0], out float knbValue)
             && float.TryParse(value[1], out float stunValue))
         {
-            _penguin.AttackCompo.MeleeAttack(knbValue, stunValue);
+            _penguin.AttackCompo?.MeleeAttack(knbValue, stunValue);
         }
     }
 
