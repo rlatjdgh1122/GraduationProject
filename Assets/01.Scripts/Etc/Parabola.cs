@@ -24,15 +24,23 @@ public static class Parabola
         float curTime = 0;
 
         float distance = Vector3.Distance(startPos, endPos);
-        float height = distance * 0.2f;
+        float height = distance * 1f;
+
+        Vector3 previousPosition = startPos;
 
         while (IsActive(monoBehaviour, maxTime, curTime))
         {
             curTime += Time.deltaTime;
             Vector3 tempPos = GetParabola(startPos, endPos, height, curTime);
-            monoBehaviour.transform.position = tempPos;
             if (isRotate) { monoBehaviour.transform.rotation = Quaternion.Euler(0, curTime * 720f, 0); }
-            yield return new WaitForEndOfFrame();
+            else
+            {
+                Vector3 direction = tempPos - previousPosition;
+                monoBehaviour.transform.rotation = Quaternion.LookRotation(direction);
+            }
+            monoBehaviour.transform.position = tempPos;
+            previousPosition = tempPos;
+            yield return null;
         }
 
         if (isPool)
