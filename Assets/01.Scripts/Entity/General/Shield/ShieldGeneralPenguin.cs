@@ -32,6 +32,8 @@ public class ShieldGeneralPenguin : General
     {
         base.HandleHit();
 
+        Debug.Log("ÃÄ¸ÂÀ½");
+
         //var maxHp = HealthCompo.maxHealth;
         //var curHp = HealthCompo.currentHealth;
 

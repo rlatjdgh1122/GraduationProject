@@ -14,6 +14,14 @@ public class PenguinSpinAttackState : State
     public override void EnterState()
     {
         base.EnterState();
+
+        prevMode = _penguin.MyArmy.MovefocusMode;
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();
+
+        _penguin.LookTargetImmediately();
+
+        general.Skill.PlaySkill();
         general.Skill.IsAvaliable = false;
         AttackEnter();
     }
@@ -23,6 +31,9 @@ public class PenguinSpinAttackState : State
         base.UpdateState();
 
         _penguin.LookTarget();
+
+        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();
 
         if (_triggerCalled)
         {
@@ -37,6 +48,8 @@ public class PenguinSpinAttackState : State
     public override void ExitState()
     {
         base.ExitState();
+
+        _penguin.MyArmy.MovefocusMode = prevMode;
         general.Skill.IsAvaliable = true;
         //AttackExit();
     }
@@ -50,6 +63,6 @@ public class PenguinSpinAttackState : State
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }
         else*/
-            _stateMachine.ChangeState(PenguinStateType.Impact);
+        _stateMachine.ChangeState(PenguinStateType.Impact);
     }
 }

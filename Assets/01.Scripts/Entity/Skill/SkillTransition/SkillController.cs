@@ -22,6 +22,10 @@ public class SkillController : MonoBehaviour
     //스킬 조건의 수치를 변경해줄때 발생하는 이벤트
     public Action<int> OnChangedMaxValueEvent = null;
 
+    private int _desicionMaxValue = 0;
+
+    public int GetMaxValue => _desicionMaxValue;
+
     private void Awake()
     {
         _skillDecision = GetComponent<SKillDecision>();
@@ -85,9 +89,11 @@ public class SkillController : MonoBehaviour
 
     private void OnChangedMaxValue(int value)
     {
-        OnChangedMaxValueEvent?.Invoke(value);
+        _desicionMaxValue = value;
 
+        OnChangedMaxValueEvent?.Invoke(value);
     }
+
     private void OnSkillActionEnter()
     {
         OnSkillActionEnterEvent?.Invoke();
@@ -103,7 +109,7 @@ public class SkillController : MonoBehaviour
     }
 
 
-    public void OffRegister()
+    private void OffRegister()
     {
         _skillDecision.OnChangedMaxValueEvent -= OnChangedMaxValueEvent;
         _skillDecision.OnSkillActionEnterEvent -= OnSkillActionEnterEvent;

@@ -20,8 +20,8 @@ public class SettingArmyPostion : MonoBehaviour
 
     private void UpdatePositions()
     {
-        if (Transforms == null || Transforms.Count == 0)
-            return;
+        if (Transforms == null || Transforms.Count == 0) return;
+        if (_savePostions == null || _savePostions.Count == 0) return;
 
         for (int i = 0; i < Transforms.Count; ++i)
         {

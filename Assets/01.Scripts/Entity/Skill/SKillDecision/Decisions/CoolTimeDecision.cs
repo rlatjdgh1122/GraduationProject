@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CoolTimeDecsion : SKillDecision
 {
-    //private WaitForSeconds HeartBeat = new WaitForSeconds(0.05f);
-
     protected override void Init()
     {
+        if (entityActionData == null) return;
+
         saveValue = Time.time;
     }
 
@@ -45,5 +45,5 @@ public class CoolTimeDecsion : SKillDecision
         OnSkillReadyEvent?.Invoke();
     }
 
-    
+
 }

@@ -3,9 +3,7 @@ using UnityEngine.Events;
 
 public class GaugeSkill : Skill
 {
-    [SerializeField] private float _targetValue;
     public float HitValue = 0;
-
     public UnityEvent<float, float> OnHitValueChanged;
 
     public ShieldGeneralPenguin shieldPenguin => _owner as ShieldGeneralPenguin;
@@ -20,27 +18,17 @@ public class GaugeSkill : Skill
     public void PlusGauge()
     {
         if (!IsAvaliable) return;
+        if (HitValue > maxDecisionValue) return;
 
         HitValue++;
+        OnHitValueChanged.Invoke(HitValue, maxDecisionValue);
+    }
 
-        if (HitValue >= _targetValue)
-        {
-            shieldPenguin.OnPassiveHitEvent();
-            HitValue = 0;
-            OnHitValueChanged?.Invoke(HitValue, _targetValue);
-        }
-        else
-        {
-            var maxHp = shieldPenguin.HealthCompo.maxHealth;
-            var curHp = shieldPenguin.HealthCompo.currentHealth;
+    public override void PlaySkill()
+    {
+        base.PlaySkill();
 
-            if (shieldPenguin.PenguinTriggerCalled == false
-                && shieldPenguin.CheckHealthRatioPassive(maxHp, curHp, 70))
-            {
-                shieldPenguin.OnPassiveHealthRatioEvent();
-            }
-        }
-
-        OnHitValueChanged?.Invoke(HitValue, _targetValue);
+        HitValue = 0;
+        OnHitValueChanged.Invoke(HitValue, maxDecisionValue);
     }
 }
