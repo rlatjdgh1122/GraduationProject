@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyLookAtState : EnemyBaseState
 {
-    private readonly float AngleThreshold = 5f; 
+    private readonly float AngleThreshold = 10f;
 
     public EnemyLookAtState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
