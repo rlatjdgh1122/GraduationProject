@@ -314,14 +314,13 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        //var Idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[legionIdx];
 
-        if (Army.General != null)
+       /* if (Army.General != null)
         {
             Debug.Log($"현재 {legionName}군단에는 장군이 존재합니다.");
             return;
-        }
+        }*/
 
         obj.SetOwner(Army);
         Army.AddGeneral(obj);
