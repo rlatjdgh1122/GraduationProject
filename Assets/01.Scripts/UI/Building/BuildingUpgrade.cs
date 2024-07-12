@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+//나중에 업그레이드 관리하는거 따로 빼야함 일단 기능 만들어놓음
 public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
 {
     [Header("Building Upgrade UI")]
@@ -18,6 +19,8 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
 
     private TextMeshProUGUI _woodText;
     private TextMeshProUGUI _stoneText;
+
+    [SerializeField] private TextMeshProUGUI _buildingNameText;
 
     private int _level = 0;
 
@@ -97,7 +100,7 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
             _slotList[i].Init(ability);
         }
 
-        if (buildingHealth.IsDead)
+        if (!buildingHealth.IsDead)
         {
             for (int i = 0; i < _level; i++)
             {
@@ -165,5 +168,21 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
     {
         textComponent.gameObject.SetActive(resourceCount >= 0);
         textComponent.text = resourceCount.ToString();
+    }
+
+    public override void ShowPanel()
+    {
+        base.ShowPanel();
+
+        BuildingNameText(_infoData.BuildingName);
+    }
+
+    public void BuildingNameText(string buildingName)
+    {
+        string brokenText = string.Empty;
+
+        brokenText = buildingHealth.IsDead == true ? "부서진 ": string.Empty;
+
+        _buildingNameText.text = $"{brokenText}{buildingName}";
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +13,7 @@ public class BuildingUI : PopupUI
     private BuildingUIComponent[] _repairPanels;
 
     private BuildingUpgrade _buildingUpgrade;
+    private BuildingRepairPanel _buildingRepairPanel;
 
     public override void Awake()
     {
@@ -19,6 +21,7 @@ public class BuildingUI : PopupUI
 
         _repairPanels = transform.GetComponentsInChildren<BuildingUIComponent>();
         _buildingUpgrade = transform.GetComponentInChildren<BuildingUpgrade>();
+        _buildingRepairPanel = transform.GetComponentInChildren<BuildingRepairPanel>();
     }
 
     public void SetStat()
@@ -35,8 +38,10 @@ public class BuildingUI : PopupUI
         InfoData = infoData;
 
         UIManager.Instance.ShowPanel("BuildingUI");
-        _buildingUpgrade.ShowPanel();
+
         _buildingUpgrade.InitSlot(infoData);
+
+        _buildingUpgrade.ShowPanel();
     }
 
     public void HideBuildingUI()
@@ -50,6 +55,9 @@ public class BuildingUI : PopupUI
     {
         base.HidePanel();
 
+        _buildingRepairPanel.HidePanel();
         _buildingUpgrade.ClosePanel();
+        _buildingUpgrade.OnMovePanel(0);
+        _buildingRepairPanel.OnMovePanel(650);
     }
 }
