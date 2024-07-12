@@ -10,6 +10,8 @@ namespace SkillSystem
 
         protected override void Init()
         {
+            if (entityActionData == null) return;
+
             saveValue = entityActionData.AttackCount;
             _checkSkillReady = true;
         }

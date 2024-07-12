@@ -9,18 +9,15 @@ namespace SkillSystem
     public class CheckWaveCountDecision : SKillDecision
     {
         private bool _canUsedSkill = true;
-         protected override void Init()
+        protected override void Init()
         {
+            if (entityActionData == null) return;
+
             saveValue = WaveManager.Instance.CurrentWaveCount;
             _canUsedSkill = true;
         }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-        }
-
-        public void WaveStart()  
+        public void WaveStart()
         {
             //웨이브 돌때마다 스킬 사용 가능하게
             SignalHub.OnBattlePhaseStartEvent -= WaveStart;
@@ -52,7 +49,7 @@ namespace SkillSystem
             maxValue -= value;
         }
 
-        
+
     }
 }
 

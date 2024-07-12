@@ -12,6 +12,8 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
     private LegionPanel _legionPanel;
     private int _generalSlotIdx = 0;
 
+    private GeneralInfoDataSO _prevGeneralInfo = null;
+
     public override void Awake()
     {
         base.Awake();
@@ -22,14 +24,22 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
     public void SetSlot(GeneralInfoDataSO info)
     {
         GeneralSelectSlotList.SetSelectedSlots(info);
+        _prevGeneralInfo = GeneralInfo;
         GeneralInfo = info;
-        CreateArmy();
+        JoinToArmy();
         _generalSlot.SetSlot(GeneralInfo);
         HidePanel();
     }
 
-    private void CreateArmy()
+    private void JoinToArmy()
     {
+        //¿¸ ¿Â±∫¿∫ ª©¡‹
+        if (_prevGeneralInfo != null)
+        {
+            DummyPenguin prevDummy = PenguinManager.Instance.FindGeneralDummyPenguin(_prevGeneralInfo.PenguinType);
+            PenguinManager.Instance.RemoveDummy(prevDummy);
+        }
+
         DummyPenguin dummy = PenguinManager.Instance.FindGeneralDummyPenguin(GeneralInfo.PenguinType);
         General general = ArmyManager.Instance.SpawnPenguin(dummy.CloneInfo, _generalSlotIdx) as General;
         PenguinManager.Instance.DummyToPenguinMapping(dummy, general);
