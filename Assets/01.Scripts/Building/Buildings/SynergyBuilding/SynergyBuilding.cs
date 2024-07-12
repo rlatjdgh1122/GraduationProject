@@ -42,6 +42,16 @@ public class SynergyBuilding : BaseBuilding
 
     public void SynergyBuff(Ability ability)
     {
-        Debug.Log(ability);
+
+    }
+
+    public void StartBuff()
+    {
+
+    }
+
+    public void ClearBuff()
+    {
+
     }
 }

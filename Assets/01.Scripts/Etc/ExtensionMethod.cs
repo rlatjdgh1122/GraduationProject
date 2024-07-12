@@ -151,6 +151,11 @@ public static class ExtensionMethod
         return result;
     }
 
+   /* public static List<TResult> Find<TResult>(this List<TResult> list, Func<TResult, bool> func)
+    {
+
+    }*/
+
     #endregion
 
     #region RectTransform
