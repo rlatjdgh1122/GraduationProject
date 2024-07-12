@@ -174,15 +174,15 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
     {
         base.ShowPanel();
 
-        BuildingNameText();
+        BuildingNameText(_infoData.BuildingName);
     }
 
-    public void BuildingNameText()
+    public void BuildingNameText(string buildingName)
     {
         string brokenText = string.Empty;
 
         brokenText = buildingHealth.IsDead == true ? "ºÎ¼­Áø ": string.Empty;
 
-        _buildingNameText.text = $"{brokenText}{_infoData.BuildingName}";
+        _buildingNameText.text = $"{brokenText}{buildingName}";
     }
 }

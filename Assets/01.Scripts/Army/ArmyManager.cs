@@ -415,12 +415,6 @@ public class ArmyManager : Singleton<ArmyManager>
         return newArmy;
     }
 
-    /*public Army GetArmyBySynergy(SynergyType synergyType)
-    {
-        
-        Armies.Find(a => a.IsSynergy == true);
-    }*/
-
     public bool CheckEmpty()
     {
         if (armies.Count <= 0) return true;
