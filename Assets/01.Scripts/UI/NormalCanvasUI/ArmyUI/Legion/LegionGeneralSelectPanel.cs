@@ -10,6 +10,7 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
 
     public GeneralSelectSlotList GeneralSelectSlotList;
     private LegionPanel _legionPanel;
+    private int _generalSlotIdx = 0;
 
     public override void Awake()
     {
@@ -30,7 +31,7 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
     private void CreateArmy()
     {
         DummyPenguin dummy = PenguinManager.Instance.FindGeneralDummyPenguin(GeneralInfo.PenguinType);
-        General general = ArrangementManager.Instance.SpawnPenguin(dummy.CloneInfo, 17) as General;
+        General general = ArmyManager.Instance.SpawnPenguin(dummy.CloneInfo, _generalSlotIdx) as General;
         PenguinManager.Instance.DummyToPenguinMapping(dummy, general);
 
         ArmyManager.Instance.JoinArmyToGeneral(_legionPanel.LegionName, _legionPanel.LegionIdx, general);
