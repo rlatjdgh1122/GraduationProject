@@ -33,7 +33,10 @@ public class BuildingView : NexusPopupUI
         foreach(var ui in _building.NecessaryResource)
         {
             BuildingPriceUI priceUI = Instantiate(_priceUI);
-            priceUI.UpdateUI(ui.NecessaryResource.resourceData.resourceIcon, ui.NecessaryResourceCount);
+
+            var data = ResourceManager.Instance.TypeToResourceDataSO(ui.Type);
+
+            priceUI.UpdateUI(data.resourceIcon, ui.Count);
             priceUI.transform.SetParent(buildingPriceTrm.transform);
         }
     }

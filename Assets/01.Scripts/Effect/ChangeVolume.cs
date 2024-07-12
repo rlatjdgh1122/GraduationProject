@@ -34,6 +34,21 @@ public class ChangeVolume : MonoBehaviour
 
     private Dictionary<VolumeType, Coroutine> _activeCoroutines = new Dictionary<VolumeType, Coroutine>();
 
+    private void OnEnable()
+    {
+        SignalHub.OnBattlePhaseEndEvent += EndVolumeEvnet;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= EndVolumeEvnet;
+    }
+
+    private void EndVolumeEvnet()
+    {
+        StopAllCoroutines();
+    }
+
     /// <summary>
     /// 현재 Volume을 바꾸고 싶은 Volume으로 Lerp 하면서 바뀜
     /// </summary>
