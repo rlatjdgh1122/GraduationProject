@@ -120,7 +120,7 @@ public class PenguinAnimationTrigger : MonoBehaviour
         _penguin.AttackCompo.DashAttack();
     }
 
-    private void RangeAttackTrigger()
+    public void RangeAttackTrigger()
     {
         if (_penguin.CurrentTarget != null)
         {
