@@ -15,4 +15,11 @@ public class SingijeonArrow : Arrow, IParabolicProjectile
     {
         StartCoroutine(Parabola.ParabolaMove(this, startPosition, targetPosition, maxTime, isPool, false));
     }
+
+    protected override void OnTriggerEnter(Collider coll)
+    {
+        base.OnTriggerEnter(coll);
+    }
+
+
 }

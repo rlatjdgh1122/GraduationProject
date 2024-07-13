@@ -43,7 +43,7 @@ public class Arrow : PoolableMono
         Destroy(this.gameObject);
     }
 
-    private void OnTriggerEnter(Collider coll)
+    protected virtual void OnTriggerEnter(Collider coll)
     {
         if (_damageCaster.CastArrowDamage(coll, _damageCaster.TargetLayer))
         {
