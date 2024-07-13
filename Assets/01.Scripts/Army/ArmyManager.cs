@@ -215,7 +215,6 @@ public class ArmyManager : Singleton<ArmyManager>
            }); //end IdxExcept
 
         EnemyArmyManager.Instance.OnSelected(curArmy.TargetEnemyArmy);
-
         _skillInput.SelectGeneral(General); // SkillInput에 선택된 장군을 보냄
     } //end method
 
