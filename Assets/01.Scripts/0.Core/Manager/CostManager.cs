@@ -20,16 +20,8 @@ public class CostManager : Singleton<CostManager>
         base.Awake();
 
         _costUI = FindObjectOfType<CostUI>();
-        _currentCost = _defaultCost;
-        AddFromCurrentCost(_defaultCost);
-    }
 
-    private void Update()
-    {
-       /* if(Input.GetKey(KeyCode.O))
-        {
-            AddFromCurrentCost(100);
-        }*/
+        AddFromCurrentCost(_defaultCost, false, true);
     }
 
     /// <summary>
@@ -79,8 +71,8 @@ public class CostManager : Singleton<CostManager>
         }
         else 
         {
-            _costUI.ChangeCost();
             AddCost(value);
+            _costUI.ChangeCost();
         }
     }
 
