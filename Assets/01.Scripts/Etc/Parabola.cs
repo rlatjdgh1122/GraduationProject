@@ -19,8 +19,9 @@ public static class Parabola
         return -4 * height * t * t + 4 * height * t;
     }
 
-    public static IEnumerator ParabolaMove(MonoBehaviour monoBehaviour, Vector3 startPos, Vector3 endPos, float maxTime, bool isPool, bool isRotate, Action action = null) // 화살은 풀링하면 오류나서 일단 이렇게 함
+    public static IEnumerator ParabolaMove(MonoBehaviour monoBehaviour, Rigidbody rigidbody , Vector3 startPos, Vector3 endPos, float maxTime, bool isPool, bool isRotate, Action action = null) // 화살은 풀링하면 오류나서 일단 이렇게 함
     {
+        maxTime = 1;
         float curTime = 0;
 
         float distance = Vector3.Distance(startPos, endPos);
@@ -31,14 +32,22 @@ public static class Parabola
         while (IsActive(monoBehaviour, maxTime, curTime))
         {
             curTime += Time.deltaTime;
-            Vector3 tempPos = GetParabola(startPos, endPos, height, curTime);
-            if (isRotate) { monoBehaviour.transform.rotation = Quaternion.Euler(0, curTime * 720f, 0); }
+            Vector3 tempPos = GetParabola(startPos, endPos, height, curTime / maxTime);
+
+            if (isRotate)
+            {
+                rigidbody.MoveRotation(Quaternion.Euler(0, curTime * 720f, 0));
+            }
             else
             {
                 Vector3 direction = tempPos - previousPosition;
-                monoBehaviour.transform.rotation = Quaternion.LookRotation(direction);
+                if (direction != Vector3.zero)
+                {
+                    rigidbody.MoveRotation(Quaternion.LookRotation(direction));
+                }
             }
-            monoBehaviour.transform.position = tempPos;
+
+            rigidbody.MovePosition(tempPos);
             previousPosition = tempPos;
             yield return null;
         }
@@ -51,7 +60,6 @@ public static class Parabola
         {
             monoBehaviour.gameObject.SetActive(false); // 반드시 바꿔
         }
-        Debug.Log("Destroy");
         action?.Invoke();
     }
 

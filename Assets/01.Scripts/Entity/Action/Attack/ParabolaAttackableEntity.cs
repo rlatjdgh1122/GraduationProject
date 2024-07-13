@@ -25,8 +25,6 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
             arrow.transform.position = _firePos.position;
             arrow.transform.rotation = Quaternion.Euler(_firePos.transform.forward);
 
-            // 이거 왜 안 했지?
-
             arrow.Setting(owner, DamageCasterCompo.TargetLayer);
             arrow.ExecuteAttack(_firePos.position, curtarget.transform.position, 10f, false);
         }
