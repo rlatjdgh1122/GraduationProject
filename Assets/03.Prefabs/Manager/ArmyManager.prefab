@@ -204,6 +204,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4001588354396640803}
+        m_TargetAssemblyTypeName: EnemyArmyManager, Assembly-CSharp
+        m_MethodName: DeSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLeftClickRaycastHitEvent:
     m_PersistentCalls:
       m_Calls:
@@ -245,7 +257,6 @@ GameObject:
   - component: {fileID: 136051925846402726}
   - component: {fileID: 7276620049884887589}
   - component: {fileID: 5581021162781932083}
-  - component: {fileID: 3077189536834508405}
   - component: {fileID: 5915532844250695125}
   - component: {fileID: 6409838579320332300}
   m_Layer: 0
@@ -283,6 +294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armies: []
+  _settingArmyPsotion: {fileID: 102849111144983439, guid: 8b3066220da4a764bb34c1300369fba5,
+    type: 3}
   G: {fileID: 1259662200772309469, guid: 39cb3d040c4173446adaa8cea0e652ba, type: 3}
 --- !u!114 &5581021162781932083
 MonoBehaviour:
@@ -297,21 +310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armySoldierList: []
---- !u!114 &3077189536834508405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5758857968282546132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ec4ccb35d4659a41a13f18c2bd02189, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 1
-  width: 5
-  length: 7
 --- !u!114 &5915532844250695125
 MonoBehaviour:
   m_ObjectHideFlags: 0

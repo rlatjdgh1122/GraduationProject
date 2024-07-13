@@ -275,7 +275,7 @@ public abstract class BaseBuilding : WorkableObject
             ColliderCompo.enabled = value;
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         if (_phaseStartSubscriptionAction != null)
         {
@@ -283,6 +283,4 @@ public abstract class BaseBuilding : WorkableObject
         }
         isInstalled = false;
     }
-
-
 }

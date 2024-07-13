@@ -18,6 +18,8 @@ public class GeneralSelectSlotList : MonoBehaviour
         {
             if (slot.GeneralData.InfoData == info)
                 slot.SetSelectedPanel();
+            else
+                slot.ReverseSelectedPanel();
         }
     }
 }

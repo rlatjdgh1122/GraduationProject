@@ -11,7 +11,6 @@ public class LegionPanel : PopupUI
     public int SetLegionIdx(int legionIdx) => LegionIdx = legionIdx;
     public string SetLegionName(string legionName) => LegionName = legionName;
 
-    private int[] IdxArry = new int[] { 11, 12, 13, 21, 22, 23 };
     public RectTransform PanelTrm => _rectTransform;
     public int CurrentIndex = 0;
 
@@ -36,11 +35,11 @@ public class LegionPanel : PopupUI
     public void SetSlots(EntityInfoDataSO info)
     {
         SoldierlInfo = info;
-        int i = 0;
+        int i = 1;
         foreach (LegionSoldierSlot slot in _soldierSlotList)
         {
             //여기서 자리를 예외처리해줌 일단은 이렇게 하고 나중에 수정
-            slot.SetSlot(info, LegionName, IdxArry[i++]);
+            slot.SetSlot(info, LegionName, i++);
         }
     }
 

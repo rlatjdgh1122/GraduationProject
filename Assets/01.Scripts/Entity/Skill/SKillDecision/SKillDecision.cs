@@ -35,11 +35,23 @@ namespace SkillSystem
 
             if (_canUsedskillInitially) //처음엔 사용가능하게
                 saveValue = -maxValue;
+
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             SignalHub.OnBattlePhaseStartEvent += Init;
+        }
+
+        protected virtual void OnDestory()
+        {
+            SignalHub.OnBattlePhaseStartEvent -= Init;
+
+            if (entityActionData)
+            {
+                OffRegister();
+
+            }//end if
         }
 
         protected abstract void Init();
@@ -94,17 +106,6 @@ namespace SkillSystem
         public virtual void OnUsed() { }   //스킬 사용한 후 실행됨
 
         public virtual void LevelUp(int value) { }  //레벨업하면 어케해줄 것인가
-
-
-        protected virtual void OnDisable()
-        {
-            SignalHub.OnBattlePhaseStartEvent -= Init;
-            if (entityActionData)
-            {
-                OffRegister();
-
-            }//end if
-        }
 
     }//end cs
 }

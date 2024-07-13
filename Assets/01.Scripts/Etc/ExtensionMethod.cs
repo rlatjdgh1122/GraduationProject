@@ -26,7 +26,7 @@ public static class ExtensionMethod
             }
 
         }//end if
-         
+
 
         if (dic.Count > 0) dic.Clear();
     }
@@ -48,7 +48,7 @@ public static class ExtensionMethod
 
     #endregion
 
-    #region Linq 확장
+    #region List
 
     /// <summary>
     /// 나와 그 나머지를 나눠서 동작
@@ -139,6 +139,16 @@ public static class ExtensionMethod
         } //end if
 
         if (list.Count > 0) list.Clear();
+    }
+
+    public static List<TResult> Convert<TSource, TResult>(this List<TSource> source, Func<TSource, TResult> selector)
+    {
+        List<TResult> result = new List<TResult>();
+        foreach (var item in source)
+        {
+            result.Add(selector(item));
+        }
+        return result;
     }
 
     #endregion

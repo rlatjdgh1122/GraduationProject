@@ -1,19 +1,29 @@
+using SynergySystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class SynergyBuilding : BaseBuilding
 {
+    [SerializeField] private SynergyBuildingInfoDataSO _infoDataSO;
     public SynergyBuildingDeadController DeadController { get; set; }
 
     private BuildingUI _buildingPanel;
+
+    private List<Ability> _ablityList = new();
 
     protected override void Awake()
     {
         base.Awake();
 
-        _buildingPanel = UIManager.Instance.canvasTrm.GetComponentInChildren<BuildingUI>();
         DeadController = GetComponent<SynergyBuildingDeadController>();
+    }
+
+    protected override void Start()
+    {
+        _buildingPanel = UIManager.Instance.GetPopupUI<BuildingUI>("BuildingUI");        
     }
 
     protected override void Running()
@@ -21,20 +31,85 @@ public class SynergyBuilding : BaseBuilding
 
     }
 
-    private bool _isFirst = false;
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && _isFirst)
+        if (!WaveManager.Instance.IsBattlePhase)
         {
-            UIManager.Instance.ShowPanel("BuildingUI");
-            _buildingPanel.BuildingStat = (SynergyBuildingStat)_characterStat;
-            _buildingPanel.BuildingHealth = HealthCompo;
             _buildingPanel.SynergyBuilding = this;
+            _buildingPanel.BuildingHealth = HealthCompo;
 
             _buildingPanel.SetStat();
+            _buildingPanel.ShowBuildingUI(_infoDataSO);
+
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
         }
+    }
 
-        _isFirst = true;
+    private void OnEnable()
+    {
+        //군단의 시너지가 취소됐을 때
+        ArmyManager.Instance.OnSynergyDisableEvent += OnSynergyDisable;
+        ArmyManager.Instance.OnSynergyEnableEvent += OnSynergyEnable;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
+        //군단의 시너지가 취소됐을 때
+        ArmyManager.Instance.OnSynergyDisableEvent -= OnSynergyDisable;
+        ArmyManager.Instance.OnSynergyEnableEvent -= OnSynergyEnable;
+    }
+
+    public void OnSynergyDisable(SynergyType type)
+    {
+        if (type == _infoDataSO.SynergyType)
+        {
+            RemoveSynergyBuff();
+        }
+    }
+
+    public void OnSynergyEnable(SynergyType type)
+    {
+        if (type == _infoDataSO.SynergyType)
+        {
+            AddSynergyBuff();
+        }
+    }
+
+    public void SetSynergyBuff(Ability ability)
+    {
+        if (ability != null)
+        {
+            _ablityList.Add(ability);
+        }
+
+        AddSynergyBuff();
+    }
+
+    public void AddSynergyBuff()
+    {
+        if (_ablityList.Count == 0) return;
+
+        var army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
+
+        foreach (var ability in _ablityList)
+        {
+            army?.RemoveStat(ability);
+            army?.AddStat(ability);
+        }
+    }
+
+    public void RemoveSynergyBuff()
+    {
+        Debug.Log("Building Destory");
+        if (_ablityList.Count == 0) return;
+
+        var army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
+
+        foreach (var ability in _ablityList.ToList())
+        {
+            army.RemoveStat(ability);
+        }
     }
 }

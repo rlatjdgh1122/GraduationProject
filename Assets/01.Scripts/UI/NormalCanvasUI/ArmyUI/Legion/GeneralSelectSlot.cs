@@ -31,9 +31,14 @@ public class GeneralSelectSlot : ArmyComponentUI
 
     public void SetSelectedPanel()
     {
-        OnUpdateState -= UpdateUI;
         _purchaseButton.interactable = false;
         _selectedPanel.gameObject.SetActive(true);
+    }
+
+    public void ReverseSelectedPanel()
+    {
+        _purchaseButton.interactable = true;
+        _selectedPanel.gameObject.SetActive(false);
     }
 
     public void UpdateUI()

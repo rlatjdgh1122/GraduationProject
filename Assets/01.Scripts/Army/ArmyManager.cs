@@ -9,12 +9,14 @@ using UnityEngine;
 public class ArmyManager : Singleton<ArmyManager>
 {
     [SerializeField] private List<Army> armies;
+    [SerializeField] private SettingArmyPostion _settingArmyPsotion = null;
 
+    //army에서 이벤트 발생시켜줌
+    public OnValueUpdated<SynergyType> OnSynergyEnableEvent = null;
+    public OnValueUpdated<SynergyType> OnSynergyDisableEvent = null;
     public General G;
-    public List<Army> Armies { get { return armies; } }
 
-    private int prevArmyIdx = -1;
-    private int curArmyIdx = -1;
+    #region property
 
     public int CurLegion
     {
@@ -27,7 +29,6 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
-    public int ArmiesCount => armies.Count;
 
     public Army CurArmy
     {
@@ -38,11 +39,25 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
+    public List<Army> Armies { get { return armies; } }
+
+    #endregion
+
+    private int prevArmyIdx = -1;
+    private int curArmyIdx = -1;
+
+    public int ArmiesCount => armies.Count;
+
+
+    private Transform SpawnPoint => GameManager.Instance.TentTrm;
+    private List<Vector3> _armyPostions = new();
+
     private SkillInput _skillInput;
 
     public override void Awake()
     {
         base.Awake();
+        _armyPostions = _settingArmyPsotion.Transforms.Convert(p => p.position);
 
         _skillInput = GetComponent<SkillInput>();
     }
@@ -219,6 +234,14 @@ public class ArmyManager : Singleton<ArmyManager>
         armies[legionIdx].SynergyType = synergyType;
     }
 
+    public Army GetArmyBySynergyType(SynergyType synergyType)
+    {
+        Army result = null;
+        result = armies.Find(a => a.SynergyType == synergyType && a.IsSynergy);
+
+        return result;
+    }
+
     #region 스탯 부분
     /// <summary>
     /// 현재 선택된 군단의 스탯을 상승 및 감소 
@@ -309,14 +332,13 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        //var Idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[legionIdx];
 
-        if (Army.General != null)
-        {
-            Debug.Log($"현재 {legionName}군단에는 장군이 존재합니다.");
-            return;
-        }
+        /* if (Army.General != null)
+         {
+             Debug.Log($"현재 {legionName}군단에는 장군이 존재합니다.");
+             return;
+         }*/
 
         obj.SetOwner(Army);
         Army.AddGeneral(obj);
@@ -372,9 +394,30 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
+
+
+    #endregion
+
+    /// <summary>
+    /// 펭귄 생성
+    /// </summary>
+    /// <param name="cloneData"> 펭귄 데이터</param>
+    /// <param name="slotIdx"> 위치 인덱스</param>
+    /// <returns></returns>
+    public Penguin SpawnPenguin(EntityInfoDataSO cloneData, int slotIdx)
+    {
+        Penguin spawnPenguin = PenguinManager.Instance.SpawnSoldier(cloneData.PenguinType, SpawnPoint.position, _armyPostions[slotIdx]);
+
+        PenguinManager.Instance.AddSoliderPenguin(spawnPenguin);
+        PenguinManager.Instance.AddInfoDataMapping(cloneData, spawnPenguin);
+
+        return spawnPenguin;
+    }
+
     /// <summary>
     /// 새로운 군단 생성
     /// </summary>
+
     public Army CreateArmy(string armyName)
     {
         Army newArmy = new Army();
@@ -383,13 +426,11 @@ public class ArmyManager : Singleton<ArmyManager>
         newArmy.MoveSpeed = 4f;
         newArmy.LegionName = armyName;
         newArmy.IsArmyReady = false;
-        newArmy.SynergyType = SynergySystem.SynergyType.Police;
+        newArmy.SynergyType = SynergyType.Police;
 
         armies.Add(newArmy);
         return newArmy;
     }
-
-    #endregion
 
     public bool CheckEmpty()
     {

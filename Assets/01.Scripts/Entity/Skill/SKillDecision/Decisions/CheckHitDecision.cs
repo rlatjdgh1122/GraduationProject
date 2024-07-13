@@ -9,7 +9,9 @@ public class CheckHitDecision : SKillDecision
 
     protected override void Init()
     {
-        saveValue = entityActionData.HitCount;
+        if (entityActionData == null) return;
+
+        saveValue = entityActionData.HitCount - maxValue;
         _checkSkillReady = true;
     }
 

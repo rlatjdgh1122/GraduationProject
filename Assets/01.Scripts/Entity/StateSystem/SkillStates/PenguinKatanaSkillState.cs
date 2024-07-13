@@ -28,19 +28,17 @@ public class PenguinKatanaSkillState : State
     {
         base.UpdateState();
 
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
-        _penguin.StopImmediately();
-
         if (_triggerCalled)
         {
-            if (_penguin.IsTargetInAttackRange)
+            if (!_penguin.IsTargetInAttackRange)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Chase);
+            }
+            else if (_penguin.IsTargetInAttackRange)
             {
                 _stateMachine.ChangeState(PenguinStateType.Attack);
             }
-            else
-            {
-                _stateMachine.ChangeState(PenguinStateType.Idle);
-            }
+            else IsTargetNull(PenguinStateType.Idle);
         }
     }
 

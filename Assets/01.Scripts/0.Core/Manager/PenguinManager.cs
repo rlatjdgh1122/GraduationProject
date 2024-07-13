@@ -68,6 +68,12 @@ public class PenguinManager
         BelongDummyPenguinList.Add(d);
     }
 
+    public void RemoveDummy(DummyPenguin d)
+    {
+        BelongDummyPenguinList.Remove(d);
+        NotBelongDummyPenguinList.Add(d);
+    }
+
     private Dictionary<EntityInfoDataSO, Penguin> infoDataToPenguinDic = new();
     private Dictionary<Penguin, EntityInfoDataSO> penguinToInfoDataDic = new();
 
