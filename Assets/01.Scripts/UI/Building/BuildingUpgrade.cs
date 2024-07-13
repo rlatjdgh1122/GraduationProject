@@ -79,7 +79,7 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
         _slotList[_level - 1].OnUnlock();
         UpdateResourceTextForSlot(_level);
 
-        synergyBuilding.SynergyBuff(_infoData.BuildingAbilityList[_level - 1].BuildingAbility);
+        synergyBuilding.SetSynergyBuff(_infoData.BuildingAbilityList[_level - 1].BuildingAbility);
     }
 
     public void OnMovePanel(float x)

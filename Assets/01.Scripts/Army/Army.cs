@@ -136,7 +136,7 @@ namespace ArmySystem
             //if (Ability.Value == incStat.Value) return;
             //UnityEngine.Debug.Log("Ω∫≈»¡ı∞°");
             AddStat(incStat.value, incStat.statType, incStat.statMode);
-            Ability = incStat.DeepCopy();
+            //Ability = incStat.DeepCopy();
         }
 
         public void RemoveStat(Ability incStat)

@@ -2868,7 +2868,7 @@ GameObject:
   - component: {fileID: 5973063247656098229}
   - component: {fileID: 8848801200727006681}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: KunaiPenguinButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2907,7 +2907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _synergyType: 0
+  _synergyType: 3
   _infoSO: {fileID: 11400000, guid: 8935111dccd5bce48a00953b97df6bd6, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &2553581001626012646
@@ -4111,6 +4111,7 @@ MonoBehaviour:
   _transferable: 1000000010000000100000001000000010000000
   _soundName: 100
   _uiGroup: 16
+  _legionNamePanel: {fileID: 2758797336862933354}
   _soliderPanel: {fileID: 4616138856662289970}
   currentPanel: {fileID: 0}
   currentCost: 500
@@ -7933,7 +7934,7 @@ GameObject:
   - component: {fileID: 9050614337897130788}
   - component: {fileID: 5692078497396077551}
   m_Layer: 5
-  m_Name: Button
+  m_Name: MeleePenguinButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7972,7 +7973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _synergyType: 0
+  _synergyType: 2
   _infoSO: {fileID: 11400000, guid: 7af39911ad28aaa4b9c79a1c6c38da1c, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &4256053143243890986
@@ -9111,7 +9112,7 @@ GameObject:
   - component: {fileID: 722198176332565937}
   - component: {fileID: 7738122107102737489}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: ShieldPenguinButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9150,7 +9151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _synergyType: 0
+  _synergyType: 1
   _infoSO: {fileID: 11400000, guid: 5b56615f33db28343a4be7bf09a326af, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &901305073108101774
@@ -13129,7 +13130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3981718954005192856
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13465,7 +13466,7 @@ GameObject:
   - component: {fileID: 5447772287053974054}
   - component: {fileID: 6026768852105259912}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: MopPenguinButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13504,7 +13505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _synergyType: 0
+  _synergyType: 4
   _infoSO: {fileID: 11400000, guid: 8ca706b8392d1ad4bb005c9c78e0d4fd, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &3185333319316123201
@@ -14025,7 +14026,7 @@ GameObject:
   - component: {fileID: 458274759258567749}
   - component: {fileID: 8073436958996744705}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ArcherPenguinButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14064,7 +14065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0f3dd4c4128c142b369d567e5efd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _synergyType: 0
+  _synergyType: 5
   _infoSO: {fileID: 11400000, guid: d4f7e5829d55d7a41988559a69047d60, type: 2}
   parentPanel: {fileID: 0}
 --- !u!222 &1266269190392317929
@@ -18915,6 +18916,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3206898010767873576}
     m_Modifications:
+    - target: {fileID: 214184918205364053, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: idx
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 741278932133497007, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: _uiGroup
@@ -18954,6 +18960,21 @@ PrefabInstance:
         type: 3}
       propertyPath: _uiGroup
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888522685303162155, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: idx
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2101967104929871854, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: idx
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258411199932788934, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: idx
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2276147146721860757, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
@@ -19176,6 +19197,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5266046531617538375, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: idx
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5690206025295291734, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -19187,6 +19213,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 8ea331e6dbcd9184d8120b0ea5706b57,
         type: 3}
+    - target: {fileID: 7047752844721725072, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: idx
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7371418065076591101, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: m_Name

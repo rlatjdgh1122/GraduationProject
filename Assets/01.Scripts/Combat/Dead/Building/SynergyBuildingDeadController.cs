@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class SynergyBuildingDeadController : BuildingDeadController<SynergyBuilding>
 {
+
     private void OnEnable()
     {
         SignalHub.OnBattlePhaseStartEvent += BuildingCompoOff;

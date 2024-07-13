@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
     [SerializeField] protected Transform nonBrokenBuilding;
     [SerializeField] protected DeadBuilding brokenBuilding;
 
+    public Action OnBuildingDeadEvent = null;
+
     protected virtual void Awake()
     {
         _owner = GetComponent<T>();
@@ -23,6 +26,8 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
 
         _owner.enabled = false;
         _colider.enabled = false;
+
+        OnBuildingDeadEvent?.Invoke();
     }
 
     public void DestroyBuilding()
