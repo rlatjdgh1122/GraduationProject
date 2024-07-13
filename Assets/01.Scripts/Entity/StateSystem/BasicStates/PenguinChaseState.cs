@@ -32,13 +32,13 @@ public class PenguinChaseState : State
             {
                 _stateMachine.ChangeState(PenguinStateType.Attack);
             }
-            else if (_stateMachine.IsPrevState(PenguinStateType.Attack) == false)
+           /* else if (_stateMachine.IsPrevState(PenguinStateType.Attack) == false)
             {
                 if (_penguin.MovefocusMode == MovefocusMode.Stop)
                 {
                     _stateMachine.ChangeState(PenguinStateType.Idle);
                 }
-            }
+            }*/
             else IsTargetNull(PenguinStateType.Idle);
         }
 
