@@ -7,18 +7,44 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SynergySettingData
 {
+
     public SynergyType SynergyType;
-    public UltimateType UltimateType;
-    public Sprite UltimateIcon;
-    public Sprite SynergyIcon;
+    public SynergyData SynergyInfo;
+    public UltimateData UltimateInfo;
+
+    [System.Serializable]
+    public struct SynergyData
+    {
+        public Sprite SynergyIcon;
+        public string SynergyName;
+        [TextArea] public string SynergyExplain;
+    }
+
+    [System.Serializable]
+    public struct UltimateData
+    {
+        public Sprite UltimateIcon;
+        public UltimateType UltimateType;
+        public string UltimateName;
+        [TextArea] public string UltimateExplain;
+    }
 }
 
 [System.Serializable]
 public class GeneralSettingData
 {
     public GeneralType GeneralType;
-    public SkillType SkillType;
-    public Sprite SkillIcon;
+    public SkillData SkillInfo;
+
+    [System.Serializable]
+    public struct SkillData
+    {
+        public SkillType SkillType;
+        public Sprite SkillIcon;
+        public string SkillName;
+        [TextArea] public string SkillExplain;
+    }
+
 }
 
 [CreateAssetMenu(menuName = "SO/Register/StatusSolt")]

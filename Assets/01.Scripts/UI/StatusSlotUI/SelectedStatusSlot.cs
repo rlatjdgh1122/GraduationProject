@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static GeneralSettingData;
+using static SynergySettingData;
 
 public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 {
@@ -94,33 +96,33 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         EnablePenguinInSelectLegion(army.Info.PenguinCount);
 
         _skillImage.sprite = _lockSprite;
-        _ultimateImage.sprite = _lockSprite;    
+        _ultimateImage.sprite = _lockSprite;
 
         _skillUI.Setting(0f, 0f, SkillType.None);
         _ultimateUI.Setting(0f);
     }
 
 
-    public void SetSkillUI(float currentValue, float fillAmount, SkillType skillType, Sprite image)
+    public void SetSkillUI(float currentValue, float fillAmount, SkillData data)
     {
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
-        _skillUI.Setting(currentValue, fillAmount, skillType);
-        _skillImage.sprite = image;
+        _skillUI.Setting(currentValue, fillAmount, data.SkillType);
+        _skillImage.sprite = data.SkillIcon;
 
     }
-    public void SetUltimateUI(float fillAmount, Sprite image)
+    public void SetUltimateUI(float fillAmount, UltimateData data)
     {
         _ultimateUI.Setting(fillAmount);
-        _ultimateImage.sprite = image;
+        _ultimateImage.sprite = data.UltimateIcon;
     }
 
 
-    public void SetSynergyUI(Sprite image)
+    public void SetSynergyUI(SynergyData data)
     {
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
-        _synergyImage.sprite = image;
+        _synergyImage.sprite = data.SynergyIcon;
 
     }
 
