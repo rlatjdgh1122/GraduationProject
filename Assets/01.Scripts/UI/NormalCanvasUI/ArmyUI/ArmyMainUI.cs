@@ -8,18 +8,21 @@ public class ArmyMainUI : PopupUI
     public ArmyInfoPanel infoPanel;
     public GeneralSlotPanel generalSlotPanel;
     private DummyPenguinFactory _factory;
+    private GameObject _buttonExit;
 
     public override void Awake()
     {
         base.Awake();
 
         _factory = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
+        _buttonExit = transform.Find("Panel/Popup/ButtonExit").GetComponent<GameObject>();
 
         ArmyComponentUI[] components = GetComponentsInChildren<ArmyComponentUI>();
 
         foreach (var compo in components)
         {
             compo.factory = _factory;
+            compo.buttonExit = _buttonExit;
             compo.generalSlotPanel = generalSlotPanel;
             //compo.infoPanel = infoPanel;
         }
