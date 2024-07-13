@@ -114,13 +114,13 @@ namespace ArmySystem
 
         public void RemoveGeneral()
         {
+            //시너지 비활성화
+            ArmyManager.Instance.OnSynergyDisableEvent?.Invoke(SynergyType);
+            
             General = null;
             SkillController = null;
 
             Info.RemovePenguinCount();
-
-            //시너지 비활성화
-            ArmyManager.Instance.OnSynergyDisableEvent?.Invoke(SynergyType);
         }
 
         #region Stat
@@ -149,7 +149,7 @@ namespace ArmySystem
 
         public void AddStat(int value, StatType type, StatMode mode)
         {
-            //this.General?.AddStat(value, type, mode);
+            this.General?.AddStat(value, type, mode);
 
             foreach (var solider in this.Soldiers)
             {
@@ -159,7 +159,7 @@ namespace ArmySystem
 
         public void RemoveStat(int value, StatType type, StatMode mode)
         {
-            //this.General?.RemoveStat(value, type, mode);
+            this.General?.RemoveStat(value, type, mode);
 
             foreach (var solider in this.Soldiers)
             {

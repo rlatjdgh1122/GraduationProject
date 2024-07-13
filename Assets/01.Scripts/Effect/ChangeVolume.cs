@@ -33,6 +33,7 @@ public class ChangeVolume : MonoBehaviour
     private List<TypeOfVolumeProfile> _volumeProfileList = new List<TypeOfVolumeProfile>();
 
     private Dictionary<VolumeType, Coroutine> _activeCoroutines = new Dictionary<VolumeType, Coroutine>();
+    private VolumeType _currentActiveVolumeType = VolumeType.None;
 
     private void OnEnable()
     {
@@ -46,7 +47,22 @@ public class ChangeVolume : MonoBehaviour
 
     private void EndVolumeEvnet()
     {
-        StopAllCoroutines();
+        if (_currentActiveVolumeType != VolumeType.None)
+        {
+            if (_activeCoroutines.ContainsKey(_currentActiveVolumeType) && _activeCoroutines[_currentActiveVolumeType] != null)
+            {
+                StopCoroutine(_activeCoroutines[_currentActiveVolumeType]);
+            }
+
+            var activeProfile = _volumeProfileList.FirstOrDefault(p => p.Type == _currentActiveVolumeType);
+
+            if (activeProfile != null && activeProfile.Volume != null)
+            {
+                activeProfile.Volume.weight = 0;
+            }
+
+            _currentActiveVolumeType = VolumeType.None;
+        }
     }
 
     /// <summary>
@@ -69,10 +85,9 @@ public class ChangeVolume : MonoBehaviour
 
             // 새로운 코루틴을 시작하고 Dictionary에 저장
             _activeCoroutines[volumeType] = StartCoroutine(ChangeVolumeRoutine(profile.Volume, profile.WaitTime, profile.ChangingDuration, duration, profile.returnDuratiion, loop));
-        }
-        else
-        {
-            Debug.LogError($"VolumeProfile of {volumeType} is NULL or not found!");
+
+            // 현재 활성화된 Volume 타입 업데이트
+            _currentActiveVolumeType = volumeType;
         }
     }
 
