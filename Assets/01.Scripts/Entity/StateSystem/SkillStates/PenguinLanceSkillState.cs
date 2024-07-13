@@ -26,20 +26,33 @@ public class PenguinLanceSkillState : State
     public override void UpdateState()
     {
         //base.UpdateState();
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
-        _penguin.StopImmediately();
+        /*_penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
+        _penguin.StopImmediately();*/
 
+        /* if (_triggerCalled)
+         {
+             if (_penguin.IsTargetInAttackRange)
+             {
+                 _stateMachine.ChangeState(PenguinStateType.Attack);
+             }
+             else
+             {
+                 _stateMachine.ChangeState(PenguinStateType.Idle);
+             }
+         }*/
         if (_triggerCalled)
         {
-            if (_penguin.IsTargetInAttackRange)
+            if (!_penguin.IsTargetInAttackRange)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Chase);
+            }
+            else if (_penguin.IsTargetInAttackRange)
             {
                 _stateMachine.ChangeState(PenguinStateType.Attack);
             }
-            else
-            {
-                _stateMachine.ChangeState(PenguinStateType.Idle);
-            }
+            else IsTargetNull(PenguinStateType.Idle);
         }
+
     }
 
     public override void ExitState()

@@ -11,11 +11,12 @@ public class ArmyManager : Singleton<ArmyManager>
     [SerializeField] private List<Army> armies;
     [SerializeField] private SettingArmyPostion _settingArmyPsotion = null;
 
+    //army에서 이벤트 발생시켜줌
+    public OnValueUpdated<SynergyType> OnSynergyEnableEvent = null;
+    public OnValueUpdated<SynergyType> OnSynergyDisableEvent = null;
     public General G;
-    public List<Army> Armies { get { return armies; } }
 
-    private int prevArmyIdx = -1;
-    private int curArmyIdx = -1;
+    #region property
 
     public int CurLegion
     {
@@ -28,7 +29,6 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
-    public int ArmiesCount => armies.Count;
 
     public Army CurArmy
     {
@@ -39,10 +39,20 @@ public class ArmyManager : Singleton<ArmyManager>
         }
     }
 
-    private SkillInput _skillInput;
+    public List<Army> Armies { get { return armies; } }
+
+    #endregion
+
+    private int prevArmyIdx = -1;
+    private int curArmyIdx = -1;
+
+    public int ArmiesCount => armies.Count;
+
 
     private Transform SpawnPoint => GameManager.Instance.TentTrm;
     private List<Vector3> _armyPostions = new();
+
+    private SkillInput _skillInput;
 
     public override void Awake()
     {
@@ -224,6 +234,14 @@ public class ArmyManager : Singleton<ArmyManager>
         armies[legionIdx].SynergyType = synergyType;
     }
 
+    public Army GetArmyBySynergyType(SynergyType synergyType)
+    {
+        Army result = null;
+        result = armies.Find(a => a.SynergyType == synergyType && a.IsSynergy);
+
+        return result;
+    }
+
     #region 스탯 부분
     /// <summary>
     /// 현재 선택된 군단의 스탯을 상승 및 감소 
@@ -314,14 +332,13 @@ public class ArmyManager : Singleton<ArmyManager>
             return;
         }
 
-        //var Idx = LegionInventoryManager.Instance.GetLegionIdxByLegionName(legion);
         var Army = armies[legionIdx];
 
-        if (Army.General != null)
-        {
-            Debug.Log($"현재 {legionName}군단에는 장군이 존재합니다.");
-            return;
-        }
+        /* if (Army.General != null)
+         {
+             Debug.Log($"현재 {legionName}군단에는 장군이 존재합니다.");
+             return;
+         }*/
 
         obj.SetOwner(Army);
         Army.AddGeneral(obj);

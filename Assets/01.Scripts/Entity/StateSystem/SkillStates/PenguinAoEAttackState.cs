@@ -28,7 +28,12 @@ public class PenguinAoEAttackState : State
             {
                 _stateMachine.ChangeState(PenguinStateType.Chase);
             }
-            else IsTargetNull(PenguinStateType.Idle);
+            else if (_penguin.IsTargetInAttackRange)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Attack);
+            }
+            else
+                IsTargetNull(PenguinStateType.Idle);
         }
 
         CheckCommandModeForMovement();

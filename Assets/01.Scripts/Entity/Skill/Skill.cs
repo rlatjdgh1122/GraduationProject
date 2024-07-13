@@ -18,6 +18,7 @@ public abstract class Skill : MonoBehaviour
     public bool IsAvaliable = true;
     public bool CanUseSkill = false;
 
+    protected int maxDecisionValue => SkillController.GetMaxValue;
     private void Awake()
     {
         SkillController = transform.Find("SkillTransition").GetComponent<SkillController>();

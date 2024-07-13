@@ -1,5 +1,8 @@
+using SynergySystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class SynergyBuilding : BaseBuilding
@@ -8,6 +11,8 @@ public class SynergyBuilding : BaseBuilding
     public SynergyBuildingDeadController DeadController { get; set; }
 
     private BuildingUI _buildingPanel;
+
+    private List<Ability> _ablityList = new();
 
     protected override void Awake()
     {
@@ -40,8 +45,71 @@ public class SynergyBuilding : BaseBuilding
         }
     }
 
-    public void SynergyBuff(Ability ability)
+    private void OnEnable()
     {
-        Debug.Log(ability);
+        //군단의 시너지가 취소됐을 때
+        ArmyManager.Instance.OnSynergyDisableEvent += OnSynergyDisable;
+        ArmyManager.Instance.OnSynergyEnableEvent += OnSynergyEnable;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
+        //군단의 시너지가 취소됐을 때
+        ArmyManager.Instance.OnSynergyDisableEvent -= OnSynergyDisable;
+        ArmyManager.Instance.OnSynergyEnableEvent -= OnSynergyEnable;
+    }
+
+    public void OnSynergyDisable(SynergyType type)
+    {
+        if (type == _infoDataSO.SynergyType)
+        {
+            RemoveSynergyBuff();
+        }
+    }
+
+    public void OnSynergyEnable(SynergyType type)
+    {
+        if (type == _infoDataSO.SynergyType)
+        {
+            AddSynergyBuff();
+        }
+    }
+
+    public void SetSynergyBuff(Ability ability)
+    {
+        if (ability != null)
+        {
+            _ablityList.Add(ability);
+        }
+
+        AddSynergyBuff();
+    }
+
+    public void AddSynergyBuff()
+    {
+        if (_ablityList.Count == 0) return;
+
+        var army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
+
+        foreach (var ability in _ablityList)
+        {
+            army?.RemoveStat(ability);
+            army?.AddStat(ability);
+        }
+    }
+
+    public void RemoveSynergyBuff()
+    {
+        Debug.Log("Building Destory");
+        if (_ablityList.Count == 0) return;
+
+        var army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
+
+        foreach (var ability in _ablityList.ToList())
+        {
+            army.RemoveStat(ability);
+        }
     }
 }
