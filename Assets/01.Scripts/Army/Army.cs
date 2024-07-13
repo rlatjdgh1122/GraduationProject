@@ -88,6 +88,13 @@ namespace ArmySystem
 
         public void AddGeneral(General general)
         {
+            General = general;
+
+            SkillController = general.Skill.SkillController;
+            UltimateController = general.Ultimate.SkillController;
+
+            Info.AddPenguinCount();
+
             if (CheckSynergy(general)) //시너지가 활성화 되었을 경우
             {
                 ArmyManager.Instance.OnSynergyEnableEvent?.Invoke(SynergyType);
@@ -96,13 +103,6 @@ namespace ArmySystem
             {
                 ArmyManager.Instance.OnSynergyDisableEvent?.Invoke(SynergyType);
             }
-
-            General = general;
-
-            SkillController = general.Skill.SkillController;
-            UltimateController = general.Ultimate.SkillController;
-
-            Info.AddPenguinCount();
         }
 
         public void RemoveSolider(Penguin penguin)
