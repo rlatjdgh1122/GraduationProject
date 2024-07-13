@@ -36,7 +36,7 @@ public class SynergyBuilding : BaseBuilding
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && IsInstalled)
         {
             _buildingPanel.SynergyBuilding = this;
             _buildingPanel.BuildingHealth = HealthCompo;
