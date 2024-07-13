@@ -32,14 +32,17 @@ public class PenguinSpinAttackState : State
 
         _penguin.LookTarget();
 
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
-        _penguin.StopImmediately();
-
         if (_triggerCalled)
         {
-            _stateMachine.ChangeState(PenguinStateType.Chase);
-
-            IsTargetNull(PenguinStateType.Idle);
+            if (!_penguin.IsTargetInAttackRange)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Chase);
+            }
+            else if (_penguin.IsTargetInAttackRange)
+            {
+                _stateMachine.ChangeState(PenguinStateType.Attack);
+            }
+            else IsTargetNull(PenguinStateType.Idle);
         }
 
     }//end method
@@ -58,11 +61,6 @@ public class PenguinSpinAttackState : State
     {
         base.AnimationTrigger();
 
-        /*if (_penguin.MoveFocusMode == MovefocusMode.Command)
-        {
-            _stateMachine.ChangeState(PenguinStateType.Idle);
-        }
-        else*/
         _stateMachine.ChangeState(PenguinStateType.Impact);
     }
 }
