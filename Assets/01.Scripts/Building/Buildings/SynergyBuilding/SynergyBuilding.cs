@@ -14,6 +14,7 @@ public class SynergyBuilding : BaseBuilding
     private BuildingUI _buildingPanel;
 
     private List<Ability> _ablityList = new();
+
     private Army _army;
 
     protected override void Awake()
@@ -89,10 +90,9 @@ public class SynergyBuilding : BaseBuilding
 
     public void SetSynergyBuff(Ability ability)
     {
-        if (ability != null)
-        {
-            _ablityList.Add(ability);
-        }
+        if (ability == null) return;
+        
+        _ablityList.Add(ability);
 
         AddSynergyBuff();
     }
@@ -108,7 +108,12 @@ public class SynergyBuilding : BaseBuilding
 
         foreach (var ability in _ablityList)
         {
-            Debug.Log(ability);
+            if (ability.isSkillUpgrade)
+            {
+                _army.SkillController.LevelUp(ability.Value);
+                continue;
+            }
+            
             _army?.AddStat(ability);
         }
     }
