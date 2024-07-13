@@ -13,6 +13,13 @@ public class SingijeonArrow : Arrow, IParabolicProjectile
 
     public void ExecuteAttack(Vector3 startPosition, Vector3 targetPosition, float maxTime, bool isPool)
     {
-        StartCoroutine(Parabola.ParabolaMove(this, startPosition, targetPosition, maxTime, isPool, false));
+        StartCoroutine(Parabola.ParabolaMove(this,_rigid, startPosition, targetPosition, maxTime, isPool, false));
     }
+
+    protected override void OnTriggerEnter(Collider coll)
+    {
+        base.OnTriggerEnter(coll);
+    }
+
+
 }

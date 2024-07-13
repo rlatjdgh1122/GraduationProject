@@ -19,20 +19,37 @@ public static class Parabola
         return -4 * height * t * t + 4 * height * t;
     }
 
-    public static IEnumerator ParabolaMove(MonoBehaviour monoBehaviour, Vector3 startPos, Vector3 endPos, float maxTime, bool isPool, bool isRotate, Action action = null) // 화살은 풀링하면 오류나서 일단 이렇게 함
+    public static IEnumerator ParabolaMove(MonoBehaviour monoBehaviour, Rigidbody rigidbody , Vector3 startPos, Vector3 endPos, float maxTime, bool isPool, bool isRotate, Action action = null) // 화살은 풀링하면 오류나서 일단 이렇게 함
     {
+        maxTime = 1;
         float curTime = 0;
 
         float distance = Vector3.Distance(startPos, endPos);
-        float height = distance * 0.2f;
+        float height = distance * 1f;
+
+        Vector3 previousPosition = startPos;
 
         while (IsActive(monoBehaviour, maxTime, curTime))
         {
             curTime += Time.deltaTime;
-            Vector3 tempPos = GetParabola(startPos, endPos, height, curTime);
-            monoBehaviour.transform.position = tempPos;
-            if (isRotate) { monoBehaviour.transform.rotation = Quaternion.Euler(0, curTime * 720f, 0); }
-            yield return new WaitForEndOfFrame();
+            Vector3 tempPos = GetParabola(startPos, endPos, height, curTime / maxTime);
+
+            if (isRotate)
+            {
+                rigidbody.MoveRotation(Quaternion.Euler(0, curTime * 720f, 0));
+            }
+            else
+            {
+                Vector3 direction = tempPos - previousPosition;
+                if (direction != Vector3.zero)
+                {
+                    rigidbody.MoveRotation(Quaternion.LookRotation(direction));
+                }
+            }
+
+            rigidbody.MovePosition(tempPos);
+            previousPosition = tempPos;
+            yield return null;
         }
 
         if (isPool)
@@ -43,7 +60,6 @@ public static class Parabola
         {
             monoBehaviour.gameObject.SetActive(false); // 반드시 바꿔
         }
-        Debug.Log("Destroy");
         action?.Invoke();
     }
 
