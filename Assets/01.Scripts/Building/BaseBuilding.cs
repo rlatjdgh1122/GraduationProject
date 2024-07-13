@@ -71,6 +71,7 @@ public abstract class BaseBuilding : WorkableObject
     protected override void Awake()
     {
         base.Awake();
+
         SetUpCompo();
     }
 

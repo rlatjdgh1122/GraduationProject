@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ModifyLegionPanel : PopupUI
+public class ModifyLegionPanel : ArmyComponentUI
 {
     [SerializeField] private LegionSwap _legionSwap;
     [SerializeField] private LegionNamingPanel _legionNamePanel;
@@ -58,5 +58,6 @@ public class ModifyLegionPanel : PopupUI
     {
         _legionNamePanel.ModifyLegionName(_currentPanel.LegionName);
         _legionNamePanel.ShowPanel();
+        buttonExit.SetActive(false);
     }
 }
