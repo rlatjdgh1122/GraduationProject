@@ -24,10 +24,10 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
     {
         SetBuildingCondition(true);
 
+        OnBuildingDeadEvent?.Invoke();
+
         _owner.enabled = false;
         _colider.enabled = false;
-
-        OnBuildingDeadEvent?.Invoke();
     }
 
     public void DestroyBuilding()

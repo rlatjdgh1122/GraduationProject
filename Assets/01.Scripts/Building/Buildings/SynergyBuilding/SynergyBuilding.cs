@@ -1,3 +1,4 @@
+using ArmySystem;
 using SynergySystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ public class SynergyBuilding : BaseBuilding
     private BuildingUI _buildingPanel;
 
     private List<Ability> _ablityList = new();
+    private Army _army;
 
     protected override void Awake()
     {
@@ -50,6 +52,9 @@ public class SynergyBuilding : BaseBuilding
         //군단의 시너지가 취소됐을 때
         ArmyManager.Instance.OnSynergyDisableEvent += OnSynergyDisable;
         ArmyManager.Instance.OnSynergyEnableEvent += OnSynergyEnable;
+
+        //건물 부서졌을 때
+        DeadController.OnBuildingDeadEvent += RemoveSynergyBuff;
     }
 
     public override void OnDisable()
@@ -59,11 +64,14 @@ public class SynergyBuilding : BaseBuilding
         //군단의 시너지가 취소됐을 때
         ArmyManager.Instance.OnSynergyDisableEvent -= OnSynergyDisable;
         ArmyManager.Instance.OnSynergyEnableEvent -= OnSynergyEnable;
+
+        //건물 부서졌을 때
+        DeadController.OnBuildingDeadEvent -= RemoveSynergyBuff;
     }
 
     public void OnSynergyDisable(SynergyType type)
     {
-        if (type == _infoDataSO.SynergyType)
+        if (type == _infoDataSO.SynergyType || !HealthCompo.IsDead)
         {
             RemoveSynergyBuff();
         }
@@ -71,8 +79,10 @@ public class SynergyBuilding : BaseBuilding
 
     public void OnSynergyEnable(SynergyType type)
     {
-        if (type == _infoDataSO.SynergyType)
+        if (type == _infoDataSO.SynergyType || !HealthCompo.IsDead)
         {
+            _army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
+
             AddSynergyBuff();
         }
     }
@@ -89,27 +99,27 @@ public class SynergyBuilding : BaseBuilding
 
     public void AddSynergyBuff()
     {
-        if (_ablityList.Count == 0) return;
-
-        var army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
+        if (_ablityList.Count == 0 || _army == null) return;
 
         foreach (var ability in _ablityList)
         {
-            army?.RemoveStat(ability);
-            army?.AddStat(ability);
+            _army?.RemoveStat(ability);
+        }
+
+        foreach (var ability in _ablityList)
+        {
+            Debug.Log(ability);
+            _army?.AddStat(ability);
         }
     }
 
     public void RemoveSynergyBuff()
     {
-        Debug.Log("Building Destory");
-        if (_ablityList.Count == 0) return;
+        if (_ablityList.Count == 0 || _army == null) return;
 
-        var army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
-
-        foreach (var ability in _ablityList.ToList())
+        foreach (var ability in _ablityList)
         {
-            army.RemoveStat(ability);
+            _army?.RemoveStat(ability);
         }
     }
 }

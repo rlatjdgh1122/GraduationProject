@@ -28,7 +28,7 @@ public class MortarRock : Arrow, IParabolicProjectile
         _damageCaster.TargetLayer = layer;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         DestroyRock();
     }
@@ -57,6 +57,6 @@ public class MortarRock : Arrow, IParabolicProjectile
         _mortarAttackRangeSprite.transform.position = targetPosition;
         _mortarAttackRangeSprite.transform.SetParent(null);
 
-        StartCoroutine(Parabola.ParabolaMove(this, startPosition, targetPosition, maxTime, isPool, true, DestroyRock));
+        StartCoroutine(Parabola.ParabolaMove(this,_rigid, startPosition, targetPosition, maxTime, isPool, true, DestroyRock));
     }
 }
