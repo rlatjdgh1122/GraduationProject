@@ -134,6 +134,18 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
+    public void UltimateAttackTrigger()
+    {
+        if (_penguin.CurrentTarget != null)
+        {
+            _penguin.AttackCompo?.UltimateRangeAttack();
+        }
+        else
+        {
+            _penguin?.AttackCompo?.UltimateRangeAttack();
+        }
+    }
+
     private void MagicAttackTrigger()
     {
         if (_penguin.CurrentTarget != null)

@@ -62,4 +62,9 @@ public class EntityAttackData : MonoBehaviour
     {
 
     }
+
+    public virtual void UltimateRangeAttack()
+    {
+
+    }
 }
