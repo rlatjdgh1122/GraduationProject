@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LegionNamingPanel : PopupUI
+public class LegionNamingPanel : ArmyComponentUI
 {
     [SerializeField] private TMP_InputField _inputField;
     [SerializeField] private Button _legionNameEnterButton;
@@ -121,6 +121,7 @@ public class LegionNamingPanel : PopupUI
         ResetPanel();
 
         HidePanel();
+        buttonExit.SetActive(true);
         ParentPanel.SetActive(true);
     }
 

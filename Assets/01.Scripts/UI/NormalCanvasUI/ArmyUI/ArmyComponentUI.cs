@@ -7,6 +7,7 @@ public class ArmyComponentUI : PopupUI
     [HideInInspector] public ArmyInfoPanel infoPanel;
     [HideInInspector] public GeneralSlotPanel generalSlotPanel;
     [HideInInspector] public DummyPenguinFactory factory;
+    [HideInInspector] public GameObject buttonExit;
 
     public static event Action<GeneralStat> OnShowGeneralInfo;
     public static event Action OnHideGeneralInfo;
