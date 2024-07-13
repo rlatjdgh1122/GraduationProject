@@ -32,6 +32,8 @@ namespace ArmySystem
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
 
+        #region Property
+
         public bool IsSynergy
         {
             get
@@ -40,9 +42,6 @@ namespace ArmySystem
                 return General.SynergyType.Equals(SynergyType);
             }
         }
-
-
-        #region Property
 
         public float MoveSpeed
         {
@@ -75,6 +74,12 @@ namespace ArmySystem
 
         #endregion
 
+        private bool CheckSynergy(General general)
+        {
+            if (!general) return false;
+            return general.SynergyType.Equals(SynergyType);
+        }
+
         public void AddSolider(Penguin penguin)
         {
             Soldiers.Add(penguin);
@@ -83,6 +88,15 @@ namespace ArmySystem
 
         public void AddGeneral(General general)
         {
+            if (CheckSynergy(general)) //시너지가 활성화 되었을 경우
+            {
+                ArmyManager.Instance.OnSynergyEnableEvent?.Invoke(SynergyType);
+            }
+            else //타입이 안맞을 경우 시너지 비활성화
+            {
+                ArmyManager.Instance.OnSynergyDisableEvent?.Invoke(SynergyType);
+            }
+
             General = general;
 
             SkillController = general.Skill.SkillController;
@@ -104,6 +118,9 @@ namespace ArmySystem
             SkillController = null;
 
             Info.RemovePenguinCount();
+
+            //시너지 비활성화
+            ArmyManager.Instance.OnSynergyDisableEvent?.Invoke(SynergyType);
         }
 
         #region Stat
