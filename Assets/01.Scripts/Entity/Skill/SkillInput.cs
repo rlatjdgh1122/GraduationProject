@@ -20,7 +20,7 @@ public class SkillInput : MonoBehaviour
 
     private void OnPlaySkill()
     {
-        //if (!CanPlaySkill()) { return; }
+        if (!CanPlaySkill()) { return; }
 
         if (_curSelectGeneral.Skill.SkillController.CheckDecision())
         {
