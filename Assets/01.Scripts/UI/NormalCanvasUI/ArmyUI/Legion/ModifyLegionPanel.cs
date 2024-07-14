@@ -58,6 +58,6 @@ public class ModifyLegionPanel : ArmyComponentUI
     {
         _legionNamePanel.ModifyLegionName(_currentPanel.LegionName);
         _legionNamePanel.ShowPanel();
-        buttonExit.SetActive(false);
+        //buttonExit.SetActive(false);
     }
 }
