@@ -15,7 +15,7 @@ public class ArmyMainUI : PopupUI
         base.Awake();
 
         _factory = GameObject.Find("PenguinSpawner/DummyPenguinFactory").GetComponent<DummyPenguinFactory>();
-        _buttonExit = transform.Find("Panel/Popup/ButtonExit").GetComponent<GameObject>();
+        _buttonExit = transform.Find("Panel/PopUp/ButtonExit").GetComponent<GameObject>();
 
         ArmyComponentUI[] components = GetComponentsInChildren<ArmyComponentUI>();
 

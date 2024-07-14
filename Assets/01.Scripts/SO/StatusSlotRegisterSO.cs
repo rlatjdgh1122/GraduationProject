@@ -2,7 +2,14 @@ using SkillSystem;
 using SynergySystem;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
+[System.Serializable]
+public class SkillDefaultData
+{
+    public Sprite Icon;
+    public string Name;
+    [TextArea] public string Explain;
+}
 
 [System.Serializable]
 public class SynergySettingData
@@ -13,20 +20,15 @@ public class SynergySettingData
     public UltimateData UltimateInfo;
 
     [System.Serializable]
-    public struct SynergyData
+    public class SynergyData : SkillDefaultData
     {
-        public Sprite SynergyIcon;
-        public string SynergyName;
-        [TextArea] public string SynergyExplain;
+
     }
 
     [System.Serializable]
-    public struct UltimateData
+    public class UltimateData : SkillDefaultData
     {
-        public Sprite UltimateIcon;
         public UltimateType UltimateType;
-        public string UltimateName;
-        [TextArea] public string UltimateExplain;
     }
 }
 
@@ -37,12 +39,9 @@ public class GeneralSettingData
     public SkillData SkillInfo;
 
     [System.Serializable]
-    public struct SkillData
+    public class SkillData : SkillDefaultData
     {
         public SkillType SkillType;
-        public Sprite SkillIcon;
-        public string SkillName;
-        [TextArea] public string SkillExplain;
     }
 
 }
