@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 using static GeneralSettingData;
 
 public class SkillMouseEventUI : MountEventUI
-{
-    private SelectedSlotSkillUI skillUI = null;
+{ 
+    public SelectedSlotSkillUI skillUI = null; 
 
-    private SkillData skillData => skillUI.SkillData;
+    private SkillData m_skillData => skillUI.SkillData;
 
     private Dictionary<SkillType, string> dic = new();
 
@@ -23,12 +23,13 @@ public class SkillMouseEventUI : MountEventUI
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
-        if (skillData == null) return;
+        Debug.Log("DSF");
+        if (m_skillData == null) return;
 
         int value = Army.SkillController.GetMaxValue;
-        string unit = dic[skillData.SkillType];
+        string unit = dic[m_skillData.SkillType];
 
-        ExplainUI.ShowPanel($"[스킬]", skillData.Name, $"{value}{unit}", skillData.Explain);
+        ExplainUI.ShowPanel($"[스킬]", m_skillData.Name, $"{value}{unit}", m_skillData.Explain);
     }
 
 

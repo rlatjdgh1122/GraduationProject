@@ -5,7 +5,7 @@ using static SynergySettingData;
 
 public class UltimateMouseEventUI : MountEventUI
 {
-    private SelectedSlotUltimateUI ultimateUI = null;
+    public SelectedSlotUltimateUI ultimateUI = null;  
 
     private UltimateData ultimateData => ultimateUI.UltimateData;
 
@@ -20,7 +20,7 @@ public class UltimateMouseEventUI : MountEventUI
     {
         if (ultimateData == null) return;
 
-        int value = Army.SkillController.GetMaxValue;
+        int value = Army.UltimateController.GetMaxValue;
         string unit = dic[ultimateData.UltimateType];
 
         ExplainUI.ShowPanel($"[±Ã±Ø±â]", ultimateData.Name, $"{value}{unit}", ultimateData.Explain);
