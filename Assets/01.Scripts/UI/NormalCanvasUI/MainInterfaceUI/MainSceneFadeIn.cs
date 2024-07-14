@@ -20,6 +20,10 @@ public class MainSceneFadeIn : MonoBehaviour
 
     private void Start()
     {
-        _canvasGroup.DOFade(0, _duration).OnComplete(() => _canvasGroup.blocksRaycasts = false);
+        UIManager.Instance.ShowPanel("GuidePanel");
+        _canvasGroup.DOFade(0, _duration).OnComplete(() =>
+        {
+            _canvasGroup.blocksRaycasts = false;
+        });
     }
 }

@@ -90,12 +90,12 @@ public class UIManager : Singleton<UIManager>
         {
             PopupUI ui = currentPopupUI.Peek();
 
-            if (ui.UIGroup != popupUI.UIGroup && popupUI.UIGroup != UIType.Gif)
+            if (ui.UIGroup != popupUI.UIGroup || ui.name == popupUI.name)
             {
                 ui.HidePanel();
             }
         }
-        
+
         if (popupUI != null)
         {
             popupUI.ShowPanel();
