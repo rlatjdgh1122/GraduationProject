@@ -6,6 +6,7 @@ using UnityEngine;
 public class SoldierSelectPanel : PopupUI
 {
     [SerializeField] private LegionNamingPanel _legionNamePanel;
+    [SerializeField] private GameObject _buttonExit;
 
     [SerializeField] private Transform _soliderPanel;
     private SoldierSelectSlot[] _slots;
@@ -42,7 +43,9 @@ public class SoldierSelectPanel : PopupUI
             }
 
             ShowPanel();
+            _buttonExit.SetActive(false);
             _legionNamePanel.ShowPanel();
+
             SetActive(false);
 
             foreach (var txt in _costTexts)
@@ -57,6 +60,7 @@ public class SoldierSelectPanel : PopupUI
     public override void HidePanel()
     {
         base.HidePanel();
+        _buttonExit.SetActive(true);
     }
 
     public override void ShowPanel()

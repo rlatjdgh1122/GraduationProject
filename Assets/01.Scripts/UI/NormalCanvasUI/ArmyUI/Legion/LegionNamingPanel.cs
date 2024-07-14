@@ -121,7 +121,6 @@ public class LegionNamingPanel : ArmyComponentUI
         ResetPanel();
 
         HidePanel();
-        buttonExit.SetActive(true);
         ParentPanel.SetActive(true);
     }
 
