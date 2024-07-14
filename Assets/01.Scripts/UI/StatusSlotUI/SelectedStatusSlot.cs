@@ -77,7 +77,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     public void Init()
     {
-        _skillUI.Setting(0f, 0f, SkillType.None);
+        _skillUI.Setting(0f, 0f);
         _ultimateUI.Setting(0f);
     }
 
@@ -98,7 +98,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         _skillImage.sprite = _lockSprite;
         _ultimateImage.sprite = _lockSprite;
 
-        _skillUI.Setting(0f, 0f, SkillType.None);
+        _skillUI.Setting(0f, 0f);
         _ultimateUI.Setting(0f);
     }
 
@@ -107,14 +107,17 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     {
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
+
+        _skillUI.SetData(data);
         _skillUI.Setting(currentValue, fillAmount, data.SkillType);
-        _skillImage.sprite = data.SkillIcon;
+        _skillImage.sprite = data.Icon;
 
     }
     public void SetUltimateUI(float fillAmount, UltimateData data)
     {
+        _ultimateUI.SetData(data);
         _ultimateUI.Setting(fillAmount);
-        _ultimateImage.sprite = data.UltimateIcon;
+        _ultimateImage.sprite = data.Icon;
     }
 
 
@@ -122,7 +125,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     {
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
-        _synergyImage.sprite = data.SynergyIcon;
+        _synergyImage.sprite = data.Icon;
 
     }
 

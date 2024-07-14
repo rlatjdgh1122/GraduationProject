@@ -27,7 +27,7 @@ public class SoldierSelectPanel : PopupUI
 
     public void Setting(LegionPanel legion)
     {
-        CostManager.Instance.SubtractFromCurrentCost(currentCost += 100, () =>
+        CostManager.Instance.SubtractFromCurrentCost(currentCost, () =>
         {
             currentPanel = legion;
 
@@ -52,6 +52,7 @@ public class SoldierSelectPanel : PopupUI
             {
                 txt.text = $"{currentCost + 100}";
             }
+            currentCost += 100;
         });
     }
 
