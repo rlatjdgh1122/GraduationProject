@@ -17,7 +17,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private int makedHexagonCount = -1;
 
     private Queue<Ground> _curHexagon_Grounds = new Queue<Ground>();
-    private Queue<Ground> _allGrounds = new Queue<Ground>(); // 나중에 Queue나 stack으로 할 수도
+    private Queue<Ground> _allGrounds = new Queue<Ground>();
 
     private Queue<float> _rotateValues = new Queue<float>(); // 랜덤 회전 값들
 
@@ -155,6 +155,12 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         int raftCount = GetRaftCount();
 
+        if(raftCount - _rotateValues.Count() > 0)
+        {
+            Debug.LogError("빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨 생성 가능한 만큼만 하겠음");
+            raftCount = _rotateValues.Count();
+        }
+
         for (int i = 0; i < raftCount; i++)
         {
             Raft raft = PoolManager.Instance.Pop(raftName) as Raft;
@@ -181,20 +187,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         float[] rotateValues = RotateValues.ToArray();
         float rotateValue = 0;
 
-        // 현재 가능한 모든 회전 값이 이전 값 목록에 포함되어 있는지 확인
-        if (_prevRotateValues.Count >= rotateValues.Length)
-        {
-            int nextHexagonGroundsGoalCount = GetCurHexagonGroundsGoalCount(makedHexagonCount + 1);
-
-            rotateValues = new float[nextHexagonGroundsGoalCount];
-
-            for (int i = 0; i < nextHexagonGroundsGoalCount; i++)
-            {
-                float curAngleBetweenGlacier = GetCurAngleBetweenGlacier(makedHexagonCount + 1);
-                rotateValues[i] = curAngleBetweenGlacier * i; // 다음 RotateValues로
-            }
-        }
-
         // 그전에 썼던거 다시 안 쓰도록
         do
         {
@@ -202,7 +194,8 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
         } while (_prevRotateValues.Contains(rotateValue));
 
         _prevRotateValues.Add(rotateValue);
-        return rotateValue;
+
+        return rotateValue - 90;
     }
 
     private int GetRaftCount()
