@@ -9,6 +9,8 @@ public class MainInterfaceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _stoneText;
     [SerializeField] private TextMeshProUGUI _woodText;
 
+    float timeScale = 0;
+
     private void Awake()
     {
         WorkerManager.Instance.OnUIUpdate += UpdateWorkerUI;
@@ -19,6 +21,8 @@ public class MainInterfaceUI : MonoBehaviour
     {
         UpdateWorkerUI(WorkerManager.Instance.MaxWorkerCount);
         UpdateResourceUI(null, 0);
+
+        timeScale = Time.timeScale;
     }
 
     private void UpdateWorkerUI(int count)

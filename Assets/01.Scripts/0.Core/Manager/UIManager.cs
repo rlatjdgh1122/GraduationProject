@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum UIType
 {
@@ -89,12 +90,12 @@ public class UIManager : Singleton<UIManager>
         {
             PopupUI ui = currentPopupUI.Peek();
 
-            if (ui.UIGroup != popupUI.UIGroup && popupUI.UIGroup != UIType.Gif)
+            if (ui.UIGroup != popupUI.UIGroup || ui.name == popupUI.name)
             {
                 ui.HidePanel();
             }
         }
-        
+
         if (popupUI != null)
         {
             popupUI.ShowPanel();
@@ -199,6 +200,8 @@ public class UIManager : Singleton<UIManager>
             }
         }
 
+        //IsPointerOverUI();
+
         //if (Input.GetKeyDown(KeyCode.Escape))
         //{
         //    if (currentPopupUI.Count <= 0)
@@ -224,6 +227,24 @@ public class UIManager : Singleton<UIManager>
         //        }
         //    }
         //}
+    }
+
+    public bool IsPointerOverUI()
+    {
+        // 마우스 포인터가 UI 위에 있는지 확인
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        var results = new System.Collections.Generic.List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        Debug.Log("I");
+
+        foreach (var ray in results)
+        {
+            Debug.Log(ray.gameObject.name);
+        }
+
+        return results.Count > 0;
     }
     #endregion
 

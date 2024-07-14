@@ -130,6 +130,7 @@ public class NexusUIPresenter : NexusPopupUI
     public void HideNexusPanel()
     {
         UIManager.Instance.HidePanel("NexusUI");
+        UIManager.Instance.HideAllPanel();
     }
 
     public override void UIUpdate()
