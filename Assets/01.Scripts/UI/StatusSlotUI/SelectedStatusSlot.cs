@@ -109,7 +109,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         //여기서 스킬 연결하자
 
         _skillUI.SetData(data);
-        _skillUI.Setting(currentValue, fillAmount);
+        _skillUI.Setting(currentValue, fillAmount, data.SkillType);
         _skillImage.sprite = data.Icon;
 
     }

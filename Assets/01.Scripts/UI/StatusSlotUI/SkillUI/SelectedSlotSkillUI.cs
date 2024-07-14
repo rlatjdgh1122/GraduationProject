@@ -16,9 +16,9 @@ public class SelectedSlotSkillUI : SkillUI
         SkillData = data;
     }
 
-    public void Setting(float _currentValue, float _currentFillAmount)
+    public void Setting(float _currentValue, float _currentFillAmount, SkillType type = SkillType.None)
     {
-        skillType = SkillData.SkillType;
+        skillType = type;
         CurrntValue = _currentValue;
         CurrentFillAmount = _currentFillAmount;
         bliendGauge.fillAmount = CurrentFillAmount;
