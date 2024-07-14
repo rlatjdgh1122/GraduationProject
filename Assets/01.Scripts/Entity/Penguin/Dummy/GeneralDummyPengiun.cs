@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneralDummyPengiun : DummyPenguin
 {
-    public GeneralStat Stat { get; set; } = null;
+    public GeneralStat Stat;
 
     private void OnMouseDown()
     {
