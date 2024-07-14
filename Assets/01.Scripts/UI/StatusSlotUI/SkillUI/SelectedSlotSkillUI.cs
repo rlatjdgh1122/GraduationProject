@@ -3,14 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static GeneralSettingData;
 
 public class SelectedSlotSkillUI : SkillUI
 {
     private SkillType skillType = SkillType.None;
 
-    public void Setting(float _currentValue, float _currentFillAmount, SkillType _skillType)
+    public SkillData SkillData { get; set; } = null;
+
+    public void SetData(SkillData data)
     {
-        skillType = _skillType;
+        SkillData = data;
+    }
+
+    public void Setting(float _currentValue, float _currentFillAmount, SkillType type = SkillType.None)
+    {
+        skillType = type;
         CurrntValue = _currentValue;
         CurrentFillAmount = _currentFillAmount;
         bliendGauge.fillAmount = CurrentFillAmount;

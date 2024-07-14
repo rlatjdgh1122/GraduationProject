@@ -120,15 +120,15 @@ public class StatusSlotContainer : MonoBehaviour
             SynergyData synergyInfo = GetSynergyInfoBySynergyType(army.SynergyType);
             UltimateData ultimateInfo = GetUltimateInfoBySynergyType(army.SynergyType);
 
-            slot.SetSynergyUI(synergyInfo.SynergyIcon);
+            slot.SetSynergyUI(synergyInfo.Icon);
             if (army.General != null) //장군이 있을때
             {
                 var generalInfo = GetDataByGeneralType(army.General.GeneralType);
-                slot.SetSkillUI(generalInfo.SkillType, generalInfo.SkillIcon);
+                slot.SetSkillUI(generalInfo.SkillType, generalInfo.Icon);
 
                 if (army.IsSynergy) //시너지 활성화 될 때
                 {
-                    slot.SetUltimateUI(ultimateInfo.UltimateType, ultimateInfo.UltimateIcon);
+                    slot.SetUltimateUI(ultimateInfo.UltimateType, ultimateInfo.Icon);
                 }
             }
 

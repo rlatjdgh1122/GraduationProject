@@ -1,8 +1,14 @@
-using SkillSystem;
-using UnityEngine;
+using static SynergySettingData;
 
 public class SelectedSlotUltimateUI : UltimateUI
 {
+    public UltimateData UltimateData { get; set; } = null;
+
+    public void SetData(UltimateData data)
+    {
+        UltimateData = data;
+    }
+
     public void Setting(float _currentFillAmount)
     {
         CurrentFillAmount = _currentFillAmount;
