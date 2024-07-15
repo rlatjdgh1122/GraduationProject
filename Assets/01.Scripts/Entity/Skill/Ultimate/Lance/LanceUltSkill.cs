@@ -13,7 +13,6 @@ public class LanceUltSkill : MonoBehaviour
 
     public void LanceUltimate()
     {
-        Debug.Log("찌이이이이르으으으기");
         _lanceUltEntity.TruckAttack(LookMouse());
     }
 

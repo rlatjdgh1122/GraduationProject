@@ -27,7 +27,7 @@ public class GaugeSkill : Skill
     public override void PlaySkill()
     {
         base.PlaySkill();
-
+        SoundManager.Play3DSound(SoundName.SkillPolice, transform.position);
         HitValue = 0;
         OnHitValueChanged.Invoke(HitValue, maxDecisionValue);
     }

@@ -13,6 +13,7 @@ public class SingijeonArrow : Arrow, IParabolicProjectile
 
     public void ExecuteAttack(Vector3 startPosition, Vector3 targetPosition, float maxTime, bool isPool)
     {
+        SoundManager.Play3DSound(SoundName.ArrowHit, transform.position);
         StartCoroutine(Parabola.ParabolaMove(this,_rigid, startPosition, targetPosition, maxTime, isPool, false));
     }
 
