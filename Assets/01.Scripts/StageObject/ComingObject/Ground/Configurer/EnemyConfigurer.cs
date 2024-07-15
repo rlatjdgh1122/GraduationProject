@@ -39,18 +39,19 @@ public class EnemyConfigurer : BaseElementsConfigurer
             spawnedEnemies.Add(spawnBoss);
         }
 
-        int randomIdx;
+        int randomIdx = Random.Range(0, _enemyNames.Length);
 
-        if (curWave < 5) // 튜토리얼이면 자폭병 안 나오게
-        {
-            randomIdx = Random.Range(0, _enemyNames.Length - 1);
-        }
-        else
-        {
-            randomIdx = Random.Range(0, _enemyNames.Length);
-        }
+        //if (curWave < 5) // 튜토리얼이면 자폭병 안 나오게
+        //{
+        //    randomIdx = Random.Range(0, _enemyNames.Length - 1);
+        //}
+        //else
+        //{
+            
+        //}
 
-        int enemyCount = randomIdx == _enemyNames.Length ? 2 : GetRandomEnemyCount(); // 폭탄병이면 일단 2마리만 나오게. 아니면 So에서 설정한대로 랜덤
+        //int enemyCount = randomIdx == _enemyNames.Length ? 2 : GetRandomEnemyCount(); // 폭탄병이면 일단 2마리만 나오게. 아니면 So에서 설정한대로 랜덤
+        int enemyCount = GetRandomEnemyCount(); // 폭탄병이면 일단 2마리만 나오게. 아니면 So에서 설정한대로 랜덤
 
         for (int i = 0; i < enemyCount; i++)
         {
@@ -81,6 +82,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
         int waveCount = curWave;
         waveCount %= 6;
         int enemyCount = waveCount + 1;
+        enemyCount = Mathf.Clamp(enemyCount, 2, 10);
         return enemyCount;
     }
 
