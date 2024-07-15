@@ -14,6 +14,7 @@ public class LanceUltimate : Skill
 
     public override void PlaySkill()
     {
+        SoundManager.Play3DSound(SoundName.UltimateLance, transform.position);
         OnSpawnTruckEvent?.Invoke();
     }
 }

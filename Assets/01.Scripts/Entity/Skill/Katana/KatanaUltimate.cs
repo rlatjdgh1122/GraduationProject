@@ -32,6 +32,7 @@ public class KatanaUltimate : Skill
     public override void PlaySkill()
     {
         OnStartEclipseEvent?.Invoke();
+        SoundManager.Play3DSound(SoundName.UltimateKatana, transform.position);
         _changeVolume.ChangeVolumeEffect(VolumeType.LunarEclipse, 3f);
         AddStat();
         CoroutineUtil.CallWaitForSeconds(9, () => RemoveStat()); // LunarEclipseUI에서 4길래 4로 함

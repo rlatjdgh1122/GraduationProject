@@ -62,6 +62,21 @@ public enum SoundName : uint
     #endregion
     Credit,
 
+    #region Skill
+
+    SkillLance,
+    SkillPolice,
+
+    #endregion
+
+    #region Ultimate
+
+    UltimateLance,
+    UltimatePolice,
+    UltimateKatana,
+
+    #endregion
+
     None = 100,
 }
 

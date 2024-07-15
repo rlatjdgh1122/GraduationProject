@@ -14,6 +14,7 @@ public class ShieldUltimate : Skill
 
     public override void PlaySkill()
     {
+        SoundManager.Play3DSound(SoundName.UltimateLance, transform.position);
         OnSpawnPrisonEvent?.Invoke();
     }
 }

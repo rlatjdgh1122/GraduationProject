@@ -36,7 +36,7 @@ public class LanceSkill : Skill
     private IEnumerator PrickCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
-
+        SoundManager.Play3DSound(SoundName.SkillLance, transform.position);
         OnPrickEvent?.Invoke();
     }
 }
