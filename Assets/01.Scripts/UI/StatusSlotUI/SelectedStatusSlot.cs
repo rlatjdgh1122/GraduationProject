@@ -20,6 +20,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     [SerializeField] private Sprite _lockSprite = null;
 
     [SerializeField] private Transform _UITrm = null;
+    [SerializeField] private SeletedSlotSynergyUI _synergyUI = null;
     [SerializeField] private SelectedSlotSkillUI _skillUI = null;
     [SerializeField] private SelectedSlotUltimateUI _ultimateUI = null;
 
@@ -125,6 +126,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     {
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
+        _synergyUI.SetData(data);
         _synergyImage.sprite = data.Icon;
 
     }
