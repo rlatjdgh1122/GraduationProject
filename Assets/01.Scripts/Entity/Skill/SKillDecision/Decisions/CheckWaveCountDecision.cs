@@ -13,7 +13,7 @@ namespace SkillSystem
         {
             if (entityActionData == null) return;
 
-            saveValue = WaveManager.Instance.CurrentWaveCount;
+            saveValue = WaveManager.Instance.CurrentWaveCount - maxValue;
             _canUsedSkill = true;
         }
 

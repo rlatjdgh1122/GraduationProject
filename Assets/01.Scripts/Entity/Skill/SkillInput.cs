@@ -20,7 +20,7 @@ public class SkillInput : MonoBehaviour
 
     private void OnPlaySkill()
     {
-        //if (!CanPlaySkill()) { return; }
+        if (!CanPlaySkill()) { return; }
 
         if (_curSelectGeneral.Skill.SkillController.CheckDecision())
         {
@@ -33,7 +33,7 @@ public class SkillInput : MonoBehaviour
     private void OnPlayUltimateSkill()
     {
         if (!CanPlaySkill() || !_curSelectGeneral.IsSynergy) { return; }
-
+        Debug.Log(_curSelectGeneral.Ultimate.SkillController.CheckDecision());
         if (_curSelectGeneral.Ultimate.SkillController.CheckDecision())
         {
             _curSelectGeneral.OnUltimateEvent();
