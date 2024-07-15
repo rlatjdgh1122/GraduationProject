@@ -299,7 +299,7 @@ public class DamageCaster : MonoBehaviour
         return true;
     }
 
-    public bool CastTruckDamage(float stunValue, Vector3 position, LayerMask targetLayer)
+    public bool CastTruckDamage(float stunValue, int ultimateDamage, Vector3 position, LayerMask targetLayer)
     {
         Collider[] colliders = Physics.OverlapSphere(position, _detectRange * 3, targetLayer);
 
@@ -310,7 +310,7 @@ public class DamageCaster : MonoBehaviour
             if (damageable != null)
             {
                 int damage = _owner.Stat.damage.GetValue();
-                damageable.ApplyDamage(damage, position, collider.transform.position, _hitType, _owner);
+                damageable.ApplyDamage(ultimateDamage, position, collider.transform.position, _hitType, _owner);
                 stunable.Stun(stunValue);
             }
         }
