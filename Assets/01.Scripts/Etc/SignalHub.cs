@@ -1,5 +1,6 @@
 using UnityEngine;
 using ArmySystem;
+using SynergySystem;
 
 
 public delegate void OnValueChanged<T>(T prevValue , T curValue);
@@ -91,4 +92,8 @@ public static class SignalHub
     public static NoiseUpdateEvent OnNoiseUpdateEvent;
 
     #endregion
+
+
+    public static OnValueUpdated<SynergyType> OnSynergyEnableEvent = null;
+    public static OnValueUpdated<SynergyType> OnSynergyDisableEvent = null;
 }

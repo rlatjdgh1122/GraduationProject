@@ -51,8 +51,8 @@ public class SynergyBuilding : BaseBuilding
     private void OnEnable()
     {
         //군단의 시너지가 취소됐을 때
-        ArmyManager.Instance.OnSynergyDisableEvent += OnSynergyDisable;
-        ArmyManager.Instance.OnSynergyEnableEvent += OnSynergyEnable;
+        SignalHub.OnSynergyDisableEvent += OnSynergyDisable;
+        SignalHub.OnSynergyEnableEvent += OnSynergyEnable;
 
         //건물 부서졌을 때
         DeadController.OnBuildingDeadEvent += RemoveSynergyBuff;
@@ -63,8 +63,8 @@ public class SynergyBuilding : BaseBuilding
         base.OnDisable();
 
         //군단의 시너지가 취소됐을 때
-        ArmyManager.Instance.OnSynergyDisableEvent -= OnSynergyDisable;
-        ArmyManager.Instance.OnSynergyEnableEvent -= OnSynergyEnable;
+        SignalHub.OnSynergyDisableEvent -= OnSynergyDisable;
+        SignalHub.OnSynergyEnableEvent -= OnSynergyEnable;
 
         //건물 부서졌을 때
         DeadController.OnBuildingDeadEvent -= RemoveSynergyBuff;
