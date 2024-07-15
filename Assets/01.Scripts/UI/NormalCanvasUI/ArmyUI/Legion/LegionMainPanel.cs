@@ -17,5 +17,7 @@ public class LegionMainPanel : PopupUI
     public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
     {
         base.MovePanel(x, y, fadeTime, ease);
+
+        SoundManager.Play2DSound(_soundName);
     }
 }

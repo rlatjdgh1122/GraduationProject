@@ -19,7 +19,7 @@ public class PopupUI : MonoBehaviour
 
     [Space(10f)]
     [SerializeField]
-    private SoundName _soundName = SoundName.None;
+    protected SoundName _soundName = SoundName.None;
 
     [SerializeField]
     private UIType _uiGroup;
