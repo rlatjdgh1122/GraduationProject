@@ -37,6 +37,7 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
 
         ResetBuilding();
 
+        OnBuildingDeadEvent?.Invoke();
         PoolManager.Instance.Push(_owner);
 
         _owner.Installing = false;
