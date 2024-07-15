@@ -22,9 +22,9 @@ public class MeleeAttackableEntity : EntityAttackData
         DamageCasterCompo.CaseAoEDamage(knbValue, stunValue);
     }
 
-    public override void AoEPrickAttack(float knbValue, float stunValue, float range = 0)
+    public override void AoEPrickAttack(float knbValue, float stunValue, int damage)
     {
-        DamageCasterCompo.CasePrickDamage(knbValue, stunValue);
+        DamageCasterCompo.CasePrickDamage(knbValue, stunValue, damage);
     }
 
     public override void MeleeAttack(float knbValue, float stunValue)

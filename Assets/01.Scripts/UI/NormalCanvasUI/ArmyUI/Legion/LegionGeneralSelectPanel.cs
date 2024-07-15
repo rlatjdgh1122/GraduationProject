@@ -23,12 +23,12 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
 
     public void SetSlot(GeneralInfoDataSO info)
     {
-        GeneralSelectSlotList.SetSelectedSlots(info);
         _prevGeneralInfo = GeneralInfo;
         GeneralInfo = info;
         JoinToArmy();
         _generalSlot.SetSlot(GeneralInfo);
         _generalSlot.button.interactable = false;
+        GeneralSelectSlotList.SetSelectedSlots(info);
         HidePanel();
     }
 
