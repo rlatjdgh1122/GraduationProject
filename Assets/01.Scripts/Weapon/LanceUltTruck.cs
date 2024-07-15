@@ -7,7 +7,10 @@ public class LanceUltTruck : PoolableMono
 {
     [SerializeField]
     private float _truckSpeed;
+    [SerializeField]
     private float _stunValue;
+    [SerializeField]
+    private int _ultimateDamage;
     
     private int _groundLayer = 0;
     private Rigidbody _rigid;
@@ -71,7 +74,7 @@ public class LanceUltTruck : PoolableMono
     private void Explode()
     {
         // 트럭 폭발 로직 추가
-        _damageCaster.CastTruckDamage(_stunValue, transform.position, _damageCaster.TargetLayer);
+        _damageCaster.CastTruckDamage(_stunValue, _ultimateDamage, transform.position, _damageCaster.TargetLayer);
         Destroy(this.gameObject);
     }
 }

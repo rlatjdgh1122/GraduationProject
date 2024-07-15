@@ -18,7 +18,7 @@ public class EntityAttackData : MonoBehaviour
 
     }
 
-    public virtual void AoEPrickAttack(float knbValue, float stunValue, float range = 0)
+    public virtual void AoEPrickAttack(float knbValue, float stunValue, int damage)
     {
 
     }

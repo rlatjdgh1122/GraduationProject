@@ -84,9 +84,10 @@ public class PenguinAnimationTrigger : MonoBehaviour
         try
         {
             if (float.TryParse(value[0], out float knbValue)
-               && float.TryParse(value[1], out float stunValue))
+               && float.TryParse(value[1], out float stunValue)
+               && int.TryParse(value[2], out int damage))
             {
-                _penguin.AttackCompo.AoEPrickAttack(knbValue, stunValue);
+                _penguin.AttackCompo.AoEPrickAttack(knbValue, stunValue, damage);
             }
         }
         catch
