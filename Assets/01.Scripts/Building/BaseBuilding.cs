@@ -43,7 +43,7 @@ public abstract class BaseBuilding : WorkableObject
     private bool isInstalled = false;
     public bool IsInstalled => isInstalled;
 
-    public bool Installing;
+    public bool Installing { get; set; }
 
     private Material[][] _meshNormalMats;
     protected MeshRenderer[] _meshRenderers;

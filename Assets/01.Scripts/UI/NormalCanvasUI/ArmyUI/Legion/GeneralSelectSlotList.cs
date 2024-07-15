@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class GeneralSelectSlotList : MonoBehaviour
 {
-    public GeneralSelectSlot[] list;
+    public List<GeneralSelectSlot> list;
 
     private void Awake()
     {
-        list = transform.GetComponentsInChildren<GeneralSelectSlot>();
+        list = transform.GetComponentsInChildren<GeneralSelectSlot>().ToList();
     }
 
     public void SetSelectedSlots(GeneralInfoDataSO info)
@@ -17,9 +17,11 @@ public class GeneralSelectSlotList : MonoBehaviour
         foreach (var slot in list)
         {
             if (slot.GeneralData.InfoData == info)
+            {
+                Debug.Log(slot.name);
                 slot.SetSelectedPanel();
-            else
-                slot.ReverseSelectedPanel();
+            }
+                
         }
     }
 }
