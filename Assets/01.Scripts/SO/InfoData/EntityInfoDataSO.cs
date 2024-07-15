@@ -23,7 +23,7 @@ public class EntityInfoDataSO : ScriptableObject
     [TextArea()]
     public string PenguinDescription;
 
-    [SerializeField] 
+    [SerializeField]
     private List<string> PenguinPersonalityList = new();
 
     [ReadOnly]
@@ -38,6 +38,11 @@ public class EntityInfoDataSO : ScriptableObject
     public string rangeRank;
 
     public string LegionName { get; set; } = "소속된 군단 없음";
+
+    public void SetLegionName(string legionName)
+    {
+        LegionName = legionName;
+    }
     public int SlotIdx { get; set; }
 
     public void Setting()

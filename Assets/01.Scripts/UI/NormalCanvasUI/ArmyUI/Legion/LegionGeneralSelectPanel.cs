@@ -41,6 +41,8 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
         }
 
         DummyPenguin dummy = PenguinManager.Instance.FindGeneralDummyPenguin(GeneralInfo.PenguinType);
+        dummy.CloneInfo.SetLegionName(_legionPanel.LegionName);
+
         General general = ArmyManager.Instance.SpawnPenguin(dummy.CloneInfo, _generalSlotIdx) as General;
         PenguinManager.Instance.DummyToPenguinMapping(dummy, general);
 
