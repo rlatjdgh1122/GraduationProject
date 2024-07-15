@@ -9,6 +9,7 @@ public class SpawnBuildingButton : MonoBehaviour
 {
     private Button _btn;
     private BuildingFactory _buildingFactory; // 팩토리
+    private BuildingItemInfo buildinginfo; // 팩토리
 
     private float installedTime;
 
@@ -31,6 +32,7 @@ public class SpawnBuildingButton : MonoBehaviour
         //_btn.onClick.AddListener(() => spawnUI.OffUnitPanel());
         //_btn.onClick.AddListener(() => spawnUI.OffBuildingPanel());
         //_btn.onClick.AddListener(() => constructionStation.UpdateSpawnUIBool());
+
     }
 
     public void SpawnBuildingEventHandler(BaseBuilding spawnBuilding, BuildingItemInfo buildinginfo) //버튼 이벤트에 구독된 함수
@@ -104,9 +106,12 @@ public class SpawnBuildingButton : MonoBehaviour
 
     private void ButtonCooldown(BaseBuilding spawnBuilding, BuildingItemInfo info) // 버튼 누르면 실행될 함수
     {
-        UIManager.Instance.HidePanel("NexusUI");
-        UIManager.Instance.HideAllPanel();
-
-        _buildingFactory.SpawnBuildingHandler(spawnBuilding, info);
+        try
+        {
+            _buildingFactory.SpawnBuildingHandler(spawnBuilding, info);
+            UIManager.Instance.HidePanel("NexusUI");
+            UIManager.Instance.HideAllPanel();
+        }
+        catch { };
     }
 }

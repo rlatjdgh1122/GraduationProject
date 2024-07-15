@@ -67,6 +67,7 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
     private void ResetUI()
     {
         _owner.BuildingItemInfoCompo.CurrentInstallCount -= 1;
+
         GameObject.Find(_owner.BuildingItemInfoCompo.CodeName).GetComponent<BuildingView>().UpdateUI();
     }
 

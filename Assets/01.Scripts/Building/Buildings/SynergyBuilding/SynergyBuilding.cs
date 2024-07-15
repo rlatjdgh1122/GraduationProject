@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class SynergyBuilding : BaseBuilding
 {
     [SerializeField] private SynergyBuildingInfoDataSO _infoDataSO;
+    public SynergyType BuildingSynergyType => _infoDataSO.SynergyType;
     public SynergyBuildingDeadController DeadController { get; set; }
 
     private BuildingUI _buildingPanel;
@@ -90,7 +92,6 @@ public class SynergyBuilding : BaseBuilding
         if (type == _infoDataSO.SynergyType || !HealthCompo.IsDead)
         {
             _army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
-
             AddSynergyBuff();
         }
     }
