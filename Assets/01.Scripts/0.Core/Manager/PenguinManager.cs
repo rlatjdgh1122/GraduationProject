@@ -196,7 +196,7 @@ public class PenguinManager
 
         RemoveItemListDummy(obj);
 
-        UpdateOwnershipDataList();
+        //UpdateOwnershipDataList();
 
         PoolManager.Instance.Push(obj);
     }
@@ -216,9 +216,9 @@ public class PenguinManager
         BelongDummyPenguinList.Remove(dummy);
         dummyToPenguinDic.Remove(dummy);
 
-        RemoveItemListDummy(dummy);
+        //RemoveItemListDummy(dummy);
 
-        UpdateOwnershipDataList();
+        //UpdateOwnershipDataList();
 
         PoolManager.Instance.Push(dummy);
     }
