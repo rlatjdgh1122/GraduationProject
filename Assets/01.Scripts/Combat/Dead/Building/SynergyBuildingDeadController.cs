@@ -29,5 +29,7 @@ public class SynergyBuildingDeadController : BuildingDeadController<SynergyBuild
         _owner.HealthCompo.ResetHealth();
 
         SetBuildingCondition(false);
+
+        OnBuildingRepairEvent?.Invoke();
     }    
 }

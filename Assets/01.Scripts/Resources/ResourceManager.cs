@@ -31,14 +31,14 @@ public class ResourceManager : Singleton<ResourceManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            AddResource(_typeByResourceDataList[0], 5);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            AddResource(_typeByResourceDataList[1], 5);
-        }
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    AddResource(_typeByResourceDataList[0], 5);
+        //}
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    AddResource(_typeByResourceDataList[1], 5);
+        //}
     }
 
     public void AddResource(ResourceDataSO resourceData, int count)

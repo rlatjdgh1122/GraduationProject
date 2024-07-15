@@ -11,6 +11,7 @@ public class SkillExplainUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _typeText = null;
     [SerializeField] private TextMeshProUGUI _nameText = null;
     [SerializeField] private TextMeshProUGUI _actionEnterText = null;
+    [SerializeField] private TextMeshProUGUI _이후증가 = null;
     [SerializeField] private TextMeshProUGUI _explainText = null;
 
     private CanvasGroup _panel = null;
@@ -26,7 +27,11 @@ public class SkillExplainUI : MonoBehaviour
     {
         _typeText.text = skillType;
         _nameText.text = skillName;
+
         _actionEnterText.text = actionEnterText;
+        if (actionEnterText == "") _이후증가.text = "";
+        else _이후증가.text = "이후 사용 가능";
+
         _explainText.text = explainText;
 
         _panel.blocksRaycasts = true;
