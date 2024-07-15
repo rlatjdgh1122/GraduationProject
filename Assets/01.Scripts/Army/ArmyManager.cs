@@ -14,7 +14,6 @@ public class ArmyManager : Singleton<ArmyManager>
     //army에서 이벤트 발생시켜줌
     public OnValueUpdated<SynergyType> OnSynergyEnableEvent = null;
     public OnValueUpdated<SynergyType> OnSynergyDisableEvent = null;
-    public General G;
 
     #region property
 
