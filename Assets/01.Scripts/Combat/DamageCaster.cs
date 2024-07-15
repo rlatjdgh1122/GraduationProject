@@ -107,7 +107,7 @@ public class DamageCaster : MonoBehaviour
     /// <summary>
     /// 찌르기 광역 공격
     /// </summary>
-    public void CasePrickDamage(float knbValue = 0f, float stunValue = 0f)
+    public void CasePrickDamage(float knbValue, float stunValue, int damage)
     {
         Vector3 capsuleStart = transform.position;
         Vector3 capsuleEnd = transform.position + transform.forward * 7f;
@@ -127,7 +127,7 @@ public class DamageCaster : MonoBehaviour
             if (raycastSuccess
                 && raycastHit.collider.TryGetComponent<Health>(out Health health))
             {
-                int damage = _owner.Stat.damage.GetValue();
+                //int damage = _owner.Stat.damage.GetValue();
 
                 health.ApplyDamage(damage, raycastHit.point, raycastHit.normal, _hitType, _owner);
                 health.Knockback(knbValue, raycastHit.normal);
