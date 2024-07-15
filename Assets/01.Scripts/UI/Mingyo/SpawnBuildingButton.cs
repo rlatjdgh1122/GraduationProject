@@ -1,4 +1,5 @@
 using DG.Tweening;
+using SynergySystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +10,7 @@ public class SpawnBuildingButton : MonoBehaviour
 {
     private Button _btn;
     private BuildingFactory _buildingFactory; // 팩토리
+    private BuildingItemInfo buildinginfo; // 팩토리
 
     private float installedTime;
 
@@ -31,6 +33,7 @@ public class SpawnBuildingButton : MonoBehaviour
         //_btn.onClick.AddListener(() => spawnUI.OffUnitPanel());
         //_btn.onClick.AddListener(() => spawnUI.OffBuildingPanel());
         //_btn.onClick.AddListener(() => constructionStation.UpdateSpawnUIBool());
+
     }
 
     public void SpawnBuildingEventHandler(BaseBuilding spawnBuilding, BuildingItemInfo buildinginfo) //버튼 이벤트에 구독된 함수
