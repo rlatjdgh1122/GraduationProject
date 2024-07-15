@@ -8,8 +8,8 @@ public class NexusStatusUI : PopupUI
 {
     private Image _fill;
 
-    private float _current;
-    private float _max;
+    private float _current => NexusManager.Instance.NexusBase.HealthCompo.currentHealth;
+    private float _max => NexusManager.Instance.NexusBase.HealthCompo.maxHealth;
 
     public override void Awake()
     {
@@ -41,9 +41,6 @@ public class NexusStatusUI : PopupUI
             Debug.LogError("NexusManager.Instance.NexusBase.HealthCompo is null");
             return;
         }
-
-        _current = NexusManager.Instance.NexusBase.HealthCompo.currentHealth;
-        _max = NexusManager.Instance.NexusBase.HealthCompo.maxHealth;
     }
 
 
@@ -60,7 +57,7 @@ public class NexusStatusUI : PopupUI
         FillAmount();
     }
 
-    private void FillAmount()
+    public void FillAmount()
     {
         _fill.DOFillAmount(_current / _max, 0.5f);
     }

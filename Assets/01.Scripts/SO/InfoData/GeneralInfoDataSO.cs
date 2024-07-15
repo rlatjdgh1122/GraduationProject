@@ -1,3 +1,4 @@
+using SynergySystem;
 using UnityEngine;
 
 
@@ -9,4 +10,6 @@ public class GeneralInfoDataSO : PenguinInfoDataSO
     [TextArea()] public string Synergy;
     [TextArea()] public string SkillName;
     [TextArea()] public string SkillDescription;
+
+    public SynergyType SynergyType;
 }

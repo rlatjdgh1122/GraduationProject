@@ -12,7 +12,7 @@ namespace SkillSystem
         {
             if (entityActionData == null) return;
 
-            saveValue = entityActionData.AttackCount;
+            saveValue = entityActionData.AttackCount - maxValue;
             _checkSkillReady = true;
         }
 

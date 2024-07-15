@@ -8,7 +8,7 @@ public class CoolTimeDecsion : SKillDecision
     {
         if (entityActionData == null) return;
 
-        saveValue = Time.time;
+        saveValue = Time.time - maxValue;
     }
 
     public override void OnUsed()

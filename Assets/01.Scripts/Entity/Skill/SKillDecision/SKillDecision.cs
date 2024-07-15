@@ -69,6 +69,7 @@ namespace SkillSystem
             skillActionData = transform.parent.GetComponent<SkillActionData>(); //스킬 트렌지션에서 갖고옴
 
             OnRegister();
+            Init();
         }
 
         private void OnRegister()
