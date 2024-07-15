@@ -175,7 +175,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156048114166032514}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -209,7 +209,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &6677385275730738849
 MonoBehaviour:
@@ -339,6 +339,7 @@ MonoBehaviour:
   _typeText: {fileID: 1428527183137879443}
   _nameText: {fileID: 3459834909663021845}
   _actionEnterText: {fileID: 2445228828180225653}
+  "_\uC774\uD6C4\uC99D\uAC00": {fileID: 7516734433743883821}
   _explainText: {fileID: 192412309084293139}
 --- !u!1 &518527636098769021
 GameObject:
@@ -426,6 +427,8 @@ GameObject:
   - component: {fileID: 7365892122382908041}
   - component: {fileID: 7750712616174019838}
   - component: {fileID: 1303751943768835269}
+  - component: {fileID: 4786145274957908262}
+  - component: {fileID: 6041739473949441790}
   m_Layer: 5
   m_Name: Synergy
   m_TagString: Untagged
@@ -492,6 +495,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!114 &4786145274957908262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050091111326941458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c768c8bf0d8fd429d2dbe306e81da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6041739473949441790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050091111326941458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c0ce83ba057f24da16a48e76d47b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExplainUI: {fileID: 7665836722938956347}
+  synergyUI: {fileID: 4786145274957908262}
 --- !u!1 &1087098958437967806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,6 +2332,7 @@ MonoBehaviour:
   _ultimateImage: {fileID: 271203357614219790}
   _lockSprite: {fileID: 21300000, guid: 3d790ebb8bf241e459a3b2856dad0fa7, type: 3}
   _UITrm: {fileID: 234193424577361030}
+  _synergyUI: {fileID: 4786145274957908262}
   _skillUI: {fileID: 2767562612669697899}
   _ultimateUI: {fileID: 5928003331584768091}
 --- !u!225 &8150390488278062102
@@ -2315,7 +2345,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &5032846904282116641
 GameObject:
@@ -2699,7 +2729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.18164827, g: 0.21346563, b: 0.24528301, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3209,7 +3239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
