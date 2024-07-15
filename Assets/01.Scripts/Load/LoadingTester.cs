@@ -6,10 +6,10 @@ public class LoadingTester : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LoadScene();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    LoadScene();
+        //}
     }
 
     public void LoadScene()

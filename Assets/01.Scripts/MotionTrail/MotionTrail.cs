@@ -74,12 +74,12 @@ public class MotionTrail : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            StopCoroutine("BakeMeshCoroutine");
-
-            StartMotionTrail();
-        }
+        //if(Input.GetKeyDown(KeyCode.L))
+        //{
+        //    StopCoroutine("BakeMeshCoroutine");
+        //
+        //    StartMotionTrail();
+        //}
     }
 
     public void StartMotionTrail()
