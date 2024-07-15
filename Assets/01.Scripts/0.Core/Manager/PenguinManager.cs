@@ -194,9 +194,9 @@ public class PenguinManager
         BelongDummyPenguinList.Remove(obj);
         //dummyToPenguinDic.Remove(obj);
 
-        RemoveItemListDummy(obj);
+        //RemoveItemListDummy(obj);
 
-        UpdateOwnershipDataList();
+        //UpdateOwnershipDataList();
 
         PoolManager.Instance.Push(obj);
     }
@@ -212,13 +212,13 @@ public class PenguinManager
         var dummy = penguinToDummyDic[obj];
 
         DummyPenguinList.Remove(dummy);
-        penguinToDummyDic.Remove(obj);
+        //penguinToDummyDic.Remove(obj);
         BelongDummyPenguinList.Remove(dummy);
-        dummyToPenguinDic.Remove(dummy);
+        //dummyToPenguinDic.Remove(dummy);
 
-        RemoveItemListDummy(dummy);
+        //RemoveItemListDummy(dummy);
 
-        UpdateOwnershipDataList();
+        //UpdateOwnershipDataList();
 
         PoolManager.Instance.Push(dummy);
     }
