@@ -15,6 +15,8 @@ public class GeneralSelectSlot : ArmyComponentUI
 
     private void Start()
     {
+        OnUpdateState += UpdateUI;
+
         _icon = transform.Find("Icon").GetComponent<Image>();
         _lockedPanel = transform.Find("Lock").GetComponent<Image>();
         _selectedPanel = transform.Find("Selected").GetComponent<Image>();
@@ -25,13 +27,11 @@ public class GeneralSelectSlot : ArmyComponentUI
         _icon.sprite = GeneralData.InfoData.PenguinIcon;
         _purchaseButton.onClick.AddListener(() => _legionGeneralPanel.SetSlot(GeneralData.InfoData));
         GeneralData = GeneralManager.Instance.GeneralList[Index];
-
-        OnUpdateState += UpdateUI;
     }
 
     public void SetSelectedPanel()
     {
-        _purchaseButton.interactable = false;
+        _purchaseButton.enabled = false;
         _selectedPanel.gameObject.SetActive(true);
     }
 
