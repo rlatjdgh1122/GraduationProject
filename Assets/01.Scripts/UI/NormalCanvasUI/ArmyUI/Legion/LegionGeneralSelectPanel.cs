@@ -28,6 +28,7 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
         GeneralInfo = info;
         JoinToArmy();
         _generalSlot.SetSlot(GeneralInfo);
+        _generalSlot.button.interactable = false;
         HidePanel();
     }
 

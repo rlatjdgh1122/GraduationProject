@@ -13,6 +13,7 @@ public class LegionGeneralSlot : MonoBehaviour
     public List<ParticleImage> _particleImg;
     public TextMeshProUGUI _text;
     public GameObject _panel;
+    public Button button;
 
     private GeneralInfoDataSO _infoData;
 
@@ -20,6 +21,7 @@ public class LegionGeneralSlot : MonoBehaviour
     {
         _icon = transform.Find("Icon").GetComponent<Image>();
         _icon.gameObject.SetActive(false);
+        button = GetComponent<Button>();
     }
 
     private void OnEnable()
