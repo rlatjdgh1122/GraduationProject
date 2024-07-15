@@ -105,12 +105,14 @@ public class StatusSlotContainer : MonoBehaviour
         });
 
         _canvasGroup.alpha = 0f;
+        _canvasGroup.blocksRaycasts = false;
         _selectedTrm.gameObject.SetActive(false);
     }
 
     private void ApplyStatusSlot()
     {
         _canvasGroup.alpha = 1f;
+        _canvasGroup.blocksRaycasts = true;
         _selectedTrm.gameObject.SetActive(true);
         _selectedStatusSlot.Init();
 

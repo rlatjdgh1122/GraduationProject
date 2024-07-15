@@ -13,6 +13,7 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
     [SerializeField] protected DeadBuilding brokenBuilding;
 
     public Action OnBuildingDeadEvent = null;
+    public Action OnBuildingRepairEvent = null;
 
     protected virtual void Awake()
     {
@@ -30,13 +31,15 @@ public abstract class BuildingDeadController<T> : MonoBehaviour, IDeadable where
         _colider.enabled = false;
     }
 
-    public void DestroyBuilding()
+    public virtual void DestroyBuilding()
     {
         ResetUI();
 
         ResetBuilding();
 
         PoolManager.Instance.Push(_owner);
+
+        _owner.Installing = false;
     }
 
     protected virtual void SetBuildingCondition(bool isDead)

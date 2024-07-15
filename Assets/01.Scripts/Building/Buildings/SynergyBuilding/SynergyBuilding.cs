@@ -36,7 +36,7 @@ public class SynergyBuilding : BaseBuilding
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && IsInstalled)
+        if (!WaveManager.Instance.IsBattlePhase && Installing)
         {
             _buildingPanel.SynergyBuilding = this;
             _buildingPanel.BuildingHealth = HealthCompo;
@@ -45,6 +45,11 @@ public class SynergyBuilding : BaseBuilding
             _buildingPanel.ShowBuildingUI(_infoDataSO);
 
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
+
+            if(_army == null)
+            {
+                _army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
+            }
         }
     }
 
@@ -56,6 +61,7 @@ public class SynergyBuilding : BaseBuilding
 
         //건물 부서졌을 때
         DeadController.OnBuildingDeadEvent += RemoveSynergyBuff;
+        DeadController.OnBuildingRepairEvent += AddSynergyBuff;
     }
 
     public override void OnDisable()
@@ -68,6 +74,7 @@ public class SynergyBuilding : BaseBuilding
 
         //건물 부서졌을 때
         DeadController.OnBuildingDeadEvent -= RemoveSynergyBuff;
+        DeadController.OnBuildingRepairEvent -= AddSynergyBuff;
     }
 
     public void OnSynergyDisable(SynergyType type)
