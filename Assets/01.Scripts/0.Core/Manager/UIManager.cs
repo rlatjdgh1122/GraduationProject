@@ -48,6 +48,7 @@ public class UIManager : Singleton<UIManager>
     //public Vector2 offVec = new Vector2(Screen.width * 0.5f, -100f);
 
     private PopupUI _currentUI;
+    public bool IsEmptyUI => _currentUI == null;
 
     public Sequence HudTextSequence;
 
