@@ -72,7 +72,6 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
         }
         else
         {
-            Debug.Log("·£´ý");
             arrow.ExecuteAttack(_firePos.position, Random.insideUnitSphere * Random.Range(1f, 5f), 10f, false);
         }
     }
