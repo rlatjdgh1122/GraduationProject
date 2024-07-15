@@ -67,4 +67,9 @@ public class EntityAttackData : MonoBehaviour
     {
 
     }
+
+    public virtual void SkillRangeAttack()
+    {
+
+    }
 }

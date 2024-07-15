@@ -14,6 +14,13 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
     {
         TargetObject curtarget = null;
 
+        if(owner.CurrentTarget == null ||
+           owner.CurrentTarget.IsDead)
+        {
+            Debug.Log("dk");
+            return;
+        }
+
         Collider[] colliders = GetColliders();
 
         if (colliders.Length > 0)
@@ -32,6 +39,13 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
     {
         Collider[] colliders = GetColliders();
 
+        if(colliders.Length <= 0)
+        {
+            Debug.Log("¾ø");
+            SkillRangeAttack();
+            return;
+        }
+
         foreach (Collider collider in colliders)
         {
             TargetObject curtarget = collider.GetComponent<TargetObject>();
@@ -41,6 +55,24 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
             SingijeonArrow arrow = GenerateArrow();
             ExecuteAttack(curtarget, arrow);
         }
+    }
+
+    public override void SkillRangeAttack()
+    {
+        TargetObject curtarget = null;
+
+        Collider[] colliders = GetColliders();
+
+        if (colliders.Length > 0)
+        {
+            curtarget = GetColliders().FirstOrDefault().GetComponent<TargetObject>();
+            _firePos.LookAt(new Vector3(curtarget.transform.position.x,
+            curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
+        }
+
+        SingijeonArrow arrow = GenerateArrow();
+
+        ExecuteAttack(curtarget, arrow);
     }
 
     private Collider[] GetColliders()
@@ -72,7 +104,8 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
         }
         else
         {
-            arrow.ExecuteAttack(_firePos.position, Random.insideUnitSphere * Random.Range(1f, 5f), 10f, false);
+            Vector3 targetPos = Random.insideUnitSphere * Random.Range(1f, 5f) + transform.position;
+            arrow.ExecuteAttack(_firePos.position, targetPos, 10f, false);
         }
     }
 

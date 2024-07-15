@@ -24,12 +24,12 @@ public class LegionGeneralSlot : MonoBehaviour
 
     private void OnEnable()
     {
-        ArmyManager.Instance.OnSynergyEnableEvent += StartParticles;
+        SignalHub.OnSynergyEnableEvent += StartParticles;
     }
 
     private void OnDisable()
     {
-        ArmyManager.Instance.OnSynergyEnableEvent -= StartParticles;
+        SignalHub.OnSynergyEnableEvent -= StartParticles;
     }
 
     public void SetSlot(GeneralInfoDataSO info)

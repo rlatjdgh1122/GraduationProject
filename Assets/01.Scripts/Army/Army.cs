@@ -97,11 +97,11 @@ namespace ArmySystem
 
             if (CheckSynergy(general)) //시너지가 활성화 되었을 경우
             {
-                ArmyManager.Instance.OnSynergyEnableEvent?.Invoke(SynergyType);
+                SignalHub.OnSynergyEnableEvent?.Invoke(SynergyType);
             }
             else //타입이 안맞을 경우 시너지 비활성화
             {
-                ArmyManager.Instance.OnSynergyDisableEvent?.Invoke(SynergyType);
+                SignalHub.OnSynergyDisableEvent?.Invoke(SynergyType);
             }
         }
 
@@ -115,7 +115,7 @@ namespace ArmySystem
         public void RemoveGeneral()
         {
             //시너지 비활성화
-            ArmyManager.Instance.OnSynergyDisableEvent?.Invoke(SynergyType);
+            SignalHub.OnSynergyDisableEvent?.Invoke(SynergyType);
             
             General = null;
             SkillController = null;

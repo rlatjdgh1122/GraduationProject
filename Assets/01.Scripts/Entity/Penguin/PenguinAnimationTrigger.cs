@@ -134,6 +134,19 @@ public class PenguinAnimationTrigger : MonoBehaviour
 
     }
 
+    public void SkillRangeAttackTrigger()
+    {
+        if (_penguin.CurrentTarget != null)
+        {
+            _penguin.AttackCompo?.SkillRangeAttack();
+        }
+        else
+        {
+            _penguin?.AttackCompo?.SkillRangeAttack();
+        }
+    }
+    
+
     public void UltimateAttackTrigger()
     {
         if (_penguin.CurrentTarget != null)
