@@ -59,7 +59,7 @@ public class CameraSystem : MonoBehaviour
     private Vector3 _startPosition;
     private Quaternion _vCamstartRotation;
 
-    private bool canMoving => UIManager.Instance.currentPopupUI.Count <= 0;
+    private bool canMoving => UIManager.Instance.IsEmptyUI;
 
     private float _startFOV = 0;
 
