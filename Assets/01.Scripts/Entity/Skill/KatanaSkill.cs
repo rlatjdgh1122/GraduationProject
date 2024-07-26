@@ -20,6 +20,8 @@ public class KatanaSkill : Skill
     public override void PlaySkill()
     {
         Dash(_dashDelay);
+
+        Sound();
     }
 
     public void Dash(float delay)
@@ -37,5 +39,15 @@ public class KatanaSkill : Skill
         yield return new WaitForSeconds(delay);
 
         OnDashEvent?.Invoke();
+    }
+
+    private IEnumerator Sound()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            SoundManager.Play3DSound(SoundName.MeleeHit, transform.position);
+            yield return new WaitForSeconds(0.1f);
+        }
+
     }
 }
