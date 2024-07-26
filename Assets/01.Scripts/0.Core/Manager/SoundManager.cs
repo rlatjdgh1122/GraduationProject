@@ -66,6 +66,8 @@ public enum SoundName : uint
 
     SkillLance,
     SkillPolice,
+    SkillKatana,
+    SkillEndKatana,
 
     #endregion
 

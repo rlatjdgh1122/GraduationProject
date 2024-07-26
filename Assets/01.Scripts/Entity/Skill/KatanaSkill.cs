@@ -21,7 +21,7 @@ public class KatanaSkill : Skill
     {
         Dash(_dashDelay);
 
-        Sound();
+        StartCoroutine(Sound());
     }
 
     public void Dash(float delay)
@@ -43,11 +43,13 @@ public class KatanaSkill : Skill
 
     private IEnumerator Sound()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 18; i++)
         {
-            SoundManager.Play3DSound(SoundName.MeleeHit, transform.position);
+            SoundManager.Play3DSound(SoundName.SkillKatana, transform.position);
             yield return new WaitForSeconds(0.1f);
         }
 
+        yield return new WaitForSeconds(0.1f);
+        SoundManager.Play3DSound(SoundName.SkillEndKatana, transform.position);
     }
 }
