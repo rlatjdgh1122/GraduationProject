@@ -131,7 +131,7 @@ public class SoundManager : MonoBehaviour
     /// <param name="type">SFX이니? BGM이니?</param>
     /// <param name="rolloffMode">이건 그냥 건들지 마셈</param>
     public static void Play3DSound(SoundName clipName, Vector3 position,
-    float minFOV = 20, float maxFOV = 55, float maxDistance = 80,
+    float minFOV = 20, float maxFOV = 60, float maxDistance = 55,
     SoundType type = SoundType.SFX,
     AudioRolloffMode rolloffMode = AudioRolloffMode.Linear)
     {
@@ -214,6 +214,7 @@ public class SoundManager : MonoBehaviour
         source.rolloffMode = rolloffMode;
 
         float fovNormalization = 1 - (float)(Cam.MainCam.fieldOfView - minFOV) / (maxFOV - minFOV);
+        fovNormalization = Mathf.Clamp(fovNormalization, 0.1f, 1);
         source.volume = fovNormalization;
 
         source.outputAudioMixerGroup = type switch
