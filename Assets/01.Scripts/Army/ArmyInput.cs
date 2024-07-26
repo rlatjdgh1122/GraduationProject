@@ -78,7 +78,6 @@ public class ArmyInput : MonoBehaviour
     public void OnRightClickEventHandler()
     {
         if (ArmyManager.Instance.CurArmy == null) return;
-        if (ArmyManager.Instance.CurArmy.MovefocusMode == MovefocusMode.Stop) return;
 
         OnRightClickEvent?.Invoke();
 
@@ -90,7 +89,6 @@ public class ArmyInput : MonoBehaviour
     public void OnLeftClickEventHandler()
     {
         if (ArmyManager.Instance.CurArmy == null) return;
-        if (ArmyManager.Instance.CurArmy.MovefocusMode == MovefocusMode.Stop) return;
         
         OnLeftClickEvent?.Invoke();
 

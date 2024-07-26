@@ -21,23 +21,16 @@ public class PenguinStunState : State
 
         _penguin.LookTarget();
 
-      
+
+
+        if (_triggerCalled)
         {
-            if (_triggerCalled)
-            {
-                _stateMachine.ChangeState(PenguinStateType.Chase);
-                //다죽였다면 이동
-                IsTargetNull(PenguinStateType.MustMove);
-            }
+            _stateMachine.ChangeState(PenguinStateType.Chase);
+            //다죽였다면 이동
+            IsTargetNull(PenguinStateType.MustMove);
         }
 
 
-        {
-            if (_penguin.WaitForCommandToArmyCalled)
-            {
-                _stateMachine.ChangeState(PenguinStateType.MustMove);
-            }
-        }
 
         if (_triggerCalled)
         {

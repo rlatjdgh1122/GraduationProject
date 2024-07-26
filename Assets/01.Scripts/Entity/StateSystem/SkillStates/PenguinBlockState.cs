@@ -15,7 +15,6 @@ public class PenguinBlockState : State
     {
         base.EnterState();
         _triggerCalled = false;
-        _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
         _penguin.FindNearestEnemyInTargetArmy();
     }

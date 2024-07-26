@@ -15,13 +15,12 @@ public class PenguinSingijeonSkillState : State
     {
         base.EnterState();
 
-        prevMode = _penguin.MyArmy.MovefocusMode;
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
         _penguin.StopImmediately();
 
         _penguin.LookTargetImmediately();
 
         _triggerCalled = false;
+        _penguin.IgnoreToArmyCalled = true;
         General.Skill.PlaySkill();
     }
 
@@ -43,7 +42,11 @@ public class PenguinSingijeonSkillState : State
 
     public override void ExitState()
     {
-        _penguin.MyArmy.MovefocusMode = prevMode;
+        if (_penguin.MyArmy.MovefocusMode == MovefocusMode.Command) //애니메이션 끝난 이후 움직이게
+        {
+            _penguin.MoveToClickPositon();
+        }
+        _penguin.IgnoreToArmyCalled = false;
 
         base.ExitState();
     }

@@ -5,7 +5,5 @@ namespace ArmySystem
     {
         Command = 0,
         Battle,
-        Stop
-
     }
 }

@@ -25,7 +25,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
         _penguin.StopImmediately();
         _penguin.CurrentTarget = null;
         _penguin.SuccessfulToArmyCalled = true;
-        _penguin.WaitForCommandToArmyCalled = true;
     }
 
     protected void AttackEnter()
@@ -36,7 +35,6 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
         _triggerCalled = false;
         _penguin.ArmyTriggerCalled = false;
-        _penguin.WaitForCommandToArmyCalled = false;
 
         if (!_penguin.TargetLock)
         {
@@ -94,13 +92,13 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
     {
         _triggerCalled = true;
 
-        if (_penguin.WaitForCommandToArmyCalled)
-            _penguin.MoveToMouseClickPositon();
+        if (_penguin.IgnoreToArmyCalled)
+            _penguin.MoveToClickPositon();
     }
 
     protected void MustMoveEnter()
     {
-        _penguin.MoveToMouseClickPositon();
+        _penguin.MoveToClickPositon();
         _penguin.SuccessfulToArmyCalled = false;
     }
 

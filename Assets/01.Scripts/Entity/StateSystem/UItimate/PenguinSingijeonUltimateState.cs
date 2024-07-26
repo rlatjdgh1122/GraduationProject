@@ -15,8 +15,6 @@ public class PenguinSingijeonUltimateState : State
     {
         base.EnterState();
 
-        prevMode = _penguin.MyArmy.MovefocusMode;
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
         _penguin.StopImmediately();
 
         _penguin.LookTargetImmediately();
@@ -28,9 +26,6 @@ public class PenguinSingijeonUltimateState : State
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
-        _penguin.StopImmediately();
 
         if (_triggerCalled)
         {
@@ -48,6 +43,5 @@ public class PenguinSingijeonUltimateState : State
     public override void ExitState()
     {
         base.ExitState();
-        _penguin.MyArmy.MovefocusMode = prevMode;
     }
 }

@@ -15,14 +15,16 @@ public class PenguinSpinAttackState : State
     {
         base.EnterState();
 
-        prevMode = _penguin.MyArmy.MovefocusMode;
-        _penguin.MyArmy.MovefocusMode = MovefocusMode.Stop;
         _penguin.StopImmediately();
 
         _penguin.LookTargetImmediately();
 
-        general.Skill.PlaySkill();
+        _triggerCalled = false;
+        _penguin.IgnoreToArmyCalled = true;
+
         general.Skill.IsAvaliable = false;
+        general.Skill.PlaySkill();
+
         AttackEnter();
     }
 
@@ -50,10 +52,15 @@ public class PenguinSpinAttackState : State
 
     public override void ExitState()
     {
+        if (_penguin.MyArmy.MovefocusMode == MovefocusMode.Command) //애니메이션 끝난 이후 움직이게
+        {
+            _penguin.MoveToClickPositon();
+        }
+        _penguin.IgnoreToArmyCalled = false;
+        general.Skill.IsAvaliable = true;
+
         base.ExitState();
 
-        _penguin.MyArmy.MovefocusMode = prevMode;
-        general.Skill.IsAvaliable = true;
         //AttackExit();
     }
 
@@ -61,6 +68,6 @@ public class PenguinSpinAttackState : State
     {
         base.AnimationTrigger();
 
-        _stateMachine.ChangeState(PenguinStateType.Impact);
+        //_stateMachine.ChangeState(PenguinStateType.Impact);
     }
 }
