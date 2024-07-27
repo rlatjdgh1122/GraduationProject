@@ -226,6 +226,11 @@ public class ArmyManager : Singleton<ArmyManager>
         return _armies[legion - 1];
     }
 
+    public Army GetArmyByLegionName(string armyName)
+    {
+        return _armies.Find(x => x.LegionName == armyName);
+    }
+
     public void SetArmySynergy(int legionIdx, SynergyType synergyType)
     {
         _armies[legionIdx].SynergyType = synergyType;

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class LegionSoldierSlot : MonoBehaviour
 {
-    private Image _icon;
+    [HideInInspector] public Image Icon;
     public bool IsBonus = false;
 
     public string LegionName { get; set; } = "";
@@ -12,9 +12,9 @@ public class LegionSoldierSlot : MonoBehaviour
 
     private void Awake()
     {
-        _icon = transform.Find("Icon").GetComponent<Image>();
+        Icon = transform.Find("Icon").GetComponent<Image>();
 
-        _icon.gameObject.SetActive(false);
+        Icon.gameObject.SetActive(false);
     }
 
     public void SetSlot(EntityInfoDataSO info, string legionName, int spawnIdx)
@@ -26,7 +26,7 @@ public class LegionSoldierSlot : MonoBehaviour
         PenguinManager.Instance.DummyToPenguinMapping(dummy, penguin);
         ArmyManager.Instance.JoinArmyToSoldier(legionName, LegionIdx, penguin);
 
-        _icon.gameObject.SetActive(true);
-        _icon.sprite = info.PenguinIcon;
+        Icon.gameObject.SetActive(true);
+        Icon.sprite = info.PenguinIcon;
     }
 }

@@ -4,8 +4,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AAType
+{
+    Front,
+    Back,
+}
+
 public static class ExtensionMethod
 {
+
+
+
     #region Mathf 확장
 
     public static void Percent(this Mathf mathf, int value, int comparisonValue)
@@ -49,6 +58,39 @@ public static class ExtensionMethod
     #endregion
 
     #region List
+
+    public enum ApplyToCountType
+    {
+        Front,
+        Back,
+    }
+
+    /// <summary>
+    /// 리스트의 앞부분 또는 뒷부분에서 지정된 개수의 요소에 대해 주어진 액션을 적용
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="count"></param>
+    /// <param name="action"></param>
+    /// <param name="type"></param>
+    public static void ApplyToCount<T>(this List<T> list, int count, Action<T> action = null, ApplyToCountType type = ApplyToCountType.Front)
+    {
+        if (type == ApplyToCountType.Front)
+        {
+            for (int i = 0; i < count; ++i)
+            {
+                action?.Invoke(list[i]);
+            }
+        }
+
+        else if (type == ApplyToCountType.Back)
+        {
+            for (int i = list.Count - count; i > list.Count; ++i)
+            {
+                action?.Invoke(list[i]);
+            }
+        }
+    }
 
     /// <summary>
     /// 나와 그 나머지를 나눠서 동작

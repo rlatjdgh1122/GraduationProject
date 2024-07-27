@@ -1,6 +1,9 @@
+using ArmySystem;
+using Define.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class LegionPanel : PopupUI
@@ -21,6 +24,13 @@ public class LegionPanel : PopupUI
 
     [SerializeField] private RectTransform _lockedTrm;
 
+    private Sprite _skullIcon = null;
+
+    private void OnDestroy()
+    {
+        SignalHub.OnBattlePhaseEndEvent -= OnBattleEndEventHandler;
+    }
+
     public override void Awake()
     {
         base.Awake();
@@ -28,6 +38,26 @@ public class LegionPanel : PopupUI
         _soldierSlotList = GetComponentsInChildren<LegionSoldierSlot>()
                             .Where(slot => !slot.IsBonus)
                             .ToList();
+
+        SignalHub.OnBattlePhaseEndEvent += OnBattleEndEventHandler;
+    }
+
+    private void Start()
+    {
+        _skullIcon = VResources.Load<Sprite>("Skull");
+    }
+
+
+    private void OnBattleEndEventHandler()
+    {
+        Army army = ArmyManager.Instance.GetArmyByLegionName(LegionName);
+
+        if (army != null)
+        {
+            int deadCount = _soldierSlotList.Count - army.Soldiers.Count;
+            _soldierSlotList.ForEach(s => s.Icon.sprite = SoldierlInfo.PenguinIcon); //일단 초기화
+            _soldierSlotList.ApplyToCount(deadCount, s => s.Icon.sprite = _skullIcon);
+        }
     }
 
     public void UnlockedLegion() => _lockedTrm.gameObject.SetActive(false);

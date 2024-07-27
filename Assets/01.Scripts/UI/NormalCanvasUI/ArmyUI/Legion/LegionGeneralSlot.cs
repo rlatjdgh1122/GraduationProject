@@ -1,6 +1,9 @@
+using ArmySystem;
 using AssetKits.ParticleImage;
+using Define.Resources;
 using DG.Tweening;
 using SynergySystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,7 +19,21 @@ public class LegionGeneralSlot : MonoBehaviour
     public Button button;
 
     private GeneralInfoDataSO _infoData;
+    private Sprite _skullIcon = null;
 
+    private string _legionName = string.Empty;
+
+    private void OnEnable()
+    {
+        SignalHub.OnSynergyEnableEvent += StartParticles;
+        SignalHub.OnBattlePhaseEndEvent += OnBattleEndEventHandler;
+    }
+
+    private void OnDisable()
+    {
+        SignalHub.OnSynergyEnableEvent -= StartParticles;
+        SignalHub.OnBattlePhaseEndEvent -= OnBattleEndEventHandler;
+    }
     private void Awake()
     {
         _icon = transform.Find("Icon").GetComponent<Image>();
@@ -24,19 +41,33 @@ public class LegionGeneralSlot : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        SignalHub.OnSynergyEnableEvent += StartParticles;
+        _skullIcon = VResources.Load<Sprite>("Skull");
     }
 
-    private void OnDisable()
+    private void OnBattleEndEventHandler()
     {
-        SignalHub.OnSynergyEnableEvent -= StartParticles;
+        if (_infoData)
+        {
+            Army army = ArmyManager.Instance.GetArmyByLegionName(_legionName);
+
+            if (army.IsGeneral)
+            {
+                _icon.sprite = _infoData.PenguinIcon;
+            }
+            else
+            {
+                _icon.sprite = _skullIcon;
+            }
+        }
     }
 
-    public void SetSlot(GeneralInfoDataSO info)
+
+    public void SetSlot(GeneralInfoDataSO info, string legionName)
     {
         _infoData = info;
+        _legionName = legionName;
 
         _icon.gameObject.SetActive(true);
         _icon.sprite = info.PenguinIcon;
