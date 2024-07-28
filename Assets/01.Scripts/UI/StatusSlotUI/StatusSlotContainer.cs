@@ -78,13 +78,13 @@ public class StatusSlotContainer : MonoBehaviour
 
         SkillUI slotSkillUI = slot.SkillUI;
         UltimateUI slotUltimateUI = slot.UltimateUI;
-        if (slotSkillUI)
+        if (slotSkillUI && newArmy.General)
         {
             var generalInfo = GetDataByGeneralType(newArmy.General.GeneralType);
             _selectedStatusSlot.SetSkillUI(slotSkillUI.CurrntValue, slotSkillUI.CurrentFillAmount, generalInfo);
         }
 
-        if (slotUltimateUI)
+        if (slotUltimateUI && newArmy.General)
         {
             _selectedStatusSlot.SetUltimateUI(slotUltimateUI.CurrentFillAmount, ultimateInfo);
         }
