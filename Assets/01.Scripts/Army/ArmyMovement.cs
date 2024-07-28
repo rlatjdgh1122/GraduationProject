@@ -12,11 +12,7 @@ public class ArmyMovement : MonoBehaviour
     private bool isCanMove = false;
     private bool successfulSeatMyPos = false;
 
-    private bool result => successfulSeatMyPos && isCanMove;
-
     private Coroutine WaitForAllTrueCoutine = null;
-    private Coroutine AllTrueToCanMoveCoutine = null;
-    private Coroutine AllTrueToSeatMyPostionCoutine = null;
 
     private static float heartbeat = 0.1f;
     private static WaitForSecondsRealtime waitingByheartbeat = new WaitForSecondsRealtime(heartbeat);
@@ -32,7 +28,7 @@ public class ArmyMovement : MonoBehaviour
         SignalHub.OnArmyChanged -= OnArmyChangedHandler;
         SignalHub.OnModifyCurArmy -= OnModifyCurArmyHnadler;
     }
-   
+
 
     private void OnArmyChangedHandler(Army prevArmy, Army newArmy)
     {
@@ -92,7 +88,11 @@ public class ArmyMovement : MonoBehaviour
             penguin.MousePos = mousePos;
             penguin.SuccessfulToArmyCalled = false;
             penguin.ArmyTriggerCalled = true;
-            penguin.MoveToMySeat(mousePos);
+
+            if (!penguin.IgnoreToArmyCalled) //군단 명령을 무시한거 아니면 움직이게
+            {
+                penguin.MoveToMySeat(mousePos);
+            }
         }
 
         yield return new WaitUntil(() => armySoldierList.TrueForAll(penguin => penguin.SuccessfulToArmyCalled));

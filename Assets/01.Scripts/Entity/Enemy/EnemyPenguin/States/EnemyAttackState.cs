@@ -50,6 +50,8 @@ public class EnemyAttackState : EnemyBaseState
     {
         base.AnimationTrigger();
 
+        _enemy.FindNearestTarget();
+
         _entityActionData.AddAttackCount();
 
         //이거 안쓸수도

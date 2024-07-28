@@ -29,11 +29,10 @@ public class State
 
     protected void IdleEnter()
     {
-        _penguin.StopImmediately();
+        //_penguin.StopImmediately();
 
         _penguin.PenguinTriggerCalled = false;
         _penguin.SuccessfulToArmyCalled = true;
-        _penguin.WaitForCommandToArmyCalled = true;
 
         _penguin.MyArmy.MovefocusMode = MovefocusMode.Command;
         //_penguin.FindNearestEnemyInTargetArmy();
@@ -48,7 +47,6 @@ public class State
         _triggerCalled = false;
         _penguin.ArmyTriggerCalled = false;
         _penguin.PenguinTriggerCalled = false;
-        _penguin.WaitForCommandToArmyCalled = false;
 
         if (!_penguin.TargetLock)
         {
@@ -113,7 +111,7 @@ public class State
 
     protected void MustMoveEnter()
     {
-        _penguin.MoveToMouseClickPositon();
+        _penguin.MoveToClickPositon();
         _penguin.SuccessfulToArmyCalled = false;
     }
     #endregion

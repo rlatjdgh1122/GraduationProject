@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ public class PenguinStateMachine
         CurrentState = StateDictionary[newState];
         CurrentState.EnterState();
 
-        ///Debug.Log($"{PrevState} -> {CurrentState}");
+        //Debug.Log($"{PrevState} -> {CurrentState}");
     }
 
     public void AddState(PenguinStateType stateType, State playerState)

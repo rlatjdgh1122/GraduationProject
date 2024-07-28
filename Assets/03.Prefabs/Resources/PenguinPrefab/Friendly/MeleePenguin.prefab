@@ -778,10 +778,11 @@ MonoBehaviour:
   CurrentTarget: {fileID: 0}
   _maxDetectEnemy: 5
   innerDistance: 7
-  attackDistance: 1.2
+  attackDistance: 0.8
   TargetLayer:
     serializedVersion: 2
     m_Bits: 4096
+  moveSpeed: 4
   attackSpeed: 1.2
   passiveData: {fileID: 0}
   ArmyTriggerCalled: 0
@@ -877,7 +878,6 @@ MonoBehaviour:
   HitNormal: {x: 0, y: 0, z: 0}
   HitType: 0
   HitTarget: {fileID: 0}
-  HitCount: 0
 --- !u!143 &7709827813026867361
 CharacterController:
   m_ObjectHideFlags: 0

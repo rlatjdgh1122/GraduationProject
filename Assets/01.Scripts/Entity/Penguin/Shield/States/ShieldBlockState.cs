@@ -14,7 +14,6 @@ public class ShieldBlockState : ShieldBaseState
     public override void Enter()
     {
         base.Enter();
-        _penguin.WaitForCommandToArmyCalled = false;
         _penguin.StopImmediately();
         _penguin.FindNearestEnemyInTargetArmy();
 

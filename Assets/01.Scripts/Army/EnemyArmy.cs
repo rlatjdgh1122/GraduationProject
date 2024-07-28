@@ -50,6 +50,8 @@ namespace ArmySystem
 
         public void OnMouseEnter()
         {
+            if (IsSelected) return;
+
             foreach (Enemy enemy in Soldiers)
             {
                 enemy.OutlineCompo.enabled = true;
@@ -88,7 +90,7 @@ namespace ArmySystem
         }
 
         public void DeSelected()
-        {   
+        {
             IsSelected = false;
 
             DeSelectedOutline();

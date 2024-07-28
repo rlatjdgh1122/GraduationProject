@@ -8,10 +8,9 @@ using UnityEngine;
 
 public class ArmyManager : Singleton<ArmyManager>
 {
-    [SerializeField] private List<Army> armies;
+    [SerializeField] private List<Army> _armies;
     [SerializeField] private SettingArmyPostion _settingArmyPsotion = null;
-
-    public General G;
+    [SerializeField] private Color _selectedOutlineColor = Color.white;
 
     #region property
 
@@ -31,19 +30,19 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         get
         {
-            if (armies.Count <= 0) return null;
-            return armies[curArmyIdx < 0 ? 0 : curArmyIdx];
+            if (_armies.Count <= 0) return null;
+            return _armies[curArmyIdx < 0 ? 0 : curArmyIdx];
         }
     }
 
-    public List<Army> Armies { get { return armies; } }
+    public List<Army> Armies { get { return _armies; } }
 
     #endregion
 
     private int prevArmyIdx = -1;
     private int curArmyIdx = -1;
 
-    public int ArmiesCount => armies.Count;
+    public int ArmiesCount => _armies.Count;
 
 
     private Transform SpawnPoint => GameManager.Instance.TentTrm;
@@ -72,8 +71,8 @@ public class ArmyManager : Singleton<ArmyManager>
 
     private void OnBattleStart()
     {
-        var prevArmy = armies[prevArmyIdx > 0 ? prevArmyIdx : 0];
-        var curArmy = armies[curArmyIdx > 0 ? curArmyIdx : 0];
+        var prevArmy = _armies[prevArmyIdx > 0 ? prevArmyIdx : 0];
+        var curArmy = _armies[curArmyIdx > 0 ? curArmyIdx : 0];
 
         CoroutineUtil.CallWaitForSeconds(0.01f,
 
@@ -93,8 +92,8 @@ public class ArmyManager : Singleton<ArmyManager>
 
     private void Start()
     {
-        if (armies.Count > 0)
-            armies.Clear();
+        if (_armies.Count > 0)
+            _armies.Clear();
 
         //CreateArmy();
     }
@@ -147,12 +146,12 @@ public class ArmyManager : Singleton<ArmyManager>
         if (!WaveManager.Instance.IsBattlePhase) return;
 
         //아직 생성되지 않은 군단에 접근하면 리턴해줌
-        if (armies.Count < legion) return;
+        if (_armies.Count < legion) return;
 
         SignalHub.OnModifyCurArmy?.Invoke();
 
         int Idx = legion - 1;
-        var curArmy = armies[Idx];
+        var curArmy = _armies[Idx];
 
         var General = curArmy.General;
 
@@ -160,6 +159,7 @@ public class ArmyManager : Singleton<ArmyManager>
         curArmy.Soldiers.ForEach(s =>
         {
             s.OutlineCompo.enabled = true;
+            s.OutlineCompo.SetColor(_selectedOutlineColor);
             s.HealthCompo.IsAlwaysShowUI = true;
             s.HealthCompo?.OnUIUpdate?.Invoke(s.HealthCompo.currentHealth, s.HealthCompo.maxHealth);
         });
@@ -169,6 +169,7 @@ public class ArmyManager : Singleton<ArmyManager>
             var GeneralHealtCompo = General.HealthCompo;
 
             General.OutlineCompo.enabled = true;
+            General.OutlineCompo.SetColor(_selectedOutlineColor);
             GeneralHealtCompo.IsAlwaysShowUI = true;
             GeneralHealtCompo?.OnUIUpdate?.Invoke(GeneralHealtCompo.currentHealth, GeneralHealtCompo.maxHealth);
         }
@@ -188,9 +189,9 @@ public class ArmyManager : Singleton<ArmyManager>
         prevArmyIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
         curArmyIdx = Idx;
 
-        SignalHub.OnArmyChanged.Invoke(armies[prevArmyIdx], armies[curArmyIdx]);
+        SignalHub.OnArmyChanged.Invoke(_armies[prevArmyIdx], _armies[curArmyIdx]);
 
-        armies.IdxExcept
+        _armies.IdxExcept
             (
             Idx,
            null,
@@ -222,18 +223,23 @@ public class ArmyManager : Singleton<ArmyManager>
 
     public Army GetArmy(int legion)
     {
-        return armies[legion - 1];
+        return _armies[legion - 1];
+    }
+
+    public Army GetArmyByLegionName(string armyName)
+    {
+        return _armies.Find(x => x.LegionName == armyName);
     }
 
     public void SetArmySynergy(int legionIdx, SynergyType synergyType)
     {
-        armies[legionIdx].SynergyType = synergyType;
+        _armies[legionIdx].SynergyType = synergyType;
     }
 
     public Army GetArmyBySynergyType(SynergyType synergyType)
     {
         Army result = null;
-        result = armies.Find(a => a.SynergyType == synergyType && a.IsSynergy);
+        result = _armies.Find(a => a.SynergyType == synergyType && a.IsSynergy);
 
         return result;
     }
@@ -247,7 +253,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curArmyIdx].AddStat(value, type, mode);
+        _armies[curArmyIdx].AddStat(value, type, mode);
     }
 
     /// <summary>
@@ -258,7 +264,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStatCurAmry(int value, StatType type, StatMode mode)
     {
-        armies[curArmyIdx].RemoveStat(value, type, mode);
+        _armies[curArmyIdx].RemoveStat(value, type, mode);
     }
 
     /// <summary>
@@ -270,7 +276,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void RemoveStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion - 1].RemoveStat(value, type, mode);
+        _armies[legion - 1].RemoveStat(value, type, mode);
     }
     /// <summary>
     /// 군단의 스탯을 삭제
@@ -281,7 +287,7 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="mode"> 상승 또는 감소</param>
     public void AddStat(int legion, int value, StatType type, StatMode mode)
     {
-        armies[legion - 1].AddStat(value, type, mode);
+        _armies[legion - 1].AddStat(value, type, mode);
     }
 
     #endregion
@@ -296,12 +302,12 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="obj"> Penguin 타입만 가능</param>
     public void JoinArmyToSoldier(string legionName, int legionIdx, Penguin obj) //들어가고 싶은 군단, 군인펭귄
     {
-        if (armies.Find(p => p.LegionName == legionName) == null)
+        if (_armies.Find(p => p.LegionName == legionName) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
-        var Army = armies[legionIdx];
+        var Army = _armies[legionIdx];
 
         obj.SetOwner(Army);
         Army.AddSolider(obj);
@@ -322,13 +328,13 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="obj"> Penguin 타입만 가능</param>
     public void JoinArmyToGeneral(string legionName, int legionIdx, General obj) //들어가고 싶은 군단, 장군펭귄
     {
-        if (armies.Find(p => p.LegionName == legionName) == null)
+        if (_armies.Find(p => p.LegionName == legionName) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
         }
 
-        var Army = armies[legionIdx];
+        var Army = _armies[legionIdx];
 
         /* if (Army.General != null)
          {
@@ -366,7 +372,7 @@ public class ArmyManager : Singleton<ArmyManager>
         //대신 군단에서 스탯빠지는건 해주고 (장군, 펭귄따로)
 
         //증가된 군단 스탯 지우기
-        var Army = armies[penguin.MyArmy.LegionIdx];
+        var Army = _armies[penguin.MyArmy.LegionIdx];
 
         penguin.SetOwner(null);
 
@@ -418,21 +424,21 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         Army newArmy = new Army();
 
-        newArmy.LegionIdx = armies.Count;
+        newArmy.LegionIdx = _armies.Count;
         newArmy.MoveSpeed = 4f;
         newArmy.LegionName = armyName;
         newArmy.IsArmyReady = false;
         newArmy.SynergyType = SynergyType.Police;
 
-        armies.Add(newArmy);
+        _armies.Add(newArmy);
         return newArmy;
     }
 
     public bool CheckEmpty()
     {
-        if (armies.Count <= 0) return true;
+        if (_armies.Count <= 0) return true;
 
-        bool result = armies.All(x => x.CheckEmpty());
+        bool result = _armies.All(x => x.CheckEmpty());
         return result;
     }
 

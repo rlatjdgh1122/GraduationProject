@@ -15,7 +15,7 @@ public class Penguin : Entity
     #region property
 
     public bool ArmyTriggerCalled = false;
-    public bool WaitForCommandToArmyCalled = true;
+    public bool IgnoreToArmyCalled = false;
     public bool SuccessfulToArmyCalled = false;
 
 
@@ -396,12 +396,12 @@ public class Penguin : Entity
         }
     }
 
-    public void MoveToMouseClickPositon()
+    public void MoveToClickPositon()
     {
         if (NavAgent != null)
         {
             NavAgent.isStopped = false;
-            NavAgent?.SetDestination(MousePos + SeatPos);
+            bool destinationSet = NavAgent.SetDestination(MousePos + SeatPos);
         }
     }
 

@@ -21,6 +21,7 @@ namespace ArmySystem
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들
         public General General = null; //장군
+        public bool IsGeneral => General != null;
 
         public EnemyArmy TargetEnemyArmy = null;
         public Ability Ability = null; //시너지 스탯
@@ -116,7 +117,7 @@ namespace ArmySystem
         {
             //시너지 비활성화
             SignalHub.OnSynergyDisableEvent?.Invoke(SynergyType);
-            
+
             General = null;
             SkillController = null;
 

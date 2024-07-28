@@ -26,7 +26,7 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
         _prevGeneralInfo = GeneralInfo;
         GeneralInfo = info;
         JoinToArmy();
-        _generalSlot.SetSlot(GeneralInfo);
+        _generalSlot.SetSlot(GeneralInfo, _legionPanel.LegionName);
         _generalSlot.button.interactable = false;
         GeneralSelectSlotList.SetSelectedSlots(info);
         HidePanel();
