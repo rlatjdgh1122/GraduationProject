@@ -25,8 +25,7 @@ public class SceneChanger : MonoBehaviour
 
     private bool ExcludeKeyCode()
     {
-        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKey(KeyCode.LeftAlt) ||
-            Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2);
+        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKey(KeyCode.LeftAlt);
     }
 
     IEnumerator WaitCutSceneTime(float waitCutSceneTime, string sceneName)
