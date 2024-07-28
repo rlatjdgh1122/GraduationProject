@@ -34,7 +34,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     private void OffRegister()
     {
-        if (SkillUI != null)
+        if (SkillUI != null && _army.SkillController)
         {
             _army.SkillController.OnSkillUsedEvent -= SkillUI.OnSkillUsed;
             _army.SkillController.OnChangedMaxValueEvent -= SkillUI.OnChangedMaxValue;
@@ -42,7 +42,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.SkillController.OnSkillReadyEvent -= SkillUI.OnSkillReady;
         }
 
-        if (UltimateUI != null)
+        if (UltimateUI != null && _army.UltimateController)
         {
             _army.UltimateController.OnSkillUsedEvent -= UltimateUI.OnUltimateUsed;
             _army.UltimateController.OnChangedMaxValueEvent -= UltimateUI.OnChangedMaxValue;
@@ -53,7 +53,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
     public void OnRegister()
     {
-        if (SkillUI != null)
+        if (SkillUI != null && _army.SkillController)
         {
             _army.SkillController.OnSkillUsedEvent += SkillUI.OnSkillUsed;
             _army.SkillController.OnChangedMaxValueEvent += SkillUI.OnChangedMaxValue;
@@ -63,7 +63,7 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.SkillController.Init();
         }
 
-        if (UltimateUI != null)
+        if (UltimateUI != null && _army.UltimateController)
         {
             _army.UltimateController.OnSkillUsedEvent += UltimateUI.OnUltimateUsed;
             _army.UltimateController.OnChangedMaxValueEvent += UltimateUI.OnChangedMaxValue;
