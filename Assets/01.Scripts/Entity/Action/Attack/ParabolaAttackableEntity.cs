@@ -17,7 +17,6 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
         if(owner.CurrentTarget == null ||
            owner.CurrentTarget.IsDead)
         {
-            Debug.Log("dk");
             return;
         }
 
@@ -41,7 +40,6 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
 
         if(colliders.Length <= 0)
         {
-            Debug.Log("¾ø");
             SkillRangeAttack();
             return;
         }

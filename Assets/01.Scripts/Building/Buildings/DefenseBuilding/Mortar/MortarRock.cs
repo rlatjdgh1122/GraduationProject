@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MortarRock : Arrow, IParabolicProjectile
 {
-    private float timer;
     private MortarExplosionEffect _attackFeedback;
 
     [SerializeField] // 일단 여기다가 넣음
@@ -16,10 +15,15 @@ public class MortarRock : Arrow, IParabolicProjectile
 
     private Vector3 _endPos;
 
-    private void Awake()
-    { 
-        //_damageCaster = GetComponent<DamageCaster>();
-        _attackFeedback = transform.GetChild(0).GetComponent<MortarExplosionEffect>();
+    protected override void Awake()
+    {
+        base.Awake();
+        _attackFeedback = transform.Find("MortarAttackEffect").GetComponent<MortarExplosionEffect>();
+    }
+
+    protected override void OnEnable()
+    {
+        isDestoried = false;
     }
 
     public override void Setting(TargetObject owner, LayerMask layer)
@@ -30,10 +34,10 @@ public class MortarRock : Arrow, IParabolicProjectile
 
     protected override void OnTriggerEnter(Collider other)
     {
-        DestroyRock();
+        DestroyRock(transform.position);
     }
 
-    private void DestroyRock()
+    private void DestroyRock(Vector3 pos)
     {
         if (!isDestoried)
         {
@@ -41,8 +45,8 @@ public class MortarRock : Arrow, IParabolicProjectile
             _mortarAttackRangeSprite.transform.SetParent(transform);
             _mortarAttackRangeSprite.SetActive(false);
             _damageCaster.CastBuildingAoEDamage(transform.position, _damageCaster.TargetLayer, damage);
-            _attackFeedback.CreateFeedback(_endPos);
-            SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position);
+            _attackFeedback.CreateFeedback(pos);
+            SoundManager.Play3DSound(SoundName.MortarExplosion, transform.position, 40, 80);
 
             CoroutineUtil.CallWaitForSeconds(0.7f, () =>
             {
@@ -56,7 +60,6 @@ public class MortarRock : Arrow, IParabolicProjectile
         _mortarAttackRangeSprite.SetActive(true);
         _mortarAttackRangeSprite.transform.position = targetPosition;
         _mortarAttackRangeSprite.transform.SetParent(null);
-
-        StartCoroutine(Parabola.ParabolaMove(this,_rigid, startPosition, targetPosition, maxTime, isPool, true, DestroyRock));
+        StartCoroutine(Parabola.ParabolaMove(this,_rigid, startPosition, targetPosition, maxTime, isPool, true, () => DestroyRock(targetPosition)));
     }
 }

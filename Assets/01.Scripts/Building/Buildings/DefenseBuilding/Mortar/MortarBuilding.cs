@@ -68,7 +68,7 @@ public class MortarBuilding : DefenseBuilding
                 elapsedTime += Time.deltaTime;
                 remainWaitTime -= Time.deltaTime;
 
-                if (!isBattlePhase) // ½î·Á°í ÇÏ´Âµ¥ ÀüÅõÆäÀÌÁî°¡ ¾Æ´Ï¸é ºÎÃ¤·Î È£´Ù´Ú ²û
+                if (_currentTarget == null) // ½î·Á°í ÇÏ´Âµ¥ ÀüÅõÆäÀÌÁî°¡ ¾Æ´Ï¸é ºÎÃ¤·Î È£´Ù´Ú ²û
                 {
                     isFired = false;
                     //float endYValuee = _cannonTransform.localPosition.y + fireMoveValue;
@@ -94,6 +94,8 @@ public class MortarBuilding : DefenseBuilding
 
     private void Fire()
     {
+        if (_currentTarget == null) { return; }
+
         ReturnOriginScale();
 
         MortarRock rock = PoolManager.Instance.Pop(prefabName) as MortarRock;
@@ -103,11 +105,7 @@ public class MortarBuilding : DefenseBuilding
 
         rock.Setting(this, _layer); //¹Ù²ã¾ß´ï
 
-        if (_currentTarget != null)
-        {
-            rock.ExecuteAttack(_firePos.position, _currentTarget.position, 10f, true);
-        }
-
+        rock.ExecuteAttack(_firePos.position, _currentTarget.position, 10f, true);
 
         SoundManager.Play3DSound(SoundName.MortarFire, _firePos.position);
     }

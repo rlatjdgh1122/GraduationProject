@@ -18,10 +18,14 @@ public class Arrow : PoolableMono
             StopCoroutine(WaitForDestroyCorountine);
     }
 
-    private void OnEnable()
+    protected virtual void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
         _damageCaster = GetComponent<DamageCaster>();
+    }
+
+    protected virtual void OnEnable()
+    {
         WaitForDestroyCorountine = StartCoroutine(WaitForDestroy());
     }
 
