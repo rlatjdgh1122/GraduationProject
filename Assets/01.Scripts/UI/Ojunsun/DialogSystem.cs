@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System;
 using UnityEngine.Events;
 
 public class DialogSystem : MonoBehaviour
@@ -17,6 +18,7 @@ public class DialogSystem : MonoBehaviour
     private float tippingSpeed;
 
     private Tween fadeTween;
+    private UnityEvent _dialogAction = null;
 
     bool isTyping = false; //글자가 모두 출력되기 전에 스킵 하는 걸 막기 위한 변수
     bool canClick = true;
@@ -28,7 +30,7 @@ public class DialogSystem : MonoBehaviour
         tippingSpeed = defaultTippingSpeed;
     }
 
-    public void Begin(string[] texts)
+    public void Begin(string[] texts, UnityEvent action = null)
     {
         sentences.Clear();
 
@@ -36,6 +38,9 @@ public class DialogSystem : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
+
+        if(action != null)
+            _dialogAction = action;
 
         Next();
     }
@@ -113,7 +118,7 @@ public class DialogSystem : MonoBehaviour
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
 
-            //MaskingUIManager.Instance?.SetMaskingImagePos();
+            _dialogAction?.Invoke();
         });
     }
 

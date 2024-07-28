@@ -94,10 +94,7 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = _startPosition;
-            transform.rotation = Quaternion.identity;
-            _cinemachineCam.transform.rotation = _vCamstartRotation;
-            CheckDistanceAndFade();
+            CameraStop();
         }
 
         if (Input.GetKey(KeyCode.Space))
@@ -108,6 +105,14 @@ public class CameraSystem : MonoBehaviour
         {
             isMoving = true;
         }
+    }
+
+    public void CameraStop()
+    {
+        transform.position = _startPosition;
+        transform.rotation = Quaternion.identity;
+        _cinemachineCam.transform.rotation = _vCamstartRotation;
+        CheckDistanceAndFade();
     }
 
     public void Look(Vector3 pos)
