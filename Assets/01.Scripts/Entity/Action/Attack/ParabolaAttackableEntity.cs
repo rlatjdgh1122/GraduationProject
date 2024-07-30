@@ -24,12 +24,12 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
 
         if (colliders.Length > 0)
         {
-            curtarget = GetColliders().FirstOrDefault().GetComponent<TargetObject>();
+            curtarget = owner.CurrentTarget.GetComponent<TargetObject>();
             _firePos.LookAt(new Vector3(curtarget.transform.position.x,
             curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
         }
 
-        SingijeonArrow arrow = GenerateArrow();
+        ParabolaArrow arrow = GenerateArrow();
 
         ExecuteAttack(curtarget, arrow);
     }
@@ -50,7 +50,7 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
             _firePos.LookAt(new Vector3(curtarget.transform.position.x,
             curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
 
-            SingijeonArrow arrow = GenerateArrow();
+            ParabolaArrow arrow = GenerateArrow();
             ExecuteAttack(curtarget, arrow);
         }
     }
@@ -68,7 +68,7 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
             curtarget.transform.position.y + 0.5f, curtarget.transform.position.z));
         }
 
-        SingijeonArrow arrow = GenerateArrow();
+        ParabolaArrow arrow = GenerateArrow();
 
         ExecuteAttack(curtarget, arrow);
     }
@@ -82,9 +82,9 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
         return colliders;
     }
 
-    private SingijeonArrow GenerateArrow()
+    private ParabolaArrow GenerateArrow()
     {
-        SingijeonArrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation) as SingijeonArrow;
+        ParabolaArrow arrow = Instantiate(_arrowPrefab, _firePos.transform.position, _firePos.rotation) as ParabolaArrow;
         //Arrow arrow = PoolManager.Instance.Pop(_arrowPrefab.name) as Arrow;
         arrow.transform.position = _firePos.position;
         arrow.transform.rotation = Quaternion.Euler(_firePos.transform.forward);
@@ -94,7 +94,7 @@ public class ParabolaAttackableEntity : RangeAttackableEntity
         return arrow;
     }
 
-    private void ExecuteAttack(TargetObject curtarget, SingijeonArrow arrow)
+    private void ExecuteAttack(TargetObject curtarget, ParabolaArrow arrow)
     {
         if (curtarget != null)
         {
