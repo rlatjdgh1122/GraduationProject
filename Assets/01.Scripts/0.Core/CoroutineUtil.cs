@@ -23,7 +23,7 @@ public static class CoroutineUtil
         _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, afterAction));
     }
 
-    public static IEnumerator DoCallWaitForAction(Func<bool> action, Action afterAction = null)
+    public static IEnumerator DoCallWaitForAction(Func<bool> action, Action afterAction = null) //action이 true가 되면 실행
     {
         yield return new WaitUntil(action);
         afterAction?.Invoke();

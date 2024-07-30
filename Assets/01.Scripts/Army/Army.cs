@@ -20,7 +20,10 @@ namespace ArmySystem
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들
-        public General General = null; //장군
+        public List<Penguin> AliveSoldiers = new(); //살아있는 펭귄들
+        public List<Penguin> DeadSoldiers = new(); //죽은 펭귄들
+
+        public General General = null; //장군은 위 리스트에 포함되지 않음 
         public bool IsGeneral => General != null;
 
         public EnemyArmy TargetEnemyArmy = null;
@@ -30,6 +33,7 @@ namespace ArmySystem
         public SkillController UltimateController = null;
         public ArmyUIInfo Info = new();
 
+        private General _myGeneral = null;
         private float _moveSpeed = 4f;
         private string _legionName = string.Empty;
 
@@ -83,13 +87,23 @@ namespace ArmySystem
 
         public void AddSolider(Penguin penguin)
         {
-            Soldiers.Add(penguin);
-            Info.AddPenguinCount();
+            if (Soldiers.Contains(penguin))
+            {
+                Soldiers.Add(penguin);
+                AliveSoldiers.Add(penguin);
+
+                Info.AddPenguinCount();
+            }
+            else
+            {
+                Debug.Log("해당 펭귄은 이미 존재합니다.");
+            }
         }
 
         public void AddGeneral(General general)
         {
             General = general;
+            _myGeneral = general;
 
             SkillController = general.Skill.SkillController;
             UltimateController = general.Ultimate.SkillController;
@@ -108,9 +122,17 @@ namespace ArmySystem
 
         public void RemoveSolider(Penguin penguin)
         {
-            Soldiers.Remove(penguin);
+            if (AliveSoldiers.Contains(penguin))
+            {
+                AliveSoldiers.Remove(penguin);
+                DeadSoldiers.Add(penguin);
 
-            Info.RemovePenguinCount();
+                Info.RemovePenguinCount();
+            }
+            else
+            {
+                Debug.Log("해당 펭귄은 이미 죽어있습니다.");
+            }
         }
 
         public void RemoveGeneral()
@@ -122,6 +144,27 @@ namespace ArmySystem
             SkillController = null;
 
             Info.RemovePenguinCount();
+        }
+
+        //힐링시스템에서 살릴 때 사용
+        public void ResurrectSoldier(Penguin penguin)
+        {
+            if (DeadSoldiers.Contains(penguin))
+            {
+                DeadSoldiers.Remove(penguin);
+                AliveSoldiers.Add(penguin);
+
+                Info.AddPenguinCount();
+            }
+            else
+            {
+                Debug.Log("해당 펭귄은 이미 살아있습니다.");
+            }
+        }
+
+        public void ResurrectGeneral()
+        {
+            if()
         }
 
         #region Stat

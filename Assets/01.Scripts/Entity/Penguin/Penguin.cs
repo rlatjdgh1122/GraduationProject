@@ -17,6 +17,7 @@ public class Penguin : Entity
     public bool ArmyTriggerCalled = false;
     public bool IgnoreToArmyCalled = false;
     public bool SuccessfulToArmyCalled = false;
+    public bool IsMustMoving = false;
 
 
     private Coroutine movingCoroutine = null;
@@ -389,6 +390,7 @@ public class Penguin : Entity
         if (NavAgent.isActiveAndEnabled)
         {
             if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) return;
+            if (IsMustMoving) return;
 
             NavAgent.SetDestination(transform.position);
             NavAgent.isStopped = false;
@@ -402,6 +404,18 @@ public class Penguin : Entity
         {
             NavAgent.isStopped = false;
             bool destinationSet = NavAgent.SetDestination(MousePos + SeatPos);
+        }
+    }
+
+    public void MustMoveToTargetPostion(Vector3 pos)
+    {
+        if (NavAgent != null)
+        {
+            IsMustMoving = true;
+            StateMachine.ChangeState(PenguinStateType.MustMove);
+
+            NavAgent.isStopped = false;
+            bool destinationSet = NavAgent.SetDestination(pos);
         }
     }
 

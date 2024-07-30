@@ -35,6 +35,21 @@ public class HealingSystem : MonoBehaviour
         _controller.SetArmy(army);
     }
 
+    public void OnClick()
+    {
+        _controller.GoToBuilding(HealingStart);
+    }
+
+    public void BrokenBuilding()
+    {
+        UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 최소됨");
+
+        StopCoroutine(_healingTimeCorouine);
+        IsHealing = false;
+        _controller.LeaveBuilding();
+    }
+
+
     private void HealingStart()
     {
         IsHealing = true;

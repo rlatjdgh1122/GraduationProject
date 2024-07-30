@@ -1,4 +1,5 @@
 using ArmySystem;
+using System;
 using UnityEngine;
 
 public class HealingController
@@ -19,10 +20,12 @@ public class HealingController
     }
 
 
-    public void GoToBuilding()
+    public void GoToBuilding(Action afterAction)
     {
-        //bool iss = true;
-        //CoroutineUtil.DoCallWaitForAction(iss, null);
+        // 여기서 감지를 한다음 
+        // 감지에 들어온 애들은 오브젝트를 꺼주고
+        // 살아있는 아군이 다 들어왔으면
+        //CoroutineUtil.DoCallWaitForAction(, afterAction);
     }
 
     public void LeaveBuilding()
