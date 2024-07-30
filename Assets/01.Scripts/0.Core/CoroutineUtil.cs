@@ -23,6 +23,12 @@ public static class CoroutineUtil
         _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, afterAction));
     }
 
+    public static IEnumerator DoCallWaitForAction(Func<bool> action, Action afterAction = null)
+    {
+        yield return new WaitUntil(action);
+        afterAction?.Invoke();
+    }
+
     private static IEnumerator DoCallWaitForOneFrame(Action action) // 매개변수로 받은 Action을 실행해준다.
     {
         yield return null;
@@ -34,6 +40,9 @@ public static class CoroutineUtil
         yield return new WaitForSeconds(seconds);
         afterAction?.Invoke();
     }
+
+   
+
 
     private class CoroutineExecutor : MonoBehaviour { } // 코루틴을 실행해주기 위한 모노비헤이비어오브젝트
 }

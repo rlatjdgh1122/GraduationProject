@@ -12,14 +12,25 @@ public class SynergyBuildingMouseEventController : MouseEventController
         if (hit.collider.transform.TryGetComponent(out SynergyBuildingMouseEventHandler compo))
         {
             Army selectedArmy = ArmyManager.Instance.CurArmy;
-            if (selectedArmy.IsSynergy && selectedArmy.SynergyType == compo.BuildingSynergyType)
+            if (selectedArmy.CheckEmpty()) return;
+
+            if (selectedArmy.IsSynergy)
             {
-                compo.SetArmy(selectedArmy);
-                compo.OnClick();
-            }
+                if (selectedArmy.SynergyType == compo.BuildingSynergyType)
+                {
+                    compo.SetArmy(selectedArmy);
+                    compo.OnClick();
+
+                } //end if
+                else
+                {
+                    UIManager.Instance.ShowWarningUI("시너지가 맞지 않아 들어갈 수 없습니다.");
+                }
+
+            } //end if
             else
             {
-                UIManager.Instance.ShowWarningUI("해당 군단은 들어갈 수 없습니다.");
+                UIManager.Instance.ShowWarningUI("시너지가 활성화되지 않았습니다.");
             }
         }
     }
