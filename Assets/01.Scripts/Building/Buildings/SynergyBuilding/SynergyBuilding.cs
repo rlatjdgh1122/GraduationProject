@@ -11,6 +11,8 @@ public class SynergyBuilding : BaseBuilding
 {
     [SerializeField] private SynergyBuildingInfoDataSO _infoDataSO;
     public SynergyType BuildingSynergyType => _infoDataSO.SynergyType;
+
+    public Outline OutlineCompo { get; set; } = null;
     public SynergyBuildingDeadController DeadController { get; set; }
 
     private BuildingUI _buildingPanel;
@@ -23,6 +25,7 @@ public class SynergyBuilding : BaseBuilding
     {
         base.Awake();
 
+        OutlineCompo = GetComponent<Outline>();
         DeadController = GetComponent<SynergyBuildingDeadController>();
     }
 
