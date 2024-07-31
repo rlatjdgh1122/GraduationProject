@@ -21,25 +21,42 @@ public class SynergyBuildingMouseEventHandler : MouseEventHandler
 
     protected override void OnMouseEnter()
     {
+        //마우스 올렸을때 해당 시너지 이미지 + 빌딩이름 보여주기
+
+        if (!_owner.IsInstalled) return;
+        if (!WaveManager.Instance.IsBattlePhase) return;
+        if (_healingSystem.IsHealing) return;
+
         _owner.OutlineCompo.enabled = true;
 
-        //마우스 올렸을때 해당 시너지 이미지 + 빌딩이름 보여주기
     }
 
     protected override void OnMouseExit()
     {
+        if (!_owner.IsInstalled) return;
+        if (!WaveManager.Instance.IsBattlePhase) return;
+        if (_healingSystem.IsHealing) return;
+
         _owner.OutlineCompo.enabled = false;
     }
 
     public void SetArmy(Army army)
     {
+        if (!_owner.IsInstalled) return;
+        if (!WaveManager.Instance.IsBattlePhase) return;
+        if (_healingSystem.IsHealing) return;
+
         _healingSystem.SetArmy(army);
 
     }
 
     public override void OnClick()
     {
-       // _healingSystem.GoToBuilding();
-        
+        if (!_owner.IsInstalled) return;
+        if (!WaveManager.Instance.IsBattlePhase) return;
+        if (_healingSystem.IsHealing) return;
+
+        _healingSystem.OnClick();
+
     }
 }

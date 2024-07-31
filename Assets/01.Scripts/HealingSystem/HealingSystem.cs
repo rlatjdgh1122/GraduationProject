@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class HealingSystem : MonoBehaviour
 {
-    [SerializeField] private Transform _spawnStartPostion = null;
-    [SerializeField] private Transform _spawnEndPostion = null;
+    [SerializeField] private Transform _spawnStartTrm = null;
+    [SerializeField] private Transform _spawnEndTrm = null;
     [Range(1f, 10f)] public float DetectionRange = 3f;
     public int InitMaxHealingTime = 30;
     public bool IsHealing = false;
@@ -21,12 +21,7 @@ public class HealingSystem : MonoBehaviour
     {
         _maxHealingTime = InitMaxHealingTime;
 
-        _controller = new HealingController(_spawnStartPostion, _spawnEndPostion);
-    }
-
-    private void Update()
-    {
-
+        _controller = new HealingController(transform, _spawnStartTrm.position, _spawnEndTrm.position, DetectionRange);
     }
 
     public void SetArmy(Army army)
@@ -37,7 +32,7 @@ public class HealingSystem : MonoBehaviour
 
     public void OnClick()
     {
-        _controller.GoToBuilding(HealingStart);
+        _controller.GoToBuilding(StartHealing);
     }
 
     public void BrokenBuilding()
@@ -46,11 +41,11 @@ public class HealingSystem : MonoBehaviour
 
         StopCoroutine(_healingTimeCorouine);
         IsHealing = false;
-        _controller.LeaveBuilding();
+        _controller.BrokenBuilding();
     }
 
 
-    private void HealingStart()
+    private void StartHealing()
     {
         IsHealing = true;
 
@@ -62,10 +57,10 @@ public class HealingSystem : MonoBehaviour
         _healingTimeCorouine = StartCoroutine(HealingTimeCorou());
     }
 
-    private void HealingEnd()
+    private void EndHealing()
     {
         IsHealing = false;
-        _controller.LeaveBuilding();
+        _controller.EndHealing();
 
         UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 완료됨");
     }
@@ -80,10 +75,10 @@ public class HealingSystem : MonoBehaviour
             yield return null;
         }
 
-        HealingEnd();
+        EndHealing();
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, DetectionRange);

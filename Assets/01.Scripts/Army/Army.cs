@@ -19,11 +19,11 @@ namespace ArmySystem
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
 
-        public List<Penguin> Soldiers = new(); //군인 펭귄들
-        public List<Penguin> AliveSoldiers = new(); //살아있는 펭귄들
-        public List<Penguin> DeadSoldiers = new(); //죽은 펭귄들
+        public List<Penguin> Soldiers = new(); //군인 펭귄들 ((장군 미포함))
+        public List<Penguin> AlivePenguins = new(); //살아있는 펭귄들 (장군 포함)
+        public List<Penguin> DeadPenguins = new(); //죽은 펭귄들 (장군 포함)
 
-        public General General = null; //장군은 위 리스트에 포함되지 않음 
+        public General General = null;
         public bool IsGeneral => General != null;
 
         public EnemyArmy TargetEnemyArmy = null;
@@ -87,10 +87,10 @@ namespace ArmySystem
 
         public void AddSolider(Penguin penguin)
         {
-            if (Soldiers.Contains(penguin))
+            if (!Soldiers.Contains(penguin))
             {
                 Soldiers.Add(penguin);
-                AliveSoldiers.Add(penguin);
+                AlivePenguins.Add(penguin);
 
                 Info.AddPenguinCount();
             }
@@ -108,6 +108,7 @@ namespace ArmySystem
             SkillController = general.Skill.SkillController;
             UltimateController = general.Ultimate.SkillController;
 
+            AlivePenguins.Add(general);
             Info.AddPenguinCount();
 
             if (CheckSynergy(general)) //시너지가 활성화 되었을 경우
@@ -120,12 +121,12 @@ namespace ArmySystem
             }
         }
 
-        public void RemoveSolider(Penguin penguin)
+        public void RemoveSolider(Penguin solider)
         {
-            if (AliveSoldiers.Contains(penguin))
+            if (!DeadPenguins.Contains(solider))
             {
-                AliveSoldiers.Remove(penguin);
-                DeadSoldiers.Add(penguin);
+                AlivePenguins.Remove(solider);
+                DeadPenguins.Add(solider);
 
                 Info.RemovePenguinCount();
             }
@@ -137,34 +138,54 @@ namespace ArmySystem
 
         public void RemoveGeneral()
         {
-            //시너지 비활성화
-            SignalHub.OnSynergyDisableEvent?.Invoke(SynergyType);
+            if (!DeadPenguins.Contains(General))
+            {
+                AlivePenguins.Remove(General);
+                DeadPenguins.Add(General);
 
-            General = null;
-            SkillController = null;
+                Info.RemovePenguinCount();
 
-            Info.RemovePenguinCount();
+                //시너지 비활성화
+                SignalHub.OnSynergyDisableEvent?.Invoke(SynergyType);
+
+                General = null;
+                SkillController = null;
+                UltimateController = null;
+            }
+            else
+            {
+                Debug.Log("장군은 이미 죽어있습니다.");
+            }
         }
 
         //힐링시스템에서 살릴 때 사용
-        public void ResurrectSoldier(Penguin penguin)
+        public void ResurrectPenguin(Penguin penguin)
         {
-            if (DeadSoldiers.Contains(penguin))
+            if (!AlivePenguins.Contains(penguin))
             {
-                DeadSoldiers.Remove(penguin);
-                AliveSoldiers.Add(penguin);
+                if (penguin is General) //장군이라면
+                {
+                    if (_myGeneral == null) return;
+
+                    General = _myGeneral;
+                    SkillController = General.Skill.SkillController;
+                    UltimateController = General.Ultimate.SkillController;
+
+                    //시너지 다시 활성화해줌
+                    SignalHub.OnSynergyEnableEvent?.Invoke(SynergyType);
+
+                } //end if
+
+                DeadPenguins.Remove(penguin);
+                AlivePenguins.Add(penguin);
 
                 Info.AddPenguinCount();
-            }
+               
+            } //end if
             else
             {
                 Debug.Log("해당 펭귄은 이미 살아있습니다.");
             }
-        }
-
-        public void ResurrectGeneral()
-        {
-            if()
         }
 
         #region Stat

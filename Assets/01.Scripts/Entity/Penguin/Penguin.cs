@@ -412,10 +412,11 @@ public class Penguin : Entity
         if (NavAgent != null)
         {
             IsMustMoving = true;
-            StateMachine.ChangeState(PenguinStateType.MustMove);
 
             NavAgent.isStopped = false;
             bool destinationSet = NavAgent.SetDestination(pos);
+
+            StateMachine.ChangeState(PenguinStateType.MustMove);
         }
     }
 
