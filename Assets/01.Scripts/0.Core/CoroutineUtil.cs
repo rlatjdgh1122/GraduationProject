@@ -28,11 +28,10 @@ public static class CoroutineUtil
     {
         yield return new WaitUntil(predicate);
         afterAction?.Invoke();
-        Debug.Log("이거 잘되는군");
     }
 
     //predicate가 true가 될때동안 action을 반복 수행해주고 주기는 heartBeat
-    public static void CallWaitForActionUntilTrue(bool predicate, Action action, float heartBeat = 0.02f, Action afterAction = null)
+    public static void CallWaitForActionUntilTrue(Func<bool> predicate, Action action, float heartBeat = 0.02f, Action afterAction = null)
     {
         _coroutineExecutor.StartCoroutine(DoCallWaitForActionUntilTrue(heartBeat, predicate, action, afterAction));
     }
@@ -49,13 +48,14 @@ public static class CoroutineUtil
         afterAction?.Invoke();
     }
 
-    private static IEnumerator DoCallWaitForActionUntilTrue(float heartBeat, bool predicate, Action action, Action afterAction)
+    private static IEnumerator DoCallWaitForActionUntilTrue(float heartBeat, Func<bool> predicate, Action action, Action afterAction)
     {
-        while (predicate)
+        while (!predicate())
         {
             yield return new WaitForSeconds(heartBeat);
             action?.Invoke();
         }
+
         afterAction?.Invoke();
     }
 

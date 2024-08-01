@@ -1,4 +1,5 @@
 using ArmySystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,10 @@ public class HealingSystem : MonoBehaviour
     {
         _maxHealingTime = InitMaxHealingTime;
 
+    }
+
+    public void Setting()
+    {
         _controller = new HealingController(transform, _spawnStartTrm.position, _spawnEndTrm.position, DetectionRange);
     }
 
@@ -47,8 +52,9 @@ public class HealingSystem : MonoBehaviour
 
     private void StartHealing()
     {
-        IsHealing = true;
+        UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 시작");
 
+        IsHealing = true;
         if (_healingTimeCorouine != null)
         {
             StopCoroutine(_healingTimeCorouine);
@@ -84,4 +90,5 @@ public class HealingSystem : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, DetectionRange);
     }
 
+    
 }

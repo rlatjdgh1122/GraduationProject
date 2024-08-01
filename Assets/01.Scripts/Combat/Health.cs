@@ -73,6 +73,11 @@ public class Health : MonoBehaviour, IDamageable, IKnockbackable, IStunable, IPr
         maxHealth = owner.GetMaxHealthValue();
     }
 
+    public void SetMaxHealth()
+    {
+        maxHealth = _onwer.GetMaxHealthValue();
+    }
+
     public void ApplyDamage(int damage, Vector3 point, Vector3 normal, HitType hitType, TargetObject hitTarget, bool isFeedback = true)
     {
         if (IsDead) return;

@@ -14,14 +14,14 @@ public class HealingController
     private LayerMask _targetLayer;
     private int _checkCount = 0;
 
-    public HealingController(Transform transform, Vector3 startPos, Vector3 endPos, float DetectionRange)
+    public HealingController(Transform rootTrm, Vector3 startPos, Vector3 endPos, float DetectionRange)
     {
-        _transform = transform;
+        _transform = rootTrm;
         _spawnStartPostion = startPos;
         _spawnEndPostion = endPos;
         _detectionRange = DetectionRange;
 
-        _targetLayer = LayerMask.NameToLayer("Player");
+        _targetLayer = 1 << LayerMask.NameToLayer("Player");
     }
 
     public void SetArmy(Army army)
@@ -42,20 +42,25 @@ public class HealingController
         // 다 들어왔으면 afterAction을 실행해줌
 
         CoroutineUtil.CallWaitForActionUntilTrue
-            (_checkCount == _seletedArmy.AlivePenguins.Count, //이 될때까지
+            (
+            () => _checkCount == _seletedArmy.AlivePenguins.Count, //이 될때까지
             () =>                                             // 반복해서 실행될 람다식
             {
-                _checkCount = Physics.OverlapSphereNonAlloc(_transform.position, _detectionRange, _colls, _targetLayer);
+                int count = Physics.OverlapSphereNonAlloc(_transform.position, _detectionRange, _colls, _targetLayer);
 
-                for (int i = 0; i < _checkCount; i++)
+                for (int i = 0; i < count; i++)
                 {
                     Collider col = _colls[i];
 
                     // 감지된 오브젝트 비활성화
-                    col.gameObject.SetActive(false);
+                    if (col.gameObject.activeSelf)
+                    {
+                        col.gameObject.SetActive(false);
+                        _checkCount++;
+                    }
                 }
             },
-            0.02f,                                            //를 주기로
+            0.2f,                                            //를 주기로
             afterAction);                                     //조건이 만족하면 실행
     }
 
@@ -69,6 +74,7 @@ public class HealingController
 
         foreach (var penguin in DeadLists)
         {
+            penguin.OnResurrected();
             _seletedArmy.ResurrectPenguin(penguin);
         }
 

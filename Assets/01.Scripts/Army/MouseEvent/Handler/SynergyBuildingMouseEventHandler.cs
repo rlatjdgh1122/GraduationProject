@@ -1,7 +1,9 @@
 using ArmySystem;
 using SynergySystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 
@@ -17,6 +19,17 @@ public class SynergyBuildingMouseEventHandler : MouseEventHandler
     protected override void Awake()
     {
         _healingSystem = GetComponent<HealingSystem>();
+
+        _owner.OnInstalledEvent += OnInstalled;
+    }
+    private void OnDestroy()
+    {
+        _owner.OnInstalledEvent -= OnInstalled;
+    }
+
+    private void OnInstalled()
+    {
+        _healingSystem.Setting();
     }
 
     protected override void OnMouseEnter()
