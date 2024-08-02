@@ -78,6 +78,13 @@ public class HealingController
             _seletedArmy.ResurrectPenguin(penguin);
         }
 
+        var AliveLists = _seletedArmy.AlivePenguins.ToArray();
+
+        foreach (var penguin in AliveLists)
+        {
+            penguin.HealthCompo.SetMaxHealth();
+        }
+
         LeaveBuilding();
     }
 

@@ -44,7 +44,9 @@ public class HealingSystem : MonoBehaviour
     {
         UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 최소됨");
 
-        StopCoroutine(_healingTimeCorouine);
+        if (_healingTimeCorouine != null)
+            StopCoroutine(_healingTimeCorouine);
+
         IsHealing = false;
         _controller.BrokenBuilding();
     }
@@ -90,5 +92,5 @@ public class HealingSystem : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, DetectionRange);
     }
 
-    
+
 }
