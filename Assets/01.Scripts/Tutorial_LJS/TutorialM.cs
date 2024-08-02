@@ -13,7 +13,7 @@ public class Tutorial
     public UnityEvent EndTutorialEvent = null;
 }
 
-public class TutorialController : Singleton<TutorialController>
+public class TutorialM : Singleton<TutorialM>
 {
     private int _tutorialIndex = 0;
     public int TutorialIndex => _tutorialIndex;

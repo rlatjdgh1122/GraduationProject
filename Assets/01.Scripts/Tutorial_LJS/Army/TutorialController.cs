@@ -15,15 +15,16 @@ public class TutorialQuest
     public UnityEvent TutorialEvent = null;
 }
 
-public class ArmyTutorial : MonoBehaviour
+public class TutorialController : MonoBehaviour
 {
     [SerializeField] private TutorialUI _tutorialUI;
+    [SerializeField] private GlitchEffectController _glitchEffectController;
 
     public List<TutorialQuest> QuestList = new();
 
     public void Quest()
     {
-        int index = TutorialController.Instance.TutorialIndex;
+        int index = TutorialM.Instance.TutorialIndex;
 
         _tutorialUI.ShowPanel(QuestList[index]);
         QuestList[index].TutorialEvent?.Invoke();
@@ -31,14 +32,14 @@ public class ArmyTutorial : MonoBehaviour
 
     public string CurrentTutorial(int index)
     {
-        int currentIndex = TutorialController.Instance.TutorialIndex;
+        int currentIndex = TutorialM.Instance.TutorialIndex;
 
         return QuestList[currentIndex].TutorialDescription[index];
     }
 
     public string CurrentTutorial()
     {
-        int currentIndex = TutorialController.Instance.TutorialIndex;
+        int currentIndex = TutorialM.Instance.TutorialIndex;
 
         return QuestList[currentIndex].TutorialTitle;
     }

@@ -14,7 +14,7 @@ public class CameraTutorial : MonoBehaviour
     [SerializeField] private List<Vector3> _arrowPosList = new();
 
     [SerializeField] private TutorialInfoUI _tutorialUI;
-    [SerializeField] private ArmyTutorial _armyTutorial;
+    [SerializeField] private TutorialController _armyTutorial;
 
     private bool _isPlaying = false;
     private int _index = 0;
@@ -80,7 +80,7 @@ public class CameraTutorial : MonoBehaviour
                 _arrow[2].DOFade(0, 0.25f).OnComplete(() =>
                 {
                     _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(0));
-                    TutorialController.Instance.AddTutorialIndex();
+                    TutorialM.Instance.AddTutorialIndex();
                 });
             }
         }

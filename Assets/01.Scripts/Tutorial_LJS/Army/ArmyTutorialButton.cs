@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class ArmyTutorialButton : MonoBehaviour
 {
     [SerializeField] private TutorialInfoUI _tutorialUI;
-    [SerializeField] private ArmyTutorial _armyTutorial;
+    [SerializeField] private TutorialController _armyTutorial;
 
     public UnityEvent _getGeneralEvent = new();
     public UnityEvent _endTutorialEvent = new();
@@ -31,7 +31,7 @@ public class ArmyTutorialButton : MonoBehaviour
         UIManager.Instance.HidePanel("ArmyUI");
         UIManager.Instance.ResetPanel();
 
-        TutorialController.Instance.AddTutorialIndex();
+        TutorialM.Instance.AddTutorialIndex();
 
     }
 }
