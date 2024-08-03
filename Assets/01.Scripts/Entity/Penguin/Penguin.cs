@@ -407,7 +407,7 @@ public class Penguin : Entity
         }
     }
 
-    public void MustMoveToTargetPostion(Vector3 pos)
+    public virtual void MustMoveToTargetPostion(Vector3 pos)
     {
         if (NavAgent != null)
         {

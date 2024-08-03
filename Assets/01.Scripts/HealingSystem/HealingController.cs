@@ -1,5 +1,6 @@
 using ArmySystem;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HealingController
@@ -32,14 +33,17 @@ public class HealingController
 
     public void GoToBuilding(Action afterAction)
     {
-
+        _checkCount = 0;
+        var penguinSet = new HashSet<GameObject>();
         foreach (var penguin in _seletedArmy.AlivePenguins)
         {
             penguin.MustMoveToTargetPostion(_transform.position);
+            penguinSet.Add(penguin.gameObject);
         }
         // 여기서 감지를 한다음
         // 감지에 들어온 애들은 오브젝트를 꺼주고
         // 다 들어왔으면 afterAction을 실행해줌
+
 
         CoroutineUtil.CallWaitForActionUntilTrue
             (
@@ -50,14 +54,18 @@ public class HealingController
 
                 for (int i = 0; i < count; i++)
                 {
-                    Collider col = _colls[i];
+                    var col = _colls[i];
+                    var obj = col.gameObject;
 
-                    // 감지된 오브젝트 비활성화
-                    if (col.gameObject.activeSelf)
+                    // check
+                    if (penguinSet.Contains(obj))
                     {
-                        col.gameObject.SetActive(false);
-                        _checkCount++;
-                    }
+                        if (obj.activeSelf)
+                        {
+                            obj.SetActive(false);
+                            _checkCount++;
+                        }
+                    }//end if
                 }
             },
             0.2f,                                            //를 주기로

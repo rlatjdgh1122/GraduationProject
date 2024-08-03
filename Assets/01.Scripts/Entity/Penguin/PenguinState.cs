@@ -98,8 +98,8 @@ public class PenguinState<T, G> : EntityState<T, G> where T : Enum where G : Pen
 
     protected void MustMoveEnter()
     {
-        _penguin.MoveToClickPositon();
-        _penguin.SuccessfulToArmyCalled = false;
+        _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
     }
 
     protected void DeadEnter()

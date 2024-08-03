@@ -26,5 +26,7 @@ public class ShieldMustMoveState : ShieldBaseState
     public override void Exit()
     {
         base.Exit();
+
+        _penguin.IsMustMoving = false;
     }
 }
