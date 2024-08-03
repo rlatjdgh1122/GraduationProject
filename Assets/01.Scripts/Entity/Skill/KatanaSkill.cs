@@ -43,7 +43,7 @@ public class KatanaSkill : Skill
 
     private IEnumerator Sound()
     {
-        for (int i = 0; i < 18; i++)
+        for (int i = 0; i < 16; i++)
         {
             SoundManager.Play3DSound(SoundName.SkillKatana, transform.position);
             yield return new WaitForSeconds(0.1f);
