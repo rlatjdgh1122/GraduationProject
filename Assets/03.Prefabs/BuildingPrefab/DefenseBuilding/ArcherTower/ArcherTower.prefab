@@ -13260,7 +13260,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8337499416749690598}
   - component: {fileID: 244320795558998017}
-  - component: {fileID: 4617981531167467558}
   - component: {fileID: 7766886982098123535}
   - component: {fileID: 5195247813737637729}
   - component: {fileID: 5633696571823467495}
@@ -13269,6 +13268,7 @@ GameObject:
   - component: {fileID: 5381207105396026729}
   - component: {fileID: 5671312330621396606}
   - component: {fileID: 1375320442018182776}
+  - component: {fileID: 972742441995043319}
   m_Layer: 0
   m_Name: ArcherTowerPenguin
   m_TagString: Player
@@ -13290,7 +13290,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2231363565095102391}
-  - {fileID: 6402317373471523840}
   - {fileID: 3310759319986641589}
   - {fileID: 3519217579545143971}
   - {fileID: 8203647674574951257}
@@ -13311,8 +13310,8 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 8df715c0c4adac647872ce3d5ae7c4aa, type: 2}
   CurrentTarget: {fileID: 0}
   _maxDetectEnemy: 5
-  innerDistance: 4
-  attackDistance: 1.5
+  innerDistance: 7
+  attackDistance: 5
   TargetLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -13320,24 +13319,9 @@ MonoBehaviour:
   attackSpeed: 1
   passiveData: {fileID: 0}
   ArmyTriggerCalled: 0
-  WaitForCommandToArmyCalled: 1
+  IgnoreToArmyCalled: 0
   SuccessfulToArmyCalled: 0
   TargetLock: 0
---- !u!114 &4617981531167467558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7942364164716095772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1c4cfc40efd3d344b81e8839ff9d88f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _arrowPrefab: {fileID: 1519222992535101541, guid: fb56535ea71799e4da008719cc106fe9,
-    type: 3}
-  _firePos: {fileID: 6402317373471523840}
 --- !u!114 &7766886982098123535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13496,6 +13480,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a70528c5e56e345bf5cb6dd1dbe527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &972742441995043319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7942364164716095772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7467b1befff02514590adc213c7d2847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowPrefab: {fileID: 2043329342570916088, guid: 64c78435548565142bda1a2aafb502cd,
+    type: 3}
+  _firePos: {fileID: 6402317373471523840}
 --- !u!1 &8011740571656895044
 GameObject:
   m_ObjectHideFlags: 0
@@ -13526,6 +13525,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5994084724068101609}
+  - {fileID: 6402317373471523840}
   m_Father: {fileID: 7007809506072474446}
   m_LocalEulerAnglesHint: {x: 23.99, y: -94.296, z: -32.504}
 --- !u!1 &8078416111393323899
@@ -13751,12 +13751,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8345845199487968895}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.516, z: 0}
-  m_LocalScale: {x: 0.70000005, y: 0.7000001, z: 0.70000017}
+  m_LocalRotation: {x: 0.36705968, y: 0.46677783, z: 0.65601677, w: -0.46586218}
+  m_LocalPosition: {x: -0.619, y: 0.634, z: -0.333}
+  m_LocalScale: {x: 1.25, y: 1.4285717, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8337499416749690598}
+  m_Father: {fileID: 8248695980274976776}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8409247578094980779
 GameObject:

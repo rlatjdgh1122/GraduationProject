@@ -20,7 +20,7 @@ public class ArcherTowerIdleState : ArcherTowerBaseState
 
     private void FindTarget()
     {
-        _penguin.FindNearestEnemy();
+        CoroutineUtil.CallWaitForOneFrame(() => _penguin.FindNearestEnemy());
     }
 
     public override void UpdateState()

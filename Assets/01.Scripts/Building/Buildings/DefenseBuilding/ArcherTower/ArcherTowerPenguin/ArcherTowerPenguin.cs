@@ -46,7 +46,7 @@ public class ArcherTowerPenguin : Penguin
         if (CurrentTarget != null)
         {
             Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
-            directionToTarget.y = 0;
+            directionToTarget.y = 1.3f;
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget,Vector3.up);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
