@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealingSystem : MonoBehaviour
 {
@@ -12,11 +13,16 @@ public class HealingSystem : MonoBehaviour
     public int InitMaxHealingTime = 30;
     public bool IsHealing = false;
 
+    public UnityEvent<float> OnStartHealingEvent = null;
+    public UnityEvent OnEndHealingEvent = null;
+    public UnityEvent OnBrokenBuildingEvent = null;
+
     private HealingController _controller = null;
     private Coroutine _healingTimeCorouine = null;
     private Army _seletedArmy = null;
 
     private int _maxHealingTime = 0;
+    private float _healingTime = 0;
 
     private void Start()
     {
@@ -49,6 +55,8 @@ public class HealingSystem : MonoBehaviour
 
         IsHealing = false;
         _controller.BrokenBuilding();
+
+        OnEndHealingEvent?.Invoke();
     }
 
 
@@ -63,6 +71,9 @@ public class HealingSystem : MonoBehaviour
         }
 
         _healingTimeCorouine = StartCoroutine(HealingTimeCorou());
+
+        _healingTime = _seletedArmy.AlivePenguins.Count / _maxHealingTime;
+        OnStartHealingEvent?.Invoke(_healingTime);
     }
 
     private void EndHealing()
@@ -71,13 +82,15 @@ public class HealingSystem : MonoBehaviour
         _controller.EndHealing();
 
         UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 완료됨");
+
+        OnEndHealingEvent?.Invoke();
     }
 
     private IEnumerator HealingTimeCorou()
     {
         float elapsedTime = 0f;
 
-        while (elapsedTime < _maxHealingTime)
+        while (elapsedTime < _healingTime)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
