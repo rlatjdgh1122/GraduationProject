@@ -1,6 +1,7 @@
 using ArmySystem;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Penguin : Entity
@@ -11,6 +12,8 @@ public class Penguin : Entity
     public float attackSpeed = 1f;
 
     public PassiveDataSO passiveData = null;
+
+    public List<GameObject> _penguinArmor = new List<GameObject>();
 
     #region property
 

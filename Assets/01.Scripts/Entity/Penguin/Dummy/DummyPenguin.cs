@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -17,6 +18,9 @@ public class DummyPenguin : PoolableMono
 {
     [SerializeField]
     private PenguinInfoDataSO _defaultInfo = null;
+
+    [SerializeField]
+    private List<GameObject> _penguinArmor = new List<GameObject>();
 
     public PenguinInfoDataSO NotCloneInfo => _defaultInfo;
 
