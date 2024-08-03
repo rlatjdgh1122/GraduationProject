@@ -135,4 +135,44 @@ public class SynergyBuilding : BaseBuilding
             _army?.RemoveStat(ability);
         }
     }
+
+    public void OnPenguinArmor()
+    {
+        Army army = ArmyManager.Instance.GetArmyBySynergyType(BuildingSynergyType);
+
+        foreach (var a in army.Soldiers)
+        {
+            Penguin penguin = a as Penguin;
+            if (penguin != null)
+            {
+                penguin.ArmorOn();
+            }
+
+            DummyPenguin dummy = PenguinManager.Instance.GetDummyByPenguin(a);
+            if (dummy != null)
+            {
+                dummy.ArmorOn();
+            }
+        }
+    }
+
+    public void OffPenguinArmor()
+    {
+        Army army = ArmyManager.Instance.GetArmyBySynergyType(BuildingSynergyType);
+
+        foreach (var a in army.Soldiers)
+        {
+            Penguin penguin = a as Penguin;
+            if (penguin != null)
+            {
+                penguin.ArmorOff();
+            }
+
+            DummyPenguin dummy = PenguinManager.Instance.GetDummyByPenguin(a);
+            if (dummy != null)
+            {
+                dummy.ArmorOff();
+            }
+        }
+    }
 }

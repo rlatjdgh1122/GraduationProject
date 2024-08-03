@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Penguin : Entity
+public class Penguin : Entity, IPenguinArmor
 {
 
     public float moveSpeed = 4f;
@@ -193,6 +193,24 @@ public class Penguin : Entity
 
         }
     }
+
+    #region PenguinArmor
+    public void ArmorOn()
+    {
+        foreach (var armor in _penguinArmor)
+        {
+            armor.SetActive(true); // Assuming you want to activate the GameObject
+        }
+    }
+
+    public void ArmorOff()
+    {
+        foreach (var armor in _penguinArmor)
+        {
+            armor.SetActive(false); // Assuming you want to deactivate the GameObject
+        }
+    }
+    #endregion
 
     #region Passive Check
     public bool CheckAttackPassive(int curAttackCount)

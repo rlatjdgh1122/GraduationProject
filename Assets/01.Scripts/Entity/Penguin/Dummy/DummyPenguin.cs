@@ -106,6 +106,24 @@ public class DummyPenguin : PoolableMono
         }
     }
 
+    #region PenguinArmor
+    public void ArmorOn()
+    {
+        foreach (var armor in _penguinArmor)
+        {
+            armor.SetActive(true); // Assuming you want to activate the GameObject
+        }
+    }
+
+    public void ArmorOff()
+    {
+        foreach (var armor in _penguinArmor)
+        {
+            armor.SetActive(false); // Assuming you want to deactivate the GameObject
+        }
+    }
+    #endregion
+
     #region AgentQuality
     public void ChangeNavqualityToNone() //Nave Quality None
     {
