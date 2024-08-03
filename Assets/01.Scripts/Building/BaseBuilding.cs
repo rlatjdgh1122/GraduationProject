@@ -40,6 +40,7 @@ public abstract class BaseBuilding : WorkableObject
     public BuildingItemInfo BuildingItemInfoCompo => _buildingItemInfo;
 
     public BuildingInfo BuildingInfoCompo;
+
     private bool isInstalled = false;
     public bool IsInstalled => isInstalled;
 
@@ -68,6 +69,8 @@ public abstract class BaseBuilding : WorkableObject
         }
         return null;
     }
+
+    public Action OnInstalledEvent = null;
 
 
     protected override void Awake()
@@ -160,6 +163,7 @@ public abstract class BaseBuilding : WorkableObject
         isInstalling = false;
 
         BuildingEnable(true);
+        OnInstalledEvent?.Invoke();
 
         if (_buildingItemInfo != null)
         {

@@ -45,6 +45,19 @@ public class ShieldPenguin : Penguin
         _stateMachine.CurrentState.UpdateState();
     }
 
+    public override void MustMoveToTargetPostion(Vector3 pos)
+    {
+        if (NavAgent != null)
+        {
+            IsMustMoving = true;
+
+            NavAgent.isStopped = false;
+            bool destinationSet = NavAgent.SetDestination(pos);
+
+            _stateMachine.ChangeState(ShieldPenguinStateEnum.MustMove);
+        }
+    }
+
     public override void StateInit()
     {
         _stateMachine.Init(ShieldPenguinStateEnum.Idle);
