@@ -123,6 +123,11 @@ public class SynergyBuilding : BaseBuilding
             
             _army?.AddStat(ability);
         }
+
+        if(_ablityList.Count >= _infoDataSO.BuildingAbilityList.Count)
+        {
+            OnPenguinArmor();
+        }
     }
 
     public void RemoveSynergyBuff()
@@ -133,6 +138,8 @@ public class SynergyBuilding : BaseBuilding
         {
             _army?.RemoveStat(ability);
         }
+
+        OffPenguinArmor();
     }
 
     public void OnPenguinArmor()
