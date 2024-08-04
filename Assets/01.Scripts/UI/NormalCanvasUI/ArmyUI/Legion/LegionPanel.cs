@@ -54,7 +54,7 @@ public class LegionPanel : PopupUI
 
         if (army != null)
         {
-            int deadCount = _soldierSlotList.Count - army.Soldiers.Count;
+            int deadCount = army.DeadPenguins.Count;
             _soldierSlotList.ForEach(s => s.Icon.sprite = SoldierlInfo.PenguinIcon); //일단 초기화
             _soldierSlotList.ApplyToCount(deadCount, s => s.Icon.sprite = _skullIcon);
         }

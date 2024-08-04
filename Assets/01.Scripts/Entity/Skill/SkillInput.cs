@@ -10,6 +10,7 @@ public class SkillInput : MonoBehaviour
 
     private bool CanPlaySkill()
     {
+        if (_selectArmy == null) return false;
         return _selectArmy.General != null; /* && 디버깅 하기 위해 주석 처리함. 나중에는 주석 풀 것.
                WaveManager.Instance.IsBattlePhase; */
     }

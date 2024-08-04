@@ -111,9 +111,11 @@ public class State
 
     protected void MustMoveEnter()
     {
-        _penguin.MoveToClickPositon();
-        _penguin.SuccessfulToArmyCalled = false;
+        _triggerCalled = true;
+        _penguin.ArmyTriggerCalled = false;
+        //_penguin.SuccessfulToArmyCalled = false;
     }
+
     #endregion
 
     #region Exit
@@ -145,7 +147,7 @@ public class State
 
     protected void MustMoveExit()
     {
-
+        _penguin.IsMustMoving = false;
     }
 
     #endregion

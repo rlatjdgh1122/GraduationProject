@@ -166,6 +166,11 @@ public abstract class TargetObject : PoolableMono
         _deadCompo?.OnResurrected();
     }
 
+    public void OnResurrected()
+    {
+        _deadCompo?.OnResurrected();
+    }
+
     protected virtual void OnDestroy()
     {
         if (HealthCompo != null)

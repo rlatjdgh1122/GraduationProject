@@ -20,6 +20,7 @@ public class Penguin : Entity, IPenguinArmor
     public bool ArmyTriggerCalled = false;
     public bool IgnoreToArmyCalled = false;
     public bool SuccessfulToArmyCalled = false;
+    public bool IsMustMoving = false;
 
 
     private Coroutine movingCoroutine = null;
@@ -410,6 +411,7 @@ public class Penguin : Entity, IPenguinArmor
         if (NavAgent.isActiveAndEnabled)
         {
             if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) return;
+            if (IsMustMoving) return;
 
             NavAgent.SetDestination(transform.position);
             NavAgent.isStopped = false;
@@ -423,6 +425,19 @@ public class Penguin : Entity, IPenguinArmor
         {
             NavAgent.isStopped = false;
             bool destinationSet = NavAgent.SetDestination(MousePos + SeatPos);
+        }
+    }
+
+    public virtual void MustMoveToTargetPostion(Vector3 pos)
+    {
+        if (NavAgent != null)
+        {
+            IsMustMoving = true;
+
+            NavAgent.isStopped = false;
+            bool destinationSet = NavAgent.SetDestination(pos);
+
+            StateMachine.ChangeState(PenguinStateType.MustMove);
         }
     }
 
