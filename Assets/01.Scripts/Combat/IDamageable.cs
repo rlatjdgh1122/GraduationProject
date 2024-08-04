@@ -23,6 +23,8 @@ public enum HitType
     DashHit,
     KatanaHit,
     LanceUltimateHit,
+    MooseHit,
+    MooseEffect,
 }
 
 public interface IDamageable
