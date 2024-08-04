@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BuildingUIComponent : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class BuildingUIComponent : MonoBehaviour
     private Coroutine showAndHideCoroutine = null;
     public SynergyBuilding synergyBuilding { get; set; }
     public Health buildingHealth { get; set; }
+
+    public UnityEvent<int> OnHealingTimeLevelUpEvent = null;
+
 
     public virtual void Awake()
     {

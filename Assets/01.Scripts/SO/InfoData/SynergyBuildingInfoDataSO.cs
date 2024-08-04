@@ -12,6 +12,7 @@ public class UpgradeInfo
     [TextArea]
     public string BuildingUpgradeDescription;
     public Ability BuildingAbility;
+    public int Reducehealingtime = 0;
 }
 
 [CreateAssetMenu(menuName = "SO/InfoData/Synergy")]

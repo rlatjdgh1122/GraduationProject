@@ -33,7 +33,7 @@ public class PenguinSpawnHandler : MonoBehaviour
             penguin.transform.rotation = trm.rotation;
             penguin.MousePos = GameManager.Instance.TentTrm.position;
             penguin.StateInit();
-
+            penguin.BattleSetting();
 
             //¥ıπÃ ∆Î±œ¿∫ ≤®¡‹
             dummy.gameObject.SetActive(false);
@@ -60,7 +60,7 @@ public class PenguinSpawnHandler : MonoBehaviour
             var trm = penguin.transform;
             var dummy = PenguinManager.Instance.GetDummyByPenguin(penguin);
 
-            if(dummy != null)
+            if (dummy != null)
             {
                 //¥ıπÃ ∆Î±œø° ¥Î«— ºº∆√¿ª «ÿ¡‹
                 dummy.gameObject.SetActive(true);
@@ -72,7 +72,7 @@ public class PenguinSpawnHandler : MonoBehaviour
                 //Ω«¡¶ ∆Î±œ¿∫ ≤®¡‹
                 penguin.gameObject.SetActive(false);
             }
-           
+
         }
 
 

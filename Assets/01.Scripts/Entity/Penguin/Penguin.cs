@@ -316,6 +316,11 @@ public class Penguin : Entity
 
     public virtual void StateInit() { }
 
+    public virtual void BattleSetting()
+    {
+        IsMustMoving = false;
+        IgnoreToArmyCalled = false;
+    }
     #endregion
 
     #region Set Stat
