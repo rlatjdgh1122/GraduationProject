@@ -11524,6 +11524,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6067096178798462809}
+  - {fileID: 630542545699742002}
   m_Father: {fileID: 3724235378361331293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6706401128530945705
@@ -11747,13 +11748,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2437445442570532270}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.30000004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7940177531726429356}
-  m_Father: {fileID: 3724235378361331293}
+  m_Father: {fileID: 3611682286634594321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8757113345491549291
 MonoBehaviour:
@@ -19148,7 +19149,6 @@ Transform:
   - {fileID: 2680625697643584567}
   - {fileID: 3414381728895505960}
   - {fileID: 3611682286634594321}
-  - {fileID: 630542545699742002}
   - {fileID: 3961300697009403281}
   - {fileID: 6725244467252082419}
   - {fileID: 8298606205255715019}
@@ -24918,9 +24918,11 @@ MonoBehaviour:
   moveSpeed: 4
   attackSpeed: 0.8
   passiveData: {fileID: 11400000, guid: 6d1a96709489e6043bb0631f731ac55d, type: 2}
+  _penguinArmor: []
   ArmyTriggerCalled: 0
-  WaitForCommandToArmyCalled: 1
+  IgnoreToArmyCalled: 0
   SuccessfulToArmyCalled: 0
+  IsMustMoving: 0
   TargetLock: 0
   SynergyType: 5
   GeneralType: 4
