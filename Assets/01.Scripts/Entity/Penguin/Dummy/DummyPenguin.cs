@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -17,6 +18,9 @@ public class DummyPenguin : PoolableMono
 {
     [SerializeField]
     private PenguinInfoDataSO _defaultInfo = null;
+
+    [SerializeField]
+    private List<GameObject> _penguinArmor = new List<GameObject>();
 
     public PenguinInfoDataSO NotCloneInfo => _defaultInfo;
 
@@ -101,6 +105,24 @@ public class DummyPenguin : PoolableMono
             OutlineCompo.enabled = true;
         }
     }
+
+    #region PenguinArmor
+    public void ArmorOn()
+    {
+        foreach (var armor in _penguinArmor)
+        {
+            armor.SetActive(true); // Assuming you want to activate the GameObject
+        }
+    }
+
+    public void ArmorOff()
+    {
+        foreach (var armor in _penguinArmor)
+        {
+            armor.SetActive(false); // Assuming you want to deactivate the GameObject
+        }
+    }
+    #endregion
 
     #region AgentQuality
     public void ChangeNavqualityToNone() //Nave Quality None
