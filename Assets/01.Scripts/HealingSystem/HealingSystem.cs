@@ -51,15 +51,17 @@ public class HealingSystem : MonoBehaviour
         _maxHealingTime -= value;
     }
 
-    public void BrokenBuilding()
+    public void LeaveBuilding()
     {
+        if (IsHealing == false) return;
+
         UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 최소됨");
 
         if (_healingTimeCorouine != null)
             StopCoroutine(_healingTimeCorouine);
 
         IsHealing = false;
-        _controller.BrokenBuilding();
+        _controller.LeaveBuilding();
 
         OnEndHealingEvent?.Invoke();
     }
