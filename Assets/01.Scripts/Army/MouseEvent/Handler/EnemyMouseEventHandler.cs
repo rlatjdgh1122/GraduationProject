@@ -2,7 +2,7 @@ using ArmySystem;
 using UnityEngine;
 
 
-public class EnemyMouseEventHandler : MouseEventHandler
+public class EnemyMouseEventHandler : MouseEventHandler  
 {
     [SerializeField] private Enemy _owner = null;
 

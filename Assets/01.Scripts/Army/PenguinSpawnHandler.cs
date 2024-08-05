@@ -15,37 +15,38 @@ public class PenguinSpawnHandler : MonoBehaviour
     /// </summary>
     private void DummyToPenguinSwapHandler()
     {
-
-        if (_spawnDummyPenguinCorouine != null)
-            StopCoroutine(_spawnDummyPenguinCorouine);
-
-        var belongDummyPenguinList = PenguinManager.Instance.BelongDummyPenguinList;
-        var notBelongDummyPenguinList = PenguinManager.Instance.NotBelongDummyPenguinList;
-
-        foreach (var dummy in belongDummyPenguinList)
+        CoroutineUtil.CallWaitForSeconds(0.05f, () =>
         {
-            var trm = dummy.transform;
+            if (_spawnDummyPenguinCorouine != null)
+                StopCoroutine(_spawnDummyPenguinCorouine);
 
-            var penguin = PenguinManager.Instance.GetPenguinByDummyPenguin(dummy);
-            //실제 펭귄에 대한 세팅을 해줌
-            penguin.gameObject.SetActive(true);
-            penguin.transform.position = trm.position;
-            penguin.transform.rotation = trm.rotation;
-            penguin.MousePos = GameManager.Instance.TentTrm.position;
-            penguin.StateInit();
+            var belongDummyPenguinList = PenguinManager.Instance.BelongDummyPenguinList;
+            var notBelongDummyPenguinList = PenguinManager.Instance.NotBelongDummyPenguinList;
 
+            foreach (var dummy in belongDummyPenguinList)
+            {
+                var trm = dummy.transform;
 
-            //더미 펭귄은 꺼줌
-            dummy.gameObject.SetActive(false);
-        }
+                var penguin = PenguinManager.Instance.GetPenguinByDummyPenguin(dummy);
+                //실제 펭귄에 대한 세팅을 해줌
+                penguin.gameObject.SetActive(true);
+                penguin.transform.position = trm.position;
+                penguin.transform.rotation = trm.rotation;
+                penguin.MousePos = GameManager.Instance.TentTrm.position;
+                penguin.StateInit();
+                penguin.BattleSetting();
 
-        //군단에 소속되지 않은 더미펭귄들은 집으로 감
-        foreach (var dummy in notBelongDummyPenguinList)
-        {
-            dummy.ChangeNavqualityToNone();
-            dummy.IsGoToHouse = true;
-        }
+                //더미 펭귄은 꺼줌
+                dummy.gameObject.SetActive(false);
+            }
 
+            //군단에 소속되지 않은 더미펭귄들은 집으로 감
+            foreach (var dummy in notBelongDummyPenguinList)
+            {
+                dummy.ChangeNavqualityToNone();
+                dummy.IsGoToHouse = true;
+            }
+        });
     }
 
     /// <summary>
@@ -53,39 +54,39 @@ public class PenguinSpawnHandler : MonoBehaviour
     /// </summary>
     private void PenguinToDummySwapHandler()
     {
-        var soldierPenguinList = PenguinManager.Instance.SoldierPenguinList;
-
-        foreach (var penguin in soldierPenguinList)
+        CoroutineUtil.CallWaitForSeconds(0.05f, () =>
         {
-            var trm = penguin.transform;
-            var dummy = PenguinManager.Instance.GetDummyByPenguin(penguin);
+            var soldierPenguinList = PenguinManager.Instance.SoldierPenguinList;
 
-            if(dummy != null)
+            foreach (var penguin in soldierPenguinList)
             {
-                //더미 펭귄에 대한 세팅을 해줌
-                dummy.gameObject.SetActive(true);
-                dummy.IsGoToHouse = false;
-                dummy.transform.position = trm.position;
-                dummy.transform.rotation = trm.rotation;
-                dummy.ChangeNavqualityToHigh();
-                dummy.StateInit();
-                //실제 펭귄은 꺼줌
-                penguin.gameObject.SetActive(false);
+                var trm = penguin.transform;
+                var dummy = PenguinManager.Instance.GetDummyByPenguin(penguin);
+
+                if (dummy != null)
+                {
+                    //더미 펭귄에 대한 세팅을 해줌
+                    dummy.gameObject.SetActive(true);
+                    dummy.IsGoToHouse = false;
+                    dummy.transform.position = trm.position;
+                    dummy.transform.rotation = trm.rotation;
+                    dummy.ChangeNavqualityToHigh();
+                    dummy.StateInit();
+                    //실제 펭귄은 꺼줌
+                    penguin.gameObject.SetActive(false);
+                }
+
             }
-           
-        }
 
-
-
-        //군단에 소속되지 않았던 애들은 여기서 처리 (순차적으로 생성)
-        if (_spawnDummyPenguinCorouine != null)
-            StopCoroutine(_spawnDummyPenguinCorouine);
-        _spawnDummyPenguinCorouine = StartCoroutine(SpawnCorou());
-
-
+            //군단에 소속되지 않았던 애들은 여기서 처리 (순차적으로 생성)
+            if (_spawnDummyPenguinCorouine != null)
+                StopCoroutine(_spawnDummyPenguinCorouine);
+            _spawnDummyPenguinCorouine = StartCoroutine(SpawnCorou());
+        });
     }
 
     private WaitForSeconds Heartbeat = new WaitForSeconds(0.2f);
+
     private IEnumerator SpawnCorou()
     {
         var dummyPenguinList = PenguinManager.Instance.NotBelongDummyPenguinList;

@@ -50,7 +50,7 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
 
     public void OnPurchaseUpgrade()
     {
-        if(buildingHealth.IsDead)
+        if (buildingHealth.IsDead)
         {
             UIManager.Instance.ShowWarningUI("건물이 부서졌습니다!");
             return;
@@ -58,13 +58,13 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
 
         if (_level >= _infoData.BuildingAbilityList.Count) return;
 
-        if (!ResourceManager.Instance.CheckAllResources(_infoData.BuildingAbilityList[_level].UpgradePriceArr))
+        if (!ResourceManager.Instance.CheckAllResources(_infoData[_level].UpgradePriceArr))
         {
             UIManager.Instance.ShowWarningUI("자원이 부족합니다!");
             return;
         }
 
-        ResourceManager.Instance.RemoveResource(_infoData.BuildingAbilityList[_level].UpgradePriceArr, () =>
+        ResourceManager.Instance.RemoveResource(_infoData[_level].UpgradePriceArr, () =>
         {
             OnClickEvent();
         });
@@ -79,7 +79,9 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
         _slotList[_level - 1].OnUnlock();
         UpdateResourceTextForSlot(_level);
 
-        synergyBuilding.SetSynergyBuff(_infoData.BuildingAbilityList[_level - 1].BuildingAbility);
+        synergyBuilding.SetSynergyBuff(_infoData[_level - 1].BuildingAbility);
+        synergyBuilding.LevelUpHealingTime(_infoData[_level - 1].ReduceHealingTime);
+        synergyBuilding.LevelUpSkillTime(_infoData[_level - 1].ReduceSkillTime);
     }
 
     public void OnMovePanel(float x)
@@ -95,7 +97,7 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
 
         for (int i = 0; i < _infoData.BuildingAbilityList.Count; i++)
         {
-            var ability = data.BuildingAbilityList[i].BuildingUpgradeDescription;
+            var ability = data[i].BuildingUpgradeDescription;
             _slotList[i].gameObject.SetActive(true);
             _slotList[i].Init(ability);
         }
@@ -151,9 +153,9 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
     {
         if (index >= _infoData.BuildingAbilityList.Count) return;
 
-        foreach (var data in _infoData.BuildingAbilityList[index].UpgradePriceArr)
+        foreach (var data in _infoData[index].UpgradePriceArr)
         {
-            if(data.Type == ResourceType.Stone)
+            if (data.Type == ResourceType.Stone)
             {
                 UpdateResourceText(_stoneText, data.Count);
             }
@@ -181,7 +183,7 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
     {
         string brokenText = string.Empty;
 
-        brokenText = buildingHealth.IsDead == true ? "부서진 ": string.Empty;
+        brokenText = buildingHealth.IsDead == true ? "부서진 " : string.Empty;
 
         _buildingNameText.text = $"{brokenText}{buildingName}";
     }

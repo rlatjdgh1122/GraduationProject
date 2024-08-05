@@ -304,9 +304,17 @@ public class Outline : MonoBehaviour
 
     List<Vector3> SmoothNormals(Mesh mesh)
     {
-
+        IEnumerable<IGrouping<Vector3, KeyValuePair<Vector3, int>>> groups = null;
         // Group vertices by location
-        var groups = mesh.vertices.Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index)).GroupBy(pair => pair.Key);
+        try
+        {
+            groups = mesh.vertices.Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index)).GroupBy(pair => pair.Key);
+        }
+        catch (NullReferenceException ex)
+        {
+            Debug.Log(mesh.name);
+        }
+
 
         // Copy normals to a new list
         var smoothNormals = new List<Vector3>(mesh.normals);
