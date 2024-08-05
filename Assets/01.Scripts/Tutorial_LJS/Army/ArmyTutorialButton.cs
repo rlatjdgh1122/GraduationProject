@@ -13,19 +13,19 @@ public class ArmyTutorialButton : MonoBehaviour
 
     public void SelectArmyButton()
     {
-        _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(0));
+        _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(0, 1));
     }
 
     public void GetGeneralButton()
     {
-        _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(1));
+        _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(1, 1));
 
         _getGeneralEvent?.Invoke();
     }
 
     public void InsetGeneralInArmyButton()
     {
-        _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(2));
+        _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(2, 1));
         _endTutorialEvent?.Invoke();
 
         UIManager.Instance.HidePanel("ArmyUI");

@@ -1,4 +1,7 @@
 
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace SynergySystem
 {
     public enum SynergyType

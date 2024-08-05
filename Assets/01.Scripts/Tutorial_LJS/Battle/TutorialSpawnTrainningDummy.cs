@@ -7,6 +7,9 @@ public class TutorialSpawnTrainningDummy : MonoBehaviour
 {
     [SerializeField] private EnemyBasicPenguin _trainningDummy;
 
+    [SerializeField] private TutorialWorldCanvas _tutorialCanvas;
+    private Transform _trainingDummyTrm;
+
     private void OnEnable()
     {
         SignalHub.OnBattlePhaseStartEvent += FindEntity;
@@ -17,6 +20,13 @@ public class TutorialSpawnTrainningDummy : MonoBehaviour
     {
         SignalHub.OnBattlePhaseStartEvent -= FindEntity;
         SignalHub.OnGroundArrivedEvent -= FindEntityAfterTime;
+    }
+
+    public void ShowArrow()
+    {
+        _tutorialCanvas.Init(TutorialImage.Arrow_Left);
+        _tutorialCanvas.SetTarget(_trainingDummyTrm, 5f);
+        _tutorialCanvas.ShowUI();
     }
 
     private void FindEntityAfterTime()
@@ -37,6 +47,8 @@ public class TutorialSpawnTrainningDummy : MonoBehaviour
         }
 
         EnemyArmyManager.Instance.CreateArmy(trainingDummy);
+
+        _trainingDummyTrm = trainingDummy[0].transform;
     }
 
     private void FindRaft()

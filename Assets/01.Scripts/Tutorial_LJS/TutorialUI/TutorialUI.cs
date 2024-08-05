@@ -15,6 +15,7 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] private float _waitTime;
 
     private TutorialInfoUI _infoUI;
+    private Sequence _sequence;
 
     private void Awake()
     {
@@ -33,17 +34,32 @@ public class TutorialUI : MonoBehaviour
         }
 
         //SoundManager.Play2DSound(SoundName.TutorialStart);
-        Fade();
+        FadeIn();
     }
 
-    private void Fade()
+    public void FadeOut(float waitTime = 0)
     {
-        Sequence seq = DOTween.Sequence();
+        _sequence?.Kill();
+        _sequence = DOTween.Sequence();
+
+        _tutorialNotification.alpha = 0;
+        _tutorialInfoUI.alpha = 1;
+
+        _sequence.Append(_tutorialNotification.DOFade(0, _fadeDuration))
+            .AppendInterval(waitTime)
+            .Append(_tutorialNotification.DOFade(0, _fadeDuration))
+            .Append(_tutorialInfoUI.DOFade(0, _fadeDuration));
+    }
+
+    private void FadeIn()
+    {
+        _sequence?.Kill();
+        _sequence = DOTween.Sequence();
 
         _tutorialNotification.alpha = 0;
         _tutorialInfoUI.alpha = 0;
 
-        seq.Append(_tutorialNotification.DOFade(1, _fadeDuration))
+        _sequence.Append(_tutorialNotification.DOFade(1, _fadeDuration))
             .AppendInterval(_waitTime)
             .Append(_tutorialNotification.DOFade(0, _fadeDuration))
             .Append(_tutorialInfoUI.DOFade(1, _fadeDuration));

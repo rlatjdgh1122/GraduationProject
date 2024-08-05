@@ -1,4 +1,5 @@
 using ArmySystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ public class TutorialSpawnOurArmy : MonoBehaviour
 {
     [SerializeField] private GeneralInfoDataSO _generalInfoSO;
     [SerializeField] private PenguinInfoDataSO _soliderInfo;
+
+    [SerializeField] private TutorialWorldCanvas _arrow;
+    [SerializeField] private TutorialController _controller;
 
     private void Start()
     {
@@ -18,24 +22,53 @@ public class TutorialSpawnOurArmy : MonoBehaviour
 
     private void SpawnGeneral()
     {
-        SpawnPenguin(_generalInfoSO);
+        var dummy = SpawnDuumyPenguin(_generalInfoSO);
+        GeneralJoinArmy(dummy, 0);
+
+        _arrow.Init(TutorialImage.Warning);
+        _arrow.SetTarget(dummy.transform, 4.5f);
+    }
+
+    public void CllickDummyPenguin()
+    {
+        _controller.TutorialInfoUI.CompleteSlot(_controller.CurrentTutorial(0));
+        TutorialM.Instance.AddTutorialIndex();
     }
 
     private void SpawnSolider()
     {
-        for(int i = 0; i < 4; i++)
+        ArmyManager.Instance.GetArmyByLegionName("1군단").SynergyType = SynergySystem.SynergyType.IceCream;
+
+        for (int i = 1; i <= 4; i++)
         {
-            SpawnPenguin(_soliderInfo);
+            SoliderJoinArmy(SpawnDuumyPenguin(_soliderInfo), i);
         }
     }
 
-    private void SpawnPenguin<T>(T infoData, int index = 0) where T : EntityInfoDataSO
+    private DummyPenguin SpawnDuumyPenguin<T>(T infoData) where T : EntityInfoDataSO
     {
         DummyPenguin dummy = PenguinManager.Instance.SpawnDummyPenguinByInfoData(infoData);
         dummy.CloneInfo.SetLegionName("1군단");
 
+        return dummy;
+    }
+
+    private void SoliderJoinArmy(DummyPenguin dummy, int index)
+    {
+        ArmyManager.Instance.JoinArmyToSoldier("1군단", 0, SpawnPenguin(dummy, index));
+    }
+
+    private void GeneralJoinArmy(DummyPenguin dummy, int index)
+    {
+        General general = SpawnPenguin(dummy, index) as General;
+        ArmyManager.Instance.JoinArmyToGeneral("1군단", 0, general);
+    }
+
+    private Penguin SpawnPenguin(DummyPenguin dummy, int index)
+    {
         Penguin penguin = ArmyManager.Instance.SpawnPenguin(dummy.CloneInfo, index);
         PenguinManager.Instance.DummyToPenguinMapping(dummy, penguin);
-        ArmyManager.Instance.JoinArmyToSoldier("1군단", 0, penguin);
+
+        return penguin;
     }
 }

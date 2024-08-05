@@ -3121,8 +3121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _glitchMat: {fileID: 2100000, guid: db9cb26e2e53cf14cba49de53bf4036c, type: 2}
-  _duration: 1
-  _waitTime: 5
+  _duration: 0.5
+  _waitTime: 2
 --- !u!114 &406183599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14845,6 +14845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogSystem: {fileID: 1898493533896026246}
+  _screenController: {fileID: 406183598}
   _tutorialData:
   - TutorialTexts:
     - "\uC77C\uC5B4\uB098\uC168\uAD70\uC694!"
@@ -14854,9 +14855,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2012048819}
-          m_TargetAssemblyTypeName: ArmyTutorial, Assembly-CSharp
+          m_TargetAssemblyTypeName: TutorialController, Assembly-CSharp
           m_MethodName: Quest
-          m_Mode: 1
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14874,13 +14875,13 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2012048819}
-          m_TargetAssemblyTypeName: ArmyTutorial, Assembly-CSharp
+          m_TargetAssemblyTypeName: TutorialController, Assembly-CSharp
           m_MethodName: Quest
-          m_Mode: 1
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -14891,7 +14892,19 @@ MonoBehaviour:
     - "\uC790 \uADF8\uB7FC \uC804\uD22C\uD558\uB7EC \uAC00\uBCFC\uAE4C\uC694?"
     EndTutorialEvent:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2012048818}
+          m_TargetAssemblyTypeName: TutorialM, Assembly-CSharp
+          m_MethodName: EndTutorial
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Tutorial_Battle
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &2012048819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14905,7 +14918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tutorialUI: {fileID: 176389379}
-  _glitchEffectController: {fileID: 0}
+  TutorialInfoUI: {fileID: 755777745}
   QuestList:
   - TutorialTitle: "\uCE74\uBA54\uB77C"
     TutorialDescription:
@@ -16590,22 +16603,22 @@ PrefabInstance:
     - target: {fileID: 358907334165837128, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8664768
+      value: -0.8786723
       objectReference: {fileID: 0}
     - target: {fileID: 358907334165837128, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99999475
+      value: 0.9996811
       objectReference: {fileID: 0}
     - target: {fileID: 358907334165837128, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0032402142
+      value: 0.008446796
       objectReference: {fileID: 0}
     - target: {fileID: 358907334165837128, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00019226078
+      value: 0.023797218
       objectReference: {fileID: 0}
     - target: {fileID: 359532556805690169, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
@@ -16675,22 +16688,22 @@ PrefabInstance:
     - target: {fileID: 2208651825007299063, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.95580405
+      value: -1.0336633
       objectReference: {fileID: 0}
     - target: {fileID: 2208651825007299063, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9995633
+      value: 0.9993684
       objectReference: {fileID: 0}
     - target: {fileID: 2208651825007299063, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.015621098
+      value: -0.032844514
       objectReference: {fileID: 0}
     - target: {fileID: 2208651825007299063, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.025085308
+      value: -0.013567324
       objectReference: {fileID: 0}
     - target: {fileID: 2332515853080356486, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
@@ -16827,22 +16840,22 @@ PrefabInstance:
     - target: {fileID: 7511038395517935446, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.0084931
+      value: -1.1192952
       objectReference: {fileID: 0}
     - target: {fileID: 7511038395517935446, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9986483
+      value: 0.99923104
       objectReference: {fileID: 0}
     - target: {fileID: 7511038395517935446, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.051972702
+      value: -0.026230514
       objectReference: {fileID: 0}
     - target: {fileID: 7511038395517935446, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00063729717
+      value: -0.029143993
       objectReference: {fileID: 0}
     - target: {fileID: 7591856793233750709, guid: 99f11b238c686f142b7c648c35107a17,
         type: 3}

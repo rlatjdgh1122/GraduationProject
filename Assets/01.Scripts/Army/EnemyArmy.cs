@@ -101,7 +101,7 @@ namespace ArmySystem
             foreach (Enemy enemy in Soldiers)
             {
                 enemy.OutlineCompo.enabled = true;
-                if (enemy.OutlineCompo.isActiveAndEnabled)
+                if (enemy.OutlineCompo != null && enemy.OutlineCompo.isActiveAndEnabled)
                 {
                     enemy.OutlineCompo.SetColor(_selectColor);
                 }
@@ -112,7 +112,7 @@ namespace ArmySystem
         {
             foreach (Enemy enemy in Soldiers)
             {
-                if (enemy.OutlineCompo != null)
+                if (enemy.OutlineCompo != null && enemy.OutlineCompo.isActiveAndEnabled)
                 {
                     enemy.OutlineCompo.enabled = false;
                 }

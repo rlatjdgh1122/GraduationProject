@@ -71,6 +71,7 @@ public class UIManager : Singleton<UIManager>
         {
             if (!popupUIDictionary.ContainsKey(popupUI.name))
             {
+                Debug.Log($"{popupUI.name}");
                 popupUIDictionary.Add(popupUI.name, popupUI);
             }
             else

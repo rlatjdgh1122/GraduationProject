@@ -79,7 +79,7 @@ public class CameraTutorial : MonoBehaviour
 
                 _arrow[2].DOFade(0, 0.25f).OnComplete(() =>
                 {
-                    _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(0));
+                    _tutorialUI.CompleteSlot(_armyTutorial.CurrentTutorial(0, 0));
                     TutorialM.Instance.AddTutorialIndex();
                 });
             }

@@ -17,30 +17,27 @@ public class TutorialQuest
 
 public class TutorialController : MonoBehaviour
 {
-    [SerializeField] private TutorialUI _tutorialUI;
-    [SerializeField] private GlitchEffectController _glitchEffectController;
+    [SerializeField] public TutorialUI _tutorialUI;
+
+    public TutorialInfoUI TutorialInfoUI;
 
     public List<TutorialQuest> QuestList = new();
 
-    public void Quest()
-    {
-        int index = TutorialM.Instance.TutorialIndex;
+    public bool CanClick { get; set; } = false;
 
+    public void Quest(int index = 0)
+    {
         _tutorialUI.ShowPanel(QuestList[index]);
         QuestList[index].TutorialEvent?.Invoke();
     }
 
-    public string CurrentTutorial(int index)
+    public void HideTutorialUI(float waitTime = 0)
     {
-        int currentIndex = TutorialM.Instance.TutorialIndex;
-
-        return QuestList[currentIndex].TutorialDescription[index];
+        _tutorialUI.FadeOut(waitTime);
     }
 
-    public string CurrentTutorial()
+    public string CurrentTutorial(int index, int currentIndex = 0)
     {
-        int currentIndex = TutorialM.Instance.TutorialIndex;
-
-        return QuestList[currentIndex].TutorialTitle;
+        return QuestList[currentIndex].TutorialDescription[index];
     }
 }

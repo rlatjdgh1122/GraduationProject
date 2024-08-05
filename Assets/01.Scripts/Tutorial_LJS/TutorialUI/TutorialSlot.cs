@@ -47,4 +47,4 @@ public class TutorialSlot : MonoBehaviour
         _slotPanel.color = _proceedingColor;
         _slotIcon.color = Color.black;
     }
-}
+} 
