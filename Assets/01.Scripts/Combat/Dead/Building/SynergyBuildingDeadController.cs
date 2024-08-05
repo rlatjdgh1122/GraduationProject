@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SynergyBuildingDeadController : BuildingDeadController<SynergyBuilding>
 {
-
+    public UnityEvent OnDeadEvent = null;
     private void OnEnable()
     {
         SignalHub.OnBattlePhaseStartEvent += BuildingCompoOff;
@@ -22,6 +23,8 @@ public class SynergyBuildingDeadController : BuildingDeadController<SynergyBuild
     public override void OnDied()
     {
         base.OnDied();
+
+        OnDeadEvent?.Invoke();
     }
 
     public void FixBuilding()
