@@ -96,12 +96,7 @@ public class HealingController
         LeaveBuilding();
     }
 
-    public void BrokenBuilding()
-    {
-        LeaveBuilding();
-    }
-
-    private void LeaveBuilding()
+    public void LeaveBuilding()
     {
         _checkCount = 0;
 

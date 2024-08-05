@@ -24,8 +24,6 @@ public class Ability
     public StatMode statMode;
     public int value; // stat will statMode to %
 
-    public bool isSkillUpgrade;
-
     public int Value
     {
         set

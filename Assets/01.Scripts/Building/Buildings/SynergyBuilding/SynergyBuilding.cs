@@ -1,11 +1,16 @@
 using ArmySystem;
 using SynergySystem;
 using System.Collections.Generic;
+using UnityEditor.Playables;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SynergyBuilding : BaseBuilding
 {
     [SerializeField] private SynergyBuildingInfoDataSO _infoDataSO;
+
+    [SerializeField] private UnityEvent<int> OnHealingTimeLevelUpEvent = null;
+
     public SynergyType BuildingSynergyType => _infoDataSO.SynergyType;
 
     public Outline OutlineCompo { get; set; } = null;
@@ -27,7 +32,7 @@ public class SynergyBuilding : BaseBuilding
 
     protected override void Start()
     {
-        _buildingPanel = UIManager.Instance.GetPopupUI<BuildingUI>("BuildingUI");        
+        _buildingPanel = UIManager.Instance.GetPopupUI<BuildingUI>("BuildingUI");
     }
 
     protected override void Running()
@@ -47,7 +52,7 @@ public class SynergyBuilding : BaseBuilding
 
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
 
-            if(_army == null)
+            if (_army == null)
             {
                 _army = ArmyManager.Instance.GetArmyBySynergyType(_infoDataSO.SynergyType);
             }
@@ -95,10 +100,20 @@ public class SynergyBuilding : BaseBuilding
         }
     }
 
+    public void LevelUpHealingTime(int value)
+    {
+        OnHealingTimeLevelUpEvent?.Invoke(value);
+    }
+
+    public void LevelUpSkillTime(int value)
+    {
+        _army.SkillController.LevelUp(value);
+    }
+
     public void SetSynergyBuff(Ability ability)
     {
         if (ability == null) return;
-        
+
         _ablityList.Add(ability);
 
         AddSynergyBuff();
@@ -115,16 +130,10 @@ public class SynergyBuilding : BaseBuilding
 
         foreach (var ability in _ablityList)
         {
-            if (ability.isSkillUpgrade)
-            {
-                _army.SkillController.LevelUp(ability.Value);
-                continue;
-            }
-            
             _army?.AddStat(ability);
         }
 
-        if(_ablityList.Count >= _infoDataSO.BuildingAbilityList.Count)
+        if (_ablityList.Count >= _infoDataSO.BuildingAbilityList.Count)
         {
             OnPenguinArmor();
         }

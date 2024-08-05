@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyMouseEventController : MouseEventController
+public class EnemyMouseEventController : MouseEventController  
 {
     public UnityEvent OnClickToEnemyArmyEvent = null;
 
