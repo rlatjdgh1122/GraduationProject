@@ -17,6 +17,7 @@ namespace ArmySystem
 
         public int LegionIdx = 0;
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
+        public bool IsHealing = false;
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들 ((장군 미포함))
@@ -180,7 +181,7 @@ namespace ArmySystem
                 AlivePenguins.Add(penguin);
 
                 Info.AddPenguinCount();
-               
+
             } //end if
             else
             {

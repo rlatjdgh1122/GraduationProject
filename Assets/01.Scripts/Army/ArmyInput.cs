@@ -78,18 +78,20 @@ public class ArmyInput : MonoBehaviour
     public void OnRightClickEventHandler()
     {
         if (ArmyManager.Instance.CurArmy == null) return;
+        if (ArmyManager.Instance.CurArmy.IsHealing) return;
 
         OnRightClickEvent?.Invoke();
 
         RaycastHit? hit = GetRaycasHit();
-        if (hit != null) 
+        if (hit != null)
             OnRightClickRaycastHitEvent?.Invoke(hit.Value);
     }
 
     public void OnLeftClickEventHandler()
     {
         if (ArmyManager.Instance.CurArmy == null) return;
-        
+        if (ArmyManager.Instance.CurArmy.IsHealing) return;
+
         OnLeftClickEvent?.Invoke();
 
         RaycastHit? hit = GetRaycasHit();
