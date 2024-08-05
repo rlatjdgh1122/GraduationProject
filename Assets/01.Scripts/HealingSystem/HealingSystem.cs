@@ -21,7 +21,7 @@ public class HealingSystem : MonoBehaviour
     private Coroutine _healingTimeCorouine = null;
     private Army _seletedArmy = null;
 
-    private int _maxHealingTime = 0;
+    private float _maxHealingTime = 0;
     private float _healingTime = 0;
 
     private void Start()
@@ -77,10 +77,9 @@ public class HealingSystem : MonoBehaviour
             StopCoroutine(_healingTimeCorouine);
         }
 
-        _healingTimeCorouine = StartCoroutine(HealingTimeCorou());
+        _healingTimeCorouine = StartCoroutine(HealingTimeCorou(_maxHealingTime));
 
-        _healingTime = _seletedArmy.AlivePenguins.Count / _maxHealingTime;
-        OnStartHealingEvent?.Invoke(_healingTime);
+        OnStartHealingEvent?.Invoke(_maxHealingTime);
     }
 
     private void EndHealing()
@@ -93,11 +92,11 @@ public class HealingSystem : MonoBehaviour
         OnEndHealingEvent?.Invoke();
     }
 
-    private IEnumerator HealingTimeCorou()
+    private IEnumerator HealingTimeCorou(float healingTime)
     {
         float elapsedTime = 0f;
 
-        while (elapsedTime < _healingTime)
+        while (elapsedTime < healingTime)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
