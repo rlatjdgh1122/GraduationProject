@@ -29,7 +29,9 @@ public class ArcherTowerBuilding : DefenseBuilding
         for (int i = 0; i < _archerPenguins.Length; i++)
         {
             _archerPenguins[i].gameObject.SetActive(true);
+            _archerPenguins[i].SetInstalled();
         }
+
 
         base.SetInstalled();
     }

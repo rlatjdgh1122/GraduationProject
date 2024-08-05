@@ -14,6 +14,14 @@ public class ArcherTowerPenguin : Penguin
 {
     public EntityStateMachine <ArcherTowerPenguinStateEnum, Penguin> _StateMachine { get; private set; }
 
+    private bool isInstalled = false;
+
+    public override void Init()
+    {
+        base.Init();
+        isInstalled = false;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,6 +46,7 @@ public class ArcherTowerPenguin : Penguin
 
     protected override void Update()
     {
+        if (!isInstalled) { return; }
         _StateMachine.CurrentState.UpdateState();
     }
 
@@ -51,6 +60,11 @@ public class ArcherTowerPenguin : Penguin
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3);
         }
+    }
+
+    public void SetInstalled()
+    {
+        isInstalled = true;
     }
 
     public override void AnimationTrigger() => _StateMachine.CurrentState.AnimationFinishTrigger();
