@@ -94,22 +94,7 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         if (_armies.Count > 0)
             _armies.Clear();
-
-        //CreateArmy();
     }
-
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.T))
-    //    {
-    //        var army = CreateArmy("1군단");
-    //        var s = Instantiate(G, new Vector3(3.868185f, 1.267861f, -4.28912f), Quaternion.identity);
-    //        s.SetOwner(army);
-    //        army.General = s;
-    //        _skillInput.SelectGeneral(s);
-    //        SignalHub.OnModifyCurArmy();
-    //    }
-    //}
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
     {
@@ -118,8 +103,6 @@ public class ArmyManager : Singleton<ArmyManager>
         if (enemyArmy != null) //타겟을 null로 할 경우를 예외처리
             CurArmy.MovefocusMode = MovefocusMode.Battle;
     }
-
-
 
     /// <summary>
     /// 움직일 경우엔 타겟을 명령모드로 변경
@@ -180,11 +163,15 @@ public class ArmyManager : Singleton<ArmyManager>
 
         if (curArmy.CheckEmpty())
         {
-            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName}에는 펭귄이 존재하지 않습니다.");
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 군단에는 펭귄이 존재하지 않습니다.");
             return;
         }
+        else if (curArmy.IsHealing)
+        {
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 군단 회복 중");
+        }
         else
-            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 선택");
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 군단 선택");
 
         prevArmyIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
         curArmyIdx = Idx;
