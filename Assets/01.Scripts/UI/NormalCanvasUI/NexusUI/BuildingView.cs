@@ -48,7 +48,7 @@ public class BuildingView : NexusPopupUI
 
     public void UpdateUI()
     {
-        //lockedPanel.gameObject.SetActive(!_building.IsUnlocked);
+        lockedPanel.gameObject.SetActive(!_building.IsUnlocked);
         buildingName.text = _building.Name;
         buildingIcon.sprite = _building.UISprite;
         maxInstallableCount.text = $"{_building.CurrentInstallCount}/{_building.MaxInstallableCount}";
