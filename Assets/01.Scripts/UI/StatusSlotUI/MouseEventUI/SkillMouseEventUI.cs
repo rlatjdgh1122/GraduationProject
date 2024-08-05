@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 using static GeneralSettingData;
 
 public class SkillMouseEventUI : MountEventUI
-{ 
-    public SelectedSlotSkillUI skillUI = null; 
+{
+    public SelectedSlotSkillUI skillUI = null;
 
     private SkillData m_skillData => skillUI.SkillData;
 
@@ -23,8 +23,8 @@ public class SkillMouseEventUI : MountEventUI
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("DSF");
         if (m_skillData == null) return;
+        if (Army.SkillController == null) return;
 
         int value = Army.SkillController.GetMaxValue;
         string unit = dic[m_skillData.SkillType];

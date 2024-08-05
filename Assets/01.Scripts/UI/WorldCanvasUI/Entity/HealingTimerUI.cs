@@ -9,6 +9,12 @@ public class HealingTimerUI : WorldUI
 
     private Coroutine _coroutine = null;
 
+    public override void Awake()
+    {
+        base.Awake();
+
+        canvas.alpha = 0f;
+    }
 
     public void StartTimer(float healingTime)
     {

@@ -107,8 +107,10 @@ public class HealingController
             penguin.transform.position = _spawnStartPostion;
             penguin.gameObject.SetActive(true);
             penguin.IsMustMoving = false;
+            penguin.StateInit();
 
-            penguin.MoveToMySeat(_spawnEndPostion);
+            CoroutineUtil.CallWaitForSeconds(0.05f, () => { penguin.MoveToMySeat(_spawnEndPostion); });
+
         }
     }
 

@@ -61,6 +61,7 @@ public class HealingSystem : MonoBehaviour
             StopCoroutine(_healingTimeCorouine);
 
         IsHealing = false;
+        _seletedArmy.IsHealing = false;
         _controller.LeaveBuilding();
 
         OnEndHealingEvent?.Invoke();
@@ -72,6 +73,8 @@ public class HealingSystem : MonoBehaviour
         UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 시작");
 
         IsHealing = true;
+        _seletedArmy.IsHealing = true;
+
         if (_healingTimeCorouine != null)
         {
             StopCoroutine(_healingTimeCorouine);
@@ -85,6 +88,8 @@ public class HealingSystem : MonoBehaviour
     private void EndHealing()
     {
         IsHealing = false;
+        _seletedArmy.IsHealing = false;
+
         _controller.EndHealing();
 
         UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 완료됨");
