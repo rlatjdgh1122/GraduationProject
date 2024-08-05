@@ -46,6 +46,11 @@ public class HealingSystem : MonoBehaviour
         _controller.GoToBuilding(StartHealing);
     }
 
+    public void LevelUp(int value)
+    {
+        _maxHealingTime -= value;
+    }
+
     public void BrokenBuilding()
     {
         UIManager.Instance.ShowWarningUI($"{_seletedArmy.LegionName}군단 회복 최소됨");

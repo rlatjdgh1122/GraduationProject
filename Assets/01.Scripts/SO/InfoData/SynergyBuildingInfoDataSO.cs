@@ -12,7 +12,8 @@ public class UpgradeInfo
     [TextArea]
     public string BuildingUpgradeDescription;
     public Ability BuildingAbility;
-    public int Reducehealingtime = 0;
+    public int ReduceHealingTime = 0;
+    public int ReduceSkillTime = 0;
 }
 
 [CreateAssetMenu(menuName = "SO/InfoData/Synergy")]
@@ -25,4 +26,12 @@ public class SynergyBuildingInfoDataSO : ScriptableObject
 
     [Header("Synergy Abilties")]
     public List<UpgradeInfo> BuildingAbilityList = new();
+
+    public UpgradeInfo this[int idx]
+    {
+        get
+        {
+            return BuildingAbilityList[idx];
+        }
+    }
 }

@@ -23,8 +23,6 @@ public class BuildingUIComponent : MonoBehaviour
     public SynergyBuilding synergyBuilding { get; set; }
     public Health buildingHealth { get; set; }
 
-    public UnityEvent<int> OnHealingTimeLevelUpEvent = null;
-
 
     public virtual void Awake()
     {
