@@ -55,4 +55,13 @@ public class TutorialM : Singleton<TutorialM>
     {
         _screenController.EndScreen(100, () => SceneManager.LoadScene(sceneName));
     }
+
+    public void ExitTutorial(string sceneName)
+    {
+        _screenController.EndScreen(100, () =>
+        {
+            _screenController.ReessetValue();
+            LoadingSceneController.LoadScene(sceneName);
+        });
+    }
 }

@@ -13,8 +13,6 @@ public class GlitchEffectController : MonoBehaviour
     [SerializeField] private float _duration;
     [SerializeField] private float _waitTime;
 
-    public float Amount   { get; private set; }
-
     private Sequence _sequence;
 
     private void ResetSequence()
@@ -23,11 +21,16 @@ public class GlitchEffectController : MonoBehaviour
         _sequence = DOTween.Sequence();
     }
 
-    public void SetValue(float amount)
+    public void SetValue(float amount, float strength = 0.7f)
     {
-        Amount = amount;
+        _glitchMat.SetFloat("_NoiseAmount", amount);
+        _glitchMat.SetFloat("_ScreenLinesStrength", strength);
+    }
 
-        _glitchMat.SetFloat("_NoiseAmount", Amount);
+    public void ReessetValue()
+    {
+        _glitchMat.SetFloat("_NoiseAmount", 0);
+        _glitchMat.SetFloat("_ScreenLinesStrength", 1);
     }
 
     public void StartScreen(float endValue, Action action = null)

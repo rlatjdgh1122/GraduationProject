@@ -11,7 +11,7 @@ public class Worker : Entity
     public Transform WorkerHomeTrm;
     #endregion
 
-    public bool IsTargetInAttackRange => Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) < attackDistance;
+    //public bool IsTargetInAttackRange => Vector3.Distance(transform.position, CurrentTarget.GetClosetPostion(transform.position)) < attackDistance;
     public bool CanWork = false;
     public bool EndWork;
 

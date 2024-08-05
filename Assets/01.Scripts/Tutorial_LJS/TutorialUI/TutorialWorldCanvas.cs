@@ -10,7 +10,7 @@ public enum TutorialImage
     Warning,
     Arrow_Right,
     Arrow_Left,
-
+    Arrow
 }
 
 [Serializable]
@@ -51,9 +51,12 @@ public class TutorialWorldCanvas : WorldUI
     {
         base.Update();
 
-        Vector3 targetPos = _target.position;
-        targetPos.y = _yPos;
+        if(_target != null)
+        {
+            Vector3 targetPos = _target.position;
+            targetPos.y = _yPos;
 
-        transform.position = targetPos;
+            transform.position = targetPos;
+        }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ResourceObjectClickTrigger : MonoBehaviour
 {
+    public bool CanClick = true;
     ResourceObject _resourceObject;
 
     private void Awake()
@@ -12,7 +13,7 @@ public class ResourceObjectClickTrigger : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && CanClick)
         {
             ResourceManager.Instance.SelectedResource = _resourceObject;
             UIManager.Instance.ShowPanel("ResourceUI");

@@ -112,6 +112,9 @@ public class SpawnBuildingButton : MonoBehaviour
             UIManager.Instance.HidePanel("NexusUI");
             UIManager.Instance.HideAllPanel();
         }
-        catch { };
+        catch 
+        {
+            Debug.LogError("Spawn Building Button Error!");
+        };
     }
 }
