@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(SkillActionData))]
 public abstract class Skill : MonoBehaviour
@@ -13,10 +14,32 @@ public abstract class Skill : MonoBehaviour
     #region events
     public Action OnSkillStart = null;
     public Action OnSkillCompleted = null;
+
+    //쉴드 장군 때문에 만들었음 ㅋㅋ
+    public UnityEvent OnAvaliableEvent = null;
+    public UnityEvent OnUnavailableEvent = null;
     #endregion
 
-    public bool IsAvaliable = true;
     public bool CanUseSkill = false;
+
+    public bool IsAvaliable
+    {
+        get => _isAvaliable;
+        set
+        {
+            _isAvaliable = value;
+            if (value == true)
+            {
+                OnAvaliableEvent?.Invoke();
+            }
+            else
+            {
+                OnUnavailableEvent?.Invoke();
+            }
+        }
+    }
+
+    private bool _isAvaliable = true;
 
     protected int maxDecisionValue => SkillController.GetMaxValue;
     private void Awake()
