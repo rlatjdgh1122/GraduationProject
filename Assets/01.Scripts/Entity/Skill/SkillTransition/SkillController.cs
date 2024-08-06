@@ -36,7 +36,7 @@ public class SkillController : MonoBehaviour
 
     public void Init()
     {
-        _skillDecision.InitMaxValue();
+
     }
 
     public void SetUp(Transform parentRoot)
@@ -81,10 +81,14 @@ public class SkillController : MonoBehaviour
 
     public void OnRegister()
     {
-        _skillDecision.OnChangedMaxValueEvent += OnChangedMaxValue;
-        _skillDecision.OnSkillActionEnterEvent += OnSkillActionEnter;
-        _skillDecision.OnSkillUsedEvent += OnSkillUsed;
-        _skillDecision.OnSkillReadyEvent += OnSkillReady;
+        if (_skillDecision)
+        {
+            _skillDecision.OnChangedMaxValueEvent += OnChangedMaxValue;
+            _skillDecision.OnSkillActionEnterEvent += OnSkillActionEnter;
+            _skillDecision.OnSkillUsedEvent += OnSkillUsed;
+            _skillDecision.OnSkillReadyEvent += OnSkillReady;
+        }
+       
     }
 
     private void OnChangedMaxValue(int value)
@@ -111,15 +115,18 @@ public class SkillController : MonoBehaviour
 
     private void OffRegister()
     {
-        _skillDecision.OnChangedMaxValueEvent -= OnChangedMaxValueEvent;
-        _skillDecision.OnSkillActionEnterEvent -= OnSkillActionEnterEvent;
-        _skillDecision.OnSkillUsedEvent -= OnSkillUsedEvent;
-        _skillDecision.OnSkillReadyEvent -= OnSkillReadyEvent;
+        if (_skillDecision)
+        {
+            _skillDecision.OnChangedMaxValueEvent -= OnChangedMaxValueEvent;
+            _skillDecision.OnSkillActionEnterEvent -= OnSkillActionEnterEvent;
+            _skillDecision.OnSkillUsedEvent -= OnSkillUsedEvent;
+            _skillDecision.OnSkillReadyEvent -= OnSkillReadyEvent;
+        }
     }
 
     private void OnDisable()
     {
-        //OffRegister();
+        OffRegister();
     }
 
 }

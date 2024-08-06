@@ -16,7 +16,7 @@ public class PenguinMustMoveState : State
 
     public override void UpdateState()
     {
-        if (_penguin.NavAgent.remainingDistance < 0.05f)
+        if (_penguin.NavAgent.velocity.magnitude < 0.05f)
         {
             _stateMachine.ChangeState(PenguinStateType.Idle);
         }

@@ -302,7 +302,7 @@ namespace ArmySystem
 
         public bool CheckEmpty()
         {
-            if (Soldiers.Count <= 0 && !General) return true;
+            if (AlivePenguins.Count <= 0) return true;
 
             return false;
         }

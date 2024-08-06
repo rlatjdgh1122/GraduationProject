@@ -323,12 +323,6 @@ public class ArmyManager : Singleton<ArmyManager>
 
         var Army = _armies[legionIdx];
 
-        /* if (Army.General != null)
-         {
-             Debug.Log($"현재 {legionName}군단에는 장군이 존재합니다.");
-             return;
-         }*/
-
         obj.SetOwner(Army);
         Army.AddGeneral(obj);
 

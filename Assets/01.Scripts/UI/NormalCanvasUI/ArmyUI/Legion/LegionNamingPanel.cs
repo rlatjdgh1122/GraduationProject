@@ -107,14 +107,13 @@ public class LegionNamingPanel : ArmyComponentUI
             return;
         }
 
-        CurrentPanel.LegionName = _legionName;
         _legionNameList.Add(_legionName);
         OnLegionNameNamingEvent?.Invoke(CurrentPanel);
 
         Army army = ArmyManager.Instance.CreateArmy(_legionName);
 
         CurrentPanel.SetLegionIdx(army.LegionIdx);
-        CurrentPanel.SetLegionName(army.LegionName);
+        CurrentPanel.SetLegionName(_legionName);
 
         CurrentPanel.SetLegionData();
 

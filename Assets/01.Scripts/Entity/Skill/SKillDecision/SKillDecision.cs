@@ -57,11 +57,6 @@ namespace SkillSystem
         protected abstract void Init();
 
         //start보다 먼저 실행되더라
-        public virtual void InitMaxValue()
-        {
-            maxValue = _initMaxVaue;
-            OnChangedMaxValueEvent?.Invoke(_maxValue);
-        }
 
         public virtual void SetUp(Transform parentRoot)
         {

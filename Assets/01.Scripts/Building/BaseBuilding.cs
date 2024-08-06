@@ -163,6 +163,7 @@ public abstract class BaseBuilding : WorkableObject
         isInstalling = false;
 
         BuildingEnable(true);
+        OnInstalled();
         OnInstalledEvent?.Invoke();
 
         if (_buildingItemInfo != null)
@@ -174,6 +175,8 @@ public abstract class BaseBuilding : WorkableObject
             //SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
     }
+
+    protected virtual void OnInstalled() { }
 
     protected override void Update()
     {

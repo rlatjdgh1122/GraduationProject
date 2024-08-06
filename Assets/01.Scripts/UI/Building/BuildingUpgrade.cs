@@ -73,6 +73,7 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
     private void OnClickEvent()
     {
         _level++;
+        synergyBuilding.Level = _level;
 
         UpdateUpgradeInfo();
         UpdateSlot();

@@ -9,6 +9,7 @@ using UnityEngine;
 public class LegionPanel : PopupUI
 {
     public int LegionIdx = 0;
+
     public string LegionName = "";
 
     public int SetLegionIdx(int legionIdx) => LegionIdx = legionIdx;
@@ -69,17 +70,17 @@ public class LegionPanel : PopupUI
         foreach (LegionSoldierSlot slot in _soldierSlotList)
         {
             //여기서 자리를 예외처리해줌 일단은 이렇게 하고 나중에 수정
-            slot.SetSlot(info, LegionName, i++);
+            slot.SetSlot(info, LegionName, LegionIdx, i++);
         }
     }
 
     public void SetLegionData()
     {
-        foreach (LegionSoldierSlot slot in _soldierSlotList)
+        /*foreach (LegionSoldierSlot slot in _soldierSlotList)
         {
             slot.LegionName = LegionName;
             slot.LegionIdx = LegionIdx;
-        }
+        }*/
     }
 
     public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
