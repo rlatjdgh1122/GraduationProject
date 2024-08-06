@@ -35,7 +35,13 @@ public class PenguinInfoUI : PopupUI
         base.HidePanel();
 
         _rectTransform.DOScale(Vector3.zero, 0.5f);
-        PenguinManager.Instance.DummyPenguinList.ForEach(p => p.OutlineCompo.enabled = false);
+        PenguinManager.Instance.DummyPenguinList.ForEach(p =>
+        {
+            if (p.OutlineCompo != null)
+            {
+                p.OutlineCompo.enabled = false;
+            }
+        });
         PenguinManager.Instance.DummyPenguinCameraCompo.DisableCamera();
     }
 

@@ -311,6 +311,15 @@ public class SoundManager : MonoBehaviour
         }
 
     }
+    public static void ResetSound()
+    {
+        instance.SoundClear();
+    }
+
+    private void SoundClear()
+    {
+        bgmContainer.TryClear();
+    }
 
     private void OnDestroy()
     {
