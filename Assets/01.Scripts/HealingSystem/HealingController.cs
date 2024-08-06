@@ -35,9 +35,20 @@ public class HealingController
     {
         _checkCount = 0;
         var penguinSet = new HashSet<GameObject>();
+
+        ArmyManager.Instance.ChangedMoveFocusMode(_seletedArmy, MovefocusMode.MustMove);
+
         foreach (var penguin in _seletedArmy.AlivePenguins)
         {
-            penguin.MustMoveToTargetPostion(_transform.position);
+            if (penguin.IgnoreToArmyCalled) //스킬쓰는 중이면
+            {
+                penguin.SetMustPostion(_transform.position);
+            }
+            else
+            {
+                penguin.MustMoveToTargetPostion(_transform.position);
+            }
+
             penguinSet.Add(penguin.gameObject);
         }
         // 여기서 감지를 한다음
@@ -101,6 +112,7 @@ public class HealingController
         _checkCount = 0;
 
         var AliveLists = _seletedArmy.AlivePenguins.ToArray();
+        ArmyManager.Instance.ChangedMoveFocusMode(_seletedArmy, MovefocusMode.Command);
 
         foreach (var penguin in AliveLists)
         {
