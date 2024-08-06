@@ -29,9 +29,9 @@ public class GeneralSelectSlot : ArmyComponentUI
         GeneralData = GeneralManager.Instance.GeneralList[Index];
     }
 
-    public void OnDestroy()
+    private void OnDisable()
     {
-        Debug.Log(gameObject.name);
+        OnUpdateState -= UpdateUI;
     }
 
     public void SetSelectedPanel()

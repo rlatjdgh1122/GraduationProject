@@ -136,7 +136,7 @@ public class Penguin : Entity, IPenguinArmor
         base.Start();
 
         EffectPlayer buffEffect = PoolManager.Instance.Pop(_penguinEffect) as EffectPlayer;
-        Debug.Log(buffEffect);
+        //Debug.Log(buffEffect);
 
 
         buffEffect.transform.SetParent(transform);
