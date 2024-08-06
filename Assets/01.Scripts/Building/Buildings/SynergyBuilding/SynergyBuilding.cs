@@ -153,6 +153,11 @@ public class SynergyBuilding : BaseBuilding
 
         _ablityList.Add(ability);
 
+        if (_ablityList.Count >= _infoDataSO.BuildingAbilityList.Count)
+        {
+            OnPenguinArmor();
+        }
+
         AddSynergyBuff();
     }
 
