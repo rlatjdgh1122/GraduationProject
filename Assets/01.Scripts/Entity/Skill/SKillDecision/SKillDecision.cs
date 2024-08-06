@@ -8,6 +8,7 @@ namespace SkillSystem
         [SerializeField] private bool _canUsedskillInitially = true;
         [SerializeField] private int _initMaxVaue = 5;
 
+
         public Action OnSkillReadyEvent = null;
         public Action OnSkillUsedEvent = null;
         public Action OnSkillActionEnterEvent = null;
@@ -16,7 +17,7 @@ namespace SkillSystem
         protected EntityActionData entityActionData = null;
         protected SkillActionData skillActionData = null;
 
-        private int _maxValue = 0;
+        protected bool isAvaliable = true;
         protected float saveValue = 0;
 
         protected int maxValue
@@ -28,6 +29,10 @@ namespace SkillSystem
                 OnChangedMaxValueEvent?.Invoke(_maxValue);
             }
         }
+
+        private int _maxValue = 0;
+
+        public int GetMaxValue => _maxValue;
 
         private void Start()
         {
@@ -67,6 +72,8 @@ namespace SkillSystem
             Init();
         }
 
+        
+
         private void OnRegister()
         {
             entityActionData.OnHitCountUpdated += OnHit;
@@ -95,13 +102,20 @@ namespace SkillSystem
 
         #endregion
 
-
+        #region Inheritance Method
 
         public abstract bool MakeDecision();
 
         public virtual void OnUsed() { }   //스킬 사용한 후 실행됨
 
         public virtual void LevelUp(int value) { }  //레벨업하면 어케해줄 것인가
+
+        #endregion
+
+        public void SetAvailable(bool available)
+        {
+            isAvaliable = available;
+        }
 
     }//end cs
 }

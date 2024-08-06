@@ -18,6 +18,7 @@ public class CheckHitDecision : SKillDecision
     protected override void OnHit(int hitCount)
     {
         if (!_checkSkillReady) return;
+        if (!isAvaliable) return;
 
         OnSkillActionEnterEvent?.Invoke();
 
