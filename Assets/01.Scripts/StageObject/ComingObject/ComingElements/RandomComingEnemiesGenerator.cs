@@ -45,7 +45,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private readonly string raftName = "Raft";
 
-    private bool isTutorialWave => curWave < 11;
+    private bool isTutorialWave => curWave < 16;
 
     [SerializeField]
     private int angle;
@@ -152,7 +152,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     }
 
 
-    private void GenerateRaft()
+    private void GenerateRaft() // 보스면 0개
     {
         int raftCount = GetRaftCount();
 
@@ -202,6 +202,12 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private int GetRaftCount()
     {
         int raftCount = 0;
+
+        if (WaveManager.Instance.CurrentWaveCount % 5 == 0)
+        {
+            return 0;
+        }
+
         if (isTutorialWave) // 튜토리얼이면 정해진대로
         {
             raftCount = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1].ComingRaftCount;
@@ -231,6 +237,11 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     private int GetGroundCount()
     {
         int groundCount = 0;
+
+        if (WaveManager.Instance.CurrentWaveCount % 5 == 0) // 보스면 1개
+        {
+            return 1;
+        }
 
         if (isTutorialWave) // 튜토리얼이면 정해진대로
         {
