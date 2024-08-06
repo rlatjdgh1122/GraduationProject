@@ -37,6 +37,8 @@ public class GlitchEffectController : MonoBehaviour
     {
         ResetSequence();
 
+        SoundManager.Play2DSound(SoundName.Glitch);
+
         _sequence.PrependInterval(_waitTime)
                  .Append(_glitchMat.DOFloat(endValue, "_NoiseAmount", _duration))
                  .AppendCallback(() =>
@@ -48,6 +50,8 @@ public class GlitchEffectController : MonoBehaviour
     public void EndScreen(float endValue, Action action = null)
     {
         ResetSequence();
+
+        SoundManager.Play2DSound(SoundName.Glitch);
 
         _sequence.Append(_glitchMat.DOFloat(endValue, "_NoiseAmount", _duration))
                  .AppendInterval(_waitTime)

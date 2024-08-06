@@ -33,7 +33,6 @@ public class TutorialUI : MonoBehaviour
             _infoUI.CreateSlot(text);
         }
 
-        //SoundManager.Play2DSound(SoundName.TutorialStart);
         FadeIn();
     }
 

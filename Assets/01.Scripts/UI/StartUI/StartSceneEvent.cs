@@ -37,21 +37,21 @@ public class StartSceneEvent : MonoBehaviour
 
     public void CreditsBtn()
     {
-        if (_canClick) return;
+        if (!_isGameStart || _canClick) return;
 
         UIManager.Instance.ShowPanel("CreditUI");
     }
 
     public void SettingBtn()
     {
-        if (_canClick) return;
+        if (!_isGameStart || _canClick) return;
 
         UIManager.Instance.ShowPanel("OptionUI");
     }
 
     public void ExitBtn()
     {
-        if (_canClick) return;
+        if (!_isGameStart || _canClick) return;
 
         Application.Quit();
     }

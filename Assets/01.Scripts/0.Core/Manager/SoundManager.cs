@@ -80,6 +80,7 @@ public enum SoundName : uint
     #endregion
 
     TutorialStart,
+    Glitch,
     None = 100,
 }
 
