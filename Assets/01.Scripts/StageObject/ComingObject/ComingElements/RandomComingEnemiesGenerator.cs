@@ -116,6 +116,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         //Vector3 groundPos = new Vector3(transform.localPosition.x, transform.localPosition.y, );
         Vector3 groundPos = transform.localPosition + direction * _spawnDistance * (makedHexagonCount + 1);
+        groundPos.y = 0;
         curGround.SetComingObjectInfo(_groundConfigurer.SetComingObjectElements(curGround.transform),
                                       transform,
                                       groundPos);
