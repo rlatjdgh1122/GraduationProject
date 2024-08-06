@@ -81,7 +81,7 @@ public class Penguin : Entity, IPenguinArmor
     public bool IsTargetInInnerRange => CurrentTarget != null && Vector3.Distance(prevMousePos, CurrentTarget.GetClosetPostion(transform.position)) <= innerDistance;
 
 
-    private Army owner = null;
+    [SerializeField] private Army owner = null;
 
     public Army MyArmy => owner;
 

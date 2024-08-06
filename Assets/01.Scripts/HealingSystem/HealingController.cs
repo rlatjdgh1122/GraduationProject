@@ -117,6 +117,7 @@ public class HealingController
         foreach (var penguin in AliveLists)
         {
             penguin.transform.position = _spawnStartPostion;
+            penguin.OutlineCompo.enabled = false;
             penguin.gameObject.SetActive(true);
             penguin.IsMustMoving = false;
             penguin.StateInit();

@@ -19,7 +19,7 @@ public class UltimateMouseEventUI : MountEventUI
     public override void OnPointerEnter(PointerEventData eventData)
     {
         if (ultimateData == null) return;
-        if (Army.UltimateController) return;
+        if (Army.UltimateController == null) return;
 
         int value = Army.UltimateController.GetMaxValue;
         string unit = dic[ultimateData.UltimateType];
