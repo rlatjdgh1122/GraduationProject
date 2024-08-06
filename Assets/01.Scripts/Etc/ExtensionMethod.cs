@@ -79,7 +79,11 @@ public static class ExtensionMethod
         {
             for (int i = 0; i < count; ++i)
             {
-                action?.Invoke(list[i]);
+                try
+                {
+                    action?.Invoke(list[i]);
+                }
+                catch { }
             }
         }
 
