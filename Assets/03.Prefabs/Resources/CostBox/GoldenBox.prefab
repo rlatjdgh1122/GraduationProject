@@ -39007,6 +39007,7 @@ GameObject:
   - component: {fileID: 2061721098933033659}
   - component: {fileID: 4361611167449552749}
   - component: {fileID: 428901229635817570}
+  - component: {fileID: 1370314391073005412}
   m_Layer: 6
   m_Name: GoldenBox
   m_TagString: Untagged
@@ -39073,6 +39074,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8, y: 0.9, z: 1}
   m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!208 &1370314391073005412
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922101363751193662}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.9, y: 0.45, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2931742139019269834
 GameObject:
   m_ObjectHideFlags: 0

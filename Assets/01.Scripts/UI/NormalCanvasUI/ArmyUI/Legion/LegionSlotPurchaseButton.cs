@@ -37,7 +37,7 @@ public class LegionSlotPurchaseButton : MonoBehaviour
         {
             _slot.gameObject.SetActive(true);
             _legionPanel.SoldierSlotList.Add(_slot);
-            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName, idx);
+            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName,_legionPanel.LegionIdx, idx);
         });
     }
 }

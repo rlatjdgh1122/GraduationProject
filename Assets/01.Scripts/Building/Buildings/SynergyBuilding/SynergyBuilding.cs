@@ -1,7 +1,6 @@
 using ArmySystem;
 using SynergySystem;
 using System.Collections.Generic;
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,8 +9,10 @@ public class SynergyBuilding : BaseBuilding
     [SerializeField] private SynergyBuildingInfoDataSO _infoDataSO;
 
     [SerializeField] private UnityEvent<int> OnHealingTimeLevelUpEvent = null;
+    public int Level = 0;
 
     public SynergyType BuildingSynergyType => _infoDataSO.SynergyType;
+
 
     public Outline OutlineCompo { get; set; } = null;
     public SynergyBuildingDeadController DeadController { get; set; }
@@ -67,7 +68,7 @@ public class SynergyBuilding : BaseBuilding
 
         //건물 부서졌을 때
         DeadController.OnBuildingDeadEvent += RemoveSynergyBuff;
-        DeadController.OnBuildingRepairEvent += AddSynergyBuff;
+        DeadController.OnBuildingRepairEvent += OnRepair;
     }
 
     public override void OnDisable()
@@ -80,7 +81,7 @@ public class SynergyBuilding : BaseBuilding
 
         //건물 부서졌을 때
         DeadController.OnBuildingDeadEvent -= RemoveSynergyBuff;
-        DeadController.OnBuildingRepairEvent -= AddSynergyBuff;
+        DeadController.OnBuildingRepairEvent -= OnRepair;
     }
 
     public void OnSynergyDisable(SynergyType type)
@@ -110,11 +111,52 @@ public class SynergyBuilding : BaseBuilding
         _army.SkillController.LevelUp(value);
     }
 
+
+    protected override void OnInstalled()
+    {
+        /* //설치 다되었을때
+         for (int i = 0; i < Level; i++)
+         {
+             if (_infoDataSO[i].ReduceSkillTime > 0)
+             {
+                 LevelUpSkillTime(_infoDataSO[i].ReduceSkillTime);
+             }
+         }*/
+        OnRepair();
+    }
+
+
+    public void OnRepair()
+    {
+        //스킬
+        for (int i = 0; i < Level; i++)
+        {
+            if (_infoDataSO[i].ReduceSkillTime > 0)
+            {
+                LevelUpSkillTime(_infoDataSO[i].ReduceSkillTime);
+            }
+        }
+
+        //방어구 추가
+        if (_ablityList.Count >= _infoDataSO.BuildingAbilityList.Count)
+        {
+            OnPenguinArmor();
+        }
+
+        //스탯 추가
+        AddSynergyBuff();
+    }
+
     public void SetSynergyBuff(Ability ability)
     {
         if (ability == null) return;
 
         _ablityList.Add(ability);
+
+        if (_ablityList.Count >= _infoDataSO.BuildingAbilityList.Count)
+        {
+            OnPenguinArmor();
+        }
 
         AddSynergyBuff();
     }
@@ -132,11 +174,6 @@ public class SynergyBuilding : BaseBuilding
         {
             _army?.AddStat(ability);
         }
-
-        if (_ablityList.Count >= _infoDataSO.BuildingAbilityList.Count)
-        {
-            OnPenguinArmor();
-        }
     }
 
     public void RemoveSynergyBuff()
@@ -148,8 +185,20 @@ public class SynergyBuilding : BaseBuilding
             _army?.RemoveStat(ability);
         }
 
+        //이거 함수 나눠주는게 좋을 것 같은데
+
+        //부서지면 스킬 쿨타임 감소시킨거 취소해줌
+        for (int i = 0; i < Level; i++)
+        {
+            if (_infoDataSO[i].ReduceSkillTime > 0)
+            {
+                LevelUpSkillTime(-_infoDataSO[i].ReduceSkillTime);
+            }
+        }
+
         OffPenguinArmor();
     }
+
 
     public void OnPenguinArmor()
     {

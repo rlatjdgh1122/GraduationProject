@@ -23,21 +23,6 @@ public class LegionSwap : PopupUI
         base.MovePanel(x, y, fadeTime, ease);
     }
 
-    private void Update()
-    {
-        if (_isAnimating) return;
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            StartCoroutine(AnimateAndSwap(-1036, 1));
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            StartCoroutine(AnimateAndSwap(1036, -1));
-        }
-    }
-
     public void MoveLegionPanel(int swapValue)
     {
         if (_isAnimating) return;

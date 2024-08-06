@@ -11,8 +11,14 @@ public class SkillInput : MonoBehaviour
     private bool CanPlaySkill()
     {
         if (_selectArmy == null) return false;
-        return _selectArmy.General != null; /* && 디버깅 하기 위해 주석 처리함. 나중에는 주석 풀 것.
-               WaveManager.Instance.IsBattlePhase; */
+        if (_selectArmy.IsHealing)
+        {
+            UIManager.Instance.ShowWarningUI("회복 중에는 스킬을 쓸 수 없습니다.");
+            return false;
+        }
+
+        return _selectArmy.General != null && WaveManager.Instance.IsBattlePhase;
+
     }
 
     private void OnEnable()

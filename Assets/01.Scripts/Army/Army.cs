@@ -17,6 +17,7 @@ namespace ArmySystem
 
         public int LegionIdx = 0;
         public bool IsArmyReady = true; //군단 전체가 움직일 준비가 되었는가
+        public bool IsHealing = false;
         public MovefocusMode MovefocusMode = MovefocusMode.Command;
 
         public List<Penguin> Soldiers = new(); //군인 펭귄들 ((장군 미포함))
@@ -180,7 +181,7 @@ namespace ArmySystem
                 AlivePenguins.Add(penguin);
 
                 Info.AddPenguinCount();
-               
+
             } //end if
             else
             {
@@ -242,66 +243,62 @@ namespace ArmySystem
             if (TargetEnemyArmy.Soldiers.Count <= 0) return null;
 
             Enemy closestEnemy = null;
-            Enemy closestUntargetedEnemy = null;
+            int fewestTargets = int.MaxValue;
             double closestDistance = double.MaxValue;
-            double closestUntargetedDistance = double.MaxValue;
 
             try
             {
-                // Soldiers 리스트를 순회하며 가장 가까운 적을 찾음
-                foreach (Enemy enemy in TargetEnemyArmy.Soldiers)
+                Dictionary<Enemy, int> enemyTargetCounts = new Dictionary<Enemy, int>();
+
+                // 각 적이 몇 명의 아군에 의해 타겟팅되고 있는지 계산
+                foreach (Penguin soldier in Soldiers)
                 {
-                    // enemy가 null인 경우를 확인
-                    if (enemy == null) continue;
-
-                    double distance = Vector3.Distance(penguin.transform.position, enemy.transform.position);
-
-                    if (distance < closestDistance)
+                    if (soldier.CurrentTarget != null)
                     {
-                        closestEnemy = enemy;
-                        closestDistance = distance;
-                    }
-
-                    if (distance < closestUntargetedDistance && !IsEnemyTargetedByMyArmy(enemy))
-                    {
-                        closestUntargetedEnemy = enemy;
-                        closestUntargetedDistance = distance;
+                        Enemy target = soldier.CurrentTarget as Enemy;
+                        if (enemyTargetCounts.ContainsKey(target))
+                        {
+                            enemyTargetCounts[target]++;
+                        }
+                        else
+                        {
+                            enemyTargetCounts[target] = 1;
+                        }
                     }
                 }
 
-                // 가장 가까운 타겟이 지정되지 않은 적 또는 가장 가까운 적 반환
-                return closestUntargetedEnemy ?? closestEnemy;
+                // 모든 적을 순회하며 타겟팅 카운트가 적고 거리가 가까운 적을 선택
+                foreach (Enemy enemy in TargetEnemyArmy.Soldiers)
+                {
+                    if (enemy == null) continue;
+
+                    double distance = Vector3.Distance(penguin.transform.position, enemy.transform.position);
+                    int targetCount = enemyTargetCounts.ContainsKey(enemy) ? enemyTargetCounts[enemy] : 0;
+
+                    // 적이 타겟팅된 아군의 수가 적고, 거리가 가장 가까운 적을 선택
+                    if (targetCount < fewestTargets || (targetCount == fewestTargets && distance < closestDistance))
+                    {
+                        closestEnemy = enemy;
+                        fewestTargets = targetCount;
+                        closestDistance = distance;
+                    }
+                }
+
+                return closestEnemy;
             }
+
             catch (NullReferenceException ex)
             {
                 return null;
             }
-
         }
 
-
-        private bool IsEnemyTargetedByMyArmy(Enemy enemy)
-        {
-            if (TargetEnemyArmy.Soldiers == null) return false;
-
-            foreach (Penguin soldier in Soldiers)
-            {
-                // enemy가 null인 경우를 확인
-                if (enemy == null) continue;
-
-                if (soldier.CurrentTarget == enemy)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         #endregion
 
         public bool CheckEmpty()
         {
-            if (Soldiers.Count <= 0 && !General) return true;
+            if (AlivePenguins.Count <= 0) return true;
 
             return false;
         }

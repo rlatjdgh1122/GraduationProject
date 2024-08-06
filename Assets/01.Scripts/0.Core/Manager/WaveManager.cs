@@ -68,6 +68,14 @@ public class WaveManager : Singleton<WaveManager>
     public bool OnBuildArcherTower = false;
     public bool OnBuildBuffTower = false;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            currentWaveCount = 15;
+        }
+    }
+
     public void BattlePhaseSubscribe()
     {
         SignalHub.OnBattlePhaseStartEvent += OnBattlePhaseStartHandle; // 전투페이즈 시작 이벤트 구독
