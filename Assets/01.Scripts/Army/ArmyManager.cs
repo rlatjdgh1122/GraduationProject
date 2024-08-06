@@ -361,7 +361,7 @@ public class ArmyManager : Singleton<ArmyManager>
         //증가된 군단 스탯 지우기
         var Army = _armies[penguin.MyArmy.LegionIdx];
 
-        penguin.SetOwner(null);
+        //penguin.SetOwner(null);
 
         //장군이라면
         if (penguin is General)

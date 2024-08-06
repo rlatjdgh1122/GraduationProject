@@ -97,7 +97,8 @@ namespace ArmySystem
             }
             else
             {
-                Debug.Log("해당 펭귄은 이미 존재합니다.");
+                Debug.Log($"해당 펭귄은 이미 존재합니다. {penguin.GetInstanceID()}");
+
             }
         }
 

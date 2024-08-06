@@ -48,6 +48,8 @@ public abstract class EntityDeadController<T> : PoolableMono, IDeadable
 
     public virtual void OnResurrected()
     {
+
+        _owner.gameObject.SetActive(true);
         //체력 다시 채움
         _owner.HealthCompo.SetHealth(_owner.Stat);
 

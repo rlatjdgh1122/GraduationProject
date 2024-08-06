@@ -120,17 +120,6 @@ namespace Define
                         return Vector3.zero;
                     }
                 }
-
-                public static Vector3 GetArmyCenterPostion(Army army)
-                {
-                    List<Vector3> posList = new();
-                    for (int i = 0; i < army.Soldiers.Count; i++)
-                    {
-                        posList.Add(army.Soldiers[i].transform.position);
-                    }
-
-                    return GetCenterPostion(posList);
-                }
             }
         }
     }
