@@ -74,6 +74,7 @@ public enum SoundName : uint
     #region Ultimate
 
     UltimateLance,
+    UltimateLanceExplosion,
     UltimatePolice,
     UltimateKatana,
 

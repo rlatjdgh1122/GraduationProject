@@ -74,6 +74,7 @@ public class LanceUltTruck : PoolableMono
     private void Explode()
     {
         // 트럭 폭발 로직 추가
+        SoundManager.Play3DSound(SoundName.UltimateLanceExplosion, transform.position);
         _damageCaster.CastTruckDamage(_stunValue, _ultimateDamage, transform.position, _damageCaster.TargetLayer);
         Destroy(this.gameObject);
     }
