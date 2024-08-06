@@ -46,6 +46,11 @@ public class PenguinSingijeonSkillState : State
         {
             _penguin.MoveToClickPositon();
         }
+        else if (_penguin.MyArmy.MovefocusMode == MovefocusMode.MustMove)
+        {
+            _penguin.MustMoveToTargetPostion();
+        }
+
         _penguin.IgnoreToArmyCalled = false;
 
         base.ExitState();

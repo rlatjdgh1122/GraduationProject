@@ -109,7 +109,13 @@ public class ArmyManager : Singleton<ArmyManager>
     /// </summary>
     public void SetMoveForcusCommand(RaycastHit hit = default)
     {
+        if (CurArmy.MovefocusMode == MovefocusMode.MustMove) return;
         CurArmy.MovefocusMode = MovefocusMode.Command;
+    }
+
+    public void ChangedMoveFocusMode(Army army, MovefocusMode mode)
+    {
+        army.MovefocusMode = mode;
     }
 
     public void ChangedCurrentArmy()

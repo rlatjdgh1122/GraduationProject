@@ -19,7 +19,7 @@ public class GeneralSlot : ArmyComponentUI
         if (GeneralData == null) return;
 
         if (GeneralData.GeneralDetailData.IsAvailable)
-            _ownText.SetActive(true);
+            _ownText?.SetActive(true);
 
         _icon.sprite = GeneralData.InfoData.PenguinIcon;
     }
