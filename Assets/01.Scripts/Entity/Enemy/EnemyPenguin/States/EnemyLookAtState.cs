@@ -16,6 +16,7 @@ public class EnemyLookAtState : EnemyBaseState
 
         _triggerCalled = false;
         _enemy.StopImmediately();
+        _enemy.FindNearestTarget();
     }
 
     public override void UpdateState()
