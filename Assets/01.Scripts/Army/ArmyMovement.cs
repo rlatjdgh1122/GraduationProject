@@ -63,6 +63,8 @@ public class ArmyMovement : MonoBehaviour
 
     public void OnClickForMovement(RaycastHit hit)
     {
+        if (curArmy.MovefocusMode == MovefocusMode.MustMove) return;
+
         if (WaitForAllTrueCoutine != null) StopCoroutine(WaitForAllTrueCoutine);
         WaitForAllTrueCoutine = StartCoroutine(Movement_Corou(hit.point));
     }

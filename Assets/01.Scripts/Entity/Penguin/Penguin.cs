@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Penguin : Entity, IPenguinArmor
 {
@@ -430,6 +431,26 @@ public class Penguin : Entity, IPenguinArmor
         {
             NavAgent.isStopped = false;
             bool destinationSet = NavAgent.SetDestination(MousePos + SeatPos);
+        }
+    }
+
+    private Vector3 _mustTargetPos = Vector3.zero;
+
+    public void SetMustPostion(Vector3 pos)
+    {
+        _mustTargetPos = pos;
+    }
+
+    public void MustMoveToTargetPostion()
+    {
+        if (NavAgent != null)
+        {
+            IsMustMoving = true;
+
+            NavAgent.isStopped = false;
+            bool destinationSet = NavAgent.SetDestination(_mustTargetPos);
+            CoroutineUtil.CallWaitForOneFrame(() => StateMachine.ChangeState(PenguinStateType.MustMove));
+
         }
     }
 
