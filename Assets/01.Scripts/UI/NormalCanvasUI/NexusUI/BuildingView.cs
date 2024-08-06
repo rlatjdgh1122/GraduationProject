@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BuildingView : NexusPopupUI
 {
     [SerializeField]
-    private BuildingPriceUI _priceUI;
+    protected BuildingPriceUI _priceUI;
 
     [HideInInspector]
     public SpawnBuildingButton spawn;
@@ -18,7 +18,7 @@ public class BuildingView : NexusPopupUI
     public TextMeshProUGUI maxInstallableCount;
     public Image lockedPanel;
 
-    private BuildingItemInfo _building;
+    protected BuildingItemInfo _building;
     public BuildingItemInfo Building => _building;
 
     protected override void Start()
@@ -41,14 +41,14 @@ public class BuildingView : NexusPopupUI
         }
     }
 
-    public void OnPurchase()
+    public virtual void OnPurchase()
     {
         _presenter.PurchaseBuilding(this);
     }
 
-    public void UpdateUI()
+    public virtual void UpdateUI()
     {
-        //lockedPanel.gameObject.SetActive(!_building.IsUnlocked);
+        lockedPanel.gameObject.SetActive(!_building.IsUnlocked);
         buildingName.text = _building.Name;
         buildingIcon.sprite = _building.UISprite;
         maxInstallableCount.text = $"{_building.CurrentInstallCount}/{_building.MaxInstallableCount}";
