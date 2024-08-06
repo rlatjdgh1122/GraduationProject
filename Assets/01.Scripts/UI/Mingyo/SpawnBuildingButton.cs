@@ -47,6 +47,12 @@ public class SpawnBuildingButton : MonoBehaviour
         }
         #endregion
 
+        if(!buildinginfo.IsUnlocked)
+        {
+            UIManager.Instance.ShowWarningUI("잠겨있습니다!");
+            return;
+        }
+
         #region 자원 비교
 
         //try

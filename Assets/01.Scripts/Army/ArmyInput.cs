@@ -77,8 +77,10 @@ public class ArmyInput : MonoBehaviour
 
     public void OnRightClickEventHandler()
     {
+        if (!ArmyManager.CheckInstance()) return;
         if (ArmyManager.Instance.CurArmy == null) return;
         if (ArmyManager.Instance.CurArmy.IsHealing) return;
+        if (!WaveManager.Instance.IsBattlePhase) return;
 
         OnRightClickEvent?.Invoke();
 
@@ -89,8 +91,10 @@ public class ArmyInput : MonoBehaviour
 
     public void OnLeftClickEventHandler()
     {
+        if (!ArmyManager.CheckInstance()) return;
         if (ArmyManager.Instance.CurArmy == null) return;
         if (ArmyManager.Instance.CurArmy.IsHealing) return;
+        if (!WaveManager.Instance.IsBattlePhase) return;
 
         OnLeftClickEvent?.Invoke();
 

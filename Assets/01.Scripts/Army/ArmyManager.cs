@@ -53,7 +53,7 @@ public class ArmyManager : Singleton<ArmyManager>
     public override void Awake()
     {
         base.Awake();
-        _armyPostions = _settingArmyPsotion.Transforms.Convert(p => p.position);
+        //_armyPostions = _settingArmyPsotion.Transforms.Convert(p => p.position);
 
         _skillInput = GetComponent<SkillInput>();
     }
@@ -61,6 +61,9 @@ public class ArmyManager : Singleton<ArmyManager>
     {
         SignalHub.OnBattlePhaseStartEvent += OnBattleStart;
         SignalHub.OnBattlePhaseEndEvent += OnBattleEnd;
+
+        if (_settingArmyPsotion != null)
+            _armyPostions = _settingArmyPsotion.Transforms.Convert(p => p.position);
     }
 
     private void OnDisable()
@@ -92,8 +95,7 @@ public class ArmyManager : Singleton<ArmyManager>
 
     private void Start()
     {
-        if (_armies.Count > 0)
-            _armies.Clear();
+        _armies.TryClear();
     }
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)

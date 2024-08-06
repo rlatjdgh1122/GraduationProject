@@ -21,6 +21,11 @@ public class StartSceneEvent : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    private void OnDisable()
+    {
+        _isGameStart = true;
+    }
+
     public void GameStartBtn()
     {
         if (!_isGameStart || _canClick) return;
@@ -32,6 +37,20 @@ public class StartSceneEvent : MonoBehaviour
             .OnComplete(() =>
             {
                 LoadingSceneController.LoadScene("IntroCutScene 1-1");
+            });
+    }
+
+    public void TutorialBtn()
+    {
+        if (!_isGameStart || _canClick) return;
+
+        _blackPanel.blocksRaycasts = true;
+        _isGameStart = false;
+
+        _blackPanel.DOFade(1, _fadeDuration)
+            .OnComplete(() =>
+            {
+                LoadingSceneController.LoadScene("Tutorial_Army");
             });
     }
 

@@ -110,7 +110,7 @@ public class NexusUIPresenter : NexusPopupUI
         }
         else
         {
-            UIManager.Instance.ShowWarningUI($"자원이 부족합니다");
+            UIManager.Instance.ShowWarningUI($"잠겨있습니다!");
         }
     }
     #endregion

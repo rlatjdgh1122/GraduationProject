@@ -18,10 +18,18 @@ public class GeneralSlot : ArmyComponentUI
     {
         if (GeneralData == null) return;
 
-        if (GeneralData.GeneralDetailData.IsAvailable)
-            _ownText?.SetActive(true);
+        if (GeneralData.GeneralDetailData != null && GeneralData.GeneralDetailData.IsAvailable)
+        {
+            // _ownText가 파괴되지 않았는지 확인 후 SetActive 호출
+            if (_ownText != null)
+                _ownText.SetActive(true);
+        }
 
-        _icon.sprite = GeneralData.InfoData.PenguinIcon;
+        // _icon이 null이 아닌지 확인 후 스프라이트 설정
+        if (_icon != null && GeneralData.InfoData != null)
+        {
+            _icon.sprite = GeneralData.InfoData.PenguinIcon;
+        }
     }
 
     public void ShowInfoPanel()
