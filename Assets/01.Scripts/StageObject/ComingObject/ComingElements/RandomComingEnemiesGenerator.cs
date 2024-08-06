@@ -45,7 +45,7 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private readonly string raftName = "Raft";
 
-    private bool isTutorialWave => curWave < 10;
+    private bool isTutorialWave => curWave < 11;
 
     [SerializeField]
     private int angle;
