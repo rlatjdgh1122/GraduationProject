@@ -31,6 +31,7 @@ public class BuildingRepairPopup : BuildingUIComponent
         ResourceManager.Instance.RemoveResource(_needResources, () =>
         {
             synergyBuilding.DeadController.FixBuilding();
+            synergyBuilding.Install(true);
             buildingHealth.ApplyHeal(1000);
             OnRepairEvent?.Invoke();
             HidePanel();

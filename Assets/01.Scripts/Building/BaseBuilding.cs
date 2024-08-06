@@ -158,7 +158,7 @@ public abstract class BaseBuilding : WorkableObject
     {
         MatChangeToNormal();
 
-        isInstalled = true;
+        Install(true);
         Installing = true;
         isInstalling = false;
 
@@ -283,12 +283,17 @@ public abstract class BaseBuilding : WorkableObject
             ColliderCompo.enabled = value;
     }
 
+    public void Install(bool value)
+    {
+        isInstalled = value;
+    }
+
     public virtual void OnDisable()
     {
         if (_phaseStartSubscriptionAction != null)
         {
             SignalHub.OnBattlePhaseStartEvent -= _phaseStartSubscriptionAction;
         }
-        isInstalled = false;
+        Install(false);
     }
 }
