@@ -13,13 +13,11 @@ public class TutorialSpawnTrainningDummy : MonoBehaviour
     private void OnEnable()
     {
         SignalHub.OnBattlePhaseStartEvent += FindEntity;
-        SignalHub.OnGroundArrivedEvent += FindEntityAfterTime;
     }
 
     private void OnDisable()
     {
         SignalHub.OnBattlePhaseStartEvent -= FindEntity;
-        SignalHub.OnGroundArrivedEvent -= FindEntityAfterTime;
     }
 
     public void ShowArrow()
@@ -27,11 +25,6 @@ public class TutorialSpawnTrainningDummy : MonoBehaviour
         _tutorialCanvas.Init(TutorialImage.Arrow_Left);
         _tutorialCanvas.SetTarget(_trainingDummyTrm, 5f);
         _tutorialCanvas.ShowUI();
-    }
-
-    private void FindEntityAfterTime()
-    {
-        FindRaft();
     }
 
     private void SpawnDummy(int count, Enemy[] enemies, Transform parent)
@@ -49,25 +42,6 @@ public class TutorialSpawnTrainningDummy : MonoBehaviour
         EnemyArmyManager.Instance.CreateArmy(trainingDummy);
 
         _trainingDummyTrm = trainingDummy[0].transform;
-    }
-
-    private void FindRaft()
-    {
-        Ground ground = transform.Find("Raft").GetComponentInChildren<Ground>();
-        Enemy[] enemies = GetComponentsInChildren<Enemy>();
-        ResourceObject[] resources = GetComponentsInChildren<ResourceObject>();
-
-        foreach (var resource in resources)
-        {
-            resource.gameObject.SetActive(false);
-        }
-
-        foreach (var enemy in enemies)
-        {
-            enemy.gameObject.SetActive(false);
-        }
-
-        SpawnDummy(enemies.Length, enemies, ground.transform);
     }
 
     private void FindEntity()

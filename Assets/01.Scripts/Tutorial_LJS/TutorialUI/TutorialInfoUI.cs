@@ -50,6 +50,8 @@ public class TutorialInfoUI : MonoBehaviour
     {
         if (_slotData.TryGetValue(text, out TutorialSlot slot))
         {
+            SoundManager.Play2DSound(SoundName.QuestEnd);
+
             if (slot != null)
             {
                 slot.TutorialComplete();

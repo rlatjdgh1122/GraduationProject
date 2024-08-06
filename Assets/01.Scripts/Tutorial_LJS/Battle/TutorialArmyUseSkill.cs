@@ -1,30 +1,59 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class TutorialArmyUseSkill : MonoBehaviour
 {
-    [SerializeField] private Image _skillImage;
-    [SerializeField] private Image _ultimateImage;
+    [SerializeField] private GameObject[] _lockObjs;
 
-    [SerializeField] private Sprite _lockIcon;
-    [SerializeField] private Sprite _skillIcon;
-    [SerializeField] private Sprite _ultimateIcon;
+    [SerializeField] private CanvasGroup _canvasGroup;
 
-    public void Lock()
+    [SerializeField] private TutorialController _controller;
+
+    private bool _unlock = false;
+
+    private bool _skillUse;
+    private bool _ultimateUse;
+
+    public void Unlock()
     {
-        _skillImage.sprite = _lockIcon;
-        _ultimateImage.sprite = _lockIcon;
+        _lockObjs[0].SetActive(false);
+        _lockObjs[1].SetActive(false);
+
+        _canvasGroup.DOFade(1, 0.3f);
+
+        _unlock = true;
     }
 
-    public void ShowSkill()
+    private void Update()
     {
-        _skillImage.sprite = _skillIcon;
-    }
+        if(_unlock )
+        {
+            if(Input.GetKeyDown(KeyCode.F))
+            {
+                _controller.TutorialInfoUI.CompleteSlot(_controller.CurrentTutorial(0, 2));
+                _skillUse = true;
 
-    public void ShowUltimate()
-    {
-        _ultimateImage.sprite = _ultimateIcon;
+                if (_skillUse && _ultimateUse)
+                {
+                    TutorialM.Instance.AddTutorialIndex();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                _controller.TutorialInfoUI.CompleteSlot(_controller.CurrentTutorial(1, 2));
+                _ultimateUse = true;
+
+                if(_skillUse && _ultimateUse)
+                {
+                    TutorialM.Instance.AddTutorialIndex();
+                    _unlock = false;
+                }
+            }
+        }
     }
 }

@@ -28,6 +28,9 @@ public class PenguinManager
         penguinToInfoDataDic.TryClear();
 
         soliderTypeToGeneralStatDic.TryClear();
+
+        BelongDummyPenguinList.TryClear();
+        NotBelongDummyPenguinList.TryClear();
     }
 
     #region ΩÃ±€≈Ê

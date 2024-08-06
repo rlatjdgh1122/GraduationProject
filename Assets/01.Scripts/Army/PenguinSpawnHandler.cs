@@ -25,8 +25,6 @@ public class PenguinSpawnHandler : MonoBehaviour
 
             foreach (var dummy in belongDummyPenguinList)
             {
-                if (dummy == null) return;
-
                 var trm = dummy.transform;
 
                 var penguin = PenguinManager.Instance.GetPenguinByDummyPenguin(dummy);

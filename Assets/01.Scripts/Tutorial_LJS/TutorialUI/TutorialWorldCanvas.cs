@@ -10,7 +10,9 @@ public enum TutorialImage
     Warning,
     Arrow_Right,
     Arrow_Left,
-    Arrow
+    Arrow,
+    Skill,
+    Ultimate
 }
 
 [Serializable]

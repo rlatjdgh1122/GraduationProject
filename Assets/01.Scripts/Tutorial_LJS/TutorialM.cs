@@ -41,6 +41,7 @@ public class TutorialM : Singleton<TutorialM>
     {
         _tutorialIndex += count;
 
+        SoundManager.Play2DSound(SoundName.QuestStart);
         StartDialog();
     }
 

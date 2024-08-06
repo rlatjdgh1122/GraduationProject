@@ -53,6 +53,8 @@ public class TutorialUI : MonoBehaviour
 
     private void FadeIn()
     {
+        SoundManager.Play2DSound(SoundName.TutorialStart);
+
         _sequence?.Kill();
         _sequence = DOTween.Sequence();
 
