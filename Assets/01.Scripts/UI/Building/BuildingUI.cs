@@ -40,6 +40,7 @@ public class BuildingUI : PopupUI
         UIManager.Instance.ShowPanel("BuildingUI");
 
         _buildingUpgrade.InitSlot(infoData);
+        _buildingRepairPanel.SetBuildingInfo(infoData);
 
         _buildingUpgrade.ShowPanel();
     }

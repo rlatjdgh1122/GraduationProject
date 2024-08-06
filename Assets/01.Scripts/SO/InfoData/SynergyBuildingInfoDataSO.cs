@@ -21,6 +21,8 @@ public class SynergyBuildingInfoDataSO : ScriptableObject
 {
     [Header("Building Information")]
     public Sprite BuildingIcon;
+    public Sprite BrokenBuildingIcon;
+
     public string BuildingName;
     public SynergyType SynergyType;
 

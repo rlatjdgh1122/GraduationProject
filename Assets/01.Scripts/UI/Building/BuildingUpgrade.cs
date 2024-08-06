@@ -188,4 +188,9 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
 
         _buildingNameText.text = $"{brokenText}{buildingName}";
     }
+
+    public void BuildingRepair()
+    {
+        _buildingNameText.text = _infoData.BuildingName;
+    }
 }

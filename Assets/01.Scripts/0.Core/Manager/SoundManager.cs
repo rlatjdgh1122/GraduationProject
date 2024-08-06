@@ -82,6 +82,7 @@ public enum SoundName : uint
 
     TutorialStart,
     Glitch,
+    TutorialBGM,
     None = 100,
 }
 
