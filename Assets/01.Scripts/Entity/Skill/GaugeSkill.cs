@@ -12,7 +12,6 @@ public class GaugeSkill : Skill
     {
         base.SetOwner(owner);
 
-        _owner.HealthCompo.OnHit += PlusGauge;
     }
 
     public void PlusGauge()
