@@ -60,6 +60,8 @@ public class PenguinSpawnHandler : MonoBehaviour
 
             foreach (var penguin in soldierPenguinList)
             {
+                if (penguin == null) continue;
+
                 var trm = penguin.transform;
                 var dummy = PenguinManager.Instance.GetDummyByPenguin(penguin);
 

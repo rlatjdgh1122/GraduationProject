@@ -7,44 +7,70 @@ public static class CoroutineUtil
     private static GameObject _coroutineObj;
     private static CoroutineExecutor _coroutineExecutor;
 
-    static CoroutineUtil() // 생성자에서 코루틴을 실행해주기 위한 모노비헤이비어 오브젝트를 생성
+    static CoroutineUtil()
     {
+        CreateCoroutineExecutor();
+    }
+
+    private static void CreateCoroutineExecutor()
+    {
+        if (_coroutineObj != null)
+        {
+            UnityEngine.Object.Destroy(_coroutineObj);
+        }
+
         _coroutineObj = new GameObject("CoroutineObj");
+        UnityEngine.Object.DontDestroyOnLoad(_coroutineObj);
         _coroutineExecutor = _coroutineObj.AddComponent<CoroutineExecutor>();
     }
 
-    public static void CallWaitForOneFrame(Action action) //1프레임 뒤에 실행
+    private static void EnsureCoroutineExecutor()
     {
+        if (_coroutineExecutor == null)
+        {
+            CreateCoroutineExecutor();
+        }
+    }
+
+    public static void CallWaitForOneFrame(Action action)
+    {
+        EnsureCoroutineExecutor();
         _coroutineExecutor.StartCoroutine(DoCallWaitForOneFrame(action));
     }
 
-    public static void CallWaitForSeconds(float seconds, Action afterAction) //n초 뒤에 실행
+    public static void CallWaitForSeconds(float seconds, Action afterAction)
     {
+        EnsureCoroutineExecutor();
         _coroutineExecutor.StartCoroutine(DoCallWaitForSeconds(seconds, afterAction));
     }
 
-    //action이 true가 되면 실행
-    public static IEnumerator CallWaitForAction(Func<bool> predicate, Action afterAction = null) 
+    public static void CallWaitForAction(Func<bool> predicate, Action afterAction = null)
     {
-        yield return new WaitUntil(predicate);
-        afterAction?.Invoke();
+        EnsureCoroutineExecutor();
+        _coroutineExecutor.StartCoroutine(DoCallWaitForAction(predicate, afterAction));
     }
 
-    //predicate가 true가 될때동안 action을 반복 수행해주고 주기는 heartBeat
     public static void CallWaitForActionUntilTrue(Func<bool> predicate, Action action, float heartBeat = 0.02f, Action afterAction = null)
     {
+        EnsureCoroutineExecutor();
         _coroutineExecutor.StartCoroutine(DoCallWaitForActionUntilTrue(heartBeat, predicate, action, afterAction));
     }
 
-    private static IEnumerator DoCallWaitForOneFrame(Action action) // 매개변수로 받은 Action을 실행해준다.
+    private static IEnumerator DoCallWaitForOneFrame(Action action)
     {
         yield return null;
         action?.Invoke();
     }
 
-    private static IEnumerator DoCallWaitForSeconds(float seconds, Action afterAction) // 매개변수로 받은 Action을 seconds초 후에 실행해준다.
+    private static IEnumerator DoCallWaitForSeconds(float seconds, Action afterAction)
     {
         yield return new WaitForSeconds(seconds);
+        afterAction?.Invoke();
+    }
+
+    private static IEnumerator DoCallWaitForAction(Func<bool> predicate, Action afterAction)
+    {
+        yield return new WaitUntil(predicate);
         afterAction?.Invoke();
     }
 
@@ -59,9 +85,5 @@ public static class CoroutineUtil
         afterAction?.Invoke();
     }
 
-
-
-
-
-    private class CoroutineExecutor : MonoBehaviour { } // 코루틴을 실행해주기 위한 모노비헤이비어오브젝트
+    private class CoroutineExecutor : MonoBehaviour { }
 }
