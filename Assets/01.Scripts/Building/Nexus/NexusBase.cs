@@ -26,7 +26,7 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
+        if (!WaveManager.Instance.IsBattlePhase && UIManager.Instance.CurrentUI == null || UIManager.Instance.CurrentUI.UIGroup != UIType.Nexus)
         {
             UIManager.Instance.ShowPanel("NexusUI");
             SignalHub.OnDefaultBuilingClickEvent?.Invoke();
