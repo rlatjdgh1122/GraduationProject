@@ -76,6 +76,9 @@ public class InstallSystem : MonoBehaviour
         _inputReader.OnEBtnEvent += RightRotateBuilding;
         _inputReader.OnQBtnEvent += LeftRotateBuilding;
 
+        SignalHub.OnBattlePhaseStartEvent += StopInstall;
+
+
         // 현재 건물 설정
         _curBuilding = building;
 
@@ -107,6 +110,8 @@ public class InstallSystem : MonoBehaviour
         _inputReader.OnEscEvent -= StopInstall;
         _inputReader.OnEBtnEvent -= RightRotateBuilding;
         _inputReader.OnQBtnEvent -= LeftRotateBuilding;
+
+        SignalHub.OnBattlePhaseStartEvent -= StopInstall;
     }
 
     private void PlaceStructure() // 건물을 선택하고 클릭을 눌러 설치 하려고 할때
