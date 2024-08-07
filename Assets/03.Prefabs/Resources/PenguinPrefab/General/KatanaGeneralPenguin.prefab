@@ -80,9 +80,31 @@ MonoBehaviour:
   moveSpeed: 4
   attackSpeed: 1
   passiveData: {fileID: 11400000, guid: a1eab8340ac55b24cada4090e9221a24, type: 2}
+  _penguinArmor: []
   ArmyTriggerCalled: 0
   IgnoreToArmyCalled: 0
   SuccessfulToArmyCalled: 0
+  IsMustMoving: 0
+  owner:
+    SynergyType: 0
+    LegionIdx: 0
+    IsArmyReady: 1
+    IsHealing: 0
+    MovefocusMode: 0
+    Soldiers: []
+    AlivePenguins: []
+    DeadPenguins: []
+    General: {fileID: 0}
+    TargetEnemyArmy:
+      Soldiers: []
+      IsSelected: 0
+    Ability:
+      abilityName: 
+      statType: 0
+      statMode: 0
+      value: 0
+    SkillController: {fileID: 0}
+    UltimateController: {fileID: 0}
   TargetLock: 0
   SynergyType: 3
   GeneralType: 3
@@ -4834,7 +4856,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61e9a6114197e94b96f976e3ec8fba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAvaliable: 1
+  OnAvaliableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnavailableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   CanUseSkill: 0
   buffValue: 10
   _buffStatType: 8
@@ -5218,7 +5245,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0933c83776ba0e47917c2222df9cebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAvaliable: 1
+  OnAvaliableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnavailableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   CanUseSkill: 0
   _dashDelay: 2
   canDash: 0
@@ -5954,7 +5986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canUsedskillInitially: 1
-  _initMaxVaue: 10
+  _initMaxVaue: 20
 --- !u!1 &6228095595881627246
 GameObject:
   m_ObjectHideFlags: 0
