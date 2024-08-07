@@ -57,16 +57,8 @@ public class LegionPanel : PopupUI
         {
             int deadCount = army.DeadPenguins.Count;
 
-            try
-            {
-                _soldierSlotList.ForEach(s => s.Icon.sprite = SoldierlInfo.PenguinIcon); //일단 초기화
-                _soldierSlotList.ApplyToCount(deadCount, s => s.Icon.sprite = _skullIcon);
-            }
-            catch
-            {
-                Debug.LogError("LegionPanel의 _soldierSlotList에서 오류가 났다. 확인해보거라");
-            }
-            
+            _soldierSlotList.ForEach(s => s.Icon.sprite = SoldierlInfo.PenguinIcon); //일단 초기화
+            _soldierSlotList.ApplyToCount(deadCount, s => s.Icon.sprite = _skullIcon);
         }
     }
 
