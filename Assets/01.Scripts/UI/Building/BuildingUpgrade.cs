@@ -76,8 +76,8 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
         synergyBuilding.Level = _level;
 
         UpdateUpgradeInfo();
-        UpdateSlot();
         _slotList[_level - 1].OnUnlock();
+        UpdateSlot();
         UpdateResourceTextForSlot(_level);
 
         synergyBuilding.SetSynergyBuff(_infoData[_level - 1].BuildingAbility);
@@ -101,14 +101,6 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
             var ability = data[i].BuildingUpgradeDescription;
             _slotList[i].gameObject.SetActive(true);
             _slotList[i].Init(ability);
-        }
-
-        if (!buildingHealth.IsDead)
-        {
-            for (int i = 0; i < _level; i++)
-            {
-                _slotList[i].OnUnlock();
-            }
         }
 
         UpdateSlot();
@@ -142,8 +134,16 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
         _upgradeInfoDic[synergyBuilding] = _level;
     }
 
-    private void UpdateSlot()
+    public void UpdateSlot()
     {
+        if (!buildingHealth.IsDead)
+        {
+            for (int i = 0; i < _level; i++)
+            {
+                _slotList[i].OnUnlock();
+            }
+        }
+
         foreach (var slot in _slotList)
         {
             slot.UpdateSlot();

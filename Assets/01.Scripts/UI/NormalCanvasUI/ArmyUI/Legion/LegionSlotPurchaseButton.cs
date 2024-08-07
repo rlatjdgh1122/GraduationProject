@@ -29,6 +29,8 @@ public class LegionSlotPurchaseButton : MonoBehaviour
     {
         _slotPanel.Setting(this);
         _slotPanel.ShowPanel();
+
+        _purchaseButton.onClick.RemoveListener(ShowSlotPanel);
     }
 
     public void Purchase() //»õ½½·Ô Ãß°¡

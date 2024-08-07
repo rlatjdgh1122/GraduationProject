@@ -125,6 +125,7 @@ public class LegionNamingPanel : ArmyComponentUI
 
     private void ResetPanel()
     {
+        _canNamingLegion = false;
         _legionName = string.Empty;
         _inputField.text = string.Empty;
         _errorMessage.text = string.Empty;
