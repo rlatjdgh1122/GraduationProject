@@ -152,7 +152,9 @@ public class WaveManager : Singleton<WaveManager>
         if (currentWaveCount == 5)
             UIManager.Instance.ShowBossWarningUI("춘자 등장!");
         if (currentWaveCount == 10)
-            UIManager.Instance.ShowBossWarningUI("보스 등장!");
+            UIManager.Instance.ShowBossWarningUI("덕배 등장!"); 
+        if (currentWaveCount == 15)
+            UIManager.Instance.ShowBossWarningUI("봉무스 등장!");
     }
 
     public void BattlePhaseEndEventHandler(bool _isWin) // 전투페이즈 종료 이벤트 실행용 함수
