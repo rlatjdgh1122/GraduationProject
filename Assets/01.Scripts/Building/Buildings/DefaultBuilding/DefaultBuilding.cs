@@ -24,19 +24,20 @@ public class DefaultBuilding : BaseBuilding
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase)
-        {
-            SpawnButton();
-        }
+        if (WaveManager.Instance.IsBattlePhase) return;
+        SpawnButton();
     }
 
     private void OnMouseEnter()
     {
+        if (WaveManager.Instance.IsBattlePhase) return;
         OutlineActive(true);
     }
 
     private void OnMouseExit()
     {
+        if (WaveManager.Instance.IsBattlePhase) return;
+
         OutlineActive(false);
     }
 

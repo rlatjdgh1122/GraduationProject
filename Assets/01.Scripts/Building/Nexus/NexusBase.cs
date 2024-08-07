@@ -26,11 +26,11 @@ public class NexusBase : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WaveManager.Instance.IsBattlePhase && UIManager.Instance.CurrentUI == null || UIManager.Instance.CurrentUI.UIGroup != UIType.Nexus)
-        {
-            UIManager.Instance.ShowPanel("NexusUI");
-            SignalHub.OnDefaultBuilingClickEvent?.Invoke();
-        }
+        if (WaveManager.Instance.IsBattlePhase) return;
+        if (UIManager.Instance.CurrentUI != null) return;
+
+        UIManager.Instance.ShowPanel("NexusUI");
+        SignalHub.OnDefaultBuilingClickEvent?.Invoke();
     }
 
     private void OnMouseOver()
