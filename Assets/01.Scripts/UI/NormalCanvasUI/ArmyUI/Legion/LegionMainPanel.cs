@@ -4,9 +4,25 @@ using UnityEngine;
 
 public class LegionMainPanel : PopupUI
 {
+    private ModifyLegionPanel _modifyPanel;
+    private LegionNamingPanel _namingPanel;
+
     public override void Awake()
     {
         base.Awake();
+
+        _modifyPanel = GetComponentInChildren<ModifyLegionPanel>();
+        _namingPanel = GetComponentInChildren<LegionNamingPanel>();
+    }
+
+    private void OnEnable()
+    {
+        _namingPanel.OnLegionNameNamingEvent += _modifyPanel.ShowLegionName;
+    }
+
+    private void OnDisable()
+    {
+        _namingPanel.OnLegionNameNamingEvent -= _modifyPanel.ShowLegionName;
     }
 
     public void MoveMainPanel(float x)

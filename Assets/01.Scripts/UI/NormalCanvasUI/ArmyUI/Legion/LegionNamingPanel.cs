@@ -108,7 +108,6 @@ public class LegionNamingPanel : ArmyComponentUI
         }
 
         _legionNameList.Add(_legionName);
-        OnLegionNameNamingEvent?.Invoke(CurrentPanel);
 
         Army army = ArmyManager.Instance.CreateArmy(_legionName);
 
@@ -121,6 +120,8 @@ public class LegionNamingPanel : ArmyComponentUI
 
         HidePanel();
         ParentPanel.SetActive(true);
+
+        OnLegionNameNamingEvent?.Invoke(CurrentPanel);
     }
 
     private void ResetPanel()
