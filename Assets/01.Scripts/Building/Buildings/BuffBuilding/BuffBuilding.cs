@@ -122,6 +122,8 @@ public abstract class BuffBuilding : BaseBuilding
 
     public void PlayEffect()
     {
+        if (!IsInstalled) { return; }
+
         if (buildingEffectFeedback != null)
             buildingEffectFeedback.PlayFeedback();
     }
