@@ -56,6 +56,8 @@ public class ArmyManager : Singleton<ArmyManager>
         //_armyPostions = _settingArmyPsotion.Transforms.Convert(p => p.position);
 
         _skillInput = GetComponent<SkillInput>();
+
+        _armies.TryClear();
     }
     private void OnEnable()
     {
@@ -90,12 +92,6 @@ public class ArmyManager : Singleton<ArmyManager>
     private void OnBattleEnd()
     {
 
-    }
-
-
-    private void Start()
-    {
-        _armies.TryClear();
     }
 
     public void SetTargetEnemyArmy(EnemyArmy enemyArmy)
