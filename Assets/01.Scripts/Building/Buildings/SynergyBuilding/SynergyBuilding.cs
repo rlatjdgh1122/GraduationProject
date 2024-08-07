@@ -111,6 +111,11 @@ public class SynergyBuilding : BaseBuilding
         _army.SkillController.LevelUp(value);
     }
 
+    public void LevelUpUltimateTime(int value)
+    {
+        _army.UltimateController.LevelUp(value);
+    }
+
 
     protected override void OnInstalled()
     {
@@ -134,6 +139,10 @@ public class SynergyBuilding : BaseBuilding
             if (_infoDataSO[i].ReduceSkillTime > 0)
             {
                 LevelUpSkillTime(_infoDataSO[i].ReduceSkillTime);
+            }
+            if (_infoDataSO[i].ReduceUltimateTime > 0)
+            {
+                LevelUpUltimateTime(_infoDataSO[i].ReduceUltimateTime);
             }
         }
 
@@ -193,6 +202,10 @@ public class SynergyBuilding : BaseBuilding
             if (_infoDataSO[i].ReduceSkillTime > 0)
             {
                 LevelUpSkillTime(-_infoDataSO[i].ReduceSkillTime);
+            }
+            if (_infoDataSO[i].ReduceUltimateTime > 0)
+            {
+                LevelUpUltimateTime(-_infoDataSO[i].ReduceUltimateTime);
             }
         }
 

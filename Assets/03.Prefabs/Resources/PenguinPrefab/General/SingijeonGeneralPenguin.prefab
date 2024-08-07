@@ -11552,7 +11552,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f2c9935b5a7d94286743c200e187ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAvaliable: 1
+  OnAvaliableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnavailableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   CanUseSkill: 0
   OnUltimateEvent:
     m_PersistentCalls:
@@ -12529,7 +12534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canUsedskillInitially: 1
-  _initMaxVaue: 10
+  _initMaxVaue: 15
 --- !u!1 &3853231127342287721
 GameObject:
   m_ObjectHideFlags: 0
@@ -24973,6 +24978,26 @@ MonoBehaviour:
   IgnoreToArmyCalled: 0
   SuccessfulToArmyCalled: 0
   IsMustMoving: 0
+  owner:
+    SynergyType: 0
+    LegionIdx: 0
+    IsArmyReady: 1
+    IsHealing: 0
+    MovefocusMode: 0
+    Soldiers: []
+    AlivePenguins: []
+    DeadPenguins: []
+    General: {fileID: 0}
+    TargetEnemyArmy:
+      Soldiers: []
+      IsSelected: 0
+    Ability:
+      abilityName: 
+      statType: 0
+      statMode: 0
+      value: 0
+    SkillController: {fileID: 0}
+    UltimateController: {fileID: 0}
   TargetLock: 0
   SynergyType: 5
   GeneralType: 4
@@ -26004,7 +26029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canUsedskillInitially: 1
-  _initMaxVaue: 1
+  _initMaxVaue: 2
 --- !u!1 &6918403281000007871
 GameObject:
   m_ObjectHideFlags: 0
@@ -27537,7 +27562,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1cb83cedf91ee5429d686d330577710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAvaliable: 1
+  OnAvaliableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnavailableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   CanUseSkill: 0
   OnSingijeonSkillEvent:
     m_PersistentCalls:

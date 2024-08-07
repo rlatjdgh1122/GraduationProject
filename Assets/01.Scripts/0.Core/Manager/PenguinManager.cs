@@ -617,15 +617,16 @@ public class PenguinManager
     public void ShowGeneralInfoUI(GeneralDummyPengiun dummy)
     {
         var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
+        var statData = GetStatByInfoData<GeneralStat>(infoData);
         var data = dummy.Stat;
 
         if (infoData)
-            data.InfoData.LegionName = infoData.LegionName;
+            statData.InfoData.LegionName = infoData.LegionName;
         else
-            data.InfoData.LegionName = "소속된 군단 없음";
+            statData.InfoData.LegionName = "소속된 군단 없음";
 
-        GetCurrentInfoData = data.InfoData;
-        GetCurrentStat = data;
+        GetCurrentInfoData = infoData;
+        GetCurrentStat = statData;
 
         UIManager.Instance.HidePanel("GeneralInfoUI");
         DummyPenguinCameraCompo.SetCamera(dummy.transform);

@@ -83,6 +83,7 @@ public class BuildingUpgrade : BuildingUIComponent, ICreateSlotUI
         synergyBuilding.SetSynergyBuff(_infoData[_level - 1].BuildingAbility);
         synergyBuilding.LevelUpHealingTime(_infoData[_level - 1].ReduceHealingTime);
         synergyBuilding.LevelUpSkillTime(_infoData[_level - 1].ReduceSkillTime);
+        synergyBuilding.LevelUpUltimateTime(_infoData[_level - 1].ReduceUltimateTime);
     }
 
     public void OnMovePanel(float x)

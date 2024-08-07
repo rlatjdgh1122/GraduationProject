@@ -14,6 +14,7 @@ public class UpgradeInfo
     public Ability BuildingAbility;
     public int ReduceHealingTime = 0;
     public int ReduceSkillTime = 0;
+    public int ReduceUltimateTime = 0;
 }
 
 [CreateAssetMenu(menuName = "SO/InfoData/Synergy")]
