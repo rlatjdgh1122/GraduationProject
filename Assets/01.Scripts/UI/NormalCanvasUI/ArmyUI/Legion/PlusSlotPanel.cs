@@ -13,6 +13,7 @@ public class PlusSlotPanel : PopupUI
         base.Awake();
 
         _purchaseButton = transform.Find("Popup/PurchaseButton").GetComponent<Button>();
+
         _purchaseButton.onClick.AddListener(OnPurchase);
     }
 

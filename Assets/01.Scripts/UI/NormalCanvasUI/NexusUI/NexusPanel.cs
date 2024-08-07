@@ -42,7 +42,7 @@ public class NexusPanel : NexusPopupUI
             buildingIcon.gameObject.SetActive(true);
             buildingIcon.sprite = _nexusInfo.previewBuilding.UISprite;
         }
-        upgradePrice.text = $"{_nexusStat.upgradePrice}";
+        upgradePrice.text = $"{((int)_nexusStat.upgradePrice)}";
     }
 
     public void OnLevelUp()
