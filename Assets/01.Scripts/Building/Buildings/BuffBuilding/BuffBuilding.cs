@@ -66,7 +66,7 @@ public abstract class BuffBuilding : BaseBuilding
         SignalHub.OnBattlePhaseEndEvent += StopEffect;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         SignalHub.OnBattlePhaseStartEvent -= PlayEffect;
         SignalHub.OnBattlePhaseEndEvent -= StopEffect;

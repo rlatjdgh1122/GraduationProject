@@ -72,6 +72,12 @@ public abstract class BaseBuilding : WorkableObject
 
     public Action OnInstalledEvent = null;
 
+    public override void Init()
+    {
+        base.Init();
+
+        isInstalled = false;
+    }
 
     protected override void Awake()
     {
