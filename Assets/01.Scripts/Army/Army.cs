@@ -299,7 +299,11 @@ namespace ArmySystem
 
         public bool CheckEmpty()
         {
-            if (AlivePenguins.Count <= 0) return true;
+            if (AlivePenguins.Count <= 0)
+            {
+                Debug.LogError($"{AlivePenguins.Count}");
+                return true;
+            }
 
             return false;
         }

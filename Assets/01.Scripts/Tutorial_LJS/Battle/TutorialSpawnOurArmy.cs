@@ -12,9 +12,11 @@ public class TutorialSpawnOurArmy : MonoBehaviour
     [SerializeField] private TutorialWorldCanvas _arrow;
     [SerializeField] private TutorialController _controller;
 
+    private string _legionName = "1";
+
     private void Start()
     {
-        ArmyManager.Instance.CreateArmy("1군단");
+        ArmyManager.Instance.CreateArmy(_legionName);
 
         SpawnSolider();
         SpawnGeneral();
@@ -37,7 +39,7 @@ public class TutorialSpawnOurArmy : MonoBehaviour
 
     private void SpawnSolider()
     {
-        ArmyManager.Instance.GetArmyByLegionName("1군단").SynergyType = SynergySystem.SynergyType.IceCream;
+        ArmyManager.Instance.GetArmyByLegionName(_legionName).SynergyType = SynergySystem.SynergyType.IceCream;
 
         for (int i = 1; i <= 4; i++)
         {
@@ -48,20 +50,20 @@ public class TutorialSpawnOurArmy : MonoBehaviour
     private DummyPenguin SpawnDuumyPenguin<T>(T infoData) where T : EntityInfoDataSO
     {
         DummyPenguin dummy = PenguinManager.Instance.SpawnDummyPenguinByInfoData(infoData);
-        dummy.CloneInfo.SetLegionName("1군단");
+        dummy.CloneInfo.SetLegionName(_legionName);
 
         return dummy;
     }
 
     private void SoliderJoinArmy(DummyPenguin dummy, int index)
     {
-        ArmyManager.Instance.JoinArmyToSoldier("1군단", 0, SpawnPenguin(dummy, index));
+        ArmyManager.Instance.JoinArmyToSoldier(_legionName, 0, SpawnPenguin(dummy, index));
     }
 
     private void GeneralJoinArmy(DummyPenguin dummy, int index)
     {
         General general = SpawnPenguin(dummy, index) as General;
-        ArmyManager.Instance.JoinArmyToGeneral("1군단", 0, general);
+        ArmyManager.Instance.JoinArmyToGeneral(_legionName, 0, general);
     }
 
     private Penguin SpawnPenguin(DummyPenguin dummy, int index)
