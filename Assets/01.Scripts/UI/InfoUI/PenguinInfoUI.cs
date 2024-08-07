@@ -17,6 +17,8 @@ public class PenguinInfoUI : PopupUI
 
     protected virtual void ShowInfo()
     {
+        _ownerInfoData.Setting();
+
         _penguinPersonalityTxt.text = _ownerInfoData.PenguinPersonality;
         _penguinDescriptionTxt.text = _ownerInfoData.PenguinDescription;
         _penguinTypeTxt.text = _ownerInfoData.PenguinTypeName;
