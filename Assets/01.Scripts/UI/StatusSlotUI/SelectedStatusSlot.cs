@@ -155,7 +155,7 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     {
         _legionNameTxt.alpha = 0f;
 
-        _legionNameTxt.text = armyName;
+        _legionNameTxt.text = $"{armyName}±º´Ü";
         _legionNameTxt.DOFade(1f, 0.5f);
     }
 

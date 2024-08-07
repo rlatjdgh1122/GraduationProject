@@ -24,7 +24,7 @@ public class PenguinInfoUI : PopupUI
         _penguinTypeTxt.text = _ownerInfoData.PenguinTypeName;
         _penguinNameTxt.text = _ownerInfoData.PenguinName;
         _penguinIcon.sprite = _ownerInfoData.PenguinIcon;
-        _legionNameTxt.text = _ownerInfoData.LegionName;
+        _legionNameTxt.text = $"{_ownerInfoData.LegionName}±º´Ü";
     }
 
     public virtual void HideInfoUI()
