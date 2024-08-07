@@ -28,10 +28,10 @@ public class PenguinManager
         penguinToInfoDataDic.TryClear();
 
         soliderTypeToGeneralStatDic.TryClear();
-
         BelongDummyPenguinList.TryClear();
         NotBelongDummyPenguinList.TryClear();
 
+        SoldierPenguinList.TryClear();
         GeneralDummyPenguinList.TryClear();
     }
 

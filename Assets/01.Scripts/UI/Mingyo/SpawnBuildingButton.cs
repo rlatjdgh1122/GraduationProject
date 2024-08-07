@@ -47,12 +47,6 @@ public class SpawnBuildingButton : MonoBehaviour
         }
         #endregion
 
-        if(!buildinginfo.IsUnlocked)
-        {
-            UIManager.Instance.ShowWarningUI("잠겨있습니다!");
-            return;
-        }
-
         #region 자원 비교
 
         //try
@@ -120,7 +114,7 @@ public class SpawnBuildingButton : MonoBehaviour
         }
         catch 
         {
-            Debug.LogError("Spawn Building Button Error!");
+            Debug.LogWarning("Spawn Building Button Error!");
         };
     }
 }

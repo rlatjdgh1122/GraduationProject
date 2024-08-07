@@ -42,6 +42,9 @@ public class StartSceneEvent : MonoBehaviour
 
     public void TutorialBtn()
     {
+        Debug.Log(_isGameStart);
+        Debug.Log(_canClick);
+
         if (!_isGameStart || _canClick) return;
 
         _blackPanel.blocksRaycasts = true;
