@@ -7,9 +7,14 @@ public class GeneralSelectSlotList : MonoBehaviour
 {
     public List<GeneralSelectSlot> list;
 
-    private void Awake()
+    private void OnEnable()
     {
         list = transform.GetComponentsInChildren<GeneralSelectSlot>().ToList();
+    }
+
+    private void OnDisable()
+    {
+        list.TryClear();
     }
 
     public void SetSelectedSlots(GeneralInfoDataSO info)

@@ -15,6 +15,11 @@ public class GeneralSlotPanel : ArmyComponentUI
         OnUpdateState += SetSlotUI;
     }
 
+    private void OnDisable()
+    {
+        OnUpdateState -= SetSlotUI;
+    }
+
     private void Start()
     {
         SetSlotData();

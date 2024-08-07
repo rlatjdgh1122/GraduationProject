@@ -31,6 +31,8 @@ public class PenguinManager
 
         BelongDummyPenguinList.TryClear();
         NotBelongDummyPenguinList.TryClear();
+
+        GeneralDummyPenguinList.TryClear();
     }
 
     #region ΩÃ±€≈Ê

@@ -16,7 +16,7 @@ public class SceneChanger : MonoBehaviour
     [SerializeField]
     private float _duration;
 
-    private string _mainScene = "Tutorial_Army";
+    private string _mainScene = "SeonghoScene";
 
     private void Update()
     {

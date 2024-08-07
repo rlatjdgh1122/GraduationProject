@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GeneralSelectSlot : ArmyComponentUI
-{  
+{
     public GeneralStat GeneralData;
     public int Index;
     private Button _purchaseButton;
@@ -29,6 +29,11 @@ public class GeneralSelectSlot : ArmyComponentUI
         GeneralData = GeneralManager.Instance.GeneralList[Index];
     }
 
+    private void OnDisable()
+    {
+        OnUpdateState -= UpdateUI;
+    }
+
     public void SetSelectedPanel()
     {
         _purchaseButton.enabled = false;
@@ -45,15 +50,23 @@ public class GeneralSelectSlot : ArmyComponentUI
     {
         if (GeneralData.GeneralDetailData.IsAvailable)
         {
+            if (_text == null)
+            {
+                Debug.Log(gameObject.name);
+            }
             _purchaseButton.interactable = true;
             _text.gameObject.SetActive(true);
             _lockedPanel.gameObject.SetActive(false);
-        } 
+        }
         else
         {
+            if (_text == null)
+            {
+                Debug.Log(gameObject.name);
+            }
             _purchaseButton.interactable = false;
             _text.gameObject.SetActive(false);
             _lockedPanel.gameObject.SetActive(true);
-        }      
+        }
     }
 }

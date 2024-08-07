@@ -21,6 +21,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+    public static bool CheckInstance() => instance != null;
+
     public virtual void Awake()
     {
 

@@ -19,6 +19,11 @@ public class GeneralStatePanel : ArmyComponentUI
         OnUpdateState += SetUI;
     }
 
+    private void OnDisable()
+    {
+        OnUpdateState -= SetUI;
+    }
+
     private void Start()
     {
         SetUI();
