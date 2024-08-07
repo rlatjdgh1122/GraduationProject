@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -301,7 +302,7 @@ public class DamageCaster : MonoBehaviour
 
     public bool CastTruckDamage(float stunValue, int ultimateDamage, Vector3 position, LayerMask targetLayer)
     {
-        Collider[] colliders = Physics.OverlapSphere(position, _detectRange * 3, targetLayer);
+        Collider[] colliders = Physics.OverlapSphere(position = new Vector3(position.x, position.y - 1f, position.z), _detectRange * 1.2f, targetLayer);
 
         foreach (Collider collider in colliders)
         {
