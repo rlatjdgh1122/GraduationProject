@@ -23,39 +23,12 @@ public class WaveManager : Singleton<WaveManager>
     public bool IsBattlePhase = false;
     public bool IsArrived = false;
 
-    //public event Action OnDummyPenguinInitTentFinEvent = null;
-
     #endregion
 
     #region SingleTon
-    //private static WaveManager _instance;
-    //public static WaveManager Instance
-    //{
-    //    get
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            _instance = FindObjectOfType<WaveManager>();
-
-    //            if (_instance == null)
-    //            {
-    //                Debug.LogError("WaveManager is Multiple.");
-    //            }
-    //        }
-    //        return _instance;
-    //    }
-    //}
 
     public override void Awake()
     {
-        //if (_instance != this)
-        //{
-        //    Destroy(gameObject);
-        //}
-        //else
-        //{
-        //    _instance = this;
-        //}
         base.Awake();
 
         _tentTrm = GameObject.Find("PenguinSpawner/Building/TentInitPos").transform;
@@ -70,6 +43,8 @@ public class WaveManager : Singleton<WaveManager>
 
     private void Update()
     {
+
+        //시네 치트키
         if(Input.GetKeyDown(KeyCode.K))
         {
             List<Enemy> gameObjects = FindObjectsOfType<Enemy>().ToList();
@@ -114,16 +89,6 @@ public class WaveManager : Singleton<WaveManager>
         }
 
         //Debug.Log(currentWaveCount);
-
-        if (currentWaveCount == 11)
-        {
-            UIManager.Instance.ShowPanel("CreditUI");
-        }
-
-        if(currentWaveCount < 4)
-        {
-            SignalHub.OnLockButtonEvent?.Invoke();
-        }
     }
 
     public void ShowDefeatUI()
@@ -161,37 +126,19 @@ public class WaveManager : Singleton<WaveManager>
     {
         isWin = _isWin;
 
-        //int questIdx = TutorialManager.Instance.CurTutoQuestIdx;
-        //bool isDone = questIdx == 0 || questIdx == 1 || questIdx == 2 || questIdx == 3 || questIdx == 4 || questIdx == 5;
-        //
-        //if (isDone) // 일단 퀘스트
-        //{
-        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.Second);
-        //}
-        //else if (questIdx == 5)
-        //{
-        //    TutorialManager.Instance.CurTutorialProgressQuest(QuestGoalIdx.First);
-        //}
-
         SignalHub.OnBattlePhaseEndEvent?.Invoke();
+
+        if (currentWaveCount == 16)
+        {
+            UIManager.Instance.ResetPanel();
+            UIManager.Instance.ShowPanel("CreditUI");
+        }
     }
 
     public bool IsCurrentWaveCountEqualTo(int value)
     {
         return currentWaveCount == value; //TimeLineHolder에서 웨이브 수를 알기 위해서
     }
-
-    /*public void DummyPenguinInitTentFinHandle()
-    {
-        OnDummyPenguinInitTentFinEvent?.Invoke();
-    }*/
-
-    //private void OnDestroy()
-    //{
-    //    OnBattlePhaseStartEvent -= OnBattlePhaseStartHandle;
-    //    OnBattlePhaseEndEvent -= OnBattlePhaseEndHandle;
-    //    OnIceArrivedEvent -= OnIceArrivedEventHanlder;
-    //}
 
     private void OnDisable()
     {

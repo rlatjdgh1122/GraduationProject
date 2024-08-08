@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyLookAtState : EnemyBaseState
 {
-    private readonly float AngleThreshold = 10f;
-
     public EnemyLookAtState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
     }
@@ -77,7 +75,7 @@ public class EnemyLookAtState : EnemyBaseState
         // 임계값 설정 (예: 30도)
 
         // 각도를 사용하여 임계값과 비교
-        return angleToTarget <= AngleThreshold;
+        return angleToTarget <= _enemy.AngleThreshold;
     }
 
 }

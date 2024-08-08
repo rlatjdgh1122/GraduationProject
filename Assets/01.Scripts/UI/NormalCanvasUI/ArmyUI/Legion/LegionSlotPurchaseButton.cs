@@ -29,14 +29,14 @@ public class LegionSlotPurchaseButton : MonoBehaviour
     {
         _slotPanel.Setting(this);
         _slotPanel.ShowPanel();
-
-        _purchaseButton.onClick.RemoveListener(ShowSlotPanel);
     }
 
     public void Purchase() //»õ½½·Ô Ãß°¡
     {
         CostManager.Instance.SubtractFromCurrentCost(350, () =>
         {
+            _purchaseButton.onClick.RemoveListener(ShowSlotPanel);
+
             _slot.gameObject.SetActive(true);
             _legionPanel.SoldierSlotList.Add(_slot);
             _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName,_legionPanel.LegionIdx, idx);

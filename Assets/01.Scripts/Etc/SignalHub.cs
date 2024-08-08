@@ -32,8 +32,6 @@ public delegate void NoiseUpdateEvent();
 public delegate void DefaultBuilingClickEvent();
 public delegate void ClickMaskingButtonEvent();
 
-public delegate void LockBuyPenguinButtonEvent();
-
 public static class SignalHub
 {
 
@@ -79,8 +77,6 @@ public static class SignalHub
     public static ClickMaskingButtonEvent OnClickPenguinSpawnButtonEvent;
 
     #endregion
-
-    public static LockBuyPenguinButtonEvent OnLockButtonEvent;
 
     public static OffPopUiEvent OnOffPopUiEvent;
 
