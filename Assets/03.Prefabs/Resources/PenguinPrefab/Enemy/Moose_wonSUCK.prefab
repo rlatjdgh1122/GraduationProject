@@ -1230,7 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8726de14ca0ad7479b7154f82f26749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectRange: 2
+  _detectRange: 3
   _hitType: 1
   TargetLayer:
     serializedVersion: 2
@@ -1679,7 +1679,7 @@ MonoBehaviour:
   _characterStat: {fileID: 11400000, guid: 23461df6b639cad4e86e1a7ecc4f2315, type: 2}
   CurrentTarget: {fileID: 0}
   _maxDetectEnemy: 30
-  innerDistance: 5
+  innerDistance: 10
   attackDistance: 2
   TargetLayer:
     serializedVersion: 2
@@ -1687,6 +1687,7 @@ MonoBehaviour:
   moveSpeed: 3
   attackSpeed: 1
   rotationSpeed: 2
+  AngleThreshold: 20
   nexusDistance: 3.5
   passiveData: {fileID: 0}
   NexusTarget: {fileID: 0}
