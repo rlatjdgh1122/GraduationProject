@@ -93,11 +93,13 @@ public class WaveManager : Singleton<WaveManager>
 
     public void ShowDefeatUI()
     {
+        UIManager.Instance.ResetPanel();
         UIManager.Instance.ShowPanel("DefeatUI");
     }
 
     private void GetReward() // 보상 획득 함수
     {
+        UIManager.Instance.ResetPanel();
         UIManager.Instance.ShowPanel("VictoryUI");
     }
 
@@ -106,6 +108,7 @@ public class WaveManager : Singleton<WaveManager>
         BattlePhaseEndEventHandler(true);
 
         UIManager.Instance.HidePanel("VictoryUI");
+        UIManager.Instance.ResetPanel();
     }
 
     public void BattlePhaseStartEventHandler() // 전투페이즈 시작 이벤트 실행용 함수

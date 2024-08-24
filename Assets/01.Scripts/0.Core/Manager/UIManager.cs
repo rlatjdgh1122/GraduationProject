@@ -107,8 +107,7 @@ public class UIManager : Singleton<UIManager>
 
     public bool CheckShowAble(UIType type)
     {
-        return _currentUI == null || _currentUI.Transferable.Contains(type)
-            || type == UIType.Gif;
+        return _currentUI == null || _currentUI.Transferable.Contains(type);
     }
 
     public void ChangeCurrentUI()
