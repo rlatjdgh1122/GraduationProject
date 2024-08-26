@@ -24,6 +24,14 @@ public class CostManager : Singleton<CostManager>
         AddFromCurrentCost(_defaultCost, false, true);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            AddFromCurrentCost(1000);
+        }
+    }
+
     /// <summary>
     /// 현재 재화에서 가격을 빼주기
     /// </summary>
@@ -65,11 +73,11 @@ public class CostManager : Singleton<CostManager>
     /// <param name="startTransform">시작 위치</param>
     public void AddFromCurrentCost(int value, bool tween = false, bool isUI = false, Vector3 startTransform = new())
     {
-        if(tween)
+        if (tween)
         {
             _costUI.CostTween(value, isUI, startTransform);
         }
-        else 
+        else
         {
             AddCost(value);
             _costUI.ChangeCost();
@@ -84,8 +92,8 @@ public class CostManager : Singleton<CostManager>
     public void CostArriveText(float cost)
     {
         _costUI.CostArriveText(cost);
-    } 
-    
+    }
+
     public void CostStopText()
     {
         _costUI.CostStopText();
