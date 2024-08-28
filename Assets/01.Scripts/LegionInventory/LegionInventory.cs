@@ -1,6 +1,5 @@
 using System.Linq;
 
-
 public class LegionInventory : LegionUI
 {
     /// <summary>
@@ -13,13 +12,7 @@ public class LegionInventory : LegionUI
             legion.RemovePenguin(data);
         }
 
-        foreach (var data in currentLegionList)
-        {
-            if (!savedLegionList.Contains(data))
-            {
-                legion.AddPenguin(data);
-            }
-        }
+        currentLegionList.ProcessIfContained(savedLegionList, false, data => legion.AddPenguin(data));
     }
 
     /// <summary>
@@ -27,21 +20,9 @@ public class LegionInventory : LegionUI
     /// </summary>
     public void SaveLegion()
     {
-        foreach (var data in currentLegionList)
-        {
-            if (!savedLegionList.Contains(data))
-            {
-                savedLegionList?.Add(data);
-            }
-        }
+        currentLegionList.ProcessIfContained(savedLegionList, false, data => savedLegionList.Add(data));
 
-        foreach (var data in currentRemovePenguinList)
-        {
-            if (savedLegionList.Contains(data))
-            {
-                savedLegionList.Remove(data);
-            }
-        }
+        currentRemovePenguinList.ProcessIfContained(savedLegionList, true, data => savedLegionList.Remove(data));
 
         ResetLegion();
     }
@@ -138,7 +119,7 @@ public class LegionInventory : LegionUI
                 else currentPenguinCnt--;
             }
         }
-        
+
         LegionCountTextSetting();
     }
 

@@ -197,6 +197,24 @@ public static class ExtensionMethod
         return result;
     }
 
+    /// <summary>
+    /// 원본 리스트의 각 요소가 변경된 리스트에 포함되는지 여부에 따라 지정된 작업을 수행
+    /// </summary>
+    public static void ProcessIfContained<T>(this List<T> list, List<T> changedList, bool shouldContain, 
+        Action<T> action = null)
+    {
+        if (list == null) throw new ArgumentNullException(nameof(list));
+        if (changedList == null) throw new ArgumentNullException(nameof(changedList));
+
+        foreach (var data in list)
+        {
+            if (changedList.Contains(data) == shouldContain)
+            {
+                action?.Invoke(data);
+            }
+        }
+    }
+
     #endregion
 
     #region RectTransform
