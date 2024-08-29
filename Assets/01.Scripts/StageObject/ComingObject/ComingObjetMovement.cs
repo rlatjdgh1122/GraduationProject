@@ -90,7 +90,7 @@ public abstract class ComingObjetMovement : MonoBehaviour
         _centerPos = trm.position;
     }
 
-    protected virtual Vector3 GetClosestPointToCenter() // ¹İµå½Ã _meshColliderÀÇ convex¸¦ ÄÑÁà¾ßÇÔ
+    protected virtual Vector3 GetClosestPointToCenter() // ë°˜ë“œì‹œ _meshColliderì˜ convexë¥¼ ì¼œì¤˜ì•¼í•¨
     {
         Vector3 closestPoint = _meshCollider.ClosestPoint(_centerPos);
         return closestPoint;
@@ -98,39 +98,36 @@ public abstract class ComingObjetMovement : MonoBehaviour
 
     public void SetComingObejctPos(Transform parentTransform, Vector3 position)
     {
-        transform.SetParent(parentTransform); // ºÎ¸ğ ¼³Á¤
-        //transform.SetParent(null); // ºÎ¸ğ ¼³Á¤
-        transform.localPosition = position; // ºùÇÏÀÇ À§Ä¡ ¼³Á¤
+        transform.SetParent(parentTransform); // ë¶€ëª¨ ì„¤ì •
+        //transform.SetParent(null); // ë¶€ëª¨ ì„¤ì •
+        transform.localPosition = position; // ë¹™í•˜ì˜ ìœ„ì¹˜ ì„¤ì •
 
-        // Áß¾Ó°ú È÷Æ® Æ÷ÀÎÆ® »çÀÌÀÇ °Å¸® °è»ê
+        // ì¤‘ì•™ê³¼ íˆíŠ¸ í¬ì¸íŠ¸ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚°
         float centerToHitPointX = Mathf.Abs(_meshCollider.transform.position.x - RaycastHit_ToCenterPos.x);
         float centerToHitPointZ = Mathf.Abs(_meshCollider.transform.position.z - RaycastHit_ToCenterPos.z);
 
         Vector3 closestPointToCenter = GetClosestPointToCenter();
 
-        // °¡Àå °¡±î¿î Æ÷ÀÎÆ®¿Í È÷Æ® Æ÷ÀÎÆ® »çÀÌÀÇ °Å¸® °è»ê
+        // ê°€ì¥ ê°€ê¹Œìš´ í¬ì¸íŠ¸ì™€ íˆíŠ¸ í¬ì¸íŠ¸ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚°
         float closestPointToHitPointX = Mathf.Abs(closestPointToCenter.x - RaycastHit_ToCenterPos.x);
         float closestPointToHitPointZ = Mathf.Abs(closestPointToCenter.z - RaycastHit_ToCenterPos.z);
 
-        // X¿Í Z °Å¸® °è»ê
+        // Xì™€ Z ê±°ë¦¬ ê³„ì‚°
         float xDistance = Mathf.Abs(centerToHitPointX - closestPointToHitPointX);
         float zDistance = Mathf.Abs(centerToHitPointZ - closestPointToHitPointZ);
 
-        // Å¸°Ù º¤ÅÍ °è»ê
+        // íƒ€ê²Ÿ ë²¡í„° ê³„ì‚°
         Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
 
         Vector3 cross = Vector3.Cross(transform.up, targetVec);
 
-        GameObject game = new GameObject();
-        game.transform.position = targetVec;
-
-        // X ÁÂÇ¥¿¡ µû¶ó Å¸°Ù º¤ÅÍ Á¶Á¤ (¾ç¼öÀÎÁö, À½¼öÀÎÁö, 0ÀÎÁö)
+        // X ì¢Œí‘œì— ë”°ë¼ íƒ€ê²Ÿ ë²¡í„° ì¡°ì • (ì–‘ìˆ˜ì¸ì§€, ìŒìˆ˜ì¸ì§€, 0ì¸ì§€)
         targetVec.x += (xDistance - 0.001f) * Mathf.Sign(closestPointToCenter.x);
 
-        // Z ÁÂÇ¥¿¡ µû¶ó Å¸°Ù º¤ÅÍ Á¶Á¤ (¾ç¼öÀÎÁö, À½¼öÀÎÁö, 0ÀÎÁö)
+        // Z ì¢Œí‘œì— ë”°ë¼ íƒ€ê²Ÿ ë²¡í„° ì¡°ì • (ì–‘ìˆ˜ì¸ì§€, ìŒìˆ˜ì¸ì§€, 0ì¸ì§€)
         targetVec.z += (zDistance - 0.001f) * Mathf.Sign(closestPointToCenter.z);
 
-        // Å¸°Ù À§Ä¡ ¼³Á¤
+        // íƒ€ê²Ÿ ìœ„ì¹˜ ì„¤ì •
         _targetPos = targetVec;
     }
     protected abstract void Arrived();
