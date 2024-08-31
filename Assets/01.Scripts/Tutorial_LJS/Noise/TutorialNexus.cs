@@ -10,7 +10,7 @@ public class TutorialNexus : MonoBehaviour
 
     public void ShowArrow()
     {
-        _tutorialCanvas.SetTarget(transform, 6f);
+        _tutorialCanvas.SetTarget(transform, 6.5f);
         _tutorialCanvas.Init(TutorialImage.Arrow);
         _tutorialCanvas.ShowUI();
     }

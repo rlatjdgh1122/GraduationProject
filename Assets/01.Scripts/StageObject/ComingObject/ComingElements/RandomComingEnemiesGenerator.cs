@@ -267,4 +267,15 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
     {
         _prevRotateValues.Clear();
     }
+
+    public int GetEnemyCount()
+    {
+        int waveCount = curWave;
+        waveCount %= 6;
+        int enemyCount = waveCount + 1;
+        enemyCount = Mathf.Clamp(enemyCount, 2, 10);
+        ComingEnemiesInfo info = _tutorialGroundInfoDataSO.TutorialComingEnemies[curWave - 1];
+
+        return enemyCount * (info.ComingGroundsCount + info.ComingRaftCount);
+    }
 }

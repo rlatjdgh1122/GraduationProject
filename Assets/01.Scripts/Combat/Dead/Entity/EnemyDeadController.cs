@@ -9,7 +9,7 @@ public class EnemyDeadController : EntityDeadController<Enemy>
 
         _owner.MyArmy.RemoveEnemy(_owner);
         _owner.DieEventHandler();
-
+        SignalHub.OnEnemyPenguinDead?.Invoke();
         _owner.MouseHandlerCompo.SetColiderActive(false);
     }
 

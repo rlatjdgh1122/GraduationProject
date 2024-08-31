@@ -5,6 +5,23 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
+    public int GetCurrentPenguinCount()
+    {
+        Penguin[] penguins = FindObjectsOfType<Penguin>();
+
+        int activeCount = 0;
+
+        foreach (Penguin penguin in penguins)
+        {
+            if (penguin.enabled)
+            {
+                activeCount++;
+            }
+        }
+
+        return activeCount;
+    }
+
     public int GetDeadPenguinCount()
     {
         Penguin[] penguins = FindObjectsOfType<Penguin>();

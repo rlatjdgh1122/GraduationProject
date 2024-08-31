@@ -43,7 +43,7 @@ public static class SignalHub
     /// <summary>
     /// ¾Æ±º Á×À» ¶§ ½ÇÇàµÊ
     /// </summary>
-    public static EnemyPenguinDead OnOurPenguinDead;
+    public static OurPenguinDead OnOurPenguinDead;
 
     #region ±º´Ü
     /// <summary>
