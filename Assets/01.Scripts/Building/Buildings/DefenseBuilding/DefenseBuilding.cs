@@ -61,39 +61,7 @@ public abstract class DefenseBuilding : BaseBuilding
 
         if (IsSelected)
         {
-            Collider[] newColls = Physics.OverlapSphere(transform.position, groundCheckRange, _groundLayer);
-            currentGrounds.Clear();
-
-            foreach (Collider coll in newColls)
-            {
-                int id = coll.GetInstanceID();
-
-                if (!_groundOutlines.TryGetValue(id, out Ground ground))
-                {
-                    ground = coll.transform.parent.GetComponent<Ground>();
-                    _groundOutlines.Add(id, ground);
-                }
-
-                currentGrounds.Add(ground);
-
-                if (ground.OutlineCompo.OutlineWidth < 10)
-                {
-                    ground.enabled = true;
-                    ground.OutlineCompo.OutlineMode = Outline.Mode.OutlineVisible;
-                    ground.UpdateOutlineColor(OutlineColorType.Red);
-                    ground.OutlineCompo.OutlineWidth = 10.0f;
-                }
-            }
-
-            _removedGrounds.Clear();
-            _removedGrounds.UnionWith(_previousGrounds); // _removedGrounds에 _previousGrounds 추가
-            _removedGrounds.ExceptWith(currentGrounds); //removedGrounds애서 currentGrounds에 있는 요소들을 제외 Linq의 Except보다 메모리소모가 적고 빠름.
-            foreach (var ground in _removedGrounds)
-            {
-                ground.UpdateOutlineColor(OutlineColorType.None);
-            }
-
-            _previousGrounds.UnionWith(currentGrounds);
+            DisplayRange();
         }
     }
 
@@ -118,6 +86,7 @@ public abstract class DefenseBuilding : BaseBuilding
     {
         if (IsInstalled)
         {
+            DisplayRange();
             _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
         }
     }
@@ -126,6 +95,7 @@ public abstract class DefenseBuilding : BaseBuilding
     {
         if (IsInstalled)
         {
+            ResetRemovedGroundsOutline();
             _health.OffUIUpdate?.Invoke();
         }
     }
@@ -138,4 +108,66 @@ public abstract class DefenseBuilding : BaseBuilding
 
         _health.enabled = true; // 설치 완료 되면 공격 대상 O
     }
+
+    private void DisplayRange()
+    {
+        Collider[] newColls = Physics.OverlapSphere(transform.position, groundCheckRange, _groundLayer);
+        currentGrounds.Clear();
+
+        foreach (Collider coll in newColls)
+        {
+            int id = coll.GetInstanceID();
+
+            if (!_groundOutlines.TryGetValue(id, out Ground ground))
+            {
+                ground = coll.transform.parent.GetComponent<Ground>();
+                _groundOutlines.Add(id, ground);
+            }
+
+            currentGrounds.Add(ground);
+
+            SetGroundToRedOutline(ground);
+        }
+
+        _removedGrounds.Clear();
+        _removedGrounds.UnionWith(_previousGrounds);
+        _removedGrounds.ExceptWith(currentGrounds);
+
+        foreach (var ground in _removedGrounds)
+        {
+            ground.UpdateOutlineColor(OutlineColorType.None);
+        }
+
+        _previousGrounds.UnionWith(currentGrounds);
+    }
+
+    private void SetGroundToRedOutline(Ground ground)
+    {
+        if (ground.OutlineCompo.OutlineWidth < 10)
+        {
+            ground.enabled = true;
+            ground.OutlineCompo.OutlineMode = Outline.Mode.OutlineVisible;
+            ground.UpdateOutlineColor(OutlineColorType.Red);
+            ground.OutlineCompo.OutlineWidth = 10.0f;
+        }
+    }
+
+    private void ResetRemovedGroundsOutline()
+    {
+        Collider[] newColls = Physics.OverlapSphere(transform.position, groundCheckRange, _groundLayer);
+
+        foreach (Collider coll in newColls)
+        {
+            int id = coll.GetInstanceID();
+
+            if (!_groundOutlines.TryGetValue(id, out Ground ground))
+            {
+                ground = coll.transform.parent.GetComponent<Ground>();
+                _groundOutlines.Add(id, ground);
+            }
+
+            ground.UpdateOutlineColor(OutlineColorType.None);
+        }
+    }
+
 }
