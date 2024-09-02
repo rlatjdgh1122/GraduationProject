@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class UnitInventory : InitialUnitInventory
 {
-    public void PenguinSlotEnter(EntityInfoDataSO so)
+    public void PenguinSlotEnter(EntityInfoDataSO so) //¿Œ∫•≈‰∏Æø° ∆Î±œ¿Ã √ﬂ∞°µ∆¿ª ∂ß
     {
-        if (penguinDictionary == null) return;
-
         if (penguinDictionary.TryGetValue(so, out UnitSlotUI slot))
         {
             slot.EnterSlot(so);
         }
     }
 
-    public void PenguinSlotExit(EntityInfoDataSO so)
+    public void PenguinSlotExit(EntityInfoDataSO so) //¿Œ∫•≈‰∏Æø° ∆Î±œ¿Ã ∫¸¡≥¿ª ∂ß
     {
-        if (penguinDictionary == null) return;
-
         if (penguinDictionary.TryGetValue(so,out UnitSlotUI slot))
         {
             slot.ExitSlot(so);
@@ -26,8 +22,6 @@ public class UnitInventory : InitialUnitInventory
 
     public void LockSlot(PenguinTypeEnum type)
     {
-        if (penguinDictionary == null) return;
-
         if(lockButtonDicntionary.TryGetValue(type, out UnitSlotUI slot))
         {
             slot.LockSlot();
@@ -36,8 +30,6 @@ public class UnitInventory : InitialUnitInventory
 
     public void UnLockSlot(PenguinTypeEnum type)
     {
-        if (penguinDictionary == null) return;
-
         if (lockButtonDicntionary.TryGetValue(type, out UnitSlotUI slot))
         {
             slot.UnLockSlot();

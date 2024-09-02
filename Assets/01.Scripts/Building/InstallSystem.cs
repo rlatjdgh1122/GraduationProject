@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 public class InstallSystem : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _cancelInstallBuildingText; // 설치 취소 안내 텍스트
+    private GameObject _cancelInstallBuildingText; // 설치 취소 안내 텍스트
 
     [SerializeField]
     private LayerMask _groundLayer;
