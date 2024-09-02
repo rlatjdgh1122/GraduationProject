@@ -167,15 +167,15 @@ public class ArmyManager : Singleton<ArmyManager>
 
         if (curArmy.CheckEmpty())
         {
-            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 군단에는 펭귄이 존재하지 않습니다.");
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName}에는 펭귄이 존재하지 않습니다.");
             return;
         }
         else if (curArmy.IsHealing)
         {
-            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 군단 회복 중");
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 회복 중");
         }
         else
-            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 군단 선택");
+            UIManager.Instance.ShowWarningUI($"{curArmy.LegionName} 선택");
 
         prevArmyIdx = curArmyIdx < 0 ? 0 : curArmyIdx;
         curArmyIdx = Idx;
@@ -405,13 +405,13 @@ public class ArmyManager : Singleton<ArmyManager>
     /// 새로운 군단 생성
     /// </summary>
 
-    public Army CreateArmy(string armyName)
+    public Army CreateArmy()
     {
         Army newArmy = new Army();
 
         newArmy.LegionIdx = _armies.Count;
         newArmy.MoveSpeed = 4f;
-        newArmy.LegionName = armyName;
+        newArmy.LegionName = $"{_armies.Count + 1}군단";
         newArmy.IsArmyReady = false;
         newArmy.SynergyType = SynergyType.Police;
 

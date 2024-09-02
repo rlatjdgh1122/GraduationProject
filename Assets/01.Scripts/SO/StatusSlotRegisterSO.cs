@@ -28,7 +28,9 @@ public class SynergySettingData
     [System.Serializable]
     public class UltimateData : SkillDefaultData
     {
+        public bool IsLock { get; set; }
         public UltimateType UltimateType;
+        [TextArea] public string LockMessage;
     }
 }
 
@@ -41,7 +43,9 @@ public class GeneralSettingData
     [System.Serializable]
     public class SkillData : SkillDefaultData
     {
+        public bool IsLock { get; set; }
         public SkillType SkillType;
+        [TextArea] public string LockMessage;
     }
 
 }

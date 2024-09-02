@@ -18,6 +18,8 @@ public class UltimateMouseEventUI : MountEventUI
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        ExplainUI.ShowPanel($"[궁극기]", "잠겨있음", $"???", "군단장과 어울리는 펭귄을 조합하여 궁극기를 해금해보세요!");
+
         if (ultimateData == null) return;
         if (Army.UltimateController == null) return;
 

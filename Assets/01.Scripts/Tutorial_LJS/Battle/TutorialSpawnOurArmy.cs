@@ -16,7 +16,7 @@ public class TutorialSpawnOurArmy : MonoBehaviour
 
     private void Start()
     {
-        ArmyManager.Instance.CreateArmy(_legionName);
+        ArmyManager.Instance.CreateArmy();
 
         SpawnSolider();
         SpawnGeneral();

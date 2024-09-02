@@ -27,6 +27,9 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     private Image[] _penguinIconList;
     private Army _army = null;
 
+    private bool _isSkillLock = false;
+    private bool _isUltimateLock = false;
+
     private void Awake()
     {
         Transform penguinIconParent = transform.Find("SoliderIcon");
@@ -98,6 +101,8 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
         _skillImage.sprite = _lockSprite;
         _ultimateImage.sprite = _lockSprite;
+        _isSkillLock = true;
+        _isUltimateLock = true;
 
         _skillUI.Setting(0f, 0f);
         _ultimateUI.Setting(0f);
@@ -109,6 +114,8 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
         //여기까지 왔다면 장군이 있다는거
         //여기서 스킬 연결하자
 
+        _isSkillLock = false;
+        data.IsLock = _isSkillLock;
         _skillUI.SetData(data);
         _skillUI.Setting(currentValue, fillAmount, data.SkillType);
         _skillImage.sprite = data.Icon;
@@ -116,6 +123,8 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
     }
     public void SetUltimateUI(float fillAmount, UltimateData data)
     {
+        _isUltimateLock = false; 
+        data.IsLock = _isUltimateLock;
         _ultimateUI.SetData(data);
         _ultimateUI.Setting(fillAmount);
         _ultimateImage.sprite = data.Icon;

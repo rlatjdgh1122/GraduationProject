@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 public class LegionNamingPanel : ArmyComponentUI
 {
-    [SerializeField] private TMP_InputField _inputField;
-    [SerializeField] private Button _legionNameEnterButton;
-    [SerializeField] private TextMeshProUGUI _errorMessage;
+    // [SerializeField] private TMP_InputField _inputField;
+    //[SerializeField] private Button _legionNameEnterButton;
+    //[SerializeField] private TextMeshProUGUI _errorMessage;
 
     public LegionPanel CurrentPanel { get; set; }
     public SoldierSelectPanel ParentPanel { get; set; }
@@ -19,24 +19,27 @@ public class LegionNamingPanel : ArmyComponentUI
 
 
     private List<string> _legionNameList = new();
-    private string _legionName;
+    public string LegionName;
     private bool _canNamingLegion = false;
 
     public override void Awake()
     {
         base.Awake();
 
-        _inputField.onEndEdit.AddListener(OnValue);
-        _legionNameEnterButton.onClick.AddListener(EnterLegionName);
+        //  _inputField.onEndEdit.AddListener(OnValue);
+        // _legionNameEnterButton.onClick.AddListener(EnterLegionName);
     }
 
     #region Legion Naming
 
     //군단 이름 쓰고 엔터 누르거나 확인 버튼 눌렀을 때 군단 이름 오류 체크
-    private void OnValue(string str)
+   /* private void OnValue(string str)
     {
         if (LegionErrorCheck(str))
-            _legionName = str;
+        {
+            LegionName = str;
+
+        }
     }
 
     //오류 체크
@@ -83,7 +86,7 @@ public class LegionNamingPanel : ArmyComponentUI
     private bool DoubleCheck(string text)
     {
         return !_legionNameList.Contains(text);
-    }
+    }*/
 
     #endregion
 
@@ -107,12 +110,12 @@ public class LegionNamingPanel : ArmyComponentUI
             return;
         }
 
-        _legionNameList.Add(_legionName);
+        _legionNameList.Add(LegionName);
 
-        Army army = ArmyManager.Instance.CreateArmy(_legionName);
+       // Army army = ArmyManager.Instance.CreateArmy(LegionName);
 
-        CurrentPanel.SetLegionIdx(army.LegionIdx);
-        CurrentPanel.SetLegionName(_legionName);
+        //CurrentPanel.SetLegionIdx(army.LegionIdx);
+        CurrentPanel.SetLegionName(LegionName);
 
         CurrentPanel.SetLegionData();
 
@@ -127,9 +130,10 @@ public class LegionNamingPanel : ArmyComponentUI
     private void ResetPanel()
     {
         _canNamingLegion = false;
-        _legionName = string.Empty;
-        _inputField.text = string.Empty;
+        LegionName = string.Empty;
+
+        /*_inputField.text = string.Empty;
         _errorMessage.text = string.Empty;
-        _errorMessage.color = Color.red;
+        _errorMessage.color = Color.red;*/
     }
 }
