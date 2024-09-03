@@ -12,7 +12,7 @@ public class TutorialSpawnOurArmy : MonoBehaviour
     [SerializeField] private TutorialWorldCanvas _arrow;
     [SerializeField] private TutorialController _controller;
 
-    private string _legionName = "1";
+    private string _legionName = "1±º´Ü";
 
     private void Start()
     {
