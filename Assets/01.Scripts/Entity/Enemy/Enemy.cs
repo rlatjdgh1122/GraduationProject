@@ -31,6 +31,8 @@ public class Enemy : Entity
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
 
+    public event Action<Enemy> OnDied = null;
+
     public Nexus NexusTarget = null;
 
     public bool IsMove = false;
@@ -84,7 +86,7 @@ public class Enemy : Entity
             passiveData = Instantiate(passiveData);
     }
 
-    public void StateInit()
+    public virtual void StateInit()
     {
         StateMachine.Init(EnemyStateType.Idle);
     }
@@ -117,6 +119,13 @@ public class Enemy : Entity
     protected override void HandleHit()
     {
 
+    }
+
+    protected override void HandleDie()
+    {
+        base.HandleDie();
+
+        OnDied?.Invoke(this);
     }
 
 

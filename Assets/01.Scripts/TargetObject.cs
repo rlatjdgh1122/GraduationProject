@@ -178,5 +178,6 @@ public abstract class TargetObject : PoolableMono
             HealthCompo.OnHit -= HandleHit;
             HealthCompo.OnDied -= HandleDie;
         }
+
     }
 }
