@@ -6,7 +6,8 @@ public class EnemyArcherPenguin : Enemy
     protected override void Awake()
     {
         base.Awake();
-    }
+
+	}
 
     protected override void Start()
     {
