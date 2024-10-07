@@ -60,4 +60,9 @@ public class GlitchEffectController : MonoBehaviour
                      action?.Invoke();
                  });
     }
+
+    private void OnDisable()
+    {
+        _glitchMat.SetFloat("_ScreenLinesStrength", 1.0f);
+    }
 }
