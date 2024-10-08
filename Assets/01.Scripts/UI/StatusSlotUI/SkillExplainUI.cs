@@ -11,7 +11,7 @@ public class SkillExplainUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _typeText = null;
     [SerializeField] private TextMeshProUGUI _nameText = null;
     [SerializeField] private TextMeshProUGUI _actionEnterText = null;
-    [SerializeField] private TextMeshProUGUI _ÀÌÈÄÁõ°¡ = null;
+    //[SerializeField] private TextMeshProUGUI _ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = null;
     [SerializeField] private TextMeshProUGUI _explainText = null;
 
     private CanvasGroup _panel = null;
@@ -28,9 +28,9 @@ public class SkillExplainUI : MonoBehaviour
         _typeText.text = skillType;
         _nameText.text = skillName;
 
-        _actionEnterText.text = actionEnterText;
-        if (actionEnterText == "") _ÀÌÈÄÁõ°¡.text = "";
-        else _ÀÌÈÄÁõ°¡.text = "ÀÌÈÄ »ç¿ë °¡´É";
+        // _actionEnterText.text = actionEnterText;
+        // if (actionEnterText == "") _ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.text = "";
+        // else _ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.text = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
 
         _explainText.text = explainText;
 
