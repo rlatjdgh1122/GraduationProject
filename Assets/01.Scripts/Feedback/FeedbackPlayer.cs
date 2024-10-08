@@ -6,7 +6,7 @@ public class FeedbackPlayer : MonoBehaviour
     public float Value { get; set; } = 0f;
     public bool IsSuccessed { get; set; } = true;
 
-    private List<Feedback> _feedbackToPlay = null;
+    private List<Feedback> _feedbackToPlay = null;  
     public List<Feedback> FeedbackToPlay => _feedbackToPlay;
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class FeedbackPlayer : MonoBehaviour
         {
             f.Value = Value;
 
-            //ÇÏ³ª¶óµµ False¸é false¸¦ ¸®ÅÏ
+            //ï¿½Ï³ï¿½ï¿½ï¿½ Falseï¿½ï¿½ falseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             IsSuccessed = f.StartFeedback();
         }
     }
