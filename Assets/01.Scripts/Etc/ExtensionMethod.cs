@@ -2,6 +2,7 @@ using Define;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum AAType
@@ -94,6 +95,14 @@ public static class ExtensionMethod
                 action?.Invoke(list[i]);
             }
         }
+    }
+
+    /// <summary>
+    /// 리스트 클론
+    /// </summary>
+    public static List<T> ListClone<T>(this List<T> source) where T : unmanaged, ICloneable
+    {
+        return source.Select(item => (T)item.Clone()).ToList();
     }
 
     /// <summary>
@@ -200,7 +209,7 @@ public static class ExtensionMethod
     /// <summary>
     /// 원본 리스트의 각 요소가 변경된 리스트에 포함되는지 여부에 따라 지정된 작업을 수행
     /// </summary>
-    public static void ProcessIfContained<T>(this List<T> list, List<T> changedList, bool shouldContain, 
+    public static void ProcessIfContained<T>(this List<T> list, List<T> changedList, bool shouldContain,
         Action<T> action = null)
     {
         if (list == null) throw new ArgumentNullException(nameof(list));

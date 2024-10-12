@@ -119,7 +119,15 @@ public class Outline : MonoBehaviour
         outlineFillMaterial.name = "OutlineFill (Instance)";
 
         // Retrieve or generate smooth normals
-        LoadSmoothNormals();
+        try
+        {
+            LoadSmoothNormals();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log($"오브젝트 이름 : {transform.name}");
+
+        } //end catch
 
         // Apply material properties immediately
         needsUpdate = true;
@@ -262,6 +270,7 @@ public class Outline : MonoBehaviour
         foreach (var meshFilter in GetComponentsInChildren<MeshFilter>())
         {
 
+
             // Skip if smooth normals have already been adopted
             if (!registeredMeshes.Add(meshFilter.sharedMesh))
             {
@@ -282,24 +291,25 @@ public class Outline : MonoBehaviour
             {
                 CombineSubmeshes(meshFilter.sharedMesh, renderer.sharedMaterials);
             }
-        }
 
-        // Clear UV3 on skinned mesh renderers
-        foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
-        {
-
-            // Skip if UV3 has already been reset
-            if (!registeredMeshes.Add(skinnedMeshRenderer.sharedMesh))
+            // Clear UV3 on skinned mesh renderers
+            foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
             {
-                continue;
+
+                // Skip if UV3 has already been reset
+                if (!registeredMeshes.Add(skinnedMeshRenderer.sharedMesh))
+                {
+                    continue;
+                }
+
+                // Clear UV3
+                skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
+
+                // Combine submeshes
+                CombineSubmeshes(skinnedMeshRenderer.sharedMesh, skinnedMeshRenderer.sharedMaterials);
             }
-
-            // Clear UV3
-            skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
-
-            // Combine submeshes
-            CombineSubmeshes(skinnedMeshRenderer.sharedMesh, skinnedMeshRenderer.sharedMaterials);
         }
+
     }
 
     List<Vector3> SmoothNormals(Mesh mesh)
@@ -312,7 +322,7 @@ public class Outline : MonoBehaviour
         }
         catch (NullReferenceException ex)
         {
-            Debug.Log(mesh.name);
+            Debug.Log($"모델 이름 : {mesh.name}");
         }
 
 
