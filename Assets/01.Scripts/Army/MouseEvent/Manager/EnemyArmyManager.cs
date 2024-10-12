@@ -9,10 +9,40 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
     public List<EnemyArmy> enemyArmies = new();
     public Color MouseOverColor = Color.white;
     public Color SelectedColor = Color.white;
+    public KeyCode SingleTargetKey = KeyCode.None;
 
     private OnValueChanged<Color> OnChangedOutlineColorEvent = null;
 
     private EnemyArmy CurrnetEnemyArmy = null;
+
+    private bool _isSingleTargetMode = false;
+
+    public bool IsSingleTargetMode
+    {
+        get => _isSingleTargetMode;
+        private set
+        {
+            _isSingleTargetMode = value;
+
+            if (CurrnetEnemyArmy == null) return;
+
+            //타겟이 이미 지정되어 있는 상태라면 수동으로 호출해줌
+            CurrnetEnemyArmy.SetSingleTargetMode(_isSingleTargetMode);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(SingleTargetKey))
+        {
+            _isSingleTargetMode = true;
+        }
+
+        else if (Input.GetKeyUp(SingleTargetKey))
+        {
+            _isSingleTargetMode = false;
+        }
+    }
 
     public EnemyArmy CreateArmy(List<Enemy> enemies)
     {

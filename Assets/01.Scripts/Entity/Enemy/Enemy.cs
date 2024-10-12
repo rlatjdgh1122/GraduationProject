@@ -53,28 +53,28 @@ public class Enemy : Entity
     {
         base.Awake();
 
-		StateMachine = new EnemyStateMachine();
+        StateMachine = new EnemyStateMachine();
 
-		foreach (EnemyStateType state in Enum.GetValues(typeof(EnemyStateType)))
-		{
-			string typeName = state.ToString();
-			Type t = Type.GetType($"Enemy{typeName}State");
-			try
-			{
-				EnemyState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState;
+        foreach (EnemyStateType state in Enum.GetValues(typeof(EnemyStateType)))
+        {
+            string typeName = state.ToString();
+            Type t = Type.GetType($"Enemy{typeName}State");
+            try
+            {
+                EnemyState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState;
 
-				StateMachine.AddState(state, newState);
+                StateMachine.AddState(state, newState);
 
-			}
-			catch
-			{
-				Debug.LogError($"There is no script : {state}");
+            }
+            catch
+            {
+                Debug.LogError($"There is no script : {state}");
 
-			}
+            }
 
-		} //end foreach 
+        } //end foreach 
 
-		if (NavAgent != null)
+        if (NavAgent != null)
         {
             NavAgent.speed = moveSpeed;
         }

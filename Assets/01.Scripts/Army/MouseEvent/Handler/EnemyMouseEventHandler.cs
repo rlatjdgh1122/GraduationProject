@@ -2,7 +2,7 @@ using ArmySystem;
 using UnityEngine;
 
 
-public class EnemyMouseEventHandler : MouseEventHandler  
+public class EnemyMouseEventHandler : MouseEventHandler
 {
     [SerializeField] private Enemy _owner = null;
 
@@ -10,11 +10,13 @@ public class EnemyMouseEventHandler : MouseEventHandler
 
     protected override void OnMouseEnter()
     {
+        Target.SetSingleTarget(_owner);
         Target.OnMouseEnter();
     }
 
     protected override void OnMouseExit()
     {
+        Target.SetSingleTarget(null);
         Target.OnMouseExit();
     }
 

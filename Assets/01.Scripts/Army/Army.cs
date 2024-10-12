@@ -240,8 +240,8 @@ namespace ArmySystem
         public Enemy FindNearestEnemy(Penguin penguin)
         {
             if (TargetEnemyArmy == null) return null;
-            if (TargetEnemyArmy.Soldiers == null) return null;
-            if (TargetEnemyArmy.Soldiers.Count <= 0) return null;
+            if (TargetEnemyArmy._soldiers == null) return null;
+            if (TargetEnemyArmy._soldiers.Count <= 0) return null;
 
             Enemy closestEnemy = null;
             int fewestTargets = int.MaxValue;
@@ -269,7 +269,7 @@ namespace ArmySystem
                 }
 
                 // 모든 적을 순회하며 타겟팅 카운트가 적고 거리가 가까운 적을 선택
-                foreach (Enemy enemy in TargetEnemyArmy.Soldiers)
+                foreach (Enemy enemy in TargetEnemyArmy.TargetSoliders)
                 {
                     if (enemy == null) continue;
 
