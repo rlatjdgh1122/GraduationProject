@@ -31,6 +31,8 @@ public class Enemy : Entity
     public EntityAttackData AttackCompo { get; private set; }
     #endregion
 
+    public event Action<Enemy> OnDied = null;
+
     public Nexus NexusTarget = null;
 
     public bool IsMove = false;
@@ -51,27 +53,28 @@ public class Enemy : Entity
     {
         base.Awake();
 
-        StateMachine = new EnemyStateMachine();
+		StateMachine = new EnemyStateMachine();
 
-        foreach (EnemyStateType state in Enum.GetValues(typeof(EnemyStateType)))
-        {
-            string typeName = state.ToString();
-            Type t = Type.GetType($"Enemy{typeName}State");
-            try
-            {
-                EnemyState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState;
+		foreach (EnemyStateType state in Enum.GetValues(typeof(EnemyStateType)))
+		{
+			string typeName = state.ToString();
+			Type t = Type.GetType($"Enemy{typeName}State");
+			try
+			{
+				EnemyState newState = Activator.CreateInstance(t, this, StateMachine, typeName) as EnemyState;
 
-                StateMachine.AddState(state, newState);
+				StateMachine.AddState(state, newState);
 
-            }
-            catch
-            {
-                Debug.LogError($"There is no script : {state}");
+			}
+			catch
+			{
+				Debug.LogError($"There is no script : {state}");
 
-            }
-        }
+			}
 
-        if (NavAgent != null)
+		} //end foreach 
+
+		if (NavAgent != null)
         {
             NavAgent.speed = moveSpeed;
         }
@@ -84,7 +87,7 @@ public class Enemy : Entity
             passiveData = Instantiate(passiveData);
     }
 
-    public void StateInit()
+    public virtual void StateInit()
     {
         StateMachine.Init(EnemyStateType.Idle);
     }
@@ -117,6 +120,13 @@ public class Enemy : Entity
     protected override void HandleHit()
     {
 
+    }
+
+    protected override void HandleDie()
+    {
+        base.HandleDie();
+
+        OnDied?.Invoke(this);
     }
 
 
