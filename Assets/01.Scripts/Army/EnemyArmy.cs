@@ -30,17 +30,21 @@ namespace ArmySystem
 		public List<Enemy> TargetSoliders = new();
 
 		public int SoliderCount => _soldiers.Count;
-		public bool IsSelected = false;
 
 		private Color _mouseOverColor = Color.white;
 		private Color _selectColor = Color.white;
+		private Color _singleTargetColor = Color.white;
 
 		private bool IsNull => _soldiers == null;
 
-		public void OnChangedOutlineColorHandler(Color overColor, Color selectColor)	
+		private bool _isSelected = false;
+		private bool _isSingleTargetSelected = false;
+
+		public void Setting(Color overColor, Color selectColor, Color singleTargetColor)
 		{
 			_mouseOverColor = overColor;
 			_selectColor = selectColor;
+			_singleTargetColor = singleTargetColor;
 		}
 
 		public void RemoveEnemy(Enemy enemy)
@@ -69,6 +73,8 @@ namespace ArmySystem
 			DeSelectedOutline();
 
 			TargetSoliders.Clear();
+			_isSingleTargetSelected = isSingleTargetMode;
+
 			if (isSingleTargetMode)
 			{
 				//단일 타겟지정
@@ -90,7 +96,7 @@ namespace ArmySystem
 
 		public void OnMouseEnter()
 		{
-			if (IsSelected) return;
+			if (!_isSingleTargetSelected && _isSelected) return;
 
 			SetSingleTargetMode(EnemyArmyManager.Instance.IsSingleTargetMode);
 
@@ -106,7 +112,7 @@ namespace ArmySystem
 
 		public void OnMouseExit()
 		{
-			if (IsSelected)
+			if (_isSelected)
 			{
 				OnSelectedOutline();
 			}
@@ -127,28 +133,31 @@ namespace ArmySystem
 
 		public void OnSelected()
 		{
-			IsSelected = true;
+			_isSelected = true;
 
 			OnSelectedOutline();
 		}
 
 		public void DeSelected()
 		{
-			IsSelected = false;
+			_isSelected = false;
 
 			DeSelectedOutline();
 		}
 
 		private void OnSelectedOutline()
 		{
+			Color color = EnemyArmyManager.Instance.IsSingleTargetMode == true ? _singleTargetColor : _selectColor;
+
 			foreach (Enemy enemy in TargetSoliders)
 			{
 				enemy.OutlineCompo.enabled = true;
 				if (enemy.OutlineCompo != null && enemy.OutlineCompo.isActiveAndEnabled)
 				{
-					enemy.OutlineCompo.SetColor(_selectColor);
+					enemy.OutlineCompo.SetColor(color);
 				}
-			}//end foreach
+
+			} //end foreach
 		}
 
 		private void DeSelectedOutline()
@@ -159,7 +168,8 @@ namespace ArmySystem
 				{
 					enemy.OutlineCompo.enabled = false;
 				}
-			}//end foreach
+
+			} //end foreach
 		}
 
 	}
