@@ -37,7 +37,7 @@ namespace ArmySystem
 
 		private bool IsNull => _soldiers == null;
 
-		public void OnChangedOutlineColorHandler(Color overColor, Color selectColor)
+		public void OnChangedOutlineColorHandler(Color overColor, Color selectColor)	
 		{
 			_mouseOverColor = overColor;
 			_selectColor = selectColor;
