@@ -88,9 +88,6 @@ public abstract class BaseTrap : BaseBuilding
             float alpha = Mathf.Lerp(1f, 0f, percent);
             material.color = new Color(0,0,0, alpha);
 
-            Debug.Log($"{material}: {alpha}");
-            Debug.Log($"Color {material.color}");
-
             yield return new WaitForEndOfFrame();
         }
 
