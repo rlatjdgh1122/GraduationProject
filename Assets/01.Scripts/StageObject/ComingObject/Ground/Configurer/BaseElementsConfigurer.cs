@@ -9,6 +9,7 @@ public abstract class BaseElementsConfigurer
     private readonly float checkDistance = 2f;
 
     protected bool isBossWave => WaveManager.Instance.CurrentWaveCount % 5 == 0; // 보스 나올 웨이브인지
+    protected bool isGeneralWave => WaveManager.Instance.CurrentWaveCount % 3 == 0; // 장군 나올 웨이브인지
 
     protected Transform transform;
 
