@@ -9,16 +9,19 @@ public class EnemyConfigurer : BaseElementsConfigurer
 {
     private string[] _enemyNames;
     private string[] _bossNames;
+    private string[] _generalNames;
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
     private EnemyArmySpawnPatternsSO _enemyArmySpawnPatternsSO;
 
-    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames, EnemyArmySpawnPatternsSO enemyArmySpawnPatternsSO) : base(transform)
+    public EnemyConfigurer(Transform transform, string[] enemyNames, string[] bossNames, string[] generalNames, EnemyArmySpawnPatternsSO enemyArmySpawnPatternsSO) : base(transform)
     {
         _enemyNames = enemyNames;
 
         _bossNames = bossNames;
+
+        _generalNames = generalNames;
 
         _enemyArmySpawnPatternsSO = enemyArmySpawnPatternsSO;
     }
@@ -37,6 +40,17 @@ public class EnemyConfigurer : BaseElementsConfigurer
             SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
 
             spawnedEnemies.Add(spawnBoss);
+        }
+
+        if (isGeneralWave && _generalNames != null) // ¿Â±∫
+        {
+            Enemy spawnGeneral;
+            spawnGeneral = PoolManager.Instance.Pop(_bossNames[(WaveManager.Instance.CurrentWaveCount / 5) - 1]) as Enemy;
+
+            SetEnemyNav(spawnGeneral);
+            SetGroundElementsPosition(spawnGeneral.gameObject, transform, previousElementsPositions);
+
+            spawnedEnemies.Add(spawnGeneral);
         }
 
         int randomIdx = Random.Range(0, _enemyNames.Length);
