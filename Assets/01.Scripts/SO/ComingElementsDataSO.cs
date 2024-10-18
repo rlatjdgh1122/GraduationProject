@@ -36,6 +36,10 @@ public class ComingElementsDataSO : ScriptableObject
     public List<GameObject> BossList => _bossList;
 
     [SerializeField]
+    private List<GameObject> _generalList;
+    public List<GameObject> GeneralList => _bossList;
+
+    [SerializeField]
     private GameObject _normalRewardPrefab;
     public GameObject NormalRewardPrefab => _normalRewardPrefab;
 
