@@ -1,4 +1,5 @@
 using ArmySystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
@@ -17,17 +18,16 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
 
     private bool _isSingleTargetMode = false;
 
+    public event OnValueUpdated<bool> OnSingleTargetModeUpdated = null;
     public bool IsSingleTargetMode
     {
         get => _isSingleTargetMode;
+
         private set
         {
             _isSingleTargetMode = value;
+            OnSingleTargetModeUpdated?.Invoke(value);
 
-            if (CurrnetEnemyArmy == null) return;
-
-            //타겟이 이미 지정되어 있는 상태라면 수동으로 호출해줌
-            CurrnetEnemyArmy.SetSingleTargetMode(_isSingleTargetMode);
         }
     }
 
@@ -35,12 +35,12 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
     {
         if (Input.GetKeyDown(SingleTargetKey))
         {
-            _isSingleTargetMode = true;
+            IsSingleTargetMode = true;
         }
 
         else if (Input.GetKeyUp(SingleTargetKey))
         {
-            _isSingleTargetMode = false;
+            IsSingleTargetMode = false;
         }
     }
 
@@ -50,6 +50,8 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
         enemyArmies.Add(army);
 
         OnChangedOutlineColorEvent += army.OnChangedOutlineColorHandler;
+        OnSingleTargetModeUpdated += army.OnUpdatedSingleTargetMode;
+
         OnChangedOutlineColor();
 
         return army;
@@ -58,6 +60,7 @@ public class EnemyArmyManager : Singleton<EnemyArmyManager>
     public void DeleteArmy(EnemyArmy army)
     {
         OnChangedOutlineColorEvent -= army.OnChangedOutlineColorHandler;
+        OnSingleTargetModeUpdated -= army.OnUpdatedSingleTargetMode;
         enemyArmies.Remove(army);
     }
 

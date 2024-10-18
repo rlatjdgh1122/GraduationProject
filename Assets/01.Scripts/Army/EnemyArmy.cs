@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ArmySystem
@@ -31,6 +32,7 @@ namespace ArmySystem
 
         public int SoliderCount => _soldiers.Count;
         public bool IsSelected = false;
+        public bool IsMouseOver = false;
 
         private Color _mouseOverColor = Color.white;
         private Color _selectColor = Color.white;
@@ -46,12 +48,7 @@ namespace ArmySystem
         public void RemoveEnemy(Enemy enemy)
         {
             _soldiers.Remove(enemy);
-
-            if (_singleTarget == null && _singleTarget.Equals(enemy))
-            {
-                _singleTarget = null;
-
-            } //end if
+            TargetSoliders.Remove(enemy);
 
             enemy.OutlineCompo.enabled = false;
 
@@ -68,7 +65,7 @@ namespace ArmySystem
             _singleTarget = enemy;
         }
 
-        public void SetSingleTargetMode(bool isSingleTargetMode)
+        public void OnUpdatedSingleTargetMode(bool isSingleTargetMode)
         {
             //타겟을 지정하기전 아웃라인을 다 지운 후
             DeSelectedOutline();
@@ -78,7 +75,8 @@ namespace ArmySystem
                 TargetSoliders.Clear();
 
                 //단일 타겟지정
-                TargetSoliders.Add(_singleTarget);
+                if (_singleTarget != null)
+                    TargetSoliders.Add(_singleTarget);
 
             } //end if
             else
@@ -90,30 +88,36 @@ namespace ArmySystem
 
             } //end else
 
-            //타겟이 지정되었다면 다시 아웃라인을 켜줌
-            OnSelectedOutline();
+            if (IsSelected) //타겟이 지정된 상황이라면
+            {
+                OnSelectedOutline();
+            } //end if
+
+            else if (IsMouseOver) //마우스가 오버된 상황이라면
+            {
+                OnMouseOverOutline();
+            } //end else if
+
+            else //아무것도 아니라면
+            {
+                DeSelectedOutline();
+            } //end else
         }
 
         #region MouseEvent
 
         public void OnMouseEnter()
         {
+            IsMouseOver = true;
             if (IsSelected) return;
 
-            SetSingleTargetMode(EnemyArmyManager.Instance.IsSingleTargetMode);
-
-            foreach (Enemy enemy in TargetSoliders)
-            {
-                enemy.OutlineCompo.enabled = true;
-                if (enemy.OutlineCompo.isActiveAndEnabled)
-                {
-                    enemy.OutlineCompo.SetColor(_mouseOverColor);
-                }
-            }
+            OnMouseOverOutline();
         }
 
         public void OnMouseExit()
         {
+            IsMouseOver = false;
+
             if (IsSelected)
             {
                 OnSelectedOutline();
@@ -144,6 +148,18 @@ namespace ArmySystem
             IsSelected = false;
 
             DeSelectedOutline();
+        }
+
+        private void OnMouseOverOutline()
+        {
+            foreach (Enemy enemy in TargetSoliders)
+            {
+                enemy.OutlineCompo.enabled = true;
+                if (enemy.OutlineCompo.isActiveAndEnabled)
+                {
+                    enemy.OutlineCompo.SetColor(_mouseOverColor);
+                }
+            } //end foreach
         }
 
         private void OnSelectedOutline()
