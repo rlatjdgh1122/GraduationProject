@@ -91,6 +91,7 @@ namespace ArmySystem
             if (!Soldiers.Contains(penguin))
             {
                 Soldiers.Add(penguin);
+                Debug.Log(Soldiers.Count);
                 AlivePenguins.Add(penguin);
 
                 Info.AddPenguinCount();
