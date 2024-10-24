@@ -42,8 +42,6 @@ public class EnemyConfigurer : BaseElementsConfigurer
                 spawnedEnemies.Add(spawnBoss);
             }
 
-            Debug.Log(isGeneralWave);
-            Debug.Log(_generalNames != null);
             if (isGeneralWave && _generalNames != null) // ¿Â±∫
             {
                 Enemy spawnGeneral;
