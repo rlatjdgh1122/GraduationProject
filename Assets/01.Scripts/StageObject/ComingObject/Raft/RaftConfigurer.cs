@@ -18,6 +18,6 @@ public class RaftConfigurer : ComingObjectConfigurer
             _enemyArmySpawnPatternsSO
         );
 
-        return new RaftElements(enemyConfigurer.SetEnemy(_previousElementsPositions));
+        return new RaftElements(enemyConfigurer.SetEnemy(_previousElementsPositions, true));
     }
 }

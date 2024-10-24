@@ -26,31 +26,34 @@ public class EnemyConfigurer : BaseElementsConfigurer
         _enemyArmySpawnPatternsSO = enemyArmySpawnPatternsSO;
     }
 
-    public List<Enemy> SetEnemy(List<Vector3> previousElementsPositions)
+    public List<Enemy> SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
     {
         List<Enemy> spawnedEnemies = new List<Enemy>();
-
-        if (isBossWave && _bossNames != null)
+        if (!isRaft)
         {
-            //걍 하드코딩함
-            Enemy spawnBoss;
-            spawnBoss = PoolManager.Instance.Pop(_bossNames[(WaveManager.Instance.CurrentWaveCount / 5) - 1]) as Enemy;
+            if (isBossWave && _bossNames != null)
+            {
+                Enemy spawnBoss;
+                spawnBoss = PoolManager.Instance.Pop(_bossNames[(WaveManager.Instance.CurrentWaveCount / 5) - 1]) as Enemy;
 
-            SetEnemyNav(spawnBoss);
-            SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
+                SetEnemyNav(spawnBoss);
+                SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
 
-            spawnedEnemies.Add(spawnBoss);
-        }
+                spawnedEnemies.Add(spawnBoss);
+            }
 
-        if (isGeneralWave && _generalNames != null) // 장군
-        {
-            Enemy spawnGeneral;
-            spawnGeneral = PoolManager.Instance.Pop(_bossNames[(WaveManager.Instance.CurrentWaveCount / 5) - 1]) as Enemy;
+            Debug.Log(isGeneralWave);
+            Debug.Log(_generalNames != null);
+            if (isGeneralWave && _generalNames != null) // 장군
+            {
+                Enemy spawnGeneral;
+                spawnGeneral = PoolManager.Instance.Pop(_generalNames[0]) as Enemy;
 
-            SetEnemyNav(spawnGeneral);
-            SetGroundElementsPosition(spawnGeneral.gameObject, transform, previousElementsPositions);
+                SetEnemyNav(spawnGeneral);
+                SetGroundElementsPosition(spawnGeneral.gameObject, transform, previousElementsPositions);
 
-            spawnedEnemies.Add(spawnGeneral);
+                spawnedEnemies.Add(spawnGeneral);
+            }
         }
 
         int randomIdx = Random.Range(0, _enemyNames.Length);
