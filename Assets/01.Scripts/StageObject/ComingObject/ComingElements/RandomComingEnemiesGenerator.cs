@@ -43,7 +43,8 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
 
-    private readonly string raftName = "Raft";
+    [SerializeField]
+    private readonly string raftName = "raft";
 
     private bool isTutorialWave => curWave < 16;
 
