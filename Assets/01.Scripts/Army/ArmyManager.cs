@@ -293,11 +293,11 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="obj"> Penguin 타입만 가능</param>
     public void JoinArmyToSoldier(string legionName, int legionIdx, Penguin obj) //들어가고 싶은 군단, 군인펭귄
     {
-        if (_armies.Find(p => p.LegionName == legionName) == null)
+       /* if (_armies.Find(p => p.LegionName == legionName) == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
-        }
+        }*/
         var Army = _armies[legionIdx];
 
         obj.SetOwner(Army);
@@ -319,11 +319,12 @@ public class ArmyManager : Singleton<ArmyManager>
     /// <param name="obj"> Penguin 타입만 가능</param>
     public void JoinArmyToGeneral(string legionName, int legionIdx, General obj) //들어가고 싶은 군단, 장군펭귄
     {
-        if (_armies.Find(p => p.LegionName == legionName) == null)
+        //var army = _armies.Find(p => p.LegionName == legionName);
+        /*if ( == null)
         {
             Debug.Log("그런 군단 이름은 없습니다.");
             return;
-        }
+        }*/
 
         var Army = _armies[legionIdx];
 
