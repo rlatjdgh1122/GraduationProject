@@ -49,6 +49,7 @@ public class Enemy : Entity
 
     public EnemyStateMachine StateMachine { get; private set; }
 
+    private Dictionary<string, ParticleSystem> _effectController = null;
     protected override void Awake()
     {
         base.Awake();
@@ -199,4 +200,22 @@ public class Enemy : Entity
     }
 
     #endregion
+
+    public void StartEffect(string effectName)
+    {
+        if (_effectController.TryGetValue(effectName, out ParticleSystem particle))
+        {
+            particle.Play();
+
+        } //end if
+    }
+
+    public void StopEffect(string effectName)
+    {
+        if (_effectController.TryGetValue(effectName, out ParticleSystem particle))
+        {
+            particle.Stop();
+
+        } //end if
+    }
 }
