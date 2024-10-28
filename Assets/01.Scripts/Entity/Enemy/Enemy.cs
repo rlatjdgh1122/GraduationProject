@@ -1,4 +1,5 @@
 using ArmySystem;
+using Define.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ public class Enemy : Entity
 
     public EnemyStateMachine StateMachine { get; private set; }
 
-    private Dictionary<string, ParticleSystem> _effectController = null;
+    private Dictionary<string, EffectPlayer> _effectController = null;
     protected override void Awake()
     {
         base.Awake();
@@ -86,6 +87,10 @@ public class Enemy : Entity
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
+
+        _effectController.Add("Health", VResources.Load<EffectPlayer>("PenguinEffect(Health)"));
+        _effectController.Add("AttackSpeed", VResources.Load<EffectPlayer>("PenguinEffect(AttackSpeed)"));
+        _effectController.Add("Damage", VResources.Load<EffectPlayer>("PenguinEffect(Damage)"));
     }
 
     public virtual void StateInit()
@@ -203,18 +208,18 @@ public class Enemy : Entity
 
     public void StartEffect(string effectName)
     {
-        if (_effectController.TryGetValue(effectName, out ParticleSystem particle))
+        if (_effectController.TryGetValue(effectName, out EffectPlayer player))
         {
-            particle.Play();
+            player.ParticleStart();
 
         } //end if
     }
 
     public void StopEffect(string effectName)
     {
-        if (_effectController.TryGetValue(effectName, out ParticleSystem particle))
+        if (_effectController.TryGetValue(effectName, out EffectPlayer player))
         {
-            particle.Stop();
+            player.ParticleStop();
 
         } //end if
     }
