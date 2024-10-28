@@ -13,25 +13,25 @@ public abstract class ComingObjectConfigurer : MonoBehaviour
 
     protected List<Vector3> _previousElementsPositions = new List<Vector3>();
 
-    public virtual ComingElements SetComingObjectElements(Transform groundTrm)
-    {
-        _previousElementsPositions.Clear();
+    public abstract ComingElements SetComingObjectElements(Transform groundTrm);
+    //{
+        //_previousElementsPositions.Clear();
 
-        EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
-                                                              GetSpawnEnemis(),
-                                                              _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
-                                                              _comingElementsDataSO.GeneralList.Select(prefab => prefab.name).ToArray(),
-                                                              _enemyArmySpawnPatternsSO);
+        //EnemyConfigurer enemyConfigurer = new EnemyConfigurer(groundTrm,
+        //                                                      GetSpawnEnemis(),
+        //                                                      _comingElementsDataSO.BossList.Select(prefab => prefab.name).ToArray(),
+        //                                                      _comingElementsDataSO.GeneralList.Select(prefab => prefab.name).ToArray(),
+        //                                                      _enemyArmySpawnPatternsSO);
 
-        //ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
-        //                                                               _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
+        ////ResourceConfigurer resourceConfigurer = new ResourceConfigurer(groundTrm,
+        ////                                                               _comingElementsDataSO.ResourceGeneratePatternDataSO.ResourceGeneratePatterns.ToArray());
 
-        //RewardConfigurer rewardConfigurer = new RewardConfigurer(groundTrm,
-        //                                                         _comingElementsDataSO.NormalRewardPrefab.name,
-        //                                                         _comingElementsDataSO.BossRewardPrefab.name);
+        ////RewardConfigurer rewardConfigurer = new RewardConfigurer(groundTrm,
+        ////                                                         _comingElementsDataSO.NormalRewardPrefab.name,
+        ////                                                         _comingElementsDataSO.BossRewardPrefab.name);
 
-        return new ComingElements(enemyConfigurer.SetEnemy(_previousElementsPositions));
-    }
+        //return new ComingElements(enemyConfigurer.SetEnemy(_previousElementsPositions));
+    //}
 
     protected string[] GetSpawnEnemis()
     {
