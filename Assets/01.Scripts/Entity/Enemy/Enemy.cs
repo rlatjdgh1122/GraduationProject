@@ -87,10 +87,22 @@ public class Enemy : Entity
 
         if (passiveData != null)
             passiveData = Instantiate(passiveData);
+    }
 
-        _effectController.Add("Health", VResources.Load<EffectPlayer>("PenguinEffect(Health)"));
-        _effectController.Add("AttackSpeed", VResources.Load<EffectPlayer>("PenguinEffect(AttackSpeed)"));
-        _effectController.Add("Damage", VResources.Load<EffectPlayer>("PenguinEffect(Damage)"));
+    
+
+    private EffectPlayer CreateEffect(string name)
+    {
+        //EffectPlayer target = VResources.Load<EffectPlayer>($"{path}");
+        EffectPlayer target = PoolManager.Instance.Pop(name) as EffectPlayer;
+        Debug.Log(name);
+        target.transform.SetParent(transform);
+        target.transform.localPosition = Vector3.zero;
+        target.transform.localScale = Vector3.one * 0.5f;
+        target.transform.rotation = Quaternion.identity;
+
+        return target;
+
     }
 
     public virtual void StateInit()
@@ -101,6 +113,14 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+
+        var healthEffect = CreateEffect("PenguinEffect(Health)");
+        var attackSpeed = CreateEffect("PenguinEffect(AttackSpeed)");
+        var damageEffect = CreateEffect("PenguinEffect(Damage)");
+
+        _effectController.Add("Health", healthEffect);
+        _effectController.Add("AttackSpeed", attackSpeed);
+        _effectController.Add("Damage", damageEffect);
     }
 
     protected override void Update()

@@ -241,8 +241,8 @@ namespace ArmySystem
         public Enemy FindNearestEnemy(Penguin penguin)
         {
             if (TargetEnemyArmy == null) return null;
-            if (TargetEnemyArmy._soldiers == null) return null;
-            if (TargetEnemyArmy._soldiers.Count <= 0) return null;
+            if (TargetEnemyArmy.Soldiers == null) return null;
+            if (TargetEnemyArmy.Soldiers.Count <= 0) return null;
 
             Enemy closestEnemy = null;
             int fewestTargets = int.MaxValue;

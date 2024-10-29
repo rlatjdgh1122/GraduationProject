@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(-100)]
 public class GameManager : Singleton<GameManager>
 {
     public int GetCurrentPenguinCount()
@@ -95,11 +96,13 @@ public class GameManager : Singleton<GameManager>
         {
             PenguinManager.Instance.Setting(_soldierRegisterSO);
         }
-    }
-    private void Start()
-    {
+
         MakePool();
     }
+   /* private void Start()
+    {
+        MakePool();
+    }*/
 
     public BaseBuilding GetBuildingFormName(string buildingName)
     {
