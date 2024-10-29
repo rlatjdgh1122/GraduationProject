@@ -41,6 +41,8 @@ public class WaveManager : Singleton<WaveManager>
     public bool OnBuildArcherTower = false;
     public bool OnBuildBuffTower = false;
 
+    public bool IsSpawnedUniqueEnemy { get; private set; } = false;
+
     private void Update()
     {
 
@@ -73,11 +75,12 @@ public class WaveManager : Singleton<WaveManager>
     {
         IsBattlePhase = false;
         IsArrived = false;
+        IsSpawnedUniqueEnemy = false;
 
         if (isWin)
         {
             currentWaveCount++;
-            List<Penguin> penguins = FindObjectsOfType<Penguin>().Where(p => p.enabled).ToList(); // 이거 나중에 바꿔야함
+            List<Penguin> penguins = FindObjectsOfType<Penguin>().Where(p => p.enabled).ToList();
             foreach (Penguin penguin in penguins)
             {
                 penguin.CurrentTarget = null;
@@ -155,5 +158,10 @@ public class WaveManager : Singleton<WaveManager>
         {
             GetReward();
         }
+    }
+
+    public void SetSpawnedUniqueEnemy()
+    {
+        IsSpawnedUniqueEnemy = true;
     }
 }

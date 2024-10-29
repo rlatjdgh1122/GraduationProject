@@ -12,6 +12,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
     private string[] _generalNames;
 
     private int curWave => WaveManager.Instance.CurrentWaveCount;
+    private bool isSpawnedUniqueEnemy => WaveManager.Instance.IsSpawnedUniqueEnemy;
 
     private EnemyArmySpawnPatternsSO _enemyArmySpawnPatternsSO;
 
@@ -29,7 +30,8 @@ public class EnemyConfigurer : BaseElementsConfigurer
     public List<Enemy> SetEnemy(List<Vector3> previousElementsPositions, bool isRaft)
     {
         List<Enemy> spawnedEnemies = new List<Enemy>();
-        if (!isRaft)
+
+        if (!isRaft && !isSpawnedUniqueEnemy)
         {
             if (isBossWave && _bossNames != null)
             {
@@ -40,6 +42,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
                 SetGroundElementsPosition(spawnBoss.gameObject, transform, previousElementsPositions);
 
                 spawnedEnemies.Add(spawnBoss);
+                WaveManager.Instance.SetSpawnedUniqueEnemy();
             }
 
             if (isGeneralWave && _generalNames != null) // ¿Â±∫
@@ -51,6 +54,7 @@ public class EnemyConfigurer : BaseElementsConfigurer
                 SetGroundElementsPosition(spawnGeneral.gameObject, transform, previousElementsPositions);
 
                 spawnedEnemies.Add(spawnGeneral);
+                WaveManager.Instance.SetSpawnedUniqueEnemy();
             }
         }
 
