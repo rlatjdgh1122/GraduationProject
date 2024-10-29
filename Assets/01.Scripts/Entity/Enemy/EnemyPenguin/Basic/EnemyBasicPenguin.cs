@@ -24,10 +24,10 @@ public class EnemyBasicPenguin : Enemy
 
         StateMachine.Init(EnemyStateType.Idle);
 
-        foreach (var enemy in MyArmy.Soldiers)
+/*        foreach (var enemy in MyArmy.Soldiers)
         {
             enemy.StartEffect("Health");
-        }
+        }*/
     }
 
    

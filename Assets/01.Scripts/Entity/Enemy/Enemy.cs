@@ -50,7 +50,7 @@ public class Enemy : Entity
 
     public EnemyStateMachine StateMachine { get; private set; }
 
-    private Dictionary<string, EffectPlayer> _effectController = null;
+    private Dictionary<string, EffectPlayer> _effectController = new();
     protected override void Awake()
     {
         base.Awake();
@@ -89,16 +89,14 @@ public class Enemy : Entity
             passiveData = Instantiate(passiveData);
     }
 
-    
+
 
     private EffectPlayer CreateEffect(string name)
     {
-        //EffectPlayer target = VResources.Load<EffectPlayer>($"{path}");
         EffectPlayer target = PoolManager.Instance.Pop(name) as EffectPlayer;
-        Debug.Log(name);
         target.transform.SetParent(transform);
+        target.transform.localScale = Vector3.one;
         target.transform.localPosition = Vector3.zero;
-        target.transform.localScale = Vector3.one * 0.5f;
         target.transform.rotation = Quaternion.identity;
 
         return target;
@@ -114,9 +112,9 @@ public class Enemy : Entity
     {
         base.Start();
 
-        var healthEffect = CreateEffect("PenguinEffect(Health)");
-        var attackSpeed = CreateEffect("PenguinEffect(AttackSpeed)");
-        var damageEffect = CreateEffect("PenguinEffect(Damage)");
+        var healthEffect = CreateEffect("PenguinEffectHealth");
+        var attackSpeed = CreateEffect("PenguinEffectAttackSpeed");
+        var damageEffect = CreateEffect("PenguinEffectDamage");
 
         _effectController.Add("Health", healthEffect);
         _effectController.Add("AttackSpeed", attackSpeed);
