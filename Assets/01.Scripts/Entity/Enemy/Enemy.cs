@@ -1,4 +1,5 @@
 using ArmySystem;
+using Define.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,7 @@ public class Enemy : Entity
 
     public EnemyStateMachine StateMachine { get; private set; }
 
+    private Dictionary<string, EffectPlayer> _effectController = new();
     protected override void Awake()
     {
         base.Awake();
@@ -87,6 +89,20 @@ public class Enemy : Entity
             passiveData = Instantiate(passiveData);
     }
 
+
+
+    private EffectPlayer CreateEffect(string name)
+    {
+        EffectPlayer target = PoolManager.Instance.Pop(name) as EffectPlayer;
+        target.transform.SetParent(transform);
+        target.transform.localScale = Vector3.one;
+        target.transform.localPosition = Vector3.zero;
+        target.transform.rotation = Quaternion.identity;
+
+        return target;
+
+    }
+
     public virtual void StateInit()
     {
         StateMachine.Init(EnemyStateType.Idle);
@@ -95,6 +111,14 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+
+        var healthEffect = CreateEffect("PenguinEffectHealth");
+        var attackSpeed = CreateEffect("PenguinEffectAttackSpeed");
+        var damageEffect = CreateEffect("PenguinEffectDamage");
+
+        _effectController.Add("Health", healthEffect);
+        _effectController.Add("AttackSpeed", attackSpeed);
+        _effectController.Add("Damage", damageEffect);
     }
 
     protected override void Update()
@@ -199,4 +223,22 @@ public class Enemy : Entity
     }
 
     #endregion
+
+    public void StartEffect(string effectName)
+    {
+        if (_effectController.TryGetValue(effectName, out EffectPlayer player))
+        {
+            player.ParticleStart();
+
+        } //end if
+    }
+
+    public void StopEffect(string effectName)
+    {
+        if (_effectController.TryGetValue(effectName, out EffectPlayer player))
+        {
+            player.ParticleStop();
+
+        } //end if
+    }
 }

@@ -23,6 +23,11 @@ public class EnemyBasicPenguin : Enemy
         base.Start();
 
         StateMachine.Init(EnemyStateType.Idle);
+
+/*        foreach (var enemy in MyArmy.Soldiers)
+        {
+            enemy.StartEffect("Health");
+        }*/
     }
 
    
@@ -41,6 +46,16 @@ public class EnemyBasicPenguin : Enemy
     {
         base.Init();
         StateMachine.Init(EnemyStateType.Idle);
+    }
+
+    protected override void HandleDie()
+    {
+        base.HandleDie();
+
+        foreach (var enemy in MyArmy.Soldiers)
+        {
+            enemy.StopEffect("Health");
+        }
     }
 
     public override void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();

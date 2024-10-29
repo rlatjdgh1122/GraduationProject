@@ -11,13 +11,13 @@ namespace ArmySystem
     {
         public EnemyArmy(List<Enemy> soldiers)
         {
-            _soldiers = soldiers;
+            Soldiers = soldiers;
 
             //처음 군단 설정할 때도 타겟 정해줌
             TargetSoliders = soldiers.ToList();
 
             //군단 설정
-            _soldiers.ForEach(enemy => enemy.JoinEnemyArmy(this));
+            Soldiers.ForEach(enemy => enemy.JoinEnemyArmy(this));
 
         }
 
@@ -25,19 +25,19 @@ namespace ArmySystem
         private Enemy _singleTarget = null;
 
         //실제 군단에 포함되어 있는 모든 펭귄들을 담고 있음
-        public List<Enemy> _soldiers = new();
+        public List<Enemy> Soldiers = new();
 
         //실제로 타겟을 지정할 땐 이 리스트를 사용하여 지정
         public List<Enemy> TargetSoliders = new();
 
-        public int SoliderCount => _soldiers.Count;
+        public int SoliderCount => Soldiers.Count;
         public bool IsSelected = false;
         public bool IsMouseOver = false;
 
         private Color _mouseOverColor = Color.white;
         private Color _selectColor = Color.white;
 
-        private bool IsNull => _soldiers == null;
+        private bool IsNull => Soldiers == null;
 
         public void OnChangedOutlineColorHandler(Color overColor, Color selectColor)
         {
@@ -47,7 +47,7 @@ namespace ArmySystem
 
         public void RemoveEnemy(Enemy enemy)
         {
-            _soldiers.Remove(enemy);
+            Soldiers.Remove(enemy);
             TargetSoliders.Remove(enemy);
 
             enemy.OutlineCompo.enabled = false;
@@ -84,7 +84,7 @@ namespace ArmySystem
                 TargetSoliders.Clear();
 
                 //군단 타겟지정, 값복사하기
-                TargetSoliders = _soldiers.ToList();
+                TargetSoliders = Soldiers.ToList();
 
             } //end else
 
