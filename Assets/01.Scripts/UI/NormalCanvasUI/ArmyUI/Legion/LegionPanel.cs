@@ -10,7 +10,9 @@ public class LegionPanel : PopupUI
 {
     public int LegionIdx = 0;
 
-    public string LegionName = "";
+    private string _legionName = string.Empty;
+
+    public string LegionName { get => _legionName; private set { _legionName = value; } }
 
     public int SetLegionIdx(int legionIdx) => LegionIdx = legionIdx;
     public string SetLegionName(string legionName) => LegionName = legionName;
@@ -62,11 +64,11 @@ public class LegionPanel : PopupUI
                 _soldierSlotList.ForEach(s => s.Icon.sprite = SoldierlInfo.PenguinIcon); //일단 초기화
                 _soldierSlotList.ApplyToCount(deadCount, s => s.Icon.sprite = _skullIcon);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.LogError($"LegionPanel의 OnBattleEndEventHandler에서 {ex}");
             }
-            
+
         }
     }
 

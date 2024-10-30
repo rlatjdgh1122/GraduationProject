@@ -51,6 +51,7 @@ public class SoldierSelectPanel : PopupUI
         });
 
         Army army = ArmyManager.Instance.CreateArmy();
+        currentPanel.SetLegionName(army.LegionName);
         SetActive(true);
     }
 

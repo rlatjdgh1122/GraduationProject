@@ -39,7 +39,7 @@ public class EnemyBasicPenguin : Enemy
 
     protected override void Update()
     {
-        StateMachine.CurrentState.UpdateState();
+        StateMachine!.CurrentState!.UpdateState();
     }
 
   public override void Init()

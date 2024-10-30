@@ -166,7 +166,7 @@ public abstract class TargetObject : PoolableMono
         _deadCompo?.OnResurrected();
     }
 
-    public void OnResurrected()
+    public virtual void OnResurrected()
     {
         _deadCompo?.OnResurrected();
     }
