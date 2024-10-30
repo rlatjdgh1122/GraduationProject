@@ -23,11 +23,23 @@ public class MaceEnemyPenguin : EnemyBasicPenguin
     protected override void Start()
     {
         base.Start();
+    }
+
+    public override void Init()
+    {
+        base.Init();
+
+        Debug.Log("ºÎÈ°");
 
         _curBuffItem = BuffList.Find(x => WaveManager.Instance.CurrentWaveCount == x.Wave);
 
-        foreach (var solider in MyArmy.Soldiers)
-            GiveBuff(solider);
+        CoroutineUtil.CallWaitForSeconds(0.5f,
+            () =>
+            {
+                foreach (var solider in MyArmy.Soldiers)
+                    GiveBuff(solider);
+            });
+
     }
 
     protected override void HandleDie()

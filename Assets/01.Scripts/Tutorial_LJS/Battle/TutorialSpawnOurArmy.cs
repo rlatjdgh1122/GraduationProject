@@ -39,7 +39,7 @@ public class TutorialSpawnOurArmy : MonoBehaviour
 
     private void SpawnSolider()
     {
-        ArmyManager.Instance.GetArmyByLegionName(_legionName).SynergyType = SynergySystem.SynergyType.IceCream;
+        ArmyManager.Instance.GetArmyByLegionName("1").SynergyType = SynergySystem.SynergyType.IceCream;
 
         for (int i = 1; i <= 4; i++)
         {
