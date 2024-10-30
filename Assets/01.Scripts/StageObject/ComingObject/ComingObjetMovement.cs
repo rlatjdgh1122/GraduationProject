@@ -119,8 +119,6 @@ public abstract class ComingObjetMovement : MonoBehaviour
         // 타겟 벡터 계산
         Vector3 targetVec = new Vector3(RaycastHit_ToCenterPos.x, 0f, RaycastHit_ToCenterPos.z);
 
-        Vector3 cross = Vector3.Cross(transform.up, targetVec);
-
         // X 좌표에 따라 타겟 벡터 조정 (양수인지, 음수인지, 0인지)
         targetVec.x += (xDistance - 0.001f) * Mathf.Sign(closestPointToCenter.x);
 
