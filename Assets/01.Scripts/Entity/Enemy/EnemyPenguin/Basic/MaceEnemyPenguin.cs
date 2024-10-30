@@ -26,76 +26,65 @@ public class MaceEnemyPenguin : EnemyBasicPenguin
 
         _curBuffItem = BuffList.Find(x => WaveManager.Instance.CurrentWaveCount == x.Wave);
 
-        GiveBuff(_curBuffItem);
+        foreach (var solider in MyArmy.Soldiers)
+            GiveBuff(solider);
     }
 
     protected override void HandleDie()
     {
         base.HandleDie();
 
-        TakeBuff(_curBuffItem);
+        foreach (var solider in MyArmy.Soldiers)
+            TakeBuff(solider);
     }
 
-    private void GiveBuff(BuffItem item)
+    private void GiveBuff(Enemy solider)
     {
-        switch (item.BuffName)
+        solider.OnDied += TakeBuff;
+
+        switch (_curBuffItem.BuffName)
         {
             case "Health":
-                foreach (var solider in MyArmy.Soldiers)
-                {
-                    solider.StartEffect(item.BuffName);
-                    _healCorou = StartCoroutine(Heal(item.BuffValue, solider));
-                }
+                solider.StartEffect(_curBuffItem.BuffName);
+                _healCorou = StartCoroutine(Heal(_curBuffItem.BuffValue, solider));
                 break;
 
             case "AttackSpeed":
-                foreach (var solider in MyArmy.Soldiers)
-                {
-                    solider.StartEffect(item.BuffName);
-                    _defaultAttackSpeed = solider.attackSpeed;
-                    solider.attackSpeed = item.BuffValue;
-                }
+                solider.StartEffect(_curBuffItem.BuffName);
+                _defaultAttackSpeed = solider.attackSpeed;
+                solider.attackSpeed = _curBuffItem.BuffValue;
                 break;
 
             case "Damage":
-                foreach (var solider in MyArmy.Soldiers)
-                {
-                    solider.StartEffect(item.BuffName);
-                    solider.AddStat(item.BuffValue, StatType.Damage, StatMode.Increase);
-                }
+                solider.StartEffect(_curBuffItem.BuffName);
+                solider.AddStat(_curBuffItem.BuffValue, StatType.Damage, StatMode.Increase);
                 break;
         }
     }
 
-    private void TakeBuff(BuffItem item)
+    private void TakeBuff(Enemy solider)
     {
-        switch (item.BuffName)
+        solider.OnDied -= TakeBuff;
+
+        switch (_curBuffItem.BuffName)
         {
             case "Health":
-                foreach (var solider in MyArmy.Soldiers)
-                {
-                    solider.StopEffect(item.BuffName);
-                    StopCoroutine(_healCorou);
-                }
+                solider.StopEffect(_curBuffItem.BuffName);
+                StopCoroutine(_healCorou);
                 break;
 
             case "AttackSpeed":
-                foreach (var solider in MyArmy.Soldiers)
-                {
-                    solider.StopEffect(item.BuffName);
-                    solider.attackSpeed = _defaultAttackSpeed;
-                }
+                solider.StopEffect(_curBuffItem.BuffName);
+                solider.attackSpeed = _defaultAttackSpeed;
                 break;
 
             case "Damage":
-                foreach (var solider in MyArmy.Soldiers)
-                {
-                    solider.StopEffect(item.BuffName);
-                    solider.RemoveStat(item.BuffValue, StatType.Damage, StatMode.Increase);
-                }
+                solider.StopEffect(_curBuffItem.BuffName);
+                solider.RemoveStat(_curBuffItem.BuffValue, StatType.Damage, StatMode.Increase);
                 break;
 
         }
+
     }
 
     private IEnumerator Heal(int value, Enemy target)
@@ -103,7 +92,9 @@ public class MaceEnemyPenguin : EnemyBasicPenguin
         while (true)
         {
             yield return new WaitForSeconds(HealingDelay);
-            target.HealthCompo.ApplyHeal(value);
+
+            if (target.enabled)
+                target.HealthCompo.ApplyHeal(value);
         }
 
     }
