@@ -6,7 +6,7 @@ public class EnemyMouseEventHandler : MouseEventHandler
 {
     [SerializeField] private Enemy _owner = null;
 
-    public EnemyArmy Target => _owner.MyArmy;
+    public EnemyArmy Target => _owner?.MyArmy;
 
     protected override void OnMouseEnter()
     {
