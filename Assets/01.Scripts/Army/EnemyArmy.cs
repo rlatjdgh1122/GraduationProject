@@ -31,8 +31,13 @@ namespace ArmySystem
         public List<Enemy> TargetSoliders = new();
 
         public int SoliderCount => Soldiers.Count;
-        public bool IsSelected = false;
         public bool IsMouseOver = false;
+
+        private bool _isSingleMode = false;
+        private bool _isArmySelected = false;
+        private bool _isSingleSelected = false;
+
+        private bool _isSeleted => _isArmySelected || _isSingleSelected;
 
         private Color _mouseOverColor = Color.white;
         private Color _selectColor = Color.white;
@@ -65,43 +70,50 @@ namespace ArmySystem
             _singleTarget = enemy;
         }
 
+        /// <summary>
+        /// A를 누를 때마다 실행됨
+        /// </summary>
         public void OnUpdatedSingleTargetMode(bool isSingleTargetMode)
         {
+            _isSingleMode = isSingleTargetMode;
+
             //타겟을 지정하기전 아웃라인을 다 지운 후
             DeSelectedOutline();
 
-            if (isSingleTargetMode)
-            {
-                TargetSoliders.Clear();
-
-                //단일 타겟지정
-                if (_singleTarget != null)
-                    TargetSoliders.Add(_singleTarget);
-
-            } //end if
-            else
-            {
-                TargetSoliders.Clear();
-
-                //군단 타겟지정, 값복사하기
-                TargetSoliders = Soldiers.ToList();
-
-            } //end else
-
-            if (IsSelected) //타겟이 지정된 상황이라면
+            if (_isSeleted) //타겟이 지정된 상황이라면
             {
                 OnSelectedOutline();
+
             } //end if
 
             else if (IsMouseOver) //마우스가 오버된 상황이라면
             {
                 OnMouseOverOutline();
+
             } //end else if
 
             else //아무것도 아니라면
             {
                 DeSelectedOutline();
+
             } //end else
+        }
+
+        private void SingleTarget()
+        {
+            TargetSoliders.Clear();
+
+            //단일 타겟지정
+            if (_singleTarget != null)
+                TargetSoliders.Add(_singleTarget);
+        }
+
+        private void ArmyTarget()
+        {
+            TargetSoliders.Clear();
+
+            //군단 타겟지정, 값복사하기
+            TargetSoliders = Soldiers.ToList();
         }
 
         #region MouseEvent
@@ -109,7 +121,7 @@ namespace ArmySystem
         public void OnMouseEnter()
         {
             IsMouseOver = true;
-            if (IsSelected) return;
+            if (_isSeleted) return;
 
             OnMouseOverOutline();
         }
@@ -117,8 +129,7 @@ namespace ArmySystem
         public void OnMouseExit()
         {
             IsMouseOver = false;
-
-            if (IsSelected)
+            if (_isSeleted)
             {
                 OnSelectedOutline();
             }
@@ -139,13 +150,27 @@ namespace ArmySystem
 
         public void OnSelected()
         {
-            IsSelected = true;
+            if (_isSingleMode)
+            {
+                _isArmySelected = false;
+                _isSingleSelected = true;
+
+            } //end if
+
+            else
+            {
+                _isArmySelected = true;
+                _isSingleSelected = false;
+
+            } //end if
+
             OnSelectedOutline();
         }
 
         public void DeSelected()
         {
-            IsSelected = false;
+            _isArmySelected = false;
+            _isSingleSelected = false;
 
             DeSelectedOutline();
         }
