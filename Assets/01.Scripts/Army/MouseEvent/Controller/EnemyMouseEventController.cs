@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,8 @@ public class EnemyMouseEventController : MouseEventController
     {
         if (hit.collider.transform.TryGetComponent(out EnemyMouseEventHandler compo))
         {
-            if (ArmyManager.Instance.CurArmy.TargetEnemyArmy == compo.Target) return;
+            //Debug.Log(ArmyManager.Instance.CurArmy.TargetEnemyArmy == compo.Target);
+            //if (ArmyManager.Instance.CurArmy.TargetEnemyArmy == compo.Target) return;
 
             compo.OnClick();
             OnClickToEnemyArmyEvent?.Invoke();

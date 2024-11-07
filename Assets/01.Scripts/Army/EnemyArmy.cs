@@ -1,8 +1,9 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ArmySystem
 {
@@ -14,21 +15,24 @@ namespace ArmySystem
             Soldiers = soldiers;
 
             //처음 군단 설정할 때도 타겟 정해줌
-            TargetSoliders = soldiers.ToList();
+            _targetSoldiers = soldiers.ToList();
+            _temporaryTargetSoldiers = soldiers.ToList();
 
             //군단 설정
             Soldiers.ForEach(enemy => enemy.JoinEnemyArmy(this));
-
         }
 
-        //얘가 null이라면 군단 선택이 안된 것과 같음 
         private Enemy _singleTarget = null;
+
+        //임시 타겟, 마우스가 호버될 때 이 리스트에 담김
+        private List<Enemy> _temporaryTargetSoldiers = new();
+
+        //실제로 타겟을 지정할 땐 이 리스트를 사용하여 지정
+        private List<Enemy> _targetSoldiers = new();
 
         //실제 군단에 포함되어 있는 모든 펭귄들을 담고 있음
         public List<Enemy> Soldiers = new();
-
-        //실제로 타겟을 지정할 땐 이 리스트를 사용하여 지정
-        public List<Enemy> TargetSoliders = new();
+        public IReadOnlyList<Enemy> TargetSoldiers => _targetSoldiers;
 
         public int SoliderCount => Soldiers.Count;
         public bool IsMouseOver = false;
@@ -53,7 +57,17 @@ namespace ArmySystem
         public void RemoveEnemy(Enemy enemy)
         {
             Soldiers.Remove(enemy);
-            TargetSoliders.Remove(enemy);
+            _targetSoldiers.Remove(enemy);
+            _temporaryTargetSoldiers.Remove(enemy);
+
+            //단일 타겟이었는데 죽었다면 타겟 해제
+            if (_isSingleSelected)
+            {
+                _singleTarget = null;              
+                _isArmySelected = false;
+                _isSingleSelected = false;
+
+            } //end if
 
             enemy.OutlineCompo.enabled = false;
 
@@ -62,7 +76,6 @@ namespace ArmySystem
                 EnemyArmyManager.Instance.DeleteArmy(this);
 
             } //end if
-
         }
 
         public void SetSingleTarget(Enemy enemy)
@@ -75,45 +88,40 @@ namespace ArmySystem
         /// </summary>
         public void OnUpdatedSingleTargetMode(bool isSingleTargetMode)
         {
-            _isSingleMode = isSingleTargetMode;
+            _isSingleMode = isSingleTargetMode; 
+            if (!IsMouseOver) return;
 
-            //타겟을 지정하기전 아웃라인을 다 지운 후
+            //아웃라인을 다 지운 후 임시 타겟 지정
             DeSelectedOutline();
+            SetTemporaryTarget();
 
-            if (_isSeleted) //타겟이 지정된 상황이라면
-            {
-                OnSelectedOutline();
-
-            } //end if
-
-            else if (IsMouseOver) //마우스가 오버된 상황이라면
-            {
-                OnMouseOverOutline();
-
-            } //end else if
-
-            else //아무것도 아니라면
-            {
-                DeSelectedOutline();
-
-            } //end else
+            //군단을 선택한 상태에서 단일 타겟 모드를 해제했다면 그리지않음
+            if (_isSeleted && !_isSingleMode) return;
+            OnMouseOverOutline();
         }
 
-        private void SingleTarget()
+        private void SetTemporaryTarget()
         {
-            TargetSoliders.Clear();
+            _temporaryTargetSoldiers.Clear();
 
-            //단일 타겟지정
-            if (_singleTarget != null)
-                TargetSoliders.Add(_singleTarget);
+            if (!_isSingleMode)
+                _temporaryTargetSoldiers = Soldiers.ToList();
+
+            else
+            {
+                if (_singleTarget != null)
+                    _temporaryTargetSoldiers.Add(_singleTarget);
+
+                //싱글타겟모드지만 타겟이 지정되지 않았다면 아무행동도 하지않음
+            }
+
         }
 
-        private void ArmyTarget()
+        private void SetTarget()
         {
-            TargetSoliders.Clear();
+            _targetSoldiers.Clear();
 
-            //군단 타겟지정, 값복사하기
-            TargetSoliders = Soldiers.ToList();
+            _targetSoldiers = _temporaryTargetSoldiers.ToList();
         }
 
         #region MouseEvent
@@ -123,12 +131,15 @@ namespace ArmySystem
             IsMouseOver = true;
             if (_isSeleted) return;
 
+            DeSelectedOutline();
+            SetTemporaryTarget();
             OnMouseOverOutline();
         }
 
         public void OnMouseExit()
         {
             IsMouseOver = false;
+
             if (_isSeleted)
             {
                 OnSelectedOutline();
@@ -164,6 +175,7 @@ namespace ArmySystem
 
             } //end if
 
+            SetTarget();
             OnSelectedOutline();
         }
 
@@ -177,7 +189,7 @@ namespace ArmySystem
 
         private void OnMouseOverOutline()
         {
-            foreach (Enemy enemy in TargetSoliders)
+            foreach (Enemy enemy in _temporaryTargetSoldiers)
             {
                 enemy.OutlineCompo.enabled = true;
                 if (enemy.OutlineCompo.isActiveAndEnabled)
@@ -189,7 +201,7 @@ namespace ArmySystem
 
         private void OnSelectedOutline()
         {
-            foreach (Enemy enemy in TargetSoliders)
+            foreach (Enemy enemy in _targetSoldiers)
             {
                 enemy.OutlineCompo.enabled = true;
                 if (enemy.OutlineCompo != null && enemy.OutlineCompo.isActiveAndEnabled)
@@ -201,7 +213,7 @@ namespace ArmySystem
 
         private void DeSelectedOutline()
         {
-            foreach (Enemy enemy in TargetSoliders)
+            foreach (Enemy enemy in _targetSoldiers)
             {
                 if (enemy.OutlineCompo != null && enemy.OutlineCompo.isActiveAndEnabled)
                 {
