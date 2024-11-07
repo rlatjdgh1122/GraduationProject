@@ -27,11 +27,13 @@ public class LegionPanel : PopupUI
 
     [SerializeField] private RectTransform _lockedTrm;
 
-    private Sprite _skullIcon = null;
+    [SerializeField] private LegionHealingPanel _healPanel;
+
+    public Sprite SkullIcon { get; private set; } = null;
 
     private void OnDestroy()
     {
-        SignalHub.OnBattlePhaseEndEvent -= OnBattleEndEventHandler;
+        //SignalHub.OnBattlePhaseEndEvent -= OnBattleEndEventHandler;
     }
 
     public override void Awake()
@@ -42,12 +44,12 @@ public class LegionPanel : PopupUI
                             .Where(slot => !slot.IsBonus)
                             .ToList();
 
-        SignalHub.OnBattlePhaseEndEvent += OnBattleEndEventHandler;
+        //SignalHub.OnBattlePhaseEndEvent += OnBattleEndEventHandler;
     }
 
     private void Start()
     {
-        _skullIcon = VResources.Load<Sprite>("Skull");
+        SkullIcon = VResources.Load<Sprite>("Skull");
     }
 
 
@@ -62,7 +64,7 @@ public class LegionPanel : PopupUI
             try
             {
                 _soldierSlotList.ForEach(s => s.Icon.sprite = SoldierlInfo.PenguinIcon); //일단 초기화
-                _soldierSlotList.ApplyToCount(deadCount, s => s.Icon.sprite = _skullIcon);
+                _soldierSlotList.ApplyToCount(deadCount, s => s.Icon.sprite = SkullIcon);
             }
             catch (Exception ex)
             {
@@ -77,11 +79,11 @@ public class LegionPanel : PopupUI
     public void SetSlots(EntityInfoDataSO info)
     {
         SoldierlInfo = info;
-        int i = 1;
+
         foreach (LegionSoldierSlot slot in _soldierSlotList)
         {
             //여기서 자리를 예외처리해줌 일단은 이렇게 하고 나중에 수정
-            slot.SetSlot(info, LegionName, LegionIdx, i++);
+            slot.SetSlot(info, LegionName, LegionIdx);
         }
     }
 
@@ -97,5 +99,10 @@ public class LegionPanel : PopupUI
     public override void MovePanel(float x, float y, float fadeTime, bool ease = true)
     {
         base.MovePanel(x, y, fadeTime, ease);
+    }
+
+    public void Heal<T>(T penguin, Action action) where T : Penguin
+    {
+        _healPanel.HealingPenguin(penguin, action);
     }
 }

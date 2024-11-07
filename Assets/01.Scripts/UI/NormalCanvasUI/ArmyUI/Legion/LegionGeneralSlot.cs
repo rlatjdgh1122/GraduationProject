@@ -12,25 +12,31 @@ using UnityEngine.UI;
 
 public class LegionGeneralSlot : MonoBehaviour
 {
+    [SerializeField] private LegionGeneralSelectPanel _generalPanel;
+
     private Image _icon;
     public List<ParticleImage> _particleImg;
     public TextMeshProUGUI _text;
     public GameObject _panel;
     public Button button;
+    private Button _button;
 
     private GeneralInfoDataSO _infoData;
     private Sprite _skullIcon = null;
 
     private string _legionName = string.Empty;
+    private LegionPanel _parentPanel;
 
     private void OnEnable()
     {
+        _generalPanel.SetGeneralEvent += SetGeneral;
         SignalHub.OnSynergyEnableEvent += StartParticles;
         SignalHub.OnBattlePhaseEndEvent += OnBattleEndEventHandler;
     }
 
     private void OnDisable()
     {
+        _generalPanel.SetGeneralEvent -= SetGeneral;
         SignalHub.OnSynergyEnableEvent -= StartParticles;
         SignalHub.OnBattlePhaseEndEvent -= OnBattleEndEventHandler;
     }
@@ -38,12 +44,30 @@ public class LegionGeneralSlot : MonoBehaviour
     {
         _icon = transform.Find("Icon").GetComponent<Image>();
         _icon.gameObject.SetActive(false);
+
         button = GetComponent<Button>();
+        _parentPanel = ExtensionMethod.FindParent<LegionPanel>(transform.gameObject);
+
+        _button = transform.Find("Button").GetComponent<Button>();
+        _button.onClick.AddListener(UpdateSlot);
+        _button.gameObject.SetActive(false);
     }
 
     private void Start()
     {
         _skullIcon = VResources.Load<Sprite>("Skull");
+    }
+
+    private void SetGeneral()
+    {
+        _button.gameObject.SetActive(true);
+    }
+
+    private void UpdateSlot()
+    {
+        if (_generalPanel.GeneralPenguin != null && !_generalPanel.GeneralPenguin.HealthCompo.IsDead) return;
+
+        _parentPanel.Heal(_generalPanel.GeneralPenguin, OnBattleEndEventHandler);
     }
 
     private void OnBattleEndEventHandler()

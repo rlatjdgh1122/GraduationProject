@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
     private int _generalSlotIdx = 0;
 
     private GeneralInfoDataSO _prevGeneralInfo = null;
+
+    public General GeneralPenguin { get; private set; } = null;
+    public Action SetGeneralEvent = null;
 
     public override void Awake()
     {
@@ -30,6 +34,8 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
         _generalSlot.button.interactable = false;
         GeneralSelectSlotList.SetSelectedSlots(info);
         HidePanel();
+
+        SetGeneralEvent?.Invoke();
     }
 
     private void JoinToArmy()
@@ -46,6 +52,7 @@ public class LegionGeneralSelectPanel : ArmyComponentUI
 
         General general = ArmyManager.Instance.SpawnPenguin(dummy.CloneInfo, _generalSlotIdx) as General;
         PenguinManager.Instance.DummyToPenguinMapping(dummy, general);
+        GeneralPenguin = general;
 
         ArmyManager.Instance.JoinArmyToGeneral(_legionPanel.LegionName, _legionPanel.LegionIdx, general);
     }

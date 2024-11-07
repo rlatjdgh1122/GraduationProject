@@ -7,7 +7,6 @@ public class LegionSlotPurchaseButton : MonoBehaviour
 {
     public PlusSlotPanel _slotPanel;
 
-    [SerializeField] private int idx = 0;
     private LegionSoldierSlot _slot;
     private Button _purchaseButton;
     private LegionPanel _legionPanel;
@@ -39,7 +38,7 @@ public class LegionSlotPurchaseButton : MonoBehaviour
 
             _slot.gameObject.SetActive(true);
             _legionPanel.SoldierSlotList.Add(_slot);
-            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName,_legionPanel.LegionIdx, idx);
+            _slot.SetSlot(_legionPanel.SoldierlInfo, _legionPanel.LegionName,_legionPanel.LegionIdx);
         });
     }
 }
