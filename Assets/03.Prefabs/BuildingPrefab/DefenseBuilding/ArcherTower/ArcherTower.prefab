@@ -12618,6 +12618,7 @@ GameObject:
   - component: {fileID: 5651710013477756690}
   - component: {fileID: 810055416098890755}
   - component: {fileID: 179374681405904512}
+  - component: {fileID: 3658505650476345697}
   m_Layer: 19
   m_Name: ArcherTower
   m_TagString: Untagged
@@ -12849,6 +12850,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonBrokenBuilding: {fileID: 5976669950651008692}
   brokenBuilding: {fileID: 7539066681637166942}
+--- !u!114 &3658505650476345697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540469605114991844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 0}
+  outlineWidth: 0
+  precomputeOutline: 0
+  IncludingChildren: 1
+  bakeKeys: []
+  bakeValues: []
+  renderers: []
+  ExceptRenderer: []
 --- !u!1 &6588380504112972365
 GameObject:
   m_ObjectHideFlags: 0
@@ -13318,9 +13340,33 @@ MonoBehaviour:
   moveSpeed: 4
   attackSpeed: 1
   passiveData: {fileID: 0}
+  _penguinArmor: []
   ArmyTriggerCalled: 0
   IgnoreToArmyCalled: 0
   SuccessfulToArmyCalled: 0
+  IsMustMoving: 0
+  owner:
+    SynergyType: 0
+    LegionIdx: 0
+    IsArmyReady: 1
+    IsHealing: 0
+    MovefocusMode: 0
+    Soldiers: []
+    AlivePenguins: []
+    DeadPenguins: []
+    General: {fileID: 0}
+    TargetEnemyArmy:
+      Soldiers: []
+      TargetSoliders: []
+      IsSelected: 0
+      IsMouseOver: 0
+    Ability:
+      abilityName: 
+      statType: 0
+      statMode: 0
+      value: 0
+    SkillController: {fileID: 0}
+    UltimateController: {fileID: 0}
   TargetLock: 0
 --- !u!114 &7766886982098123535
 MonoBehaviour:

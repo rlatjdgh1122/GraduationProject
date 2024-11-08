@@ -1526,7 +1526,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3880966893058514064}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1640213183339403766}
+        m_TargetAssemblyTypeName: LegionHealingPanel, Assembly-CSharp
+        m_MethodName: Heal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &719002703852303477
 GameObject:
   m_ObjectHideFlags: 0
@@ -13680,7 +13692,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 352439717229954905}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1640213183339403766}
+        m_TargetAssemblyTypeName: LegionHealingPanel, Assembly-CSharp
+        m_MethodName: Cancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6525212094984504816
 GameObject:
   m_ObjectHideFlags: 0
@@ -14882,7 +14906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7874762916871756980}
-  - component: {fileID: 8167772250610991721}
+  - component: {fileID: 1640213183339403766}
   - component: {fileID: 8695481963952347035}
   - component: {fileID: 3735774351545240482}
   - component: {fileID: 5483402759099821334}
@@ -14914,7 +14938,7 @@ RectTransform:
   m_AnchoredPosition: {x: -7.369995, y: -135.583}
   m_SizeDelta: {x: 1478.36, y: 841.992}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8167772250610991721
+--- !u!114 &1640213183339403766
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14923,10 +14947,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7458828868804796564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dddf82d59cc6294a8335cfa1454d5f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d5890a78aaed8446babd4543ea32495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelFadeTime: 0
+  _panelFadeTime: 0.2
   _panelDelayTime: 0
   _transferable: 1000000010000000100000001000000010000000
   _soundName: 16
@@ -14934,7 +14958,9 @@ MonoBehaviour:
   infoPanel: {fileID: 0}
   generalSlotPanel: {fileID: 0}
   factory: {fileID: 0}
-  LegionName: 
+  _generalHealingCost: 2000
+  _healingCost: 300
+  _text: {fileID: 597014593315944030}
 --- !u!225 &8695481963952347035
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -19547,6 +19573,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
+      propertyPath: _healPanel
+      value: 
+      objectReference: {fileID: 1640213183339403766}
+    - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
       propertyPath: _soundName
       value: 16
       objectReference: {fileID: 0}
@@ -20495,6 +20526,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
+      propertyPath: _healPanel
+      value: 
+      objectReference: {fileID: 1640213183339403766}
+    - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
       propertyPath: _soundName
       value: 16
       objectReference: {fileID: 0}
@@ -21186,6 +21222,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
+      propertyPath: _healPanel
+      value: 
+      objectReference: {fileID: 1640213183339403766}
+    - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
       propertyPath: _soundName
       value: 16
       objectReference: {fileID: 0}
@@ -21820,6 +21861,11 @@ PrefabInstance:
       propertyPath: LegionName
       value: "1\uAD70\uB2E8"
       objectReference: {fileID: 0}
+    - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: _healPanel
+      value: 
+      objectReference: {fileID: 1640213183339403766}
     - target: {fileID: 7371418065076591101, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: m_Name
@@ -22657,6 +22703,11 @@ PrefabInstance:
       propertyPath: LegionName
       value: "3\uAD70\uB2E8 "
       objectReference: {fileID: 0}
+    - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
+        type: 3}
+      propertyPath: _healPanel
+      value: 
+      objectReference: {fileID: 1640213183339403766}
     - target: {fileID: 7263099487407230357, guid: 19fd86e57b02da14197f6c01b612d2e7,
         type: 3}
       propertyPath: _soundName

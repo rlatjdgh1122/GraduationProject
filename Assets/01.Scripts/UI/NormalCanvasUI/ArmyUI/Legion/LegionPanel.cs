@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class LegionPanel : PopupUI
 {
+    public int Cost = 0;
     public int LegionIdx = 0;
 
     private string _legionName = string.Empty;

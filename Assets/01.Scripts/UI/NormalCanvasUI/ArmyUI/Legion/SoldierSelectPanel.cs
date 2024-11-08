@@ -12,7 +12,6 @@ public class SoldierSelectPanel : PopupUI
     private SoldierSelectSlot[] _slots;
 
     [HideInInspector] public LegionPanel currentPanel;
-    public float currentCost = 500f;
 
     [SerializeField]
     private TextMeshProUGUI[] _costTexts;
@@ -22,11 +21,17 @@ public class SoldierSelectPanel : PopupUI
         base.Awake();
 
         _slots = _soliderPanel.GetComponentsInChildren<SoldierSelectSlot>();
+
+        foreach(var text in _costTexts)
+        {
+            var legion = ExtensionMethod.FindParent<LegionPanel>(text.gameObject);
+            text.text = legion.Cost.ToString();
+        }
     }
 
     public void Setting(LegionPanel legion)
     {
-        CostManager.Instance.SubtractFromCurrentCost(currentCost, () =>
+        CostManager.Instance.SubtractFromCurrentCost(legion.Cost, () =>
         {
             currentPanel = legion;
 
@@ -40,14 +45,6 @@ public class SoldierSelectPanel : PopupUI
 
             ShowPanel();
             _buttonExit.SetActive(false);
-
-
-            foreach (var txt in _costTexts)
-            {
-                txt.text = $"{currentCost + 100}";
-            }
-            currentCost += 100;
-
         });
 
         Army army = ArmyManager.Instance.CreateArmy();

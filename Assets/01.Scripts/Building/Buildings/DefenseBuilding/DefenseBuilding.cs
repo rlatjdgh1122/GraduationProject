@@ -174,8 +174,6 @@ public abstract class DefenseBuilding : BaseBuilding
     {
         base.OnDisable();
 
-        DisplayRange();
-        _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
+        ResetRemovedGroundsOutline();
     }
-
 }
