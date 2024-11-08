@@ -17,12 +17,18 @@ public class GeneralRandomPanel : ArmyComponentUI
     [SerializeField] private GeneralRandomPanelEffect _effect;
     [SerializeField] private GeneralRandomResultPanel _resultPanel;
 
+    [Header("Setting")]
+    [SerializeField] private int _initialPrice;
+    [SerializeField] private int _priceIncreaseValue;
+
     public void StartGamble()
     {
-        CostManager.Instance.SubtractFromCurrentCost(1500, () =>
+        CostManager.Instance.SubtractFromCurrentCost(_initialPrice, () =>
         {
             ShowPanel();
             MoveSlot();
+
+            _initialPrice += _priceIncreaseValue;
         });
     }
 
