@@ -170,4 +170,12 @@ public abstract class DefenseBuilding : BaseBuilding
         }
     }
 
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
+        DisplayRange();
+        _health.OnUIUpdate?.Invoke(_health.currentHealth, _health.maxHealth);
+    }
+
 }

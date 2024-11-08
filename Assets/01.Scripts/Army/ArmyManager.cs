@@ -211,7 +211,6 @@ public class ArmyManager : Singleton<ArmyManager>
     /// 현재 선택된 Army를 리던
     /// </summary>
     /// <returns> Army를 리던</returns>
-
     public Army GetArmy(int legion)
     {
         return _armies[legion - 1];

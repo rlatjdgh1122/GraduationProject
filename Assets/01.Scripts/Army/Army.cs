@@ -175,7 +175,8 @@ namespace ArmySystem
                     UltimateController = General.Ultimate.SkillController;
 
                     //시너지 다시 활성화해줌
-                    SignalHub.OnSynergyEnableEvent?.Invoke(SynergyType);
+                    if (CheckSynergy(General))
+                        SignalHub.OnSynergyEnableEvent?.Invoke(SynergyType);
 
                 } //end if
 
