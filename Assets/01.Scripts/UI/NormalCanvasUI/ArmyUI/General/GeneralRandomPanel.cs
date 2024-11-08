@@ -2,6 +2,7 @@ using AssetKits.ParticleImage;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GeneralRandomPanel : ArmyComponentUI
@@ -20,6 +21,7 @@ public class GeneralRandomPanel : ArmyComponentUI
     [Header("Setting")]
     [SerializeField] private int _initialPrice;
     [SerializeField] private int _priceIncreaseValue;
+    [SerializeField] private TextMeshProUGUI _priceText;
 
     public void StartGamble()
     {
@@ -29,6 +31,7 @@ public class GeneralRandomPanel : ArmyComponentUI
             MoveSlot();
 
             _initialPrice += _priceIncreaseValue;
+            _priceText.text = $"{_initialPrice}";
         });
     }
 
