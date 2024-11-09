@@ -28,9 +28,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""3a550ec9-9242-4d73-9dab-b9bbcfb66db8"",
             ""actions"": [
                 {
-                    ""name"": ""MouseRightClick"",
+                    ""name"": ""RightClick"",
                     ""type"": ""Button"",
                     ""id"": ""26d0c08c-87bb-4972-8ded-e16f0ef7efe2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""b852edcf-42d5-4d62-9192-9c4729bcc993"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -63,7 +72,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardAndMouse"",
-                    ""action"": ""MouseRightClick"",
+                    ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -86,6 +95,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardAndMouse"",
                     ""action"": ""Ultimate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1aaf4dab-6908-446a-9c34-648ca8bc7aec"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""LeftClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -201,7 +221,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 }");
         // Penguin
         m_Penguin = asset.FindActionMap("Penguin", throwIfNotFound: true);
-        m_Penguin_MouseRightClick = m_Penguin.FindAction("MouseRightClick", throwIfNotFound: true);
+        m_Penguin_RightClick = m_Penguin.FindAction("RightClick", throwIfNotFound: true);
+        m_Penguin_LeftClick = m_Penguin.FindAction("LeftClick", throwIfNotFound: true);
         m_Penguin_Skill = m_Penguin.FindAction("Skill", throwIfNotFound: true);
         m_Penguin_Ultimate = m_Penguin.FindAction("Ultimate", throwIfNotFound: true);
         // Building
@@ -271,14 +292,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Penguin
     private readonly InputActionMap m_Penguin;
     private List<IPenguinActions> m_PenguinActionsCallbackInterfaces = new List<IPenguinActions>();
-    private readonly InputAction m_Penguin_MouseRightClick;
+    private readonly InputAction m_Penguin_RightClick;
+    private readonly InputAction m_Penguin_LeftClick;
     private readonly InputAction m_Penguin_Skill;
     private readonly InputAction m_Penguin_Ultimate;
     public struct PenguinActions
     {
         private @Controls m_Wrapper;
         public PenguinActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MouseRightClick => m_Wrapper.m_Penguin_MouseRightClick;
+        public InputAction @RightClick => m_Wrapper.m_Penguin_RightClick;
+        public InputAction @LeftClick => m_Wrapper.m_Penguin_LeftClick;
         public InputAction @Skill => m_Wrapper.m_Penguin_Skill;
         public InputAction @Ultimate => m_Wrapper.m_Penguin_Ultimate;
         public InputActionMap Get() { return m_Wrapper.m_Penguin; }
@@ -290,9 +313,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PenguinActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PenguinActionsCallbackInterfaces.Add(instance);
-            @MouseRightClick.started += instance.OnMouseRightClick;
-            @MouseRightClick.performed += instance.OnMouseRightClick;
-            @MouseRightClick.canceled += instance.OnMouseRightClick;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
+            @LeftClick.started += instance.OnLeftClick;
+            @LeftClick.performed += instance.OnLeftClick;
+            @LeftClick.canceled += instance.OnLeftClick;
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
@@ -303,9 +329,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IPenguinActions instance)
         {
-            @MouseRightClick.started -= instance.OnMouseRightClick;
-            @MouseRightClick.performed -= instance.OnMouseRightClick;
-            @MouseRightClick.canceled -= instance.OnMouseRightClick;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
+            @LeftClick.started -= instance.OnLeftClick;
+            @LeftClick.performed -= instance.OnLeftClick;
+            @LeftClick.canceled -= instance.OnLeftClick;
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
@@ -410,7 +439,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface IPenguinActions
     {
-        void OnMouseRightClick(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
         void OnSkill(InputAction.CallbackContext context);
         void OnUltimate(InputAction.CallbackContext context);
     }

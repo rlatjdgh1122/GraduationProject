@@ -91,15 +91,16 @@ namespace ArmySystem
             if (!Soldiers.Contains(penguin))
             {
                 Soldiers.Add(penguin);
-                Debug.Log(Soldiers.Count);
                 AlivePenguins.Add(penguin);
 
                 Info.AddPenguinCount();
             }
             else
             {
-                Debug.Log($"해당 펭귄은 이미 존재합니다. {penguin.GetInstanceID()}");
+                DeadPenguins.Remove(penguin);
+                AlivePenguins.Add(penguin);
 
+                Info.AddPenguinCount();
             }
         }
 

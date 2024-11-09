@@ -67,7 +67,7 @@ public class LegionGeneralSlot : MonoBehaviour
     {
         if (_generalPanel.GeneralPenguin != null && !_generalPanel.GeneralPenguin.HealthCompo.IsDead) return;
 
-        _parentPanel.Heal(_generalPanel.GeneralPenguin, OnBattleEndEventHandler);
+        _parentPanel.Heal(_generalPanel.GeneralPenguin, _infoData, OnBattleEndEventHandler);
     }
 
     private void OnBattleEndEventHandler()

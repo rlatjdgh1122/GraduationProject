@@ -22,7 +22,6 @@ public class EnemyMouseEventHandler : MouseEventHandler
 
     public override void OnClick()
     {
-        Debug.Log(Target);
         Target.OnClick();
         ArmyManager.Instance.SetTargetEnemyArmy(Target);
     }

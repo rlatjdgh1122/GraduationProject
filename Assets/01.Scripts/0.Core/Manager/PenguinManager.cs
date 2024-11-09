@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PenguinManager
@@ -63,8 +64,8 @@ public class PenguinManager
 
     public void DummyToPenguinMapping(DummyPenguin d, Penguin p)
     {
-        penguinToDummyDic[p] = d;
-        dummyToPenguinDic[d] = p;
+        penguinToDummyDic.Add(p, d);
+        dummyToPenguinDic.Add(d, p);
 
         NotBelongDummyPenguinList.Remove(d);
         BelongDummyPenguinList.Add(d);
@@ -153,16 +154,16 @@ public class PenguinManager
             IsHaveOwner = true, //¿œ¥‹¿∫ ¿Ã∑∏∞‘
             dummyPenguin = obj
         });
+
         DummyPenguinList.Add(obj);
-        NotBelongDummyPenguinList.Add(obj);
-        //BelongDummyPenguinList.Add(obj); //¿œ¥‹¿∫ ¿Ã∑∏∞‘«ÿº≠ √≥¿Ωø° ªÁ∏È æÓ
-
-    }
-
-    //ø©±‚º≠ ±∫¥‹ ¿Ã∏ßø° µ˚∂Û ø¿≥  º≥¡§«ÿ¡÷±‚
-    public void SetOwnerByLegionName(string legionName, bool isHaveOwner)
-    {
-
+        if (obj is GeneralDummyPengiun)
+        {
+            NotBelongDummyPenguinList.Add(obj);
+        }
+        else
+        {
+            BelongDummyPenguinList.Add(obj);
+        }
     }
 
     public void AddGeneralStat(PenguinTypeEnum type, GeneralStat stat)
@@ -176,11 +177,6 @@ public class PenguinManager
         SoldierPenguinList.Add(obj);
     }
 
-    public void RemoveSoliderPenguin(Penguin obj)
-    {
-        SoldierPenguinList.Remove(obj);
-    }
-
     /// <summary>
     /// ≈√‚«“ ∂ß ªÁøÎ
     /// </summary>
@@ -192,13 +188,7 @@ public class PenguinManager
         var penguin = dummyToPenguinDic[obj];
 
         SoldierPenguinList.Remove(penguin);
-        //penguinToDummyDic.Remove(penguin);
         BelongDummyPenguinList.Remove(obj);
-        //dummyToPenguinDic.Remove(obj);
-
-        //RemoveItemListDummy(obj);
-
-        //UpdateOwnershipDataList();
 
         PoolManager.Instance.Push(obj);
     }
@@ -214,29 +204,23 @@ public class PenguinManager
         var dummy = penguinToDummyDic[obj];
 
         DummyPenguinList.Remove(dummy);
-        //penguinToDummyDic.Remove(obj);
         BelongDummyPenguinList.Remove(dummy);
-        //dummyToPenguinDic.Remove(dummy);
 
-        //RemoveItemListDummy(dummy);
-
-        //UpdateOwnershipDataList();
-
-        PoolManager.Instance.Push(dummy);
+        dummy.gameObject.SetActive(false);
+        //PoolManager.Instance.Push(dummy);
     }
 
-    private void RemoveItemListDummy(DummyPenguin obj)
+    public void ResurrectedSoldierPenguin(Penguin obj)
     {
-        var ItemList = _itemDummyPenguinList.ToList();
+        SoldierPenguinList.Add(obj);
 
-        foreach (var item in ItemList)
-        {
-            if (item.dummyPenguin.Equals(obj))
-            {
-                _itemDummyPenguinList.Remove(item);
-                break;
-            }
-        }
+        var dummy = penguinToDummyDic[obj];
+
+        DummyPenguinList.Add(dummy);
+        BelongDummyPenguinList.Add(dummy);
+
+        dummy.gameObject.SetActive(true);
+        dummy.StateInit();
     }
 
     public void AddInfoDataMapping(EntityInfoDataSO data, Penguin penguin)
@@ -300,6 +284,7 @@ public class PenguinManager
 
         return resultDummy;
     }
+
     public DummyPenguin GetDummyByPenguin(Penguin penguin)
     {
         DummyPenguin resultDummy = null;
@@ -309,16 +294,6 @@ public class PenguinManager
         }
 
         return resultDummy;
-    }
-
-    public DummyPenguin FindDummyPenguin<T>(T info) where T : EntityInfoDataSO
-    {
-        return DummyFactoryCompo.FindDummyPenguin(info);
-    }
-
-    public T SpawnDummyPenguinHandler<T>(T dummyPenguin) where T : DummyPenguin
-    {
-        return DummyFactoryCompo.SpawnDummyPenguinHandler(dummyPenguin);
     }
 
     public DummyPenguin SpawnDummyPenguinByInfoData<T>(T info) where T : EntityInfoDataSO
@@ -410,152 +385,6 @@ public class PenguinManager
         }
 
         return result;
-    }
-    #endregion
-
-    #region ApplyData
-
-    //¿Ã∞≈ æ»æ∏
-    public void ApplySaveData(List<EntityInfoDataSO> addDataList, List<EntityInfoDataSO> removeDataList)
-    {
-        foreach (var data in removeDataList)
-        {
-            ReleaseDummyPenguin(data);
-        }
-        foreach (var data in addDataList)
-        {
-            ApplyDummyPenguin(data);
-        }
-
-    }
-
-    //∆Î±œ∞˙ ¥ıπÃ∆Î±œ¿ª ∏ «Œ
-    private void ApplyDummyPenguin(EntityInfoDataSO data)
-    {
-        var dataType = data.PenguinType;
-        var jobType = data.JobType;
-        var legionName = data.LegionName;
-
-        var penguin = GetPenguinByInfoData(data);
-
-        //¡ˆ±›±Ó¡ˆ ª˝º∫µ» ¥ıπÃ∆Î±œµÈø°º≠
-        //ø¿≥ ∏¶ ∞°¡ˆ∞Ì ¿÷¡ˆ æ ¿∫ æ÷µÈ¿ª ∞Ò∂Û ø¿≥ ∏¶ ≥÷æÓ¡‹
-        foreach (var info in _itemDummyPenguinList)
-        {
-            var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
-            var dummyPenguin = info.dummyPenguin;
-
-            //ø¿≥ ∏¶ ∞°¡ˆ∞Ì ¿÷¡ˆ æ ¥Ÿ∏È
-            if (!info.IsHaveOwner)
-            {
-                //∏∏æ‡ ¿Â±∫¿Ã∂Û∏È
-                if (dummyPenguin is GeneralDummyPengiun)
-                {
-                    //¥ıπÃ ∆Î±œø° Ω∫≈»¿∏∑Œ πŸ≤ﬁ
-                    penguin.Stat = (dummyPenguin as GeneralDummyPengiun).Stat;
-                }
-                //∆Î±œ ≈∏¿‘¿Ã ∞∞¥Ÿ∏È
-                if (dataType == dummyPenguinType)
-                {
-                    info.IsHaveOwner = true;
-
-                    //∆Î±œ¿Ã∂˚ ¥ıπÃ∆Î±œ¿Ã∂˚ ø¨∞·
-                    penguinToDummyDic.Add(penguin, dummyPenguin);
-                    dummyToPenguinDic.Add(dummyPenguin, penguin);
-
-                    JoinToArmy(legionName, penguin, jobType);
-                    break;
-                }
-            }
-
-        }
-        UpdateOwnershipDataList();
-    }
-
-    private void JoinToArmy(string legionName, Penguin penguin, PenguinJobType jobType)
-    {
-        if (jobType == PenguinJobType.Solider)
-        {
-            //ArmyManager.Instance.JoinArmyToSoldier(legionName, penguin);
-        }
-
-        else if (jobType == PenguinJobType.General)
-        {
-            //ArmyManager.Instance.JoinArmyToGeneral(legionName, penguin as General);
-        }
-    }
-
-    //∆Î±œ∞˙ ¥ıπÃ∆Î±œ¿ª µÒº≈≥ ∏Æø°º≠ ¡¶ø‹
-    private void ReleaseDummyPenguin(EntityInfoDataSO data)
-    {
-        var dataType = data.PenguinType;
-        var penguin = GetPenguinByInfoData(data);
-
-
-        foreach (var info in _itemDummyPenguinList)
-        {
-            if (info.IsHaveOwner)
-            {
-                var dummy = GetDummyByInfoData(data);
-                if (info.dummyPenguin.Equals(dummy))
-                {
-                    var dummyPenguin = info.dummyPenguin;
-                    info.IsHaveOwner = false;
-                    //∆Î±œ¿Ã∂˚ ¥ıπÃ∆Î±œ¿Ã∂˚ ø¨∞·«ÿ¡¶
-                    penguinToDummyDic.Remove(penguin);
-                    dummyToPenguinDic.Remove(dummyPenguin);
-
-                    break;
-                }
-            }
-        }
-
-        UpdateOwnershipDataList();
-
-        //¡ˆ±›±Ó¡ˆ ª˝º∫µ» ¥ıπÃ∆Î±œµÈø°º≠
-        //ø¿≥ ∏¶ ∞°¡ˆ∞Ì ¿÷¥¬ ¥ıπÃ∆Î±œµÈ¿ª ∞Ò∂Û ø¿≥ ∏¶ ¡ˆøˆ¡÷∞Ì
-        //µÒº≈≥ ∏Æø°º≠ ¡ˆøˆ¡‹
-        /*foreach (var info in _itemDummyPenguinList)
-        {
-            var dummyPenguinType = info.dummyPenguin.NotCloneInfo.PenguinType;
-            var dummyPenguin = info.dummyPenguin;
-
-            //ø¿≥ ∏¶ ∞°¡ˆ∞Ì ¿÷¥Ÿ∏È
-            if (info.IsHaveOwner)
-            {
-                //∆Î±œ ≈∏¿‘¿Ã ∞∞¥Ÿ∏È
-                if (dataType == dummyPenguinType)
-                {
-                    info.IsHaveOwner = false;
-
-                    //∆Î±œ¿Ã∂˚ ¥ıπÃ∆Î±œ¿Ã∂˚ ø¨∞·
-                    penguinToDummyDic.Remove(penguin);
-                    dummyToPenguinDic.Remove(dummyPenguin);
-
-                    break;
-                }
-            }
-
-        }*/
-    }
-
-    private void UpdateOwnershipDataList()
-    {
-        if (BelongDummyPenguinList.Count > 0) BelongDummyPenguinList.Clear();
-        if (NotBelongDummyPenguinList.Count > 0) NotBelongDummyPenguinList.Clear();
-
-
-        foreach (var item in _itemDummyPenguinList)
-        {
-            if (item.IsHaveOwner)
-            {
-                BelongDummyPenguinList.Add(item.dummyPenguin);
-            }
-            else
-            {
-                NotBelongDummyPenguinList.Add(item.dummyPenguin);
-            }
-        }
     }
     #endregion
 

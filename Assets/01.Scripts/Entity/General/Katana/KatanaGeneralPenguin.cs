@@ -31,7 +31,7 @@ public class KatanaGeneralPenguin : General
 
     public override void OnPassiveAttackEvent()
     {
-        Debug.Log("잘되네요");
+       
     }
 
     public override void OnSkillEvent()

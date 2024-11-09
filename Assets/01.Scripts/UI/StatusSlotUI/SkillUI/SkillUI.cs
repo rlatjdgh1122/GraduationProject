@@ -15,6 +15,11 @@ public abstract class SkillUI : MonoBehaviour
 
     protected virtual void Awake()
     {
+        
+    }
+
+    private void OnEnable()
+    {
         bliendGauge = transform.Find("BliendGauge").GetComponent<Image>();
     }
 
@@ -30,8 +35,17 @@ public abstract class SkillUI : MonoBehaviour
 
     public virtual void OnSkillUsed()
     {
-        bliendGauge.fillAmount = 1f;
-        CurrentFillAmount = 1f;
+        try
+        {
+            bliendGauge.fillAmount = 1f;
+            CurrentFillAmount = 1f;
+        }
+        catch(MissingReferenceException ex)
+        {
+            Debug.Log(gameObject.name + " " + gameObject.GetInstanceID());
+        }
+       
+       
     }
 
     public virtual void OnSkillActionEnter() { }

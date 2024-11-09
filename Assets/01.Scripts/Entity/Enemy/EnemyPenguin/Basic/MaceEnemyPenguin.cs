@@ -29,8 +29,6 @@ public class MaceEnemyPenguin : EnemyBasicPenguin
     {
         base.Init();
 
-        Debug.Log("ºÎÈ°");
-
         _curBuffItem = BuffList.Find(x => WaveManager.Instance.CurrentWaveCount == x.Wave);
 
         CoroutineUtil.CallWaitForSeconds(0.5f,

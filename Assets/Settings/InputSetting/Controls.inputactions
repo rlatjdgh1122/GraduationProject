@@ -6,9 +6,18 @@
             "id": "3a550ec9-9242-4d73-9dab-b9bbcfb66db8",
             "actions": [
                 {
-                    "name": "MouseRightClick",
+                    "name": "RightClick",
                     "type": "Button",
                     "id": "26d0c08c-87bb-4972-8ded-e16f0ef7efe2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftClick",
+                    "type": "Button",
+                    "id": "b852edcf-42d5-4d62-9192-9c4729bcc993",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -41,7 +50,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardAndMouse",
-                    "action": "MouseRightClick",
+                    "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": "KeyboardAndMouse",
                     "action": "Ultimate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1aaf4dab-6908-446a-9c34-648ca8bc7aec",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAndMouse",
+                    "action": "LeftClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

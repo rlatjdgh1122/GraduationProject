@@ -33,14 +33,14 @@ public class ArmyInput : MonoBehaviour
 
     private void SubscribeToBattlePhaseEvents() // 전투시작하면 ArmyInput 구독
     {
-        _inputReader.RightClickEvent += OnRightClickEventHandler;
-        _inputReader.OnLeftClickEvent += OnLeftClickEventHandler;
+        _inputReader.OnBattleRightClickEvent += OnRightClickEventHandler;
+        _inputReader.OnBattleLeftClickEvent += OnLeftClickEventHandler;
     }
 
     private void UnSubscribeToBattlePhaseEvents() // 전투끝나면 ArmyInput 구독 해제
     {
-        _inputReader.RightClickEvent -= OnRightClickEventHandler;
-        _inputReader.OnLeftClickEvent -= OnLeftClickEventHandler;
+        _inputReader.OnBattleRightClickEvent -= OnRightClickEventHandler;
+        _inputReader.OnBattleLeftClickEvent -= OnLeftClickEventHandler;
     }
 
     private void Awake()

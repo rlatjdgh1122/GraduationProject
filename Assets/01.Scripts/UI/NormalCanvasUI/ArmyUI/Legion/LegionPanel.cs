@@ -102,8 +102,8 @@ public class LegionPanel : PopupUI
         base.MovePanel(x, y, fadeTime, ease);
     }
 
-    public void Heal<T>(T penguin, Action action) where T : Penguin
+    public void Heal<T>(T penguin, EntityInfoDataSO infoData, Action action) where T : Penguin
     {
-        _healPanel.HealingPenguin(penguin, action);
+        _healPanel.HealingPenguin(penguin, infoData,action);
     }
 }

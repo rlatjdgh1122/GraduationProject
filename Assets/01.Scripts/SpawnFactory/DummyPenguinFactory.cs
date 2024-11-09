@@ -37,7 +37,7 @@ public class DummyPenguinFactory : EntityFactory<DummyPenguin>
     /// <summary>
     /// ´õ¹Ì Æë±Ï »ý¼º
     /// </summary>
-    /// <param name="dummyPenguin"> ´õ¹Ì Æë±Ï</param>   
+    /// <param name="dummyPenguin"> ´õ¹Ì Æë±Ï</param>
     public T SpawnDummyPenguinHandler<T>(T dummyPenguin) where T : DummyPenguin
     {
         if (spawnXIdx >= 5)

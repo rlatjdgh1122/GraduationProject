@@ -31,17 +31,6 @@ public class ShieldGeneralPenguin : General
     protected override void HandleHit()
     {
         base.HandleHit();
-
-        Debug.Log("ÃÄ¸ÂÀ½");
-
-        //var maxHp = HealthCompo.maxHealth;
-        //var curHp = HealthCompo.currentHealth;
-
-        //if (PenguinTriggerCalled == false
-        //    && CheckHealthRatioPassive(maxHp, curHp, 70))
-        //{
-        //    OnPassiveHealthRatioEvent();
-        //}
     }
 
     public override void OnSkillEvent()

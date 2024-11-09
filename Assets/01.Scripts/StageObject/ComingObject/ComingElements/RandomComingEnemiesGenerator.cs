@@ -159,7 +159,6 @@ public class RandomComingEnemiesGenerator : MonoBehaviour
 
         if(raftCount - _rotateValues.Count() > 0)
         {
-            Debug.LogError("빙하 오게 할때 현재 육각형까지 남은 수가 넘으면 안됨 생성 가능한 만큼만 하겠음");
             raftCount = _rotateValues.Count();
         }
 

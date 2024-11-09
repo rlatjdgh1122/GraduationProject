@@ -23,7 +23,6 @@ public class GeneralSelectSlotList : MonoBehaviour
         {
             if (slot.GeneralData.InfoData == info)
             {
-                Debug.Log(slot.name);
                 slot.SetSelectedPanel();
             }
                 

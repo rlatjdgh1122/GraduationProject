@@ -1,4 +1,5 @@
 using System;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,7 +7,8 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(menuName = "SO/InputReader")]
 public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.IBuildingActions
 {
-    public event Action RightClickEvent;
+    public event Action OnBattleRightClickEvent;
+    public event Action OnBattleLeftClickEvent;
     public event Action OnLeftClickEvent;
 
     public event Action OnEscEvent;
@@ -27,17 +29,29 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
             _controls.Penguin.SetCallbacks(this);
             _controls.Building.SetCallbacks(this);
         }
-
-        _controls.Penguin.Enable();
+        _controls.Penguin.Disable();
         _controls.Building.Enable();
+
+        SignalHub.OnBattlePhaseStartEvent += BattleStart;
+        SignalHub.OnBattlePhaseEndEvent += BattleEnd;
     }
 
-    public void OnMouseRightClick(InputAction.CallbackContext context)
+    private void OnDestroy()
     {
-        if (context.performed)
-        {
-            RightClickEvent?.Invoke();
-        }
+        SignalHub.OnBattlePhaseStartEvent -= BattleStart;
+        SignalHub.OnBattlePhaseEndEvent -= BattleEnd;
+    }
+
+    private void BattleStart()
+    {
+        _controls.Penguin.Enable();
+        _controls.Building.Disable();
+    }
+
+    private void BattleEnd()
+    {
+        _controls.Penguin.Disable();
+        _controls.Building.Enable();
     }
 
     public void OnMouseLeftClick(InputAction.CallbackContext context)
@@ -50,7 +64,7 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
 
     public void OnExitBuilding(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
             OnEscEvent?.Invoke();
         }
@@ -72,7 +86,7 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
         }
     }
 
-   public bool IsPointerOverUI()
+    public bool IsPointerOverUI()
     {
         // 마우스 포인터가 UI 위에 있는지 확인
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
@@ -80,7 +94,7 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
         var results = new System.Collections.Generic.List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
 
-        
+
         //foreach (var ray in results)
         //{
         //    Debug.Log(ray.gameObject.name);
@@ -100,5 +114,21 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
     public void OnUltimate(InputAction.CallbackContext context)
     {
         OnUltimateEvent?.Invoke();
+    }
+
+    public void OnRightClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnBattleRightClickEvent?.Invoke();
+        }
+    }
+
+    public void OnLeftClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnBattleLeftClickEvent?.Invoke();
+        }
     }
 }

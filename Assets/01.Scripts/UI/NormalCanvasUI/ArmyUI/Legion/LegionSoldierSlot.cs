@@ -10,7 +10,7 @@ public class LegionSoldierSlot : MonoBehaviour
 
     private Health _currentHealth;
     private Penguin _penguin;
-
+    private EntityInfoDataSO _infoData;
     private LegionPanel _parentPanel;
 
     private void Awake()
@@ -26,12 +26,14 @@ public class LegionSoldierSlot : MonoBehaviour
 
     public void SetSlot(EntityInfoDataSO info, string legionName, int legionIdx)
     {
+        _infoData = info;
+
         DummyPenguin dummy = PenguinManager.Instance.SpawnDummyPenguinByInfoData(info);
         dummy.CloneInfo.SetLegionName(legionName);
 
         _penguin = ArmyManager.Instance.SpawnPenguin(dummy.CloneInfo, _index);
         _currentHealth = _penguin.HealthCompo;
-        
+
         PenguinManager.Instance.DummyToPenguinMapping(dummy, _penguin);
         ArmyManager.Instance.JoinArmyToSoldier(legionName, legionIdx, _penguin);
 
@@ -58,6 +60,6 @@ public class LegionSoldierSlot : MonoBehaviour
     {
         if (!_currentHealth.IsDead) return;
 
-        _parentPanel.Heal(_penguin, ChangeSlot);
+        _parentPanel.Heal(_penguin, _infoData, ChangeSlot);
     }
 }
