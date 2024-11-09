@@ -45,9 +45,9 @@ public class NexusManager : Singleton<NexusManager>
     public void SetNexusHealth()
     {
         _nexusBase.HealthCompo.SetMaxHealth(_nexusStat); //최대 체력 올려주고
-        int healValue = (int)(_nexusStat.maxHealth.GetValue() * 0.2f);
+        int healValue = (int)(_nexusStat.maxHealth.GetValue() * 0.5f);
         //Debug.Log(healValue);
-        _nexusBase.HealthCompo.ApplyHeal(healValue); //최대 체력의 20%만큼 힐
+        _nexusBase.HealthCompo.ApplyHeal(healValue); //최대 체력의 50%만큼 힐
     }
 
     private void SetNexusInfoData()

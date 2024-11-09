@@ -30,6 +30,7 @@ public class SkillMouseEventUI : MountEventUI
 
         int value = Army.SkillController.GetMaxValue;
         string unit = dic[skillData.SkillType];
+        Debug.Log(value + " " + unit);
 
         ExplainUI.ShowPanel($"[½ºÅ³]", skillData.Name, $"{value}{unit}", skillData.Explain);
     }
