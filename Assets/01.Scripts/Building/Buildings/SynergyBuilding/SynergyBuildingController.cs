@@ -13,16 +13,21 @@ public class SynergyBuildingController : MonoBehaviour
     private void Awake()
     {
         _buildingFactory = FindObjectOfType<BuildingFactory>();
+
+        SignalHub.OnSynergyEnableEvent += OnSynergyEnable;
     }
 
+    private void OnDestroy()
+    {
+        SignalHub.OnSynergyEnableEvent -= OnSynergyEnable;
+        
+    }
     private void OnEnable()
     {
-        SignalHub.OnSynergyEnableEvent += OnSynergyEnable;
     }
 
     private void OnDisable()
     {
-        SignalHub.OnSynergyEnableEvent -= OnSynergyEnable;
     }
 
     private void OnSynergyEnable(SynergyType synergyType)

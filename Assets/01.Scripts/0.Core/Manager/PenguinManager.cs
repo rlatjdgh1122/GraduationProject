@@ -1,9 +1,6 @@
-using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.XPath;
-using Unity.Jobs.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PenguinManager
@@ -616,16 +613,16 @@ public class PenguinManager
 
     public void ShowGeneralInfoUI(GeneralDummyPengiun dummy)
     {
-        var infoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
-        var statData = GetStatByInfoData<GeneralStat>(infoData);
-        var data = dummy.Stat;
+        var getInfoData = GetInfoDataByDummyPenguin<GeneralInfoDataSO>(dummy);
+        var data = getInfoData == null ? dummy.CloneInfo : getInfoData;
+        var statData = GetStatByInfoData<GeneralStat>(data);
 
-        if (infoData)
-            statData.InfoData.LegionName = infoData.LegionName;
+        if (getInfoData)
+            statData.InfoData.LegionName = getInfoData.LegionName;
         else
             statData.InfoData.LegionName = "소속된 군단 없음";
 
-        GetCurrentInfoData = infoData;
+        GetCurrentInfoData = data;
         GetCurrentStat = statData;
 
         UIManager.Instance.HidePanel("GeneralInfoUI");
