@@ -29,17 +29,17 @@ public class InputReader : ScriptableObject, Controls.IPenguinActions, Controls.
             _controls.Penguin.SetCallbacks(this);
             _controls.Building.SetCallbacks(this);
         }
-        _controls.Penguin.Disable();
+        _controls.Penguin.Enable();
         _controls.Building.Enable();
 
-        SignalHub.OnBattlePhaseStartEvent += BattleStart;
-        SignalHub.OnBattlePhaseEndEvent += BattleEnd;
+        //SignalHub.OnBattlePhaseStartEvent += BattleStart;
+        //SignalHub.OnBattlePhaseEndEvent += BattleEnd;
     }
 
     private void OnDestroy()
     {
-        SignalHub.OnBattlePhaseStartEvent -= BattleStart;
-        SignalHub.OnBattlePhaseEndEvent -= BattleEnd;
+       //SignalHub.OnBattlePhaseStartEvent -= BattleStart;
+        //SignalHub.OnBattlePhaseEndEvent -= BattleEnd;
     }
 
     private void BattleStart()

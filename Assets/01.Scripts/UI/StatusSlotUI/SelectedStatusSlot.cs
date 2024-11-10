@@ -53,7 +53,6 @@ public class SelectedStatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             army.UltimateController.OnSkillUsedEvent -= _ultimateUI.OnUltimateUsed;
             army.UltimateController.OnChangedMaxValueEvent -= _ultimateUI.OnChangedMaxValue;
             army.UltimateController.OnSkillActionEnterEvent -= _ultimateUI.OnUltimateActionEnter;
-            //_army.UltimateController.OnSkillReadyEvent -= UltimateUI.OnSkillReady;
         }
     }
 

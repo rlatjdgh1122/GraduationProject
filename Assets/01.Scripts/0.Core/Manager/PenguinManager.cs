@@ -156,13 +156,10 @@ public class PenguinManager
         });
 
         DummyPenguinList.Add(obj);
+
         if (obj is GeneralDummyPengiun)
         {
             NotBelongDummyPenguinList.Add(obj);
-        }
-        else
-        {
-            BelongDummyPenguinList.Add(obj);
         }
     }
 

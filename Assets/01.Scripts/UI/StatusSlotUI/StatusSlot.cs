@@ -47,8 +47,9 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
             _army.UltimateController.OnSkillUsedEvent -= UltimateUI.OnUltimateUsed;
             _army.UltimateController.OnChangedMaxValueEvent -= UltimateUI.OnChangedMaxValue;
             _army.UltimateController.OnSkillActionEnterEvent -= UltimateUI.OnUltimateActionEnter;
-            //_army.UltimateController.OnSkillReadyEvent -= UltimateUI.OnSkillReady;
         }
+
+        _army.OnGeneralDied -= OffRegister;
     }
 
     public void OnRegister()
@@ -71,6 +72,8 @@ public class StatusSlot : MonoBehaviour, IValueChangeUnit<ArmyUIInfo>
 
             _army.UltimateController.Init();
         }
+
+        _army.OnGeneralDied += OffRegister;
     }
 
     public virtual void SetArmy(Army army)

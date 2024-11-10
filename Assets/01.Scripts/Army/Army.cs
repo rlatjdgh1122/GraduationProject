@@ -77,6 +77,7 @@ namespace ArmySystem
 
         public OnValueUpdated<float> OnMoveSpeedUpdated = null;
         public OnValueChanged<string> OnLegionNameChanged = null;
+        public event Action OnGeneralDied = null;
 
         #endregion
 
@@ -152,9 +153,14 @@ namespace ArmySystem
                 //시너지 비활성화
                 SignalHub.OnSynergyDisableEvent?.Invoke(SynergyType);
 
-                General = null;
-                SkillController = null;
-                UltimateController = null;
+                OnGeneralDied.Invoke();
+
+                CoroutineUtil.CallWaitForSeconds(0.02f, () =>
+                {
+                    General = null;
+                    SkillController = null;
+                    UltimateController = null;
+                });
             }
             else
             {
